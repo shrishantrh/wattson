@@ -1,0 +1,12 @@
+.ys { display: flex; gap: 12px; align-items: flex-start; margin-top: 12px; }
+.ys-play { flex: none; min-width: 64px; }
+.ys-body { flex: 1; min-width: 0; }
+.ys-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+.ys-year { font-family: var(--font-display); font-weight: 200; font-size: 26px; line-height: 1; font-variant-numeric: tabular-nums; }
+.ys-label { font-size: 11px; color: var(--muted); }
+.ys input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 2px; background: linear-gradient(to right, var(--ink-2) 0, var(--ink-2) var(--ys-fill), rgba(255,255,255,0.12) var(--ys-fill), rgba(255,255,255,0.12) 100%); border-radius: 1px; outline: none; margin: 8px 0 6px; }
+.ys input[type=range].playing { background: linear-gradient(to right, var(--accent) 0, var(--accent) var(--ys-fill), rgba(255,255,255,0.12) var(--ys-fill), rgba(255,255,255,0.12) 100%); }
+.ys input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); border: 0; cursor: pointer; }
+.ys input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); border: 0; cursor: pointer; }
+.ys-ticks { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+.ys-ticks span.on { color: var(--ink); }

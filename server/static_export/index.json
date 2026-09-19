@@ -22,7 +22,8 @@
   "companies": "companies.json",
   "facilities": "facilities.json",
   "company": "company/{TICKER}.json",
-  "site": "site/{preset}.json"
+  "site": "site/{preset}.json",
+  "irradiance": "irradiance.json"
  },
  "site_presets": [
   "300mw-phoenix-nova-omaha",

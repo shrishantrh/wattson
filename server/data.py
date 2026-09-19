@@ -114,6 +114,15 @@ def corrections_for(region_id: str) -> dict | None:
 
 
 @functools.lru_cache(maxsize=1)
+def irradiance_doc() -> dict:
+    """NASA POWER irradiance overlay. Precomputed; never re-fetched here."""
+    p = CLAIMS / "derived" / "irradiance.json"
+    if not p.exists():
+        raise FileNotFoundError(str(p))
+    return json.loads(p.read_text())
+
+
+@functools.lru_cache(maxsize=1)
 def facilities() -> list:
     """Hand-built datacenter site lookup: operator -> site -> serving utility -> BA.
 

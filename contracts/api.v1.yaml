@@ -122,6 +122,42 @@ paths:
       responses:
         "200":
           content: {application/json: {schema: {$ref: '#/components/schemas/SearchStatus'}}}
+  /api/irradiance:
+    get:
+      summary: NASA POWER irradiance overlay on daytime vs overnight clean share
+      description: >
+        Precomputed illustration from claims/derived/irradiance.json. Surface irradiance is
+        flat at every point; that is the finding. Only 2 of 5 regions separate cleanly.
+        No causal coefficients. Clients MUST render scale_mismatch_note and the verdict
+        field, including does_not_separate, contradicts, and unusable.
+      responses:
+        "200":
+          description: Irradiance overlay document
+          content: {application/json: {schema: {type: object}}}
+        "404": {description: Overlay file missing}
+  /api/irradiance/narrate:
+    post:
+      summary: Grok Voice narration for one irradiance region
+      description: >
+        Builds a spoken script from the region's fields (no hardcoded numbers) and returns
+        MP3 audio via xAI TTS. Requires XAI_API_KEY. Script must not claim the sun got
+        brighter or attribute share changes to irradiance.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [region]
+              properties:
+                region: {type: string, example: ERCO/NRTH}
+                voice_id: {type: string, default: eve}
+      responses:
+        "200":
+          description: MP3 audio
+          content: {audio/mpeg: {schema: {type: string, format: binary}}}
+        "404": {description: Unknown region or missing overlay}
+        "503": {description: TTS unavailable (missing key or upstream error)}
   /api/export/{kind}.csv:
     get:
       summary: CSV of the underlying series

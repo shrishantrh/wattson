@@ -12,6 +12,7 @@ import Compare from './pages/Compare.jsx'
 import Found from './pages/Found.jsx'
 import Region from './pages/Region.jsx'
 import Method from './pages/Method.jsx'
+import Irradiance from './pages/Irradiance.jsx'
 // Heavier routes load on demand. import.meta.glob keeps the build green while a page file is
 // still being written by someone else: a missing page shows a short message instead of failing the bundle.
 const pageFiles = import.meta.glob('./pages/*.jsx')
@@ -19,7 +20,7 @@ const Missing = ({ name }) => <div className="card" style={{ position: 'fixed', 
 const lazyPage = name => lazy(() => (pageFiles[`./pages/${name}.jsx`] ? pageFiles[`./pages/${name}.jsx`]() : Promise.resolve({ default: () => <Missing name={name} /> })))
 const Screener = lazyPage('Screener'), Explore = lazyPage('Explore'), Alerts = lazyPage('Alerts'), Companies = lazyPage('Companies')
 
-const PAGES = { landing: Landing, check: Check, compare: Compare, found: Found, region: Region, method: Method, screen: Screener, explore: Explore, alerts: Alerts, companies: Companies }
+const PAGES = { landing: Landing, check: Check, compare: Compare, found: Found, region: Region, method: Method, screen: Screener, explore: Explore, alerts: Alerts, companies: Companies, irradiance: Irradiance }
 
 export default function App() {
   const hash = useHash()

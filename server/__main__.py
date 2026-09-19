@@ -32,6 +32,10 @@ def static_export(out_dir: Path) -> int:
     w("alerts.json", A.get_alerts())
     w("companies.json", A.get_companies())
     w("facilities.json", A.get_facilities())
+    try:
+        w("irradiance.json", A.get_irradiance())
+    except Exception as e:  # noqa: BLE001 — static export should still finish if overlay missing
+        print(f"skip irradiance export: {e}", file=sys.stderr)
 
     # Every region the detail endpoint accepts, not just the 111 ranked ones.
     # Files are named with the id URL-encoded so PJM/DOM -> region/PJM%2FDOM.json
@@ -71,6 +75,7 @@ def static_export(out_dir: Path) -> int:
             "facilities": "facilities.json",
             "company": "company/{TICKER}.json",
             "site": "site/{preset}.json",
+            "irradiance": "irradiance.json",
         },
         "site_presets": list(presets),
         "files": written + 1,
