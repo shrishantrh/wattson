@@ -16,6 +16,7 @@ export default function Region({ id, regions, alerts, meta }) {
     return () => { alive = false }
   }, [r?.heatmap_uri])
   const charts = useMemo(() => (r ? build(r) : null), [r])
+  const zr = useMemo(() => zrange(hm), [hm])
   if (!r) return <p>Unknown region: {id}. <a href="#/">Back to the ranking.</a></p>
   const d = r.detection, s = r.siting
   const myAlerts = alerts.filter(a => a.region === r.id && a.active)
@@ -46,8 +47,8 @@ export default function Region({ id, regions, alerts, meta }) {
         </div>
       </section>
 
-      {hm && <ChartCard title="Carbon-free share, every hour of 2025" note={`365 days × 24 hours, local time. ${r.cf_inherited_from_ba ? `Parent BA (${r.ba}) generation.` : ''} Light = mostly fossil, dark = mostly carbon-free.`}
-        data={[{ type: 'heatmap', z: hm.cf_share, x: hm.hours, y: hm.days, colorscale: SEQ, zmin: 0, zmax: 1, hoverongaps: false, colorbar: { title: { text: 'CF share', font: { color: C.muted, size: 11 } }, thickness: 10, tickfont: { color: C.muted, size: 10 }, tickformat: '.0%' }, hovertemplate: '%{y} %{x}:00<br>carbon-free %{z:.0%}<extra></extra>' }]}
+      {hm && <ChartCard title="Carbon-free share, every hour of 2025" note={`365 days × 24 hours, local time. ${r.cf_inherited_from_ba ? `Parent BA (${r.ba}) generation. ` : ''}Light = more fossil, dark = more carbon-free. Color scale spans this region's 1st–99th percentile (${pct(zr[0], 0)}–${pct(zr[1], 0)}); hover for exact values.`}
+        data={[{ type: 'heatmap', z: hm.cf_share, x: hm.hours, y: hm.days, colorscale: SEQ, zmin: zr[0], zmax: zr[1], hoverongaps: false, colorbar: { title: { text: 'CF share', font: { color: C.muted, size: 11 } }, thickness: 10, tickfont: { color: C.muted, size: 10 }, tickformat: '.0%' }, hovertemplate: '%{y} %{x}:00<br>carbon-free %{z:.0%}<extra></extra>' }]}
         layout={layout({ hovermode: 'closest', margin: { t: 10, r: 10, l: 60, b: 40 }, xaxis: { title: { text: 'hour of day (local)' }, dtick: 2 }, yaxis: { type: 'date', autorange: 'reversed', tickformat: '%b' } })}
         height={520} table={hmTable} csvName={`${r.ba}_heatmap_2025`} />}
       {hm === false && <div className="banner info">No heatmap for this region.</div>}
@@ -79,6 +80,15 @@ export default function Region({ id, regions, alerts, meta }) {
       </section>
     </>
   )
+}
+
+function zrange(hm) {
+  if (!hm) return [0, 1]
+  const v = hm.cf_share.flat().filter(x => x != null).sort((a, b) => a - b)
+  if (!v.length) return [0, 1]
+  let lo = v[Math.floor(v.length * 0.01)], hi = v[Math.floor(v.length * 0.99)]
+  if (hi - lo < 0.15) { const m = (hi + lo) / 2; lo = m - 0.075; hi = m + 0.075 }
+  return [Math.max(0, lo), Math.min(1, hi)]
 }
 
 function build(r) {
