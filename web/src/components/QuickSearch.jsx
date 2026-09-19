@@ -1,20 +1,16 @@
-import { useState } from 'react'
-import { parseQuery, queryHref } from '../lib/query.js'
+import { CommandPalette } from './CommandPalette.jsx'
+import { openPalette } from '../lib/commands.js'
 
-// The one box, compact form for the top bar.
+// The one box, compact form for the top bar: a button that opens the command palette.
+// Renders its own <CommandPalette /> so the top bar works on its own; if the app also mounts
+// one at the root, only the earliest-mounted instance is live, so nothing doubles up.
+const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent || '')
+
 export default function QuickSearch() {
-  const [q, setQ] = useState('')
-  const [hint, setHint] = useState('')
-  const submit = e => {
-    e.preventDefault()
-    const r = parseQuery(q)
-    if (r.kind === 'unknown') { setHint(r.hint); return }
-    setHint(''); setQ(''); window.location.hash = queryHref(r)
-  }
   return (
-    <form className="quick" onSubmit={submit} title={hint}>
-      <input value={q} onChange={e => setQ(e.target.value)} placeholder={hint || 'Check a company or compare locations'} aria-label="Check a company or compare locations" />
-      <span className="k">↵</span>
-    </form>
+    <>
+      <button type="button" className="quick" onClick={() => openPalette(true)} aria-haspopup="dialog" aria-label={`Search or ask (${isMac ? 'Command' : 'Control'} K)`}>Search or ask… <span className="k">{isMac ? '⌘K' : 'Ctrl K'}</span></button>
+      <CommandPalette />
+    </>
   )
 }

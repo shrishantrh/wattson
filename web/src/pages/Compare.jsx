@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
-import { Card, Num, Evidence, Section, Chip, KV, Ring, Ticks } from '../console/widgets.jsx'
-import { loadSite, loadOpening, useAsync } from '../lib/data.js'
+import { Card, Num, Evidence, Section, Chip, KV, Ring, HourBars } from '../console/widgets.jsx'
+import { loadSite, loadOpening, useAsync, useRegionDetails, hourProfile, nightSeries } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { compareAnswer, caveatFor, pct0, pct1, n0, signedGw } from '../lib/findings.js'
 import { matchMetro } from '../lib/query.js'
@@ -21,6 +21,7 @@ export default function Compare({ route }) {
   const [add, setAdd] = useState('')
   const cands = data?.candidates || []
   const answer = data ? compareAnswer(data) : null
+  const details = useRegionDetails(evidence ? cands.map(c => c.region_id) : [])
   const globe = useMemo(() => {
     const pts = cands.filter(c => c.lat != null)
     return { view: fitView(pts), points: pts.map(c => ({ id: c.region_id, lat: c.lat, lng: c.lng, r: 0.2, color: c === answer?.best ? tk.accent : tk.ink2 })), rings: pts.filter(c => c === answer?.best).map(c => ({ id: c.region_id, lat: c.lat, lng: c.lng, color: tk.accent, maxR: 3, speed: 0.8, period: 1600 })),
@@ -69,6 +70,8 @@ export default function Compare({ route }) {
               c.detector?.rank && ['new flat load already showing up', `#${c.detector.rank} of 111 · ${c.detector.growth_pct > 0 ? '+' : ''}${Math.round(c.detector.growth_pct)}% since 2019`],
               ['siting rank', c.siting?.siting_rank ? `${c.siting.siting_rank} of ${c.siting.n_ranked}` : '—'],
             ]} />
+            {hourProfile(details[c.region_id]) && <div style={{ marginTop: 12 }}><HourBars values={hourProfile(details[c.region_id])} caption="Clean share by hour, 2025 (night in ember)" /></div>}
+            {nightSeries(details[c.region_id]) && <p className="note" style={{ marginTop: 8 }}>Clean at night by year: {nightSeries(details[c.region_id]).map((v, i) => `${2019 + i} ${v == null ? '—' : Math.round(v * 100) + '%'}`).join(' · ')}</p>}
             {cav && <div className="banner banner-error" style={{ marginTop: 10 }}>{cav}</div>}
             {c.cf_inherited_from_ba && <p className="note" style={{ marginTop: 8 }}>Generation figures are for the whole grid this place sits on; demand is local. Operator is hand-mapped.</p>}
           </Section>

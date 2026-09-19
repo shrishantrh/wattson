@@ -2,13 +2,30 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import GlobeGL from 'react-globe.gl'
 import * as THREE from 'three'
 import { loadDayNightTextures, makeDayNightMaterial, makeNightMaterial, setDayNightUniforms } from './dayNight.js'
+import { isUS, isUSNeighbor, loadCountries, loadStateMesh } from './land.js'
 import { subsolarPoint } from './sun.js'
 
 const DEG = Math.PI / 180
 const EMPTY = []
+const NOOP = () => {}
 const DEFAULT_VIEW = { lat: 38, lng: -97, altitude: 1.6 }
 const DEFAULT_TERMINATOR = { enabled: true, dayDim: 0.35 }
-const DEFAULT_ATMOSPHERE = { color: '#ffffff', altitude: 0.12 }
+const DEFAULT_ATMOSPHERE = { color: '#ffffff', altitude: 0.12, opacity: 1 } // night style
+const DEFAULT_ATMOSPHERE_DOTS = { color: '#ffffff', altitude: 0.08, opacity: 0.35 } // dots style: faint rim
+// Dots style palette. Land is one grey at three alphas so the US reads first, its neighbours
+// second and the rest of the world as context; state borders sit between the US and neighbours.
+const DEFAULT_LAND = {
+  sphere: '#141817', // a step above the page background (#0a0c0b) so the disc reads where there is no land
+  us: 'rgba(233,236,233,0.62)',
+  neighbors: 'rgba(233,236,233,0.30)',
+  other: 'rgba(233,236,233,0.14)',
+  states: 'rgba(233,236,233,0.22)',
+}
+const LAND_ALT = 0.002 // dot matrix, globe-radius units above the surface
+const STATES_ALT = 0.003 // state border lines, above the dots
+const HEX_RES = 3 // H3 resolution: ~60 km cells, about 12k dots over land
+const HEX_MARGIN = 0.6 // fraction of the cell diameter left as a gap around each dot
+const HEX_DOT_SEGMENTS = 10 // circle segments per dot; 12 is three-globe's default
 const DEFAULT_DOT = 'rgba(255,255,255,0.85)'
 const DEFAULT_RING = '#ffffff'
 const DEFAULT_LABEL = 'rgba(255,255,255,0.7)'
@@ -51,6 +68,31 @@ function toThreeColor(color) {
   const c = parseCss(color)
   if (c) return { hex: (c.r << 16) | (c.g << 8) | c.b, alpha: c.a }
   return { hex: new THREE.Color(color).getHex(), alpha: 1 }
+}
+
+// Scale a colour's brightness by k (times its own alpha) and return it as opaque '#rrggbb'.
+// three-globe's atmosphere takes its colour through THREE.Color, which drops alpha, so the
+// only way to get a fainter rim is a darker colour: over a dark background the glow
+// (colour * intensity, normal-blended) reads the same as white at k opacity.
+function dimHex(color, k) {
+  const c = parseCss(color) || (() => {
+    const t = new THREE.Color(color)
+    return { r: Math.round(t.r * 255), g: Math.round(t.g * 255), b: Math.round(t.b * 255), a: 1 }
+  })()
+  const s = Math.max(0, Math.min(1, k)) * c.a
+  const ch = (v) => Math.round(v * s).toString(16).padStart(2, '0')
+  return `#${ch(c.r)}${ch(c.g)}${ch(c.b)}`
+}
+
+// Scene lights. globe.gl's defaults (ambient 0xcccccc plus a directional light from above)
+// shade the hex layer's MeshLambertMaterial, so the dot matrix would brighten at the top of
+// the globe and darken at the limb. Ambient-only at intensity pi renders every Lambert
+// surface at exactly its own colour, which is what a flat map wants.
+function makeDotsLights() {
+  return [new THREE.AmbientLight(0xffffff, Math.PI)]
+}
+function makeDefaultLights() {
+  return [new THREE.AmbientLight(0xcccccc, Math.PI), new THREE.DirectionalLight(0xffffff, 0.6 * Math.PI)]
 }
 
 // ---------- data identity: keep datum objects stable so react-globe.gl's data joins are no-ops ----------
@@ -179,19 +221,27 @@ function makeMarkerElement(d) {
 function markerVisibility(el, isVisible) { el.style.opacity = isVisible ? '1' : '0' }
 
 /**
- * 3D Earth at night, turned to the US, with a day/night terminator, small dots, propagating
- * pulse rings and text labels. Fills its parent element. Dark theme only.
+ * 3D Earth turned to the US with small dots, propagating pulse rings, text labels and HTML
+ * pin markers. Fills its parent element. Dark theme only. Two surface styles:
+ *
+ * - `'dots'` (default): a matte dark sphere with land drawn as a dot matrix (H3 resolution 3,
+ *   three-globe's hex polygon layer in dot mode) coloured by country (US bright, Canada and
+ *   Mexico mid, everything else dim) and thin US state border lines. No texture, no terminator.
+ *   The TopoJSON (about 220 KB raw) is loaded lazily on first use and cached.
+ * - `'night'`: the NASA night-lights texture with the day/night terminator shader.
  *
  * Props:
  * @param {object} props
+ * @param {'dots'|'night'} [props.style='dots'] surface style; switching at runtime disposes the previous sphere material and textures
+ * @param {{ sphere?: string, us?: string, neighbors?: string, other?: string, states?: string }} [props.landColors] dots style colours: `sphere` '#0f1211', `us` 'rgba(233,236,233,0.62)', `neighbors` (Canada, Mexico) 'rgba(233,236,233,0.30)', `other` 'rgba(233,236,233,0.14)', `states` (border lines) 'rgba(233,236,233,0.22)'; ignored in night style
  * @param {{ lat: number, lng: number, altitude: number }} [props.view] camera target; a change animates pointOfView over 1200 ms (first application is instant)
  * @param {Array<{ id: string|number, lat: number, lng: number, r?: number, color?: string, hollow?: boolean }>} [props.points] dots; `r` in angular degrees (react-globe.gl's pointRadius unit, default 0.25); `hollow` renders a thin ring outline
  * @param {Array<{ id: string|number, lat: number, lng: number, color?: string, maxR?: number, speed?: number, period?: number }>} [props.rings] pulse rings; `maxR` degrees (3), `speed` degrees/second (1), `period` ms between rings (1200), react-globe.gl units
  * @param {Array<{ id: string|number, lat: number, lng: number, text: string, size?: number, color?: string, dot?: boolean, dotR?: number }>} [props.labels] text labels; `size` degrees (0.6); `dot: false` hides the marker dot
- * @param {{ enabled?: boolean, sunLng?: number, sunLat?: number, dayDim?: number }} [props.terminator] day/night shader; sunLng/sunLat default to the real subsolar point; dayDim 0.35; `enabled: false` shows the plain night texture
+ * @param {{ enabled?: boolean, sunLng?: number, sunLat?: number, dayDim?: number }} [props.terminator] night style only: day/night shader; sunLng/sunLat default to the real subsolar point; dayDim 0.35; `enabled: false` shows the plain night texture. A no-op in dots style (there is no texture to shade)
  * @param {boolean} [props.interactive=true] orbit controls on/off (off also disables zoom and pan)
  * @param {number} [props.autoRotate=0] degrees per second, 0 = off
- * @param {{ color?: string, altitude?: number }|null} [props.atmosphere] faint rim; null hides it
+ * @param {{ color?: string, altitude?: number, opacity?: number }|null} [props.atmosphere] rim glow; null hides it. Default depends on style: night `{ color: '#ffffff', altitude: 0.12, opacity: 1 }`, dots `{ color: '#ffffff', altitude: 0.08, opacity: 0.35 }`. `opacity` scales the glow's brightness (three-globe's glow has no alpha; the colour is darkened instead, which reads the same over a dark page)
  * @param {string} [props.background='rgba(0,0,0,0)'] renderer clear colour; transparent by default so the page background shows
  * @param {'auto'|'high'|'low'} [props.quality='auto'] auto: pixel ratio capped at 1.5, antialias on; low: 1, antialias off; high: 2, antialias on
  * @param {() => void} [props.onReady] called once the globe is initialised and the first view is applied
@@ -200,6 +250,8 @@ function markerVisibility(el, isVisible) { el.style.opacity = isVisible ? '1' : 
  * @param {Array<{ id: string|number, lat: number, lng: number, label?: string, color?: string, hollow?: boolean, muted?: boolean, lead?: boolean, href?: string }>} [props.markers] HTML pin markers (tile + stem + label) anchored to the surface
  */
 export default function Globe({
+  style = 'dots',
+  landColors,
   view = DEFAULT_VIEW,
   points = EMPTY,
   rings = EMPTY,
@@ -207,7 +259,7 @@ export default function Globe({
   terminator = DEFAULT_TERMINATOR,
   interactive = true,
   autoRotate = 0,
-  atmosphere = DEFAULT_ATMOSPHERE,
+  atmosphere,
   background = 'rgba(0,0,0,0)',
   quality = 'auto',
   onReady,
@@ -223,12 +275,22 @@ export default function Globe({
   const onReadyRef = useRef(onReady)
   const onClickRef = useRef(onPointClick)
   const onHoverRef = useRef(onPointHover)
+  const lightsOverriddenRef = useRef(false)
   const [size, setSize] = useState({ w: 0, h: 0 })
   const [mat, setMat] = useState(null)
+  const [land, setLand] = useState(null) // dots style: { countries, states } once the TopoJSON is in
   const [readyTick, setReadyTick] = useState(0)
 
   const q = QUALITY[quality] || QUALITY.auto
-  const terminatorEnabled = terminator ? terminator.enabled !== false : false
+  const isDots = style !== 'night'
+  const lc = landColors || DEFAULT_LAND
+  const sphereColor = lc.sphere || DEFAULT_LAND.sphere
+  const usColor = lc.us || DEFAULT_LAND.us
+  const neighborColor = lc.neighbors || DEFAULT_LAND.neighbors
+  const otherColor = lc.other || DEFAULT_LAND.other
+  const statesColor = lc.states || DEFAULT_LAND.states
+  // The terminator only exists in night style; in dots style there is no texture to shade.
+  const terminatorEnabled = !isDots && (terminator ? terminator.enabled !== false : false)
   const sunLat = terminator ? terminator.sunLat : undefined
   const sunLng = terminator ? terminator.sunLng : undefined
   const dayDim = terminator && terminator.dayDim != null ? terminator.dayDim : DEFAULT_TERMINATOR.dayDim
@@ -264,44 +326,53 @@ export default function Globe({
     return () => ro.disconnect()
   }, [])
 
-  // 2. Textures and globe material. The globe is not mounted until this resolves, so there is
-  //    never a frame with globe.gl's default (white, lit) sphere.
+  // 2. Globe material. The globe is not mounted until this resolves, so there is never a
+  //    frame with globe.gl's default (white, lit) sphere. Night style loads the textures;
+  //    dots style is a plain unlit sphere, resolved through the same path so both styles are
+  //    handled by one subscription. The dots material is created in the default colour and
+  //    recoloured in place by the layout effect below, so a colour change never rebuilds it.
   useEffect(() => {
     let alive = true
-    loadDayNightTextures(terminatorEnabled)
-      .then(({ day, night }) => {
+    const load = isDots
+      ? Promise.resolve({ material: new THREE.MeshBasicMaterial({ color: toThreeColor(DEFAULT_LAND.sphere).hex }), textures: [], kind: 'dots' })
+      : loadDayNightTextures(terminatorEnabled).then(({ day, night }) => {
+          let material
+          if (terminatorEnabled) {
+            const sun = subsolarPoint()
+            const g = globeRef.current
+            const pov = (g && g.pointOfView && g.pointOfView()) || viewRef.current
+            material = makeDayNightMaterial({
+              dayTexture: day,
+              nightTexture: night,
+              sunLat: sun.lat,
+              sunLng: sun.lng,
+              dayDim: DEFAULT_TERMINATOR.dayDim,
+              globeLat: pov.lat,
+              globeLng: pov.lng,
+            })
+          } else {
+            material = makeNightMaterial(night)
+          }
+          return { material, textures: day ? [day, night] : [night], kind: 'night' }
+        })
+    load
+      .then((next) => {
         if (!alive) {
-          if (day) day.dispose()
-          night.dispose()
+          // Style changed while loading: nothing rendered this, so free it here.
+          next.material.dispose()
+          next.textures.forEach((t) => t.dispose())
           return
         }
-        let material
-        if (terminatorEnabled) {
-          const sun = subsolarPoint()
-          const g = globeRef.current
-          const pov = (g && g.pointOfView && g.pointOfView()) || viewRef.current
-          material = makeDayNightMaterial({
-            dayTexture: day,
-            nightTexture: night,
-            sunLat: sun.lat,
-            sunLng: sun.lng,
-            dayDim: DEFAULT_TERMINATOR.dayDim,
-            globeLat: pov.lat,
-            globeLng: pov.lng,
-          })
-        } else {
-          material = makeNightMaterial(night)
-        }
-        setMat({ material, textures: day ? [day, night] : [night] })
+        setMat(next)
       })
       .catch((err) => {
         console.warn('[Globe] texture load failed, using a plain dark sphere', err)
-        if (alive) setMat({ material: new THREE.MeshBasicMaterial({ color: 0x0b0d12 }), textures: [] })
+        if (alive) setMat({ material: new THREE.MeshBasicMaterial({ color: 0x0b0d12 }), textures: [], kind: 'night' })
       })
     return () => {
       alive = false
     }
-  }, [terminatorEnabled])
+  }, [isDots, terminatorEnabled])
 
   // Dispose the previous material and its textures when replaced, and on unmount.
   useEffect(() => {
@@ -312,6 +383,35 @@ export default function Globe({
       mat.textures.forEach((t) => t.dispose())
     }
   }, [mat])
+
+  // Dots style: recolour the sphere in place rather than rebuilding the material. Layout
+  // effect so the colour is set before the frame in which the new material first paints.
+  useLayoutEffect(() => {
+    if (mat && mat.kind === 'dots') mat.material.color.setHex(toThreeColor(sphereColor).hex)
+  }, [mat, sphereColor])
+
+  // Dots style: land geometry. The TopoJSON is lazy-loaded and converted once per page
+  // (land.js caches it); each mount gets shallow copies because three-globe's data join
+  // writes its bookkeeping onto the datum objects, so two globes must not share them.
+  useEffect(() => {
+    if (!isDots) return undefined
+    let alive = true
+    Promise.all([loadCountries(), loadStateMesh()])
+      .then(([countries, states]) => {
+        if (!alive) return
+        setLand({
+          countries: countries.map((f, i) => ({ ...f, id: f.id ?? `c${i}` })),
+          states: states.map((s) => ({ ...s })),
+        })
+      })
+      .catch((err) => {
+        console.warn('[Globe] land data failed to load, rendering a bare sphere', err)
+        if (alive) setLand({ countries: EMPTY, states: EMPTY })
+      })
+    return () => {
+      alive = false
+    }
+  }, [isDots])
 
   // 3. Sun position and day dimming: layout effect so a caller animating sunLng per frame sees
   //    the uniform change before that frame paints.
@@ -376,6 +476,38 @@ export default function Globe({
     c.autoRotateSpeed = (autoRotate || 0) / 6
   }, [readyTick, interactive, autoRotate])
 
+  // 6b. Lights: flat ambient in dots style so the Lambert dot meshes render unshaded; the
+  //     night style keeps globe.gl's defaults (restored only if we had overridden them).
+  useEffect(() => {
+    const g = globeRef.current
+    if (!readyTick || !g || !g.lights) return
+    if (isDots) {
+      g.lights(makeDotsLights())
+      lightsOverriddenRef.current = true
+    } else if (lightsOverriddenRef.current) {
+      g.lights(makeDefaultLights())
+      lightsOverriddenRef.current = false
+    }
+  }, [readyTick, isDots])
+
+  // 6c. Take the land meshes out of the pointer raycast. globe.gl raycasts every scene object
+  //     and applies pointerEventsFilter afterwards, so without this each hover would test the
+  //     ray against ~120k dot triangles and 11k border segments. three-globe's data join
+  //     builds the objects on a 1 ms debounce; a short timer runs after that. Purely a
+  //     performance measure: if it ever misses, hover still works, just slower.
+  useEffect(() => {
+    const g = globeRef.current
+    if (!readyTick || !g || !isDots || !land) return undefined
+    const t = setTimeout(() => {
+      const scene = g.scene && g.scene()
+      if (!scene) return
+      scene.traverse((o) => {
+        if (o.__globeObjType === 'hexPolygon' || o.__globeObjType === 'path') o.traverse((c) => { c.raycast = NOOP })
+      })
+    }, 60)
+    return () => clearTimeout(t)
+  }, [readyTick, isDots, land])
+
   // 7. Pixel ratio cap (three-render-objects sets min(2, dpr) at init; re-cap after any resize).
   useEffect(() => {
     const g = globeRef.current
@@ -407,7 +539,23 @@ export default function Globe({
     [q.antialias],
   )
 
-  const showGlobe = size.w > 0 && size.h > 0 && !!mat
+  // Dots style accessors, memoised so react-kapsule only re-digests the layers on a real change.
+  const hexColor = useCallback(
+    (f) => (isUS(f) ? usColor : isUSNeighbor(f) ? neighborColor : otherColor),
+    [usColor, neighborColor, otherColor],
+  )
+  const pathColor = useCallback(() => statesColor, [statesColor])
+  const countries = isDots && land ? land.countries : EMPTY
+  const stateLines = isDots && land ? land.states : EMPTY
+
+  // Atmosphere: the default depends on the style; an explicit prop (or null) wins.
+  const atmo = atmosphere === undefined ? (isDots ? DEFAULT_ATMOSPHERE_DOTS : DEFAULT_ATMOSPHERE) : atmosphere
+  const atmoDefaults = isDots ? DEFAULT_ATMOSPHERE_DOTS : DEFAULT_ATMOSPHERE
+  const atmoColor = dimHex((atmo && atmo.color) || atmoDefaults.color, atmo && atmo.opacity != null ? atmo.opacity : atmoDefaults.opacity)
+  const atmoAltitude = atmo && atmo.altitude != null ? atmo.altitude : atmoDefaults.altitude
+
+  // Dots style also waits for the land data so the sphere and its dots appear together.
+  const showGlobe = size.w > 0 && size.h > 0 && !!mat && (!isDots || !!land)
 
   return (
     <div
@@ -425,9 +573,26 @@ export default function Globe({
           animateIn={false}
           waitForGlobeReady={true}
           globeMaterial={mat.material}
-          showAtmosphere={!!atmosphere}
-          atmosphereColor={(atmosphere && atmosphere.color) || DEFAULT_ATMOSPHERE.color}
-          atmosphereAltitude={atmosphere && atmosphere.altitude != null ? atmosphere.altitude : DEFAULT_ATMOSPHERE.altitude}
+          showAtmosphere={!!atmo}
+          atmosphereColor={atmoColor}
+          atmosphereAltitude={atmoAltitude}
+          hexPolygonsData={countries}
+          hexPolygonResolution={HEX_RES}
+          hexPolygonMargin={HEX_MARGIN}
+          hexPolygonUseDots={true}
+          hexPolygonDotResolution={HEX_DOT_SEGMENTS}
+          hexPolygonAltitude={LAND_ALT}
+          hexPolygonCurvatureResolution={5}
+          hexPolygonColor={hexColor}
+          hexPolygonsTransitionDuration={0}
+          pathsData={stateLines}
+          pathPoints="points"
+          pathPointAlt={STATES_ALT}
+          pathResolution={2}
+          pathColor={pathColor}
+          pathDashLength={1}
+          pathDashGap={0}
+          pathTransitionDuration={0}
           onGlobeReady={handleReady}
           onZoom={handleZoom}
           enablePointerInteraction={!!(onPointClick || onPointHover)}

@@ -4,7 +4,8 @@ import metros from '../data/metros.json'
 
 // Data access, in resolution order:
 //   1. VITE_API_BASE set  -> the engine's live endpoints (contracts/api.v1.yaml)
-//   2. public/api/**      -> the engine's static export (server --static-export), copied at build
+//   2. public/api/**      -> the engine's static export (server --static-export -> server/static_export, copied at build;
+//                            region files are named like PJM%2FDOM.json, hence the double encoding)
 //   3. public/fixtures/*  -> fixtures (Yash's contract fixtures, else the provisional ones)
 // Every loader returns the same normalised shape whichever source answered.
 const base = import.meta.env.BASE_URL
@@ -51,7 +52,7 @@ export async function loadOpening() {
 // ---------- one region ----------
 export async function loadRegion(id) {
   const raw = await tryEach([
-    ...(api ? [() => getJSON(`${api}/api/region/${encodeURIComponent(id)}`)] : []), () => staticExport(`region/${encodeURIComponent(id)}`),
+    ...(api ? [() => getJSON(`${api}/api/region/${encodeURIComponent(id)}`)] : []), () => staticExport(`region/${encodeURIComponent(encodeURIComponent(id))}`),
     async () => { const f = await fixture('region'); if (f.regions) { const r = f.regions[id]; if (!r) throw new NotFound(`Region ${id}`, Object.keys(f.regions)); return { ...r, _provisional: f._provisional } } if (f.region?.id === id) return { ...f.region, meta: f.meta }; throw new NotFound(`Region ${id}`, f.region ? [f.region.id] : []) },
   ])
   const r = raw.region ? { ...raw.region, meta: raw.meta } : raw
@@ -133,3 +134,16 @@ export function useAsync(fn, deps = []) {
   }, [...deps, tick])   // eslint-disable-line react-hooks/exhaustive-deps
   return { ...s, reload }
 }
+
+// Best-effort details for several regions at once (hour profiles, yearly series). Missing ones are simply absent.
+export function useRegionDetails(ids) {
+  const key = (ids || []).filter(Boolean).join('|')
+  const { data } = useAsync(async () => {
+    const out = {}
+    await Promise.all(key.split('|').filter(Boolean).map(async id => { try { out[id] = await loadRegion(id) } catch { /* not in this source */ } }))
+    return out
+  }, [key])
+  return data || {}
+}
+export const nightSeries = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; return g?.cf_share ? ['2019', '2020', '2021', '2022', '2023', '2024', '2025'].map(y => g.cf_share[y]?.overnight ?? null) : null }
+export const hourProfile = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; return g?.profile_24h?.['2025'] || g?.profile_24h || null }

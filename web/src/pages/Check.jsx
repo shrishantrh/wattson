@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
 import { Card, Num, Evidence, Section, Chip, KV, Ticks } from '../console/widgets.jsx'
-import { loadCompany, useAsync } from '../lib/data.js'
+import { loadCompany, useAsync, useRegionDetails, nightSeries } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { checkAnswer, pct0, caveatFor } from '../lib/findings.js'
 import { COMPANIES } from '../lib/query.js'
@@ -19,6 +19,7 @@ export default function Check({ route }) {
   const tk = useMemo(readTokens, [])
   const known = COMPANIES.find(c => c.ticker === ticker)
   const sites = data?.sites || []
+  const details = useRegionDetails(evidence ? sites.map(s => s.region_id) : [])
   const bySite = useMemo(() => Object.fromEntries((data?.claims || []).flatMap(k => (k.evidence || []).filter(e => e.type === 'grid').map(e => [e.ba, e]))), [data])
   const globe = useMemo(() => {
     const pts = sites.filter(s => s.lat != null)
@@ -58,7 +59,7 @@ export default function Check({ route }) {
                 {sites.map(s => { const e = bySite[s.ba]; const cav = caveatFor(s.region_id); return (
                   <a className="row" key={s.metro} href={href.region(s.region_id)}>
                     <div><div className="t">{s.metro}</div><div className="d">{s.serving_utility || 'utility unknown'} · {s.grid_label}{s.source_type ? ` · ${s.source_type.replace(/_/g, ' ')}` : ''}{cav ? ' · data unreliable' : ''}</div></div>
-                    <div className="n">{e?.cf_share != null ? pct0(e.cf_share) : '—'}{e?.overnight_cf_share != null && <small> · {pct0(e.overnight_cf_share)} at night</small>}</div>
+                    <div className="n">{e?.cf_share != null ? pct0(e.cf_share) : '—'}{(e?.overnight_cf_share ?? nightSeries(details[s.region_id])?.[6]) != null && <small> · {pct0(e?.overnight_cf_share ?? nightSeries(details[s.region_id])[6])} at night</small>}</div>
                   </a>) })}
               </div>
               <p className="note" style={{ marginTop: 10 }}>Clean share of the electricity generated on each site's grid in {a.primary?.year || 2024}, all hours. The site lookup is hand-curated from the serving utility outward, never from the state.</p>

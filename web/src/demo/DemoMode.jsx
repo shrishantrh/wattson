@@ -17,8 +17,9 @@ export function useDemoMode(hash) {
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(idx - 1) }
       else if (e.key === 'Escape') setOn(false)
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    const onToggle = e => { if (e.detail?.key === 'demo') setOn(v => !v) }
+    window.addEventListener('keydown', onKey); window.addEventListener('wattson:toggle', onToggle)
+    return () => { window.removeEventListener('keydown', onKey); window.removeEventListener('wattson:toggle', onToggle) }
   }, [on, idx])
   return { on, idx, scene: SCENES[idx] || null }
 }

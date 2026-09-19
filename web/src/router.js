@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-// #/ landing · #/check/META · #/compare?mw=300&metros=a|b|c · #/found?s=scene · #/region/<id> · #/method
+// #/ landing · #/screen?by=preset · #/check/META · #/compare?mw=300&metros=a|b|c · #/found?s=scene · #/region/<id> · #/method
 export function parseHash(hash = window.location.hash) {
   const raw = hash.replace(/^#/, '')
   const [pathPart, queryPart = ''] = raw.split('?')
@@ -20,6 +20,7 @@ export const href = {
   found: s => (s ? `#/found?s=${s}` : '#/found'),
   region: id => `#/region/${encodeURIComponent(id)}`,
   method: () => '#/method',
+  screen: by => (by ? `#/screen?by=${by}` : '#/screen'),
 }
 
 export function useHash() {
