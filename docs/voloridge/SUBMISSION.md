@@ -122,6 +122,67 @@ population median, so missing data is never an advantage.
 check that catches them is not "did the code run" but "what would this look like if the pipeline were
 silently broken, and does it look like that?"
 
+
+---
+
+## Every guard we built was blind to something
+
+This is the part we would most want another team to take away, and it is the challenge's
+own thesis turned on the people doing the work. We built eight checks. Each one caught
+real problems. **Not one of the eight most serious failures was caught by a test.** Every
+one was caught by reading an output and asking why it looked the way it did.
+
+**A page-fidelity audit that could not see reading order.** We verified all 309 page
+citations against the source: zero mismatches. The check compared each chunk against *the
+same extraction that produced it*, so it proved the chunk came from that page while the
+words within it were scrambled. A self-consistent check cannot detect a systematic bias in
+the instrument it checks with.
+
+**A verbatim guard that could not see corruption.** Downstream, a second guard required
+every quote to appear character-for-character in its chunk. It caught 20 model
+paraphrases. It cannot prove the chunk matches the document — a spliced quote passes it
+perfectly. Two guards, one blind spot each, stacked in the same direction.
+
+**An acceptance test that was insufficient.** We specified four pages that had to come out
+clean. A rewrite passed all four and silently broke a fifth — the page four of eight
+findings cite — because a heading ended exactly where a column began. A page can satisfy a
+targeted substring check and be mangled two inches higher up.
+
+**Synthetic tests that passed while reality failed.** The 10-K section slicer passed every
+test we wrote, while three of four real filings sliced wrong: 759 words instead of 11,754;
+a 52,000-word run-on; a 367-word truncation. Tests only test what you imagined.
+
+**A ranking that was secretly a tautology.** Our alert prioritiser scored missing values
+as 1.0, so structural alerts got a free pass on two of three factors and swept the top
+eight slots. The "prioritised" screen was the detector ranking relabelled. Every test
+passed. It was caught by noticing the ordering looked too tidy.
+
+**A sweep that missed the thing it was built to find.** Our first pairwise duplicate
+detector swept 2019–2026 in one window and did not find AZPS/SRP, the pair it existed to
+confirm, because the duplication *ended* and the post-break period destroys the
+correlation. It also reported a false positive on two solar series that match trivially in
+the dark.
+
+**A derived field that overwrote its own source.** The falsifiability cap was not
+idempotent: re-running it read the capped value back into the field holding the model's
+original score, destroying the record of what the model actually said. Caught because two
+numbers moved that had no business moving. A model's score is a fact about a past API
+call; if it changes, something is overwriting history.
+
+**A shim that silently dropped an argument.** Our pandas-2 compatibility layer ignored a
+`columns=` parameter, so scripts asking for four columns received all six. That one failed
+loudly. Had it failed quietly it would have produced numbers instead of an error.
+
+**The through-line.** Every one of these produces a plausible result rather than a crash.
+The question that caught them is never "did the tests pass" — they did — but *why does
+this output look the way it does?* Why is this ordering so tidy. Why did this company
+return zero findings when it makes the same claim as the others. Why did a number change
+that cannot change. Why is the sum of two balancing authorities larger than the power
+plant.
+
+That question is the whole job. The data traps in EIA-930 are the same shape as the traps
+in our own code, and neither announces itself.
+
 ---
 
 ## What we built with it
