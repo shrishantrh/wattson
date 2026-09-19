@@ -41,7 +41,7 @@ async function main() {
   log('chrome:', chrome)
   const browser = await puppeteer.launch({
     executablePath: chrome, headless: false, defaultViewport: null,
-    args: [`--window-size=${W},${H + 87}`, '--hide-scrollbars', '--autoplay-policy=no-user-gesture-required', '--no-first-run', '--no-default-browser-check', '--disable-infobars', '--disable-session-crashed-bubble', '--hide-crash-restore-bubble'],
+    args: [`--window-size=${W},${H + 87}`, '--hide-scrollbars', '--autoplay-policy=no-user-gesture-required', '--start-fullscreen', '--no-first-run', '--no-default-browser-check', '--disable-infobars', '--disable-session-crashed-bubble', '--hide-crash-restore-bubble'],
   })
   const [page] = await browser.pages()
   await fitWindow(browser, page)
@@ -108,18 +108,18 @@ async function main() {
   log(`gif  ${gifOut}  ${mb(gifOut)}`)
 }
 
-// No viewport emulation (the screencast captures what the window shows): grow the window until the
-// page's own innerWidth/innerHeight are exactly W x H, so frames come out at 1440 x 900.
+// The screencast captures the visible area, so the window's content area must hold all of W x H.
+// A 13-inch display (1470 x 956 points) cannot fit 900 px under Chrome's toolbar, so the window is
+// taken fullscreen and the viewport emulated at W x H inside it; frames then come out at 1440 x 900.
 async function fitWindow(browser, page) {
   const cdp = await page.createCDPSession()
   const { windowId } = await cdp.send('Browser.getWindowForTarget')
-  for (let i = 0; i < 4; i++) {
-    const { w, h, dpr } = await page.evaluate(() => ({ w: innerWidth, h: innerHeight, dpr: devicePixelRatio }))
-    if (w === W && h === H) { log(`window fitted: ${w}x${h} @${dpr}x`); break }
-    const { bounds } = await cdp.send('Browser.getWindowBounds', { windowId })
-    await cdp.send('Browser.setWindowBounds', { windowId, bounds: { windowState: 'normal', width: bounds.width + (W - w), height: bounds.height + (H - h) } })
-    await new Promise(r => setTimeout(r, 300))
-  }
+  await cdp.send('Browser.setWindowBounds', { windowId, bounds: { windowState: 'fullscreen' } }).catch(() => {})
+  await new Promise(r => setTimeout(r, 1500))
+  await page.setViewport({ width: W, height: H, deviceScaleFactor: 1 })
+  await new Promise(r => setTimeout(r, 300))
+  const { w, h } = await page.evaluate(() => ({ w: innerWidth, h: innerHeight }))
+  if (w !== W || h !== H) log(`warning: viewport is ${w}x${h}, wanted ${W}x${H}`)
   await cdp.detach()
 }
 

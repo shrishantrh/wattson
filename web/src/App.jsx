@@ -19,6 +19,7 @@ import Method from './pages/Method.jsx'
 const pageFiles = import.meta.glob('./pages/*.jsx')
 const Missing = ({ name }) => <div className="card" style={{ position: 'fixed', left: 22, top: 66, width: 420, zIndex: 60 }}><p className="note">The {name} page is not built yet.</p><a className="btn" href="#/" style={{ marginTop: 10, display: 'inline-block' }}>Back to start</a></div>
 const lazyPage = name => lazy(() => (pageFiles[`./pages/${name}.jsx`] ? pageFiles[`./pages/${name}.jsx`]() : Promise.resolve({ default: () => <Missing name={name} /> })))
+const Film = lazyPage('Film')
 const Screener = lazyPage('Screener'), Explore = lazyPage('Explore'), Alerts = lazyPage('Alerts'), Companies = lazyPage('Companies'), Data = lazyPage('Data')
 
 const PAGES = { landing: Landing, check: Check, compare: Compare, found: Found, region: Region, method: Method, screen: Screener, explore: Explore, alerts: Alerts, companies: Companies, data: Data }
@@ -35,6 +36,7 @@ export default function App() {
         <ErrorBoundary key={pageKey}><Suspense fallback={<div className="card" style={{ position: 'fixed', left: 22, top: 66, width: 420, zIndex: 4 }}><Loading what="the page" /></div>}><Page route={route} demo={demo.on} /></Suspense></ErrorBoundary>
         <DemoHud on={demo.on} idx={demo.idx} />
         <Tour on={demo.on} idx={demo.idx} />
+        {/[?&]film=1/.test(hash) && <Suspense fallback={null}><Film route={route} /></Suspense>}
         <CommandPalette />
         <ShortcutsSheet />
         <Toaster />
