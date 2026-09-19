@@ -1,0 +1,25 @@
+{
+ "is_mock": true,
+ "count": 1,
+ "cannot_verify_total": 1,
+ "companies": [
+  {
+   "company": "Meta Platforms",
+   "ticker": "META",
+   "talk_score": 0.82,
+   "walk_score": 0.526,
+   "coverage": 0.75,
+   "unverifiable_share": 0.33,
+   "cannot_verify_count": 1,
+   "n_sites": 4,
+   "n_claims": 3,
+   "is_mock": true
+  }
+ ],
+ "notes": [
+  "grid-only, excludes PPAs",
+  "unweighted across sites",
+  "site mapping hand-curated",
+  "annual matched claims are true under the GHG Protocol market-based method; this is not an accusation"
+ ]
+}

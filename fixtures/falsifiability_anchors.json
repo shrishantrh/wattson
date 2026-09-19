@@ -1,0 +1,30 @@
+{
+  "_note": "Hand-written by a human, deliberately not generated. These calibrate the falsifiability classifier and are the reason its scores mean anything. Do not add, reword or 'improve' them without a human deciding to.",
+  "definition": "Falsifiability is how checkable a claim is against physical or public data, NOT how true it is, NOT how ambitious it is, and NOT how good it sounds. A claim can be false and highly falsifiable. A claim can be entirely honest and unfalsifiable.",
+  "scale": "0 = no possible observation could contradict it. 1 = a specific number, scope and timeframe that named data could directly contradict.",
+  "high": [
+    {"score": 0.95, "text": "In 2024, 62% of the electricity consumed by our US data centers came from carbon-free sources on an hourly basis.",
+     "why": "Named metric, number, geography, year, and an hourly basis. Grid data can contradict it directly."},
+    {"score": 0.90, "text": "Our Prineville, Oregon data center is served by Pacific Power under a renewable energy tariff.",
+     "why": "A specific site and a specific serving utility. A tariff filing either says this or it does not."},
+    {"score": 0.85, "text": "We matched 100% of our annual global electricity consumption with renewable energy in FY25.",
+     "why": "Exact magnitude, scope and period. Checkable against disclosed purchases. Scores high even though annual matching is a contract claim rather than a physical one."},
+    {"score": 0.80, "text": "We will operate on 24/7 carbon-free energy on every grid where we operate by 2030.",
+     "why": "A future commitment, but the metric, the coverage and the date are all specific enough to be measured and missed."}
+  ],
+  "low": [
+    {"score": 0.08, "text": "We strive to be a leader in environmental responsibility.",
+     "why": "'Strive' and 'leader' name no measurable quantity. No observation contradicts striving."},
+    {"score": 0.05, "text": "We are committed to a sustainable future.",
+     "why": "No metric, no scope, no date. Commitment is a stated internal state."},
+    {"score": 0.05, "text": "We continue to explore innovative approaches to clean energy procurement.",
+     "why": "Exploring is unfalsifiable by construction. Any activity at all satisfies it."},
+    {"score": 0.02, "text": "Sustainability is at the heart of everything we do.",
+     "why": "A statement about identity, not about the world. Nothing could count as evidence against it."}
+  ],
+  "edge_cases": [
+    {"rule": "An EXCLUSION is not a hedge.", "example": "Our 2025 renewable target does not include short-term spot-market RECs.", "guidance": "This TIGHTENS a claim. It raises falsifiability and must never be scored or tagged as a greenwash pattern."},
+    {"rule": "Scope narrowing is a real hedge and should be tagged, but it still scores HIGH on falsifiability.", "example": "100% renewable across our owned-and-operated facilities.", "guidance": "Narrow scope makes a claim MORE checkable, not less. Tag hidden_tradeoff; do not lower the score."},
+    {"rule": "A number alone does not make a claim falsifiable if the metric is undefined.", "example": "We improved our energy efficiency by 30%.", "guidance": "Against what baseline, over what period? Mid-range, around 0.4."}
+  ]
+}

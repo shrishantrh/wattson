@@ -1,0 +1,41 @@
+{
+  "retrieved_at": "2026-09-19",
+  "documents": {
+    "META": {
+      "doc": "esg",
+      "title": "Meta 2025 Sustainability Report",
+      "year": 2025,
+      "source_url": "https://sustainability.atmeta.com/wp-content/uploads/2025/08/Meta_2025-Sustainability-Report.pdf",
+      "local_path": "claims/raw/pdf/META_esg.pdf",
+      "bytes": 24280851,
+      "sha256": "6399a937fe554bb069cefab9e235077c4c48ea701f96b207f61f2470ceda7e9d"
+    },
+    "MSFT": {
+      "doc": "esg",
+      "title": "Microsoft 2026 Environmental Sustainability Report",
+      "year": 2026,
+      "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+      "local_path": "claims/raw/pdf/MSFT_esg.pdf",
+      "bytes": 14225069,
+      "sha256": "20918e9fc4a02241f55d12f1f5b6228a832b706499f9963a1a3f91e3d3e693ba"
+    },
+    "GOOGL": {
+      "doc": "esg",
+      "title": "Google 2026 Environmental Report",
+      "year": 2026,
+      "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+      "local_path": "claims/raw/pdf/GOOGL_esg.pdf",
+      "bytes": 18041620,
+      "sha256": "1ed48de75e39955734a50c63599ca6c5f5a9bdf21465425b3ea85fde7f54320c"
+    },
+    "AMZN": {
+      "doc": "esg",
+      "title": "2025 Amazon Sustainability Report",
+      "year": 2025,
+      "source_url": "https://sustainability.aboutamazon.com/2025-amazon-sustainability-report.pdf",
+      "local_path": "claims/raw/pdf/AMZN_esg.pdf",
+      "bytes": 10129559,
+      "sha256": "f559e2fe2ff3498d3e8dbb8041daf20569fda0bc26ea63b62c3f401685d99e70"
+    }
+  }
+}
