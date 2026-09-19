@@ -9,11 +9,15 @@ function useEvidenceIndex() {
   return idx || {}
 }
 function PageCrop({ item, caption }) {
+  const [open, setOpen] = useState(false)
+  useEffect(() => { if (!open) return undefined; const k = e => { if (e.key === 'Escape') setOpen(false) }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k) }, [open])
   if (!item?.src) return null
+  const src = `${import.meta.env.BASE_URL}${item.src.replace(/^\//, '')}`
   return (
     <figure className="sbs-page" style={{ margin: 0 }}>
-      <div style={{ position: 'relative', borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-        <img src={`${import.meta.env.BASE_URL}${item.src.replace(/^\//, '')}`} alt={caption} style={{ display: 'block', width: '100%' }} />
+      {open && <div role="dialog" aria-label={caption} onClick={() => setOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 90, background: 'rgba(0,0,0,0.82)', display: 'grid', placeItems: 'center', padding: 32, cursor: 'zoom-out' }}><div style={{ position: 'relative', maxWidth: 1200, width: '100%' }}><img src={src} alt={caption} style={{ display: 'block', width: '100%', borderRadius: 10 }} />{(item.boxes || []).map((b, i) => <span key={i} style={{ position: 'absolute', left: `${b[0] * 100}%`, top: `${b[1] * 100}%`, width: `${b[2] * 100}%`, height: `${b[3] * 100}%`, border: '3px solid var(--accent)', borderRadius: 4, pointerEvents: 'none' }} />)}<p className="note" style={{ marginTop: 10, textAlign: 'center' }}>{caption}{item.page ? ` · p. ${item.page}` : ''} · click anywhere to close</p></div></div>}
+      <div onClick={() => setOpen(true)} style={{ position: 'relative', borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', cursor: 'zoom-in' }} title="Click to enlarge">
+        <img src={src} alt={caption} style={{ display: 'block', width: '100%' }} />
         {(item.boxes || []).map((b, i) => <span key={i} style={{ position: 'absolute', left: `${b[0] * 100}%`, top: `${b[1] * 100}%`, width: `${b[2] * 100}%`, height: `${b[3] * 100}%`, border: '2px solid var(--accent)', borderRadius: 3, boxShadow: '0 0 0 9999px rgba(0,0,0,0.35)', pointerEvents: 'none' }} />)}
       </div>
       <figcaption className="note" style={{ marginTop: 6 }}>{caption}{item.page ? ` · p. ${item.page}` : ''}</figcaption>
