@@ -123,7 +123,7 @@ export default function Found({ route }) {
           <p className="note" style={{ marginTop: 10 }}>{(() => { const by = traj.summary?.by_year?.[yi]; const d = traj.summary?.biggest_drop?.[0], u = traj.summary?.biggest_rise?.[0]; const ex = traj.summary?.excluded_step_changes || []; const natY = nat[String(yp.year)]?.overnight; return by && d && u ? `In ${yp.year} the US ran ${natY != null ? pct1(natY) : '—'} clean at night. From 2019 to 2025 the biggest fall among grids was ${coords.regions[d.id]?.label || d.id} (${Math.round(d.from * 100)}% to ${Math.round(d.to * 100)}%), the biggest rise ${coords.regions[u.id]?.label || u.id} (${Math.round(u.from * 100)}% to ${Math.round(u.to * 100)}%). Zones are coloured with their grid's share, since zones report demand only.${ex.length ? ` ${ex.map(id => coords.regions[id]?.label || id).join(', ')} show a single-year step in the published data and are left out.` : ''} Press play.` : '' })()}</p>
         </>}
       </Card>
-      {scene === 'headline' && <Section title="Clean share by hour on that grid, 2025 (night in ember)"><HourBars values={pjm.profile_24h?.['2025'] || pjm.profile_24h} /></Section>}
+      {scene === 'headline' && <Section title="Clean share by hour on that grid, 2025 (night hours marked)"><HourBars values={pjm.profile_24h?.['2025'] || pjm.profile_24h} /></Section>}
       {scene === 'headline' && <Section title="Named before the ranking was seen"><KV rows={validation.map(r => [r.known_cluster_label || r.id, `${ordinal(r.rank)} of ${det.n_scored}`])} /></Section>}
       {scene === 'night' && <Section title="Top 10 places, growth since 2019">{rows(top)}</Section>}
       {scene === 'detector' && <Section title="Named in advance, and the new leads">{rows(named)}</Section>}

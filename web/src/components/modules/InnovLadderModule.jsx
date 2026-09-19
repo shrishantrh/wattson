@@ -3,6 +3,7 @@ import { useRegionDetails } from '../../lib/data.js'
 import { caveatFor } from '../../lib/findings.js'
 import { companyLadder, regionLadder, gridFacts, fmtRange, fmtPts, biggestDrop } from '../../lib/innovLadder.js'
 import '../../styles/innovLadder.css'
+import { Mod, Say, Empty } from './Shell.jsx'
 
 // The accounting ladder: one number, the carbon-free share, read under successively stricter accounting.
 // On a company page the rungs run from what it claims (annual, market-based, with the page) through what it
@@ -51,19 +52,22 @@ function LadderSvg({ rungs, label }) {
 }
 
 function Ladder({ ladder, aria }) {
-  if (!ladder) return <p className="mod-empty">Nothing measurable to put on the ladder.</p>
+  if (!ladder) return <Empty>Nothing measurable to put on the ladder.</Empty>
   const step = biggestDrop(ladder.rungs)
   const c = ladder.counts || {}
   const counted = [c.flagged ? `${c.flagged} flagged` : null, c.corrected ? `${c.corrected} corrected` : null, c.cannot_verify ? `${c.cannot_verify} cannot verify` : null].filter(Boolean)
   return (
-    <div className="innov-ladder">
-      <p className="innov-sentence">{ladder.sentence}</p>
+    <Mod
+      className="mod-ladder"
+      caption="One number, the carbon-free share, read again at each rung under stricter accounting."
+      lead={<Say>{ladder.sentence}</Say>}
+      foot={<>{counted.length ? <><b>{counted.join(' · ')}</b> on this ladder. </> : null}EIA-930 hourly via PUDL for the grid rungs, the company's own report for the paper ones. Generation within each footprint, not consumption; average mix; contracted power excluded. The increment is a six-year difference of overnight averages, not a marginal emissions factor.</>}
+    >
       <LadderSvg rungs={ladder.rungs} label={aria} />
       {step && <p className="innov-step">The biggest step is {step.from.label} to {step.to.label}: <b>{fmtPts(-step.pts)}</b>{STEP_WORDS[`${step.from.id}>${step.to.id}`] ? `, where ${STEP_WORDS[`${step.from.id}>${step.to.id}`]}` : ''}.</p>}
       <ul className="innov-sources">{ladder.rungs.map(r => <li key={r.id}><span>{r.label}</span><code>{r.source}</code></li>)}</ul>
       {(ladder.flags || []).map((f, i) => <p key={i} className="innov-flag">Flagged: {f}</p>)}
-      <p className="innov-foot">{counted.length ? <><b>{counted.join(' · ')}</b> on this ladder. </> : null}Generation within each footprint, not consumption; average mix; contracted power excluded. The increment is a six-year difference of overnight averages, not a marginal emissions factor.</p>
-    </div>
+    </Mod>
   )
 }
 

@@ -1,27 +1,33 @@
+import { Mod, Lead, Empty } from './Shell.jsx'
+
 // The utilities serving this region's load. The table is hand-mapped from public service-territory
-// information (scripts/operators_manual.json), not derived from the hourly data, and the chip says so.
+// information (scripts/operators_manual.json), not derived from the hourly data, and the card says so.
 export default function OperatorsView({ operators }) {
   const rows = (operators || []).filter(o => o && (o.utility || o.parent || o.ticker))
-  if (!rows.length) return <p className="mod-empty">No operator mapping for this region.</p>
+  if (!rows.length) return <Empty>No operator mapping for this region.</Empty>
+  const lead = String(rows.length)
+  const label = rows.length === 1 ? `utility serves the load here: ${rows[0].utility || rows[0].parent}` : 'utilities serve the load here'
   return (
-    <div className="mod-ops">
-      <div className="mod-head mod-head-right">
-        <span className="mod-chip dim" tabIndex={0} data-tip="Built from public service-territory information, not from the data. Tickers are unverified." data-tip-side="left">hand-mapped</span>
-      </div>
-      <ul className="mod-rows">
+    <Mod
+      className="mod-ops"
+      caption="Who would build for, and bill, a new flat load in this region."
+      lead={<Lead value={lead} label={label} />}
+      foot="Hand-mapped from public service-territory information, not derived from the hourly data. Tickers are unverified; a human must check one before judging it."
+    >
+      <div className="mod-rows">
         {rows.map((o, i) => {
           const tag = [o.parent, o.ticker].filter(Boolean).join(' · ')
           return (
-            <li key={`${o.utility || o.parent || 'op'}-${i}`} className="mod-row">
+            <div key={`${o.utility || o.parent || 'op'}-${i}`} className="mod-row">
               <div className="mod-cell">
                 <div className="mod-t">{o.utility || o.parent}</div>
                 {o.role && <div className="mod-d">{o.role}</div>}
               </div>
               {tag && <span className="mod-chip mono">{tag}</span>}
-            </li>
+            </div>
           )
         })}
-      </ul>
-    </div>
+      </div>
+    </Mod>
   )
 }

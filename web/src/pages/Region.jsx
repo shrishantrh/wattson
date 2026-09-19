@@ -51,7 +51,7 @@ export default function Region({ route }) {
   const ctx = useMemo(() => ({ detail: data, region_id: id, load_mw: LOAD_MW }), [data, id])
   const modules = useMemo(() => {
     if (!data) return []
-    const hours = { id: 'hours', title: 'Clean power by hour, 2025 (night in ember)', render: () => (prof ? <HourBars values={prof} /> : <p className="note">No hourly profile in this data source.</p>) }
+    const hours = { id: 'hours', title: 'Clean power by hour, 2025 (night hours marked)', render: () => (prof ? <HourBars values={prof} /> : <p className="note">No hourly profile in this data source.</p>) }
     const rest = applicableModules(ctx).map(m => ({ id: m.id, title: m.title, render: () => m.render(ctx), default: m.id !== 'heatmap' }))
     const nb = regs.data && nearbyModule.applies({ regions: regs.data, region_id: id }) ? [{ id: 'nearby', title: nearbyModule.title, render: () => nearbyModule.render({ regions: regs.data, region_id: id, load_mw: 300 }) }] : []
     return orderEvidence([hours, ...rest, ...nb])

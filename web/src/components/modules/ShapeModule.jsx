@@ -4,6 +4,7 @@ import { SHAPES, FLEX_FRACTION, FLEX_LABEL, shapeById, cleanShareFor, bestHours,
 import { pct, mw } from '../../lib/format.js'
 import ShapePicker from '../ShapePicker.jsx'
 import NumberTicker from '../NumberTicker.jsx'
+import { Mod, Lead, Empty } from './Shell.jsx'
 
 const isArr = p => Array.isArray(p) && p.length >= 24
 const isYearMap = p => p != null && typeof p === 'object' && !Array.isArray(p)
@@ -53,7 +54,7 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
   const shape = shapeById(shapeId) || SHAPES[0]
   const cmp = useMemo(() => compareShapes(p), [p])
   const fx = useMemo(() => (p && flexible ? shiftable(p, shape.weights, FLEX_FRACTION) : null), [p, shape, flexible])
-  if (!p) return <p className="mod-empty">No hourly clean-share profile for this grid.</p>
+  if (!p) return <Empty>No hourly clean-share profile for this grid.</Empty>
 
   const share = fx ? fx.share : cleanShareFor(p, shape.weights)
   const eff = fx ? fx.weights : shape.weights
@@ -65,19 +66,21 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
   const shapeWords = `${shape.label}${flexible ? `, ${FLEX_LABEL}` : ''}`
 
   return (
-    <div className="shape-mod">
+    <Mod
+      className="mod-shape"
+      caption="Pick a load shape; the clean share is re-weighted hour by hour to match it."
+      lead={<Lead
+        value={share == null ? '—' : <NumberTicker value={share * 100} format={n => `${n.toFixed(1)}%`} />}
+        t="clean"
+        label={`clean power for a ${shapeWords} load, ${shown}`}
+        aside={fossil == null ? '—' : <NumberTicker value={Math.round(fossil)} format={n => mw(n)} />}
+        asideTone="fossil"
+        asideLabel={`of ${mw(loadMW)} not carbon-free`}
+      />}
+      foot={`EIA-930 hourly via PUDL, ${shown}. Clean share of generation by local hour${grid ? `, for the whole ${grid} grid${inherited ? ' (this zone inherits it)' : ''}` : ''}. Not carbon-free = load × (1 − share); other and unknown fuels count as not clean. Generation within the footprint, not consumption.`}
+    >
       <ShapePicker value={shape.id} onChange={setShape} flexible={flexible} onFlexible={setFlex} />
       <ShapeChart profile={p} weights={eff} base={fx ? shape.weights : null} best={six.hours} label={label} />
-      <div className="shape-hero">
-        <div className="shape-big">
-          <div className="shape-v"><NumberTicker value={share == null ? null : share * 100} format={n => `${n.toFixed(1)}%`} /></div>
-          <div className="shape-l">clean power for a {shapeWords} load, {shown}</div>
-        </div>
-        <div className="shape-big">
-          <div className="shape-v accent"><NumberTicker value={fossil == null ? null : Math.round(fossil)} format={n => mw(n)} /></div>
-          <div className="shape-l">of {mw(loadMW)} not carbon-free</div>
-        </div>
-      </div>
       <div className="shape-chips" role="list" aria-label="Clean share by load shape">
         {cmp.shapes.map(s => <span key={s.id} role="listitem" className={`shape-chip${s.id === shape.id ? ' on' : ''}`}>{s.label} <b>{pct(s.share)}</b></span>)}
         <span role="listitem" className={`shape-chip${flexible && shape.id === 'flat' ? ' on' : ''}`}>{FLEX_LABEL} <b>{pct(cmp.flexible20.share)}</b></span>
@@ -89,8 +92,7 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
       {s19 != null && s25 != null && (
         <p className={`shape-years${s25 < s19 ? ' accent' : ''}`}><span className="from">2019 {pct(s19)}</span> → 2025 {pct(s25)}<span className="shape-years-l">for a {shapeWords} load</span></p>
       )}
-      <p className="mod-foot">Clean share of generation by local hour, {shown}{grid ? `, for the whole ${grid} grid${inherited ? ' (this zone inherits it)' : ''}` : ''}. Not carbon-free = load × (1 − share); other and unknown fuels count as not clean. Generation within the footprint, not consumption.</p>
-    </div>
+    </Mod>
   )
 }
 

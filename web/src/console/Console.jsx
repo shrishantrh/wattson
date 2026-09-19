@@ -3,6 +3,8 @@ import { Globe, FlatMap, detectGlobeCapability } from '../globe'
 import { href } from '../router.js'
 import QuickSearch from '../components/QuickSearch.jsx'
 import { useColumnWidth, ResizeHandle } from '../components/ColumnResize.jsx'
+import Insight from '../components/Insight.jsx'
+import { ZoomIn, ZoomOut, Night, Table as TableIcon, Layers, Globe as GlobeIcon } from '../components/Icons.jsx'
 
 // The shell: ONE persistent night globe (mounted once, in StageProvider at the app root) with,
 // at most, a top bar, a left column of cards and a centred overlay. Pages render <Shell> to
@@ -44,18 +46,19 @@ export function StageProvider({ children }) {
         <header className="topbar">
           <a className="brand" href="#/"><span className="wordmark">Wattson</span><span className="tagline">It follows the power, not the press release.</span></a>
           {spec.page !== 'landing' && <QuickSearch />}
-          <nav className="toplinks"><a href={href.data()} className={spec.page === 'data' ? 'on' : ''}>Data</a><a href={href.found()} className={spec.page === 'found' ? 'on' : ''}>What we found</a><a href={href.method()} className={spec.page === 'method' ? 'on' : ''}>Method</a></nav>
+          <nav className="toplinks"><a href={href.data()} className={spec.page === 'data' ? 'on' : ''}><TableIcon size={13} />Data</a><a href={href.found()} className={spec.page === 'found' ? 'on' : ''}><GlobeIcon size={13} />What we found</a><a href={href.method()} className={spec.page === 'method' ? 'on' : ''}><Layers size={13} />Method</a></nav>
         </header>
         <div className="stage-ctl">
-          <button type="button" onClick={() => setZoom(z => Math.min(6, z + 1))} aria-label="Zoom in">+</button>
-          <button type="button" onClick={() => setZoom(z => Math.max(-4, z - 1))} aria-label="Zoom out">−</button>
+          <button type="button" onClick={() => setZoom(z => Math.min(6, z + 1))} aria-label="Zoom in"><ZoomIn size={15} /></button>
+          <button type="button" onClick={() => setZoom(z => Math.max(-4, z - 1))} aria-label="Zoom out"><ZoomOut size={15} /></button>
           <span className="gap" />
-          <button type="button" className={style === 'night' ? 'on' : ''} onClick={() => setStyle(v => (v === 'night' ? 'dots' : 'night'))} aria-label="Toggle night lights" data-tip="Night lights">☾</button>
+          <button type="button" className={style === 'night' ? 'on' : ''} onClick={() => setStyle(v => (v === 'night' ? 'dots' : 'night'))} aria-label="Toggle night lights" data-tip="Night lights" data-tip-side="left"><Night size={15} /></button>
         </div>
         {spec.column && <div className="column-wrap" style={{ width: colWidth }}><div className="column">{spec.column}</div>{!spec.columnWidth && <ResizeHandle {...handleProps} />}</div>}
         {spec.overlay && <div className="overlay">{spec.overlay}</div>}
         {spec.foot && <div className="foot">{spec.foot}</div>}
         {children}
+        <Insight />
       </div>
     </StageCtx.Provider>
   )

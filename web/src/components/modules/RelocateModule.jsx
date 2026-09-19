@@ -6,6 +6,7 @@ import { indexRegions, siteShare, companyPhysical, relocate, bestMoves, regionLa
 import { pct } from '../../lib/format.js'
 import { Chip, Num } from '../../console/widgets.jsx'
 import { href } from '../../router.js'
+import { Mod, Say, Empty } from './Shell.jsx'
 
 // Move one of a company's sites to another grid and watch its physical figure (the unweighted
 // mean clean share of the grids under its sites) and range move. The claim does not move: it is
@@ -39,9 +40,9 @@ export default function RelocateModule({ company }) {
   const result = useMemo(() => (byId && dest ? relocate(sites, siteIndex, dest, byId) : null), [sites, siteIndex, dest, byId])
   const physical = useMemo(() => (byId ? companyPhysical(sites, byId) : null), [sites, byId])
 
-  if (regions?.error) return <p className="mod-empty">Could not load the grids: {String(regions.error.message || regions.error)}</p>
-  if (!byId) return <p className="mod-empty">Loading the grids…</p>
-  if (!sites.length || !physical?.n) return <p className="mod-empty">No grid figures for this company's sites.</p>
+  if (regions?.error) return <Empty>Could not load the grids: {String(regions.error.message || regions.error)}</Empty>
+  if (!byId) return <Empty>Loading the grids…</Empty>
+  if (!sites.length || !physical?.n) return <Empty>No grid figures for this company's sites.</Empty>
 
   const name = shortName(company)
   // The same grid physically: the same region, or a zone and the BA whose generation it reports.
@@ -51,7 +52,16 @@ export default function RelocateModule({ company }) {
   const chooseGrid = id => { setPick(id); setText('') }
 
   return (
-    <div className="rl-mod">
+    <Mod
+      className="mod-relocate"
+      caption="A what-if on the grid only: the contracts and the claim are left exactly as they are."
+      lead={result
+        ? <Say>{same
+          ? <>{name}'s {shortMetro(site?.metro)} already draws from <a href={href.region(result.moved.toRegionId)}>{result.moved.to}</a>. Pick another grid to see the figure move.</>
+          : <>If {name}'s {shortMetro(site?.metro)} drew from <a href={href.region(result.moved.toRegionId)}>{result.moved.to}</a> instead, its physical figure would be <b>{pct(result.after.mean, 0)}</b> instead of <b>{pct(result.before.mean, 0)}</b>. The claim would not change; the physics would.</>}</Say>
+        : <Say>Type a place, or pick one of the suggestions, to move {name}'s {shortMetro(site?.metro)} and see the figure change.</Say>}
+      foot="EIA-930 hourly via PUDL, 2025. Physical figure = unweighted mean of the all-hours carbon-free share of generation within each site's grid; a zone inherits its parent grid. Generation within the footprint, not consumption; interchange is not allocated."
+    >
       <div className="rl-row" role="group" aria-label="Which site to move">
         <span className="rl-k">Move</span>
         {sites.map((s, i) => { const sh = siteShare(s, byId); return <Chip key={i} small active={i === siteIndex} dim={sh == null} onClick={() => chooseSite(i)}><span className="rl-chip" title={`${s.metro || ''}${s.serving_utility ? ` · ${s.serving_utility}` : ''}`}>{shortMetro(s.metro)} <b>{sh == null ? '—' : pct(sh)}</b></span></Chip> })}
@@ -65,8 +75,7 @@ export default function RelocateModule({ company }) {
         {text.trim() && typedKnown && <span className="rl-hint">{typed.metro !== regionLabel(byId[typed.region_id]) ? `${typed.metro} · ` : ''}{regionLabel(byId[typed.region_id])}</span>}
       </div>
 
-      {result ? (
-        <>
+      {result && (
           <div className="rl-nums">
             <div className="rl-pair">
               <Num value={pct(result.before.mean)} label="physical figure now" sub={`${result.before.n} site${result.before.n === 1 ? '' : 's'}, all hours 2025`} />
@@ -81,18 +90,9 @@ export default function RelocateModule({ company }) {
               </div>
             )}
           </div>
-          <p className={`rl-say${dirtier ? ' accent' : ''}`}>
-            {same
-              ? <>{name}'s {shortMetro(site?.metro)} already draws from <a href={href.region(result.moved.toRegionId)}>{result.moved.to}</a>. Pick another grid to see the figure move.</>
-              : <>If {name}'s {shortMetro(site?.metro)} drew from <a href={href.region(result.moved.toRegionId)}>{result.moved.to}</a> instead, its physical figure would be <b className="after">{pct(result.after.mean, 0)}</b> instead of <b>{pct(result.before.mean, 0)}</b>. The claim would not change; the physics would.</>}
-          </p>
-        </>
-      ) : (
-        <p className="rl-say">Type a place, or pick one of the suggestions, to move {name}'s {shortMetro(site?.metro)} and see the figure change.</p>
       )}
       {site?.note && <details className="rl-caveat"><summary>Caveat on this site's grid figure</summary><p>{site.note}</p></details>}
-      <p className="mod-foot">Physical figure = unweighted mean of the all-hours 2025 carbon-free share of generation within each site's grid; a zone inherits its parent grid. Generation within the footprint, not consumption; interchange is not allocated. A what-if on the grid only: contracts and the claim are left as they are.</p>
-    </div>
+    </Mod>
   )
 }
 

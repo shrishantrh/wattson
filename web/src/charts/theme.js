@@ -3,12 +3,17 @@
 //
 // Color semantics, fixed everywhere:
 //   overnight = accent, daytime = ink-2, all hours = muted.
-//   fuels: gas is the only colored fuel (accent); everything else is a gray ladder.
-//   heatmaps: bg -> grays -> accent (SEQ).
+//   fuels: gas is the only colored fuel (fossil, the ember); everything else is a gray ladder.
+//   heatmaps: --n1 through the neutral ramp up to --clean (SEQ), so a clean hour reads cool
+//   and a fossil hour sinks into the card instead of glowing.
+// clean/fossil/pos/neg/n1..n5 fall back to the older tokens until tokens.css declares them,
+// so this file still has exactly one place where a color is written down: FALLBACK.
 
 const FALLBACK = {
   bg: '#0a0a0b', surface: '#131316', 'surface-2': '#1b1b1f', ink: '#ececea', 'ink-2': '#a6a6a2', muted: '#6f6f6b',
   line: '#26262a', accent: '#f2b34c', 'accent-soft': 'rgba(242,179,76,0.16)',
+  clean: '#4fc3bd', fossil: '#f2b34c', pos: '#4fc3bd', neg: '#f2b34c', warn: '#f2b34c',
+  n1: '#15151a', n2: '#26262a', n3: '#3a3a40', n4: '#6f6f6b', n5: '#a6a6a2',
   'font-ui': 'system-ui, -apple-system, "Segoe UI", sans-serif', 'font-mono': 'ui-monospace, "SF Mono", Menlo, Consolas, monospace',
 }
 
@@ -28,6 +33,8 @@ export function tokens() {
   return {
     bg: readVar('bg'), surface: readVar('surface'), surface2: readVar('surface-2'), ink: readVar('ink'), ink2: readVar('ink-2'), muted: readVar('muted'),
     line: readVar('line'), accent: readVar('accent'), accentSoft: readVar('accent-soft'), fontUI: readVar('font-ui'), fontMono: readVar('font-mono'),
+    clean: readVar('clean'), fossil: readVar('fossil') || readVar('accent'), pos: readVar('pos'), neg: readVar('neg'), warn: readVar('warn'),
+    n1: readVar('n1'), n2: readVar('n2'), n3: readVar('n3'), n4: readVar('n4'), n5: readVar('n5'),
   }
 }
 
@@ -38,7 +45,7 @@ export const alpha = (hex, a) => (isHex(hex) ? `rgba(${hex2rgb(hex).join(',')},$
 export const mix = (a, b, t) => { if (!isHex(a) || !isHex(b)) return t < 0.5 ? a : b; const A = hex2rgb(a), B = hex2rgb(b); return `#${A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join('')}` }
 
 // -- series colors --
-export const seriesColors = (t = tokens()) => ({ overnight: t.accent, daytime: t.ink2, all: t.muted })
+export const seriesColors = (t = tokens()) => ({ overnight: t.accent, daytime: t.ink2, all: t.muted, clean: t.clean, fossil: t.fossil })
 
 // -- fuels --
 // Stack order: clean group (light -> darker), neutral "other", then the fossil group with gas first.
@@ -53,21 +60,24 @@ export const FUEL_COLORS = (t = tokens()) => ({
   solar: t.muted,
   geothermal: mix(t.muted, t.line, 0.5),
   other: t.line,
-  gas: t.accent,                     // the only colored fuel: the thing being burned
+  gas: t.fossil,                     // the only colored fuel: the thing being burned
   coal: mix(t.muted, t.line, 0.3),   // mid gray, hatched
   oil: mix(t.muted, t.line, 0.8),    // darker gray, hatched
 })
 // Coal and oil sit in the same lightness band as solar/geothermal, so they also carry a hatch (secondary encoding).
 export const FUEL_PATTERN = { coal: '/', oil: 'x' }
 
-// -- sequential colorscale for heatmaps: bg through grays up to the accent at 1 --
-export const SEQ = (t = tokens()) => [[0, t.bg], [0.25, mix(t.bg, t.muted, 0.35)], [0.5, mix(t.bg, t.muted, 0.8)], [0.75, mix(t.muted, t.ink2, 0.7)], [1, t.accent]]
+// -- sequential colorscale for heatmaps: --n1 through the neutral ramp up to --clean at 1.
+// The low end stays a shade above the card so an empty hour is still distinguishable from the
+// background, and only the top third picks up the cool hue.
+export const SEQ = (t = tokens()) => [[0, t.n1], [0.3, mix(t.n1, t.n3, 0.85)], [0.55, t.n4], [0.78, mix(t.n5, t.clean, 0.5)], [1, t.clean]]
 
 // -- layout --
 const axis = (t, o = {}) => ({
-  gridcolor: t.line, zerolinecolor: t.line, linecolor: t.line, showline: false,
-  tickfont: { family: t.fontMono, color: t.muted, size: 11 }, title: { font: { family: t.fontUI, color: t.muted, size: 11 }, standoff: 8 },
-  spikecolor: t.line, spikethickness: 1,
+  gridcolor: t.n2, zerolinecolor: t.n3, linecolor: t.n3, showline: false,
+  ticks: 'outside', ticklen: 4, tickcolor: t.n3,
+  tickfont: { family: t.fontMono, color: t.muted, size: 10 }, title: { font: { family: t.fontUI, color: t.muted, size: 11 }, standoff: 8 },
+  spikecolor: t.n4, spikethickness: 1,
   ...o,
 })
 
@@ -77,7 +87,7 @@ export function layout({ xaxis = {}, yaxis = {}, legend = {}, margin = {}, ...re
     font: { family: t.fontUI, color: t.ink2, size: 12 },
     margin: { t: 28, r: 12, l: 52, b: 40, ...margin },
     hovermode: 'x unified',
-    hoverlabel: { bgcolor: t.surface, bordercolor: t.line, font: { family: t.fontUI, color: t.ink, size: 12 }, align: 'left' },
+    hoverlabel: { bgcolor: t.surface, bordercolor: t.n3, font: { family: t.fontUI, color: t.ink, size: 12 }, align: 'left' },
     // no legend box: transparent, borderless, horizontal above the plot
     legend: { orientation: 'h', x: 0, y: 1.14, bgcolor: 'rgba(0,0,0,0)', borderwidth: 0, font: { family: t.fontUI, color: t.ink2, size: 11 }, ...legend },
     xaxis: axis(t, xaxis), yaxis: axis(t, yaxis),

@@ -2,37 +2,59 @@
    (.spark), number ticker (.ticker) and the column resize handle (.resize-handle).
    Colours come from tokens.css only; the one accent is the sparkline's last dot. */
 
-/* ---- workspace: ordered, hideable modules ---- */
+/* ---- workspace: ordered, hideable modules ----
+   One 10px rhythm down the column. A module card's controls stay out of the way until the pointer
+   or the keyboard arrives on that card; the title is the only thing showing at rest. */
 .ws { display: flex; flex-direction: column; gap: 10px; flex: none; min-width: 0; }
 .ws-bar { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 24px; padding: 0 2px; }
 .ws-bar-title { font-size: 12px; color: var(--muted); }
 .ws-pop-host { position: relative; margin-left: auto; }
-.ws-customize { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(17, 20, 19, 0.85); border-radius: 999px; padding: 4px 11px; font-size: 12px; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
-.ws-customize:hover, .ws-customize[aria-expanded="true"] { color: var(--ink); border-color: rgba(255, 255, 255, 0.24); }
+.ws-customize { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-strong); background: var(--surface-a); border-radius: 999px; padding: 4px 11px; font-size: 12px; color: var(--ink-2); cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
+.ws-customize:hover, .ws-customize[aria-expanded="true"] { color: var(--ink); border-color: var(--line-focus); }
+.ws-customize:focus-visible { outline: none; box-shadow: var(--ring); }
 .ws-customize-n { font-family: var(--font-mono); font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.ws-pop { position: absolute; right: 0; top: calc(100% + 6px); width: 240px; background: rgba(17, 20, 19, 0.98); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); padding: 6px; z-index: 20; }
-.ws-pop-head { font-size: 11px; color: var(--muted); padding: 6px 8px 4px; }
-.ws-pop-row { display: flex; align-items: center; gap: 9px; padding: 6px 8px; border-radius: 7px; font-size: 13px; color: var(--ink); cursor: pointer; user-select: none; }
+
+/* the Customize popover is a menu: a titled header, a scrollable list of rows, a footer of actions */
+.ws-pop { position: absolute; right: 0; top: calc(100% + 6px); width: 264px; background: var(--surface-a); backdrop-filter: blur(12px); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow); padding: 4px; z-index: 20; }
+.ws-pop-head { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px 6px; font-size: 12px; font-weight: 500; color: var(--ink-2); }
+.ws-pop-hint { font-size: 11px; font-weight: 400; color: var(--muted); }
+.ws-pop-list { display: flex; flex-direction: column; max-height: 44vh; overflow: auto; scrollbar-width: thin; padding: 2px 0; border-top: 1px solid var(--line-soft); }
+.ws-pop-row { display: flex; align-items: center; gap: 9px; padding: 7px 10px; border-radius: 7px; font-size: 13px; color: var(--ink); cursor: pointer; user-select: none; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
 .ws-pop-row:hover { background: rgba(255, 255, 255, 0.05); }
+.ws-pop-row:focus-within { background: rgba(255, 255, 255, 0.05); box-shadow: var(--ring); }
 .ws-pop-row.off { color: var(--muted); }
 .ws-pop-row input { margin: 0; width: 13px; height: 13px; accent-color: var(--ink-2); flex: none; }
+.ws-pop-row input:focus-visible { outline: none; }
 .ws-pop-row span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ws-pop-foot { display: flex; justify-content: space-between; gap: 6px; padding: 6px 4px 2px; border-top: 1px solid rgba(255, 255, 255, 0.06); margin-top: 4px; }
-.ws-linkbtn { background: transparent; border: 0; padding: 4px 4px; font-size: 12px; color: var(--ink-2); cursor: pointer; border-radius: 6px; }
+.ws-pop-foot { display: flex; justify-content: space-between; gap: 6px; padding: 5px 6px 3px; border-top: 1px solid var(--line-soft); margin-top: 2px; }
+.ws-linkbtn { background: transparent; border: 0; padding: 4px 5px; font-size: 12px; color: var(--ink-2); cursor: pointer; border-radius: 6px; transition: color var(--dur-fast) var(--ease); }
 .ws-linkbtn:hover { color: var(--ink); }
+.ws-linkbtn:focus-visible { outline: none; box-shadow: var(--ring); }
 .ws-linkbtn:disabled { color: var(--muted); cursor: default; }
-.ws-module { position: relative; }
-.ws-module.is-dragging { z-index: 10; border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
-.ws-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; min-height: 22px; }
+
+/* the card */
+.ws-module { position: relative; animation: ws-enter var(--dur) var(--ease-out) both; }
+.ws-module.is-dragging { z-index: 10; border-color: var(--line-focus); box-shadow: var(--shadow); animation: none; }
+@keyframes ws-enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.ws-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; min-height: 22px; }
 .ws-title { font-size: 12px; color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ws-tools { display: inline-flex; align-items: center; gap: 3px; flex: none; opacity: 0.55; transition: opacity 120ms; }
+.ws-tools { display: inline-flex; align-items: center; gap: 2px; flex: none; opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
 .ws-module:hover .ws-tools, .ws-module:focus-within .ws-tools, .ws-module.is-dragging .ws-tools { opacity: 1; }
-.ws-handle, .ws-hide { width: 22px; height: 22px; padding: 0; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; font-size: 13px; line-height: 1; }
-.ws-handle { cursor: grab; touch-action: none; font-family: var(--font-mono); letter-spacing: -0.2em; padding-right: 0.2em; }
+.ws-handle, .ws-hide { width: 22px; height: 22px; padding: 0; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; line-height: 1; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.ws-handle svg circle { fill: currentColor; }
+.ws-hide svg path { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; }
+.ws-handle { cursor: grab; touch-action: none; }
 .ws-handle:active, .ws-module.is-dragging .ws-handle { cursor: grabbing; }
-.ws-handle:hover, .ws-hide:hover, .ws-handle:focus-visible, .ws-hide:focus-visible { color: var(--ink); border-color: rgba(255, 255, 255, 0.14); outline: none; }
+.ws-handle:hover, .ws-hide:hover { color: var(--ink); border-color: var(--line-strong); }
+/* keyboard focus reveals the tools even without a pointer, and says so with the ring */
+.ws-handle:focus-visible, .ws-hide:focus-visible { color: var(--ink); outline: none; box-shadow: var(--ring); }
 .ws-empty { font-size: 13px; color: var(--muted); padding: 10px 2px; }
-@media (prefers-reduced-motion: reduce) { .ws-module { transition: none !important; } .ws-tools { transition: none; } }
+/* a module that draws its own surface would double the card's border: flatten it */
+.ws-module > .card, .ws-module .mod > .card { background: transparent; border: 0; border-radius: 0; padding: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .ws-module { transition: none !important; animation: none; }
+  .ws-tools { transition: none; }
+}
 
 /* ---- table: dense, sortable, sticky header ---- */
 .tbl { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
