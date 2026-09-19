@@ -30,7 +30,7 @@ export default function Alerts() {
     <>
       <Card title={<><b>What changed this month</b> · trailing 12 months to {month(data.latest_month)}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
         <h1 className="verdict">{sentence}</h1>
-        <div className="nums"><Num value={String(rows.length)} label="alerts, one per place" sub={data.count_before_ranking ? `from ${data.count_before_ranking} raw` : null} /><Num value={String(rows.filter(r => r.rule === 'detector_top10').length)} label="new flat load" accent /><Num value={String(rows.filter(r => /cf_share_down|clean_mw_below|gas_share/.test(r.rule)).length)} label="nights getting dirtier" /></div>
+        <div className="nums"><Num value={String(rows.length)} label="alerts, one per place" sub={data.count_before_ranking && data.count_before_ranking !== rows.length ? `from ${data.count_before_ranking} raw` : null} /><Num value={String(rows.filter(r => r.rule === 'detector_top10').length)} label="new flat load" accent /><Num value={String(rows.filter(r => /cf_share_down|clean_mw_below|gas_share/.test(r.rule)).length)} label="nights getting dirtier" /></div>
         <p className="note" style={{ marginTop: 12 }}>Severity = how far past the threshold × how many months it has held × how recent. {data.excluded_regions?.length ? `Excluded: ${data.excluded_regions.join(', ')} (data flag).` : ''}</p>
       </Card>
       <Card>
