@@ -14,8 +14,8 @@ const frameOf = (err, componentStack) => {
 }
 
 export default class ErrorBoundary extends Component {
-  constructor(p) { super(p); this.state = { err: null, componentStack: '', copied: false } }
-  static getDerivedStateFromError(err) { return { err, copied: false } }
+  constructor(p) { super(p); this.state = { err: null, componentStack: '', copied: null } }
+  static getDerivedStateFromError(err) { return { err, copied: null } }
   componentDidCatch(err, info) {
     this.setState({ componentStack: info?.componentStack || '' })
     if (err && typeof err === 'object') { if (logged.has(err)) return; logged.add(err) }
@@ -24,8 +24,8 @@ export default class ErrorBoundary extends Component {
   copy = () => {
     const { err, componentStack } = this.state
     const text = [`${err?.name || 'Error'}: ${err?.message || err}`, err?.stack || '', componentStack ? `Component stack:${componentStack}` : '', window.location.href].filter(Boolean).join('\n')
-    const done = () => { this.setState({ copied: true }); setTimeout(() => this.setState({ copied: false }), 1500) }
-    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done, () => {})
+    const flash = copied => { this.setState({ copied }); setTimeout(() => this.setState({ copied: null }), 1500) }
+    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(() => flash('Copied'), () => flash('Copy failed'))
   }
   render() {
     if (!this.state.err) return this.props.children
@@ -39,7 +39,7 @@ export default class ErrorBoundary extends Component {
         <div className="st-actions">
           <button type="button" className="btn" onClick={() => this.setState({ err: null, componentStack: '' })}>Try again</button>
           <button type="button" className="btn" onClick={() => window.location.reload()}>Reload</button>
-          <button type="button" className="btn" onClick={this.copy} disabled={!navigator.clipboard}>{copied ? 'Copied' : 'Copy error'}</button>
+          <button type="button" className="btn" onClick={this.copy} disabled={!navigator.clipboard}>{copied || 'Copy error'}</button>
           <a className="btn" href="#/">Back to start</a>
         </div>
       </div>

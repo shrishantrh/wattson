@@ -6,6 +6,7 @@ import { useDemoMode, DemoHud } from './demo/DemoMode.jsx'
 import { CommandPalette } from './components/CommandPalette.jsx'
 import { Toaster } from './components/Toast.jsx'
 import { ShortcutsSheet } from './components/Shortcuts.jsx'
+import Tour from './components/Tour.jsx'
 import Landing from './pages/Landing.jsx'
 import Check from './pages/Check.jsx'
 import Compare from './pages/Compare.jsx'
@@ -32,6 +33,7 @@ export default function App() {
       <StageProvider>
         <ErrorBoundary key={pageKey}><Suspense fallback={null}><Page route={route} demo={demo.on} /></Suspense></ErrorBoundary>
         <DemoHud on={demo.on} idx={demo.idx} />
+        <Tour on={demo.on} idx={demo.idx} />
         <CommandPalette />
         <ShortcutsSheet />
         <Toaster />

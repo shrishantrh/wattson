@@ -16,6 +16,12 @@
   .resize-handle { display: none; }
 }
 
+/* ---- any column narrower than the desktop: tables scroll sideways inside their card ---- */
+@media (max-width: 1100px) {
+  .tbl-wrap { overflow-x: auto; overscroll-behavior-x: contain; }
+  .tbl table { width: max-content; min-width: 100%; }
+}
+
 /* ---- phones and portrait tablets: ≤ 900px ---- */
 @media (max-width: 900px) {
   :root {
@@ -35,24 +41,29 @@
   .tagline, .toplinks { display: none; }
   .quick { width: auto; flex: none; max-width: 60%; }
 
-  /* stage controls: a horizontal group at the top right, under the top bar */
-  .stage-ctl { top: calc(var(--m-top) + 6px); right: max(12px, env(safe-area-inset-right, 0px)); transform: none; flex-direction: row; gap: 6px; }
+  /* stage controls: a horizontal group at the top right, under the top bar (base.css hides
+     them while a column is up; the same selector shows them again here) */
+  .stage-ctl, .app:has(.column-wrap) .stage-ctl { display: flex; top: calc(var(--m-top) + 6px); right: max(12px, env(safe-area-inset-right, 0px)); transform: none; flex-direction: row; gap: 6px; }
   .stage-ctl .gap { height: auto; width: 4px; }
   .stage-ctl button { width: 36px; height: 36px; }
   [data-tip-side="left"]::after { right: auto; left: 50%; top: calc(100% + 6px); bottom: auto; transform: translateX(-50%) translateY(-2px); }
   [data-tip-side="left"]:hover::after, [data-tip-side="left"]:focus-visible::after { transform: translateX(-50%) translateY(0); }
 
-  /* landing overlay: stacked, full-width box, chip rows wrap */
-  .overlay { inset: var(--m-top) 0 0 0; padding: 0 max(var(--m-gutter), env(safe-area-inset-right, 0px)) calc(56px + env(safe-area-inset-bottom, 0px)) max(var(--m-gutter), env(safe-area-inset-left, 0px)); }
+  /* landing overlay: stacked, full-width box, chip rows wrap. Centred by auto margins so a
+     short screen scrolls the overlay instead of clipping the headline. */
+  .overlay { inset: var(--m-top) 0 0 0; padding: 8px max(var(--m-gutter), env(safe-area-inset-right, 0px)) calc(48px + env(safe-area-inset-bottom, 0px)) max(var(--m-gutter), env(safe-area-inset-left, 0px)); justify-content: flex-start; overflow-y: auto; overscroll-behavior: contain; pointer-events: auto; }
+  .overlay > :first-child { margin-top: auto; }
+  .overlay > :last-child { margin-bottom: auto; }
   .hero-q { font-size: 28px; max-width: none; margin-bottom: 22px; }
   .hero-sub { font-size: 14px; max-width: none; margin: -10px 0 20px; }
-  .pal-inline, .searchbox { width: 100%; }
+  .pal-inline, .searchbox { width: 100%; flex: none; }
   .pal-inline .pal-input { font-size: 16px; padding: 14px 16px; }
   .pal-inline .pal-list { max-height: 36vh; }
   .searchbox { padding-left: 14px; }
   .searchbox input { font-size: 16px; }
   .examples { width: 100%; margin-top: 18px; }
-  .ex-row { row-gap: 8px; }
+  .ex-row { width: 100%; row-gap: 8px; }
+  .ex-row .chip { max-width: 100%; height: auto; min-height: 32px; padding-top: 6px; padding-bottom: 6px; white-space: normal; text-align: center; }
   .ex-label { width: 100%; text-align: center; margin: 0; }
   .found-link { margin-top: 22px; }
   .foot { left: var(--m-gutter); right: var(--m-gutter); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); font-size: 10px; line-height: 1.4; }
@@ -70,10 +81,6 @@
   .pair { gap: 12px; }
   .pair .val { font-size: 30px; }
   .yearrow .year { font-size: 22px; }
-
-  /* tables (screener): scroll sideways inside their card, never the page */
-  .tbl-wrap { overflow-x: auto; overscroll-behavior-x: contain; }
-  .tbl table { width: max-content; min-width: 100%; }
 }
 
 /* ---- landscape phones: the sheet starts higher ---- */
@@ -81,9 +88,8 @@
   :root { --m-sheet-top: 30%; }
 }
 
-/* ---- short viewports (landscape phones): the landing scrolls instead of clipping ---- */
+/* ---- short viewports (landscape phones): tighter landing, no foot ---- */
 @media (max-width: 900px) and (max-height: 520px) {
-  .overlay { justify-content: flex-start; overflow-y: auto; overscroll-behavior: contain; pointer-events: auto; padding-top: 8px; }
   .hero-q { font-size: 24px; margin-bottom: 16px; }
   .hero-sub { margin: -6px 0 14px; }
   .examples { margin-top: 12px; }
@@ -91,15 +97,17 @@
   .foot { display: none; }
 }
 
-/* ---- phones: ≤ 640px ---- */
-@media (max-width: 640px) {
-  /* the ⌘K dialog is the whole screen */
+/* ---- phones (and landscape phones): the ⌘K dialog is the whole screen ---- */
+@media (max-width: 640px), (max-width: 900px) and (max-height: 520px) {
   .pal-overlay { padding: 0; align-items: stretch; }
-  .pal-panel { width: 100%; max-width: none; max-height: none; border: 0; border-radius: 0; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .pal-panel { width: 100%; max-width: none; max-height: none; border: 0; border-radius: 0; background: var(--surface); padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
   .pal-panel > .pal { flex: 1; }
   .pal-hint { max-width: 40%; }
-  /* iOS zooms into any input under 16px on focus */
-  .field, .tbl-filter { font-size: 16px; }
+}
+
+/* ---- phones: ≤ 640px ---- */
+@media (max-width: 640px) {
+  .field, .tbl-filter { font-size: 16px; }   /* iOS zooms into any input under 16px on focus */
 }
 
 /* ---- narrow phones: ≤ 380px ---- */

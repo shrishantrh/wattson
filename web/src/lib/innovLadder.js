@@ -27,7 +27,8 @@ const clamp01 = x => (x == null ? null : Math.min(1, Math.max(0, x)))
 // ---- words for numbers ----------------------------------------------------------------------
 // Whole percents, one decimal under 10% so 5.6% and 0.7% are not rounded into 6% and 1%.
 export const fmtShare = x => { const v = num(x); if (v == null) return '—'; const p = Math.max(0, v) * 100; return p > 0 && p < 10 ? `${p.toFixed(1)}%` : `${Math.round(p)}%` }
-export const fmtRange = (lo, hi) => { const a = num(lo), b = num(hi); if (a == null && b == null) return '—'; if (a == null || b == null) return fmtShare(a ?? b); return fmtShare(a) === fmtShare(b) ? fmtShare(a) : `${fmtShare(a)}–${fmtShare(b)}` }
+// "46–75%": one percent sign, the app's convention for a range across sites.
+export const fmtRange = (lo, hi) => { const a = num(lo), b = num(hi); if (a == null && b == null) return '—'; if (a == null || b == null) return fmtShare(a ?? b); return fmtShare(a) === fmtShare(b) ? fmtShare(a) : `${fmtShare(a).replace('%', '')}–${fmtShare(b)}` }
 // A change in a share, in points: "−35 pts", "−4.9 pts".
 export const fmtPts = d => { const v = num(d); if (v == null) return '—'; const p = Math.abs(v) * 100; const s = p < 10 ? p.toFixed(1) : String(Math.round(p)); return `${v < 0 ? '−' : v > 0 ? '+' : ''}${s} pts` }
 export const fmtGw = gw => { const v = num(gw); return v == null ? '—' : `${Math.abs(v).toFixed(1)} GW` }
