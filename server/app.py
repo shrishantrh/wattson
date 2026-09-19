@@ -44,6 +44,7 @@ def _summary(r):
         "cf_inherited_from_ba": r.get("cf_inherited_from_ba"),
         "exclude_from_alerts": r.get("exclude_from_alerts"),
         "data_flags": r.get("data_flags"),
+        "has_corrections": data.corrections_for(r["id"]) is not None,
     }
 
 
@@ -66,6 +67,7 @@ def get_regions():
                  "national": m["national"]},
         "count": len(scored),
         "regions": [_summary(r) for r in scored],
+        "corrections": data.corrections(),
     }
 
 
@@ -82,6 +84,9 @@ def get_region(region_id: str):
     out = {k: r[k] for k in keys if k in r}
     out["operator"] = _operator(r)
     out["heatmap_available"] = data.heatmap_available(r.get("heatmap_uri"))
+    # Known-wrong published values, with corrections and evidence. Served alongside the
+    # published numbers, never silently substituted for them.
+    out["corrections"] = data.corrections_for(region_id)
     return {"meta": data.public_meta(), "region": out}
 
 

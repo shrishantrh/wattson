@@ -885,6 +885,12 @@
    "ticker": null,
    "mapping_note": "hand-mapped"
   },
-  "heatmap_available": true
+  "heatmap_available": true,
+  "corrections": {
+   "summary": "Checked with the same method and NOT the same problem. No generation step break in coal, its dominant fuel. Demand rises from ~2,300 MW (2021) to ~4,000 MW (Dec 2022) over about six months, generation rising with it and exports falling from ~1,400 to ~400 MW. A ramp, not a step.",
+   "corrections": [],
+   "unreliable": true,
+   "unreliable_reason": "WACM's demand anomaly remains unexplained. It is not a reporting artefact we can correct, and its existing flag and alert exclusion should stay."
+  }
  }
 }

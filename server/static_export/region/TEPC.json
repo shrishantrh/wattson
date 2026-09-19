@@ -880,6 +880,7 @@
    "ticker": "FTS",
    "mapping_note": "hand-mapped"
   },
-  "heatmap_available": true
+  "heatmap_available": true,
+  "corrections": null
  }
 }

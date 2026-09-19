@@ -895,6 +895,316 @@
    "ticker": "PNW",
    "mapping_note": "hand-mapped"
   },
-  "heatmap_available": true
+  "heatmap_available": true,
+  "corrections": {
+   "summary": "Published overnight carbon-free share falls 0.620 -> 0.104. It was never 0.620. Corrected, it RISES 0.017 -> 0.104. The published figure is wrong in direction, not only magnitude.",
+   "corrections": [
+    {
+     "path": "cf_share.2019",
+     "published": {
+      "overnight": 0.62,
+      "daytime": 0.651,
+      "all": 0.616
+     },
+     "corrected": {
+      "overnight": 0.017,
+      "daytime": 0.167,
+      "all": 0.083
+     },
+     "evidence": "The 2019 figure counts nuclear generation that SRP reported at the same time. Recomputed on a consistent basis with nuclear excluded throughout. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline.",
+     "confidence": "proven"
+    },
+    {
+     "path": "cf_avg_mw.2019",
+     "published": {
+      "overnight": 3373.0,
+      "daytime": 3736.0,
+      "all": 3538.0
+     },
+     "corrected": {
+      "overnight": 34.7,
+      "daytime": 402.2,
+      "all": 201.1
+     },
+     "evidence": "Overnight clean generation in 2019 was solar only. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline.",
+     "confidence": "proven"
+    },
+    {
+     "path": "fuel_delta_overnight_gw.nuclear",
+     "published": -3.61,
+     "corrected": 0.0,
+     "evidence": "-3.61 GW describes a duplicate being removed from the books, not fuel being displaced on the system. On a consistent basis AZPS reports no nuclear in either period. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline.",
+     "confidence": "proven"
+    },
+    {
+     "path": "siting.change_since_2019",
+     "published": -0.517,
+     "corrected": 0.087,
+     "evidence": "Published value has the wrong SIGN: it reports a 0.517 fall where the like-for-like change is an increase. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline.",
+     "confidence": "proven"
+    },
+    {
+     "path": "siting.ratio_slope_per_year",
+     "published": -0.1105,
+     "corrected": 0.011,
+     "evidence": "Wrong sign, driven entirely by the inflated 2019 point. Recomputed over 2019-2025 with nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline.",
+     "confidence": "proven"
+    },
+    {
+     "path": "siting.ratio_2019",
+     "published": 1.145,
+     "corrected": 0.0118,
+     "evidence": "Overnight clean MW over overnight demand, nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline.",
+     "confidence": "proven"
+    },
+    {
+     "path": "siting.siting_score",
+     "published": 0.173,
+     "corrected": 0.449,
+     "evidence": "Recomputed with the corrected change_since_2019. siting_score is a mean of cross-sectional percentile ranks, so one region's correction moves the table.",
+     "confidence": "proven"
+    },
+    {
+     "path": "siting.siting_rank",
+     "published": 49,
+     "corrected": 32,
+     "evidence": "Recomputed over the same 52 ranked BAs. The published file stores rounded components while the pipeline ranked on full precision, so this method reproduces 41 of 52 published ranks exactly. Treat the corrected rank as +/- 2.",
+     "confidence": "high_confidence_inference",
+     "approximate": true
+    },
+    {
+     "path": "profile_24h.2019",
+     "published": [
+      0.599,
+      0.609,
+      0.621,
+      0.63,
+      0.634,
+      0.632,
+      0.622,
+      0.615,
+      0.621,
+      0.637,
+      0.651,
+      0.659,
+      0.658,
+      0.653,
+      0.648,
+      0.64,
+      0.626,
+      0.612,
+      0.59,
+      0.569,
+      0.56,
+      0.561,
+      0.57,
+      0.583
+     ],
+     "corrected": [
+      0.033,
+      0.02,
+      0.011,
+      0.011,
+      0.011,
+      0.01,
+      0.01,
+      0.02,
+      0.064,
+      0.123,
+      0.156,
+      0.172,
+      0.174,
+      0.171,
+      0.168,
+      0.162,
+      0.152,
+      0.133,
+      0.1,
+      0.066,
+      0.049,
+      0.044,
+      0.042,
+      0.039
+     ],
+     "evidence": "Inflated at every hour by the duplicated nuclear. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline.",
+     "confidence": "proven"
+    },
+    {
+     "path": "trailing12[0:18]",
+     "published": {
+      "month": [
+       "2019-06",
+       "2019-07",
+       "2019-08",
+       "2019-09",
+       "2019-10",
+       "2019-11",
+       "2019-12",
+       "2020-01",
+       "2020-02",
+       "2020-03",
+       "2020-04",
+       "2020-05",
+       "2020-06",
+       "2020-07",
+       "2020-08",
+       "2020-09",
+       "2020-10",
+       "2020-11"
+      ],
+      "overnight_share": [
+       0.628,
+       0.632,
+       0.631,
+       0.63,
+       0.629,
+       0.635,
+       0.62,
+       0.604,
+       0.588,
+       0.561,
+       0.541,
+       0.504,
+       0.455,
+       0.393,
+       0.322,
+       0.228,
+       0.145,
+       0.033
+      ],
+      "overnight_clean_mw": [
+       3615.0,
+       3643.0,
+       3629.0,
+       3634.0,
+       3626.0,
+       3654.0,
+       3373.0,
+       3033.0,
+       2718.0,
+       2379.0,
+       2143.0,
+       1843.0,
+       1517.0,
+       1182.0,
+       862.0,
+       537.0,
+       305.0,
+       60.0
+      ]
+     },
+     "corrected": {
+      "month": [
+       "2019-06",
+       "2019-07",
+       "2019-08",
+       "2019-09",
+       "2019-10",
+       "2019-11",
+       "2019-12",
+       "2020-01",
+       "2020-02",
+       "2020-03",
+       "2020-04",
+       "2020-05",
+       "2020-06",
+       "2020-07",
+       "2020-08",
+       "2020-09",
+       "2020-10",
+       "2020-11"
+      ],
+      "overnight_share": [
+       0.015,
+       0.016,
+       0.016,
+       0.016,
+       0.016,
+       0.016,
+       0.017,
+       0.017,
+       0.017,
+       0.017,
+       0.017,
+       0.017,
+       0.016,
+       0.016,
+       0.015,
+       0.014,
+       0.014,
+       0.014
+      ],
+      "overnight_clean_mw": [
+       32,
+       33,
+       34,
+       35,
+       36,
+       35,
+       35,
+       35,
+       33,
+       33,
+       32,
+       32,
+       30,
+       29,
+       27,
+       25,
+       25,
+       26
+      ]
+     },
+     "evidence": "Every trailing-12 window touching a month before 2019-12-04 includes the duplicate, which is what produces the apparent 2019-2021 decline. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline.",
+     "confidence": "proven",
+     "calibration": {
+      "recomputed_with_nuclear_included": [
+       0.628,
+       0.632,
+       0.631,
+       0.63
+      ],
+      "published": [
+       0.628,
+       0.632,
+       0.631,
+       0.63
+      ],
+      "note": "The same code with nuclear left in reproduces the published series, which is what makes the corrected series trustworthy."
+     }
+    }
+   ],
+   "unaffected": [
+    {
+     "path": "detection",
+     "fields": {
+      "rank": 3,
+      "score": 9.01,
+      "growth_pct": 31.0
+     },
+     "status": "UNAFFECTED AND SAFE TO PUBLISH",
+     "why": "The detector is demand-only: z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), all computed from demand, load factor and neighbouring demand. It contains no generation term, so the nuclear reporting change cannot reach it. AZPS is rank 3 on the demo screen and that ranking stands."
+    }
+   ],
+   "data_flags_should_be": [
+    {
+     "code": "generation_reporting_break",
+     "severity": "high",
+     "applies_to": [
+      "cf_share",
+      "cf_avg_mw",
+      "fuel_delta_overnight_gw",
+      "siting",
+      "trailing12",
+      "profile_24h"
+     ],
+     "effective_before": "2019-12-04",
+     "message": "Generation-side figures before 2019-12-04 include a nuclear plant also reported by SRP. Treat AZPS generation history as beginning 2021-01-01, or use the corrected values."
+    }
+   ],
+   "published_data_flags": [],
+   "published_exclude_from_alerts": false,
+   "recommended_handling": "Treat AZPS generation-side history as beginning 2021-01-01, or apply this overlay. Either way stop publishing a decline."
+  }
  }
 }
