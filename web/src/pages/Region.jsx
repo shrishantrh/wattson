@@ -5,7 +5,8 @@ import Workspace from '../components/Workspace.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
 import { applicableModules } from '../components/modules/index.js'
 import coords from '../data/region_coords.json'
-import { loadRegion, useAsync, hourProfile } from '../lib/data.js'
+import { loadRegion, loadRegions, useAsync, hourProfile } from '../lib/data.js'
+import { nearbyModule } from '../components/modules/NearbyModule.jsx'
 import { readTokens } from '../lib/tokens.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { regionTitle, pts1, n0 } from '../lib/findings.js'
@@ -33,6 +34,7 @@ function NotFoundState({ label, error }) {
 export default function Region({ route }) {
   const id = route.id
   const { loading, error, data, reload } = useAsync(() => loadRegion(id), [id])
+  const regs = useAsync(loadRegions, [])
   const tk = useMemo(() => readTokens(), [])
   const c = coords.regions[id]
   const label = c?.label || data?.name || id
@@ -51,8 +53,9 @@ export default function Region({ route }) {
     if (!data) return []
     const hours = { id: 'hours', title: 'Clean power by hour, 2025 (night in ember)', render: () => (prof ? <HourBars values={prof} /> : <p className="note">No hourly profile in this data source.</p>) }
     const rest = applicableModules(ctx).map(m => ({ id: m.id, title: m.title, render: () => m.render(ctx), default: m.id !== 'heatmap' }))
-    return orderEvidence([hours, ...rest])
-  }, [data, prof, ctx])
+    const nb = regs.data && nearbyModule.applies({ regions: regs.data, region_id: id }) ? [{ id: 'nearby', title: nearbyModule.title, render: () => nearbyModule.render({ regions: regs.data, region_id: id, load_mw: 300 }) }] : []
+    return orderEvidence([hours, ...rest, ...nb])
+  }, [data, prof, ctx, regs.data])
 
   if (loading || error) {
     const title = <><b>{c?.place || label}</b>{c ? ` · ${id.split('/')[0]} grid` : ''}</>

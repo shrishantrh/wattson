@@ -8,8 +8,8 @@ import '../styles/tour.css'
 // top edge and, when the step names a `focus` selector and the element exists, a 2px outline around
 // it. Keys while the tour shows and nobody is typing: p play/pause, Esc hide (demo mode and its hud
 // stay on), t show again. Stepping stays with demo mode (← →); playing presses → for you.
-// Props: on, idx, ms (seconds between steps when playing, default 9000), auto (optional: the result
-// of useAutoAdvance if the app calls it itself; otherwise the tour runs its own).
+// Props: on, idx, ms (milliseconds between steps when playing, default 9000), auto (optional: the
+// result of useAutoAdvance if the app calls it itself; otherwise the tour runs its own).
 
 const typing = e => ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target?.tagName) || !!e.target?.isContentEditable
 const overlayOpen = () => !!document.querySelector('.sheet-overlay, .pal-overlay')
@@ -22,39 +22,50 @@ export function useAutoAdvance(on, idx, ms = 9000) {
   const [playing, setPlaying] = useState(false)
   const n = stepIndex(idx)
   const atEnd = idx >= SCENES.length - 1 || (n >= 0 && n >= TOUR.length - 1)
-  useEffect(() => { if (!on) setPlaying(false) }, [on])
+  // Leaving or entering demo mode, or reaching the end, stops playback (state adjusted during render, not in an effect).
+  const [seenOn, setSeenOn] = useState(on)
+  if (on !== seenOn) { setSeenOn(on); setPlaying(false) }
+  if (playing && atEnd) setPlaying(false)
+  const active = on && playing && !atEnd
   useEffect(() => {
-    if (!on || !playing) return
-    if (atEnd) { setPlaying(false); return }
+    if (!active) return
     const id = setInterval(pressNext, ms)
     return () => clearInterval(id)
-  }, [on, playing, atEnd, idx, ms])
-  return { playing, setPlaying, toggle: () => setPlaying(v => !v), atEnd }
+  }, [active, idx, ms])
+  return { playing: active, setPlaying, toggle: () => setPlaying(v => !v), atEnd }
 }
 
-// The viewport box of the first element matching `selector`, or null. The page behind a scene loads
-// lazily and then fetches, so the element is looked up again every 250 ms until it exists, then kept
-// in step with resize, any scroll, and a slow re-measure for layout shifts (fonts, data arriving).
+// The viewport box of the first element matching `selector`: `live` is the current box or null,
+// `last` the most recent one (kept across steps so the outline can fade out where it was). The page
+// behind a scene loads lazily and then fetches, so the element is looked up again every 250 ms until
+// it exists, then kept in step with resize, any scroll, and a slow re-measure for layout shifts.
+const NO_BOX = { selector: null, live: null, last: null }
 function useFocusRect(selector, active) {
-  const [rect, setRect] = useState(null)
+  const [state, setState] = useState(NO_BOX)
   useEffect(() => {
-    if (!active || !selector) { setRect(null); return }
+    if (!active || !selector) return
     let timer = 0, misses = 0
     const measure = () => {
       const el = document.querySelector(selector)
       const r = el && el.getBoundingClientRect()
-      if (!r || (!r.width && !r.height)) { misses++; setRect(null); return false }
+      if (!r || (!r.width && !r.height)) { misses++; setState(s => (s.selector === selector && s.live == null ? s : { selector, live: null, last: s.last })); return false }
       misses = 0
-      setRect(p => (p && p.top === r.top && p.left === r.left && p.width === r.width && p.height === r.height ? p : { top: r.top, left: r.left, width: r.width, height: r.height }))
+      setState(s => {
+        const p = s.selector === selector ? s.live : null
+        if (p && p.top === r.top && p.left === r.left && p.width === r.width && p.height === r.height) return s
+        const box = { top: r.top, left: r.left, width: r.width, height: r.height }
+        return { selector, live: box, last: box }
+      })
       return true
     }
     const tick = () => { const found = measure(); timer = setTimeout(tick, found || misses > 24 ? 1000 : 250) }
-    tick()
+    timer = setTimeout(tick, 0)
     window.addEventListener('resize', measure)
     window.addEventListener('scroll', measure, true)
     return () => { clearTimeout(timer); window.removeEventListener('resize', measure); window.removeEventListener('scroll', measure, true) }
   }, [selector, active])
-  return rect
+  const live = active && selector && state.selector === selector ? state.live : null
+  return { live, box: live || (active && selector ? state.last : null) }
 }
 
 export default function Tour({ on, idx, ms = 9000, auto = null }) {
@@ -66,14 +77,11 @@ export default function Tour({ on, idx, ms = 9000, auto = null }) {
   const n = stepIndex(idx)
   const step = n >= 0 ? TOUR[n] : null
   const scene = SCENES[idx] || null
-  const show = on && !hidden
-  const rect = useFocusRect(step?.focus, show)
-  const lastRect = useRef(null)
-  if (rect) lastRect.current = rect
-  const box = rect || lastRect.current
-
   // Entering demo mode shows the tour again after an Esc.
-  useEffect(() => { if (on) setHidden(false) }, [on])
+  const [seenOn, setSeenOn] = useState(on)
+  if (on !== seenOn) { setSeenOn(on); setHidden(false) }
+  const show = on && !hidden
+  const { live, box } = useFocusRect(step?.focus, show)
 
   useEffect(() => {
     if (!on) return
@@ -96,7 +104,7 @@ export default function Tour({ on, idx, ms = 9000, auto = null }) {
   return (
     <>
       <div className="tour-progress" aria-hidden="true">{TOUR.map((t, i) => <i key={t.sceneId} className={i <= n ? 'done' : ''} />)}</div>
-      {box && <div className={`tour-focus ${rect ? 'on' : ''}`} aria-hidden="true" style={{ top: box.top - 4, left: box.left - 4, width: box.width + 8, height: box.height + 8 }} />}
+      {box && <div className={`tour-focus ${live ? 'on' : ''}`} aria-hidden="true" style={{ top: box.top - 4, left: box.left - 4, width: box.width + 8, height: box.height + 8 }} />}
       <aside className="tour-card" role="note" aria-label="Tour caption">
         <header className="tour-head">
           <span className="tour-step">{n >= 0 ? n + 1 : '–'} / {TOUR.length}</span>
