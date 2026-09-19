@@ -1,0 +1,75 @@
+{
+  "question": "Does ERCOT demand response bias our own detector against converted miners, the sites we most want to flag?",
+  "mechanism": "A curtailing load sheds at peak, so its load factor falls. score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta) rewards a RISING load factor, so curtailment pushes a region down.",
+  "load_factor_term": {
+    "correlation_with_score": 0.607,
+    "weight_in_score": 0.5,
+    "median_delta": -0.014,
+    "n_regions": 111
+  },
+  "ercot_zones": [
+    {
+      "region": "ERCO/NRTH",
+      "rank": 1,
+      "growth_pct": 94.6,
+      "load_factor_delta": 0.069,
+      "load_factor_delta_percentile": 96.4,
+      "overnight_excess": 13.4
+    },
+    {
+      "region": "ERCO/FWES",
+      "rank": 2,
+      "growth_pct": 116.1,
+      "load_factor_delta": 0.015,
+      "load_factor_delta_percentile": 80.2,
+      "overnight_excess": 3.1
+    },
+    {
+      "region": "ERCO",
+      "rank": 8,
+      "growth_pct": 27.2,
+      "load_factor_delta": 0.071,
+      "load_factor_delta_percentile": 97.3,
+      "overnight_excess": 3.9
+    },
+    {
+      "region": "ERCO/WEST",
+      "rank": 111,
+      "growth_pct": 1.5,
+      "load_factor_delta": -0.023,
+      "load_factor_delta_percentile": 29.7,
+      "overnight_excess": -2.0
+    },
+    {
+      "region": "SWPP/SPS",
+      "rank": 23,
+      "growth_pct": 11.4,
+      "load_factor_delta": 0.078,
+      "load_factor_delta_percentile": 98.2,
+      "overnight_excess": 2.7
+    },
+    {
+      "region": "ERCO/SCEN",
+      "rank": 16,
+      "growth_pct": 29.1,
+      "load_factor_delta": 0.055,
+      "load_factor_delta_percentile": 91.9,
+      "overnight_excess": 3.7
+    },
+    {
+      "region": "NYIS",
+      "rank": 63,
+      "growth_pct": -2.7,
+      "load_factor_delta": -0.013,
+      "load_factor_delta_percentile": 50.5,
+      "overnight_excess": 5.0
+    }
+  ],
+  "verdict": "bias_present_but_not_visible",
+  "statement": "The bias mechanism is real but does not show up where the curtailing sites actually are. Score correlates with load_factor_delta at r=+0.61, so a load whose load factor falls is genuinely pushed down the ranking. Yet every region hosting a confirmed curtailing miner sits ABOVE the median on load factor change: ERCO/NRTH at the 96th percentile, ERCO at the 97th, ERCO/FWES at the 80th, SWPP/SPS at the 94th. Riot curtailed more than 95% of load during the August 2023 ERCOT peak, and those hours are too few to move an annual load factor computed over 8,760 of them. Demand response is economically large and temporally tiny, so it barely touches this statistic. The caveat stands as a method caveat rather than a correction: a site curtailing far more hours than these would be pushed down, and we would not see it.",
+  "caveats": [
+    "Zone-level load factor cannot isolate one facility. A 750 MW site inside a multi-GW zone moves the statistic only slightly.",
+    "Curtailment hours are not in our data: this reasons from the arithmetic of an annual load factor, it does not measure the curtailed hours themselves.",
+    "ERCO/WEST is the one ERCOT zone with a falling load factor (-0.023, 30th percentile) and it ranks last of 111. We cannot tell from this whether that is curtailment or simply a region with no growth."
+  ]
+}
