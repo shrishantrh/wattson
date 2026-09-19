@@ -246,3 +246,50 @@ def health():
     return {"ok": True, "regions": len(data.regions_by_id()),
             "companies_are_mock": data.companies_doc()["is_mock"],
             "alerts_are_ranked": data.alerts_doc()["is_ranked"]}
+
+
+@app.get("/api/facilities")
+def get_facilities():
+    """Datacenter sites joined to the grid they actually draw from.
+
+    The chain the UI filters on: AI operator -> site -> serving utility -> parent
+    company -> ticker -> the balancing authority we score.
+    """
+    rows = []
+    for f in data.facilities():
+        r = data.regions_by_id().get(f.get("zone") or f["ba"]) or data.regions_by_id().get(f["ba"])
+        cf = ((r.get("cf_share") or {}).get("2025") or {}).get("all") if r else None
+        det = (r.get("detection") or {}) if r else {}
+        rows.append({
+            "company": f["company"], "ticker": f["ticker"],
+            "metro": f["metro"], "state": f["state"],
+            "lat": float(f["lat"]) if f.get("lat") else None,
+            "lon": float(f["lon"]) if f.get("lon") else None,
+            "serving_utility": f["serving_utility"],
+            "utility_parent": f.get("utility_parent") or None,
+            "utility_ticker": f.get("utility_ticker") or None,
+            "ba": f["ba"], "zone": f["zone"] or None, "pjm_zone": f["zone"] or None,
+            "region_id": (f["zone"] or f["ba"]),
+            "cf_share_2025": cf,
+            "detector_rank": det.get("rank"), "detector_score": det.get("score"),
+            "growth_pct": det.get("growth_pct"),
+            "source_type": f["source_type"], "source_url": f["source_url"],
+            "note": f.get("note") or None,
+        })
+    no_equity = [r for r in rows if not r["utility_ticker"]]
+    return {
+        "count": len(rows),
+        "facilities": rows,
+        "no_listed_equity_count": len(no_equity),
+        "notes": [
+            "Sites are mapped from the serving utility outward, never inferred from the state.",
+            "utility_parent and utility_ticker describe the SERVING UTILITY's owner, not the "
+            "datacenter operator.",
+            f"{len(no_equity)} of {len(rows)} sites are served by public power districts or "
+            "member-owned cooperatives with no listed equity. Cheap hydro and wind sit "
+            "disproportionately with public power, so a material share of this buildout lands "
+            "where there is no stock to trade.",
+            "Coverage is partial and hand-curated. Absence of a site is not evidence it does "
+            "not exist.",
+        ],
+    }

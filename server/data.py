@@ -111,3 +111,19 @@ def corrections() -> dict:
 
 def corrections_for(region_id: str) -> dict | None:
     return (corrections().get("regions") or {}).get(region_id)
+
+
+@functools.lru_cache(maxsize=1)
+def facilities() -> list:
+    """Hand-built datacenter site lookup: operator -> site -> serving utility -> BA.
+
+    Built from the serving utility outward, never inferred from the state. Geographic
+    inference produces confidently wrong BA mappings -- Prineville and Quincy both
+    resolve to BPAT and both are wrong, in opposite directions.
+    """
+    import csv
+    p = CLAIMS / "lookup" / "facilities.csv"
+    if not p.exists():
+        return []
+    with open(p) as f:
+        return list(csv.DictReader(f))
