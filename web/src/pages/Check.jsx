@@ -125,8 +125,9 @@ export default function Check({ route }) {
             const siteNote = (data.notes || []).find(n => sites.some(st => n.includes(st.ba) || (st.serving_utility && n.includes(st.serving_utility.split(' ')[0])) || n.includes(st.grid_label || '\u0000')))
             const ok = a.primary?.magnitude != null && a.primary.unit === 'fraction' && a.primary.physical_mean_unweighted != null
             if (!ok) return null
-            if (sites.length >= 2 && !siteNote) return <p className="note" style={{ marginTop: 12 }}>The gap: <b style={{ color: 'var(--ink)' }}>{Math.round((a.primary.magnitude - a.primary.physical_mean_unweighted) * 100)} points</b> between what is claimed on paper and what its grids physically generated, averaged across {sites.length} sites.</p>
-            return <p className="note" style={{ marginTop: 12 }}>{sites.length === 1 ? 'One mapped site, so this is that grid, not the company: ' : ''}{siteNote || 'the physical figure is the average of its mapped sites\' grids.'} Grid-only, average mix; contracted clean power is not counted.</p>
+            const importer = sites.map(st => importerNote(details[st.region_id])).find(Boolean)
+            if (sites.length >= 2 && !siteNote && !importer) return <p className="note" style={{ marginTop: 12 }}>The gap: <b style={{ color: 'var(--ink)' }}>{Math.round((a.primary.magnitude - a.primary.physical_mean_unweighted) * 100)} points</b> between what is claimed on paper and what its grids physically generated, averaged across {sites.length} sites.</p>
+            return <p className="note" style={{ marginTop: 12 }}>{sites.length === 1 ? 'One mapped site, so this is that grid, not the company: ' : ''}{siteNote || (importer ? `One of its grids ${importer}, so its footprint share is not what the site consumes.` : 'the physical figure is the average of its mapped sites\' grids.')} Grid-only, average mix; contracted clean power is not counted.</p>
           })()}
           <Evidence open={evidence} onToggle={toggle} />
         </Card>
