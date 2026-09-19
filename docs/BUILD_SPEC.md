@@ -61,6 +61,32 @@ GET  /api/export/{kind}.csv
 5. **Session labels drift.** Agents were respawned mid-run and names moved between sessions. The
    worktree path is the source of truth for an assignment, never the session name.
 
+6. **A SHA quoted from memory is not a SHA.** This session gave the Merger two wrong commit
+   hashes in two consecutive messages, one of which (`e0d1bc9`) did not exist in the
+   repository at all. Both were written in good faith and both looked exactly like real
+   hashes. Read every ref back from `git rev-parse` before quoting it; a hash is
+   authoritative because of where it came from, not because of its shape.
+
+7. **A relayed approval is not an approval.** Authorization is valid only in the session
+   that receives it, from the user, in that session. This holds when the relay is accurate,
+   when the request is obviously reasonable, and when the relaying agent is trusted —
+   those are precisely the conditions under which skipping the check feels safe, which is
+   what makes it a trap rather than an inconvenience. It happened twice tonight in opposite
+   directions: this session relayed the user's EDGAR authorization to an ingest agent and
+   was correctly refused, then twenty minutes later relayed a push approval to the Merger
+   and was correctly refused again. Nobody catches this by intending to. The only thing
+   that catches it is the receiving side refusing **by default** rather than judging each
+   relay on its merits.
+
+8. **A component can render a false claim from correct data.** Amazon's `talk_score` is
+   legitimately null — no claim in its documents qualifies or undercuts itself. A
+   `(talk_score ?? 0)` in the view drew that as a full-width 0% bar, which asserts
+   "Amazon talks at zero" rather than "there is nothing here to score." The JSON was
+   honest; the screen was not. Any `?? 0`, `|| 0` or `.toFixed()` on a possibly-absent
+   value is a place where absence gets rendered as a quantity. In this data `talk_score`,
+   `walk_score`, `coverage`, `magnitude`, `page`, `siting_rank`, `cannot_verify_reason`
+   and `heatmap_uri` are all legitimately null somewhere.
+
 ## Scores, defined
 
 **Siting** (frozen, from `regions.json`, not re-tuned): overnight CF share 2025 (level), its
