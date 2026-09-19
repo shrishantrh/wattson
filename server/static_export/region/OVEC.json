@@ -107,6 +107,7 @@
    "ticker": null,
    "mapping_note": "hand-mapped"
   },
-  "heatmap_available": false
+  "heatmap_available": false,
+  "corrections": null
  }
 }

@@ -93,3 +93,21 @@ def company_list() -> list:
     d = companies_doc()
     cs = d["companies"]
     return cs if isinstance(cs, list) else cs.get("companies", [])
+
+
+@functools.lru_cache(maxsize=1)
+def corrections() -> dict:
+    """Published values we know to be wrong, with corrected values and evidence.
+
+    Applied at serve time rather than rewritten into the exports, so the UI can show
+    published and corrected side by side. A project about numbers that look clean and
+    are wrong should show its own corrections in place.
+    """
+    p = CLAIMS / "derived" / "corrections.json"
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text())
+
+
+def corrections_for(region_id: str) -> dict | None:
+    return (corrections().get("regions") or {}).get(region_id)
