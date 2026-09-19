@@ -132,6 +132,20 @@ export async function loadCompanies() {
   return { companies: list, is_mock: raw.is_mock ?? list.every(c => c.is_mock), notes: raw.notes || [], _provisional: raw._provisional }
 }
 
+// ---------- facilities (every mapped site with its grid) ----------
+export async function loadFacilities() {
+  try {
+    const raw = await tryEach([...(api ? [() => getJSON(`${api}/api/facilities`)] : []), () => staticExport('facilities'), () => fixture('facilities')])
+    const list = (raw.facilities || raw.sites || raw || []).map(s => { const region_id = s.region_id || (s.zone ? `${s.ba}/${s.zone}` : s.ba); const rc = coords.regions[region_id] || coords.regions[s.ba]; return { ...s, region_id, lat: s.lat ?? s.latitude ?? rc?.lat, lng: s.lng ?? s.lon ?? s.longitude ?? rc?.lng, grid_label: rc?.label || s.ba } })
+    return { facilities: list, no_listed_equity_count: raw.no_listed_equity_count ?? list.filter(s => !(s.ticker || s.operator?.ticker)).length, source: 'engine' }
+  } catch (e) {
+    if (e.name !== 'NotFound') throw e
+    const cos = await loadCompanies(); const out = []
+    await Promise.all(cos.companies.map(async c => { try { const d = await loadCompany(c.ticker); d.sites.forEach(s => out.push({ ...s, ticker: c.ticker, company: c.company })) } catch { /* not exported */ } }))
+    return { facilities: out, no_listed_equity_count: null, source: 'companies' }
+  }
+}
+
 export async function loadAlerts() {
   return tryEach([...(api ? [() => getJSON(`${api}/api/alerts`)] : []), () => staticExport('alerts'), () => fixture('alerts')])
 }

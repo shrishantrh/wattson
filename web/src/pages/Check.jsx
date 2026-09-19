@@ -11,6 +11,7 @@ import { COMPANIES } from '../lib/query.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import ingest from '../data/ingest_status.json'
+import SideBySideModule, { sideBySideOf } from '../components/modules/SideBySideModule.jsx'
 
 // A grid that generates far less than it uses is mostly imports; its footprint share is not what the site consumes.
 const importerNote = d => { const g = d && d.type === 'zone' && d.parent ? d.parent : d; const gen = g?.total_avg_mw?.['2025']?.all, dem = d?.demand?.['2025']?.avg_mw; return gen && dem && gen / dem < 0.5 ? `generates ${Math.round(gen / dem * 100)}% of what it uses, the rest is imported` : null }
@@ -55,12 +56,13 @@ export default function Check({ route }) {
   } else {
     const a = checkAnswer(data)
     const modules = [
+      ...(sideBySideOf(data).length ? [{ id: 'sbs', title: 'Says, and discloses, in the same report', render: () => <SideBySideModule company={data} /> }] : []),
       { id: 'sites', title: 'Where its sites draw power', render: () => (
         <>
           <div className="rows">
             {sites.map(s => { const e = bySite[s.ba]; const cav = caveatFor(s.region_id); const series = nightSeries(details[s.region_id]); return (
               <a className="row" key={s.metro} href={href.region(s.region_id)}>
-                <div><div className="t">{s.metro}</div><div className="d">{s.serving_utility || 'utility unknown'} · {s.grid_label}{s.source_type ? ` · ${s.source_type.replace(/_/g, ' ')}` : ''}{cav ? ' · data unreliable' : ''}{importerNote(details[s.region_id]) ? ` · ${importerNote(details[s.region_id])}` : ''}</div></div>
+                <div><div className="t">{s.metro}</div><div className="d">{s.serving_utility || 'utility unknown'} · {s.grid_label}{s.source_type ? ` · ${s.source_type.replace(/_/g, ' ')}` : ''}{cav ? ' · history corrected' : ''}{importerNote(details[s.region_id]) ? ` · ${importerNote(details[s.region_id])}` : ''}</div></div>
                 <div className="n" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>{series && <Sparkline values={series} width={64} height={18} accentLast baseline title="clean at night, 2019 to 2025" />}<span>{e?.cf_share != null ? pct0(e.cf_share) : '—'}{(e?.overnight_cf_share ?? series?.[6]) != null && <small> · {pct0(e?.overnight_cf_share ?? series[6])} at night</small>}</span></div>
               </a>) })}
           </div>

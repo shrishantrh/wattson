@@ -123,6 +123,6 @@ export function compareAnswer(res) {
   const best = clean[0] || cs[0], second = clean[1]
   let sentence = `${best.metro} is your cleanest option: ${pct0(share(best))} clean power at night and ${trendWord(chg(best), s(best))}.`
   if (second) sentence += ` ${second.metro} is ${pct0(share(second))} and ${trendWord(chg(second), s(second))}.`
-  if (bad.length) sentence += ` ${bad.map(c => `${c.metro} reads ${pct0(share(c))} but its data looks unreliable, so treat it as unknown`).join('; ')}.`
-  return { sentence, best, numbers: cs.map(c => ({ value: pct0(share(c)), raw: share(c), label: `${c.rank}. ${c.metro}`, sub: caveatFor(c.region_id) ? 'data unreliable' : trendWord(chg(c), s(c)), accent: c === best })) }
+  if (bad.length) sentence += ` ${bad.map(c => `${c.metro} is ${pct0(share(c))} and its published history is corrected here, so read its trend with care`).join('; ')}.`
+  return { sentence, best, numbers: cs.map(c => ({ value: pct0(share(c)), raw: share(c), label: `${c.rank}. ${c.metro}`, sub: caveatFor(c.region_id) ? 'history corrected' : trendWord(chg(c), s(c)), accent: c === best })) }
 }

@@ -8,6 +8,7 @@
 // applies() is false when the data a module needs is absent, so a caller never renders an empty module.
 // render() returns a node without an outer card; the caller wraps it and shows `title`.
 // The views live in the .jsx files next to this one and export only a component (fast refresh).
+import CorrectionsModule, { correctionsOf } from './CorrectionsModule.jsx'
 import { createElement } from 'react'
 import '../../styles/modules.css'
 import HeatmapView from './HeatmapModule.jsx'
@@ -77,6 +78,7 @@ export const HistoryModule = {
   render: ctx => createElement(HistoryView, { cf_share: cfShareOf(ctx?.detail), demand: demandOf(ctx?.detail), grid: gridLabel(ctx?.detail), inherited: !!ctx?.detail?.cf_inherited_from_ba }),
 }
 
-export const MODULES = [HeatmapModule, FuelDeltaModule, OperatorsModule, DetectorModule, AlertsModule, HistoryModule]
+export const MODULES = [
+  { id: 'corrections', title: 'Published vs corrected', applies: ctx => !!correctionsOf(ctx.detail), render: ctx => createElement(CorrectionsModule, { detail: ctx.detail }) },HeatmapModule, FuelDeltaModule, OperatorsModule, DetectorModule, AlertsModule, HistoryModule]
 export const moduleById = id => MODULES.find(m => m.id === id) || null
 export const applicableModules = ctx => MODULES.filter(m => m.applies(ctx))

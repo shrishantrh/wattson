@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
 import { Card, Num, Ticks } from '../console/widgets.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
-import { loadCompanies, loadCompany, useAsync } from '../lib/data.js'
+import { loadCompanies, loadFacilities, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { pct0 } from '../lib/findings.js'
 import { Loading, ErrorState } from '../components/States.jsx'
@@ -13,9 +13,10 @@ export default function Companies() {
   const { loading, error, data, reload } = useAsync(loadCompanies, [])
   const tk = useMemo(readTokens, [])
   const list = data?.companies || []
-  const sites = useAsync(async () => { const out = []; await Promise.all(list.map(async c => { try { const d = await loadCompany(c.ticker); d.sites.forEach(s => out.push({ ...s, ticker: c.ticker })) } catch { /* not exported yet */ } })); return out }, [list.map(c => c.ticker).join('|')])
+  const fac = useAsync(loadFacilities, [])
+  const sites = { data: fac.data?.facilities || [] }
   const pts = (sites.data || []).filter(s => s.lat != null)
-  const globe = useMemo(() => ({ view: fitView(pts), points: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, r: 0.18, color: tk.ink2 })), markers: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, label: `${s.ticker} · ${s.metro.split(',')[0]}`, tip: `${s.serving_utility || ''} · ${s.grid_label}`, href: href.region(s.region_id), color: tk.ink2 })) }), [pts, tk])
+  const globe = useMemo(() => ({ view: fitView(pts), points: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, r: 0.18, color: tk.ink2 })), markers: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, label: `${s.ticker} · ${(s.metro || s.name || '').split(',')[0]}`, tip: `${s.serving_utility || s.utility || ''} · ${s.grid_label}${s.ticker_utility || s.operator?.ticker ? ` · ${s.ticker_utility || s.operator.ticker}` : ' · no listed equity'}`, href: href.region(s.region_id), color: tk.ink2 })) }), [pts, tk])
   const back = () => { window.location.hash = href.landing() }
   let column
   if (loading) column = <Card title={<b>Companies</b>} onClose={back}><Loading what="the watchlist" /></Card>
@@ -29,7 +30,7 @@ export default function Companies() {
       <>
         <Card title={<><b>Companies</b> · talk vs walk{data.is_mock && <> · <span className="accent">mock</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
           <h1 className="verdict">{sentence}</h1>
-          <div className="nums"><Num value={String(list.length)} label="companies read" /><Num value={String(n)} label="claims extracted" sub={`${cv} can't be verified`} /><Num value={String(pts.length)} label="sites mapped" sub="hand-curated, utility outward" /></div>
+          <div className="nums"><Num value={String(list.length)} label="companies read" /><Num value={String(n)} label="claims extracted" sub={`${cv} can't be verified`} /><Num value={String(pts.length)} label="sites mapped" sub={fac.data?.no_listed_equity_count != null ? `${fac.data.no_listed_equity_count} on public power or co-ops, no listed equity` : 'hand-curated, utility outward'} /></div>
           <p className="note" style={{ marginTop: 12 }}>Talk = how bold and specific the claims are, 0–1. Walk = the clean share of generation on the grids its mapped sites use, averaged, grid-only, contracted power excluded.</p>
         </Card>
         <Card>
