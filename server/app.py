@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 
 from server import data
 from server import search as corpus_search
+from server import ai as ask_layer
 from server import irradiance_narrate as narrate
 
 app = FastAPI(title="Wattson API", version="1.0.0")
@@ -418,3 +419,38 @@ def get_facilities():
             "not exist.",
         ],
     }
+
+
+class AskRequest(BaseModel):
+    q: str
+    page: dict | None = Field(default=None, description="What the user is looking at now")
+
+
+@app.post("/api/ask")
+def post_ask(req: AskRequest):
+    """Answer a question using ONLY typed tools over the published datasets.
+
+    The model may not state a number a tool did not return. This is the one surface where
+    a model writes prose a reader takes as ours, so the honesty rules -- consistent with
+    rather than caused by, never 'they lied', share alongside absolute, zones inherit
+    their parent's generation -- are enforced in the system prompt and the tools return
+    the same rows the charts draw.
+    """
+    if not (req.q or "").strip():
+        return {"answer": "Ask me something about a grid region, a company claim, or a comparison.",
+                "tools_used": []}
+    return ask_layer.ask(req.q.strip(), page_context=req.page)
+
+
+@app.post("/api/ask/summarize")
+def post_summarize(req: AskRequest):
+    """Plain-English summary of the screen the user is on."""
+    return ask_layer.summarize(req.page or {"route": req.q})
+
+
+@app.get("/api/ask/status")
+def get_ask_status():
+    """Whether the ask layer is available. The UI hides it rather than failing when not."""
+    import os
+    return {"available": bool(os.environ.get("OPENAI_API_KEY")),
+            "model": ask_layer.MODEL, "tools": sorted(ask_layer.TOOLS)}

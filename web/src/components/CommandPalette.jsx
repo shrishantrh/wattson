@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Command } from 'cmdk'
 import { askItem, matchGroups, useCommands } from '../lib/commands.js'
+import { ask as askServer, askAvailable, summarize } from '../lib/ask.js'
+import { pageContext } from '../lib/pageContext.js'
 import '../styles/palette.css'
 
 // The command palette. <CommandPalette /> is the dialog: ⌘K / Ctrl+K toggles it, "/" opens it
@@ -35,23 +37,55 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   const [q, setQ] = useState('')
   const shown = useMemo(() => matchGroups(groups, q, { limit, emptyLimit }), [groups, q, limit, emptyLimit])
   const ask = useMemo(() => askItem(q), [q])
+  // The ask layer answers what the deterministic parser cannot. It is optional: when no
+  // server is configured the palette behaves exactly as before.
+  const [aiOn, setAiOn] = useState(false)
+  const [answer, setAnswer] = useState(null)   // {state:'loading'|'done'|'error', text, tools}
+  useEffect(() => { askAvailable().then(setAiOn) }, [])
   const list = useMemo(() => {
     if (!ask) return shown
     if (!shown.length) return [{ id: 'ask', label: 'Ask', items: [ask], total: 1 }]
     if (ask.href && ask.composed) return [{ id: 'ask', label: 'Ask', items: [ask], total: 1 }, ...shown]
     return shown
   }, [ask, shown])
+  const runAsk = async (question, kind = 'ask') => {
+    setAnswer({ state: 'loading', q: question })
+    try {
+      const ctx = pageContext()
+      const r = kind === 'summary' ? await summarize(ctx) : await askServer(question, ctx)
+      setAnswer({ state: 'done', q: question, text: r.answer || '', tools: r.tools_used || [] })
+    } catch (e) {
+      setAnswer({ state: 'error', q: question, text: String(e.message || e) })
+    }
+  }
   const run = it => {
-    if (it.unknown) return
+    if (it.unknown) { if (aiOn) runAsk(q); return }
     if (it.action) it.action(); else if (it.href) window.location.assign(it.href)
     setQ('')
     onDone?.()
   }
   const hasQuery = q.trim().length > 0
+  const canAsk = aiOn && hasQuery
   const showList = hasQuery || emptyLimit > 0
   return (
     <Command shouldFilter={false} loop label="Wattson commands" className={`pal ${className}`}>
       <Command.Input className="pal-input" value={q} onValueChange={setQ} placeholder={placeholder} autoFocus={autoFocus} autoComplete="off" spellCheck={false} aria-label={placeholder} />
+      {aiOn && (
+        <div className="pal-askbar">
+          <button type="button" className="pal-askbtn" onClick={() => runAsk(q || 'this screen', 'summary')}>Summarise this screen</button>
+          {canAsk && <button type="button" className="pal-askbtn" onClick={() => runAsk(q)}>Ask: {q}</button>}
+        </div>
+      )}
+      {answer && (
+        <div className={`pal-answer ${answer.state}`}>
+          {answer.state === 'loading' && <p className="muted">Reading the data…</p>}
+          {answer.state === 'error' && <p className="muted">The ask layer is unavailable. Everything else still works.</p>}
+          {answer.state === 'done' && <>
+            <p>{answer.text}</p>
+            {!!answer.tools?.length && <p className="pal-answer-tools">from {answer.tools.map(t => t.tool).join(', ')}</p>}
+          </>}
+        </div>
+      )}
       {showList && (
         <Command.List className="pal-list">
           {list.map(g => (

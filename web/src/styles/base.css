@@ -309,3 +309,12 @@ a.gpin:hover .gpin-label { border-color: var(--line-focus); }
 .gapbar-t i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 3px; }
 .gapbar-v { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink); text-align: right; }
 .gapbar-v.accent { color: var(--accent); }
+
+/* --- ask layer ---------------------------------------------------------------- */
+.pal-askbar { display: flex; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.pal-askbtn { font: inherit; font-size: 12px; color: var(--ink2); background: var(--bg2);
+  border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.pal-askbtn:hover { color: var(--ink); border-color: var(--line2); }
+.pal-answer { padding: 12px; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+.pal-answer p { margin: 0 0 6px; }
+.pal-answer-tools { font-size: 11px; color: var(--muted); margin: 0; }
