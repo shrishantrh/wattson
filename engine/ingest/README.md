@@ -55,6 +55,41 @@ Two things are unresolved before EDGAR output can be written, see the handoff no
 10-K filings on EDGAR are HTML and have **no page numbers**, so they cannot satisfy
 the `page` contract without inventing one.
 
+## Extraction
+
+Text comes from PyMuPDF layout **blocks**, not from clustering individual
+words. Blocks are paragraphs and table rows already grouped by the renderer.
+Ordering them is all this module does: a block spanning >60% of the page width
+is a banner that separates one horizontal section from the next, and within a
+section blocks are grouped into columns **by their left edge** and read top to
+bottom, column by column.
+
+An earlier version clustered words by x coordinate. It fixed plain two-column
+body text and failed on everything else — full-width headers torn across bands
+and losing words, tables flattened into orphaned numbers, and pages with two
+text layers interleaving per character ("632%3% C apPituarlc ghoasoedds").
+
+Clustering is on the LEFT edge rather than the gap to the previous block's
+right edge, because columns share a left margin while right edges are ragged.
+On Google's executive summary a heading block ends exactly where the next
+column begins; gap-on-right-edge merged the columns and spliced every sentence
+on the page.
+
+`claims/raw/pdf/` is gitignored, so `tests/test_real_pages.py` skips when the
+PDFs are absent. Those are the tests that matter: run the download first.
+
+**Licence note:** PyMuPDF is AGPL-3.0. Fine for a hackathon; someone should
+decide deliberately before this ships as a product.
+
+## Quality flags
+
+Every chunk carries `quality`: `ok`, `tabular`, or `suspect`, with reasons.
+A substring check against the page cannot tell good text from bad — garbled
+output is still "present on the page" that produced it — so a consumer needs
+an explicit signal. Current corpus: 341 ok, 7 tabular, 6 suspect of 354.
+Never quote a `suspect` chunk; quote numbers but not prose from a `tabular`
+one.
+
 ## Two lessons worth keeping
 
 **A self-consistent check cannot find a systematic bias in the instrument it
@@ -71,3 +106,9 @@ although Meta makes the same annual-matching claim in plainer language. That
 asymmetry made no sense, and chasing it — rather than accepting the output —
 is what surfaced the column-splicing bug. The null result diagnosed the
 upstream defect.
+
+**Corollary, learned the hard way twice.** The acceptance set for the
+extraction rewrite was META p3, META p18, GOOGL p94 and AMZN p11. All four
+passed while GOOGL p4 — the page four of the eight findings rest on — silently
+regressed into spliced text. It was not in the set because nobody had seen it
+break. Any page a finding cites belongs in the regression set, automatically.

@@ -12,6 +12,8 @@ Two design commitments, both driven by how the output is used downstream:
    chunks -- nothing downstream bills on it.
 """
 
+from engine.ingest.quality import assess
+
 TARGET_TOKENS = 2000
 OVERLAP_TOKENS = 200
 
@@ -30,13 +32,15 @@ def chunk_pages(pages, *, source_doc, source_url, ticker, year,
         start = 0
         while start < len(tokens):
             window = tokens[start:start + target_tokens]
+            body = " ".join(window)
             chunks.append({
-                "text": " ".join(window),
+                "text": body,
                 "page": page_no,
                 "source_doc": source_doc,
                 "source_url": source_url,
                 "ticker": ticker,
                 "year": year,
+                "quality": assess(body),
             })
             if start + target_tokens >= len(tokens):
                 break
@@ -70,6 +74,7 @@ def chunk_text(text, *, item, source_doc, source_url, ticker, year,
             "year": year,
             "locator": {"type": "html_anchor", "item": item,
                         "char_offset": offset},
+            "quality": assess(body),
         })
         if start + target_tokens >= len(tokens):
             break

@@ -23,6 +23,8 @@ def write_jsonl(path, records):
         out = {f: rec[f] for f in FIELDS}
         if locator:
             out["locator"] = locator
+        if rec.get("quality"):
+            out["quality"] = rec["quality"]
         validated.append(out)
 
     with open(path, "w", encoding="utf-8") as fh:
