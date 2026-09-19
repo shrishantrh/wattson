@@ -176,3 +176,14 @@ export function useRegionDetails(ids) {
 }
 export const nightSeries = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; return g?.cf_share ? ['2019', '2020', '2021', '2022', '2023', '2024', '2025'].map(y => g.cf_share[y]?.overnight ?? null) : null }
 export const hourProfile = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; return g?.profile_24h?.['2025'] || g?.profile_24h || null }
+
+// ---------- irradiance (satellite overlay) ----------
+// Same resolution order as everything else: live API, then the static export, then a
+// fixture. The screen must render from the export with no server.
+export async function loadIrradiance() {
+  return tryEach([
+    ...(api ? [() => getJSON(`${api}/api/irradiance`)] : []),
+    () => staticExport('irradiance'),
+    () => fixture('irradiance'),
+  ])
+}

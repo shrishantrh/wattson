@@ -20,6 +20,7 @@ export const href = {
   found: s => (s ? `#/found?s=${s}` : '#/found'),
   region: id => `#/region/${encodeURIComponent(id)}`,
   method: () => '#/method',
+  irradiance: () => '#/irradiance',
   screen: by => (by ? `#/screen?by=${by}` : '#/screen'),
   alerts: () => '#/alerts',
   companies: () => '#/companies',

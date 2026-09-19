@@ -15,6 +15,8 @@ export const GROUP = { company: 'Check a company', compare: 'Compare places', pl
 // Scenes of the evidence page (Found.jsx) and the screener presets (Screener.jsx). Kept here so
 // the palette does not import page modules.
 export const SCENES = [['headline', 'The finding'], ['night', 'At night'], ['sweep', 'Day vs night'], ['detector', 'Where load is landing']]
+// Satellite irradiance overlay: why the day cleaned up and the night did not.
+export const IRRADIANCE = ['irradiance', 'Why the day got clean and the night did not']
 export const SCREENS = [['rising', 'New flat load rising'], ['cleanest', 'Cleanest at night'], ['dirtiest', 'Dirtiest at night'], ['worsening', 'Getting worse fastest'], ['improving', 'Improving fastest']]
 
 // View toggles. The shell (console/Console.jsx) and demo mode (demo/DemoMode.jsx) listen for
