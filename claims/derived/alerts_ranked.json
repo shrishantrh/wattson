@@ -151,29 +151,6 @@
       }
     },
     {
-      "region": "PACW",
-      "rule": "gas_share_up_3pts_yoy",
-      "threshold": 0.03,
-      "baseline_2019": null,
-      "unit": "share",
-      "first_crossed": "2025-05",
-      "active": true,
-      "months_active_streak": 17,
-      "latest_month": "2026-09",
-      "current_value": 0.4342209825677963,
-      "current_value_yoy_delta": 0.35067025645002425,
-      "name": "PacifiCorp - West",
-      "description": "Overnight gas share (trailing 12 months) up at least 3 points year over year",
-      "severity": 0.17016380724812163,
-      "severity_factors": {
-        "magnitude": 0.3206702564500242,
-        "persistence": 0.7083333333333334,
-        "recency": 0.7491535384383408,
-        "neutral_applied": []
-      },
-      "data_caveat": "Computed on a trailing-12 window ending 2026-09, one month past the 2026-08 window every other rule uses. The data snapshot ends 2026-09-05, so 2026-09 is a partial month, and CLAUDE.md's frozen decisions drop partial months from trailing-12 series. Value is likely biased."
-    },
-    {
       "region": "SWPP/GRDA",
       "rule": "demand_up_20pct",
       "threshold": 794,
@@ -455,6 +432,27 @@
         "recency": 0.2314686780718226,
         "neutral_applied": []
       }
+    },
+    {
+      "region": "PNM/PNM",
+      "rule": "demand_up_20pct",
+      "threshold": 1053,
+      "baseline_2019": 878,
+      "unit": "MW",
+      "first_crossed": "2025-07",
+      "active": true,
+      "months_active_streak": 14,
+      "latest_month": "2026-08",
+      "current_value": 1096.2800319764037,
+      "name": "PNM System Firm Load",
+      "description": "Overnight demand (trailing 12 months) at least 20% above 2019",
+      "severity": 0.022387447211596634,
+      "severity_factors": {
+        "magnitude": 0.04929388607790858,
+        "persistence": 0.5833333333333334,
+        "recency": 0.7785647265364468,
+        "neutral_applied": []
+      }
     }
   ],
   "withheld_for_review": [
@@ -478,7 +476,32 @@
         "recency": 0.2184773394223818,
         "neutral_applied": []
       },
-      "data_caveat": "Overnight clean share reads ~0.15 in 2025 against 0.62 in 2019 and overnight clean generation reads ~356 MW against a 3,373 MW 2019 baseline. CLAUDE.md records this as almost certainly a reporting change, not a real collapse. Demand-side AZPS numbers are sound and are still ranked."
+      "withheld_reason": "suspect_generation_reporting",
+      "data_caveat": "Overnight clean share reads ~0.15 in 2025 against 0.62 in 2019 and overnight clean generation ~356 MW against a 3,373 MW 2019 baseline. CLAUDE.md records this as almost certainly a reporting change, not a real collapse; no real grid loses 87% of its clean generation. AZPS's DEMAND-side numbers are sound and still rank: it holds detector rank 3 on demand evidence alone."
+    },
+    {
+      "region": "PACW",
+      "rule": "gas_share_up_3pts_yoy",
+      "threshold": 0.03,
+      "baseline_2019": null,
+      "unit": "share",
+      "first_crossed": "2025-05",
+      "active": true,
+      "months_active_streak": 17,
+      "latest_month": "2026-09",
+      "current_value": 0.4342209825677963,
+      "current_value_yoy_delta": 0.35067025645002425,
+      "name": "PacifiCorp - West",
+      "description": "Overnight gas share (trailing 12 months) up at least 3 points year over year",
+      "severity": 0.17016380724812163,
+      "severity_factors": {
+        "magnitude": 0.3206702564500242,
+        "persistence": 0.7083333333333334,
+        "recency": 0.7491535384383408,
+        "neutral_applied": []
+      },
+      "withheld_reason": "partial_month_2026_09",
+      "data_caveat": "Computed on a trailing-12 window ending 2026-09, one month past the 2026-08 window every other rule uses. The data snapshot ends 2026-09-05, so 2026-09 holds five days, and CLAUDE.md's frozen decisions drop partial months from trailing-12 series. A five-day number must not sit beside full-month numbers on one screen. Root cause is in scripts/export_json.py and cannot be fixed here: nothing on this machine can run the pipeline."
     },
     {
       "region": "AZPS",
@@ -500,14 +523,135 @@
         "recency": 0.22272467953508485,
         "neutral_applied": []
       },
-      "data_caveat": "Overnight clean share reads ~0.15 in 2025 against 0.62 in 2019 and overnight clean generation reads ~356 MW against a 3,373 MW 2019 baseline. CLAUDE.md records this as almost certainly a reporting change, not a real collapse. Demand-side AZPS numbers are sound and are still ranked."
+      "withheld_reason": "suspect_generation_reporting",
+      "data_caveat": "Overnight clean share reads ~0.15 in 2025 against 0.62 in 2019 and overnight clean generation ~356 MW against a 3,373 MW 2019 baseline. CLAUDE.md records this as almost certainly a reporting change, not a real collapse; no real grid loses 87% of its clean generation. AZPS's DEMAND-side numbers are sound and still rank: it holds detector rank 3 on demand evidence alone."
+    },
+    {
+      "region": "LDWP",
+      "rule": "gas_share_up_3pts_yoy",
+      "threshold": 0.03,
+      "baseline_2019": null,
+      "unit": "share",
+      "first_crossed": "2020-06",
+      "active": true,
+      "months_active_streak": 9,
+      "latest_month": "2026-09",
+      "current_value": 0.6838468359918988,
+      "current_value_yoy_delta": 0.19702980956549537,
+      "name": "Los Angeles Department of Water and Power",
+      "description": "Overnight gas share (trailing 12 months) up at least 3 points year over year",
+      "severity": 0.015067506022107121,
+      "severity_factors": {
+        "magnitude": 0.16702980956549537,
+        "persistence": 0.375,
+        "recency": 0.24055595922353623,
+        "neutral_applied": []
+      },
+      "withheld_reason": "partial_month_2026_09",
+      "data_caveat": "Computed on a trailing-12 window ending 2026-09, one month past the 2026-08 window every other rule uses. The data snapshot ends 2026-09-05, so 2026-09 holds five days, and CLAUDE.md's frozen decisions drop partial months from trailing-12 series. A five-day number must not sit beside full-month numbers on one screen. Root cause is in scripts/export_json.py and cannot be fixed here: nothing on this machine can run the pipeline."
+    },
+    {
+      "region": "PNM",
+      "rule": "gas_share_up_3pts_yoy",
+      "threshold": 0.03,
+      "baseline_2019": null,
+      "unit": "share",
+      "first_crossed": "2020-09",
+      "active": true,
+      "months_active_streak": 3,
+      "latest_month": "2026-09",
+      "current_value": 0.2907704737403025,
+      "current_value_yoy_delta": 0.06740514362575323,
+      "name": "Public Service Company of New Mexico",
+      "description": "Overnight gas share (trailing 12 months) up at least 3 points year over year",
+      "severity": 0.0011916351154877829,
+      "severity_factors": {
+        "magnitude": 0.03740514362575323,
+        "persistence": 0.125,
+        "recency": 0.2548601609255362,
+        "neutral_applied": []
+      },
+      "withheld_reason": "partial_month_2026_09",
+      "data_caveat": "Computed on a trailing-12 window ending 2026-09, one month past the 2026-08 window every other rule uses. The data snapshot ends 2026-09-05, so 2026-09 holds five days, and CLAUDE.md's frozen decisions drop partial months from trailing-12 series. A five-day number must not sit beside full-month numbers on one screen. Root cause is in scripts/export_json.py and cannot be fixed here: nothing on this machine can run the pipeline."
+    },
+    {
+      "region": "AECI",
+      "rule": "gas_share_up_3pts_yoy",
+      "threshold": 0.03,
+      "baseline_2019": null,
+      "unit": "share",
+      "first_crossed": "2020-06",
+      "active": true,
+      "months_active_streak": 3,
+      "latest_month": "2026-09",
+      "current_value": 0.36864304491338146,
+      "current_value_yoy_delta": 0.04826077707361026,
+      "name": "Associated Electric Cooperative, Inc.",
+      "description": "Overnight gas share (trailing 12 months) up at least 3 points year over year",
+      "severity": 0.0005490923431386844,
+      "severity_factors": {
+        "magnitude": 0.018260777073610263,
+        "persistence": 0.125,
+        "recency": 0.24055595922353623,
+        "neutral_applied": []
+      },
+      "withheld_reason": "partial_month_2026_09",
+      "data_caveat": "Computed on a trailing-12 window ending 2026-09, one month past the 2026-08 window every other rule uses. The data snapshot ends 2026-09-05, so 2026-09 holds five days, and CLAUDE.md's frozen decisions drop partial months from trailing-12 series. A five-day number must not sit beside full-month numbers on one screen. Root cause is in scripts/export_json.py and cannot be fixed here: nothing on this machine can run the pipeline."
+    },
+    {
+      "region": "SCEG",
+      "rule": "gas_share_up_3pts_yoy",
+      "threshold": 0.03,
+      "baseline_2019": null,
+      "unit": "share",
+      "first_crossed": "2020-06",
+      "active": true,
+      "months_active_streak": 3,
+      "latest_month": "2026-09",
+      "current_value": 0.48177533856614424,
+      "current_value_yoy_delta": 0.04715207175539293,
+      "name": "South Carolina Electric & Gas Company",
+      "description": "Overnight gas share (trailing 12 months) up at least 3 points year over year",
+      "severity": 0.0005157541342236837,
+      "severity_factors": {
+        "magnitude": 0.017152071755392934,
+        "persistence": 0.125,
+        "recency": 0.24055595922353623,
+        "neutral_applied": []
+      },
+      "withheld_reason": "partial_month_2026_09",
+      "data_caveat": "Computed on a trailing-12 window ending 2026-09, one month past the 2026-08 window every other rule uses. The data snapshot ends 2026-09-05, so 2026-09 holds five days, and CLAUDE.md's frozen decisions drop partial months from trailing-12 series. A five-day number must not sit beside full-month numbers on one screen. Root cause is in scripts/export_json.py and cannot be fixed here: nothing on this machine can run the pipeline."
+    },
+    {
+      "region": "WALC",
+      "rule": "gas_share_up_3pts_yoy",
+      "threshold": 0.03,
+      "baseline_2019": null,
+      "unit": "share",
+      "first_crossed": "2020-06",
+      "active": true,
+      "months_active_streak": 4,
+      "latest_month": "2026-09",
+      "current_value": 0.49886707125867935,
+      "current_value_yoy_delta": 0.03482548076991221,
+      "name": "Western Area Power Administration - Desert Southwest Region",
+      "description": "Overnight gas share (trailing 12 months) up at least 3 points year over year",
+      "severity": 0.00019346635922015996,
+      "severity_factors": {
+        "magnitude": 0.00482548076991221,
+        "persistence": 0.16666666666666666,
+        "recency": 0.24055595922353623,
+        "neutral_applied": []
+      },
+      "withheld_reason": "partial_month_2026_09",
+      "data_caveat": "Computed on a trailing-12 window ending 2026-09, one month past the 2026-08 window every other rule uses. The data snapshot ends 2026-09-05, so 2026-09 holds five days, and CLAUDE.md's frozen decisions drop partial months from trailing-12 series. A five-day number must not sit beside full-month numbers on one screen. Root cause is in scripts/export_json.py and cannot be fixed here: nothing on this machine can run the pipeline."
     }
   ],
   "dropped": {
     "inactive": 57,
     "excluded_region": 0,
     "record_high_not_top10": 42,
-    "deduped_same_region": 24,
-    "over_limit": 17
+    "deduped_same_region": 22,
+    "over_limit": 13
   }
 }

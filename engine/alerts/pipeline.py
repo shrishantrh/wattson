@@ -35,10 +35,10 @@ def build(limit: int = DEFAULT_LIMIT) -> dict:
     # reason instead of vanishing into the dedupe count.
     ranked = rank(feed["alerts"], regions, limit=limit,
                   as_of_month=feed_latest_month,
-                  withhold=quality.is_artificial)
+                  withhold=lambda a: quality.should_withhold(a, feed_latest_month))
 
-    kept, _ = quality.partition(ranked["alerts"], feed_latest_month)
-    _, withheld = quality.partition(ranked["withheld"], feed_latest_month)
+    kept = quality.annotate(ranked["alerts"], feed_latest_month)
+    withheld = quality.annotate(ranked["withheld"], feed_latest_month)
 
     return {
         "generated_from": feed.get("generated"),

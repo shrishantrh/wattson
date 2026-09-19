@@ -85,3 +85,19 @@ def test_suspect_generation_alerts_are_withheld_not_silently_dropped(result):
     withheld = result["withheld_for_review"]
     assert withheld, "expected AZPS generation-side alerts to be withheld"
     assert all(a["data_caveat"] for a in withheld)
+    assert all(a["withheld_reason"] for a in withheld)
+
+
+def test_no_ranked_alert_is_computed_past_the_feeds_latest_month(result):
+    """Every survivor shares one trailing-12 window."""
+    latest = result["latest_month"]
+    for a in result["alerts"]:
+        if a.get("latest_month") is not None:
+            assert a["latest_month"] <= latest
+
+
+def test_all_six_partial_month_gas_alerts_are_withheld(result):
+    held = [a for a in result["withheld_for_review"]
+            if a["withheld_reason"] == "partial_month_2026_09"]
+    assert {a["region"] for a in held} == {
+        "LDWP", "WALC", "SCEG", "PACW", "AECI", "PNM"}

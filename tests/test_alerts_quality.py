@@ -75,15 +75,33 @@ def test_alert_on_the_feeds_latest_month_is_not_caveated():
     assert q.caveat_for(a, feed_latest_month="2026-08") is None
 
 
-def test_partial_month_alerts_are_caveated_but_still_ranked():
-    """A different window is questionable, not clearly artificial."""
+def test_partial_month_alerts_are_withheld():
+    """Five days of data must not sit beside full-month numbers on one screen."""
     a = alert(region="LDWP", rule="gas_share_up_3pts_yoy",
               latest_month="2026-09", threshold=0.03,
               current_value_yoy_delta=0.20, baseline_2019=None)
     kept, withheld = q.partition([a], feed_latest_month="2026-08")
-    assert [x["region"] for x in kept] == ["LDWP"]
-    assert withheld == []
-    assert kept[0]["data_caveat"]
+    assert kept == []
+    assert [x["region"] for x in withheld] == ["LDWP"]
+
+
+def test_partial_month_withholding_carries_a_machine_readable_reason():
+    a = alert(region="LDWP", rule="gas_share_up_3pts_yoy",
+              latest_month="2026-09", threshold=0.03,
+              current_value_yoy_delta=0.20, baseline_2019=None)
+    _, withheld = q.partition([a], feed_latest_month="2026-08")
+    assert withheld[0]["withheld_reason"] == "partial_month_2026_09"
+
+
+def test_suspect_generation_withholding_carries_its_own_reason():
+    a = alert(region="AZPS", rule="clean_mw_below_2019")
+    _, withheld = q.partition([a], feed_latest_month="2026-08")
+    assert withheld[0]["withheld_reason"] == "suspect_generation_reporting"
+
+
+def test_clean_alert_carries_no_withheld_reason():
+    kept, _ = q.partition([alert()], feed_latest_month="2026-08")
+    assert "withheld_reason" not in kept[0]
 
 
 def test_structural_alert_without_a_month_is_not_caveated():
