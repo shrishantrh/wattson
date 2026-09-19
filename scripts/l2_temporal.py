@@ -72,6 +72,10 @@ def build(loc: pd.DataFrame):
     # trailing 12 months: monthly sums per BA, rolled; national = sum across BAs first
     stacked["month"] = stacked.year.astype(str) + "-" + stacked.local_month.astype(str).str.zfill(2)
     monthly = aggregate(stacked, ["ba", "period", "month"])
+    # drop partial months (the snapshot ends 2026-09-05): require 90% of the hours the period has in that month
+    days = pd.to_datetime(monthly.month + "-01").dt.days_in_month
+    per_day = monthly.period.map({"all": 24, "overnight": 6, "daytime": 6})
+    monthly = monthly[monthly.hours >= 0.9 * days * per_day]
     nat_m = monthly.groupby(["period", "month"], observed=True)[["hours", "cf_mwh", "total_mwh"]].agg(
         {"hours": "max", "cf_mwh": "sum", "total_mwh": "sum"}).reset_index().assign(ba="US")
     # national hours = max BA hours in that month (a BA-hour count), MW = MWh / hours

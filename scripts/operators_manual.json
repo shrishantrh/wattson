@@ -1,0 +1,58 @@
+{
+  "_note": "HAND-MAPPED from public utility service-territory information, September 2026. Not derived from the data. Tickers are the listed parent where one exists; public power, co-ops and federal marketers have none. This is a who-serves-the-load table, not an investment view.",
+  "ERCO/NRTH": [
+    {"utility": "Oncor Electric Delivery", "role": "transmission & distribution", "parent": "Sempra", "ticker": "SRE"},
+    {"utility": "AEP Texas North", "role": "transmission & distribution", "parent": "American Electric Power", "ticker": "AEP"},
+    {"utility": "Vistra", "role": "generation (ERCOT-wide)", "parent": "Vistra Corp", "ticker": "VST"},
+    {"utility": "NRG Energy", "role": "generation (ERCOT-wide)", "parent": "NRG Energy", "ticker": "NRG"}
+  ],
+  "ERCO/FWES": [
+    {"utility": "Oncor Electric Delivery", "role": "transmission & distribution", "parent": "Sempra", "ticker": "SRE"},
+    {"utility": "AEP Texas North", "role": "transmission & distribution", "parent": "American Electric Power", "ticker": "AEP"},
+    {"utility": "Texas-New Mexico Power", "role": "transmission & distribution", "parent": "TXNM Energy", "ticker": "TXNM"},
+    {"utility": "Vistra", "role": "generation (ERCOT-wide)", "parent": "Vistra Corp", "ticker": "VST"}
+  ],
+  "AZPS": [
+    {"utility": "Arizona Public Service", "role": "vertically integrated", "parent": "Pinnacle West Capital", "ticker": "PNW"}
+  ],
+  "TEPC": [
+    {"utility": "Tucson Electric Power", "role": "vertically integrated", "parent": "Fortis Inc. (via UNS Energy)", "ticker": "FTS"}
+  ],
+  "WACM": [
+    {"utility": "Western Area Power Administration, Rocky Mountain Region", "role": "federal power marketer / BA operator", "parent": "U.S. Department of Energy", "ticker": null},
+    {"utility": "Tri-State Generation and Transmission", "role": "generation & transmission cooperative", "parent": "member-owned", "ticker": null},
+    {"utility": "Black Hills Colorado Electric / Cheyenne Light", "role": "distribution", "parent": "Black Hills Corp", "ticker": "BKH"},
+    {"utility": "Colorado Springs Utilities", "role": "municipal", "parent": "City of Colorado Springs", "ticker": null}
+  ],
+  "PJM/DOM": [
+    {"utility": "Virginia Electric and Power (Dominion Energy Virginia)", "role": "vertically integrated", "parent": "Dominion Energy", "ticker": "D"},
+    {"utility": "Northern Virginia Electric Cooperative (NOVEC)", "role": "distribution cooperative", "parent": "member-owned", "ticker": null}
+  ],
+  "SWPP/OPPD": [
+    {"utility": "Omaha Public Power District", "role": "public power, vertically integrated", "parent": "public (Nebraska)", "ticker": null}
+  ],
+  "ERCO": [
+    {"utility": "Oncor Electric Delivery", "role": "transmission & distribution", "parent": "Sempra", "ticker": "SRE"},
+    {"utility": "CenterPoint Energy Houston Electric", "role": "transmission & distribution", "parent": "CenterPoint Energy", "ticker": "CNP"},
+    {"utility": "AEP Texas", "role": "transmission & distribution", "parent": "American Electric Power", "ticker": "AEP"},
+    {"utility": "Vistra", "role": "generation", "parent": "Vistra Corp", "ticker": "VST"},
+    {"utility": "NRG Energy", "role": "generation", "parent": "NRG Energy", "ticker": "NRG"},
+    {"utility": "Constellation Energy", "role": "generation (Calpine acquisition announced 2025)", "parent": "Constellation Energy", "ticker": "CEG"}
+  ],
+  "SC": [
+    {"utility": "Santee Cooper (South Carolina Public Service Authority)", "role": "state-owned, vertically integrated", "parent": "State of South Carolina", "ticker": null},
+    {"utility": "Central Electric Power Cooperative", "role": "G&T cooperative (Santee Cooper's largest customer)", "parent": "member-owned", "ticker": null}
+  ],
+  "CISO/SDGE": [
+    {"utility": "San Diego Gas & Electric", "role": "transmission & distribution", "parent": "Sempra", "ticker": "SRE"}
+  ],
+  "PJM/AEP": [
+    {"utility": "AEP Ohio, Appalachian Power, Indiana Michigan Power, Kentucky Power", "role": "distribution (AEP East zone)", "parent": "American Electric Power", "ticker": "AEP"}
+  ],
+  "PJM": [
+    {"utility": "Constellation Energy", "role": "generation (largest nuclear fleet in PJM)", "parent": "Constellation Energy", "ticker": "CEG"},
+    {"utility": "Vistra", "role": "generation", "parent": "Vistra Corp", "ticker": "VST"},
+    {"utility": "Talen Energy", "role": "generation", "parent": "Talen Energy", "ticker": "TLN"},
+    {"utility": "Dominion Energy Virginia", "role": "vertically integrated (DOM zone)", "parent": "Dominion Energy", "ticker": "D"}
+  ]
+}
