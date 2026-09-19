@@ -47,14 +47,14 @@ export default function NearbyModule({ regions, regionId, loadMW = 300, k = 3 })
       </div>
       {caveat && <div className="nb-caveat">{caveat}</div>}
       <div className="nb-nums">
-        <Num num={from.fossilMW != null ? Math.round(from.fossilMW) : undefined} value="—" format={mwFmt} label={`fossil MW of ${n0(load)} here`} sub={`${pct0(from.share)} clean at night, 2025`} accent />
+        <Num num={from.fossilMW != null ? Math.round(from.fossilMW) : undefined} value="—" format={mwFmt} label={`fossil MW of a ${n0(load)} MW load here`} sub={`${pct0(from.share)} clean at night, 2025`} accent />
         {best
           ? <Num num={Math.round(best.fossilMW)} format={mwFmt} label={`fossil MW at ${best.label}`} sub={`${pct0(best.share)} clean, ${n0(best.miles)} miles away`} />
           : <Num value={outside ? `${n0(outside.miles)} mi` : '—'} label={outside ? `to the nearest cleaner grid, ${outside.label}` : 'no cleaner grid in the data'} sub={outside ? `${pct0(outside.share)} clean at night` : null} />}
       </div>
       {(candidates.length > 0 || excluded.length > 0 || outside) && (
         <div className="nb-rows">
-          <div className="nb-row nb-hdr" aria-hidden="true"><span>{candidates.length ? `cleaner grids within ${n0(radius)} miles` : 'nearest cleaner grid'}</span><span>distance</span><span>clean at night</span><span>fossil MW of {n0(load)}</span></div>
+          <div className="nb-row nb-hdr" aria-hidden="true"><span>{candidates.length ? `cleaner grids within ${n0(radius)} miles` : 'nearest cleaner grid'}</span><span>distance</span><span>clean at night</span><span>fossil MW</span></div>
           {candidates.map(c => <Row key={c.id} c={c} />)}
           {excluded.map(c => <Row key={c.id} c={c} mark="data flagged" dim />)}
           {!candidates.length && outside && <Row c={outside} mark={`beyond ${n0(radius)} mi`} />}

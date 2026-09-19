@@ -106,7 +106,6 @@
 @media (max-width: 380px) {
   .nums { grid-template-columns: 1fr; gap: 12px; }
   .pair { grid-template-columns: 1fr; }
-  .hero-q { font-size: 26px; }
   .quick { max-width: 55%; }
 }
 

@@ -74,7 +74,8 @@ export default function Region({ route }) {
   const eyebrow = <><b>{s.place || s.label}</b>{s.grid ? ` · ${s.grid} grid` : ''}</>
   const column = (
     <>
-      <Card title={eyebrow} right={facts.length > 0 && <span style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>{facts.map(f => <Chip key={f.key} small dim>{f.text}</Chip>)}</span>} onClose={back}>
+      <Card title={eyebrow} onClose={back}>
+        {facts.length > 0 && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>{facts.map(f => <Chip key={f.key} small dim>{f.text}</Chip>)}</div>}
         <h1 className="verdict">{t.title}</h1>
         <div className="nums" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
           <Num num={s.night2025 != null ? s.night2025 * 100 : undefined} value="—" format={pctFmt} label="clean at night, 2025" accent />

@@ -20,7 +20,6 @@ export const SCREENS = [['rising', 'New flat load rising'], ['cleanest', 'Cleane
 // View toggles. The shell (console/Console.jsx) and demo mode (demo/DemoMode.jsx) listen for
 // window 'wattson:toggle' events with detail.key set to one of these.
 export const TOGGLES = [
-  { key: '2d', label: 'Toggle 2D map', hint: 'globe / flat', keywords: ['flat', 'map', 'globe', '3d'] },
   { key: 'night', label: 'Toggle night lights', hint: 'day-night line', keywords: ['terminator', 'dark', 'lights', 'sun'] },
   { key: 'demo', label: 'Toggle demo mode', hint: 'd', keywords: ['walkthrough', 'present', 'scenes'] },
 ]
