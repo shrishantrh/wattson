@@ -89,3 +89,109 @@ def test_timeframe_only_claim_stays_a_dated_commitment():
     c = claim(verbatim="We will reach this goal by the end of the decade.",
               timeframe="end of the decade")
     assert C.evidence_class(c) == "dated_commitment"
+
+
+# --- deterministic falsifiability cap --------------------------------------
+
+def test_uncheckable_claim_is_capped():
+    """No quantity, no date: uncheckable by the definition of falsifiability."""
+    c = claim(verbatim="The selected mix has been poured in our newest data "
+                       "centers, including in slab-on-grade applications.",
+              falsifiability=0.9)
+    out = C.apply_cap(c)
+    assert out["falsifiability"] == C.UNCHECKABLE_CAP
+    assert out["falsifiability_model"] == 0.9
+    assert out["falsifiability_capped"] is True
+
+
+def test_cap_never_raises_a_score_that_was_already_low():
+    c = claim(verbatim="We strive to be a leader.", falsifiability=0.05)
+    out = C.apply_cap(c)
+    assert out["falsifiability"] == 0.05
+    assert out["falsifiability_capped"] is False
+
+
+def test_claim_with_a_quantity_is_not_capped():
+    c = claim(verbatim="We matched 100% of our electricity with renewables.",
+              falsifiability=0.95)
+    assert C.apply_cap(c)["falsifiability"] == 0.95
+
+
+def test_claim_with_a_magnitude_is_not_capped():
+    c = claim(magnitude=62.0, verbatim="no digits", falsifiability=0.95)
+    assert C.apply_cap(c)["falsifiability"] == 0.95
+
+
+def test_dated_commitment_without_a_number_is_not_capped():
+    """A deadline can be missed, so it is checkable."""
+    c = claim(verbatim="We will operate on carbon-free energy by then.",
+              timeframe="by 2030", falsifiability=0.8)
+    assert C.apply_cap(c)["falsifiability"] == 0.8
+
+
+def test_the_original_score_is_always_preserved():
+    for f in (0.9, 0.05):
+        c = claim(verbatim="Concrete nouns, no quantity.", falsifiability=f)
+        assert C.apply_cap(c)["falsifiability_model"] == f
+
+
+def test_capping_is_applied_by_annotate():
+    c = claim(verbatim="We partnered with a named vendor on a named project.",
+              falsifiability=0.9)
+    assert C.annotate([c])[0]["falsifiability"] == C.UNCHECKABLE_CAP
+
+
+def test_cap_matches_the_qualitative_class_exactly():
+    """The cap fires on precisely the claims evidence_class calls qualitative."""
+    cases = [claim(verbatim="No quantity here at all.", falsifiability=0.9),
+             claim(verbatim="We hit 100%.", falsifiability=0.9),
+             claim(timeframe="2030", verbatim="No number.", falsifiability=0.9)]
+    for c in cases:
+        capped = C.apply_cap(c)["falsifiability_capped"]
+        assert capped == (C.evidence_class(c) == "qualitative")
+
+
+# --- quantity detection must ignore digits inside words --------------------
+
+def test_digit_inside_an_organisation_name_is_not_a_quantity():
+    """'C2ES' and a footnote marker exempted a membership list from the cap."""
+    v = ("This includes membership in the: - Beyond Alliance - Clean Energy "
+         "Buyers Alliance - American Council on Renewable Energy (ACORE) - C2ES")
+    assert C.has_quantity(v) is False
+
+
+def test_footnote_marker_glued_to_a_word_is_not_a_quantity():
+    assert C.has_quantity("Members of the Clean Grid Alliance3") is False
+
+
+def test_standalone_number_is_a_quantity():
+    assert C.has_quantity("saved over 1,420 kilograms of plastic") is True
+
+
+def test_percentage_is_a_quantity():
+    assert C.has_quantity("We matched 100% of our electricity") is True
+
+
+def test_decimal_is_a_quantity():
+    assert C.has_quantity("avoided 41.2 million metric tons") is True
+
+
+def test_membership_list_is_now_capped():
+    v = ("This includes membership in the: - Beyond Alliance - Clean Energy "
+         "Buyers Alliance - C2ES - Clean Grid Alliance3")
+    out = C.apply_cap(claim(verbatim=v, falsifiability=0.9))
+    assert out["falsifiability"] == C.UNCHECKABLE_CAP
+
+
+def test_capping_is_idempotent():
+    """Reclassify runs repeatedly; the model's original score must survive.
+
+    A second pass that reads the already-capped `falsifiability` back into
+    `falsifiability_model` destroys the only record of what the model said.
+    """
+    c = claim(verbatim="Concrete nouns, no quantity, no date.", falsifiability=0.9)
+    once = C.apply_cap(c)
+    twice = C.apply_cap(once)
+    assert twice["falsifiability_model"] == 0.9
+    assert twice["falsifiability"] == C.UNCHECKABLE_CAP
+    assert C.apply_cap(twice) == twice

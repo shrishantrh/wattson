@@ -59,9 +59,9 @@
     "10k": 5
   },
   "evidence_class": {
-    "quantified": 165,
-    "dated_commitment": 17,
-    "qualitative": 58
+    "quantified": 157,
+    "dated_commitment": 23,
+    "qualitative": 60
   },
   "evidence_class_note": "Computed from the model's own returned fields; it never changes the model's falsifiability score. The score alone is not safe to sort on: the model rates specific-sounding activity statements highly even with no number and no date. Filter to 'quantified' for anything shown next to a grid figure.",
   "verbatim_check": {
@@ -98,7 +98,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "While AI infrastructure is driving demand for energy, water, land, and materials, sustainability solutions are not scaling fast enough to meet demand.",
@@ -122,7 +124,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our aim is to build technology that gives more than it takes.",
@@ -148,7 +152,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our total emissions (Scopes 1, 2, and 3) increased 25% year over year, driven primarily by the expansion of our datacenter infrastructure and pausing our use of non-additional, unbundled renewable energy certificates as we prioritize investments that bring net new power to grids.",
@@ -172,7 +178,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Scope 3 remains the largest share of our footprint overall, but one of the clearest changes this year was the growing contribution of Scope 2, which represents 13% of our total emissions\u2014up from nearly 2% last year.",
@@ -196,7 +204,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "0.07% Reduced single-use plastics in primary packaging to 0.07% across our global portfolio.4",
@@ -220,7 +230,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we matched 100% of our annual global electricity consumption with renewable energy.2",
@@ -244,7 +256,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we replenished for the first time more water globally than we withdrew\u2014more than 14 million cubic meters\u2014marking a major milestone on our journey to become water positive.",
@@ -268,7 +282,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft has eliminated nearly all single-use plastics in our primary product packaging, reducing the share that remained to just 0.07% at the end of calendar year 2025.4",
@@ -292,7 +308,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Across our cloud operations, we achieved 92% reuse and recycling of decommissioned servers and components for the second consecutive year, diverted 90.5% of construction and demolition waste from landfills and incinerators, and expanded our Circular Centers to seven facilities globally.",
@@ -316,7 +334,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022\u0000 Become carbon negative by 2030 by reducing emissions across our operations and value chain, and removing more carbon than we emit.",
@@ -340,7 +360,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022\u0000 Become water positive by 2030 by reducing water use, replenishing more than we withdraw, expanding access to water and sanitation, and supporting stronger water stewardship.",
@@ -364,7 +386,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022\u0000 Become zero waste by 2030 by reducing waste at the source, keeping products and materials in use longer, and recovering what remains.",
@@ -388,7 +412,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022\u0000 Protect ecosystems by applying data and digital technologies and protecting more land than we use by 2025.",
@@ -412,7 +438,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This year, we are expanding transparency through the addition of metro- level datacenter energy and water use, providing greater insight into how our operations interact with local resources and communities.",
@@ -436,7 +464,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we added 29 projects to our CDR portfolio, spanning five continents and 10 distinct CDR pathways.",
@@ -460,7 +490,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2020, we launched Microsoft\u2019s Climate Innovation Fund, a $1 billion investment mandate designed to help promising sustainability solutions move toward commercial scale.",
@@ -484,7 +516,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since then, we have allocated $815 million to a portfolio of 67 investees, who collectively have attracted billions of dollars in follow-on capital for solutions including lower- carbon materials, sustainable aviation fuels, and carbon-free electricity (CFE).3",
@@ -508,7 +542,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We expect these projects to contribute more than 45 million metric tons toward Microsoft\u2019s carbon goals over the next three decades.",
@@ -532,7 +568,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also structure long-term purchase agreements based on the maturity and scale potential of different CDR pathways\u2014often 10 to 15 years for engineered solutions and more than 20 years for nature-based projects\u2014helping suppliers secure financing, improve revenue certainty, and expand deployment.",
@@ -556,7 +594,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We use water usage effectiveness (WUE)12 to help measure and improve the efficiency of water used for datacenter cooling and humidification.",
@@ -580,7 +620,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through continuous innovation\u2014including advanced cooling technologies, increased use of recycled and reclaimed water, and next-generation designs that can eliminate most water use for cooling\u2014we are driving sustained improvements in WUE and, in some cases, working toward near-zero water consumption in our datacenters.",
@@ -590,7 +632,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our datacenters",
-      "falsifiability": 0.35,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "aspirational_verb",
         "unbounded_timeframe"
@@ -607,7 +649,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.35,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Through Microsoft\u2019s Community-First AI Infrastructure plan, we work with local jurisdictions, utilities, nonprofits, and community partners to better align datacenter growth with community needs.",
@@ -633,7 +677,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Across our supply chain, we work with suppliers to lower barriers to decarbonization.",
@@ -659,7 +705,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In partnership with Wild Nature Institute, we developed GIRAFFE, an open-source tool to help conservationists track and protect Tanzania\u2019s endangered giraffes.",
@@ -683,7 +731,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, Microsoft launched its Datacenter Community Pledge to set expectations for how we design, build, and operate infrastructure in ways that create tangible local benefits.",
@@ -693,7 +743,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "datacenters",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 15,
@@ -707,7 +757,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "In 2026, we built on that foundation with our Community-First AI Infrastructure plan, which responds more directly to the priorities that communities most often raise as new AI infrastructure grows.",
@@ -717,7 +769,7 @@
       "unit": null,
       "timeframe": null,
       "scope": null,
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 15,
@@ -731,7 +783,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "\u2022\u0000 Electricity\u2014We will work with local jurisdictions so our datacenters do not increase electricity prices for customers.",
@@ -741,7 +795,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our datacenters",
-      "falsifiability": 0.7,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "aspirational_verb",
         "vague_commitment"
@@ -758,7 +812,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.7,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "\u2022\u0000 Water\u2014We will minimize water use and replenish water in priority regions.",
@@ -786,7 +842,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In support of our carbon targets, we are working to reduce the embodied carbon5 of each project design by 30% from our baseline datacenter design.",
@@ -813,7 +871,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have also piloted constructing datacenters with hybrid mass timber, a strong and ultralightweight wood, which has demonstrated a reduction up to 35% in structural embodied carbon7 compared to datacenters designed with conventional steel frames.",
@@ -837,7 +897,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Up to 35% reduction in structural embodied carbon with our hybrid mass timber datacenters.",
@@ -861,7 +923,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.88,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "For example, our multi-story datacenters can reduce embodied carbon by 15\u201325% and use less land than our standard design.",
@@ -888,7 +952,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We expect this design to avoid the need for more than 125 million liters of water per year, per datacenter.",
@@ -912,7 +978,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft designs new datacenters worldwide to achieve LEED Gold certification. In 2025, 25 Microsoft datacenter projects achieved this, bringing our global total to 80 certified projects.",
@@ -936,7 +1004,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We remain the only large-scale cloud services provider participating in the LEED Volume Program, which is designed to ensure consistent performance across sites.",
@@ -946,7 +1016,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "large-scale cloud services providers participating in the LEED Volume Program",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 18,
@@ -960,7 +1030,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "In 2024, we introduced a new cooling system design that brings liquid coolants directly to our servers\u2019 chips, where the heat is generated.",
@@ -970,7 +1042,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our datacenters",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 18,
@@ -984,7 +1056,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "This approach avoids evaporative cooling altogether by circulating liquid in a closed loop between servers and chillers, preventing continuous water loss.",
@@ -994,7 +1068,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "this cooling approach",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 18,
@@ -1008,7 +1082,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Our latest design uses a zonal cooling strategy, which allows warmer water to cool most IT equipment, and only directs cooler liquid to higher-heat, high-intensity workloads, improving energy efficiency.",
@@ -1018,7 +1094,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our latest design",
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "aspirational_verb"
       ],
@@ -1034,7 +1110,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We aim to use zonal cooling wherever feasible.",
@@ -1061,7 +1139,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.08,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we partnered with local nonprofits, municipalities, and volunteers to plant over 150,000 native trees.",
@@ -1085,7 +1165,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At our Boydton, Virginia campus, a large-scale effort restored over 16,300 linear feet of streams and 185 acres of pollinator habitat, and created over three miles of ADA-accessible walking trails.",
@@ -1109,7 +1191,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To date, we\u2019ve funded 30 ecological restoration projects covering more than 600 acres and engaging over 9,000 community members in environmental programs.",
@@ -1135,7 +1219,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Concrete and steel are among the largest sources of embodied carbon in construction, accounting for 8% and 7% of global carbon dioxide emissions, respectively.8,9",
@@ -1159,7 +1245,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This work identified a formula with 21% lower global warming potential.10",
@@ -1185,7 +1273,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through this agreement, Microsoft expects to secure near- zero-emissions steel, along with environmental attribute certificates,11 over seven years.",
@@ -1211,7 +1301,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Up to 95% lower emissions with Stegra\u2019s green steel.",
@@ -1237,7 +1329,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we completed rigorous field testing for two lower-embodied-carbon concrete products developed by suppliers Ozinga and Urban Mining Industries.",
@@ -1261,7 +1355,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "These mixes use waste materials, such as blast furnace slag and recycled glass, to replace a portion of Portland cement\u2014a key driver of emissions in conventional concrete\u2014which can substantially reduce the embodied carbon.",
@@ -1287,7 +1383,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.15,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we diverted 90.5% of our construction and demolition waste from landfills and incinerators, exceeding our target for the second year in a row.",
@@ -1311,7 +1409,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In line with our target, the majority of LEED-certified Microsoft datacenter construction projects divert at minimum 75% of construction and demolition waste from landfills and incinerators.",
@@ -1337,7 +1437,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Three portable Instagrid IG ONE units were used during concrete work at our Madrid datacenter, helping to reduce onsite generator emissions and improve worker safety through lightweight, cable-free equipment.",
@@ -1361,7 +1463,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since the beginning of the program, we have agreements encompassing up to 40 gigawatts (GW) of new renewable energy across 26 countries, which include frameworks like our 2024 agreement with Brookfield for up to 10.5 GW. This helps expand carbon-free electricity availability and support innovation in power markets. Of that volume, 19 GW are now online.",
@@ -1385,7 +1489,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are also reducing reliance on fossil diesel by expanding the use of renewable diesel fuel (RD). This includes increasing the use of hydrotreated vegetable oil to roughly 60% of our datacenters in Europe\u2014including sites in Dublin and Amsterdam. As of the end of 2025 we also use RD in Phoenix, San Antonio, and Atlanta in the United States.",
@@ -1409,7 +1515,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we achieved our milestone to match 100% of our annual electricity consumption with renewable energy.2",
@@ -1433,7 +1541,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "100% of our annual global electricity consumption matched with renewable energy.",
@@ -1457,7 +1567,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, our datacenters delivered a global average PUE of 1.17.",
@@ -1481,7 +1593,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we harvested over 690 megawatts (MW).",
@@ -1505,7 +1619,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By the end of 2025, these approaches had scaled to nearly 4 million servers globally.",
@@ -1529,7 +1645,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At Microsoft, we target a PUE as near to 1.0 as possible.",
@@ -1556,7 +1674,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022\u0000 Replenished over 14.2 million cubic meters (cubic meters) of water, which, for the first time, surpassed our global water withdrawals.16",
@@ -1580,7 +1700,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "These adjustments helped improve WUE by 23% in our Phoenix, Arizona, datacenters in FY25 compared to the previous year.",
@@ -1604,7 +1726,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Based on our FY25 global average WUE of 0.27 L per kWh, our owned datacenters have achieved a 25% reduction in WUE since our 2022 baseline, progressing towards our 2030 target of a 40% reduction.",
@@ -1628,7 +1752,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022\u0000 Funded 24 new water replenishment projects, estimated to provide more than 29 million cubic meters in volumetric water benefit over their lifetime.",
@@ -1652,7 +1778,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To date, contracted projects represent more than 133 million cubic meters of replenishment volume over their lifetime17\u2014the equivalent of 53,200 Olympic-sized swimming pools18\u2014 with our footprint now spanning 34 priority locations globally.",
@@ -1676,7 +1804,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The system is expected to collect more than three times the water annually required for cooling, with the remaining volume supporting reliable water access for the local community.",
@@ -1700,7 +1830,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, Microsoft successfully recycled over 2,100 metric tons of UPS batteries globally, reducing waste while recovering valuable materials.",
@@ -1724,7 +1856,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we achieved a 92% reuse and recycling rate across decommissioned hardware, exceeding our 90% target for the second consecutive year.",
@@ -1748,7 +1882,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, Microsoft achieved a 92% reuse and recycling rate for servers and components, exceeding its 90% target for the second consecutive year.",
@@ -1772,7 +1908,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We\u2019re driving down the operational waste in our datacenters by prioritizing waste prevention and embracing circular practices, in support of our 90% operational waste diversion target.",
@@ -1798,7 +1936,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As we\u2019ve grown our network of haulers worldwide, we\u2019ve significantly increased the amount of wood that we can route for recycling and reuse, successfully diverting nearly 230 metric tons of wood this year.",
@@ -1824,7 +1964,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.75,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025 we expanded our recycling and reuse capabilities for server rack packaging across all owned datacenters, enabling us to divert more than 9,000 metric tons of server-rack delivery packaging waste from landfills and incinerators.",
@@ -1848,7 +1990,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, Microsoft received the Social Impact of the Year award from the Gartner\u00ae Power of the Profession\u2122 Supply Chain Awards.19",
@@ -1872,7 +2016,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "For every 1 MW of heat repurposed externally, cooling demand can be reduced by up to 1 MW, reducing electricity required for cooling systems, improving PUE, and lowering operational costs.",
@@ -1896,7 +2042,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Early investigations suggest that repurposing just 1 MW of waste heat for DAC could enable the removal of up to 5,000 metric tons of carbon dioxide annually, turning a previously unused resource into a scalable climate-positive solution.",
@@ -1922,7 +2070,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To improve circularity in the design of our rack packaging, we are now working towards incorporating 75% circular content20 in the packaging for servers and components by 2030, in partnership with suppliers, certifying bodies, and logistics partners.",
@@ -1949,7 +2099,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "DAC systems historically have been difficult to scale due to high energy demand, but supplying them with datacenter waste heat could potentially decrease electricity consumption by more than 20% while increasing productivity by more than 20%.",
@@ -1975,7 +2127,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft led private sector investment in the Southeast Asia Clean Energy Facility, which provides early-stage funding for clean energy projects in a region where coal remains a major part of the energy mix. Since then, the facility has mobilized $230 million in private sector debt and equity\u2014more than 100 times Microsoft\u2019s initial contribution.",
@@ -1999,7 +2153,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Twelve, which transforms carbon dioxide into chemicals, fuels, and materials, raised $645 million in follow-on funding\u2014one of the largest financing rounds in the e-fuels21 space to date.",
@@ -2023,7 +2179,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Dimensional Energy secured the first commercial deployment of its catalyst technology for applications including base oils, sustainable aviation fuel (SAF), and diesel. Its British Columbia plant processes one ton of carbon dioxide per day from a cement flue stack into synthetic crude.",
@@ -2047,7 +2205,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Building on the 500-MW Pivot Energy framework agreement announced in 2024, Microsoft signed a suite of agreements enabling up to 1.5 GW of projects across approximately 100 communities in 20 US states.",
@@ -2071,7 +2231,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Eavor Technologies completed the first operational loop of its closed-loop geothermal system in Geretsried, Germany, marking an important step toward scaling geothermal energy as a reliable source of sustainable energy.",
@@ -2081,7 +2243,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Geretsried, Germany",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 29,
@@ -2095,7 +2257,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "VEIR also demonstrated its patented superconducting technology by delivering 3 MW of power in a simulated datacenter environment, proving its potential to power AI factories and datacenters with a smaller physical footprint.",
@@ -2119,7 +2283,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "One example is our power purchase agreement with Constellation to restart the Crane Clean Energy Center, formerly known as the Three Mile Island Unit 1 reactor.",
@@ -2143,7 +2309,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft is partnering with Helion Energy, which is constructing its first commercial fusion plant in Washington state with the aim of delivering clean, consistently available power.",
@@ -2153,7 +2321,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Washington state",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 29,
@@ -2167,7 +2335,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "In FY25, Microsoft continued to expand distributed generation at scale.",
@@ -2193,7 +2363,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our total emissions (Scopes 1, 2, and 3) increased 25% year over year, driven primarily by the expansion of our datacenter infrastructure and stopping our use of non-additional, unbundled renewable energy certificates as we prioritize investments that bring net new power to grids.",
@@ -2217,7 +2389,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "One of the clearest shifts this year was the growing contribution of Scope 2 emissions, which represented 13% of our total emissions, up from nearly 2% last year.",
@@ -2241,7 +2415,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In December 2025, the European Commission announced the European Grids Package, a legislative initiative aimed to make the grid more digitalized, decentralized, and flexible.",
@@ -2265,7 +2441,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft\u2019s emissions increased in FY25, reflecting rapid cloud growth and a deliberate shift toward long-term carbon-free electricity investments that add new capacity to grids.",
@@ -2289,7 +2467,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft engaged with European policymakers and grid operators to help anticipate energy demand from the datacenter sector and support better integration of digital infrastructure into European grids.",
@@ -2315,7 +2495,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In Asia, Microsoft has put forward policy positions on grid modernization in markets where rising digital infrastructure demand intersects with system constraints.",
@@ -2339,7 +2521,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This work is grounded in markets where Microsoft has a significant semiconductor or datacenter footprint\u2014primarily South Korea, Japan, Taiwan, and key Southeast Asian markets.",
@@ -2363,7 +2547,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Across these regions, Microsoft has identified priorities including transmission expansion, interconnection reform, market transparency, and access pathways for CFE, and engaged governments, regulators, utilities, and industry coalitions to help advance them.",
@@ -2387,7 +2573,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In the United States, Microsoft engaged with policymakers and regulators to strengthen grid infrastructure and accelerate the buildout needed to meet rising electricity demand.",
@@ -2411,7 +2599,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At the federal level, we advocated for transmission expansion and reforms to expedite permitting and interconnection.",
@@ -2435,7 +2625,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In the European Union (EU), Microsoft engaged with policymakers on the datacenter sustainability rating scheme, sharing technical expertise on how datacenters can be designed, built, and operated with stronger sustainability and efficiency outcomes.",
@@ -2459,7 +2651,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We advocated for a consistent, industry- wide approach across all EU member states that rewards best-in-class sustainable infrastructure.",
@@ -2485,7 +2679,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also engaged state and federal policymakers to advance energy affordability and new approaches for large energy customers.",
@@ -2509,7 +2705,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft also works with regulators to advance sustainability standards for digital infrastructure.",
@@ -2533,7 +2731,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, our third year of signing long-term CDR credit contracts, we added 29 projects to the Microsoft CDR portfolio.",
@@ -2557,7 +2757,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We expect these projects, spanning five continents and 10 distinct CDR pathways, to contribute more than 45 million metric tons toward Microsoft\u2019s carbon goals over the next three decades\u2014the equivalent of removing over 10 million internal combustion cars from the road for a year.",
@@ -2581,7 +2783,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We\u2019ve continued to conduct due diligence on roughly 200 CDR projects and use CDR procurement to signal market demand.",
@@ -2605,7 +2809,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft structures long-term CDR purchase agreements that enable innovation and growth. 45 million metric tons of CDR contracted in FY25.",
@@ -2629,7 +2835,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, Microsoft expanded commitments in both areas, including agreements with CO280 and Stockholm Exergi in BECCS, and with Rubicon Carbon and Chestnut Carbon in ARR.",
@@ -2653,7 +2861,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, Microsoft also began procuring long- term carbon removal through improved forest management (IFM), soil organic carbon (SOC), biochar, and biomass carbon removal and storage (BiCRS).",
@@ -2677,7 +2887,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Bioenergy with carbon capture and storage (BECCS) and afforestation, reforestation, and revegetation (ARR) make up the majority of Microsoft\u2019s portfolio, reflecting their technical maturity and repeatability.",
@@ -2687,7 +2899,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Microsoft\u2019s portfolio (carbon dioxide removal)",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 34,
@@ -2701,7 +2913,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Our LinkedIn 4 Wilton Park campus in Dublin illustrates that approach. Working with Flynn Construction and the NGO Building Transparency, LinkedIn used the Embodied Carbon in Construction Calculator to better understand the carbon impact of materials and enable the selection of lower-carbon options wherever possible. Combined with matching 100% of the campus\u2019s electricity consumption with CFE, that work resulted in the office receiving the Irish Construction Industry\u2019s Green Project of the Year Award.",
@@ -2725,7 +2939,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, Microsoft opened its first all-electric kitchen in Suzhou, China, and added two more in India\u2014a new build at Hyderabad\u2019s Central Kitchen and an electric retrofit at Bengaluru Ferns. Together, these three kitchens serve approximately 200,000 meals per month to employees using fully electric equipment.",
@@ -2749,7 +2965,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft is also reducing direct emissions from campus transportation by expanding the use of electric vehicles (EVs) across Africa, Asia, Europe, and North America. This includes growing our office EV fleet to approximately 300 vehicles in India and constructing a new bus charging depot to power nine electric buses at our Dublin campus.",
@@ -2773,7 +2991,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, LinkedIn also introduced biophilic design27 to 4 Wilton Park and the London Experience Centre, integrating natural materials, forms, and lighting to improve occupant experience, strengthen connection to nature, and reduce carbon impact.",
@@ -2797,7 +3017,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Opened in July 2022, the all-electric system was designed to run about 50% more efficiently than a conventional utility plant serving the same load, based on engineering modeling.",
@@ -2821,7 +3043,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, this work completed over 350 fixes, delivering approximately 4,000 megawatt-hours of annual energy savings.",
@@ -2845,7 +3069,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At Microsoft\u2019s Puget Sound campus, the Thermal Energy Center taps geothermal energy deep underground to heat and cool new buildings through one of the largest geoexchange fields in the United States.",
@@ -2855,7 +3081,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Microsoft\u2019s Puget Sound campus",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 36,
@@ -2869,7 +3095,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Across approximately 830,000 square feet of LinkedIn campuses and office space, we\u2019re using predictive AI to improve building performance optimization.",
@@ -2893,7 +3121,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "These include heating, ventilation, and cooling (HVAC) improvements at our Washington state campuses, LED lighting upgrades in six European offices, and occupancy-based HVAC controls in our Dominican Republic locations.",
@@ -2917,7 +3147,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, Microsoft diverted approximately 34,000 metric tons of operational waste from landfills and incineration across datacenters and campuses.",
@@ -2941,7 +3173,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, eight of our campuses achieved third-party zero-waste validation. Seven were validated by UL Solutions based on landfill diversion performance, while one was certified through TRUE for embedding zero-waste practices into facility operations.",
@@ -2965,7 +3199,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At our Hyderabad campus, Microsoft installed an air-to-water system using approximately 300 hydro-panels to extract humidity and convert it into potable water.",
@@ -2989,7 +3225,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At one of our Chicago, Illinois, campuses, a custom system captures and treats wastewater used for cooling IT equipment so it can be reused repeatedly. Combined with other efficiency improvements, this has helped cut the campus\u2019s use of municipal water by more than 30% year over year.",
@@ -3013,7 +3251,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft is working to reduce waste across campuses by preventing it at the source, expanding reuse, and strengthening circular systems in day-to-day operations, in line with our 9 0% operational waste diversion target.",
@@ -3039,7 +3279,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft has made significant strides towards our zero-waste commitment across our campuses.",
@@ -3065,7 +3307,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, LinkedIn offices also diverted more than 90 metric tons of furniture waste through a furniture reuse program, avoiding over 270 metric tons of carbon dioxide equivalent (m t C O 2 e) emissions.",
@@ -3089,7 +3333,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Environmental DNA (eDNA) analysis shows our honeybees pollinate more than 150 floral species across 47 square miles, from plums and cherries to peaches and apricots.",
@@ -3113,7 +3359,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, the landscaping team partnered with a local compost service provider to transform an estimated 3,000 cubic yards of leaf debris into compost and convert trees naturally downed in a storm into over 600 cubic yards of wood chips, which we reapply to native plant zones.",
@@ -3137,7 +3385,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In S\u00e3o Paulo and Brasilia, Brazil, and Bogot\u00e1, Colombia, campus teams diverted more than two metric tons of end-of-life furniture from landfills through internal auctions, public sales, and donations, including local donations to Laudes and Best Buddies.",
@@ -3161,7 +3411,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This builds on the more than 1,900 metric tons of office equipment Microsoft has donated to charities since 2010, in partnership with Green Standards.",
@@ -3185,7 +3437,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This diverted over 30% of our campus waste from landfills and established critical year-round composting infrastructure in North Dakota, creating new opportunities for local businesses and residents to cut landfill waste and curb methane emissions.",
@@ -3209,7 +3463,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, Microsoft\u2019s Fargo, North Dakota, campus needed a permanent local composting solution to divert organic waste, which accounted for one-third of its annual operational waste.",
@@ -3233,7 +3489,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At Microsoft\u2019s Washington state headquarters, an urban beekeeping program supports approximately 250,000 honeybees\u2014 and is helping shape how we design campus landscapes.",
@@ -3257,7 +3515,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We partnered with local company Prairie Composting to fund North Dakota\u2019s first food waste composting facility and acquire year- round composting equipment that can withstand Fargo\u2019s harsh winters.",
@@ -3267,7 +3527,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Fargo, North Dakota / North Dakota",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 38,
@@ -3281,7 +3541,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Since earning zero-waste validation in 2024, our Dublin campus has continued to improve diversion through a durable goods program, expanding composting infrastructure, and employee engagement.",
@@ -3291,7 +3553,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Dublin campus",
-      "falsifiability": 0.7,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "aspirational_verb"
       ],
@@ -3307,7 +3569,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.7,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Since rollout, the Fargo composting facility has expanded business to compost food waste for the local community, Starbucks, and Costco.",
@@ -3331,7 +3595,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.7,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Now, on the edge of Quincy, two Microsoft campuses hold more than 20 buildings and 2 million square feet of computing power that millions rely on every day.",
@@ -3355,7 +3621,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 1979, we have built a presence that extends from our headquarters in Redmond, with Mount Rainier on the horizon, to datacenter communities in Central Washington\u2019s agricultural basin and forest restoration efforts on the Olympic Peninsula.",
@@ -3379,7 +3647,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft has also entered into a long- term agreement with Powerex to deliver carbon- free electricity to a new Microsoft datacenter in Washington state, matching hourly demand with direct deliveries of carbon-free hydro, solar, and wind power on a 24x7 basis.",
@@ -3403,7 +3673,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through this investment, we anticipate securing access to up to 3 million metric tons of carbon removal credits through 2035.",
@@ -3429,7 +3701,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft joined with the City of Quincy to build the Quincy Water Reuse Utility, which treats cooling water from a Microsoft datacenter and recirculates it for reuse, helping reduce reliance on potable water in an arid region.",
@@ -3439,7 +3713,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Quincy Water Reuse Utility / City of Quincy",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 40,
@@ -3453,7 +3727,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Using Azure Quantum Elements, Microsoft helped screen more than 32 million candidate materials and narrow them to 18 promising candidates in 80 hours.",
@@ -3477,7 +3753,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft has committed more than $100 million to investees and partners across Washington working to advance SAF, cleaner energy, climate-smart forestry, carbon removal, and other sustainability solutions.",
@@ -3501,7 +3779,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Improving how we design, build, and operate datacenters and campuses.",
@@ -3529,7 +3809,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Working with suppliers and partners to reduce impacts across the value chain.",
@@ -3557,7 +3839,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Expanding access to CFE and strengthening grid infrastructure.",
@@ -3585,7 +3869,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Supporting the technologies, markets, and local conditions needed to scale this work responsibly over time.",
@@ -3613,7 +3899,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Energy Saver, our opt-in Windows feature, extends battery life and reduces device energy consumption by approximately 20% per active session.",
@@ -3637,7 +3925,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In one Microsoft experiment, five professionals were asked to summarize a 3,000-word technical report into 200 words, which took a median of 41 minutes and consumed an estimated 13.7 watt-hours of laptop energy. Using a single prompt, Copilot completed the same task in under a minute using 0.29 watt-hours of datacenter energy\u2014roughly 55 times faster and 47 times more energy efficient.",
@@ -3661,7 +3951,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Recent Microsoft research found that optimized, large-scale AI inference can consume less than one watt-hour of energy per query, and that improvements across model design, serving systems, and hardware could reduce energy use by 8 to 20 times.",
@@ -3685,7 +3977,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we announced the general availability of carbon optimization insights within Azure.",
@@ -3709,7 +4003,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "60,000+ open-source green software and climate-focused projects launched on GitHub in 2025.",
@@ -3733,7 +4029,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Built on Microsoft Dataverse and Microsoft Power Platform, Sustainability Manager delivers data integration, emissions tracking, and alignment with global standards.",
@@ -3757,7 +4055,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This helps our customers to easily calculate their carbon footprint across product lifecycle stages, allocate emissions from facilities and suppliers to specific products and organizational units, and combine social and governance data with environmental metrics for holistic assessments.",
@@ -3781,7 +4081,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To address these challenges, Oatly partnered with Microsoft and PwC Sweden to centralize and streamline data, to improve transparency and traceability across its operations using Microsoft Sustainability Manager.29",
@@ -3805,7 +4107,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are using bespoke AI-enabled tools in Microsoft Sustainability Manager to help review carbon data submitted under our Supplier Code of Conduct reporting standards and identify ways to improve alignment.",
@@ -3829,7 +4133,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Oatly, a global leader in plant-based dairy alternatives, is committed to significantly reducing its environmental impact but recognized that its fragmented, manual approach to managing sustainability data was no longer sufficient.",
@@ -3855,7 +4161,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Together, these strategies strive to help Microsoft and our customers lower energy use, reduce emissions, and support the effectiveness of Azure systems that are both effective and environmentally responsible.",
@@ -3882,7 +4190,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At the end of 2025, we eliminated nearly all single use plastic - from Microsoft\u2019s primary product packaging,4 reducing single-use plastics to 0.07% across our global portfolio.",
@@ -3906,7 +4216,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At the end of 2025, we also achieved 99.0% packaging recyclability by implementing a paper- first approach that replaces plastics with renewable fiber-based materials.",
@@ -3930,7 +4242,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2020, shifting to fiber-based materials has prevented more than 5,000 metric tons of plastic from being manufactured.",
@@ -3954,7 +4268,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "It accounts for 1,000 unique packaging components spanning small break-the-seal labels all the way to the foam cushioning used to protect Surface Studio 2+, an all-in-one desktop PC that weighs over 21 pounds.",
@@ -3978,7 +4294,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "That\u2019s equivalent to the weight of a half-billion plastic water bottles.30",
@@ -4002,7 +4320,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.7,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our targets have been simple yet ambitious: eliminate single-use plastics and design 100% recyclable packaging.",
@@ -4029,7 +4349,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.45,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we achieved a rate of 4.2% single-use plastics across Microsoft primary product packaging.",
@@ -4053,7 +4375,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By the end of calendar year 2025, we had eliminated nearly all single-use plastics from Microsoft primary product packaging,4 achieving a rate of 0.07%.",
@@ -4077,7 +4401,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By 2030, we aim for 25% of our devices\u2019 product content to come from recycled materials.31",
@@ -4104,7 +4430,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "25% of our devices\u2019 product content is expected to come from recycled materials by 2030.",
@@ -4131,7 +4459,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have secured 100% recycled aluminum alloys in key enclosures; recycled copper and gold in printed circuit boards; recycled cobalt in batteries; recycled tin in solder paste; rare earth magnets from reclaimed electronics scrap; and post-consumer recycled plastics in key components and accessories.32",
@@ -4155,7 +4485,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "These efforts resulted in savings of 5 million kWh across our devices production footprint.",
@@ -4179,7 +4511,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, 43 of our manufacturing suppliers achieved greater than or equal to 90% waste diversion; 42 achieved UL 2799 Platinum certification and 1 achieved UL 2799 Gold certification.",
@@ -4203,7 +4537,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Windows 365 Link is also built with sustainability in mind: it\u2019s ENERGY STAR-certified, contains at least 63% recycled content,33 uses 100% paper-based packaging, and is designed to be long-lasting and repairable.",
@@ -4227,7 +4563,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we worked with 20 manufacturing suppliers to pilot a measurable energy efficiency program and identified 60 energy-saving opportunities across supplier manufacturing processes, utilities, and buildings.",
@@ -4251,7 +4589,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This effort encourages our devices manufacturing suppliers to achieve \u226590% waste diversion from landfill and incineration, aligned with zero-waste-to-landfill principles and globally recognized standards such as UL 2799, a third-party validated zero waste standard.",
@@ -4275,7 +4615,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "AI-driven tools have reduced the time needed for lifecycle assessment modeling by up to 80% per device.",
@@ -4299,7 +4641,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Adoption on XBOX consoles has remained above 70% since we launched the feature in 2022 and made it the default power mode in 2023.",
@@ -4323,7 +4667,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "20x less power consumed by the console in Shutdown (Energy Saver) mode compared to Sleep mode when off.",
@@ -4347,7 +4693,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Together, these features can cut energy use by as much as 50% without compromising player experience.",
@@ -4371,7 +4719,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we increased the use of alternative fuels34 across our transportation operations, helping to reduce emissions by more than 70,000 metric tons of carbon dioxide equivalents (m t C O 2 e).",
@@ -4395,7 +4745,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Using hydrotreated vegetable oil (HVO) fuel36 for a portion of road freight helped save 33 m t C O 2 e.",
@@ -4419,7 +4771,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Broader optimization efforts\u2014including the adoption of lightweight recyclable pallets, changes to packaging configuration, and the continued use of electric vehicles (EVs)37 \u2014delivered a further 2,200 m t C O 2 e in savings.",
@@ -4443,7 +4797,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, we continued to expand the implementation of EcoTransIT, a software solution that calculates emissions at each stage of a shipment\u2019s journey.",
@@ -4467,7 +4823,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "CargoPilot, an internal AI-powered logistics agent for Microsoft\u2019s cloud supply chain, brings together complex logistics data and dynamic demand forecasting to simulate cost, carbon, and delivery speed trade-offs.",
@@ -4491,7 +4849,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Scope 3 categories A Purchased Goods and Services 25.28% B Capital Goods 44.57% C Fuel- and Energy-Related Activities (Market-Based) 5.30% D Upstream Transportation and Distribution 3.66% E Business Travel 1.00% F Employee Commuting 1.40% G Use of Sold Products 4.07% H Waste Generated in Operations 0.07% Downstream Transportation and Distribution 0.42% End-of-Life Treatment of Sold Products 0.01% Downstream Leased Assets 0.03%",
@@ -4515,7 +4875,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Scope 2 and 3 emissions included in this chart are market-based.",
@@ -4539,7 +4901,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We updated our Supplier Code of Conduct to request that suppliers purchase SAF for Microsoft-related travel where possible by 2030.",
@@ -4563,7 +4927,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In FY25, nearly one in five of our water projects used AI to optimize outcomes, from detecting leaks to improving efficiency.",
@@ -4587,7 +4953,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In partnership with the International Water Management Institute (IWMI), Microsoft developed Water Copilot, an AI assistant designed for the Limpopo River basin in South Africa.",
@@ -4597,7 +4965,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Limpopo River basin in South Africa",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 56,
@@ -4611,7 +4979,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Our partnership with FIDO Tech, for example, has supported 357 verified repairs and conserved more than 8.5 million cubic meters (m cubed) of water so far\u2014the equivalent of over 3,400 Olympic-sized pools.",
@@ -4635,7 +5005,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In Quer\u00e9taro, Mexico, similar work conserved more than 760,000 m cubed in FY25 alone.",
@@ -4659,7 +5031,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In Yond\u00f3, Antioquia, Colombia, we developed an AI-powered mapping system for projects that incentivize forest protection and prevent emissions from deforestation and land-use change. Using Sentinel-2 satellite imagery and high- precision AI models with 92% accuracy, the system generates 10-meter-resolution maps that support transparent conservation practices and direct up to 85% of profits to local forest protectors.",
@@ -4683,7 +5057,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In marine ecosystems, our AI for Good Lab partnered with the World Wildlife Fund (WWF) to launch GhostNetZero, an AI-powered platform to detect abandoned fishing gear that can trap and kill marine life. By analyzing underwater sonar scans with an approximately 90% detection rate, the platform can identify these \u201cghost nets\u201d in minutes instead of hours, helping divers recover them more efficiently.",
@@ -4707,7 +5083,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In Phoenix, Arizona, our AI acoustic leak detection is helping detect and repair hidden leaks in municipal water networks, preventing the loss of thousands of cubic meters of water each year.",
@@ -4731,7 +5109,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To help close that gap, we are expanding access to biodiversity data through SPARROW, a solar- powered edge device developed by Microsoft that uses AI to monitor wildlife autonomously in some of the planet\u2019s most remote areas.",
@@ -4757,7 +5137,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The Planetary Computer is central to this work. With more than 80 petabytes of Earth data from over 140 sources\u2014the equivalent of roughly 40 trillion pages of standard printed text\u2014it helps organizations measure, monitor, and model the physical world.",
@@ -4781,7 +5163,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The Planetary Computer is central to this work. With more than 80 petabytes of Earth data from over 140 sources\u2014the equivalent of roughly 40 trillion pages of standard printed text\u2014it helps organizations measure, monitor, and model the physical world. In 2025, it was accessed an average of 24 billion times each month, reflecting its role as a global resource for environmental data.",
@@ -4805,7 +5189,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As part of the European Centre for Medium- Range Weather Forecast\u2019s AI Weather Quest, Microsoft Research and MSN Weather developed MicroDuet, a weather forecasting model that improved predictive performance for temperature, precipitation, and pressure. Across forecast variables and horizons, the model outperformed government, academic, and industry forecasting systems worldwide.",
@@ -4815,7 +5201,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "worldwide",
-      "falsifiability": 0.75,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 58,
@@ -4829,7 +5215,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.75,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "To help democratize access to geospatial data, Microsoft made Planetary Explorer\u2014 an AI-powered solution accelerator\u2014open source.",
@@ -4839,7 +5227,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Planetary Explorer (AI-powered solution accelerator)",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 59,
@@ -4853,7 +5241,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "This AI-enabled platform consolidates climate data from more than 190 countries in one place and helps surface insight on progress, gaps, and where support is needed.",
@@ -4877,7 +5267,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Following the success of WEO-GPT, an Azure-based agent trained exclusively on the World Energy Outlook report and dataset, the IEA expanded this approach for its 2025 Special Report on Energy and AI and the 2025 World Energy Outlook.",
@@ -4901,7 +5293,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we published Strategic Guide: Aligning AI Transformation with Sustainability Goals, which offers a practical roadmap to help companies bring AI and sustainability strategies closer together.",
@@ -4925,7 +5319,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft and EY showcased the platform at COP30 by demonstrating how AI-powered data tools can support more effective climate reporting and analysis at a global scale.",
@@ -4935,7 +5331,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "the platform (Climate Data Hub)",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 59,
@@ -4949,7 +5345,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "That means continuing to reduce the resource and environmental impact of our own products across software, devices, packaging, logistics, and supply chains, while also strengthening the tools that help customers act on their sustainability priorities.",
@@ -4976,7 +5374,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We will continue working to build sustainability into our products",
@@ -5003,7 +5403,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "It also means using Microsoft\u2019s cloud, AI, and data capabilities where they can help address specific challenges\u2014from emissions measurement and low-impact software to water resilience, ecosystem conservation, and access to climate data.",
@@ -5030,7 +5432,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Contributed more than 45 million metric tons of carbon removal, adding 29 projects spanning five continents and 10 pathways.",
@@ -5054,7 +5458,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Harvested more than 690 MW of power capacity within existing datacenters, allowing more workloads to run without adding new infrastructure.",
@@ -5078,7 +5484,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Expanded our renewable energy portfolio to include agreements encompassing up to 40GW of new renewable energy across 26 countries.",
@@ -5102,7 +5510,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Replenished more than 14.2 million cubic meters of water, surpassing global water withdrawals for the first time.",
@@ -5126,7 +5536,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Reduced global datacenter water usage effectiveness by 25% from the 2022 baseline, progressing toward our 40% reduction target.",
@@ -5150,7 +5562,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Diverted 90.5% of construction and demolition waste from landfills and incinerators, exceeding target for the second consecutive year.",
@@ -5174,7 +5588,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Achieved a 92% reuse and recycling rate for decommissioned cloud hardware, exceeding our 90% target for the second year in a row.",
@@ -5198,7 +5614,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Diverted more than 9,000 metric tons of server-rack packaging waste from landfills and incinerators.",
@@ -5222,7 +5640,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Achieved legal protection of 16,266 acres\u2014 approximately 36% more than the estimated land area where Microsoft operates.",
@@ -5246,7 +5666,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Achieved our goal of matching 100% of our annual global electricity consumption with renewable energy, a significant milestone on our path to carbon negative.",
@@ -5270,7 +5692,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Funded 30 ecological restoration projects in communities near our datacenters, covering more than 600 acres and engaging over 9,000 community members in environmental programs.",
@@ -5294,7 +5718,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Developed AI-powered forest conservation tools with 92% mapping accuracy, helping direct conservation efforts and support local forest stewards.",
@@ -5318,7 +5744,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Designed new liquid cooling systems expected to avoid more than 125 million liters of water annually per datacenter, reducing water demand while supporting AI growth.",
@@ -5342,7 +5770,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Eliminated nearly all single-use plastic in primary product packaging, reducing the remaining share to just 0.07% across our portfolio.",
@@ -5366,7 +5796,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Expanded the Planetary Computer to more than 80 petabytes of environmental data from over 140 sources, helping researchers, governments, and NGOs better understand and act on climate data.",
@@ -5390,7 +5822,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Funded 24 new water replenishment projects, expected to provide more than 29 million cubic meters of benefit over their lifetime.",
@@ -5414,7 +5848,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.75,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Microsoft\u2019s environmental data reporting covers global wholly owned and partially owned subsidiaries over which Microsoft has management and operational control, including Microsoft owned and leased real estate facilities and datacenters.",
@@ -5424,7 +5860,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "global wholly owned and partially owned subsidiaries over which Microsoft has management and operational control, including Microsoft owned and leased real estate facilities and datacenters",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 63,
@@ -5438,7 +5874,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We present greenhouse gas emissions in accordance with the GHG Protocol and management\u2019s criteria and select environmental metrics that both reference the Global Reporting Initiative (GRI) Standards and are reported in accordance with management\u2019s criteria as of and for the fiscal year ended June 30, 2025 (FY25).",
@@ -5462,7 +5900,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have reported carbon emissions and energy data to CDP since 2004 and water data to CDP since 2011.",
@@ -5486,7 +5926,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "On climate-related issues, we developed our latest report in reference to the International Financial Reporting Standards (IFRS) S2 Climate-related Disclosures standard, as issued by the International Sustainability Standards Board (ISSB), which builds on the structure and principles of the Task Force on Climate-related Financial Disclosures (TCFD).",
@@ -5496,7 +5938,7 @@
       "unit": null,
       "timeframe": null,
       "scope": null,
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 63,
@@ -5510,7 +5952,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "This category represents more than 90% of the renewable energy applied to achieve our 2025 target.",
@@ -5534,7 +5978,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our 2025 100% renewable target does not include purchases from short-term, so-called \u201cspot market\u201d renewable energy credits (RECs) sourced from operational clean energy projects.",
@@ -5560,7 +6006,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Tracking and lowering WUE is a crucial aspect of our commitment to be water positive by 2030.",
@@ -5586,7 +6034,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The solid line represents Microsoft\u2019s reported greenhouse gas emissions (Scopes 1, 2, and 3) for FY20\u2013FY25, prepared in accordance with GHG Protocol and management\u2019s criteria, and uses a market-based emissions approach.",
@@ -5610,7 +6060,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This estimate is calculated based on the EPA estimate of the typical passenger vehicle averaging 22.8 miles per gallon with the average vehicle miles traveled as 10,917 miles per year.",
@@ -5634,7 +6086,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "One plastic water bottle approximately equal to 10 g of plastic, 100 bottles approximately equal to 1 kg, 500,000,000 bottles approximately equal to 5,000 metric tons of plastic.",
@@ -5658,7 +6112,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Devices product content covers the entire Surface and Gaming devices portfolio by mass.",
@@ -5668,7 +6124,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "entire Surface and Gaming devices portfolio",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 65,
@@ -5682,7 +6138,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Surface Pro 10 and Surface Pro (11th Edition) enclosure includes Bucket and Kickstand. 100% recycled aluminum alloy in Bucket and Kickstand. Surface Laptop 6 enclosure includes A Cover, C Cover, and D Bucket. 100% recycled aluminum alloy in A Cover. Surface Laptop (7th Edition) \u2013 13.8 and 15-inch \u2013 enclosure includes A Cover, C Bucket, and D Cover. 100% recycled aluminum alloy in A Cover and C Bucket. 100% recycled rare earth metals in magnets.",
@@ -5706,7 +6164,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Phillips 66 supplied 11 million gallons of SAF to United Airlines.",
@@ -5730,7 +6190,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through a subsequent exchange of environmental attributes between United Airlines, DSV, and Microsoft, this SAF is expected to reduce lifecycle GHG emissions by about 100,000 metric tons.",
@@ -5754,7 +6216,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This estimate is calculated based on the EPA estimate of the typical passenger vehicle emitting 0.009 m t C O 2 e per gallon of gas.",
@@ -5778,7 +6242,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Comparatively, tree growth, and thus carbon accumulation, begins immediately and then accelerates, with significant uptake typically occurring after four to six years under optimal conditions, such as tropical environments with 30 or more native species planted.",
@@ -5802,7 +6268,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Within our portfolio, it\u2019s common for three to four years to lapse from a developer\u2019s decision to proceed with a technology-based project and when they begin commercial operations\u2014that is, when a project starts to result in actual carbon removal.",
@@ -5826,7 +6294,9 @@
       "doc_year": 2026,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2020, we announced goals to become a carbon negative, water positive, and zero waste company by 2030.",
@@ -5853,7 +6323,9 @@
       "doc_year": 2026,
       "doc_type": "10k",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In addition, in 2020 we announced goals to become carbon negative, water positive, and zero waste by 2030.",
@@ -5880,7 +6352,9 @@
       "doc_year": 2026,
       "doc_type": "10k",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Changes in climate where we operate may increase the costs of powering and cooling computer hardware we use to develop software and provide cloud-based services.",
@@ -5905,7 +6379,9 @@
       "doc_year": 2026,
       "doc_type": "10k",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Environmental regulations or changes in the supply, demand, or available sources of energy or other resources may affect the availability or cost of goods and services, including natural resources, necessary to run our business.",
@@ -5930,7 +6406,9 @@
       "doc_year": 2026,
       "doc_type": "10k",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.08,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The long-term effects of climate change on the global economy and the IT industry are unclear.",
@@ -5955,7 +6433,9 @@
       "doc_year": 2026,
       "doc_type": "10k",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     }
   ]
 }
