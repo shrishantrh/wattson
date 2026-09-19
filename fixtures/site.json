@@ -1,0 +1,159 @@
+{
+ "request": {
+  "mw": 300,
+  "metros": [
+   "Phoenix",
+   "N. Virginia",
+   "Omaha"
+  ],
+  "flat_247": true
+ },
+ "method": "Ranked on overnight carbon-free share today, whether it is improving, and overnight clean MW relative to overnight demand. Frozen siting score from regions.json; no re-tuning.",
+ "unmapped_metros": [],
+ "candidates": [
+  {
+   "metro": "Omaha",
+   "region_id": "SWPP/OPPD",
+   "name": "Omaha Public Power District",
+   "siting_score": 0.737,
+   "siting_rank": 10,
+   "components": {
+    "level_overnight_cf_share_2025": 0.519,
+    "direction_ratio_slope_per_year": 0.0101,
+    "headroom_overnight_clean_mw_over_demand": 0.537,
+    "change_since_2019": 0.052
+   },
+   "detector": {
+    "rank": 7,
+    "score": 6.82,
+    "growth_pct": 39.4,
+    "overnight_growth_pct": 45.0,
+    "pattern": "flat-load growth"
+   },
+   "fuel_that_filled_growth": {
+    "fuel": "wind",
+    "gw": 4.16
+   },
+   "fuel_delta_overnight_gw": {
+    "nuclear": -0.01,
+    "hydro": -0.91,
+    "wind": 4.16,
+    "solar": 0.05,
+    "geothermal": null,
+    "gas": 0.6,
+    "coal": -0.41,
+    "oil": -0.0,
+    "other": 0.01
+   },
+   "operator": {
+    "utility": "Omaha Public Power District",
+    "parent": "public (Nebraska)",
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ],
+   "verdict_rank": 1
+  },
+  {
+   "metro": "N. Virginia",
+   "region_id": "PJM/DOM",
+   "name": "Dominion Virginia Power zone",
+   "siting_score": 0.436,
+   "siting_rank": 34,
+   "components": {
+    "level_overnight_cf_share_2025": 0.39,
+    "direction_ratio_slope_per_year": -0.0044,
+    "headroom_overnight_clean_mw_over_demand": 0.408,
+    "change_since_2019": -0.042
+   },
+   "detector": {
+    "rank": 6,
+    "score": 7.71,
+    "growth_pct": 31.8,
+    "overnight_growth_pct": 39.5,
+    "pattern": "flat-load growth"
+   },
+   "fuel_that_filled_growth": {
+    "fuel": "gas",
+    "gw": 10.74
+   },
+   "fuel_delta_overnight_gw": {
+    "nuclear": -0.95,
+    "hydro": -0.22,
+    "wind": 1.07,
+    "solar": 0.01,
+    "geothermal": null,
+    "gas": 10.74,
+    "coal": -2.52,
+    "oil": 0.15,
+    "other": 0.41
+   },
+   "operator": {
+    "utility": "Virginia Electric and Power (Dominion Energy Virginia)",
+    "parent": "Dominion Energy",
+    "ticker": "D",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ],
+   "verdict_rank": 2
+  },
+  {
+   "metro": "Phoenix",
+   "region_id": "AZPS",
+   "name": "Arizona Public Service Company",
+   "siting_score": 0.173,
+   "siting_rank": 49,
+   "components": {
+    "level_overnight_cf_share_2025": 0.104,
+    "direction_ratio_slope_per_year": -0.1105,
+    "headroom_overnight_clean_mw_over_demand": 0.057,
+    "change_since_2019": -0.517
+   },
+   "detector": {
+    "rank": 3,
+    "score": 9.01,
+    "growth_pct": 31.0,
+    "overnight_growth_pct": 43.3,
+    "pattern": "flat-load growth"
+   },
+   "fuel_that_filled_growth": {
+    "fuel": "gas",
+    "gw": 0.31
+   },
+   "fuel_delta_overnight_gw": {
+    "nuclear": -3.61,
+    "hydro": 0.0,
+    "wind": 0.21,
+    "solar": -0.01,
+    "geothermal": null,
+    "gas": 0.31,
+    "coal": -0.3,
+    "oil": 0.0,
+    "other": 0.0
+   },
+   "operator": {
+    "utility": "Arizona Public Service",
+    "parent": "Pinnacle West Capital",
+    "ticker": "PNW",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "data_flags": [],
+   "verdict_rank": 3
+  }
+ ],
+ "caveats": [
+  "Generation within a footprint, not consumption; interchange not allocated.",
+  "Average grid mix, not marginal emissions.",
+  "Regions are coarse; PJM spans Chicago to New Jersey.",
+  "Zones inherit the parent BA's generation figures.",
+  "Operator table is hand-mapped.",
+  "Detector flags flat 24/7 load in general (datacenters, crypto mining, oilfield electrification); language is 'consistent with'."
+ ]
+}

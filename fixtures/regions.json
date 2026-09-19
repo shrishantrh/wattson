@@ -1,0 +1,4279 @@
+{
+ "meta": {
+  "generated": "2026-09-19",
+  "data_snapshot_end": "2026-09-05",
+  "baseline_year": 2019,
+  "n_scored": 111,
+  "detector_method": "score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z; 500 MW cut; p99.5 peak; frozen before results",
+  "validation_named_in_advance": [
+   "PJM/DOM",
+   "PJM/AEP",
+   "SWPP/OPPD",
+   "ERCO/NCEN"
+  ],
+  "pattern_labels": {
+   "flat-load growth": "growth >= 10% and overnight excess > 0",
+   "possible midday solar suppression": "growth < 5% and overnight excess >= 5 points",
+   "mixed": "everything else"
+  },
+  "caveats": [
+   "Generation within a footprint, not consumption; interchange not allocated.",
+   "Average grid mix, not marginal emissions.",
+   "Regions are coarse; PJM spans Chicago to New Jersey.",
+   "Zones inherit the parent BA's generation figures.",
+   "Operator table is hand-mapped.",
+   "Detector flags flat 24/7 load in general (datacenters, crypto mining, oilfield electrification); language is 'consistent with'."
+  ],
+  "data_flags": {
+   "WACM": "Demand rose about 1.5 GW during 2022 while generation stayed near 4 GW and net exports fell from 1.5 GW to zero, with no change in interchange partners. Not explained by the data; could be a reporting or footprint change. Kept in the ranking (method frozen), excluded from alerts."
+  }
+ },
+ "count": 111,
+ "regions": [
+  {
+   "id": "ERCO/NRTH",
+   "ba": "ERCO",
+   "zone": "NRTH",
+   "name": "North",
+   "detection": {
+    "rank": 1,
+    "score": 16.47,
+    "growth_pct": 94.6,
+    "overnight_growth_pct": 107.9,
+    "overnight_excess": 13.4,
+    "neighbor_divergence": 74.5,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.603,
+    "siting_rank": 18,
+    "overnight_cf_share_2025": 0.413,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.417,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.413,
+    "daytime": 0.576,
+    "all": 0.461
+   },
+   "operator": {
+    "utility": "Oncor Electric Delivery",
+    "parent": "Sempra",
+    "ticker": "SRE",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ERCO/FWES",
+   "ba": "ERCO",
+   "zone": "FWES",
+   "name": "Far West",
+   "detection": {
+    "rank": 2,
+    "score": 13.89,
+    "growth_pct": 116.1,
+    "overnight_growth_pct": 119.1,
+    "overnight_excess": 3.1,
+    "neighbor_divergence": 96.0,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.603,
+    "siting_rank": 18,
+    "overnight_cf_share_2025": 0.413,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.417,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.413,
+    "daytime": 0.576,
+    "all": 0.461
+   },
+   "operator": {
+    "utility": "Oncor Electric Delivery",
+    "parent": "Sempra",
+    "ticker": "SRE",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "AZPS",
+   "ba": "AZPS",
+   "zone": null,
+   "name": "Arizona Public Service Company",
+   "detection": {
+    "rank": 3,
+    "score": 9.01,
+    "growth_pct": 31.0,
+    "overnight_growth_pct": 43.3,
+    "overnight_excess": 12.3,
+    "neighbor_divergence": 26.4,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.173,
+    "siting_rank": 49,
+    "overnight_cf_share_2025": 0.104,
+    "change_since_2019": -0.517,
+    "overnight_clean_mw_over_demand": 0.057,
+    "ratio_slope_per_year": -0.1105
+   },
+   "cf_share_2025": {
+    "overnight": 0.104,
+    "daytime": 0.476,
+    "all": 0.285
+   },
+   "operator": {
+    "utility": "Arizona Public Service",
+    "parent": "Pinnacle West Capital",
+    "ticker": "PNW",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "TEPC",
+   "ba": "TEPC",
+   "zone": null,
+   "name": "Tucson Electric Power Company",
+   "detection": {
+    "rank": 4,
+    "score": 8.51,
+    "growth_pct": 15.1,
+    "overnight_growth_pct": 29.6,
+    "overnight_excess": 14.5,
+    "neighbor_divergence": 10.6,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.442,
+    "siting_rank": 32,
+    "overnight_cf_share_2025": 0.078,
+    "change_since_2019": 0.058,
+    "overnight_clean_mw_over_demand": 0.084,
+    "ratio_slope_per_year": 0.0137
+   },
+   "cf_share_2025": {
+    "overnight": 0.078,
+    "daytime": 0.266,
+    "all": 0.146
+   },
+   "operator": {
+    "utility": "Tucson Electric Power",
+    "parent": "Fortis Inc. (via UNS Energy)",
+    "ticker": "FTS",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "WACM",
+   "ba": "WACM",
+   "zone": null,
+   "name": "Western Area Power Administration - Rocky Mountain Region",
+   "detection": {
+    "rank": 5,
+    "score": 8.24,
+    "growth_pct": 52.1,
+    "overnight_growth_pct": 57.0,
+    "overnight_excess": 4.9,
+    "neighbor_divergence": 47.5,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.5,
+    "siting_rank": 28,
+    "overnight_cf_share_2025": 0.297,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.3,
+    "ratio_slope_per_year": -0.0348
+   },
+   "cf_share_2025": {
+    "overnight": 0.297,
+    "daytime": 0.374,
+    "all": 0.339
+   },
+   "operator": {
+    "utility": "Western Area Power Administration, Rocky Mountain Region",
+    "parent": "U.S. Department of Energy",
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": true,
+   "data_flags": [
+    "Demand rose about 1.5 GW during 2022 while generation stayed near 4 GW and net exports fell from 1.5 GW to zero, with no change in interchange partners. Not explained by the data; could be a reporting or footprint change. Kept in the ranking (method frozen), excluded from alerts."
+   ]
+  },
+  {
+   "id": "PJM/DOM",
+   "ba": "PJM",
+   "zone": "DOM",
+   "name": "Dominion Virginia Power zone",
+   "detection": {
+    "rank": 6,
+    "score": 7.71,
+    "growth_pct": 31.8,
+    "overnight_growth_pct": 39.5,
+    "overnight_excess": 7.7,
+    "neighbor_divergence": 32.9,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": "Virginia Electric and Power (Dominion Energy Virginia)",
+    "parent": "Dominion Energy",
+    "ticker": "D",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SWPP/OPPD",
+   "ba": "SWPP",
+   "zone": "OPPD",
+   "name": "Omaha Public Power District",
+   "detection": {
+    "rank": 7,
+    "score": 6.82,
+    "growth_pct": 39.4,
+    "overnight_growth_pct": 45.0,
+    "overnight_excess": 5.6,
+    "neighbor_divergence": 30.9,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": "Omaha Public Power District",
+    "parent": "public (Nebraska)",
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ERCO",
+   "ba": "ERCO",
+   "zone": null,
+   "name": "Electric Reliability Council of Texas, Inc.",
+   "detection": {
+    "rank": 8,
+    "score": 5.14,
+    "growth_pct": 27.2,
+    "overnight_growth_pct": 31.1,
+    "overnight_excess": 3.9,
+    "neighbor_divergence": 22.7,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.603,
+    "siting_rank": 18,
+    "overnight_cf_share_2025": 0.413,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.417,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.413,
+    "daytime": 0.576,
+    "all": 0.461
+   },
+   "operator": {
+    "utility": "Oncor Electric Delivery",
+    "parent": "Sempra",
+    "ticker": "SRE",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "SC",
+   "ba": "SC",
+   "zone": null,
+   "name": "South Carolina Public Service Authority",
+   "detection": {
+    "rank": 9,
+    "score": 5.08,
+    "growth_pct": 28.3,
+    "overnight_growth_pct": 33.7,
+    "overnight_excess": 5.4,
+    "neighbor_divergence": 25.0,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.186,
+    "siting_rank": 48,
+    "overnight_cf_share_2025": 0.007,
+    "change_since_2019": -0.034,
+    "overnight_clean_mw_over_demand": 0.005,
+    "ratio_slope_per_year": -0.0061
+   },
+   "cf_share_2025": {
+    "overnight": 0.007,
+    "daytime": 0.102,
+    "all": 0.056
+   },
+   "operator": {
+    "utility": "Santee Cooper (South Carolina Public Service Authority)",
+    "parent": "State of South Carolina",
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "CISO/SDGE",
+   "ba": "CISO",
+   "zone": "SDGE",
+   "name": "San Diego Gas and Electric",
+   "detection": {
+    "rank": 10,
+    "score": 3.72,
+    "growth_pct": 3.5,
+    "overnight_growth_pct": 14.0,
+    "overnight_excess": 10.5,
+    "neighbor_divergence": -1.1,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 33,
+    "overnight_cf_share_2025": 0.458,
+    "change_since_2019": -0.037,
+    "overnight_clean_mw_over_demand": 0.325,
+    "ratio_slope_per_year": 0.0144
+   },
+   "cf_share_2025": {
+    "overnight": 0.458,
+    "daytime": 0.641,
+    "all": 0.546
+   },
+   "operator": {
+    "utility": "San Diego Gas & Electric",
+    "parent": "Sempra",
+    "ticker": "SRE",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PNM/PNM",
+   "ba": "PNM",
+   "zone": "PNM",
+   "name": "PNM System Firm Load",
+   "detection": {
+    "rank": 11,
+    "score": 3.62,
+    "growth_pct": 12.8,
+    "overnight_growth_pct": 20.8,
+    "overnight_excess": 8.0,
+    "neighbor_divergence": 8.3,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.821,
+    "siting_rank": 4,
+    "overnight_cf_share_2025": 0.595,
+    "change_since_2019": 0.372,
+    "overnight_clean_mw_over_demand": 0.507,
+    "ratio_slope_per_year": 0.0571
+   },
+   "cf_share_2025": {
+    "overnight": 0.595,
+    "daytime": 0.857,
+    "all": 0.716
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "CISO/PGAE",
+   "ba": "CISO",
+   "zone": "PGAE",
+   "name": "Pacific Gas and Electric",
+   "detection": {
+    "rank": 12,
+    "score": 3.41,
+    "growth_pct": 1.3,
+    "overnight_growth_pct": 9.8,
+    "overnight_excess": 8.5,
+    "neighbor_divergence": -3.2,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 33,
+    "overnight_cf_share_2025": 0.458,
+    "change_since_2019": -0.037,
+    "overnight_clean_mw_over_demand": 0.325,
+    "ratio_slope_per_year": 0.0144
+   },
+   "cf_share_2025": {
+    "overnight": 0.458,
+    "daytime": 0.641,
+    "all": 0.546
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SRP",
+   "ba": "SRP",
+   "zone": null,
+   "name": "Salt River Project",
+   "detection": {
+    "rank": 13,
+    "score": 3.38,
+    "growth_pct": 20.3,
+    "overnight_growth_pct": 25.0,
+    "overnight_excess": 4.8,
+    "neighbor_divergence": 15.7,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.654,
+    "siting_rank": 16,
+    "overnight_cf_share_2025": 0.551,
+    "change_since_2019": -0.006,
+    "overnight_clean_mw_over_demand": 1.039,
+    "ratio_slope_per_year": -0.0363
+   },
+   "cf_share_2025": {
+    "overnight": 0.551,
+    "daytime": 0.677,
+    "all": 0.599
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "ERCO/SOUT",
+   "ba": "ERCO",
+   "zone": "SOUT",
+   "name": "South",
+   "detection": {
+    "rank": 14,
+    "score": 3.31,
+    "growth_pct": 26.4,
+    "overnight_growth_pct": 31.4,
+    "overnight_excess": 5.0,
+    "neighbor_divergence": 6.3,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.603,
+    "siting_rank": 18,
+    "overnight_cf_share_2025": 0.413,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.417,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.413,
+    "daytime": 0.576,
+    "all": 0.461
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PGE",
+   "ba": "PGE",
+   "zone": null,
+   "name": "Portland General Electric Company",
+   "detection": {
+    "rank": 15,
+    "score": 3.11,
+    "growth_pct": 14.3,
+    "overnight_growth_pct": 21.9,
+    "overnight_excess": 7.6,
+    "neighbor_divergence": 9.7,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.25,
+    "siting_rank": 42,
+    "overnight_cf_share_2025": 0.227,
+    "change_since_2019": -0.112,
+    "overnight_clean_mw_over_demand": 0.093,
+    "ratio_slope_per_year": 0.0013
+   },
+   "cf_share_2025": {
+    "overnight": 0.227,
+    "daytime": 0.227,
+    "all": 0.232
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "ERCO/SCEN",
+   "ba": "ERCO",
+   "zone": "SCEN",
+   "name": "South Central",
+   "detection": {
+    "rank": 16,
+    "score": 2.88,
+    "growth_pct": 29.1,
+    "overnight_growth_pct": 32.8,
+    "overnight_excess": 3.7,
+    "neighbor_divergence": 9.1,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.603,
+    "siting_rank": 18,
+    "overnight_cf_share_2025": 0.413,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.417,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.413,
+    "daytime": 0.576,
+    "all": 0.461
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "NYIS/ZONE",
+   "ba": "NYIS",
+   "zone": "ZONE",
+   "name": "Mohawk Valley",
+   "detection": {
+    "rank": 17,
+    "score": 2.63,
+    "growth_pct": -7.1,
+    "overnight_growth_pct": 4.6,
+    "overnight_excess": 11.6,
+    "neighbor_divergence": -5.0,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "NYIS/ZOND",
+   "ba": "NYIS",
+   "zone": "ZOND",
+   "name": "North",
+   "detection": {
+    "rank": 18,
+    "score": 2.37,
+    "growth_pct": 9.3,
+    "overnight_growth_pct": 12.9,
+    "overnight_excess": 3.7,
+    "neighbor_divergence": 12.2,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/AEP",
+   "ba": "PJM",
+   "zone": "AEP",
+   "name": "American Electric Power zone",
+   "detection": {
+    "rank": 19,
+    "score": 2.29,
+    "growth_pct": 9.2,
+    "overnight_growth_pct": 12.6,
+    "overnight_excess": 3.4,
+    "neighbor_divergence": 10.4,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": "AEP Ohio, Appalachian Power, Indiana Michigan Power, Kentucky Power",
+    "parent": "American Electric Power",
+    "ticker": "AEP",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "NYIS/ZONG",
+   "ba": "NYIS",
+   "zone": "ZONG",
+   "name": "Hudson Valley",
+   "detection": {
+    "rank": 20,
+    "score": 2.27,
+    "growth_pct": -0.7,
+    "overnight_growth_pct": 7.1,
+    "overnight_excess": 7.8,
+    "neighbor_divergence": 2.2,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "CISO",
+   "ba": "CISO",
+   "zone": null,
+   "name": "California Independent System Operator",
+   "detection": {
+    "rank": 21,
+    "score": 2.09,
+    "growth_pct": 4.5,
+    "overnight_growth_pct": 9.6,
+    "overnight_excess": 5.1,
+    "neighbor_divergence": -1.5,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 33,
+    "overnight_cf_share_2025": 0.458,
+    "change_since_2019": -0.037,
+    "overnight_clean_mw_over_demand": 0.325,
+    "ratio_slope_per_year": 0.0144
+   },
+   "cf_share_2025": {
+    "overnight": 0.458,
+    "daytime": 0.641,
+    "all": 0.546
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "SWPP/OKGE",
+   "ba": "SWPP",
+   "zone": "OKGE",
+   "name": "Oklahoma Gas and Electric Co.",
+   "detection": {
+    "rank": 22,
+    "score": 2.06,
+    "growth_pct": 19.3,
+    "overnight_growth_pct": 21.7,
+    "overnight_excess": 2.4,
+    "neighbor_divergence": 10.7,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SWPP/SPS",
+   "ba": "SWPP",
+   "zone": "SPS",
+   "name": "Southwestern Public Service Company",
+   "detection": {
+    "rank": 23,
+    "score": 1.98,
+    "growth_pct": 11.4,
+    "overnight_growth_pct": 14.1,
+    "overnight_excess": 2.7,
+    "neighbor_divergence": 2.8,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "FPL",
+   "ba": "FPL",
+   "zone": null,
+   "name": "Florida Power & Light Company",
+   "detection": {
+    "rank": 24,
+    "score": 1.87,
+    "growth_pct": 14.3,
+    "overnight_growth_pct": 18.0,
+    "overnight_excess": 3.7,
+    "neighbor_divergence": 10.9,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.353,
+    "siting_rank": 38,
+    "overnight_cf_share_2025": 0.263,
+    "change_since_2019": -0.026,
+    "overnight_clean_mw_over_demand": 0.265,
+    "ratio_slope_per_year": -0.0069
+   },
+   "cf_share_2025": {
+    "overnight": 0.263,
+    "daytime": 0.45,
+    "all": 0.317
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "SWPP/WAUE",
+   "ba": "SWPP",
+   "zone": "WAUE",
+   "name": "Western Area Power Upper Great Plains East",
+   "detection": {
+    "rank": 25,
+    "score": 1.86,
+    "growth_pct": 16.0,
+    "overnight_growth_pct": 18.1,
+    "overnight_excess": 2.1,
+    "neighbor_divergence": 7.4,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "NYIS/ZONF",
+   "ba": "NYIS",
+   "zone": "ZONF",
+   "name": "Capital",
+   "detection": {
+    "rank": 26,
+    "score": 1.75,
+    "growth_pct": -2.0,
+    "overnight_growth_pct": 5.2,
+    "overnight_excess": 7.2,
+    "neighbor_divergence": 0.8,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "GCPD",
+   "ba": "GCPD",
+   "zone": null,
+   "name": "Public Utility District No. 2 of Grant County, Washington",
+   "detection": {
+    "rank": 27,
+    "score": 1.7,
+    "growth_pct": 25.6,
+    "overnight_growth_pct": 25.5,
+    "overnight_excess": -0.2,
+    "neighbor_divergence": 21.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.792,
+    "siting_rank": 7,
+    "overnight_cf_share_2025": 1.0,
+    "change_since_2019": 0.0,
+    "overnight_clean_mw_over_demand": 1.348,
+    "ratio_slope_per_year": -0.0713
+   },
+   "cf_share_2025": {
+    "overnight": 1.0,
+    "daytime": 1.0,
+    "all": 1.0
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "SWPP/NPPD",
+   "ba": "SWPP",
+   "zone": "NPPD",
+   "name": "Nebraska Public Power District",
+   "detection": {
+    "rank": 28,
+    "score": 1.62,
+    "growth_pct": 16.9,
+    "overnight_growth_pct": 19.9,
+    "overnight_excess": 3.0,
+    "neighbor_divergence": 8.3,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "NYIS/ZONA",
+   "ba": "NYIS",
+   "zone": "ZONA",
+   "name": "West",
+   "detection": {
+    "rank": 29,
+    "score": 1.36,
+    "growth_pct": 1.9,
+    "overnight_growth_pct": 6.6,
+    "overnight_excess": 4.7,
+    "neighbor_divergence": 4.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SWPP/GRDA",
+   "ba": "SWPP",
+   "zone": "GRDA",
+   "name": "Grand River Dam Authority",
+   "detection": {
+    "rank": 30,
+    "score": 1.36,
+    "growth_pct": 41.9,
+    "overnight_growth_pct": 36.3,
+    "overnight_excess": -5.6,
+    "neighbor_divergence": 33.3,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "FPC",
+   "ba": "FPC",
+   "zone": null,
+   "name": "Progress Energy Florida",
+   "detection": {
+    "rank": 31,
+    "score": 1.33,
+    "growth_pct": 6.6,
+    "overnight_growth_pct": 11.0,
+    "overnight_excess": 4.4,
+    "neighbor_divergence": 3.3,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.218,
+    "siting_rank": 45,
+    "overnight_cf_share_2025": 0.006,
+    "change_since_2019": -0.0,
+    "overnight_clean_mw_over_demand": 0.005,
+    "ratio_slope_per_year": -0.0001
+   },
+   "cf_share_2025": {
+    "overnight": 0.006,
+    "daytime": 0.221,
+    "all": 0.096
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "NYIS/ZONC",
+   "ba": "NYIS",
+   "zone": "ZONC",
+   "name": "Central",
+   "detection": {
+    "rank": 32,
+    "score": 1.27,
+    "growth_pct": -6.6,
+    "overnight_growth_pct": 1.0,
+    "overnight_excess": 7.6,
+    "neighbor_divergence": -4.6,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ISNE/4001",
+   "ba": "ISNE",
+   "zone": "4001",
+   "name": "Maine",
+   "detection": {
+    "rank": 33,
+    "score": 1.0,
+    "growth_pct": -4.5,
+    "overnight_growth_pct": 3.7,
+    "overnight_excess": 8.2,
+    "neighbor_divergence": -4.6,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.389,
+    "change_since_2019": -0.116,
+    "overnight_clean_mw_over_demand": 0.353,
+    "ratio_slope_per_year": -0.0041
+   },
+   "cf_share_2025": {
+    "overnight": 0.389,
+    "daytime": 0.396,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/JC",
+   "ba": "PJM",
+   "zone": "JC",
+   "name": "Jersey Central Power & Light zone",
+   "detection": {
+    "rank": 34,
+    "score": 1.0,
+    "growth_pct": -0.8,
+    "overnight_growth_pct": 4.6,
+    "overnight_excess": 5.4,
+    "neighbor_divergence": 0.4,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "MISO/0035",
+   "ba": "MISO",
+   "zone": "0035",
+   "name": "Zones 3 and 5",
+   "detection": {
+    "rank": 35,
+    "score": 0.95,
+    "growth_pct": 6.9,
+    "overnight_growth_pct": 9.8,
+    "overnight_excess": 2.9,
+    "neighbor_divergence": 7.2,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 24,
+    "overnight_cf_share_2025": 0.345,
+    "change_since_2019": 0.025,
+    "overnight_clean_mw_over_demand": 0.341,
+    "ratio_slope_per_year": 0.0069
+   },
+   "cf_share_2025": {
+    "overnight": 0.345,
+    "daytime": 0.382,
+    "all": 0.349
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "NYIS/ZONB",
+   "ba": "NYIS",
+   "zone": "ZONB",
+   "name": "Genesee",
+   "detection": {
+    "rank": 36,
+    "score": 0.93,
+    "growth_pct": -3.5,
+    "overnight_growth_pct": 2.9,
+    "overnight_excess": 6.4,
+    "neighbor_divergence": -1.4,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "LGEE",
+   "ba": "LGEE",
+   "zone": null,
+   "name": "LG&E and KU Services Company as agent for Louisville Gas and Electric Company and Kentucky Utilities",
+   "detection": {
+    "rank": 37,
+    "score": 0.92,
+    "growth_pct": 11.6,
+    "overnight_growth_pct": 14.1,
+    "overnight_excess": 2.4,
+    "neighbor_divergence": 8.3,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.237,
+    "siting_rank": 43,
+    "overnight_cf_share_2025": 0.011,
+    "change_since_2019": -0.001,
+    "overnight_clean_mw_over_demand": 0.009,
+    "ratio_slope_per_year": -0.0006
+   },
+   "cf_share_2025": {
+    "overnight": 0.011,
+    "daytime": 0.02,
+    "all": 0.014
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "ISNE/4006",
+   "ba": "ISNE",
+   "zone": "4006",
+   "name": "Southeast Mass.",
+   "detection": {
+    "rank": 38,
+    "score": 0.92,
+    "growth_pct": 1.3,
+    "overnight_growth_pct": 5.7,
+    "overnight_excess": 4.4,
+    "neighbor_divergence": 1.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.389,
+    "change_since_2019": -0.116,
+    "overnight_clean_mw_over_demand": 0.353,
+    "ratio_slope_per_year": -0.0041
+   },
+   "cf_share_2025": {
+    "overnight": 0.389,
+    "daytime": 0.396,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SWPP",
+   "ba": "SWPP",
+   "zone": null,
+   "name": "Southwest Power Pool",
+   "detection": {
+    "rank": 39,
+    "score": 0.85,
+    "growth_pct": 10.7,
+    "overnight_growth_pct": 12.4,
+    "overnight_excess": 1.6,
+    "neighbor_divergence": 7.4,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "NYIS/ZONI",
+   "ba": "NYIS",
+   "zone": "ZONI",
+   "name": "Dunwoodie",
+   "detection": {
+    "rank": 40,
+    "score": 0.83,
+    "growth_pct": -2.1,
+    "overnight_growth_pct": 2.9,
+    "overnight_excess": 4.9,
+    "neighbor_divergence": 0.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/PL",
+   "ba": "PJM",
+   "zone": "PL",
+   "name": "Pennsylvania Power & Light zone",
+   "detection": {
+    "rank": 41,
+    "score": 0.82,
+    "growth_pct": 2.2,
+    "overnight_growth_pct": 3.8,
+    "overnight_excess": 1.6,
+    "neighbor_divergence": 3.3,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "BANC",
+   "ba": "BANC",
+   "zone": null,
+   "name": "Balancing Authority of Northern California",
+   "detection": {
+    "rank": 42,
+    "score": 0.74,
+    "growth_pct": 2.4,
+    "overnight_growth_pct": 6.7,
+    "overnight_excess": 4.2,
+    "neighbor_divergence": -3.5,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.468,
+    "siting_rank": 31,
+    "overnight_cf_share_2025": 0.44,
+    "change_since_2019": -0.045,
+    "overnight_clean_mw_over_demand": 0.429,
+    "ratio_slope_per_year": 0.019
+   },
+   "cf_share_2025": {
+    "overnight": 0.44,
+    "daytime": 0.465,
+    "all": 0.469
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PJM/EKPC",
+   "ba": "PJM",
+   "zone": "EKPC",
+   "name": "East Kentucky Power Cooperative zone",
+   "detection": {
+    "rank": 43,
+    "score": 0.72,
+    "growth_pct": 11.0,
+    "overnight_growth_pct": 13.5,
+    "overnight_excess": 2.5,
+    "neighbor_divergence": 12.1,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "CISO/SCE",
+   "ba": "CISO",
+   "zone": "SCE",
+   "name": "Southern California Edison",
+   "detection": {
+    "rank": 44,
+    "score": 0.62,
+    "growth_pct": 7.1,
+    "overnight_growth_pct": 8.2,
+    "overnight_excess": 1.1,
+    "neighbor_divergence": 2.5,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 33,
+    "overnight_cf_share_2025": 0.458,
+    "change_since_2019": -0.037,
+    "overnight_clean_mw_over_demand": 0.325,
+    "ratio_slope_per_year": 0.0144
+   },
+   "cf_share_2025": {
+    "overnight": 0.458,
+    "daytime": 0.641,
+    "all": 0.546
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ISNE/4002",
+   "ba": "ISNE",
+   "zone": "4002",
+   "name": "New Hampshire",
+   "detection": {
+    "rank": 45,
+    "score": 0.55,
+    "growth_pct": 2.3,
+    "overnight_growth_pct": 6.7,
+    "overnight_excess": 4.4,
+    "neighbor_divergence": 2.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.389,
+    "change_since_2019": -0.116,
+    "overnight_clean_mw_over_demand": 0.353,
+    "ratio_slope_per_year": -0.0041
+   },
+   "cf_share_2025": {
+    "overnight": 0.389,
+    "daytime": 0.396,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PNM",
+   "ba": "PNM",
+   "zone": null,
+   "name": "Public Service Company of New Mexico",
+   "detection": {
+    "rank": 46,
+    "score": 0.54,
+    "growth_pct": 4.6,
+    "overnight_growth_pct": 9.0,
+    "overnight_excess": 4.5,
+    "neighbor_divergence": -1.4,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.821,
+    "siting_rank": 4,
+    "overnight_cf_share_2025": 0.595,
+    "change_since_2019": 0.372,
+    "overnight_clean_mw_over_demand": 0.507,
+    "ratio_slope_per_year": 0.0571
+   },
+   "cf_share_2025": {
+    "overnight": 0.595,
+    "daytime": 0.857,
+    "all": 0.716
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "NYIS/ZONK",
+   "ba": "NYIS",
+   "zone": "ZONK",
+   "name": "Long Island",
+   "detection": {
+    "rank": 47,
+    "score": 0.51,
+    "growth_pct": -2.9,
+    "overnight_growth_pct": 1.7,
+    "overnight_excess": 4.6,
+    "neighbor_divergence": -0.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "MISO/8910",
+   "ba": "MISO",
+   "zone": "8910",
+   "name": "Zones 8, 9, and 10",
+   "detection": {
+    "rank": 48,
+    "score": 0.49,
+    "growth_pct": 5.5,
+    "overnight_growth_pct": 6.7,
+    "overnight_excess": 1.2,
+    "neighbor_divergence": 5.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 24,
+    "overnight_cf_share_2025": 0.345,
+    "change_since_2019": 0.025,
+    "overnight_clean_mw_over_demand": 0.341,
+    "ratio_slope_per_year": 0.0069
+   },
+   "cf_share_2025": {
+    "overnight": 0.345,
+    "daytime": 0.382,
+    "all": 0.349
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "FMPP",
+   "ba": "FMPP",
+   "zone": null,
+   "name": "Florida Municipal Power Pool",
+   "detection": {
+    "rank": 49,
+    "score": 0.46,
+    "growth_pct": 7.5,
+    "overnight_growth_pct": 10.0,
+    "overnight_excess": 2.5,
+    "neighbor_divergence": 4.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.075,
+    "change_since_2019": 0.002,
+    "overnight_clean_mw_over_demand": 0.072,
+    "ratio_slope_per_year": -0.001
+   },
+   "cf_share_2025": {
+    "overnight": 0.075,
+    "daytime": 0.13,
+    "all": 0.089
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "BPAT",
+   "ba": "BPAT",
+   "zone": null,
+   "name": "Bonneville Power Administration",
+   "detection": {
+    "rank": 50,
+    "score": 0.45,
+    "growth_pct": 9.4,
+    "overnight_growth_pct": 11.3,
+    "overnight_excess": 1.9,
+    "neighbor_divergence": 4.9,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.827,
+    "siting_rank": 3,
+    "overnight_cf_share_2025": 0.905,
+    "change_since_2019": 0.022,
+    "overnight_clean_mw_over_demand": 1.245,
+    "ratio_slope_per_year": -0.0444
+   },
+   "cf_share_2025": {
+    "overnight": 0.905,
+    "daytime": 0.911,
+    "all": 0.913
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PJM/PN",
+   "ba": "PJM",
+   "zone": "PN",
+   "name": "Pennsylvania Electric zone",
+   "detection": {
+    "rank": 51,
+    "score": 0.41,
+    "growth_pct": -1.9,
+    "overnight_growth_pct": 2.4,
+    "overnight_excess": 4.3,
+    "neighbor_divergence": -0.9,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM",
+   "ba": "PJM",
+   "zone": null,
+   "name": "PJM Interconnection, LLC",
+   "detection": {
+    "rank": 52,
+    "score": 0.4,
+    "growth_pct": 5.4,
+    "overnight_growth_pct": 8.1,
+    "overnight_excess": 2.8,
+    "neighbor_divergence": 2.0,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": "Constellation Energy",
+    "parent": "Constellation Energy",
+    "ticker": "CEG",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PJM/PS",
+   "ba": "PJM",
+   "zone": "PS",
+   "name": "Public Service Electric & Gas zone",
+   "detection": {
+    "rank": 53,
+    "score": 0.38,
+    "growth_pct": -0.8,
+    "overnight_growth_pct": 3.2,
+    "overnight_excess": 4.0,
+    "neighbor_divergence": 0.3,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ISNE/4003",
+   "ba": "ISNE",
+   "zone": "4003",
+   "name": "Vermont",
+   "detection": {
+    "rank": 54,
+    "score": 0.38,
+    "growth_pct": -5.8,
+    "overnight_growth_pct": 1.4,
+    "overnight_excess": 7.2,
+    "neighbor_divergence": -5.9,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.389,
+    "change_since_2019": -0.116,
+    "overnight_clean_mw_over_demand": 0.353,
+    "ratio_slope_per_year": -0.0041
+   },
+   "cf_share_2025": {
+    "overnight": 0.389,
+    "daytime": 0.396,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "TEC",
+   "ba": "TEC",
+   "zone": null,
+   "name": "Tampa Electric Company",
+   "detection": {
+    "rank": 55,
+    "score": 0.34,
+    "growth_pct": 3.8,
+    "overnight_growth_pct": 7.0,
+    "overnight_excess": 3.1,
+    "neighbor_divergence": -0.3,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.256,
+    "siting_rank": 41,
+    "overnight_cf_share_2025": 0.0,
+    "change_since_2019": 0.0,
+    "overnight_clean_mw_over_demand": 0.0,
+    "ratio_slope_per_year": -0.0001
+   },
+   "cf_share_2025": {
+    "overnight": 0.0,
+    "daytime": 0.286,
+    "all": 0.118
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "ERCO/COAS",
+   "ba": "ERCO",
+   "zone": "COAS",
+   "name": "Coast",
+   "detection": {
+    "rank": 56,
+    "score": 0.33,
+    "growth_pct": 20.1,
+    "overnight_growth_pct": 23.2,
+    "overnight_excess": 3.2,
+    "neighbor_divergence": -6.3,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.603,
+    "siting_rank": 18,
+    "overnight_cf_share_2025": 0.413,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.417,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.413,
+    "daytime": 0.576,
+    "all": 0.461
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ISNE/4005",
+   "ba": "ISNE",
+   "zone": "4005",
+   "name": "Rhode Island",
+   "detection": {
+    "rank": 57,
+    "score": 0.3,
+    "growth_pct": -0.5,
+    "overnight_growth_pct": 3.6,
+    "overnight_excess": 4.1,
+    "neighbor_divergence": -0.6,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.389,
+    "change_since_2019": -0.116,
+    "overnight_clean_mw_over_demand": 0.353,
+    "ratio_slope_per_year": -0.0041
+   },
+   "cf_share_2025": {
+    "overnight": 0.389,
+    "daytime": 0.396,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "IPCO",
+   "ba": "IPCO",
+   "zone": null,
+   "name": "Idaho Power Company",
+   "detection": {
+    "rank": 58,
+    "score": 0.25,
+    "growth_pct": 11.4,
+    "overnight_growth_pct": 12.4,
+    "overnight_excess": 1.0,
+    "neighbor_divergence": 6.9,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.583,
+    "siting_rank": 20,
+    "overnight_cf_share_2025": 0.702,
+    "change_since_2019": -0.097,
+    "overnight_clean_mw_over_demand": 0.572,
+    "ratio_slope_per_year": -0.0107
+   },
+   "cf_share_2025": {
+    "overnight": 0.702,
+    "daytime": 0.782,
+    "all": 0.747
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "MISO/0001",
+   "ba": "MISO",
+   "zone": "0001",
+   "name": "Zone 1",
+   "detection": {
+    "rank": 59,
+    "score": 0.22,
+    "growth_pct": 2.8,
+    "overnight_growth_pct": 5.2,
+    "overnight_excess": 2.4,
+    "neighbor_divergence": 3.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 24,
+    "overnight_cf_share_2025": 0.345,
+    "change_since_2019": 0.025,
+    "overnight_clean_mw_over_demand": 0.341,
+    "ratio_slope_per_year": 0.0069
+   },
+   "cf_share_2025": {
+    "overnight": 0.345,
+    "daytime": 0.382,
+    "all": 0.349
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "TVA",
+   "ba": "TVA",
+   "zone": null,
+   "name": "Tennessee Valley Authority",
+   "detection": {
+    "rank": 60,
+    "score": 0.2,
+    "growth_pct": 7.2,
+    "overnight_growth_pct": 9.4,
+    "overnight_excess": 2.3,
+    "neighbor_divergence": 3.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.5,
+    "siting_rank": 29,
+    "overnight_cf_share_2025": 0.48,
+    "change_since_2019": -0.071,
+    "overnight_clean_mw_over_demand": 0.476,
+    "ratio_slope_per_year": -0.0152
+   },
+   "cf_share_2025": {
+    "overnight": 0.48,
+    "daytime": 0.498,
+    "all": 0.487
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "ISNE/4008",
+   "ba": "ISNE",
+   "zone": "4008",
+   "name": "Northeast Mass.",
+   "detection": {
+    "rank": 61,
+    "score": 0.06,
+    "growth_pct": 0.2,
+    "overnight_growth_pct": 3.8,
+    "overnight_excess": 3.6,
+    "neighbor_divergence": 0.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.389,
+    "change_since_2019": -0.116,
+    "overnight_clean_mw_over_demand": 0.353,
+    "ratio_slope_per_year": -0.0041
+   },
+   "cf_share_2025": {
+    "overnight": 0.389,
+    "daytime": 0.396,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ERCO/EAST",
+   "ba": "ERCO",
+   "zone": "EAST",
+   "name": "East",
+   "detection": {
+    "rank": 62,
+    "score": -0.04,
+    "growth_pct": 14.0,
+    "overnight_growth_pct": 19.6,
+    "overnight_excess": 5.6,
+    "neighbor_divergence": -12.4,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.603,
+    "siting_rank": 18,
+    "overnight_cf_share_2025": 0.413,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.417,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.413,
+    "daytime": 0.576,
+    "all": 0.461
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "NYIS",
+   "ba": "NYIS",
+   "zone": null,
+   "name": "New York Independent System Operator",
+   "detection": {
+    "rank": 63,
+    "score": -0.05,
+    "growth_pct": -2.7,
+    "overnight_growth_pct": 2.3,
+    "overnight_excess": 5.0,
+    "neighbor_divergence": -7.3,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "JEA",
+   "ba": "JEA",
+   "zone": null,
+   "name": "Jacksonville Energy",
+   "detection": {
+    "rank": 64,
+    "score": -0.08,
+    "growth_pct": 5.4,
+    "overnight_growth_pct": 7.7,
+    "overnight_excess": 2.3,
+    "neighbor_divergence": 2.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.167,
+    "siting_rank": 50,
+    "overnight_cf_share_2025": 0.0,
+    "change_since_2019": -0.0,
+    "overnight_clean_mw_over_demand": 0.0,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.0,
+    "daytime": 0.017,
+    "all": 0.006
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PJM/ATSI",
+   "ba": "PJM",
+   "zone": "ATSI",
+   "name": "American Transmission Systems, Inc. zone",
+   "detection": {
+    "rank": 65,
+    "score": -0.09,
+    "growth_pct": 2.5,
+    "overnight_growth_pct": 4.1,
+    "overnight_excess": 1.6,
+    "neighbor_divergence": 3.6,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ISNE",
+   "ba": "ISNE",
+   "zone": null,
+   "name": "ISO New England Inc.",
+   "detection": {
+    "rank": 66,
+    "score": -0.11,
+    "growth_pct": -2.5,
+    "overnight_growth_pct": 3.0,
+    "overnight_excess": 5.6,
+    "neighbor_divergence": -7.1,
+    "pattern": "possible midday solar suppression"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.389,
+    "change_since_2019": -0.116,
+    "overnight_clean_mw_over_demand": 0.353,
+    "ratio_slope_per_year": -0.0041
+   },
+   "cf_share_2025": {
+    "overnight": 0.389,
+    "daytime": 0.396,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PJM/CE",
+   "ba": "PJM",
+   "zone": "CE",
+   "name": "Commonwealth Edison zone",
+   "detection": {
+    "rank": 67,
+    "score": -0.12,
+    "growth_pct": -1.1,
+    "overnight_growth_pct": 1.7,
+    "overnight_excess": 2.8,
+    "neighbor_divergence": -0.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/DPL",
+   "ba": "PJM",
+   "zone": "DPL",
+   "name": "Delmarva Power & Light zone",
+   "detection": {
+    "rank": 68,
+    "score": -0.12,
+    "growth_pct": -3.0,
+    "overnight_growth_pct": 0.3,
+    "overnight_excess": 3.2,
+    "neighbor_divergence": -2.0,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ISNE/4007",
+   "ba": "ISNE",
+   "zone": "4007",
+   "name": "Western/Central Mass.",
+   "detection": {
+    "rank": 69,
+    "score": -0.17,
+    "growth_pct": 0.1,
+    "overnight_growth_pct": 3.5,
+    "overnight_excess": 3.4,
+    "neighbor_divergence": 0.6,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.389,
+    "change_since_2019": -0.116,
+    "overnight_clean_mw_over_demand": 0.353,
+    "ratio_slope_per_year": -0.0041
+   },
+   "cf_share_2025": {
+    "overnight": 0.389,
+    "daytime": 0.396,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ISNE/4004",
+   "ba": "ISNE",
+   "zone": "4004",
+   "name": "Connecticut",
+   "detection": {
+    "rank": 70,
+    "score": -0.2,
+    "growth_pct": -4.6,
+    "overnight_growth_pct": 0.3,
+    "overnight_excess": 4.8,
+    "neighbor_divergence": -4.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.365,
+    "siting_rank": 36,
+    "overnight_cf_share_2025": 0.389,
+    "change_since_2019": -0.116,
+    "overnight_clean_mw_over_demand": 0.353,
+    "ratio_slope_per_year": -0.0041
+   },
+   "cf_share_2025": {
+    "overnight": 0.389,
+    "daytime": 0.396,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/BC",
+   "ba": "PJM",
+   "zone": "BC",
+   "name": "Baltimore Gas & Electric zone",
+   "detection": {
+    "rank": 71,
+    "score": -0.22,
+    "growth_pct": -2.9,
+    "overnight_growth_pct": 0.4,
+    "overnight_excess": 3.3,
+    "neighbor_divergence": -1.9,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/DAY",
+   "ba": "PJM",
+   "zone": "DAY",
+   "name": "Dayton Power & Light zone",
+   "detection": {
+    "rank": 72,
+    "score": -0.29,
+    "growth_pct": 1.0,
+    "overnight_growth_pct": 2.5,
+    "overnight_excess": 1.4,
+    "neighbor_divergence": 2.2,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/PEP",
+   "ba": "PJM",
+   "zone": "PEP",
+   "name": "Potomac Electric Power zone",
+   "detection": {
+    "rank": 73,
+    "score": -0.29,
+    "growth_pct": -5.1,
+    "overnight_growth_pct": -1.7,
+    "overnight_excess": 3.4,
+    "neighbor_divergence": -4.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "CPLE",
+   "ba": "CPLE",
+   "zone": null,
+   "name": "Duke Energy Progress East",
+   "detection": {
+    "rank": 74,
+    "score": -0.46,
+    "growth_pct": 1.9,
+    "overnight_growth_pct": 5.4,
+    "overnight_excess": 3.5,
+    "neighbor_divergence": -2.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.718,
+    "siting_rank": 14,
+    "overnight_cf_share_2025": 0.537,
+    "change_since_2019": 0.017,
+    "overnight_clean_mw_over_demand": 0.555,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.537,
+    "daytime": 0.635,
+    "all": 0.556
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "NEVP",
+   "ba": "NEVP",
+   "zone": null,
+   "name": "Nevada Power Company",
+   "detection": {
+    "rank": 75,
+    "score": -0.47,
+    "growth_pct": 8.6,
+    "overnight_growth_pct": 8.5,
+    "overnight_excess": -0.1,
+    "neighbor_divergence": 4.0,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.34,
+    "siting_rank": 39,
+    "overnight_cf_share_2025": 0.018,
+    "change_since_2019": 0.005,
+    "overnight_clean_mw_over_demand": 0.017,
+    "ratio_slope_per_year": 0.0014
+   },
+   "cf_share_2025": {
+    "overnight": 0.018,
+    "daytime": 0.558,
+    "all": 0.258
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "DUK",
+   "ba": "DUK",
+   "zone": null,
+   "name": "Duke Energy Carolinas",
+   "detection": {
+    "rank": 76,
+    "score": -0.51,
+    "growth_pct": 2.9,
+    "overnight_growth_pct": 5.4,
+    "overnight_excess": 2.5,
+    "neighbor_divergence": -1.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.635,
+    "siting_rank": 17,
+    "overnight_cf_share_2025": 0.593,
+    "change_since_2019": -0.018,
+    "overnight_clean_mw_over_demand": 0.657,
+    "ratio_slope_per_year": -0.0072
+   },
+   "cf_share_2025": {
+    "overnight": 0.593,
+    "daytime": 0.594,
+    "all": 0.575
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PJM/ME",
+   "ba": "PJM",
+   "zone": "ME",
+   "name": "Metropolitan Edison zone",
+   "detection": {
+    "rank": 77,
+    "score": -0.52,
+    "growth_pct": -0.4,
+    "overnight_growth_pct": 1.3,
+    "overnight_excess": 1.8,
+    "neighbor_divergence": 0.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SCL",
+   "ba": "SCL",
+   "zone": null,
+   "name": "Seattle City Light",
+   "detection": {
+    "rank": 78,
+    "score": -0.56,
+    "growth_pct": 0.3,
+    "overnight_growth_pct": 2.7,
+    "overnight_excess": 2.4,
+    "neighbor_divergence": -5.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.721,
+    "siting_rank": 13,
+    "overnight_cf_share_2025": 1.0,
+    "change_since_2019": 0.0,
+    "overnight_clean_mw_over_demand": 0.526,
+    "ratio_slope_per_year": -0.0123
+   },
+   "cf_share_2025": {
+    "overnight": 1.0,
+    "daytime": 1.0,
+    "all": 1.0
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "EPE",
+   "ba": "EPE",
+   "zone": null,
+   "name": "El Paso Electric Company",
+   "detection": {
+    "rank": 79,
+    "score": -0.57,
+    "growth_pct": 7.4,
+    "overnight_growth_pct": 9.1,
+    "overnight_excess": 1.7,
+    "neighbor_divergence": 2.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.276,
+    "siting_rank": 40,
+    "overnight_cf_share_2025": 0.001,
+    "change_since_2019": 0.001,
+    "overnight_clean_mw_over_demand": 0.001,
+    "ratio_slope_per_year": 0.0001
+   },
+   "cf_share_2025": {
+    "overnight": 0.001,
+    "daytime": 0.341,
+    "all": 0.158
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "SWPP/SECI",
+   "ba": "SWPP",
+   "zone": "SECI",
+   "name": "Sunflower Electric",
+   "detection": {
+    "rank": 80,
+    "score": -0.59,
+    "growth_pct": 10.1,
+    "overnight_growth_pct": 10.5,
+    "overnight_excess": 0.5,
+    "neighbor_divergence": 0.8,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/DUQ",
+   "ba": "PJM",
+   "zone": "DUQ",
+   "name": "Duquesne Lighting Company zone",
+   "detection": {
+    "rank": 81,
+    "score": -0.62,
+    "growth_pct": -3.0,
+    "overnight_growth_pct": -0.1,
+    "overnight_excess": 2.9,
+    "neighbor_divergence": -2.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "NYIS/ZONJ",
+   "ba": "NYIS",
+   "zone": "ZONJ",
+   "name": "New York City",
+   "detection": {
+    "rank": 82,
+    "score": -0.67,
+    "growth_pct": -3.7,
+    "overnight_growth_pct": -1.4,
+    "overnight_excess": 2.3,
+    "neighbor_divergence": -1.6,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.404,
+    "siting_rank": 35,
+    "overnight_cf_share_2025": 0.459,
+    "change_since_2019": -0.195,
+    "overnight_clean_mw_over_demand": 0.386,
+    "ratio_slope_per_year": -0.0258
+   },
+   "cf_share_2025": {
+    "overnight": 0.459,
+    "daytime": 0.447,
+    "all": 0.446
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/AP",
+   "ba": "PJM",
+   "zone": "AP",
+   "name": "Allegheny Power zone",
+   "detection": {
+    "rank": 83,
+    "score": -0.71,
+    "growth_pct": -1.2,
+    "overnight_growth_pct": 0.3,
+    "overnight_excess": 1.5,
+    "neighbor_divergence": -0.2,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "LDWP",
+   "ba": "LDWP",
+   "zone": null,
+   "name": "Los Angeles Department of Water and Power",
+   "detection": {
+    "rank": 84,
+    "score": -0.71,
+    "growth_pct": -7.9,
+    "overnight_growth_pct": -3.8,
+    "overnight_excess": 4.1,
+    "neighbor_divergence": -13.9,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.506,
+    "siting_rank": 27,
+    "overnight_cf_share_2025": 0.171,
+    "change_since_2019": 0.082,
+    "overnight_clean_mw_over_demand": 0.119,
+    "ratio_slope_per_year": 0.0061
+   },
+   "cf_share_2025": {
+    "overnight": 0.171,
+    "daytime": 0.576,
+    "all": 0.369
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PACE",
+   "ba": "PACE",
+   "zone": null,
+   "name": "PacifiCorp - East",
+   "detection": {
+    "rank": 85,
+    "score": -0.74,
+    "growth_pct": 9.9,
+    "overnight_growth_pct": 9.2,
+    "overnight_excess": -0.7,
+    "neighbor_divergence": 5.4,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 22,
+    "overnight_cf_share_2025": 0.255,
+    "change_since_2019": 0.108,
+    "overnight_clean_mw_over_demand": 0.306,
+    "ratio_slope_per_year": 0.0199
+   },
+   "cf_share_2025": {
+    "overnight": 0.255,
+    "daytime": 0.527,
+    "all": 0.363
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PJM/DEOK",
+   "ba": "PJM",
+   "zone": "DEOK",
+   "name": "Duke Energy Ohio/Kentucky zone",
+   "detection": {
+    "rank": 86,
+    "score": -0.77,
+    "growth_pct": -1.2,
+    "overnight_growth_pct": 0.2,
+    "overnight_excess": 1.4,
+    "neighbor_divergence": -0.2,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SWPP/MPS",
+   "ba": "SWPP",
+   "zone": "MPS",
+   "name": "KCP&L Greater Missouri Operations",
+   "detection": {
+    "rank": 87,
+    "score": -0.87,
+    "growth_pct": 7.1,
+    "overnight_growth_pct": 8.9,
+    "overnight_excess": 1.9,
+    "neighbor_divergence": -3.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SWPP/KCPL",
+   "ba": "SWPP",
+   "zone": "KCPL",
+   "name": "Kansas City Power & Light",
+   "detection": {
+    "rank": 88,
+    "score": -1.05,
+    "growth_pct": 4.3,
+    "overnight_growth_pct": 6.2,
+    "overnight_excess": 1.9,
+    "neighbor_divergence": -6.4,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "MISO",
+   "ba": "MISO",
+   "zone": null,
+   "name": "Midcontinent Independent Transmission System Operator, Inc..",
+   "detection": {
+    "rank": 89,
+    "score": -1.11,
+    "growth_pct": 2.2,
+    "overnight_growth_pct": 3.6,
+    "overnight_excess": 1.4,
+    "neighbor_divergence": -2.4,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 24,
+    "overnight_cf_share_2025": 0.345,
+    "change_since_2019": 0.025,
+    "overnight_clean_mw_over_demand": 0.341,
+    "ratio_slope_per_year": 0.0069
+   },
+   "cf_share_2025": {
+    "overnight": 0.345,
+    "daytime": 0.382,
+    "all": 0.349
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PJM/PE",
+   "ba": "PJM",
+   "zone": "PE",
+   "name": "PECO Energy zone",
+   "detection": {
+    "rank": 90,
+    "score": -1.17,
+    "growth_pct": -2.1,
+    "overnight_growth_pct": -1.0,
+    "overnight_excess": 1.1,
+    "neighbor_divergence": -1.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "ERCO/NCEN",
+   "ba": "ERCO",
+   "zone": "NCEN",
+   "name": "North Central",
+   "detection": {
+    "rank": 91,
+    "score": -1.32,
+    "growth_pct": 14.2,
+    "overnight_growth_pct": 16.2,
+    "overnight_excess": 1.9,
+    "neighbor_divergence": -12.2,
+    "pattern": "flat-load growth"
+   },
+   "siting": {
+    "siting_score": 0.603,
+    "siting_rank": 18,
+    "overnight_cf_share_2025": 0.413,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.417,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.413,
+    "daytime": 0.576,
+    "all": 0.461
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PJM/AE",
+   "ba": "PJM",
+   "zone": "AE",
+   "name": "Atlantic Electric zone",
+   "detection": {
+    "rank": 92,
+    "score": -1.33,
+    "growth_pct": -7.1,
+    "overnight_growth_pct": -4.2,
+    "overnight_excess": 2.9,
+    "neighbor_divergence": -6.2,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.436,
+    "siting_rank": 34,
+    "overnight_cf_share_2025": 0.39,
+    "change_since_2019": -0.042,
+    "overnight_clean_mw_over_demand": 0.408,
+    "ratio_slope_per_year": -0.0044
+   },
+   "cf_share_2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SOCO",
+   "ba": "SOCO",
+   "zone": null,
+   "name": "Southern Company Services, Inc. - Trans",
+   "detection": {
+    "rank": 93,
+    "score": -1.57,
+    "growth_pct": 1.2,
+    "overnight_growth_pct": 1.4,
+    "overnight_excess": 0.2,
+    "neighbor_divergence": -3.4,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 22,
+    "overnight_cf_share_2025": 0.31,
+    "change_since_2019": 0.049,
+    "overnight_clean_mw_over_demand": 0.334,
+    "ratio_slope_per_year": 0.0103
+   },
+   "cf_share_2025": {
+    "overnight": 0.31,
+    "daytime": 0.374,
+    "all": 0.325
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PSCO",
+   "ba": "PSCO",
+   "zone": null,
+   "name": "Public Service Company of Colorado",
+   "detection": {
+    "rank": 94,
+    "score": -1.66,
+    "growth_pct": -5.3,
+    "overnight_growth_pct": -3.4,
+    "overnight_excess": 1.8,
+    "neighbor_divergence": -11.2,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.451,
+    "change_since_2019": 0.195,
+    "overnight_clean_mw_over_demand": 0.487,
+    "ratio_slope_per_year": 0.047
+   },
+   "cf_share_2025": {
+    "overnight": 0.451,
+    "daytime": 0.518,
+    "all": 0.462
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "MISO/0006",
+   "ba": "MISO",
+   "zone": "0006",
+   "name": "Zone 6",
+   "detection": {
+    "rank": 95,
+    "score": -1.85,
+    "growth_pct": -1.8,
+    "overnight_growth_pct": -1.2,
+    "overnight_excess": 0.6,
+    "neighbor_divergence": -4.6,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 24,
+    "overnight_cf_share_2025": 0.345,
+    "change_since_2019": 0.025,
+    "overnight_clean_mw_over_demand": 0.341,
+    "ratio_slope_per_year": 0.0069
+   },
+   "cf_share_2025": {
+    "overnight": 0.345,
+    "daytime": 0.382,
+    "all": 0.349
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "MISO/0027",
+   "ba": "MISO",
+   "zone": "0027",
+   "name": "Zones 2 and 7",
+   "detection": {
+    "rank": 96,
+    "score": -1.96,
+    "growth_pct": -0.3,
+    "overnight_growth_pct": -0.0,
+    "overnight_excess": 0.3,
+    "neighbor_divergence": -3.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 24,
+    "overnight_cf_share_2025": 0.345,
+    "change_since_2019": 0.025,
+    "overnight_clean_mw_over_demand": 0.341,
+    "ratio_slope_per_year": 0.0069
+   },
+   "cf_share_2025": {
+    "overnight": 0.345,
+    "daytime": 0.382,
+    "all": 0.349
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "MISO/0004",
+   "ba": "MISO",
+   "zone": "0004",
+   "name": "Zone 4",
+   "detection": {
+    "rank": 97,
+    "score": -2.03,
+    "growth_pct": -9.1,
+    "overnight_growth_pct": -6.5,
+    "overnight_excess": 2.6,
+    "neighbor_divergence": -11.9,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 24,
+    "overnight_cf_share_2025": 0.345,
+    "change_since_2019": 0.025,
+    "overnight_clean_mw_over_demand": 0.341,
+    "ratio_slope_per_year": 0.0069
+   },
+   "cf_share_2025": {
+    "overnight": 0.345,
+    "daytime": 0.382,
+    "all": 0.349
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "PACW",
+   "ba": "PACW",
+   "zone": null,
+   "name": "PacifiCorp - West",
+   "detection": {
+    "rank": 98,
+    "score": -2.04,
+    "growth_pct": -2.1,
+    "overnight_growth_pct": -0.2,
+    "overnight_excess": 1.9,
+    "neighbor_divergence": -8.1,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.731,
+    "siting_rank": 12,
+    "overnight_cf_share_2025": 0.722,
+    "change_since_2019": 0.444,
+    "overnight_clean_mw_over_demand": 0.264,
+    "ratio_slope_per_year": 0.0056
+   },
+   "cf_share_2025": {
+    "overnight": 0.722,
+    "daytime": 0.791,
+    "all": 0.75
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "SWPP/CSWS",
+   "ba": "SWPP",
+   "zone": "CSWS",
+   "name": "AEPW American Electric Power West",
+   "detection": {
+    "rank": 99,
+    "score": -2.08,
+    "growth_pct": 2.0,
+    "overnight_growth_pct": 2.7,
+    "overnight_excess": 0.7,
+    "neighbor_divergence": -8.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SWPP/EDE",
+   "ba": "SWPP",
+   "zone": "EDE",
+   "name": "Empire District Electric Company",
+   "detection": {
+    "rank": 100,
+    "score": -2.34,
+    "growth_pct": 3.8,
+    "overnight_growth_pct": 4.9,
+    "overnight_excess": 1.1,
+    "neighbor_divergence": -6.9,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "AVA",
+   "ba": "AVA",
+   "zone": null,
+   "name": "Avista Corporation",
+   "detection": {
+    "rank": 101,
+    "score": -2.39,
+    "growth_pct": 1.0,
+    "overnight_growth_pct": 0.9,
+    "overnight_excess": -0.1,
+    "neighbor_divergence": -5.0,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.532,
+    "siting_rank": 26,
+    "overnight_cf_share_2025": 0.547,
+    "change_since_2019": -0.018,
+    "overnight_clean_mw_over_demand": 0.391,
+    "ratio_slope_per_year": 0.0019
+   },
+   "cf_share_2025": {
+    "overnight": 0.547,
+    "daytime": 0.578,
+    "all": 0.582
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "SWPP/WR",
+   "ba": "SWPP",
+   "zone": "WR",
+   "name": "Westar Energy",
+   "detection": {
+    "rank": 102,
+    "score": -2.58,
+    "growth_pct": -0.1,
+    "overnight_growth_pct": 0.1,
+    "overnight_excess": 0.2,
+    "neighbor_divergence": -10.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "SCEG",
+   "ba": "SCEG",
+   "zone": null,
+   "name": "South Carolina Electric & Gas Company",
+   "detection": {
+    "rank": 103,
+    "score": -2.65,
+    "growth_pct": 0.7,
+    "overnight_growth_pct": -1.2,
+    "overnight_excess": -2.0,
+    "neighbor_divergence": -3.9,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.596,
+    "siting_rank": 19,
+    "overnight_cf_share_2025": 0.38,
+    "change_since_2019": 0.031,
+    "overnight_clean_mw_over_demand": 0.404,
+    "ratio_slope_per_year": 0.0007
+   },
+   "cf_share_2025": {
+    "overnight": 0.38,
+    "daytime": 0.499,
+    "all": 0.421
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "SWPP/WFEC",
+   "ba": "SWPP",
+   "zone": "WFEC",
+   "name": "Western Farmers Electric Cooperative",
+   "detection": {
+    "rank": 104,
+    "score": -2.93,
+    "growth_pct": 5.9,
+    "overnight_growth_pct": 3.7,
+    "overnight_excess": -2.2,
+    "neighbor_divergence": -4.8,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.737,
+    "siting_rank": 10,
+    "overnight_cf_share_2025": 0.519,
+    "change_since_2019": 0.052,
+    "overnight_clean_mw_over_demand": 0.537,
+    "ratio_slope_per_year": 0.0101
+   },
+   "cf_share_2025": {
+    "overnight": 0.519,
+    "daytime": 0.414,
+    "all": 0.456
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  },
+  {
+   "id": "TPWR",
+   "ba": "TPWR",
+   "zone": null,
+   "name": "City of Tacoma, Department of Public Utilities, Light Division",
+   "detection": {
+    "rank": 105,
+    "score": -3.43,
+    "growth_pct": -6.4,
+    "overnight_growth_pct": -6.6,
+    "overnight_excess": -0.2,
+    "neighbor_divergence": -12.4,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.696,
+    "siting_rank": 15,
+    "overnight_cf_share_2025": 1.0,
+    "change_since_2019": 0.0,
+    "overnight_clean_mw_over_demand": 0.461,
+    "ratio_slope_per_year": 0.0065
+   },
+   "cf_share_2025": {
+    "overnight": 1.0,
+    "daytime": 1.0,
+    "all": 1.0
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "CPLW",
+   "ba": "CPLW",
+   "zone": null,
+   "name": "Duke Energy Progress West",
+   "detection": {
+    "rank": 106,
+    "score": -3.5,
+    "growth_pct": -5.3,
+    "overnight_growth_pct": -3.1,
+    "overnight_excess": 2.1,
+    "neighbor_divergence": -9.9,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.16,
+    "siting_rank": 51,
+    "overnight_cf_share_2025": 0.042,
+    "change_since_2019": -0.192,
+    "overnight_clean_mw_over_demand": 0.041,
+    "ratio_slope_per_year": -0.0097
+   },
+   "cf_share_2025": {
+    "overnight": 0.042,
+    "daytime": 0.062,
+    "all": 0.067
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "WALC",
+   "ba": "WALC",
+   "zone": null,
+   "name": "Western Area Power Administration - Desert Southwest Region",
+   "detection": {
+    "rank": 107,
+    "score": -3.66,
+    "growth_pct": -5.2,
+    "overnight_growth_pct": -6.5,
+    "overnight_excess": -1.3,
+    "neighbor_divergence": -11.2,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.558,
+    "siting_rank": 24,
+    "overnight_cf_share_2025": 0.538,
+    "change_since_2019": -0.1,
+    "overnight_clean_mw_over_demand": 0.627,
+    "ratio_slope_per_year": 0.0504
+   },
+   "cf_share_2025": {
+    "overnight": 0.538,
+    "daytime": 0.507,
+    "all": 0.566
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "NWMT",
+   "ba": "NWMT",
+   "zone": null,
+   "name": "NorthWestern Energy (NWMT)",
+   "detection": {
+    "rank": 108,
+    "score": -3.76,
+    "growth_pct": -6.7,
+    "overnight_growth_pct": -7.1,
+    "overnight_excess": -0.4,
+    "neighbor_divergence": -12.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.776,
+    "siting_rank": 8,
+    "overnight_cf_share_2025": 0.429,
+    "change_since_2019": 0.17,
+    "overnight_clean_mw_over_demand": 0.78,
+    "ratio_slope_per_year": 0.0566
+   },
+   "cf_share_2025": {
+    "overnight": 0.429,
+    "daytime": 0.445,
+    "all": 0.43
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "AECI",
+   "ba": "AECI",
+   "zone": null,
+   "name": "Associated Electric Cooperative, Inc.",
+   "detection": {
+    "rank": 109,
+    "score": -4.96,
+    "growth_pct": -4.9,
+    "overnight_growth_pct": -6.6,
+    "overnight_excess": -1.6,
+    "neighbor_divergence": -9.5,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.5,
+    "siting_rank": 29,
+    "overnight_cf_share_2025": 0.144,
+    "change_since_2019": 0.072,
+    "overnight_clean_mw_over_demand": 0.159,
+    "ratio_slope_per_year": 0.0122
+   },
+   "cf_share_2025": {
+    "overnight": 0.144,
+    "daytime": 0.092,
+    "all": 0.112
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "PSEI",
+   "ba": "PSEI",
+   "zone": null,
+   "name": "Puget Sound Energy",
+   "detection": {
+    "rank": 110,
+    "score": -5.01,
+    "growth_pct": -15.7,
+    "overnight_growth_pct": -16.6,
+    "overnight_excess": -0.9,
+    "neighbor_divergence": -21.7,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.577,
+    "siting_rank": 21,
+    "overnight_cf_share_2025": 0.399,
+    "change_since_2019": 0.143,
+    "overnight_clean_mw_over_demand": 0.108,
+    "ratio_slope_per_year": -0.0088
+   },
+   "cf_share_2025": {
+    "overnight": 0.399,
+    "daytime": 0.382,
+    "all": 0.402
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "exclude_from_alerts": false,
+   "data_flags": []
+  },
+  {
+   "id": "ERCO/WEST",
+   "ba": "ERCO",
+   "zone": "WEST",
+   "name": "West",
+   "detection": {
+    "rank": 111,
+    "score": -5.78,
+    "growth_pct": 1.5,
+    "overnight_growth_pct": -0.6,
+    "overnight_excess": -2.0,
+    "neighbor_divergence": -24.9,
+    "pattern": "mixed"
+   },
+   "siting": {
+    "siting_score": 0.603,
+    "siting_rank": 18,
+    "overnight_cf_share_2025": 0.413,
+    "change_since_2019": 0.014,
+    "overnight_clean_mw_over_demand": 0.417,
+    "ratio_slope_per_year": -0.0
+   },
+   "cf_share_2025": {
+    "overnight": 0.413,
+    "daytime": 0.576,
+    "all": 0.461
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "exclude_from_alerts": false,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ]
+  }
+ ]
+}
