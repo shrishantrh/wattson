@@ -1,6 +1,7 @@
 {
  "generated": "2026-09-19",
  "frame": "This is an input to a trade, not a trade. We measure where flat 24/7 load is arriving and which grids tighten first, from federal metered data, ahead of company guidance. The page shows the physical input and stops where our evidence stops.",
+ "no_prediction": "We have no validation that this signal predicts any price. We have run no backtest and tested nothing against a price series. What follows is a physical measurement and the instruments where the same physical fact is priced by someone else.",
  "limits": [
   "We have no validation that this signal predicts prices. None. Nothing on this page has been tested against a price series, and we have run no backtest. What we measure is physical: metered generation and demand.",
   "A material share of this buildout lands where there is nothing to trade. Of the 12 sites whose serving utility we could establish, 5 are served by public power, a cooperative or a state authority with no listed equity.",
@@ -19,6 +20,8 @@
   "available": true,
   "venue": "Kalshi",
   "fetched_at": "2026-09-19T22:58:38+00:00",
+  "cached_at_build_time": true,
+  "as_of_note": "Prices are yes bid / yes ask as of 2026-09-19T22:58 UTC, cached into this page at build time. They are stale by construction and were not fetched from your browser.",
   "message": null,
   "series_with_no_open_contracts": [
    "KXERCOTX",

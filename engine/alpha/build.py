@@ -281,6 +281,12 @@ def build() -> dict:
             "metered data, ahead of company guidance. The page shows the "
             "physical input and stops where our evidence stops."
         ),
+        "no_prediction": (
+            "We have no validation that this signal predicts any price. We "
+            "have run no backtest and tested nothing against a price series. "
+            "What follows is a physical measurement and the instruments where "
+            "the same physical fact is priced by someone else."
+        ),
         "limits": LIMITS,
         "no_listed_equity": {
             "count": summary["no_listed_equity_count"],
@@ -301,6 +307,13 @@ def build() -> dict:
             "available": bool(snapshot.get("available")),
             "venue": "Kalshi",
             "fetched_at": snapshot.get("fetched_at"),
+            "cached_at_build_time": True,
+            "as_of_note": (
+                f"Prices are yes bid / yes ask as of "
+                f"{str(snapshot.get('fetched_at') or 'unknown')[:16]} UTC, "
+                f"cached into this page at build time. They are stale by "
+                f"construction and were not fetched from your browser."
+            ),
             "message": (None if snapshot.get("available") else
                         "Event markets were unreachable when this page was "
                         "built. Equities and commodities below are unaffected."),

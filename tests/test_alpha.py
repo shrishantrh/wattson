@@ -42,7 +42,12 @@ def test_nothing_in_the_payload_predicts_a_price(payload):
     do. "no validation that this signal predicts prices" is the denial, not
     the claim, and a scan that cannot tell them apart would push the
     disclaimer off the page."""
-    scanned = {k: v for k, v in payload.items() if k != "limits"}
+    # `limits` and `no_prediction` are the disclaimer blocks: they exist to
+    # say what we cannot do, so they are the one place the banned words are
+    # correct. A scan that cannot tell a denial from a claim would push the
+    # disclaimer off the page.
+    disclaimers = {"limits", "no_prediction"}
+    scanned = {k: v for k, v in payload.items() if k not in disclaimers}
     hit = BANNED.search(json.dumps(scanned))
     assert hit is None, f"prediction language in payload: {hit.group(0)!r}"
 
@@ -140,3 +145,26 @@ def test_zone_fuel_figures_are_labelled_as_the_parent_bas(payload):
 
 def test_at_least_one_featured_region_is_an_inheriting_zone(payload):
     assert any(c["fuel_inherited_from"] for c in payload["chains"])
+
+
+# --- the two checks the Manager asked to confirm ---------------------------
+
+def test_event_prices_carry_an_as_of_timestamp(payload):
+    """A price with no as-of date reads as current when the demo runs later."""
+    ev = payload["event_markets"]
+    if ev["available"]:
+        assert ev["fetched_at"], "cached Kalshi prices must carry a fetch time"
+        assert ev["as_of_note"] and re.search(r"\d", ev["as_of_note"])
+
+
+def test_event_prices_are_cached_not_fetched_in_the_browser(payload):
+    assert payload["event_markets"]["cached_at_build_time"] is True
+
+
+def test_page_denies_predictive_power_outside_the_limits_block(payload):
+    """It must be impossible to read the page and think we claim prediction,
+    without having to reach the limits section."""
+    stmt = payload["no_prediction"].lower()
+    assert "no validation" in stmt
+    assert "predict" in stmt
+    assert "backtest" in stmt

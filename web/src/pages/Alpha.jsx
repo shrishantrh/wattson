@@ -80,6 +80,7 @@ export default function Alpha() {
       <Card title={<b>Generating Alpha</b>} onClose={back}>
         <h1 className="verdict">An input to a trade. Not a trade.</h1>
         <p className="note" style={{ marginTop: 10 }}>{data.frame}</p>
+        <p className="note" style={{ marginTop: 10, fontWeight: 600 }}>{data.no_prediction}</p>
       </Card>
 
       <Section title="What we cannot tell you">
@@ -94,8 +95,25 @@ export default function Alpha() {
         <p className="note">{ne.note}</p>
       </Section>
 
+      {ev.series_with_no_open_contracts?.length
+        ? (
+          <Section title="Markets that exist but are not trading">
+            <p className="note" style={{ marginBottom: 8 }}>{ev.series_note}</p>
+            <ul className="rows">
+              {ev.series_with_no_open_contracts.map(s => (
+                <li className="row" key={s}><div className="t" style={{ fontSize: 13 }}>{s}</div></li>
+              ))}
+            </ul>
+          </Section>
+        )
+        : null}
+
       {ev.available === false
         ? <Section title="Event markets"><p className="note">{ev.message}</p></Section>
+        : null}
+
+      {ev.as_of_note
+        ? <Section title="Event-market prices"><p className="note">{ev.as_of_note}</p></Section>
         : null}
 
       {(data.chains || []).map(c => (
@@ -113,19 +131,6 @@ export default function Alpha() {
             : null}
         </Section>
       ))}
-
-      {ev.series_with_no_open_contracts?.length
-        ? (
-          <Section title="Markets that exist but are not trading">
-            <p className="note" style={{ marginBottom: 8 }}>{ev.series_note}</p>
-            <ul className="rows">
-              {ev.series_with_no_open_contracts.map(s => (
-                <li className="row" key={s}><div className="t" style={{ fontSize: 13 }}>{s}</div></li>
-              ))}
-            </ul>
-          </Section>
-        )
-        : null}
 
       <Section title="Provenance">
         <p className="note">
