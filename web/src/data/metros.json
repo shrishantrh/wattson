@@ -268,8 +268,7 @@
    "aliases": [
     "hillsboro",
     "hillsboro, or",
-    "portland",
-    "prineville"
+    "portland"
    ]
   },
   {
@@ -334,6 +333,7 @@
    "lng": -93.62,
    "serving_utility": "MidAmerican Energy",
    "aliases": [
+    "altoona",
     "des moines / altoona",
     "des moines / altoona, ia"
    ]
@@ -375,7 +375,6 @@
    "serving_utility": "Nashville Electric Service (TVA)",
    "aliases": [
     "clarksville",
-    "gallatin",
     "nashville",
     "nashville, tn"
    ]

@@ -19,7 +19,8 @@ export function openingTitle(pjm, baseline = 2019, latest = 2025) {
   const ex0 = y(pjm.overnight_net_export_mw, baseline), ex1 = y(pjm.overnight_net_export_mw, latest)
   const parts = [`${n0(a)} MW then, ${n0(b)} MW now.`]
   if (tot != null) parts.push(`Overnight generation rose ${gw1(tot)}.`)
-  if (gas != null) parts.push(`Gas supplied ${signedGw(gas).replace('+', '')} of it.`)
+  const coal = pjm.fuel_delta_overnight_gw?.coal
+  if (gas != null) parts.push(coal != null && coal < 0 ? `Gas rose ${signedGw(gas).replace('+', '')} while coal fell ${signedGw(coal).replace('−', '')}.` : `Gas rose ${signedGw(gas).replace('+', '')}.`)
   if (ex0 != null && ex1 != null) parts.push(`Net exports ${ex1 < ex0 ? 'fell' : 'rose'} from ${gw1(ex0)} to ${gw1(ex1)}, so the new generation served PJM's own load.`)
   return { title: `PJM's overnight clean generation ${verb} since ${baseline}.`, sub: parts.join(' ') }
 }
@@ -44,7 +45,8 @@ export function detectorTitle(det) {
 export function regionTitle(region, label) {
   const d = region?.demand || {}, cf = region?.cf_share || {}
   const g = d['2025']?.overnight_avg_mw / d['2019']?.overnight_avg_mw - 1
-  const o = cf['2025']?.overnight - cf['2019']?.overnight
+  const sitingChange = region?.siting?.change_since_2019 ?? region?.parent?.siting?.change_since_2019
+  const o = sitingChange ?? (cf['2025']?.overnight - cf['2019']?.overnight)
   const name = label || region?.name || region?.id
   if (!Number.isFinite(g)) return { title: `${name}`, sub: '' }
   const grew = g >= 0 ? `grew ${pct0(g)}` : `fell ${pct0(-g)}`
@@ -88,7 +90,8 @@ export function interpYears(cf, p, first = 2019, last = 2025) {
 // ---------- plain-English answers for the two questions ----------
 import caveats from '../data/data_caveats.json'
 export const caveatFor = id => caveats[id] || (id && id.includes('/') ? caveats[id.split('/')[0]] : null) || null
-const trendWord = s => (s == null ? 'with no trend data' : s > 0.005 ? 'improving' : s < -0.005 ? 'getting worse' : 'holding steady')
+// Direction from the change since 2019 (points); the per-year slope only when that is missing.
+const trendWord = (chg, slope) => (chg != null ? (chg > 0.01 ? 'improving' : chg < -0.01 ? 'getting worse' : 'holding steady') : slope == null ? 'with no trend data' : slope > 0.005 ? 'improving' : slope < -0.005 ? 'getting worse' : 'holding steady')
 
 export function checkAnswer(c) {
   const claims = c?.claims || [], sites = c?.sites || []
@@ -98,13 +101,14 @@ export function checkAnswer(c) {
   const claimed = primary.metric === 'renewable_electricity_share' && primary.unit === 'fraction' ? `${Math.round(primary.magnitude * 100)}% renewable` : primary.metric === 'contracted_capacity_mw' ? `${n0(primary.magnitude)} MW of contracted clean power` : primary.magnitude != null ? `${primary.magnitude} ${primary.unit || ''}`.trim() : (primary.metric || 'a clean-energy claim').replace(/_/g, ' ')
   const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'Too vague to check.', cannot_verify: "Can't be checked from grid data." }[primary.verdict] || ''
   const lo = primary.physical_min, hi = primary.physical_max
-  const phys = lo != null && hi != null ? ` Physically, its sites run on ${Math.round(lo * 100)}–${Math.round(hi * 100)}% clean power.` : ''
+  const range = lo != null && hi != null ? (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`) : null
+  const phys = range ? ` Physically, its ${sites.length === 1 ? 'site runs' : 'sites run'} on ${range} clean power.` : ''
   return {
     sentence: `${c.company} says ${claimed}. ${verdictText}${phys}`,
     verdict: primary.verdict, primary,
     numbers: [
       { value: primary.metric === 'renewable_electricity_share' ? pct0(primary.magnitude) : claimed, label: 'claimed', sub: primary.scope ? primary.scope.replace(/_/g, ' ') : null },
-      { value: lo != null && hi != null ? `${Math.round(lo * 100)}–${Math.round(hi * 100)}%` : '—', label: 'actually clean, by site', sub: 'grid average, all hours', accent: true },
+      { value: range || '—', label: sites.length === 1 ? 'actually clean at the site' : 'actually clean, by site', sub: 'grid average, all hours', accent: true },
       { value: String(sites.length), label: sites.length === 1 ? 'site checked' : 'sites checked', sub: cv ? `${cv} claim${cv === 1 ? '' : 's'} can't be verified` : null },
     ],
   }
@@ -113,12 +117,12 @@ export function checkAnswer(c) {
 export function compareAnswer(res) {
   const cs = res?.candidates || []
   if (!cs.length) return { sentence: 'No known locations to compare.', numbers: [] }
-  const share = c => c.siting?.overnight_cf_share_2025, s = c => c.siting?.ratio_slope_per_year
+  const share = c => c.siting?.overnight_cf_share_2025, s = c => c.siting?.ratio_slope_per_year, chg = c => c.siting?.change_since_2019
   const bad = cs.filter(c => caveatFor(c.region_id))
   const clean = cs.filter(c => !caveatFor(c.region_id))
   const best = clean[0] || cs[0], second = clean[1]
-  let sentence = `${best.metro} is your cleanest option: ${pct0(share(best))} clean power at night and ${trendWord(s(best))}.`
-  if (second) sentence += ` ${second.metro} is ${pct0(share(second))} and ${trendWord(s(second))}.`
+  let sentence = `${best.metro} is your cleanest option: ${pct0(share(best))} clean power at night and ${trendWord(chg(best), s(best))}.`
+  if (second) sentence += ` ${second.metro} is ${pct0(share(second))} and ${trendWord(chg(second), s(second))}.`
   if (bad.length) sentence += ` ${bad.map(c => `${c.metro} reads ${pct0(share(c))} but its data looks unreliable, so treat it as unknown`).join('; ')}.`
-  return { sentence, best, numbers: cs.map(c => ({ value: pct0(share(c)), raw: share(c), label: `${c.rank}. ${c.metro}`, sub: caveatFor(c.region_id) ? 'data unreliable' : trendWord(s(c)), accent: c === best })) }
+  return { sentence, best, numbers: cs.map(c => ({ value: pct0(share(c)), raw: share(c), label: `${c.rank}. ${c.metro}`, sub: caveatFor(c.region_id) ? 'data unreliable' : trendWord(chg(c), s(c)), accent: c === best })) }
 }

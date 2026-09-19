@@ -37,6 +37,14 @@ export async function loadRegions() {
   return { meta: raw.meta || {}, regions, _provisional: raw._provisional }
 }
 
+// New leads: top-10 flat-load regions not named in advance and not data-flagged; a parent grid is not
+// a separate lead when one of its own zones already is (ERCOT when N. Texas leads).
+export function newLeads(rows, validation, flags) {
+  const top = rows.filter(r => (r.rank || 99) <= 10 && r.pattern === 'flat-load growth' && !validation.includes(r.id) && !flags[r.id])
+  const ids = new Set(top.map(r => r.id))
+  return top.filter(r => !r.id.includes('/') ? ![...ids].some(x => x.startsWith(r.id + '/')) : true).map(r => r.id)
+}
+
 // ---------- the finding (evidence page) ----------
 export async function loadOpening() {
   return tryEach([() => fixture('opening'), async () => {
@@ -44,7 +52,7 @@ export async function loadOpening() {
     const y = (o, k) => ({ 2019: o?.['2019']?.[k], 2025: o?.['2025']?.[k] })
     return { headline: regs.meta.headline, data_snapshot_end: regs.meta.data_snapshot_end, baseline_year: regs.meta.baseline_year || 2019,
       pjm: { overnight_clean_mw: y(pjm.cf_avg_mw, 'overnight'), overnight_total_mw: y(pjm.total_avg_mw, 'overnight'), overnight_cf_share: y(pjm.cf_share, 'overnight'), overnight_net_export_mw: pjm.interchange ? { 2019: pjm.interchange['2019']?.net_export_overnight_mw, 2025: pjm.interchange['2025']?.net_export_overnight_mw } : {}, fuel_delta_overnight_gw: pjm.fuel_delta_overnight_gw, dom_overnight_demand_mw: y(dom.demand, 'overnight_avg_mw'), dom_avg_demand_mw: y(dom.demand, 'avg_mw'), profile_24h: pjm.profile_24h },
-      national: regs.meta.national || null, detector: { ...regs.meta, regions: regs.regions.map(r => ({ ...r, ...(r.detection || {}), validation: (regs.meta.validation_named_in_advance || []).includes(r.id), data_flagged: !!(regs.meta.data_flags || {})[r.id] })), new_leads: regs.regions.filter(r => (r.detection?.rank || 99) <= 10 && !(regs.meta.validation_named_in_advance || []).includes(r.id) && !(regs.meta.data_flags || {})[r.id]).map(r => r.id) },
+      national: regs.meta.national || null, detector: { ...regs.meta, regions: regs.regions.map(r => ({ ...r, ...(r.detection || {}), validation: (regs.meta.validation_named_in_advance || []).includes(r.id), data_flagged: !!(regs.meta.data_flags || {})[r.id] })), new_leads: newLeads(regs.regions.map(r => ({ id: r.id, rank: r.detection?.rank, pattern: r.detection?.pattern })), regs.meta.validation_named_in_advance || [], regs.meta.data_flags || {}) },
       caveats: regs.meta.caveats, pattern_labels: regs.meta.pattern_labels, data_flags: regs.meta.data_flags }
   }])
 }

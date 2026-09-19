@@ -4,7 +4,7 @@ import { Card, Num, Section, KV, HourBars } from '../console/widgets.jsx'
 import coords from '../data/region_coords.json'
 import { loadOpening, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
-import { openingTitle, nationalTitle, detectorTitle, n0, pct1, gw1, signedGw, interpYears, ordinal } from '../lib/findings.js'
+import { openingTitle, nationalTitle, detectorTitle, n0, pct1, gw1, signedGw, interpYears, ordinal, caveatFor } from '../lib/findings.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 
@@ -67,12 +67,12 @@ export default function Found({ route }) {
     return []
   }, [scene, pulses, tk, dom])
   const markers = useMemo(() => {
-    const pin = (r, extra = {}) => ({ id: r.id, lat: r.c.lat, lng: r.c.lng, label: r.known_cluster_label || r.c.label, href: href.region(r.id), hollow: !!r.data_flagged, ...extra })
+    const pin = (r, extra = {}) => ({ id: r.id, lat: r.c.lat, lng: r.c.lng, label: `${r.known_cluster_label || r.c.label}${caveatFor(r.id) ? ' · data?' : ''}`, tip: caveatFor(r.id) || `#${r.rank} · ${r.pattern}`, href: href.region(r.id), hollow: !!r.data_flagged || !!caveatFor(r.id), ...extra })
     if (scene === 'detector') return sideLabels(named.map(r => pin(r, { lead: leads.has(r.id), color: r.validation ? tk.ink : tk.accent })))
     if (scene === 'night') return sideLabels(pulses.map(r => pin(r, { lead: leads.has(r.id), color: tk.accent })))
-    if (scene === 'headline') return [{ id: 'PJM/DOM', lat: dom.lat, lng: dom.lng, label: 'Northern Virginia · +39% at night', href: href.region('PJM/DOM'), color: tk.accent }]
+    if (scene === 'headline') { const g = data?.pjm?.dom_overnight_demand_mw; const pct = g?.['2019'] ? Math.round((g['2025'] / g['2019'] - 1) * 100) : null; return [{ id: 'PJM/DOM', lat: dom.lat, lng: dom.lng, label: `Northern Virginia${pct != null ? ` · +${pct}% at night` : ''}`, href: href.region('PJM/DOM'), color: tk.accent }] }
     return []
-  }, [scene, named, pulses, leads, tk, dom])
+  }, [scene, named, pulses, leads, tk, dom, data])
   const sunTarget = scene === 'sweep' ? SUN_SWEEP[0] + (SUN_SWEEP[1] - SUN_SWEEP[0]) * p : SUN_NIGHT
   const sunLng = useTween(sunTarget, 1100, scene !== 'sweep')
   const terminator = useMemo(() => ({ enabled: true, sunLng, sunLat: 0, dayDim: 0.3 }), [sunLng])

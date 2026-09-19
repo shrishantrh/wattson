@@ -192,9 +192,14 @@ def main():
             "validation": r["id"] in validation_ids,
             "known_cluster_label": KNOWN_CLUSTERS.get(r["id"]),
         })
-    new_leads = [row["id"] for row in det_rows
-                 if row["rank"] <= 10 and row["id"] not in KNOWN_CLUSTERS
-                 and not row["data_flagged"]]
+    # Top-10 flat-load regions not named in advance and not data-flagged; a parent grid is not a
+    # separate lead when one of its own zones already is (ERCOT when N. Texas leads).
+    cand = [row for row in det_rows
+            if row["rank"] <= 10 and row["id"] not in KNOWN_CLUSTERS
+            and not row["data_flagged"] and row.get("pattern") == "flat-load growth"]
+    ids = {row["id"] for row in cand}
+    new_leads = [row["id"] for row in cand
+                 if "/" in row["id"] or not any(x.startswith(row["id"] + "/") for x in ids)]
 
     opening = {
         **header(),

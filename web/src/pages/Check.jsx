@@ -10,6 +10,10 @@ import { checkAnswer, pct0, caveatFor } from '../lib/findings.js'
 import { COMPANIES } from '../lib/query.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
+import ingest from '../data/ingest_status.json'
+
+// A grid that generates far less than it uses is mostly imports; its footprint share is not what the site consumes.
+const importerNote = d => { const g = d && d.type === 'zone' && d.parent ? d.parent : d; const gen = g?.total_avg_mw?.['2025']?.all, dem = d?.demand?.['2025']?.avg_mw; return gen && dem && gen / dem < 0.5 ? `generates ${Math.round(gen / dem * 100)}% of what it uses, the rest is imported` : null }
 
 const VERDICT = { true_on_paper: 'true on paper', contradicted: 'contradicted', unfalsifiable: 'too vague to check', cannot_verify: "can't verify" }
 const REASON = { no_falsifiable_content: 'nothing measurable in the claim', no_site_mapping: 'no site could be mapped to a grid', ba_out_of_coverage: 'its grid is outside our coverage', year_out_of_range: 'the year is outside the data' }
@@ -42,7 +46,8 @@ export default function Check({ route }) {
         {error.name === 'NotFound' ? (
           <>
             <h1 className="verdict">{known ? `${known.name} isn't verified yet.` : `We don't have ${ticker}.`}</h1>
-            <p className="note" style={{ marginTop: 10 }}>{known ? `${known.name}'s reports are being read now. ` : ''}{others.length ? <>Verified so far: {others.map(c => <Chip key={c.ticker} small href={href.check(c.ticker)}>{c.name}</Chip>)}</> : 'No company has been verified yet.'}</p>
+            {known && ingest.companies?.[known.ticker] && <p className="note" style={{ marginTop: 10 }}>Read so far: {ingest.companies[known.ticker].documents.map(d => `${d.kind.toUpperCase()} ${d.pages} pages`).join(', ')} · {ingest.companies[known.ticker].chunks} passages · claim extraction {ingest.companies[known.ticker].extracted ? 'done' : 'pending'}.</p>}
+            <p className="note" style={{ marginTop: 10 }}>{others.length ? <>Verified so far: {others.map(c => <Chip key={c.ticker} small href={href.check(c.ticker)}>{c.name}</Chip>)}</> : 'No company has been verified yet.'}</p>
           </>
         ) : <ErrorState error={error} onRetry={reload} />}
       </Card>
@@ -55,7 +60,7 @@ export default function Check({ route }) {
           <div className="rows">
             {sites.map(s => { const e = bySite[s.ba]; const cav = caveatFor(s.region_id); const series = nightSeries(details[s.region_id]); return (
               <a className="row" key={s.metro} href={href.region(s.region_id)}>
-                <div><div className="t">{s.metro}</div><div className="d">{s.serving_utility || 'utility unknown'} · {s.grid_label}{s.source_type ? ` · ${s.source_type.replace(/_/g, ' ')}` : ''}{cav ? ' · data unreliable' : ''}</div></div>
+                <div><div className="t">{s.metro}</div><div className="d">{s.serving_utility || 'utility unknown'} · {s.grid_label}{s.source_type ? ` · ${s.source_type.replace(/_/g, ' ')}` : ''}{cav ? ' · data unreliable' : ''}{importerNote(details[s.region_id]) ? ` · ${importerNote(details[s.region_id])}` : ''}</div></div>
                 <div className="n" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>{series && <Sparkline values={series} width={64} height={18} accentLast baseline title="clean at night, 2019 to 2025" />}<span>{e?.cf_share != null ? pct0(e.cf_share) : '—'}{(e?.overnight_cf_share ?? series?.[6]) != null && <small> · {pct0(e?.overnight_cf_share ?? series[6])} at night</small>}</span></div>
               </a>) })}
           </div>
