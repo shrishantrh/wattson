@@ -13,9 +13,19 @@ import { SHAPES, FLEX_FRACTION, cleanShareFor, shiftable, profileOf } from '../l
 import ShapePicker from '../components/ShapePicker.jsx'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
+import { Bolt, Layers, Info, Place, Pin, Night } from '../components/Icons.jsx'
+import '../styles/answer.css'
 
 const trend = s => (s == null ? '—' : `${s > 0 ? '+' : ''}${(s * 100).toFixed(1)} pts / yr`)
 const pctFmt = n => `${Math.round(n)}%`
+
+// Zone label: what kind of thing the next block is.
+function Zone({ icon: Icon, children, right }) {
+  return <div className="ans-sec"><Icon size={12} /><span>{children}</span>{right && <span className="ans-sec-r">{right}</span>}</div>
+}
+const mtitle = (Icon, text) => <span className="ans-mtitle"><Icon size={13} />{text}</span>
+// 44px for the Breadcrumbs component (owned elsewhere); it renders as the first child of the column.
+const CrumbSpace = () => <div className="ans-crumbs" aria-hidden="true" />
 
 // Question 2: "Where should I put a datacenter so it runs on the cleanest power?"
 export default function Compare({ route }) {
@@ -61,17 +71,27 @@ export default function Compare({ route }) {
       <button className="btn primary" type="submit">Rank</button>
     </form>
   )
-  const picker = <div style={{ margin: '-4px 0 12px' }}><ShapePicker value={shape} onChange={setShape} flexible={flexible} onFlexible={setFlexible} /><p className="note" style={{ marginTop: 6 }}>{whatIf ? `What-if: ranked on the clean share over the hours a ${shapeLabel} load uses, from each place's 24-hour profile.` : 'Flat 24/7 uses the frozen night score. Pick a shape to see how the ranking moves.'}</p></div>
+  // One control group: the request (how much, where) with the load shape subordinate to it.
+  const controls = (
+    <div className="ans-controls">
+      {form}
+      <div className="ans-controls-sub">
+        <span className="ans-controls-k">load shape</span>
+        <ShapePicker value={shape} onChange={setShape} flexible={flexible} onFlexible={setFlexible} />
+        <p className="note">{whatIf ? `What-if: ranked on the clean share over the hours a ${shapeLabel} load uses, from each place's 24-hour profile.` : 'Flat 24/7 uses the frozen night score. Pick a shape to see how the ranking moves.'}</p>
+      </div>
+    </div>
+  )
 
   let column
-  if (loading) column = <Card title={<><b>Compare</b> · {request.mw} MW</>} onClose={back}>{form}<Loading what="the ranking" /></Card>
-  else if (error) column = <Card title={<b>Compare</b>} onClose={back}>{form}<ErrorState error={error} onRetry={reload} /></Card>
+  if (loading) column = <><CrumbSpace /><Card className="ans-card" title={<><b>Compare</b> · {request.mw} MW</>} onClose={back}><div className="ans-controls">{form}</div><Loading what="the ranking" /></Card></>
+  else if (error) column = <><CrumbSpace /><Card className="ans-card" title={<b>Compare</b>} onClose={back}><div className="ans-controls">{form}</div><ErrorState error={error} onRetry={reload} /></Card></>
   else {
     const load = Number(data.request.mw)
     const modules = [
       ...cands.map(c => {
         const cf = c.siting?.overnight_cf_share_2025, dem = c.demand?.overnight_avg_mw, cav = caveatFor(c.region_id), d = details[c.region_id], series = nightSeries(d), prof = hourProfile(d)
-        return { id: `cand-${c.region_id}`, title: <><span style={{ color: c === answer.best ? 'var(--accent)' : 'var(--ink)' }}>{c.rank}. {c.metro}</span> · {c.grid_label} · <a href={href.region(c.region_id)} className="ink2">detail →</a></>, render: () => (
+        return { id: `cand-${c.region_id}`, title: <><Place size={13} className="ans-micon" /><span style={{ color: c === answer.best ? 'var(--accent)' : 'var(--ink)' }}>{c.rank}. {c.metro}</span> · {c.grid_label} · <a href={href.region(c.region_id)} className="ink2">detail →</a></>, render: () => (
           <>
             <div className="instrument"><Ring value={cf} /><div className="num"><div className="v" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{pct1(cf)}{series && <Sparkline values={series} width={72} height={20} accentLast baseline title="clean at night, 2019 to 2025" />}</div><div className="l">clean power at night, 2025 · {trend(c.siting?.ratio_slope_per_year)}</div></div></div>
             <KV rows={[
@@ -90,31 +110,60 @@ export default function Compare({ route }) {
           </>
         ) }
       }),
-      ...(answer.best && regs.data && nearbyModule.applies({ regions: regs.data, region_id: answer.best.region_id }) ? [{ id: 'nearby', title: `${nearbyModule.title} · ${answer.best.metro}`, render: () => nearbyModule.render({ regions: regs.data, region_id: answer.best.region_id, load_mw: load }) }] : []),
-      { id: 'method', title: 'How we rank', render: () => <p className="note">{data.method}</p> },
-      { id: 'night', title: 'Why night matters', render: () => (
+      ...(answer.best && regs.data && nearbyModule.applies({ regions: regs.data, region_id: answer.best.region_id }) ? [{ id: 'nearby', title: mtitle(Pin, `${nearbyModule.title} · ${answer.best.metro}`), render: () => nearbyModule.render({ regions: regs.data, region_id: answer.best.region_id, load_mw: load }) }] : []),
+      { id: 'night', title: mtitle(Night, 'Why night matters'), render: () => (
         <>
           {nat ? <div className="nums" style={{ marginTop: 0 }}><Num num={(nat['2025']?.daytime ?? 0) * 100} format={pctFmt} label="clean during the day, 2025" sub={`${pct1(nat['2019']?.daytime)} in 2019`} /><Num num={(nat['2025']?.overnight ?? 0) * 100} format={pctFmt} label="clean at night, 2025" sub={`${pct1(nat['2019']?.overnight)} in 2019`} accent /><Num value="½" label="of a datacenter's power is used at night" /></div> : <p className="note">National series not available from this data source.</p>}
           <p className="note" style={{ marginTop: 10 }}>Solar cleaned up the middle of the day and did nothing for the middle of the night. Flat load lands half of itself in the hours that have not improved since 2019. <a href={href.found('sweep')} className="ink2">See it →</a></p>
         </>
       ) },
-      { id: 'landing', title: 'Where new flat load is already showing up', render: () => <div className="rows">{top.map(r => <a className="row" key={r.id} href={href.region(r.id)}><div><div className="t">{r.known_cluster_label || r.name}</div><div className="d">{r.pattern}{r.data_flagged ? ' · data flagged' : ''}</div></div><div className="n">#{r.rank} <small>+{Math.round(r.growth_pct)}%</small></div></a>)}<a className="note" href={href.found('detector')} style={{ display: 'block', marginTop: 8 }}>All 111 →</a></div> },
+      { id: 'landing', title: mtitle(Bolt, 'Where new flat load is already showing up'), render: () => <div className="rows">{top.map(r => <a className="row" key={r.id} href={href.region(r.id)}><div><div className="t">{r.known_cluster_label || r.name}</div><div className="d">{r.pattern}{r.data_flagged ? ' · data flagged' : ''}</div></div><div className="n">#{r.rank} <small>+{Math.round(r.growth_pct)}%</small></div></a>)}<a className="note" href={href.found('detector')} style={{ display: 'block', marginTop: 8 }}>All 111 →</a></div> },
     ]
+    const bestShare = answer.best?.siting?.overnight_cf_share_2025
+    const bestTone = bestShare != null && bestShare >= 0.5 ? 'clean' : 'fossil'
     column = (
       <>
-        <Card title={<><b>Compare</b> · {n0(data.request.mw)} MW of flat load{data._computed_client_side && ' · ranked here from the frozen score'}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
-          {form}
-          {picker}
+        <CrumbSpace />
+        <Zone icon={Bolt} right={<span className="chip sm ans-chip">{whatIf ? shapeLabel : 'flat 24/7'}</span>}>Answer</Zone>
+        <div className="ans-sticky">
+          <span className="ans-sticky-name"><Place size={13} />{n0(data.request.mw)} MW · {cands.length} place{cands.length === 1 ? '' : 's'}</span>
+          {answer.best && <span className="ans-sticky-v"><b>{answer.best.metro}</b> · <b className={bestTone}>{pct0(bestShare)}</b> clean</span>}
+        </div>
+        <Card className="ans-card" title={<><b>Compare</b> · {n0(data.request.mw)} MW of flat load{data._computed_client_side && ' · ranked here from the frozen score'}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
+          {controls}
           {data.unmapped.length > 0 && <div className="banner">Not in the data: {data.unmapped.join(', ')}. Try a nearby city or a grid name.</div>}
-        {cands.length === 0 && <p className="note" style={{ margin: '8px 0 12px' }}>Nothing to rank yet. Add a place above, or start from the example: <Chip small href={href.compare(DEMO_COMPARE)}>{DEMO_COMPARE.mw} MW: {DEMO_COMPARE.metros.join(' vs ')}</Chip></p>}
+          {cands.length === 0 && <p className="note" style={{ margin: '8px 0 12px' }}>Nothing to rank yet. Add a place above, or start from the example: <Chip small href={href.compare(DEMO_COMPARE)}>{DEMO_COMPARE.mw} MW: {DEMO_COMPARE.metros.join(' vs ')}</Chip></p>}
           <h1 className="verdict">{answer.sentence}</h1>
-          <div className="nums" style={{ gridTemplateColumns: `repeat(${Math.max(1, Math.min(3, cands.length))}, 1fr)` }}>{answer.numbers.map((n, i) => <Num key={i} num={n.raw != null ? n.raw * 100 : undefined} format={pctFmt} value={n.value} label={n.label} sub={whatIf ? shapeDef.label : n.sub} accent={n.accent} />)}</div>
+          <ol className="ans-rank">
+            {answer.numbers.map((n, i) => (
+              <li key={i} className={i === 0 ? 'is-best' : ''}>
+                <span className="ans-rank-n">{i + 1}</span>
+                <span className="ans-rank-name">{n.label.replace(/^\d+\.\s*/, '')}<small>{whatIf ? shapeDef.label : n.sub}</small></span>
+                <span className={`ans-rank-v ${i === 0 ? bestTone : ''}`}>{n.value}</span>
+              </li>
+            ))}
+          </ol>
           <div className="sharebar" aria-hidden="true">{cands.map(c => { const v = c.siting?.overnight_cf_share_2025 ?? 0; return <span key={c.region_id} className={c === answer.best ? 'best' : ''} style={{ width: `${Math.max(2, v * 100) / cands.length}%` }} title={`${c.metro} ${pct0(v)}`} /> })}</div>
-          {answer.best?.siting?.overnight_cf_share_2025 != null && <p className="note live" style={{ marginTop: 10 }}>At <b>{n0(Number(mw) || load)} MW</b>, {answer.best.metro} would draw about <b>{n0((Number(mw) || load) * (1 - answer.best.siting.overnight_cf_share_2025))} MW</b> from fossil generation {whatIf ? 'over those hours' : 'at night'} on the 2025 mix{cands[1]?.siting?.overnight_cf_share_2025 != null ? <>, versus <b>{n0((Number(mw) || load) * (1 - cands[1].siting.overnight_cf_share_2025))} MW</b> in {cands[1].metro}</> : null}. Average mix, not marginal.</p>}
-          {!whatIf && <p className="note" style={{ marginTop: 8 }}>Ranked on clean power at night, whether it is improving, and clean power relative to demand. Equal weight, frozen before any result was seen.</p>}
+          {bestShare != null && <p className="note live" style={{ marginTop: 10 }}>At <b>{n0(Number(mw) || load)} MW</b>, {answer.best.metro} would draw about <b>{n0((Number(mw) || load) * (1 - bestShare))} MW</b> from fossil generation {whatIf ? 'over those hours' : 'at night'} on the 2025 mix{cands[1]?.siting?.overnight_cf_share_2025 != null ? <>, versus <b>{n0((Number(mw) || load) * (1 - cands[1].siting.overnight_cf_share_2025))} MW</b> in {cands[1].metro}</> : null}. Average mix, not marginal.</p>}
+          <details className="ans-why is-method">
+            <summary>How this ranking is made</summary>
+            <dl className="ans-dl">
+              <div><dt>score</dt><dd>Clean power at night, whether it is improving, and clean power relative to demand. Equal weight, frozen before any result was seen.</dd></div>
+              {whatIf && <div><dt>what-if</dt><dd>A shape other than flat 24/7 re-ranks on the clean share over the hours that shape uses. The frozen score is the flat case.</dd></div>}
+            </dl>
+          </details>
           <Evidence open={evidence} onToggle={toggle} label="Show why" />
         </Card>
-        {evidence && <Workspace id="compare" modules={modules} />}
+        {evidence && (
+          <>
+            <Workspace id="compare" modules={modules} title={<span className="ans-mtitle"><Layers size={13} />Evidence<em className="ans-count">{modules.length}</em></span>} />
+            <Zone icon={Info}>Sources and caveats</Zone>
+            <section className="card ans-tail">
+              <p className="ans-tail-sum">How we rank, in full.</p>
+              <ul className="ans-list"><li>{data.method}</li><li>Average mix inside each grid's footprint, not marginal emissions and not consumption: imports are not allocated.</li></ul>
+            </section>
+          </>
+        )}
       </>
     )
   }

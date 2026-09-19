@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 import Shell from '../console/Console.jsx'
 import { Card, Num, Ticks } from '../console/widgets.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
@@ -8,6 +8,7 @@ import { readTokens } from '../lib/tokens.js'
 import { n0, pct1 } from '../lib/findings.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
+import '../styles/pages.css'
 
 const SHORT = { demand_up_20pct: 'night demand up 20%+ vs 2019', demand_record_high: 'night demand at a record', cf_share_down_3pts: 'clean at night down 3+ pts', gas_share_up_3pts_yoy: 'gas at night up 3+ pts in a year', clean_mw_below_2019: 'clean power at night below 2019', detector_top10: 'new flat load, detector top 10' }
 const month = m => (m ? new Date(m + '-01T00:00:00').toLocaleDateString(undefined, { month: 'short', year: 'numeric' }) : '—')
@@ -35,14 +36,17 @@ export default function Alerts() {
         <p className="note" style={{ marginTop: 12 }}>Severity = how far past the threshold × how many months it has held × how recent. The dashed line marks the drop from the primary tier to supporting and chronic alerts. {data.excluded_regions?.length ? `Excluded: ${data.excluded_regions.join(', ')} (data flag).` : ''}</p>
       </Card>
       <Card>
-        <div className="rows">
+        <div className="rows al-rows">
           {rows.map((r, i) => (
-            <a className="row" key={r.region + r.rule} href={href.region(r.region)} style={{ gridTemplateColumns: '1.6em 1fr 120px auto', opacity: r.tier && r.tier !== 'primary' ? 0.72 : 1, borderTop: i > 0 && rows[i - 1].tier === 'primary' && r.tier !== 'primary' ? '1px dashed rgba(255,255,255,0.18)' : undefined }}>
-              <span className="mono muted" style={{ fontSize: 12 }}>{i + 1}</span>
-              <div><div className="t">{r.label} <span className="muted">· {SHORT[r.rule] || r.rule}</span>{r.tier && r.tier !== 'primary' && <span className="chip sm" style={{ marginLeft: 8 }}>{r.tier}</span>}</div><div className="d">{r.first_crossed ? `since ${month(r.first_crossed)}` : 'this year'}{r.months_active_streak ? ` · ${r.months_active_streak} months` : ''}{r.unit === 'MW' && r.current_value != null ? ` · ${n0(r.current_value)} MW vs ${n0(r.baseline_2019)} in 2019` : r.unit === 'share' && r.current_value != null ? ` · ${pct1(r.current_value)} vs ${pct1(r.baseline_2019)} in 2019` : r.score != null ? ` · score ${r.score.toFixed(1)}` : ''}</div></div>
+            <Fragment key={r.region + r.rule}>
+              {i > 0 && rows[i - 1].tier === 'primary' && r.tier !== 'primary' && <div className="al-tier">supporting and chronic</div>}
+            <a className={`row${r.tier && r.tier !== 'primary' ? ' supporting' : ''}`} href={href.region(r.region)}>
+              <span className="rk">{i + 1}</span>
+              <div><div className="t">{r.label} <span className="muted">· {SHORT[r.rule] || r.rule}</span>{r.tier && r.tier !== 'primary' && <span className="chip sm al-chip">{r.tier}</span>}</div><div className="d">{r.first_crossed ? `since ${month(r.first_crossed)}` : 'this year'}{r.months_active_streak ? ` · ${r.months_active_streak} months` : ''}{r.unit === 'MW' && r.current_value != null ? ` · ${n0(r.current_value)} MW vs ${n0(r.baseline_2019)} in 2019` : r.unit === 'share' && r.current_value != null ? ` · ${pct1(r.current_value)} vs ${pct1(r.baseline_2019)} in 2019` : r.score != null ? ` · score ${r.score.toFixed(1)}` : ''}</div></div>
               <Ticks value={(r.severity ?? 0) / maxSev * 100} max={100} n={12} accent={i === 0} />
               <span className="n">{r.severity != null ? r.severity.toFixed(2) : '—'}</span>
             </a>
+            </Fragment>
           ))}
         </div>
       </Card>

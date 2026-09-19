@@ -118,10 +118,11 @@
 .al-rows .row.supporting .t { color: var(--ink-2); }
 .al-rows .row.supporting .rk, .al-rows .row.supporting .n { color: var(--muted); }
 .al-tier { display: flex; align-items: center; gap: 10px; margin: 14px 0 4px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.al-tier::before, .al-tier::after { content: ''; height: 1px; background: var(--line-strong); }
+.al-tier::before, .al-tier::after { content: ''; height: 0; border-top: 1px dashed var(--line-strong); }
 .al-tier::before { width: 2.2em; flex: none; }
 .al-tier::after { flex: 1; }
 .al-chip { margin-left: 8px; }
+.al-rows .al-tier + .row { border-top: 0; }
 
 /* ── Companies ─────────────────────────────────────────────────────────── */
 .co-rows .row { grid-template-columns: 1fr auto; column-gap: 14px; padding: 10px 0; }
@@ -133,6 +134,7 @@
 
 /* ── Method ────────────────────────────────────────────────────────────── */
 .mt-formula { display: block; margin: 0 0 12px; padding: 10px 12px; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.03); font-family: var(--font-mono); font-size: 11px; line-height: 1.6; color: var(--ink-2); overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-feature-settings: normal; letter-spacing: 0; }
+.mt-formula + .section-title { margin-top: 16px; }
 .mt-dl { margin: 0; }
 .mt-dl > div { padding: 9px 0; border-top: 1px solid var(--line-soft); }
 .mt-dl > div:first-child { border-top: 0; padding-top: 2px; }

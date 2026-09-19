@@ -78,7 +78,9 @@
 .app .field,
 .app .quick,
 .app .searchbox,
-.app .card { transition: color var(--mo-fast) var(--mo-out), border-color var(--mo-fast) var(--mo-out), background-color var(--mo-fast) var(--mo-out), box-shadow var(--mo-fast) var(--mo-out), transform var(--mo-fast) var(--mo-out); }
+/* not .ws-module: dnd-kit drives those with an inline transform while they are dragged and
+   reordered, and a transform transition here would trail the pointer. */
+.app .card:not(.ws-module) { transition: color var(--mo-fast) var(--mo-out), border-color var(--mo-fast) var(--mo-out), background-color var(--mo-fast) var(--mo-out), box-shadow var(--mo-fast) var(--mo-out), transform var(--mo-fast) var(--mo-out); }
 
 .app .btn:hover:not(:disabled),
 .app .chip:hover:not(:disabled),

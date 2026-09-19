@@ -14,6 +14,8 @@ import ingest from '../data/ingest_status.json'
 import SideBySideModule, { sideBySideOf } from '../components/modules/SideBySideModule.jsx'
 import { relocateModule } from '../components/modules/RelocateModule.jsx'
 import { innovLadderModule } from '../components/modules/InnovLadderModule.jsx'
+import { Bolt, Layers, Info, Company as CompanyIcon, Place, Link as LinkIcon, Night, ArrowRight, Check as CheckIcon, Close as CloseIcon, Help } from '../components/Icons.jsx'
+import '../styles/answer.css'
 
 // A grid that generates far less than it uses is mostly imports; its footprint share is not what the site consumes.
 const importerNote = d => { const g = d && d.type === 'zone' && d.parent ? d.parent : d; const gen = g?.total_avg_mw?.['2025']?.all, dem = d?.demand?.['2025']?.avg_mw; return gen && dem && gen / dem < 0.5 ? `generates ${Math.round(gen / dem * 100)}% of what it uses, the rest is imported` : null }
@@ -31,6 +33,38 @@ function GapBar({ claim }) {
     </div>
   )
 }
+// Zone label: what kind of thing the next block is. Icon carries the kind, text carries the word.
+function Zone({ icon: Icon, children, right }) {
+  return <div className="ans-sec"><Icon size={12} /><span>{children}</span>{right && <span className="ans-sec-r">{right}</span>}</div>
+}
+// A module header that says what kind of evidence it is.
+const mtitle = (Icon, text) => <span className="ans-mtitle"><Icon size={13} />{text}</span>
+// 44px for the Breadcrumbs component (owned elsewhere); it renders as the first child of the column.
+const CrumbSpace = () => <div className="ans-crumbs" aria-hidden="true" />
+const VERDICT_ICON = { true_on_paper: CheckIcon, contradicted: CloseIcon, unfalsifiable: Help, cannot_verify: Info }
+
+// Claimed vs measured on ONE track: a claim is an accounting fact (neutral ink), what the
+// grids physically generated is the clean/fossil pair. The difference is said once, below.
+function AnsGap({ claimed, lo, hi, claimText, measuredText, note }) {
+  const tone = (lo + (hi - lo) / 2) >= 0.5 ? 'clean' : 'fossil'
+  const long = measuredText.length > 5
+  return (
+    <div className="ans-gap">
+      <div className="ans-gap-row">
+        <span className="ans-gap-k">says</span>
+        <span className="ans-gap-t"><i style={{ left: 0, width: `${Math.min(1, claimed) * 100}%` }} /></span>
+        <span className={`ans-gap-v${claimText.length > 5 ? ' long' : ''}`}>{claimText}</span>
+      </div>
+      <div className="ans-gap-row">
+        <span className="ans-gap-k">its grids</span>
+        <span className="ans-gap-t"><i className={tone} style={{ left: `${lo * 100}%`, width: `${Math.max(2, (hi - lo) * 100)}%` }} /></span>
+        <span className={`ans-gap-v ${tone}${long ? ' long' : ''}`}>{measuredText}</span>
+      </div>
+      {note}
+    </div>
+  )
+}
+
 const REASON = { no_falsifiable_content: 'nothing measurable in the claim', no_site_mapping: 'no site could be mapped to a grid', ba_out_of_coverage: 'its grid is outside our coverage', year_out_of_range: 'the year is outside the data' }
 const pctFmt = n => `${Math.round(n)}%`
 
@@ -53,11 +87,11 @@ export default function Check({ route }) {
   const toggle = () => { window.location.hash = href.check(ticker, !evidence) }
 
   let column
-  if (loading) column = <Card title={<b>{known?.name || ticker}</b>} onClose={back}><Loading what={known?.name || ticker} /></Card>
+  if (loading) column = <><CrumbSpace /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}><Loading what={known?.name || ticker} /></Card></>
   else if (error) {
     const others = COMPANIES.filter(c => (error.available || []).includes(c.ticker))
     column = (
-      <Card title={<b>{known?.name || ticker}</b>} onClose={back}>
+      <><CrumbSpace /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}>
         {error.name === 'NotFound' ? (
           <>
             <h1 className="verdict">{known ? `${known.name} isn't verified yet.` : `We don't have ${ticker}.`}</h1>
@@ -65,14 +99,14 @@ export default function Check({ route }) {
             <p className="note" style={{ marginTop: 10 }}>{others.length ? <>Verified so far: {others.map(c => <Chip key={c.ticker} small href={href.check(c.ticker)}>{c.name}</Chip>)}</> : 'No company has been verified yet.'}</p>
           </>
         ) : <ErrorState error={error} onRetry={reload} />}
-      </Card>
+      </Card></>
     )
   } else {
     const a = checkAnswer(data)
     const modules = [
-      ...(sideBySideOf(data).length ? [{ id: 'sbs', title: 'Says, and discloses, in the same report', render: () => <SideBySideModule company={data} /> }] : []),
-      ...(innovLadderModule.applies({ company: data }) ? [{ id: innovLadderModule.id, title: innovLadderModule.title, render: () => innovLadderModule.render({ company: data }) }] : []),
-      { id: 'sites', title: 'Where its sites draw power', render: () => (
+      ...(sideBySideOf(data).length ? [{ id: 'sbs', title: mtitle(LinkIcon, 'Says, and discloses, in the same report'), render: () => <SideBySideModule company={data} /> }] : []),
+      ...(innovLadderModule.applies({ company: data }) ? [{ id: innovLadderModule.id, title: mtitle(Layers, innovLadderModule.title), render: () => innovLadderModule.render({ company: data }) }] : []),
+      { id: 'sites', title: mtitle(Place, 'Where its sites draw power'), render: () => (
         <>
           <div className="rows">
             {sites.map(s => { const e = bySite[s.ba]; const cav = caveatFor(s.region_id); const series = nightSeries(details[s.region_id]); return (
@@ -84,7 +118,7 @@ export default function Check({ route }) {
           <p className="note" style={{ marginTop: 10 }}>Clean share of the electricity generated on each site's grid in {a.primary?.year || 2024}, all hours; the line is clean-at-night 2019 to 2025. The site lookup is hand-curated from the serving utility outward, never from the state.</p>
         </>
       ) },
-      { id: 'claims', title: 'What it claims, and the verdict', render: () => (
+      { id: 'claims', title: mtitle(CompanyIcon, 'What it claims, and the verdict'), render: () => (
         <>
           {(data.claims || []).map(k => {
             const contra = (k.evidence || []).find(e => e.type === 'internal_contradiction' || e.type === 'cross_document_contradiction')
@@ -102,38 +136,73 @@ export default function Check({ route }) {
           })}
         </>
       ) },
-      { id: 'talkwalk', title: 'Talk vs walk', render: () => (
+      { id: 'talkwalk', title: mtitle(Bolt, 'Talk vs walk'), render: () => (
         <>
           <div className="nums" style={{ marginTop: 0 }}><Num num={(data.talk_score ?? 0) * 100} format={pctFmt} label="talk" sub="how bold the claims are" accent /><Num num={(data.walk_score ?? 0) * 100} format={pctFmt} label="walk" sub="clean share across its sites" /><Num num={(data.coverage ?? 0) * 100} format={pctFmt} label="coverage" sub="claims we could check" /></div>
           <KV rows={[['talk', data.talk_score_method || 'boldness × specificity, 0–1'], ['walk', data.walk_score_method || 'mean physical clean share across mapped sites, grid-only, unweighted']]} />
           <p className="note" style={{ marginTop: 10 }}>Grid-only and average mix: contracted clean power (PPAs, RECs) is not counted, which is why an annual "100% renewable" claim can be true on paper while its sites physically run on much less.</p>
         </>
       ) },
-      { id: 'caveats', title: 'What this number does not mean', render: () => (
-        <ul className="note" style={{ margin: 0, paddingLeft: 18 }}>
-          {(data.notes || []).map((n, i) => <li key={i} style={{ marginBottom: 6 }}>{n}</li>)}
-        </ul>
-      ) },
-      ...(relocateModule.applies({ company: data }) ? [{ id: relocateModule.id, title: relocateModule.title, render: () => relocateModule.render({ company: data }) }] : []),
-      { id: 'night', title: 'Why night matters', default: false, render: () => <p className="note">Since 2019 the US grid got cleaner during the day and stood still at night. A datacenter draws the same power at 3am as at noon, so half of its electricity lands in the hours that did not improve. <a href={href.found('sweep')} className="ink2">See the numbers →</a></p> },
+      ...(relocateModule.applies({ company: data }) ? [{ id: relocateModule.id, title: mtitle(ArrowRight, relocateModule.title), render: () => relocateModule.render({ company: data }) }] : []),
+      { id: 'night', title: mtitle(Night, 'Why night matters'), default: false, render: () => <p className="note">Since 2019 the US grid got cleaner during the day and stood still at night. A datacenter draws the same power at 3am as at noon, so half of its electricity lands in the hours that did not improve. <a href={href.found('sweep')} className="ink2">See the numbers →</a></p> },
     ]
+    // Claimed vs measured, on one scale. Only a fractional claim with a measured range can be drawn.
+    const p = a.primary
+    const track = p?.magnitude != null && p.unit === 'fraction' && p.physical_min != null
+      ? { claimed: Math.min(1, p.magnitude), lo: p.physical_min, hi: p.physical_max ?? p.physical_min }
+      : null
+    const claimText = a.numbers[0]?.value ?? '—'
+    const measuredText = a.numbers[1]?.value ?? '—'
+    const measuredTone = track && (track.lo + (track.hi - track.lo) / 2) >= 0.5 ? 'clean' : 'fossil'
+    // A grid whose footprint understates what its sites can draw, or a single site, changes how the
+    // figure should be read: the gap is not headlined, and the note that explains it opens by default.
+    const siteNote = (data.notes || []).find(n => sites.some(st => n.includes(st.ba) || (st.serving_utility && n.includes(st.serving_utility.split(' ')[0])) || n.includes(st.grid_label || ' ')))
+    const importer = sites.map(st => importerNote(details[st.region_id])).find(Boolean)
+    const headlineGap = !!track && p.physical_mean_unweighted != null && sites.length >= 2 && !siteNote && !importer
+    const gapPts = track && p.physical_mean_unweighted != null ? Math.round((p.magnitude - p.physical_mean_unweighted) * 100) : null
+    const reading = headlineGap || !track ? null : `${sites.length === 1 ? 'One mapped site, so this is that grid, not the company. ' : ''}${siteNote || (importer ? `One of its grids ${importer}, so its footprint share is not what the site consumes.` : "The physical figure is the average of its mapped sites' grids.")}`
+    const VerdictIcon = VERDICT_ICON[a.verdict] || Info
+    const modCount = modules.length
     column = (
       <>
-        <Card title={<><b>{data.company}</b> · {data.ticker}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
+        <CrumbSpace />
+        <Zone icon={Bolt} right={<span className="chip sm ans-chip"><VerdictIcon size={12} />{VERDICT[a.verdict] || 'read'}</span>}>Answer</Zone>
+        <div className="ans-sticky">
+          <span className="ans-sticky-name"><CompanyIcon size={13} />{data.company}</span>
+          <span className="ans-sticky-v"><b>{claimText}</b> claimed · <b className={measuredTone}>{measuredText}</b> measured</span>
+        </div>
+        <Card className="ans-card" title={<><b>{data.company}</b> · {data.ticker}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
           <h1 className="verdict">{a.sentence}</h1>
-          {a.numbers.length > 0 && <div className="nums">{a.numbers.map((n, i) => <Num key={i} {...n} />)}</div>}
-          {(() => {
-            // A gap is only headlined when it rests on more than one site and no site's grid carries a footprint note.
-            const siteNote = (data.notes || []).find(n => sites.some(st => n.includes(st.ba) || (st.serving_utility && n.includes(st.serving_utility.split(' ')[0])) || n.includes(st.grid_label || '\u0000')))
-            const ok = a.primary?.magnitude != null && a.primary.unit === 'fraction' && a.primary.physical_mean_unweighted != null
-            if (!ok) return null
-            const importer = sites.map(st => importerNote(details[st.region_id])).find(Boolean)
-            if (sites.length >= 2 && !siteNote && !importer) return <p className="note" style={{ marginTop: 12 }}>The gap: <b style={{ color: 'var(--ink)' }}>{Math.round((a.primary.magnitude - a.primary.physical_mean_unweighted) * 100)} points</b> between what is claimed on paper and what its grids physically generated, averaged across {sites.length} sites.</p>
-            return <p className="note" style={{ marginTop: 12 }}>{sites.length === 1 ? 'One mapped site, so this is that grid, not the company: ' : ''}{siteNote || (importer ? `One of its grids ${importer}, so its footprint share is not what the site consumes.` : 'the physical figure is the average of its mapped sites\' grids.')} Grid-only, average mix; contracted clean power is not counted.</p>
-          })()}
+          {track ? (
+            <>
+              <AnsGap
+                {...track}
+                claimText={claimText}
+                measuredText={measuredText}
+                note={headlineGap ? <p className="ans-gap-say"><b>{gapPts} points</b> between what is claimed on paper and what its grids physically generated, averaged across {sites.length} sites.</p> : null}
+              />
+              {a.numbers.length > 2 && <div className="nums ans-meta" style={{ gridTemplateColumns: `repeat(${a.numbers.length - 2}, auto)` }}>{a.numbers.slice(2).map((n, i) => <Num key={i} {...n} />)}</div>}
+            </>
+          ) : a.numbers.length > 0 && <div className="nums">{a.numbers.map((n, i) => <Num key={i} {...n} />)}</div>}
+          <details className="ans-why" open={!!reading}>
+            <summary>Why this number is conservative</summary>
+            <dl className="ans-dl">
+              {reading && <div><dt>how to read it</dt><dd>{reading}</dd></div>}
+              <div><dt>basis</dt><dd>Grid-only, average mix; contracted clean power is not counted.</dd></div>
+            </dl>
+          </details>
           <Evidence open={evidence} onToggle={toggle} />
         </Card>
-        {evidence && <Workspace id="check" modules={modules} />}
+        {evidence && (
+          <>
+            <Workspace id="check" modules={modules} title={<span className="ans-mtitle"><Layers size={13} />Evidence<em className="ans-count">{modCount}</em></span>} />
+            <Zone icon={Info}>Sources and caveats</Zone>
+            <section className="card ans-tail">
+              <p className="ans-tail-sum">What this number does not mean.</p>
+              <ul className="ans-list">{(data.notes || []).map((n, i) => <li key={i}>{n}</li>)}</ul>
+            </section>
+          </>
+        )}
       </>
     )
   }

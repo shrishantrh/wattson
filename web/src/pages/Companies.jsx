@@ -9,6 +9,7 @@ import { pct0 } from '../lib/findings.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import '../styles/companies.css'
+import '../styles/pages.css'
 
 const to100 = v => (v == null ? null : Number(v) * 100)
 const plural = (n, one, many = `${one}s`) => (n == null ? `— ${many}` : `${n} ${n === 1 ? one : many}`)
@@ -59,7 +60,7 @@ export default function Companies() {
           {fac.loading && <Loading what="the sites" />}
           {!fac.loading && !siteRows.length && <p className="note">No mapped sites in this data source.</p>}
           {siteRows.length > 0 && (
-            <div className="rows">
+            <div className="rows co-rows">
               {siteRows.map(s => (
                 <a className="row co-site" key={`${s.ticker}-${s.metro}-${s.serving_utility}`} href={href.region(s.region_id)}>
                   <div>
