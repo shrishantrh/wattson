@@ -78,6 +78,30 @@ GET  /api/export/{kind}.csv
    that catches it is the receiving side refusing **by default** rather than judging each
    relay on its merits.
 
+9. **A correct merge resolution can still break the build.** When `cursor/spacex` was
+   merged, resolving the conflicted `web/` files to *ours* was right — taking theirs would
+   have silently reverted five null-render fixes and the build would still have passed.
+   But a NEW file merges without conflict and carries its imports in, while the symbols it
+   imports live in files that DID conflict and went to ours. The page arrived and its
+   dependencies did not. The resolution was correct and the result was broken, which is
+   exactly why it got through: the risk being watched for was a silent revert, and nobody
+   checked that the new page still had anything to import.
+
+10. **"It builds" is a claim about a checkout, not about a commit.** The same merge was
+    reported as building clean. It did — in a working tree that contained five grafted
+    changes which had never been committed, because `git add -A` ran before the graft and
+    `git commit` then committed the already-staged index. *True of my working tree, false
+    of the commit, and I could not tell the difference because I never left my working
+    tree.* This is the trap that made trap 9 invisible. Build from a fresh `git clone` and
+    a fresh `npm ci` before claiming a build passes — the Merger caught both rounds this
+    way and neither was findable any other way.
+
+11. **A caveat that is not machine-readable does not exist** — recorded three separate
+    times from three directions: AZPS shipping `data_flags: []` while its warning lived in
+    CLAUDE.md prose, the alerts module independently finding the same gap, and the
+    corrections overlay having to carry `data_flags_should_be` because the published data
+    could not.
+
 8. **A component can render a false claim from correct data.** Amazon's `talk_score` is
    legitimately null — no claim in its documents qualifies or undercuts itself. A
    `(talk_score ?? 0)` in the view drew that as a full-width 0% bar, which asserts
