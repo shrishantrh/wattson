@@ -67,7 +67,7 @@ const GROUPS = [
 ]
 
 export function ShortcutsSheet({ groups = GROUPS }) {
-  const host = useFirstMounted()
+  const host = useFirstMounted('shortcuts')
   const [open, setOpen] = useState(false)
   const sheetRef = useRef(null)
 

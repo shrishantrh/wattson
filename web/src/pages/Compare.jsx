@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
-import { Card, Num, Evidence, Section, Chip, KV, Ring, HourBars } from '../console/widgets.jsx'
+import { Card, Num, Evidence, Chip, KV, Ring, HourBars } from '../console/widgets.jsx'
+import Workspace from '../components/Workspace.jsx'
+import Sparkline from '../components/Sparkline.jsx'
+import { CopyButton } from '../components/CopyButton.jsx'
 import { loadSite, loadOpening, useAsync, useRegionDetails, hourProfile, nightSeries } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { compareAnswer, caveatFor, pct0, pct1, n0, signedGw } from '../lib/findings.js'
@@ -9,6 +12,7 @@ import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 
 const trend = s => (s == null ? '—' : `${s > 0 ? '+' : ''}${(s * 100).toFixed(1)} pts / yr`)
+const pctFmt = n => `${Math.round(n)}%`
 
 // Question 2: "Where should I put a datacenter so it runs on the cleanest power?"
 export default function Compare({ route }) {
@@ -44,22 +48,15 @@ export default function Compare({ route }) {
 
   let column
   if (loading) column = <Card title={<><b>Compare</b> · {request.mw} MW</>} onClose={back}>{form}<Loading what="the ranking" /></Card>
-  else if (error) column = <Card title={<><b>Compare</b></>} onClose={back}>{form}<ErrorState error={error} onRetry={reload} /></Card>
-  else column = (
-    <>
-      <Card title={<><b>Compare</b> · {n0(data.request.mw)} MW of flat load{data._computed_client_side && ' · ranked here from the frozen score'}</>} onClose={back}>
-        {form}
-        {data.unmapped.length > 0 && <div className="banner">Not in our map yet: {data.unmapped.join(', ')}. Try a nearby major city.</div>}
-        <h1 className="verdict">{answer.sentence}</h1>
-        <div className="nums" style={{ gridTemplateColumns: `repeat(${Math.max(1, Math.min(3, cands.length))}, 1fr)` }}>{answer.numbers.map((n, i) => <Num key={i} {...n} />)}</div>
-        <p className="note" style={{ marginTop: 12 }}>Ranked on clean power at night, whether it is improving, and clean power relative to demand. Equal weight, frozen before any result was seen.</p>
-        <Evidence open={evidence} onToggle={toggle} label="Show why" />
-      </Card>
-      {evidence && cands.map(c => {
-        const cf = c.siting?.overnight_cf_share_2025, dem = c.demand?.overnight_avg_mw, load = Number(data.request.mw), cav = caveatFor(c.region_id)
-        return (
-          <Section key={c.region_id} title={<><b style={{ color: c === answer.best ? 'var(--accent)' : 'inherit' }}>{c.rank}. {c.metro}</b> · {c.grid_label}</>} right={<a href={href.region(c.region_id)}>Detail →</a>}>
-            <div className="instrument"><Ring value={cf} /><div><div className="num"><div className="v">{pct1(cf)}</div><div className="l">clean power at night, 2025 · {trend(c.siting?.ratio_slope_per_year)}</div></div></div></div>
+  else if (error) column = <Card title={<b>Compare</b>} onClose={back}>{form}<ErrorState error={error} onRetry={reload} /></Card>
+  else {
+    const load = Number(data.request.mw)
+    const modules = [
+      ...cands.map(c => {
+        const cf = c.siting?.overnight_cf_share_2025, dem = c.demand?.overnight_avg_mw, cav = caveatFor(c.region_id), d = details[c.region_id], series = nightSeries(d), prof = hourProfile(d)
+        return { id: `cand-${c.region_id}`, title: <><span style={{ color: c === answer.best ? 'var(--accent)' : 'var(--ink)' }}>{c.rank}. {c.metro}</span> · {c.grid_label} · <a href={href.region(c.region_id)} className="ink2">detail →</a></>, render: () => (
+          <>
+            <div className="instrument"><Ring value={cf} /><div className="num"><div className="v" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{pct1(cf)}{series && <Sparkline values={series} width={72} height={20} accentLast baseline title="clean at night, 2019 to 2025" />}</div><div className="l">clean power at night, 2025 · {trend(c.siting?.ratio_slope_per_year)}</div></div></div>
             <KV rows={[
               ['since 2019', c.siting?.change_since_2019 != null ? `${c.siting.change_since_2019 > 0 ? '+' : ''}${(c.siting.change_since_2019 * 100).toFixed(1)} pts` : '—'],
               ['clean power vs demand at night', c.siting?.overnight_clean_mw_over_demand != null ? `${c.siting.overnight_clean_mw_over_demand.toFixed(2)}×` : '—'],
@@ -70,26 +67,34 @@ export default function Compare({ route }) {
               c.detector?.rank && ['new flat load already showing up', `#${c.detector.rank} of 111 · ${c.detector.growth_pct > 0 ? '+' : ''}${Math.round(c.detector.growth_pct)}% since 2019`],
               ['siting rank', c.siting?.siting_rank ? `${c.siting.siting_rank} of ${c.siting.n_ranked}` : '—'],
             ]} />
-            {hourProfile(details[c.region_id]) && <div style={{ marginTop: 12 }}><HourBars values={hourProfile(details[c.region_id])} caption="Clean share by hour, 2025 (night in ember)" /></div>}
-            {nightSeries(details[c.region_id]) && <p className="note" style={{ marginTop: 8 }}>Clean at night by year: {nightSeries(details[c.region_id]).map((v, i) => `${2019 + i} ${v == null ? '—' : Math.round(v * 100) + '%'}`).join(' · ')}</p>}
+            {prof && <div style={{ marginTop: 12 }}><HourBars values={prof} caption="Clean share by hour, 2025 (night in ember)" /></div>}
             {cav && <div className="banner banner-error" style={{ marginTop: 10 }}>{cav}</div>}
             {c.cf_inherited_from_ba && <p className="note" style={{ marginTop: 8 }}>Generation figures are for the whole grid this place sits on; demand is local. Operator is hand-mapped.</p>}
-          </Section>
-        )
-      })}
-      {evidence && (
+          </>
+        ) }
+      }),
+      { id: 'method', title: 'How we rank', render: () => <p className="note">{data.method}</p> },
+      { id: 'night', title: 'Why night matters', render: () => (
         <>
-          <Section title="How we rank"><p className="note">{data.method}</p></Section>
-          <Section title="Why night matters" right={<a href={href.found('sweep')}>See it →</a>}>
-            {nat ? <div className="nums" style={{ marginTop: 0 }}><Num value={pct0(nat['2025']?.daytime)} label="clean during the day, 2025" sub={`${pct0(nat['2019']?.daytime)} in 2019`} /><Num value={pct0(nat['2025']?.overnight)} label="clean at night, 2025" sub={`${pct0(nat['2019']?.overnight)} in 2019`} accent /><Num value="½" label="of a datacenter's power is used at night" /></div> : <p className="note">National series not available from this data source.</p>}
-            <p className="note" style={{ marginTop: 10 }}>Solar cleaned up the middle of the day and did nothing for the middle of the night. Flat load lands half of itself in the hours that have not improved since 2019.</p>
-          </Section>
-          <Section title="Where new flat load is already showing up" right={<a href={href.found('detector')}>All 111 →</a>}>
-            <div className="rows">{top.map(r => <a className="row" key={r.id} href={href.region(r.id)}><div><div className="t">{r.known_cluster_label || r.name}</div><div className="d">{r.pattern}{r.data_flagged ? ' · data flagged' : ''}</div></div><div className="n">#{r.rank} <small>+{Math.round(r.growth_pct)}%</small></div></a>)}</div>
-          </Section>
+          {nat ? <div className="nums" style={{ marginTop: 0 }}><Num num={(nat['2025']?.daytime ?? 0) * 100} format={pctFmt} label="clean during the day, 2025" sub={`${pct0(nat['2019']?.daytime)} in 2019`} /><Num num={(nat['2025']?.overnight ?? 0) * 100} format={pctFmt} label="clean at night, 2025" sub={`${pct0(nat['2019']?.overnight)} in 2019`} accent /><Num value="½" label="of a datacenter's power is used at night" /></div> : <p className="note">National series not available from this data source.</p>}
+          <p className="note" style={{ marginTop: 10 }}>Solar cleaned up the middle of the day and did nothing for the middle of the night. Flat load lands half of itself in the hours that have not improved since 2019. <a href={href.found('sweep')} className="ink2">See it →</a></p>
         </>
-      )}
-    </>
-  )
+      ) },
+      { id: 'landing', title: 'Where new flat load is already showing up', render: () => <div className="rows">{top.map(r => <a className="row" key={r.id} href={href.region(r.id)}><div><div className="t">{r.known_cluster_label || r.name}</div><div className="d">{r.pattern}{r.data_flagged ? ' · data flagged' : ''}</div></div><div className="n">#{r.rank} <small>+{Math.round(r.growth_pct)}%</small></div></a>)}<a className="note" href={href.found('detector')} style={{ display: 'block', marginTop: 8 }}>All 111 →</a></div> },
+    ]
+    column = (
+      <>
+        <Card title={<><b>Compare</b> · {n0(data.request.mw)} MW of flat load{data._computed_client_side && ' · ranked here from the frozen score'}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
+          {form}
+          {data.unmapped.length > 0 && <div className="banner">Not in our map yet: {data.unmapped.join(', ')}. Try a nearby major city.</div>}
+          <h1 className="verdict">{answer.sentence}</h1>
+          <div className="nums" style={{ gridTemplateColumns: `repeat(${Math.max(1, Math.min(3, cands.length))}, 1fr)` }}>{answer.numbers.map((n, i) => <Num key={i} num={n.raw != null ? n.raw * 100 : undefined} format={pctFmt} value={n.value} label={n.label} sub={n.sub} accent={n.accent} />)}</div>
+          <p className="note" style={{ marginTop: 12 }}>Ranked on clean power at night, whether it is improving, and clean power relative to demand. Equal weight, frozen before any result was seen.</p>
+          <Evidence open={evidence} onToggle={toggle} label="Show why" />
+        </Card>
+        {evidence && <Workspace id="compare" modules={modules} />}
+      </>
+    )
+  }
   return <Shell page="compare" globe={globe} column={column} />
 }

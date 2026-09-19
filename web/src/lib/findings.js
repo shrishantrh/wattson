@@ -120,5 +120,5 @@ export function compareAnswer(res) {
   let sentence = `${best.metro} is your cleanest option: ${pct0(share(best))} clean power at night and ${trendWord(s(best))}.`
   if (second) sentence += ` ${second.metro} is ${pct0(share(second))} and ${trendWord(s(second))}.`
   if (bad.length) sentence += ` ${bad.map(c => `${c.metro} reads ${pct0(share(c))} but its data looks unreliable, so treat it as unknown`).join('; ')}.`
-  return { sentence, best, numbers: cs.map(c => ({ value: pct0(share(c)), label: `${c.rank}. ${c.metro}`, sub: caveatFor(c.region_id) ? 'data unreliable' : trendWord(s(c)), accent: c === best })) }
+  return { sentence, best, numbers: cs.map(c => ({ value: pct0(share(c)), raw: share(c), label: `${c.rank}. ${c.metro}`, sub: caveatFor(c.region_id) ? 'data unreliable' : trendWord(s(c)), accent: c === best })) }
 }

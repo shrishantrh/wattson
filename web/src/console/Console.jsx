@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Globe, FlatMap, detectGlobeCapability } from '../globe'
 import { href } from '../router.js'
 import QuickSearch from '../components/QuickSearch.jsx'
+import { useColumnWidth, ResizeHandle } from '../components/ColumnResize.jsx'
 
 // The shell: ONE persistent night globe (mounted once, in StageProvider at the app root) with,
 // at most, a top bar, a left column of cards and a centred overlay. Pages render <Shell> to
@@ -29,7 +30,8 @@ export function StageProvider({ children }) {
   useEffect(() => { setZoom(0) }, [baseView.lat, baseView.lng, baseView.altitude])
   const view = useMemo(() => ({ ...baseView, altitude: Math.min(3, Math.max(0.45, baseView.altitude * Math.pow(0.8, zoom))) }), [baseView, zoom])
   const terminator = useMemo(() => (style === 'night' ? { enabled: true, sunLng: 60, sunLat: 0, dayDim: 0.3, ...(g.terminator || {}) } : { enabled: false }), [style, g.terminator])
-  const colWidth = spec.column ? spec.columnWidth || 420 : 0
+  const [colW, handleProps] = useColumnWidth('column', 420, 340, 760)
+  const colWidth = spec.column ? spec.columnWidth || colW : 0
   const GlobeC = flat ? FlatMap : Globe
   const ctx = useMemo(() => ({ setSpec }), [])
   return (
@@ -52,7 +54,7 @@ export function StageProvider({ children }) {
           <button type="button" className={flat ? 'on' : ''} onClick={() => setFlat(v => !v)} disabled={cap !== 'webgl'} aria-label="Toggle 2D">{flat ? '3D' : '2D'}</button>
           <button type="button" className={style === 'night' ? 'on' : ''} onClick={() => setStyle(v => (v === 'night' ? 'dots' : 'night'))} aria-label="Toggle night lights" data-tip="Night lights">☾</button>
         </div>
-        {spec.column && <div className="column" style={spec.columnWidth ? { width: spec.columnWidth } : undefined}>{spec.column}</div>}
+        {spec.column && <div className="column-wrap" style={{ width: colWidth }}><div className="column">{spec.column}</div>{!spec.columnWidth && <ResizeHandle {...handleProps} />}</div>}
         {spec.overlay && <div className="overlay">{spec.overlay}</div>}
         {spec.foot && <div className="foot">{spec.foot}</div>}
         {children}
@@ -62,10 +64,14 @@ export function StageProvider({ children }) {
 }
 
 // Pages describe what to show; the provider renders it.
+let shellSeq = 0
 export default function Shell(props) {
   const { setSpec } = useContext(StageCtx)
-  useLayoutEffect(() => { setSpec(props) })   // every render: column/overlay contain live state
-  useEffect(() => () => setSpec(s => (s === props ? {} : s)), [])   // eslint-disable-line react-hooks/exhaustive-deps
+  const idRef = useRef(null)
+  if (idRef.current == null) idRef.current = ++shellSeq
+  const id = idRef.current
+  useLayoutEffect(() => { setSpec({ ...props, _owner: id }) })   // every render: column/overlay contain live state
+  useLayoutEffect(() => () => setSpec(s => (s._owner === id ? {} : s)), [id, setSpec])   // layout cleanup runs before the next page's layout effect
   return null
 }
 

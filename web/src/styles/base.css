@@ -87,6 +87,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* result column */
 .column { position: absolute; top: 66px; left: 22px; bottom: 18px; width: 420px; z-index: 4; overflow: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 6px; scrollbar-width: thin; }
+.column-wrap { position: absolute; top: 66px; left: 22px; bottom: 18px; z-index: 4; }
+.column-wrap > .column { position: absolute; inset: 0; width: auto; left: 0; top: 0; bottom: 0; }
 .card { background: var(--surface-a); border: 1px solid var(--line-soft); border-radius: var(--radius-card); padding: 18px 20px; flex: none; transition: border-color var(--dur-fast) var(--ease); }
 a.card:hover, .card.link:hover { border-color: var(--line-strong); }
 .card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }

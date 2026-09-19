@@ -36,23 +36,26 @@ export function dismissToast(id) {
   setTimeout(() => { items = items.filter(x => x.id !== id); emit() }, FADE_MS)
 }
 
-// One host per page: instances register in mount order and the first living one renders.
-const hosts = new Set(), hostSubs = new Set()
-const ping = () => { for (const f of hostSubs) f() }
+// One host per page and per scope: instances register in mount order and only the first
+// living one renders. Toaster and ShortcutsSheet each use their own scope.
+const scopes = new Map()
 // oxlint-disable-next-line react/only-export-components
-export function useFirstMounted() {
+export function useFirstMounted(scope = 'toast') {
   const [id] = useState(() => ({}))
   const [first, setFirst] = useState(false)
   useEffect(() => {
-    const f = () => setFirst(hosts.values().next().value === id)
-    hosts.add(id); hostSubs.add(f); ping()
-    return () => { hosts.delete(id); hostSubs.delete(f); ping() }
-  }, [id])
+    let s = scopes.get(scope)
+    if (!s) scopes.set(scope, (s = { hosts: new Set(), subs: new Set() }))
+    const f = () => setFirst(s.hosts.values().next().value === id)
+    const ping = () => { for (const g of s.subs) g() }
+    s.hosts.add(id); s.subs.add(f); ping()
+    return () => { s.hosts.delete(id); s.subs.delete(f); ping() }
+  }, [id, scope])
   return first
 }
 
 export function Toaster() {
-  const host = useFirstMounted()
+  const host = useFirstMounted('toast')
   const list = useSyncExternalStore(subscribe, snapshot, snapshot)
   if (!host) return null
   return createPortal(

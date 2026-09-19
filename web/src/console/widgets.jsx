@@ -1,4 +1,5 @@
 // Small presentational pieces. No chart library on primary screens.
+import NumberTicker from '../components/NumberTicker.jsx'
 export function Card({ title, right, children, className = '', style, onClose }) {
   return (
     <section className={`card ${className}`} style={style}>
@@ -8,8 +9,9 @@ export function Card({ title, right, children, className = '', style, onClose })
   )
 }
 
-export function Num({ value, label, sub, accent = false }) {
-  return <div className="num"><div className={`v ${accent ? 'accent' : ''}`}>{value}</div><div className="l">{label}{sub && <div className="s">{sub}</div>}</div></div>
+// `num` + `format` animates the figure when it appears or changes; `value` renders a string as-is.
+export function Num({ value, num, format, label, sub, accent = false }) {
+  return <div className="num"><div className={`v ${accent ? 'accent' : ''}`}>{num != null ? <NumberTicker value={num} format={format} /> : value}</div><div className="l">{label}{sub && <div className="s">{sub}</div>}</div></div>
 }
 
 export function Ring({ value, text, size = 56 }) {
