@@ -7,7 +7,7 @@ import { CopyButton } from '../components/CopyButton.jsx'
 import { loadSite, loadOpening, useAsync, useRegionDetails, hourProfile, nightSeries } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { compareAnswer, caveatFor, pct0, pct1, n0, signedGw } from '../lib/findings.js'
-import { matchMetro } from '../lib/query.js'
+import { resolvePlace, DEMO_COMPARE } from '../lib/query.js'
 import { SHAPES, FLEX_FRACTION, cleanShareFor, shiftable, profileOf } from '../lib/shape.js'
 import ShapePicker from '../components/ShapePicker.jsx'
 import { Loading, ErrorState } from '../components/States.jsx'
@@ -46,7 +46,7 @@ export default function Compare({ route }) {
       markers: pts.map(c => ({ id: c.region_id, lat: c.lat, lng: c.lng, label: `${c.rank}  ${c.metro} · ${pct0(c.siting?.overnight_cf_share_2025)}`, tip: `${c.metro}: ${pct1(c.siting?.overnight_cf_share_2025)} clean at night, ${trend(c.siting?.ratio_slope_per_year)}${c.detector?.rank ? `, flat-load rank #${c.detector.rank}` : ''}`, href: href.region(c.region_id), color: c === answer?.best ? tk.accent : tk.ink2, lead: c === answer?.best })) }
   }, [cands, answer, tk])
   const go = (m = request.metros, load = mw) => { window.location.hash = href.compare({ mw: Number(load) || 300, metros: m, evidence }) }
-  const addMetro = e => { e.preventDefault(); const m = matchMetro(add); if (m && !request.metros.some(x => matchMetro(x)?.metro === m.metro)) go([...request.metros, m.metro]); setAdd('') }
+  const addMetro = e => { e.preventDefault(); const m = resolvePlace(add); if (m && !request.metros.some(x => resolvePlace(x)?.region_id === m.region_id)) go([...request.metros, m.metro]); setAdd('') }
   const back = () => { window.location.hash = href.landing() }
   const toggle = () => { window.location.hash = href.compare({ ...request, evidence: !evidence }) }
   const nat = found.data?.national?.cf_share, top = (found.data?.detector?.regions || []).filter(r => r.rank <= 5)
@@ -54,7 +54,7 @@ export default function Compare({ route }) {
   const form = (
     <form className="formline" onSubmit={e => { e.preventDefault(); go() }}>
       <input className="field" type="number" min="1" value={mw} onChange={e => setMw(e.target.value)} style={{ width: 74 }} aria-label="Load in MW" /><span className="muted" style={{ fontSize: 12 }}>MW, 24/7</span>
-      {request.metros.map(m => <Chip key={m} small onRemove={request.metros.length > 1 ? () => go(request.metros.filter(x => x !== m)) : undefined}>{m}</Chip>)}
+      {request.metros.map(m => <Chip key={m} small onRemove={request.metros.length > 1 ? () => go(request.metros.filter(x => x !== m)) : undefined}>{resolvePlace(m)?.metro || m}</Chip>)}
       <input className="field" value={add} onChange={e => setAdd(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addMetro(e) }} placeholder="+ add a place" style={{ width: 132 }} aria-label="Add a place" />
       <button className="btn primary" type="submit">Rank</button>
     </form>
@@ -102,7 +102,8 @@ export default function Compare({ route }) {
         <Card title={<><b>Compare</b> · {n0(data.request.mw)} MW of flat load{data._computed_client_side && ' · ranked here from the frozen score'}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
           {form}
           {picker}
-          {data.unmapped.length > 0 && <div className="banner">Not in our map yet: {data.unmapped.join(', ')}. Try a nearby major city.</div>}
+          {data.unmapped.length > 0 && <div className="banner">Not in the data: {data.unmapped.join(', ')}. Try a nearby city or a grid name.</div>}
+        {cands.length === 0 && <p className="note" style={{ margin: '8px 0 12px' }}>Nothing to rank yet. Add a place above, or start from the example: <Chip small href={href.compare(DEMO_COMPARE)}>{DEMO_COMPARE.mw} MW: {DEMO_COMPARE.metros.join(' vs ')}</Chip></p>}
           <h1 className="verdict">{answer.sentence}</h1>
           <div className="nums" style={{ gridTemplateColumns: `repeat(${Math.max(1, Math.min(3, cands.length))}, 1fr)` }}>{answer.numbers.map((n, i) => <Num key={i} num={n.raw != null ? n.raw * 100 : undefined} format={pctFmt} value={n.value} label={n.label} sub={whatIf ? shapeDef.label : n.sub} accent={n.accent} />)}</div>
           <div className="sharebar" aria-hidden="true">{cands.map(c => { const v = c.siting?.overnight_cf_share_2025 ?? 0; return <span key={c.region_id} className={c === answer.best ? 'best' : ''} style={{ width: `${Math.max(2, v * 100) / cands.length}%` }} title={`${c.metro} ${pct0(v)}`} /> })}</div>

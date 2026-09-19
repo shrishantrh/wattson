@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import coords from '../data/region_coords.json'
 import metros from '../data/metros.json'
+import { resolvePlace } from './query.js'
 
 // Data access, in resolution order:
 //   1. VITE_API_BASE set  -> the engine's live endpoints (contracts/api.v1.yaml)
@@ -104,7 +105,7 @@ export function normalizeSite(raw, request) {
   }).sort((a, b) => a.rank - b.rank)
   return { request: req, candidates, method: raw.method || raw.ranking_key || 'Ranked on clean share at night, whether it is improving, and clean power relative to demand.', unmapped: raw.unmapped_metros || [], caveats: raw.caveats || [], _provisional: raw._provisional }
 }
-const sameRequest = (a, b) => a && b && Number(a.mw) === Number(b.mw) && a.metros.length === b.metros.length && a.metros.every(m => b.metros.some(x => metroFor(x)?.metro === metroFor(m)?.metro || slug(x) === slug(m)))
+const sameRequest = (a, b) => a && b && Number(a.mw) === Number(b.mw) && a.metros.length === b.metros.length && a.metros.every(m => b.metros.some(x => (resolvePlace(x)?.region_id && resolvePlace(x)?.region_id === resolvePlace(m)?.region_id) || slug(x) === slug(m)))
 export async function loadSite(request) {
   const req = { mw: Number(request?.mw) || 300, metros: request?.metros || [], flat_247: true }
   if (api) return normalizeSite(await getJSON(`${api}/api/site`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(req) }), req)
@@ -115,7 +116,7 @@ export async function loadSite(request) {
   const regs = await loadRegions()
   const unmapped = [], cands = []
   for (const name of req.metros) {
-    const m = metroFor(name); const r = m && regs.regions.find(x => x.id === m.region_id)
+    const m = resolvePlace(name); const r = m && regs.regions.find(x => x.id === m.region_id)
     if (!m || !r) { unmapped.push(name); continue }
     let detail = null; try { detail = await loadRegion(m.region_id) } catch { /* no detail in this source */ }
     const gen = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail
