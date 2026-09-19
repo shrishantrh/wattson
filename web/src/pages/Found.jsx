@@ -8,8 +8,9 @@ import { loadOpening, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { openingTitle, nationalTitle, detectorTitle, n0, pct1, gw1, signedGw, interpYears, ordinal, caveatFor } from '../lib/findings.js'
 import { Loading, ErrorState } from '../components/States.jsx'
-import { href } from '../router.js'
+import { href, useHash } from '../router.js'
 import '../styles/pages.css'
+import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 // "What we found": the evidence behind the answers, one scene at a time.
 const SCENES = [['headline', 'The finding'], ['night', 'At night'], ['sweep', 'Day vs night'], ['detector', 'Where load is landing']]
@@ -86,18 +87,20 @@ export default function Found({ route }) {
     const onKey = e => { if (['INPUT', 'TEXTAREA'].includes(e.target?.tagName)) return; const i = Number(e.key) - 1; if (SCENES[i]) window.location.hash = href.found(SCENES[i][0]) }
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)
   }, [])
+  const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
   const tabs = <div className="seg fd-tabs" role="tablist" aria-label="Scenes">{SCENES.map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={id === scene} className={id === scene ? 'on' : ''} onClick={() => { window.location.hash = href.found(id) }}>{label}</button>)}</div>
 
-  if (loading || error) return <Shell page="found" globe={{ view: VIEWS.headline }} column={<Card title={<b>What we found</b>} onClose={back}>{loading ? <Loading what="the findings" /> : <ErrorState error={error} onRetry={reload} />}</Card>} />
+  if (loading || error) return <Shell page="found" globe={{ view: VIEWS.headline }} column={<><Breadcrumbs trail={crumbs} onBack={back} /><Card title={<b>What we found</b>} onClose={back}>{loading ? <Loading what="the findings" /> : <ErrorState error={error} onRetry={reload} />}</Card></>} />
   const pjm = data.pjm, nat = data.national?.cf_share || {}
   const head = openingTitle(pjm), natT = nationalTitle(nat), detT = detectorTitle(det)
   const live = interpYears(nat, scene === 'sweep' ? p : 0)
   const validation = scored.filter(r => r.validation).sort((a, b) => a.rank - b.rank)
-  const rows = list => <div className="rows pg-ranked">{list.map(r => <a className="row" key={r.id} href={href.region(r.id)}><span className="rk">{r.rank}</span><div><div className={`t ${leads.has(r.id) ? 'accent' : ''}`}>{r.known_cluster_label || r.c.label}{r.data_flagged ? ' · data flagged' : leads.has(r.id) ? ' · new' : ''}</div><div className="d">{r.pattern}</div></div><div className="n">{r.growth_pct != null ? `${r.growth_pct > 0 ? '+' : ''}${r.growth_pct.toFixed(0)}%` : '—'} <small>since 2019</small></div></a>)}</div>
+  const rows = list => <div className="rows pg-ranked">{list.map(r => <a className="row" key={r.id} href={href.region(r.id)}><span className="rk">{r.rank}</span><div><div className={`t ${leads.has(r.id) ? 'accent' : ''}`}>{r.known_cluster_label || r.c.label}{r.data_flagged ? ' · data flagged' : leads.has(r.id) ? ' · new' : ''}</div><div className="d">{r.pattern}</div></div><div className="n">{r.growth_pct != null ? `${r.growth_pct > 0 ? '+' : ''}${r.growth_pct.toFixed(0)}%` : '—'}</div></a>)}</div>
 
   const column = (
     <>
+      <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<b>What we found</b>} onClose={back}>
         {tabs}
         {scene === 'headline' && <div className="fd-scene">
@@ -119,7 +122,7 @@ export default function Found({ route }) {
           <div className="fd-years">
             <div className="fd-years-top"><span className="fd-years-year">{live.year}</span><span className="fd-years-label">clean share, by year</span><button type="button" className="btn" onClick={() => setReplay(k => k + 1)}>Replay</button></div>
             <div className="fd-track"><i style={{ width: `${Math.round(p * 100)}%` }} /></div>
-            <div className="fd-ticks">{YEARS.map(yr => <span key={yr} className={yr === live.year ? 'on' : ''}>{yr}</span>)}</div>
+            <div className="fd-ticks">{YEARS.map(yr => <span key={yr} className={yr === live.year ? 'on' : ''}>{String(yr).slice(2)}</span>)}</div>
           </div>
           <p className="note" style={{ marginTop: 14 }}>{natT.sub}</p>
         </div>}
@@ -133,8 +136,8 @@ export default function Found({ route }) {
       </Card>
       {scene === 'headline' && <Section title="Clean share by hour on that grid, 2025 (night hours marked)"><HourBars values={pjm.profile_24h?.['2025'] || pjm.profile_24h} /></Section>}
       {scene === 'headline' && <Section title="Named before the ranking was seen"><KV rows={validation.map(r => [r.known_cluster_label || r.id, `${ordinal(r.rank)} of ${det.n_scored}`])} /></Section>}
-      {scene === 'night' && <Section title="Top 10 places, growth since 2019">{rows(top)}</Section>}
-      {scene === 'detector' && <Section title="Named in advance, and the new leads">{rows(named)}</Section>}
+      {scene === 'night' && <Section title="Top 10 places, growth since 2019" right={<span className="mono muted" style={{ fontSize: 11 }}>rank · growth</span>}>{rows(top)}</Section>}
+      {scene === 'detector' && <Section title="Named in advance, and the new leads" right={<span className="mono muted" style={{ fontSize: 11 }}>growth since 2019</span>}>{rows(named)}</Section>}
       {scene === 'sweep' && <Section title="Clean power generated, US average MW"><KV rows={[['day, 2019', `${n0(data.national?.cf_avg_mw?.['2019']?.daytime)} MW`], ['day, 2025', `${n0(data.national?.cf_avg_mw?.['2025']?.daytime)} MW`], ['night, 2019', `${n0(data.national?.cf_avg_mw?.['2019']?.overnight)} MW`], ['night, 2025', `${n0(data.national?.cf_avg_mw?.['2025']?.overnight)} MW`]]} /></Section>}
     </>
   )

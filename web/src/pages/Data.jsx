@@ -6,8 +6,9 @@ import coords from '../data/region_coords.json'
 import { loadRegions, loadAlerts, loadCompanies, loadCompany, loadFacilities, useAsync } from '../lib/data.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { pct1 } from '../lib/findings.js'
-import { href } from '../router.js'
+import { href, useHash } from '../router.js'
 import '../styles/pages.css'
+import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 // The sheets: every dataset the answers are built from, sortable, filterable, exportable.
 const SHEETS = [
@@ -36,9 +37,11 @@ export default function Data({ route }) {
   const t = SHEETS.some(([id]) => id === route.params?.t) ? route.params.t : 'regions'
   const { loading, error, data, reload } = useAsync(() => loadSheet(t), [t])
   const globe = useMemo(() => ({ view: { lat: 38.5, lng: -97, altitude: 1.6 }, interactive: true }), [])
+  const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
   const column = (
     <>
+      <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<><b>Data</b> · the sheets behind every answer</>} onClose={back}>
         <div className="pg-chips">{SHEETS.map(([id, label]) => <Chip key={id} small active={id === t} href={`#/data?t=${id}`}>{label}</Chip>)}</div>
         <p className="pg-lede">Sort any column, filter any text, download the CSV. Hourly EIA-930 via PUDL through 2026-09-05; claims read off the rendered pages of each company's own reports; site mapping and operators hand-curated.</p>

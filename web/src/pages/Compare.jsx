@@ -14,6 +14,7 @@ import ShapePicker from '../components/ShapePicker.jsx'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import { Bolt, Layers, Info, Place, Pin, Night } from '../components/Icons.jsx'
+import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 import '../styles/answer.css'
 
 const trend = s => (s == null ? '—' : `${s > 0 ? '+' : ''}${(s * 100).toFixed(1)} pts / yr`)
@@ -24,12 +25,11 @@ function Zone({ icon: Icon, children, right }) {
   return <div className="ans-sec"><Icon size={12} /><span>{children}</span>{right && <span className="ans-sec-r">{right}</span>}</div>
 }
 const mtitle = (Icon, text) => <span className="ans-mtitle"><Icon size={13} />{text}</span>
-// 44px for the Breadcrumbs component (owned elsewhere); it renders as the first child of the column.
-const CrumbSpace = () => <div className="ans-crumbs" aria-hidden="true" />
 
 // Question 2: "Where should I put a datacenter so it runs on the cleanest power?"
 export default function Compare({ route }) {
   const evidence = route.params?.evidence === '1'
+  const crumbs = useCrumbs()
   const request = useMemo(() => ({ mw: route.mw, metros: route.metros }), [route.mw, route.metros])
   const { loading, error, data, reload } = useAsync(() => loadSite(request), [request.mw, request.metros.join('|')])
   const found = useAsync(loadOpening, [])
@@ -84,8 +84,8 @@ export default function Compare({ route }) {
   )
 
   let column
-  if (loading) column = <><CrumbSpace /><Card className="ans-card" title={<><b>Compare</b> · {request.mw} MW</>} onClose={back}><div className="ans-controls">{form}</div><Loading what="the ranking" /></Card></>
-  else if (error) column = <><CrumbSpace /><Card className="ans-card" title={<b>Compare</b>} onClose={back}><div className="ans-controls">{form}</div><ErrorState error={error} onRetry={reload} /></Card></>
+  if (loading) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<><b>Compare</b> · {request.mw} MW</>} onClose={back}><div className="ans-controls">{form}</div><Loading what="the ranking" /></Card></>
+  else if (error) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>Compare</b>} onClose={back}><div className="ans-controls">{form}</div><ErrorState error={error} onRetry={reload} /></Card></>
   else {
     const load = Number(data.request.mw)
     const modules = [
@@ -123,7 +123,7 @@ export default function Compare({ route }) {
     const bestTone = bestShare != null && bestShare >= 0.5 ? 'clean' : 'fossil'
     column = (
       <>
-        <CrumbSpace />
+        <Breadcrumbs trail={crumbs} />
         <Zone icon={Bolt} right={<span className="chip sm ans-chip">{whatIf ? shapeLabel : 'flat 24/7'}</span>}>Answer</Zone>
         <div className="ans-sticky">
           <span className="ans-sticky-name"><Place size={13} />{n0(data.request.mw)} MW · {cands.length} place{cands.length === 1 ? '' : 's'}</span>

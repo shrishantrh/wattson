@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// oxlint-disable react-hooks/rules-of-hooks -- useCrumbs is a pure function, not a hook; Node calls it directly.
 // Unit tests for the pure trail derivation in src/components/Breadcrumbs.jsx (useCrumbs).
 //
 //   node web/test/breadcrumbs.test.mjs        (or: node --test web/test/breadcrumbs.test.mjs)

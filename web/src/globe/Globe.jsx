@@ -7,7 +7,7 @@ import { loadDayNightTextures, makeDayNightMaterial, makeNightMaterial, setDayNi
 import { buildDotMesh, disposeDotMesh, paintDotMesh } from './dots.js'
 import { loadDotField, loadStateMesh } from './land.js'
 import { subsolarPoint } from './sun.js'
-import { makeSphereMaterial, setSphereColor } from './surface.js'
+import { makeSphereMaterial, setDotTone, setSphereColor } from './surface.js'
 import '../styles/globe.css'
 
 const DEG = Math.PI / 180
@@ -214,8 +214,9 @@ function markerVisibility(el, isVisible) {
  *   page background, the centre lifts, a thin white rim marks the horizon) and land drawn as an
  *   instanced dot field: one dot per H3 cell, resolution 4 over the US and 3 elsewhere, each dot
  *   sized by its cell's true area, brighter on coastlines and borders, dimmer inland, with a
- *   small deterministic per-dot jitter so the pattern has texture. Thin US state border lines
- *   sit on top. The TopoJSON (about 220 KB raw) is loaded lazily and the field is built once per
+ *   small deterministic per-dot jitter so the pattern has texture, and the whole field dimming
+ *   and losing contrast as the camera pulls back (quiet behind a landing headline at altitude
+ *   1.75, fully up by altitude 0.75). Thin US state border lines sit on top. The TopoJSON (about 220 KB raw) is loaded lazily and the field is built once per
  *   page, chunked across frames.
  * - `'night'`: the NASA night-lights texture with the day/night terminator shader.
  *
@@ -556,6 +557,7 @@ export default function Globe({
         return
       }
       mesh = buildDotMesh(land.field, g.getGlobeRadius(), LAND_ALT)
+      setDotTone(mesh.material, stemAltRef.current ?? (g.pointOfView ? g.pointOfView().altitude : null))
       globeObj.add(mesh)
       dotMeshRef.current = mesh
       setDotTick((t) => t + 1) // the colours are written by the effect below
@@ -583,7 +585,7 @@ export default function Globe({
         us: usColor,
         neighbors: neighborColor,
         other: otherColor,
-        clean: cleanColor || cssVar('--clean', '#5fd3c2'),
+        clean: cleanColor || cssVar('--clean', '#4fd4d0'),
         fossil: fossilColor || cssVar('--fossil', cssVar('--accent', '#ff7a4a')),
       },
       stableHeat.length ? stableHeat : null,
@@ -651,6 +653,8 @@ export default function Globe({
   const handleZoom = useCallback(
     (pov) => {
       setDayNightUniforms(matRef.current, { globeLat: pov.lat, globeLng: pov.lng })
+      // The land quietens as the camera pulls back: two uniform writes, every camera frame.
+      if (dotMeshRef.current) setDotTone(dotMeshRef.current.material, pov.altitude)
       const prev = stemAltRef.current
       if (prev == null || Math.abs(prev - pov.altitude) > 0.02) {
         stemAltRef.current = pov.altitude

@@ -15,6 +15,7 @@ import SideBySideModule, { sideBySideOf } from '../components/modules/SideBySide
 import { relocateModule } from '../components/modules/RelocateModule.jsx'
 import { innovLadderModule } from '../components/modules/InnovLadderModule.jsx'
 import { Bolt, Layers, Info, Company as CompanyIcon, Place, Link as LinkIcon, Night, ArrowRight, Check as CheckIcon, Close as CloseIcon, Help } from '../components/Icons.jsx'
+import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 import '../styles/answer.css'
 
 // A grid that generates far less than it uses is mostly imports; its footprint share is not what the site consumes.
@@ -39,8 +40,6 @@ function Zone({ icon: Icon, children, right }) {
 }
 // A module header that says what kind of evidence it is.
 const mtitle = (Icon, text) => <span className="ans-mtitle"><Icon size={13} />{text}</span>
-// 44px for the Breadcrumbs component (owned elsewhere); it renders as the first child of the column.
-const CrumbSpace = () => <div className="ans-crumbs" aria-hidden="true" />
 const VERDICT_ICON = { true_on_paper: CheckIcon, contradicted: CloseIcon, unfalsifiable: Help, cannot_verify: Info }
 
 // Claimed vs measured on ONE track: a claim is an accounting fact (neutral ink), what the
@@ -71,6 +70,7 @@ const pctFmt = n => `${Math.round(n)}%`
 // Question 1: "This company says it's clean. What's actually powering its sites?"
 export default function Check({ route }) {
   const ticker = route.ticker
+  const crumbs = useCrumbs()
   const evidence = route.params?.evidence === '1'
   const { loading, error, data, reload } = useAsync(() => loadCompany(ticker), [ticker])
   const tk = useMemo(readTokens, [])
@@ -87,11 +87,11 @@ export default function Check({ route }) {
   const toggle = () => { window.location.hash = href.check(ticker, !evidence) }
 
   let column
-  if (loading) column = <><CrumbSpace /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}><Loading what={known?.name || ticker} /></Card></>
+  if (loading) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}><Loading what={known?.name || ticker} /></Card></>
   else if (error) {
     const others = COMPANIES.filter(c => (error.available || []).includes(c.ticker))
     column = (
-      <><CrumbSpace /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}>
+      <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}>
         {error.name === 'NotFound' ? (
           <>
             <h1 className="verdict">{known ? `${known.name} isn't verified yet.` : `We don't have ${ticker}.`}</h1>
@@ -156,7 +156,7 @@ export default function Check({ route }) {
     const measuredTone = track && (track.lo + (track.hi - track.lo) / 2) >= 0.5 ? 'clean' : 'fossil'
     // A grid whose footprint understates what its sites can draw, or a single site, changes how the
     // figure should be read: the gap is not headlined, and the note that explains it opens by default.
-    const siteNote = (data.notes || []).find(n => sites.some(st => n.includes(st.ba) || (st.serving_utility && n.includes(st.serving_utility.split(' ')[0])) || n.includes(st.grid_label || ' ')))
+    const siteNote = (data.notes || []).find(n => sites.some(st => n.includes(st.ba) || (st.serving_utility && n.includes(st.serving_utility.split(' ')[0])) || n.includes(st.grid_label || '\u0000')))
     const importer = sites.map(st => importerNote(details[st.region_id])).find(Boolean)
     const headlineGap = !!track && p.physical_mean_unweighted != null && sites.length >= 2 && !siteNote && !importer
     const gapPts = track && p.physical_mean_unweighted != null ? Math.round((p.magnitude - p.physical_mean_unweighted) * 100) : null
@@ -165,7 +165,7 @@ export default function Check({ route }) {
     const modCount = modules.length
     column = (
       <>
-        <CrumbSpace />
+        <Breadcrumbs trail={crumbs} />
         <Zone icon={Bolt} right={<span className="chip sm ans-chip"><VerdictIcon size={12} />{VERDICT[a.verdict] || 'read'}</span>}>Answer</Zone>
         <div className="ans-sticky">
           <span className="ans-sticky-name"><CompanyIcon size={13} />{data.company}</span>

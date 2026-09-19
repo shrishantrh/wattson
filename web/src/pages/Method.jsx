@@ -3,8 +3,9 @@ import { Card, Section, KV } from '../console/widgets.jsx'
 import { loadOpening, useAsync } from '../lib/data.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { ordinal } from '../lib/findings.js'
-import { href } from '../router.js'
+import { href, useHash } from '../router.js'
 import '../styles/pages.css'
+import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 // Method reads as: what we measure, how the detector works, what we hold to, the labels,
 // the flags, the company rule. The wording is deliberate and unchanged; only its structure
@@ -18,12 +19,14 @@ const Defs = ({ rows, className = '' }) => (
 
 export default function Method() {
   const { loading, error, data, reload } = useAsync(loadOpening, [])
+  const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
-  if (loading || error) return <Shell page="method" globe={{ view: { lat: 30, lng: -96, altitude: 2.2 }, interactive: false }} column={<Card title={<b>Method</b>} onClose={back}>{loading ? <Loading what="method" /> : <ErrorState error={error} onRetry={reload} />}</Card>} />
+  if (loading || error) return <Shell page="method" globe={{ view: { lat: 30, lng: -96, altitude: 2.2 }, interactive: false }} column={<><Breadcrumbs trail={crumbs} onBack={back} /><Card title={<b>Method</b>} onClose={back}>{loading ? <Loading what="method" /> : <ErrorState error={error} onRetry={reload} />}</Card></>} />
   const det = data.detector || {}
   const val = (det.regions || []).filter(r => r.validation).sort((a, b) => a.rank - b.rank)
   const column = (
     <>
+      <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<b>Method</b>} onClose={back}>
         <h1 className="verdict">We measure what each grid physically generated, hour by hour.</h1>
         <p className="pg-lede">Every US balancing authority, from EIA-930 via PUDL. Clean = nuclear, hydro, wind, solar, geothermal. Night is {data.overnight_hours_local || '00:00–05:59'} local, day is {data.daytime_hours_local || '10:00–15:59'}. Baseline {data.baseline_year || 2019}; data through {data.data_snapshot_end || '2026-09-05'}.</p>

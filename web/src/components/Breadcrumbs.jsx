@@ -1,7 +1,7 @@
 import { Place, Layers, Company, Table, Bolt, Info, Globe as GlobeIcon, Sort, Filter, ArrowLeft, Pin } from './Icons.jsx'
 import coords from '../data/region_coords.json'
 import { COMPANIES } from '../lib/query.js'
-import { href, parseHash } from '../router.js'
+import { href, parseHash, useHash } from '../router.js'
 import '../styles/breadcrumbs.css'
 
 // Where you are, in one 44px row at the top of the column. The trail is derived from the hash
@@ -28,7 +28,8 @@ function regionTrail(id) {
 const here = trail => trail.map((c, i) => (i === trail.length - 1 ? { label: c.label, icon: c.icon } : c))
 
 // useCrumbs(hash) -> [{ label, href?, icon? }]. Pure: same hash, same trail. Landing returns [].
-export function useCrumbs(hash = window.location.hash) {
+// oxlint-disable-next-line react/only-export-components
+export function useCrumbs(hash = typeof window === 'undefined' ? '' : window.location.hash) {
   return here(trailFor(hash))
 }
 
@@ -75,15 +76,19 @@ function Sep() {
   return <svg className="bc-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9.5 5.5 7 6.5-7 6.5" /></svg>
 }
 
+// Props, all optional: `trail` (from useCrumbs; omitted, the component derives it from the live
+// hash itself) and `onBack` (omitted, the back button walks history, falling back to Home).
 export default function Breadcrumbs({ trail, onBack }) {
-  if (!trail || !trail.length) return null
+  const derived = useCrumbs(useHash())
+  const items = trail && trail.length ? trail : trail ? [] : derived
+  if (!items.length) return null
   const back = onBack || (() => { if (window.history.length > 1) window.history.back(); else window.location.hash = href.landing() })
-  const last = trail.length - 1
+  const last = items.length - 1
   return (
     <nav className="bc" aria-label="Breadcrumb">
       <button type="button" className="bc-back" onClick={back} aria-label="Back"><ArrowLeft size={15} /></button>
       <ol className="bc-list">
-        {trail.map((c, i) => {
+        {items.map((c, i) => {
           const Icon = c.icon
           const inner = <>{Icon && <Icon size={13} />}<span className="bc-text">{c.label}</span></>
           return (

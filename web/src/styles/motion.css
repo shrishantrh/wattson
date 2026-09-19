@@ -176,13 +176,15 @@
 /* ---------------------------------------------------------------- 6. focus and keyboard
    The ring is feedback about where you are, not an animation: it appears on the frame the focus
    moves. Nothing about a focused element transitions while it is focused. */
-.app *:focus-visible { transition: none; }
+body *:focus-visible { transition: none; }
 
 /* the palette and any dialog: scale from 0.98 with a fade, 160ms, ease-out. The scrim fades on
-   its own so the panel is never seen against a hard cut. */
-.pal-overlay, .app .pal-overlay { animation: mo-scrim 160ms var(--mo-out) backwards; }
-.pal-panel, .app .pal-panel,
-.app [role='dialog'] { animation: mo-dialog 160ms var(--mo-out) backwards; }
+   its own so the panel is never seen against a hard cut. These layers are portaled to <body>,
+   outside .app, so the weight is carried by `body ` instead; `[role=dialog]` alone is left at
+   low weight so a dialog that already owns an entrance keeps it. */
+body .pal-overlay { animation: mo-scrim 160ms var(--mo-out) backwards; }
+body .pal-overlay .pal-panel { animation: mo-dialog 160ms var(--mo-out) backwards; }
+[role='dialog'] { animation: mo-dialog 160ms var(--mo-out) backwards; }
 
 @keyframes mo-scrim { from { opacity: 0; } to { opacity: 1; } }
 @keyframes mo-dialog { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: none; } }
