@@ -98,6 +98,30 @@ paths:
       responses:
         "200":
           content: {application/json: {schema: {$ref: '#/components/schemas/AlertsResponse'}}}
+  /api/search:
+    get:
+      summary: Search verified ESG reports and SEC 10-K passages
+      description: >
+        Full-text search across the citable corpus. Every hit preserves its source URL and
+        either the verified PDF page or the EDGAR HTML locator. quality_flag=tabular is
+        numeric/table evidence only; quality_flag=suspect must never be quoted as prose.
+      parameters:
+        - {name: q, in: query, required: true, schema: {type: string, minLength: 1}}
+        - {name: ticker, in: query, schema: {type: string, enum: [META, MSFT, GOOGL, AMZN]}}
+        - {name: doc_type, in: query, schema: {type: string, enum: [esg, 10k]}}
+        - {name: quality_flag, in: query, schema: {type: string, enum: [ok, tabular, suspect]}}
+        - {name: limit, in: query, schema: {type: integer, minimum: 1, maximum: 50, default: 12}}
+      responses:
+        "200":
+          content: {application/json: {schema: {$ref: '#/components/schemas/SearchResponse'}}}
+        "422": {description: Invalid search parameters}
+        "503": {description: Elasticsearch is unavailable or not configured}
+  /api/search/status:
+    get:
+      summary: Retrieval corpus and Elastic index counts
+      responses:
+        "200":
+          content: {application/json: {schema: {$ref: '#/components/schemas/SearchStatus'}}}
   /api/export/{kind}.csv:
     get:
       summary: CSV of the underlying series
@@ -363,3 +387,32 @@ components:
         count_before_ranking: {type: integer}
         excluded_regions: {type: array, items: {type: string}, example: ["WACM"]}
         alerts: {type: array, items: {$ref: '#/components/schemas/Alert'}}
+    SearchHit:
+      type: object
+      required: [text, ticker, source_doc, source_url, doc_type, quality_flag, score]
+      properties:
+        text: {type: string}
+        ticker: {type: string}
+        page: {type: integer, nullable: true}
+        locator: {type: object, nullable: true, additionalProperties: true}
+        source_doc: {type: string}
+        source_url: {type: string, format: uri}
+        doc_type: {type: string, enum: [esg, 10k]}
+        quality_flag: {type: string, enum: [ok, tabular, suspect]}
+        score: {type: number, nullable: true}
+    SearchResponse:
+      type: object
+      required: [total, hits]
+      properties:
+        total: {type: integer}
+        hits: {type: array, items: {$ref: '#/components/schemas/SearchHit'}}
+    SearchStatus:
+      type: object
+      required: [available, index, corpus, quality]
+      properties:
+        available: {type: boolean}
+        index: {type: string}
+        indexed: {type: integer}
+        error: {type: string}
+        corpus: {type: object, additionalProperties: {type: integer}}
+        quality: {type: object, additionalProperties: {type: integer}}
