@@ -227,6 +227,45 @@ the pipeline uses, so our results are unaffected — but that choice is now veri
 than assumed. Anyone reaching for the reported column gets a 2.5-billion-megawatt hydro
 hour in BANC.
 
+
+### Testing our own claim at full scale, on your hardware
+
+We published a claim: the AZPS/SRP double-count was the only pair of balancing
+authorities reporting the same generation as each other. That came from investigating
+Arizona and then checking its neighbour. It had never been tested exhaustively.
+
+So we tested it. **Every unordered pair of balancing authorities, every fuel, every hour
+both report, in 90-day windows stepped 30 days: 4,430 pairs with enough data across
+580,410 window comparisons, nine workers on the 48-core instance, 17.1 seconds.**
+
+34 pairs exceed 0.90 correlation. **Two are actual duplicates.**
+
+| Pair | Fuel | Correlation | Identical within 5 MW | Combined |
+|---|---|---|---|---|
+| **AZPS / SRP** | nuclear | **0.999982** | **99.58%** | 7,746 MW vs a 3,937 MW plant |
+| PNM / TEPC | solar | 0.94 | 51% | 145.7 MW |
+
+The Arizona duplication is now established by exhaustive search rather than by
+investigation. The second is small, affects no published figure, and we name it as a
+**candidate** rather than a finding.
+
+**The first version of this sweep had two bugs, and both are the point.**
+
+It swept 2019–2026 as a single window and **missed AZPS/SRP — the very pair it was
+written to find.** The duplication ended on 2019-12-04, and the post-break period, where
+AZPS reads zero against SRP's 3,900 MW, destroys the correlation. *A duplication that
+stops is invisible to a whole-period test.* Hence sliding windows.
+
+It also reported BANC/PACW solar as a duplicate at "53% identical". Solar is zero at
+night for both, so **any two solar series match trivially in the dark.** Hours where both
+are near zero are now dropped before comparing.
+
+And correlation alone is not evidence. LDWP/NEVP solar correlates at **0.979** and is not
+a duplicate, because their values differ by 71 MW on average. Two balancing authorities
+in one region share weather and load shape. **The discriminator is whether the numbers are
+identical, not whether they move together** — a test built on correlation would have
+produced dozens of false accusations about named grid operators.
+
 ---
 
 ## An independent check on the whole index
