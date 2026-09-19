@@ -59,7 +59,7 @@ export function StageProvider({ children }) {
         <header className="topbar">
           <a className="brand" href="#/"><span className="wordmark">Wattson</span><span className="tagline">It follows the power, not the press release.</span></a>
           {spec.page !== 'landing' && <QuickSearch />}
-          <nav className="toplinks"><a href={href.data()} className={spec.page === 'data' ? 'on' : ''}><TableIcon size={13} />Data</a><a href={href.found()} className={spec.page === 'found' ? 'on' : ''}><GlobeIcon size={13} />What we found</a><a href={href.method()} className={spec.page === 'method' ? 'on' : ''}><Layers size={13} />Method</a></nav>
+          <nav className="toplinks"><a href={href.data()} className={spec.page === 'data' ? 'on' : ''}><TableIcon size={13} />Data</a><a href={href.found()} className={spec.page === 'found' ? 'on' : ''}><GlobeIcon size={13} />What we found</a><a href={href.alpha()} className={spec.page === 'alpha' ? 'on' : ''}><TableIcon size={13} />Generating Alpha</a><a href={href.irradiance()} className={spec.page === 'irradiance' ? 'on' : ''}><GlobeIcon size={13} />Day vs night</a><a href={href.method()} className={spec.page === 'method' ? 'on' : ''}><Layers size={13} />Method</a></nav>
         </header>
         <div className="stage-ctl">
           <button type="button" onClick={() => setZoom(z => Math.min(6, z + 1))} aria-label="Zoom in"><ZoomIn size={15} /></button>

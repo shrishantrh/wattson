@@ -72,6 +72,14 @@ export default function Landing() {
             <span className="lx-go-a" aria-hidden="true">&rarr;</span>
           </a>
         </section>
+        <section className="lx-action">
+          <h2 className="lx-act-t">Follow the money, and the sun</h2>
+          <p className="lx-act-s">Which instruments price the tightening, and why the day got clean while the night did not.</p>
+          <div className="lx-chips">
+            <Chip href={href.alpha()}>Generating Alpha</Chip>
+            <Chip href={href.irradiance()}>Day vs night</Chip>
+          </div>
+        </section>
       </div>
 
       <ol className="lx-steps" aria-label="How it works">
