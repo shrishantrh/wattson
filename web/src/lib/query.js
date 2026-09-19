@@ -41,7 +41,7 @@ export function resolvePlace(text) {
   if (m) return { metro: m.metro, region_id: m.region_id, lat: m.lat, lng: m.lng, serving_utility: m.serving_utility, source: 'metro' }
   const t = norm(raw)
   const ids = Object.keys(coords.regions)
-  const id = coords.regions[raw] ? raw : ids.find(i => i.toLowerCase() === t) || ids.find(i => coords.regions[i].label.toLowerCase() === t) || ids.find(i => coords.regions[i].place.toLowerCase().startsWith(t)) || ids.find(i => coords.regions[i].place.toLowerCase().includes(t) && t.length >= 4)
+  const id = coords.regions[raw] ? raw : ids.find(i => i.toLowerCase() === t) || ids.find(i => norm(coords.regions[i].label) === t) || ids.find(i => norm(coords.regions[i].place).startsWith(t)) || ids.find(i => norm(coords.regions[i].place).includes(t) && t.length >= 4)
   if (!id) return null
   const c = coords.regions[id]
   return { metro: c.label, region_id: id, lat: c.lat, lng: c.lng, serving_utility: null, source: 'region' }

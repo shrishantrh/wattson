@@ -118,6 +118,7 @@ export async function loadSite(request) {
   for (const name of req.metros) {
     const m = resolvePlace(name); const r = m && regs.regions.find(x => x.id === m.region_id)
     if (!m || !r) { unmapped.push(name); continue }
+    if (cands.some(c => c.region_id === m.region_id)) continue   // the same place named twice
     let detail = null; try { detail = await loadRegion(m.region_id) } catch { /* no detail in this source */ }
     const gen = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail
     cands.push({ metro: m.metro, region_id: m.region_id, siting: r.siting || gen?.siting, detector: r.detection, operator: r.operator || (detail?.operators_manual || [])[0] || null, name: m.serving_utility, fuel_delta_overnight_gw: gen?.fuel_delta_overnight_gw, demand: detail?.demand?.['2025'] || null, cf_inherited_from_ba: r.cf_inherited_from_ba, data_flags: r.data_flags || [], lat: m.lat, lng: m.lng })
