@@ -6,7 +6,7 @@ instrument console). The product answers two questions. Everything below serves 
 1. **Check a company.** "It says 100% clean. What's actually powering its sites?"
 2. **Compare places.** "Where should 300 MW of flat load go to run on the cleanest power?"
 
-Tags: `[done]` shipped today · `[now]` being built tonight by agents · `[next]` before the
+Tags: `[done]` shipped (updated Sept 19, late evening) · `[now]` being built tonight by agents · `[next]` before the
 05:00 freeze if time allows · `[later]` after the hackathon.
 
 ## A. What the product is (1–12)
@@ -14,8 +14,8 @@ Tags: `[done]` shipped today · `[now]` being built tonight by agents · `[next]
 1. `[done]` Two verbs on the landing, nothing else: check a company, compare places.
 2. `[done]` One answer card per action: one sentence generated from the data, three numbers.
 3. `[done]` Evidence only on request, one section at a time.
-4. `[now]` A command palette (⌘K) that reaches everything: companies, places, presets, all 124 regions, findings, method, view toggles. The box always works.
-5. `[now]` A screener: all 111 regions as a sortable table (clean at night, change, slope, detector rank, growth) with CSV. This is the quant view.
+4. `[done]` A command palette (⌘K) that reaches everything: companies, places, presets, all 124 regions, findings, method, view toggles. The box always works.
+5. `[done]` A screener: all 111 regions as a sortable table (clean at night, change, slope, detector rank, growth) with CSV. This is the quant view.
 6. `[next]` Saved comparisons: every compare has a URL; a "Copy link" button and a "Recent" list in the palette.
 7. `[next]` "Ask" free text routed through the parser with a visible interpretation line ("Read as: 300 MW · Phoenix, Northern Virginia, Omaha") before it runs.
 8. `[next]` Alerts as a module in evidence: Yash's 14 ranked alerts, filtered to the places on screen.
@@ -27,7 +27,7 @@ Tags: `[done]` shipped today · `[now]` being built tonight by agents · `[next]
 ## B. Landing (13–22)
 
 13. `[done]` Globe, wordmark, one question, one box, example chips, one "What we found" link.
-14. `[now]` The box is the palette inline: results appear as you type (companies, places, regions), Enter opens the first.
+14. `[done]` The box is the palette inline: results appear as you type (companies, places, regions), Enter opens the first.
 15. `[now]` Chips are real presets with URLs; add a third row later for "Explore: cleanest grids at night · dirtiest · where new load is landing".
 16. `[next]` Show one live number under the box, rotating on click (not on a timer): "US clean power at night: 39.7%".
 17. `[next]` Keyboard from the start: `/` or ⌘K focuses, `1–4` open findings, `?` shows shortcuts.
@@ -41,10 +41,10 @@ Tags: `[done]` shipped today · `[now]` being built tonight by agents · `[next]
 
 23. `[done]` Company: "X says 100% renewable. True on paper. Physically, its sites run on 32–93% clean power."
 24. `[done]` Compare: "Omaha is your cleanest option: 52% clean power at night and improving. Northern Virginia is 39% and holding steady. Phoenix reads 10% but its data looks unreliable."
-25. `[now]` Numbers tick up when the card appears (NumberTicker), never on idle.
-26. `[now]` A sparkline of clean-at-night by year (2019–2025) beside the main number.
+25. `[done]` Numbers tick up when the card appears (NumberTicker), never on idle.
+26. `[done]` A sparkline of clean-at-night by year (2019–2025) beside the main number.
 27. `[next]` Verdict chip colours: only the contradicted verdict uses the accent; everything else stays grey.
-28. `[next]` "Copy sentence" and "Copy link" actions on the card (share the verdict as text).
+28. `[done]` "Copy sentence" and "Copy link" actions on the card (share the verdict as text).
 29. `[next]` Company card: the contradiction, when one exists, is the second sentence, with the page number.
 30. `[next]` Compare card: a 3-segment bar of the candidates' night clean share, ordered by rank.
 31. `[next]` Compare card: the MW field changes the fossil-MW figure live (already computed in evidence; surface one number on the card).
@@ -58,16 +58,16 @@ Tags: `[done]` shipped today · `[now]` being built tonight by agents · `[next]
 
 ## D. Evidence as modules (39–54)
 
-39. `[now]` Evidence sections are modules: show/hide, reorder by drag, order remembered per page.
-40. `[now]` "Customize" popover listing every module with a checkbox and Reset.
-41. `[now]` Resizable column (drag the edge), width remembered.
-42. `[now]` Table view toggle on every list module (sortable, CSV).
-43. `[next]` Module: hour-of-day clean share (24 bars) for each place and each company site.
-44. `[next]` Module: what changed at night since 2019 (fuel deltas as a signed bar list).
-45. `[next]` Module: who serves the load, with the hand-mapped tag and the ticker.
-46. `[next]` Module: detector components (four numbers, one line each).
-47. `[next]` Module: the 365×24 heatmap for the region (port from `charts/builders.js`, behind a module).
-48. `[next]` Module: alerts for the places on screen.
+39. `[done]` Evidence sections are modules: show/hide, reorder by drag, order remembered per page.
+40. `[done]` "Customize" popover listing every module with a checkbox and Reset.
+41. `[done]` Resizable column (drag the edge), width remembered.
+42. `[done]` Table view toggle on every list module (sortable, CSV).
+43. `[done]` Module: hour-of-day clean share (24 bars) for each place and each company site.
+44. `[done]` Module: what changed at night since 2019 (fuel deltas as a signed bar list).
+45. `[done]` Module: who serves the load, with the hand-mapped tag and the ticker.
+46. `[done]` Module: detector components (four numbers, one line each).
+47. `[done]` Module: the 365×24 heatmap for the region (port from `charts/builders.js`, behind a module).
+48. `[done]` Module: alerts for the places on screen.
 49. `[next]` Module: talk vs walk scatter, only when the engine defines talk (E4).
 50. `[next]` Every module has a CSV button (U6) and a "source" footnote (table, hours, baseline).
 51. `[later]` Module: interchange (net exports) by year for BAs.
@@ -77,7 +77,7 @@ Tags: `[done]` shipped today · `[now]` being built tonight by agents · `[next]
 
 ## E. The globe (55–68)
 
-55. `[now]` Minimal dot-matrix globe by default: matte sphere, land as dots, US brighter, state borders as thin lines. Night-lights texture stays as a toggle.
+55. `[done]` Minimal dot-matrix globe by default: matte sphere, land as dots, US brighter, state borders as thin lines. Night-lights texture stays as a toggle.
 56. `[done]` Pins: dot, stem, rounded tag with the number that matters (clean %), clickable.
 57. `[done]` Camera fits the pins for each answer; zoom controls; 2D fallback.
 58. `[next]` Hover a pin: a small card (name, clean at night, trend, detector rank) anchored to it.
@@ -94,12 +94,12 @@ Tags: `[done]` shipped today · `[now]` being built tonight by agents · `[next]
 
 ## F. Visual system (69–80)
 
-69. `[now]` Inter for everything, JetBrains Mono for small labels and numbers.
-70. `[now]` Spacing scale, radius scale, focus rings, 150 ms transitions, thin scrollbars.
-71. `[now]` Cards fade up in sequence after an action (40 ms stagger), never on idle.
+69. `[done]` Inter for everything, JetBrains Mono for small labels and numbers.
+70. `[done]` Spacing scale, radius scale, focus rings, 150 ms transitions, thin scrollbars.
+71. `[done]` Cards fade up in sequence after an action (40 ms stagger), never on idle.
 72. `[next]` One accent colour, used only for: the winning option, gas/fossil, the contradicted verdict.
-73. `[next]` Icons: a small set of 12 line icons (search, pin, table, layers, sun/moon, zoom, close, drag, csv, link, info, keyboard) as inline SVG, 1.5 px stroke.
-74. `[next]` Tooltips on every abbreviation (BA, PJM, MW) via `data-tip`.
+73. `[done]` Icons: a small set of 12 line icons (search, pin, table, layers, sun/moon, zoom, close, drag, csv, link, info, keyboard) as inline SVG, 1.5 px stroke.
+74. `[done]` Tooltips on every abbreviation (BA, PJM, MW) via `data-tip`.
 75. `[next]` Empty, loading (skeleton lines, no spinner) and error states styled consistently.
 76. `[next]` Light theme via the tokens file only (Notion-white), toggle in the palette.
 77. `[later]` Print stylesheet for the answer card (a one-page PDF).
@@ -109,8 +109,8 @@ Tags: `[done]` shipped today · `[now]` being built tonight by agents · `[next]
 
 ## G. Interactivity and keyboard (81–90)
 
-81. `[now]` ⌘K palette with groups and fuzzy search.
-82. `[now]` Drag to reorder modules; keyboard reordering too.
+81. `[done]` ⌘K palette with groups and fuzzy search.
+82. `[done]` Drag to reorder modules; keyboard reordering too.
 83. `[next]` `?` opens a shortcuts sheet; `esc` closes anything; `←` goes back.
 84. `[next]` Click a number in a card to open the module that explains it.
 85. `[next]` Click a place name anywhere to add it to the current comparison.
@@ -125,7 +125,7 @@ Tags: `[done]` shipped today · `[now]` being built tonight by agents · `[next]
 91. `[done]` Hand-noted data caveats (AZPS, WACM) shown wherever those numbers appear.
 92. `[done]` Provisional fixtures and mock claims labelled on screen.
 93. `[next]` Every number has a source footnote (table, hours, baseline year) in its module.
-94. `[next]` Swap to Yash's static export from `server/static_export/` at build; live API behind a flag.
+94. `[done]` Swap to Yash's static export from `server/static_export/` at build; live API behind a flag.
 95. `[next]` Method page links from every caveat; the six caveats stay one line each.
 96. `[next]` A "numbers checklist" page for E8: every demo-facing figure, its source, a check mark.
 
