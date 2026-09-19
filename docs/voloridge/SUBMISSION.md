@@ -165,6 +165,87 @@ lookup, where it produces confidently wrong balancing-authority mappings, and ou
 
 ---
 
+## We swept the whole dataset for the bug we found
+
+Finding one reporting error is an anecdote. We turned it into a method and ran it across
+every balancing authority.
+
+**69 BAs swept. One permanent material break in a carbon-free fuel in the entire dataset:
+AZPS nuclear. One case of two BAs reporting the same generation hour by hour: AZPS and
+SRP, correlation 0.9953, identical within 5 MW in 97.8% of hours over the 180 days before
+the break. No other pair comes close.**
+
+48 clean, 1 coverage gap, 20 with a break in a minor fuel. PJM, ERCOT, CAISO, TEPC, WACM,
+SC, SOCO, DUK, TVA, SCEG and BPAT are all clean, so nothing under the headline finding is
+affected.
+
+**What was actually wrong with AZPS.** Through 2019, Arizona Public Service and Salt River
+Project each reported the same roughly 3,900 MW of nuclear. Their combined output was
+about 1.8 times Palo Verde's nameplate capacity. Last hour reported 2019-12-04 07:00 UTC,
+then 17 months of nulls, then a literal zero. Every other AZPS fuel continues across that
+date. A step on one date, not a decline.
+
+Consequence: our own published figure said AZPS overnight clean share **fell** from 0.620
+to 0.104. On a consistent basis it **rose** from 0.017. **Wrong in direction, not
+magnitude.** It is corrected in the product as an overlay that shows the published value,
+the corrected value and the evidence side by side, rather than silently swapped.
+
+**Four false-positive classes had to be eliminated first.** Each would have been a wrong
+public claim about a named grid operator.
+
+*Pre-2019 coverage.* The first PJM run flagged a break in every fuel on 2018-07-11, which
+would have read as a catastrophe under our biggest region. PJM simply stops reporting: 251
+of 365 days null in 2018, 1 of 2,806 from 2019 onward. Chasing it produced the
+discriminator the sweep now rests on: **every fuel stopping together means the BA stopped
+reporting; one fuel stopping while the others continue means the generation was
+reattributed.** Only the second is a finding.
+
+*Refuelling outages.* A 30-day window flagged nuclear at BPAT, NYISO, SCEG and SPP. All
+four resume — nuclear refuelling runs past thirty days. Only AZPS never comes back.
+
+*The 2024 category split*, already known, excluded by fuel and date.
+
+*A seasonal artefact in our own method.* A 60-day before/after comparison cannot detect
+reattribution at all. It confidently "explained" nearly every candidate, because national
+gas swings tens of gigawatts seasonally and the test simply names whichever large BA
+happened to rise. Only direct hour-by-hour pair comparison works. We nearly shipped the
+version that was wrong twenty times over.
+
+**Trap 10: the `reported` generation column contains integer-overflow sentinels.** 75
+hours carry values like 429,497,248 MW and 2,576,980,992 MW, against roughly 450,000 MW of
+total US generation. `net_generation_adjusted_mwh` has zero such hours and is the column
+the pipeline uses, so our results are unaffected — but that choice is now verified rather
+than assumed. Anyone reaching for the reported column gets a 2.5-billion-megawatt hydro
+hour in BANC.
+
+---
+
+## An independent check on the whole index
+
+Google publishes grid carbon-free share per balancing authority in its environmental
+report — the same quantity we compute from EIA-930, calculated independently, by a
+different organisation, from different inputs.
+
+| BA | Google | Wattson |
+|---|---|---|
+| ERCOT | 46 | 46.1 |
+| Duke | 57 | 57.5 |
+| Southern | 33 | 32.5 |
+| PJM | 40 | 39.3 |
+| MISO | 36 | 34.9 |
+| SPP | 47 | 45.6 |
+| TVA | 47 | 48.7 |
+
+**7 of 11 within 2 points, median difference −0.5 points.**
+
+Three outliers are recorded as open questions rather than errors. The clearest, SC, is a
+good illustration of a caveat we already publish: we read Santee Cooper's balancing
+authority alone, while Google appears to aggregate it with SCEG next door, which holds the
+jointly-owned nuclear. The outlier argues for the honesty of our regional caveat rather
+than against the accuracy of the index.
+
+---
+
 ## Reproducibility run on Voloridge compute
 
 Re-ran the full pipeline end to end on a Voloridge-provided `i7i.12xlarge`
