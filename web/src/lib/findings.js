@@ -84,3 +84,41 @@ export function interpYears(cf, p, first = 2019, last = 2025) {
   const mix = k => (a && b ? a[k] + (b[k] - a[k]) * f : a?.[k] ?? null)
   return { year: Math.round(x), yearExact: x, daytime: mix('daytime'), overnight: mix('overnight') }
 }
+
+// ---------- plain-English answers for the two questions ----------
+import caveats from '../data/data_caveats.json'
+export const caveatFor = id => caveats[id] || (id && id.includes('/') ? caveats[id.split('/')[0]] : null) || null
+const trendWord = s => (s == null ? 'with no trend data' : s > 0.005 ? 'improving' : s < -0.005 ? 'getting worse' : 'holding steady')
+
+export function checkAnswer(c) {
+  const claims = c?.claims || [], sites = c?.sites || []
+  const primary = claims.find(k => k.magnitude != null && ['true_on_paper', 'contradicted'].includes(k.verdict)) || claims.find(k => k.magnitude != null) || claims[0]
+  const cv = c?.cannot_verify_count ?? 0
+  if (!primary) return { sentence: `${c?.company || 'This company'} has no extracted claims yet.`, numbers: [], verdict: null }
+  const claimed = primary.metric === 'renewable_electricity_share' && primary.unit === 'fraction' ? `${Math.round(primary.magnitude * 100)}% renewable` : primary.metric === 'contracted_capacity_mw' ? `${n0(primary.magnitude)} MW of contracted clean power` : primary.magnitude != null ? `${primary.magnitude} ${primary.unit || ''}`.trim() : (primary.metric || 'a clean-energy claim').replace(/_/g, ' ')
+  const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'Too vague to check.', cannot_verify: "Can't be checked from grid data." }[primary.verdict] || ''
+  const lo = primary.physical_min, hi = primary.physical_max
+  const phys = lo != null && hi != null ? ` Physically, its sites run on ${Math.round(lo * 100)}–${Math.round(hi * 100)}% clean power.` : ''
+  return {
+    sentence: `${c.company} says ${claimed}. ${verdictText}${phys}`,
+    verdict: primary.verdict, primary,
+    numbers: [
+      { value: primary.metric === 'renewable_electricity_share' ? pct0(primary.magnitude) : claimed, label: 'claimed', sub: primary.scope ? primary.scope.replace(/_/g, ' ') : null },
+      { value: lo != null && hi != null ? `${Math.round(lo * 100)}–${Math.round(hi * 100)}%` : '—', label: 'actually clean, by site', sub: 'grid average, all hours', accent: true },
+      { value: String(sites.length), label: sites.length === 1 ? 'site checked' : 'sites checked', sub: cv ? `${cv} claim${cv === 1 ? '' : 's'} can't be verified` : null },
+    ],
+  }
+}
+
+export function compareAnswer(res) {
+  const cs = res?.candidates || []
+  if (!cs.length) return { sentence: 'No known locations to compare.', numbers: [] }
+  const share = c => c.siting?.overnight_cf_share_2025, s = c => c.siting?.ratio_slope_per_year
+  const bad = cs.filter(c => caveatFor(c.region_id))
+  const clean = cs.filter(c => !caveatFor(c.region_id))
+  const best = clean[0] || cs[0], second = clean[1]
+  let sentence = `${best.metro} is your cleanest option: ${pct0(share(best))} clean power at night and ${trendWord(s(best))}.`
+  if (second) sentence += ` ${second.metro} is ${pct0(share(second))} and ${trendWord(s(second))}.`
+  if (bad.length) sentence += ` ${bad.map(c => `${c.metro} reads ${pct0(share(c))} but its data looks unreliable, so treat it as unknown`).join('; ')}.`
+  return { sentence, best, numbers: cs.map(c => ({ value: pct0(share(c)), label: `${c.rank}. ${c.metro}`, sub: caveatFor(c.region_id) ? 'data unreliable' : trendWord(s(c)), accent: c === best })) }
+}
