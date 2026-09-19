@@ -1,150 +1,98 @@
 {
- "_mock": true,
  "company": "Meta Platforms",
  "ticker": "META",
  "sites": [
   {
-   "metro": "Prineville, OR",
+   "metro": "Prineville",
+   "state": "OR",
    "ba": "PACW",
+   "zone": null,
    "pjm_zone": null,
-   "serving_utility": "Pacific Power",
-   "source_type": "inferred",
-   "source_url": null
+   "serving_utility": "Pacific Power (PacifiCorp)",
+   "source_type": "company_disclosure",
+   "source_url": "https://datacenters.atmeta.com/wp-content/uploads/2025/02/Metas-Prineville-Data-Center.pdf",
+   "note": "TRAP, AND IT IS TIME-DEPENDENT: naive geography gives BPAT. Actual is Pacific Power (PACW). In 2019 the error was ~60 points (BPAT 0.898 vs PACW 0.297). By 2025 PACW has cleaned up sharply (0.75 vs BPAT 0.913), so the error is ~16 points. Still material, but do NOT quote the 2019-era framing as if it were current.",
+   "cf_share_2025": 0.75
   },
   {
-   "metro": "Altoona, IA",
-   "ba": "MISO",
-   "pjm_zone": null,
-   "serving_utility": "MidAmerican Energy",
-   "source_type": "inferred",
-   "source_url": null
-  },
-  {
-   "metro": "Newton County, GA",
-   "ba": "SOCO",
-   "pjm_zone": null,
-   "serving_utility": "Georgia Power / Walton EMC",
-   "source_type": "inferred",
-   "source_url": null
-  },
-  {
-   "metro": "Gallatin, TN",
-   "ba": "TVA",
-   "pjm_zone": null,
-   "serving_utility": "Gallatin Dept. of Electricity (TVA)",
-   "source_type": "inferred",
-   "source_url": null
+   "metro": "Papillion (Sarpy County)",
+   "state": "NE",
+   "ba": "SWPP",
+   "zone": "SWPP/OPPD",
+   "pjm_zone": "SWPP/OPPD",
+   "serving_utility": "Omaha Public Power District",
+   "source_type": "company_disclosure",
+   "source_url": "https://oppdthewire.com/papillion-facebook-data-center-goes-live/",
+   "note": "Detector rank 7. OPPD is a ZONE of SWPP, not a BA. Meta buys wind via a dedicated OPPD rate (Rattlesnake Creek); the grid it physically draws from is still SPP.",
+   "cf_share_2025": 0.456
   }
  ],
  "claims": [
   {
-   "claim_id": "META-MOCK-001",
-   "verbatim": "[MOCK] We matched 100% of the electricity use of our data centers and offices with renewable energy.",
-   "source_doc": "MOCK sustainability report",
-   "page": null,
-   "year": 2024,
+   "claim_id": "META-2026-001",
+   "verbatim": "Since 2020, we have matched 100% of our annual electricity use with clean and renewable energy.",
+   "source_doc": "Meta_2025-Sustainability-Report.pdf",
+   "source_url": "https://sustainability.atmeta.com/wp-content/uploads/2025/08/Meta_2025-Sustainability-Report.pdf",
+   "page": 18,
+   "year": 2026,
    "metric": "renewable_electricity_share",
    "magnitude": 1.0,
    "unit": "fraction",
-   "timeframe": "2024",
+   "timeframe": "annual",
    "scope": "market_based",
-   "falsifiability": 0.9,
+   "falsifiability": 0.85,
    "greenwash_patterns": [
     "hidden_tradeoff"
    ],
+   "kind": "annual_scope",
    "verdict": "true_on_paper",
-   "physical_min": 0.321,
-   "physical_max": 0.934,
-   "physical_mean_unweighted": 0.526,
+   "cannot_verify_reason": null,
+   "physical_min": 0.456,
+   "physical_max": 0.75,
+   "physical_mean_unweighted": 0.603,
    "confidence": "high",
+   "verification": {
+    "human_reread_rendered_page": true,
+    "method": "human re-read of the rendered PDF page",
+    "pages_checked": [
+     18
+    ]
+   },
    "evidence": [
     {
      "type": "grid",
      "ba": "PACW",
-     "year": 2024,
-     "cf_share": 0.934
+     "year": 2025,
+     "cf_share": 0.75
     },
     {
      "type": "grid",
-     "ba": "MISO",
-     "year": 2024,
-     "cf_share": 0.337
+     "ba": "SWPP",
+     "year": 2025,
+     "cf_share": 0.456
     },
     {
-     "type": "grid",
-     "ba": "SOCO",
-     "year": 2024,
-     "cf_share": 0.321
-    },
-    {
-     "type": "grid",
-     "ba": "TVA",
-     "year": 2024,
-     "cf_share": 0.51
-    },
-    {
-     "type": "note",
-     "note": "MOCK claim text. Grid evidence values are real L1 outputs (calendar 2024, all hours, grid-only)."
-    }
-   ]
-  },
-  {
-   "claim_id": "META-MOCK-002",
-   "verbatim": "[MOCK] We are committed to a sustainable future for our data centers.",
-   "source_doc": "MOCK sustainability report",
-   "page": null,
-   "year": 2024,
-   "metric": null,
-   "magnitude": null,
-   "unit": null,
-   "timeframe": null,
-   "scope": null,
-   "falsifiability": 0.1,
-   "greenwash_patterns": [
-    "vague_wording"
-   ],
-   "verdict": "unfalsifiable",
-   "physical_min": null,
-   "physical_max": null,
-   "physical_mean_unweighted": null,
-   "confidence": "high",
-   "evidence": []
-  },
-  {
-   "claim_id": "META-MOCK-003",
-   "verbatim": "[MOCK] Our new campus will be supported by 500 MW of new solar in the region.",
-   "source_doc": "MOCK press release",
-   "page": null,
-   "year": 2025,
-   "metric": "contracted_capacity_mw",
-   "magnitude": 500,
-   "unit": "MW",
-   "timeframe": "2025-2027",
-   "scope": "contracted",
-   "falsifiability": 0.7,
-   "greenwash_patterns": [],
-   "verdict": "cannot_verify",
-   "physical_min": null,
-   "physical_max": null,
-   "physical_mean_unweighted": null,
-   "confidence": "low",
-   "evidence": [
-    {
-     "type": "note",
-     "note": "cannot_verify: PPA deliveries are not in EIA-930; grid-only method cannot see contracted power."
+     "type": "internal_contradiction",
+     "source_doc": "Meta_2025-Sustainability-Report.pdf",
+     "page": 18,
+     "note": "The claim \"100% of our annual electricity\" is qualified in the same sentence by \"annual\"."
     }
    ]
   }
  ],
- "talk_score": 0.8,
- "walk_score": 0.526,
- "coverage": 0.67,
- "unverifiable_share": 0.33,
+ "talk_score": 0.55,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.603,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 0,
  "notes": [
-  "MOCK DATA: claim text and scores are illustrative placeholders until claims/companies.json lands.",
-  "grid-only, excludes PPAs",
-  "unweighted across sites, no capacity data",
-  "facility mapping is hand-curated"
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "Every quote was read off the rendered PDF page or raw SEC HTML by a human.",
+  "PacifiCorp West rose from 0.297 in 2019 to 0.75 in 2025. A 2019-era framing of this site as far dirtier than its neighbours is no longer current."
  ],
- "is_mock": true
+ "is_mock": false
 }
