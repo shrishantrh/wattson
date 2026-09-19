@@ -18,7 +18,7 @@ function Row({ c, mark, dim }) {
     <a className={`nb-row${dim ? ' nb-flagged' : ''}`} href={href.region(c.id)} title={`${c.label}: ${pct0(c.share)} clean at night, ${n0(c.miles)} miles away${mark ? ` (${mark})` : ''}`}>
       <div className="nb-cell"><div className="nb-t">{c.label}{mark && <span className="nb-mark">{mark}</span>}</div><div className="nb-d">{c.place || c.id} · {pts1(c.change_since_2019)} since 2019{c.rank ? ` · flat-load rank #${c.rank}` : ''}</div></div>
       <span className="nb-n">{n0(c.miles)}<small> mi</small></span>
-      <span className={`mod-tk nb-tk ${dim ? 'neutral' : 'clean'}`}><Ticks value={c.share == null ? 0 : c.share} max={1} n={10} /></span>
+      <span className="mod-tk nb-tk"><Ticks value={c.share == null ? 0 : c.share} max={1} n={10} tone={dim ? 'neutral' : 'clean'} label={`${pct0(c.share)} clean at night`} /></span>
       <span className="nb-n">{pct0(c.share)}</span>
       <span className="nb-n">{n0(c.fossilMW)}<small> MW</small></span>
     </a>
@@ -47,7 +47,7 @@ export default function NearbyModule({ regions, regionId, loadMW = 300, k = 3 })
       className="mod-nearby"
       caption={`Cleaner grids within ${n0(radius)} miles of this load centre, nearest first.`}
       lead={<Say>{describeNearby(res)}</Say>}
-      foot={`EIA-930 hourly via PUDL, 2025. Distance is between load centres (a zone's metro, a grid's service-territory centre): a proxy for staying in the same market, not a check of transmission or land. Clean at night is the carbon-free share of generation 00:00–05:59 local; a zone inherits its whole grid's share, so grids are listed once. Fossil MW = ${n0(load)} MW × (1 − clean share); other and unknown fuels count as not clean. Generation within each footprint, not consumption. Grids whose data is corrected or flagged are marked and not recommended.`}
+      foot={`EIA-930 hourly via PUDL, 2025; clean is the carbon-free share of generation 00:00–05:59 local and fossil MW is ${n0(load)} MW × (1 − that share). Distance is between load centres, a proxy for staying in the same market, not a check of transmission or land. Generation within each footprint, not consumption; a zone inherits its whole grid's share, so grids are listed once. Grids whose data is corrected or flagged are marked and not recommended.`}
     >
       <div className="nb">
         <div className="nb-head">
@@ -65,7 +65,7 @@ export default function NearbyModule({ regions, regionId, loadMW = 300, k = 3 })
         </div>
         {listed.length > 0 || flagged.length > 0 || outside ? (
           <div className="nb-rows">
-            <div className="nb-row nb-hdr" aria-hidden="true"><span>{listed.length ? `cleaner grids within ${n0(radius)} miles` : 'nearest cleaner grid'}</span><span>distance</span><span /><span>clean at night</span><span>fossil MW</span></div>
+            <div className="nb-row nb-hdr" aria-hidden="true"><span>{listed.length ? 'cleaner grids in range' : 'nearest cleaner grid'}</span><span>distance</span><span /><span>clean</span><span>fossil MW</span></div>
             {listed.map(c => <Row key={c.id} c={c} />)}
             {flagged.map(c => <Row key={c.id} c={c} mark="data flagged" dim />)}
             {!listed.length && outside && <Row c={outside} mark={`beyond ${n0(radius)} mi`} />}

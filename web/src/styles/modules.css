@@ -7,9 +7,9 @@
      content            the detail
      .mod-foot          11px muted source note, above a hairline
 
-   Colours come from tokens.css only. `--fossil` is the ember (the thing being burned), `--clean` the
-   cool cyan-teal, `--n1..--n5` the neutral ramp; the second value in each var() is the fallback for
-   the window before those tokens land and should be deleted once they have. */
+   Colours come from tokens.css only: `--fossil` is the ember (the thing being burned), `--clean` the
+   cool cyan-teal, `--warn` the amber for data that was corrected, everything else neutral grey.
+   Data colour inside a widget is the widget's own (console/widgets.jsx, styles/dataviz.css). */
 
 /* ---- anatomy ---- */
 .mod { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
@@ -30,11 +30,11 @@
 .mod-lead-v s, .mod-lead-v .from { color: var(--muted); }
 .mod-lead-v s { text-decoration-thickness: 1px; text-decoration-color: var(--muted); }
 .mod-lead-v .arrow { color: var(--muted); padding: 0 2px; }
-.mod-lead-v.fossil { color: var(--fossil, var(--accent)); }
-.mod-lead-v.clean { color: var(--clean, #4fb8ad); }
-.mod-lead-v.pos { color: var(--pos, var(--ink)); }
-.mod-lead-v.neg { color: var(--neg, var(--accent)); }
-.mod-lead-v.warn { color: var(--warn, var(--accent)); }
+.mod-lead-v.fossil { color: var(--fossil); }
+.mod-lead-v.clean { color: var(--clean); }
+.mod-lead-v.pos { color: var(--pos); }
+.mod-lead-v.neg { color: var(--neg); }
+.mod-lead-v.warn { color: var(--warn); }
 .mod-lead-l { margin-top: 4px; font-size: 12px; color: var(--muted); line-height: 1.4; text-wrap: pretty; }
 
 /* ---- shared small parts ---- */
@@ -54,14 +54,11 @@
 .mod-d { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.35; }
 .mod-n { font-family: var(--font-mono); font-size: 12px; color: var(--ink); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
 .mod-n small { color: var(--muted); font-size: 10.5px; }
-.mod-n.fossil { color: var(--fossil, var(--accent)); }
+.mod-n.fossil { color: var(--fossil); }
 
-/* tick bars: the shared Ticks widget, tinted by meaning */
+/* tick bars: the shared Ticks widget does the colour (tone="clean" for a clean share, accent for
+   fossil and severity, neutral otherwise); this only gives it a box to sit in */
 .mod-tk { display: block; min-width: 0; }
-.mod-tk .ticks { height: 7px; }
-.mod-tk.clean .ticks i.on { background: var(--clean, #4fb8ad); }
-.mod-tk.fossil .ticks i.on { background: var(--fossil, var(--accent)); }
-.mod-tk.neutral .ticks i.on { background: var(--n4, var(--ink-2)); }
 
 /* one labelled tick row: what it is, how big, the exact figure */
 .mod-ticks { display: flex; flex-direction: column; }
@@ -76,21 +73,21 @@
 .mod-sums { display: flex; flex-wrap: wrap; gap: 6px 22px; }
 .mod-sum { min-width: 0; }
 .mod-sum-v { display: block; font-family: var(--font-mono); font-size: 13px; line-height: 1.3; color: var(--ink); font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
-.mod-sum-v.fossil { color: var(--fossil, var(--accent)); }
-.mod-sum-v.clean { color: var(--clean, #4fb8ad); }
+.mod-sum-v.fossil { color: var(--fossil); }
+.mod-sum-v.clean { color: var(--clean); }
 .mod-sum-l { font-size: 11px; color: var(--muted); line-height: 1.3; }
 .mod-bars { display: flex; flex-direction: column; gap: 5px; margin: 0; padding: 0; list-style: none; }
 .mod-bar { display: grid; grid-template-columns: 62px 1fr 68px; gap: 10px; align-items: center; }
 .mod-bar-name { font-size: 12px; color: var(--ink-2); }
 .mod-bar-track { position: relative; display: block; height: 10px; }
 .mod-bar-track::before { content: ''; position: absolute; top: -2px; bottom: -2px; left: var(--zero, 0%); width: 1px; background: var(--line-strong); }
-.mod-bar-fill { position: absolute; top: 1px; bottom: 1px; min-width: 1px; border-radius: 1px; background: var(--n4, var(--ink-2)); }
-.mod-bar-fill.fossil { background: var(--fossil, var(--accent)); }
-.mod-bar-fill.clean { background: var(--clean, #4fb8ad); }
-.mod-bar-fill.other { background: var(--n3, var(--muted)); }
+.mod-bar-fill { position: absolute; top: 1px; bottom: 1px; min-width: 1px; border-radius: 1px; background: var(--ink-2); }
+.mod-bar-fill.fossil { background: var(--fossil); }
+.mod-bar-fill.clean { background: var(--clean); }
+.mod-bar-fill.other { background: var(--muted); }
 .mod-bar-val { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-2); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
-.mod-bar.fossil .mod-bar-val { color: var(--fossil, var(--accent)); }
-.mod-bar.clean .mod-bar-val { color: var(--clean, #4fb8ad); }
+.mod-bar.fossil .mod-bar-val { color: var(--fossil); }
+.mod-bar.clean .mod-bar-val { color: var(--clean); }
 .mod-bar.other .mod-bar-val { color: var(--muted); }
 
 /* ---- history: a sparkline and the two end values ---- */
@@ -100,13 +97,20 @@
 .mod-hist-row:last-child { padding-bottom: 0; }
 .mod-hist-l { font-size: 12.5px; color: var(--ink); line-height: 1.35; }
 .mod-hist-sub { font-size: 11px; color: var(--muted); line-height: 1.3; margin-top: 2px; }
-.mod-hist-spark { display: block; color: var(--n4, var(--ink-2)); }
-.mod-hist-spark.down { color: var(--fossil, var(--accent)); }
-.mod-hist-spark .spark-dot { fill: currentColor; }
+.mod-hist-spark { display: block; color: var(--ink-2); }   /* .dv-spark up/down recolours it */
 .mod-hist-v { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
 .mod-hist-v .from { color: var(--muted); }
 .mod-hist-v .arrow { color: var(--muted); padding: 0 1px; }
-.mod-hist-v.down { color: var(--fossil, var(--accent)); }
+.mod-hist-v.down { color: var(--fossil); }
+
+/* a fold for the rest of a long detail list: one quiet line, never a wall */
+.mod-more > summary { list-style: none; cursor: pointer; font-size: 12px; color: var(--muted); padding: 2px 0; transition: color var(--dur-fast) var(--ease); }
+.mod-more > summary::-webkit-details-marker { display: none; }
+.mod-more > summary::before { content: '▸ '; }
+.mod-more[open] > summary::before { content: '▾ '; }
+.mod-more > summary:hover { color: var(--ink-2); }
+.mod-more > summary:focus-visible { outline: none; box-shadow: var(--ring); border-radius: 4px; }
+.mod-more[open] > summary { margin-bottom: 10px; }
 
 /* ---- corrections: the published figure struck through, the corrected one beside it ---- */
 .mod-corr-block + .mod-corr-block { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line-soft); }
@@ -155,9 +159,10 @@
 .mod-sbs .sbs-head b { color: var(--ink-2); font-weight: 500; }
 .mod-sbs .sbs-chip { text-transform: none; letter-spacing: 0; }
 .mod-sbs .sbs-quote { font-size: 15px; }
-.mod-sbs .sbs-bar-i { background: var(--clean, #4fb8ad); }
+.mod-sbs .sbs-bar-t::before { content: ''; position: absolute; left: 50%; right: auto; bottom: 0; top: 0; width: 12px; margin-left: -6px; border-radius: 2px 2px 0 0; background: var(--n3); }   /* the rest of the 0-100 scale, so the gap to the claim is visible */
+.mod-sbs .sbs-bar-i { background: var(--clean); z-index: 1; }
 .mod-sbs .sbs-bar-v { color: var(--ink-2); }
-.mod-sbs .sbs-bar:last-child .sbs-bar-i { background: var(--clean, #4fb8ad); }
+.mod-sbs .sbs-bar:last-child .sbs-bar-i { background: var(--clean); }
 .mod-sbs .sbs-bar:last-child .sbs-bar-v { color: var(--ink); }
 
 @media (max-width: 720px) {

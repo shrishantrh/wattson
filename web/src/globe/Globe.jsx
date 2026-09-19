@@ -497,7 +497,11 @@ export default function Globe({
     const c = g.controls()
     if (!c) return undefined
     const on = !!interactive
-    c.enabled = on
+    // `enabled` stays true even when the globe is not interactive: three 0.186's OrbitControls
+    // returns from update() when it is false, which also stops auto-rotate and, on a fresh
+    // mount, leaves the camera unrotated (it never looks at the globe). Interaction is turned
+    // off per gesture instead.
+    c.enabled = true
     c.enableRotate = on
     c.enableZoom = on
     c.enablePan = false
@@ -538,6 +542,7 @@ export default function Globe({
   //    of reference three-globe's own layers use), rebuilt only when the field itself changes.
   useEffect(() => {
     const g = globeRef.current
+    if (import.meta.env.DEV) console.log('[dbg dots]', { readyTick, g: !!g, isDots, land: !!land, field: !!(land && land.field) })
     if (!readyTick || !g || !isDots || !land || !land.field) return undefined
     const scene = g.scene && g.scene()
     const globeObj = scene && scene.children.find((o) => typeof o.getGlobeRadius === 'function')
@@ -545,7 +550,9 @@ export default function Globe({
     const mesh = buildDotMesh(land.field, g.getGlobeRadius(), LAND_ALT)
     dotMeshRef.current = mesh
     globeObj.add(mesh)
+    if (import.meta.env.DEV) { console.log('[dbg dots] added', mesh.count, globeObj.uuid); setTimeout(() => console.log('[dbg dots] 2s later parent=', mesh.parent && mesh.parent.uuid), 2000) }
     return () => {
+      if (import.meta.env.DEV) console.log('[dbg dots] cleanup')
       dotMeshRef.current = null
       disposeDotMesh(mesh)
     }

@@ -13,7 +13,8 @@ const FALLBACK = {
   bg: '#0a0a0b', surface: '#131316', 'surface-2': '#1b1b1f', ink: '#ececea', 'ink-2': '#a6a6a2', muted: '#6f6f6b',
   line: '#26262a', accent: '#f2b34c', 'accent-soft': 'rgba(242,179,76,0.16)',
   clean: '#4fc3bd', fossil: '#f2b34c', pos: '#4fc3bd', neg: '#f2b34c', warn: '#f2b34c',
-  n1: '#15151a', n2: '#26262a', n3: '#3a3a40', n4: '#6f6f6b', n5: '#a6a6a2',
+  // n1..n3 are surfaces (page, card, raised); n4/n5 are hairlines. Marks use ink/ink-2/muted.
+  n1: '#0a0a0b', n2: '#131316', n3: '#1b1b1f', n4: 'rgba(255,255,255,0.08)', n5: 'rgba(255,255,255,0.14)',
   'font-ui': 'system-ui, -apple-system, "Segoe UI", sans-serif', 'font-mono': 'ui-monospace, "SF Mono", Menlo, Consolas, monospace',
 }
 
@@ -70,14 +71,14 @@ export const FUEL_PATTERN = { coal: '/', oil: 'x' }
 // -- sequential colorscale for heatmaps: --n1 through the neutral ramp up to --clean at 1.
 // The low end stays a shade above the card so an empty hour is still distinguishable from the
 // background, and only the top third picks up the cool hue.
-export const SEQ = (t = tokens()) => [[0, t.n1], [0.3, mix(t.n1, t.n3, 0.85)], [0.55, t.n4], [0.78, mix(t.n5, t.clean, 0.5)], [1, t.clean]]
+export const SEQ = (t = tokens()) => [[0, t.n1], [0.3, mix(t.n1, t.muted, 0.4)], [0.55, t.muted], [0.8, mix(t.ink2, t.clean, 0.6)], [1, t.clean]]
 
 // -- layout --
 const axis = (t, o = {}) => ({
-  gridcolor: t.n2, zerolinecolor: t.n3, linecolor: t.n3, showline: false,
-  ticks: 'outside', ticklen: 4, tickcolor: t.n3,
+  gridcolor: t.line, zerolinecolor: t.n5, linecolor: t.n5, showline: false,
+  ticks: 'outside', ticklen: 4, tickcolor: t.n5,
   tickfont: { family: t.fontMono, color: t.muted, size: 10 }, title: { font: { family: t.fontUI, color: t.muted, size: 11 }, standoff: 8 },
-  spikecolor: t.n4, spikethickness: 1,
+  spikecolor: t.muted, spikethickness: 1,
   ...o,
 })
 
@@ -87,7 +88,7 @@ export function layout({ xaxis = {}, yaxis = {}, legend = {}, margin = {}, ...re
     font: { family: t.fontUI, color: t.ink2, size: 12 },
     margin: { t: 28, r: 12, l: 52, b: 40, ...margin },
     hovermode: 'x unified',
-    hoverlabel: { bgcolor: t.surface, bordercolor: t.n3, font: { family: t.fontUI, color: t.ink, size: 12 }, align: 'left' },
+    hoverlabel: { bgcolor: t.surface, bordercolor: t.n5, font: { family: t.fontUI, color: t.ink, size: 12 }, align: 'left' },
     // no legend box: transparent, borderless, horizontal above the plot
     legend: { orientation: 'h', x: 0, y: 1.14, bgcolor: 'rgba(0,0,0,0)', borderwidth: 0, font: { family: t.fontUI, color: t.ink2, size: 11 }, ...legend },
     xaxis: axis(t, xaxis), yaxis: axis(t, yaxis),

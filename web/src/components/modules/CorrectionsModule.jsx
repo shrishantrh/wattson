@@ -21,6 +21,25 @@ const headline = c => {
   return null
 }
 
+// One corrected figure: what changed, every key published against corrected, and the evidence.
+function Block({ x }) {
+  if (!x) return null
+  return (
+    <div className="mod-corr-block">
+      <div className="mod-corr-head"><span>{pretty(x.path)}</span><span className="mod-chip mono">{x.confidence || 'corrected'}</span></div>
+      <ul className="mod-corr-rows">
+        {Object.keys(x.published || {}).map(k => (
+          <li key={k} className="mod-corr-row">
+            <span>{k}</span>
+            <span className="mod-corr-v"><s>{fmtVal(x.published[k], x.path)}</s><span className="arrow">→</span><b>{fmtVal(x.corrected?.[k], x.path)}</b></span>
+          </li>
+        ))}
+      </ul>
+      {x.evidence && <p className="mod-corr-ev">{x.evidence}</p>}
+    </div>
+  )
+}
+
 export default function CorrectionsModule({ detail }) {
   const c = correctionsOf(detail)
   if (!c) return <Empty>Nothing was corrected for this region.</Empty>
@@ -34,20 +53,13 @@ export default function CorrectionsModule({ detail }) {
         : <Lead value={String((c.corrections || []).length)} label="figures corrected on this region" t="warn" />}
       foot="Published = what the EIA-930 export says. Corrected = recomputed on a consistent basis by the engine. Both are shown on purpose."
     >
-      {c.corrections.map((x, i) => (
-        <div key={i} className="mod-corr-block">
-          <div className="mod-corr-head"><span>{pretty(x.path)}</span><span className="mod-chip mono">{x.confidence || 'corrected'}</span></div>
-          <ul className="mod-corr-rows">
-            {Object.keys(x.published || {}).map(k => (
-              <li key={k} className="mod-corr-row">
-                <span>{k}</span>
-                <span className="mod-corr-v"><s>{fmtVal(x.published[k], x.path)}</s><span className="arrow">→</span><b>{fmtVal(x.corrected?.[k], x.path)}</b></span>
-              </li>
-            ))}
-          </ul>
-          {x.evidence && <p className="mod-corr-ev">{x.evidence}</p>}
-        </div>
-      ))}
+      <Block x={c.corrections[0]} />
+      {c.corrections.length > 1 && (
+        <details className="mod-more">
+          <summary>{c.corrections.length - 1} more corrected {c.corrections.length === 2 ? 'figure' : 'figures'}</summary>
+          {c.corrections.slice(1).map((x, i) => <Block key={i} x={x} />)}
+        </details>
+      )}
     </Mod>
   )
 }

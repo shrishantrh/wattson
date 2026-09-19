@@ -17,8 +17,8 @@ function Row({ label, sub, values, format, accentIfLower }) {
     <div className="mod-hist-row">
       <div className="mod-cell"><div className="mod-hist-l">{label}</div>{sub && <div className="mod-hist-sub">{sub}</div>}</div>
       <Sparkline
-        className={`mod-hist-spark${fell ? ' down' : ''}`}
-        values={values.map(x => x.v)} width={104} height={26} strokeWidth={1.25} accentLast baseline
+        className="mod-hist-spark"
+        values={values.map(x => x.v)} width={104} height={26} strokeWidth={1.25} accentLast area delta={!!accentIfLower}
         title={values.filter(x => x.v != null).map(x => `${x.year} ${format(x.v)}`).join(', ')}
       />
       <div className={`mod-hist-v${fell ? ' down' : ''}`}><span className="from">{format(first)}</span><span className="arrow"> → </span>{format(last)}</div>
@@ -35,12 +35,12 @@ export default function HistoryView({ cf_share, demand, grid, inherited }) {
   if (!night.some(x => x.v != null) && !day.some(x => x.v != null)) return <Empty>No yearly clean-share series for this grid.</Empty>
   const [n19, n25] = ends(night)
   const fell = down(night)
-  const direction = n19 == null || n25 == null ? 'clean at night' : fell ? 'less clean at night than in 2019' : n25 > n19 ? 'cleaner at night than in 2019' : 'no cleaner at night than in 2019'
+  const direction = n19 == null || n25 == null ? 'clean at night, 2019 to 2025' : fell ? 'less clean at night in 2025 than in 2019' : n25 > n19 ? 'cleaner at night in 2025 than in 2019' : 'no cleaner at night in 2025 than in 2019'
   return (
     <Mod
       className="mod-history"
       caption="The carbon-free share of generation, one point per year."
-      lead={<Lead value={<><span className="from">{pct(n19, 1)}</span><span className="arrow"> → </span>{pct(n25, 1)}</>} t={fell ? 'fossil' : 'clean'} label={`${direction}, 2019 to 2025`} />}
+      lead={<Lead value={<><span className="from">{pct(n19, 1)}</span><span className="arrow"> → </span>{pct(n25, 1)}</>} t={fell ? 'fossil' : 'clean'} label={direction} />}
       foot={`EIA-930 hourly via PUDL. Night is 00:00–05:59 local, day 10:00–15:59; 2026 is partial and left out.${inherited && grid ? ` Shares are the whole ${grid} grid's; demand is this region's own.` : ''}`}
     >
       <div className="mod-hist">
