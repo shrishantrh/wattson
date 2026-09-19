@@ -125,13 +125,15 @@ function withDrops(rungs) {
   for (const r of rungs) { if (r.share == null) continue; r.drop = prev == null ? null : r.share - prev; prev = r.share }
   return rungs
 }
-const incWords = (g, possessive) => {
+const incWords = (g, label) => {
   const inc = g.increment
-  if (inc.readable) return `${possessive} was ${fmtShare(inc.share)} clean${inc.top ? ` (${inc.top.fuel} ${fmtSignedGw(inc.top.gw)})` : ''}`
-  if (inc.reason === 'fell') return `${possessive} fell ${fmtGw(inc.total_gw)} overall, so its increment cannot be read`
-  if (inc.reason === 'did not grow') return `${possessive} did not grow (${fmtSignedGw(inc.total_gw)}), so its increment cannot be read`
-  return `${possessive} has no fuel breakdown, so its increment cannot be read`
+  if (inc.readable) return `${label}'s grid was ${fmtShare(inc.share)} clean${inc.top ? ` (${inc.top.fuel} ${fmtSignedGw(inc.top.gw)})` : ''}`
+  if (inc.reason === 'fell') return `${label}'s overnight generation fell ${fmtGw(inc.total_gw)}, so its increment cannot be read`
+  if (inc.reason === 'did not grow') return `${label}'s overnight generation did not grow (${fmtSignedGw(inc.total_gw)}), so its increment cannot be read`
+  return `${label}'s grid has no fuel breakdown, so its increment cannot be read`
 }
+// A site's region id, the way lib/data.js normalises it: a zone may already be the full "BA/ZONE" id.
+const siteRegionId = s => s.region_id || (s.zone ? (String(s.zone).includes('/') ? String(s.zone) : `${s.ba}/${s.zone}`) : s.ba)
 
 // company: the normalised company (lib/data.js loadCompany). grids: { [region_id]: gridFacts(detail) } for the
 // sites whose region detail has loaded; a site without one falls back to the company file's cf_share_2025.
@@ -140,8 +142,7 @@ export function companyLadder(company, { grids = {} } = {}) {
   const claim = primaryClaim(company)
   const sites = (company?.sites || []).filter(s => s && (s.region_id || s.ba))
   if (!claim || !sites.length) return null
-  const idOf = s => s.region_id || (s.zone ? `${s.ba}/${s.zone}` : s.ba)
-  const rows = sites.map(s => ({ site: s, id: idOf(s), grid: grids[idOf(s)] || null }))
+  const rows = sites.map(s => ({ site: s, id: siteRegionId(s), grid: grids[siteRegionId(s)] || null }))
   const gridLabel = r => r.grid?.label || r.site.grid_label || r.id
   const names = [...new Set(rows.map(gridLabel))]
   const hourly = disclosedHourly(company)
@@ -175,7 +176,7 @@ export function companyLadder(company, { grids = {} } = {}) {
         : inc.reason === 'fell' ? `Its overnight generation fell ${fmtGw(inc.total_gw)} since 2019${g.demand_delta_gw != null ? ` while overnight demand ${g.demand_delta_gw >= 0 ? 'rose' : 'fell'} ${fmtGw(g.demand_delta_gw)}` : ''}, so the increment cannot be read from generation inside the footprint.`
         : `The footprint's own overnight generation did not grow since 2019 (${fmtSignedGw(inc.total_gw)}${g.demand_delta_gw != null ? ` against ${fmtSignedGw(g.demand_delta_gw)} of demand` : ''}), so the increment cannot be read.`)
     } else {
-      parts.push(`Of the generation added at night since 2019, ${listWords(withGrid.map(r => incWords(r.grid, `${gridLabel(r)}'s grid`)))}.`)
+      parts.push(`Of the generation added at night since 2019, ${listWords(withGrid.map(r => incWords(r.grid, gridLabel(r))))}.`)
     }
   }
   if (claim.verdict === 'true_on_paper') parts.push('Each rung removes one accounting convention; the claim is true on paper at the rung it was made for.')

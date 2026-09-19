@@ -1,4 +1,4 @@
-export { default as Plot, loadPlotly } from './Plot.jsx'
+export { default as Plot } from './Plot.jsx'
 export { default as ChartCard } from './ChartCard.jsx'
 export { default as DataTable, Badge } from './DataTable.jsx'
 export * from './theme.js'

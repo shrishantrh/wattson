@@ -4,7 +4,8 @@ import { Card, Num, Evidence, Chip, KV, Ring, HourBars } from '../console/widget
 import Workspace from '../components/Workspace.jsx'
 import Sparkline from '../components/Sparkline.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
-import { loadSite, loadOpening, useAsync, useRegionDetails, hourProfile, nightSeries } from '../lib/data.js'
+import { loadSite, loadOpening, loadRegions, useAsync, useRegionDetails, hourProfile, nightSeries } from '../lib/data.js'
+import { nearbyModule } from '../components/modules/NearbyModule.jsx'
 import { readTokens } from '../lib/tokens.js'
 import { compareAnswer, caveatFor, pct0, pct1, n0, signedGw } from '../lib/findings.js'
 import { resolvePlace, DEMO_COMPARE } from '../lib/query.js'
@@ -22,6 +23,7 @@ export default function Compare({ route }) {
   const request = useMemo(() => ({ mw: route.mw, metros: route.metros }), [route.mw, route.metros])
   const { loading, error, data, reload } = useAsync(() => loadSite(request), [request.mw, request.metros.join('|')])
   const found = useAsync(loadOpening, [])
+  const regs = useAsync(loadRegions, [])
   const tk = useMemo(readTokens, [])
   const [mw, setMw] = useState(request.mw)
   const [add, setAdd] = useState('')
@@ -88,6 +90,7 @@ export default function Compare({ route }) {
           </>
         ) }
       }),
+      ...(answer.best && regs.data && nearbyModule.applies({ regions: regs.data, region_id: answer.best.region_id }) ? [{ id: 'nearby', title: `${nearbyModule.title} · ${answer.best.metro}`, render: () => nearbyModule.render({ regions: regs.data, region_id: answer.best.region_id, load_mw: load }) }] : []),
       { id: 'method', title: 'How we rank', render: () => <p className="note">{data.method}</p> },
       { id: 'night', title: 'Why night matters', render: () => (
         <>

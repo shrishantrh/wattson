@@ -10,8 +10,9 @@ import { useEffect, useRef, useState } from 'react'
 let plotlyModule = null
 let plotlyPromise = null
 
-/** Resolve the Plotly module, loading its chunk on first use. A failed load is not memoised, so the next call retries. */
-export function loadPlotly() {
+// Resolve the Plotly module, loading its chunk on first use. A failed load is not memoised, so the next
+// mount retries. Kept module-private: exporting it beside the component would turn off Fast Refresh here.
+function loadPlotly() {
   if (plotlyModule) return Promise.resolve(plotlyModule)
   if (!plotlyPromise) {
     plotlyPromise = import('plotly.js-dist-min')
