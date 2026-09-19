@@ -43,3 +43,25 @@ def test_normal_operating_variation_is_not_a_break():
     s = series([4000] * 30 + [0] * 5 + [4000] * 45)
 
     assert find_step_break(s) is None
+
+
+def test_a_long_outage_that_recovers_is_not_a_break():
+    """Nuclear refuelling outages run past thirty days, so a 30-day stable
+    window alone flags them. BPAT, NYIS and SCEG all came back; only AZPS
+    never did. Permanence is what separates a reporting change from an outage."""
+    s = series([4000] * 40 + [0] * 45 + [4000] * 60)
+
+    assert find_step_break(s) is None
+
+
+def test_a_break_that_never_recovers_is_still_a_break():
+    s = series([4000] * 40 + [0] * 105)
+
+    assert find_step_break(s) is not None
+
+
+def test_a_small_partial_recovery_does_not_excuse_a_break():
+    """Coming back at 5% of the old level is not the plant returning."""
+    s = series([4000] * 40 + [0] * 60 + [200] * 45)
+
+    assert find_step_break(s) is not None
