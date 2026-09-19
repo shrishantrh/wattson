@@ -162,3 +162,57 @@ lookup, where it produces confidently wrong balancing-authority mappings, and ou
 - Facility and operator mapping is hand-curated. Operator tickers are unverified.
 - Hourly data updated with each release. PUDL is a snapshot ending 2026-09-05, not a live feed.
 - Dominion's roughly +4 GW overnight is about half of PJM's overnight growth. Half, not all.
+
+---
+
+## Reproducibility run on Voloridge compute
+
+Re-ran the full pipeline end to end on a Voloridge-provided `i7i.12xlarge`
+(48 vCPU, 371 GB RAM, Amazon Linux 2023), from raw PUDL parquet to final JSON.
+
+| Step | Wall clock |
+|---|---|
+| PUDL fetch, 359 MB, 6 tables | **3.7 s** |
+| `build_wide` (118,404,998 rows) | 13.7 s |
+| `carbon_free_index` | 12.3 s |
+| `overnight_profile` | 3.3 s |
+| `l2_temporal` | 9.5 s |
+| `l2_interchange` | 6.8 s |
+| `l3_detector` | 19.3 s |
+| `l4_supply` | 29.1 s |
+| `export_json` | 5.7 s |
+| **Total** | **under 2 minutes** |
+
+The 3.7-second fetch is the in-region advantage: same AWS region as the PUDL bucket.
+
+**The results are identical across a Python and pandas major version boundary.** The
+development machine runs Python 3.14 with pandas 3; the instance runs Python 3.9 with
+pandas 2.3.3. Every headline figure reproduced exactly:
+
+| | Dev machine | Voloridge instance |
+|---|---|---|
+| Regions / detector-scored | 124 / 111 | 124 / 111 |
+| Dominion rank, score | 6, 7.71 | 6, 7.71 |
+| Dominion overnight gas 2019→2025 | +10.74 GW | +10.74 GW |
+| PJM overnight clean generation | 35,700 → 35,619 MW | 35,700 → 35,619 MW |
+| National overnight CF share | 0.405 → 0.397 | 0.405 → 0.397 |
+
+**Two portability issues, reported rather than smoothed over.**
+
+*The analysis needed no changes.* No file in `scripts/` was edited for this run. One
+environment shim was required: pandas 2 cannot accept a dictionary-encoded column with
+uint32 indices from pyarrow, so dictionary columns are decoded to their value type at
+the parquet read. That is a representation change, not an analytical one.
+
+*The shim's first version was wrong and the failure was loud, which is the point.* It
+dropped the `columns=` argument, so scripts requesting 4 columns silently received all
+6 — surfacing as `Length mismatch: Expected axis has 6 elements, new values have 4`.
+Had it failed quietly instead, it would have produced numbers rather than an error.
+
+*One genuine pandas-2/3 difference remains, and it is cosmetic.* `l4_supply` line 105
+pretty-prints PJM's overnight fuel table. PJM reports no geothermal, and pandas 2 drops
+the all-null column from the pivot where pandas 3 retains it, raising `KeyError:
+['geothermal'] not in index`. Every output CSV is written before that line, so the
+analysis completes and the failure is a display statement. Reported because a
+"FAILED" in a log that turns out to be cosmetic is exactly the thing a reader should
+be able to check rather than take on trust.
