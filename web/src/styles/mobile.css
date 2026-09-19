@@ -51,7 +51,7 @@
 
   /* landing overlay: stacked, full-width box, chip rows wrap. Centred by auto margins so a
      short screen scrolls the overlay instead of clipping the headline. */
-  .overlay { inset: var(--m-top) 0 0 0; padding: 8px max(var(--m-gutter), env(safe-area-inset-right, 0px)) calc(48px + env(safe-area-inset-bottom, 0px)) max(var(--m-gutter), env(safe-area-inset-left, 0px)); justify-content: flex-start; overflow-y: auto; overscroll-behavior: contain; pointer-events: auto; }
+  .overlay { inset: var(--m-top) 0 0 0; padding: 50px max(var(--m-gutter), env(safe-area-inset-right, 0px)) calc(64px + env(safe-area-inset-bottom, 0px)) max(var(--m-gutter), env(safe-area-inset-left, 0px)); justify-content: flex-start; overflow-y: auto; overscroll-behavior: contain; pointer-events: auto; }   /* top clears the stage controls, bottom clears the foot */
   .overlay > :first-child { margin-top: auto; }
   .overlay > :last-child { margin-bottom: auto; }
   .hero-q { font-size: 28px; max-width: none; margin-bottom: 22px; }
@@ -66,7 +66,7 @@
   .ex-row .chip { max-width: 100%; height: auto; min-height: 32px; padding-top: 6px; padding-bottom: 6px; white-space: normal; text-align: center; }
   .ex-label { width: 100%; text-align: center; margin: 0; }
   .found-link { margin-top: 22px; }
-  .foot { left: var(--m-gutter); right: var(--m-gutter); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); font-size: 10px; line-height: 1.4; }
+  .foot { left: 0; right: 0; bottom: 0; padding: 18px var(--m-gutter) calc(10px + env(safe-area-inset-bottom, 0px)); font-size: 10px; line-height: 1.4; background: linear-gradient(to bottom, transparent, var(--bg) 45%); }   /* the overlay scrolls under it on short screens */
   .column-wrap ~ .foot { display: none; }   /* the sheet covers it */
 
   /* the column: a bottom sheet over the globe, full width with 12px gutters, scrollable */

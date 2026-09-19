@@ -33,9 +33,9 @@ export function sideBySideOf(company) {
   return out
 }
 
-// The page cite as a mono chip; dashed when the source has no page (raw SEC HTML).
-function PageChip({ page }) {
-  return <span className={`sbs-chip${page == null ? ' dim' : ''}`}>{page == null ? 'no page' : `p. ${page}`}</span>
+// The page cite as a mono chip; dashed when the source has no page (raw SEC HTML). `title` names the document.
+function PageChip({ page, title }) {
+  return <span className={`sbs-chip${page == null ? ' dim' : ''}`} title={title || undefined}>{page == null ? 'no page' : `p. ${page}`}</span>
 }
 
 export default function SideBySideModule({ company }) {
@@ -49,8 +49,8 @@ export default function SideBySideModule({ company }) {
         const unit = evidence.unit || '%'
         const max = Math.max(...series, 100)
         const pages = idx[claim.claim_id]
-        const doc = evidence.source_doc || claim.source_doc || null
-        const sameDoc = !claim.source_doc || !evidence.source_doc || claim.source_doc === evidence.source_doc
+        const saysDoc = claim.source_doc || null, discDoc = evidence.source_doc || saysDoc
+        const sameDoc = !saysDoc || !discDoc || saysDoc === discDoc
         const quote = String(claim.verbatim || '').replace(/^[“"]+/, '').replace(/[”"]+$/, '')
         return (
           <div key={claim.claim_id || i} className="sbs">
@@ -62,11 +62,12 @@ export default function SideBySideModule({ company }) {
             )}
             <div className="sbs-pair">
               <div className="sbs-col">
-                <div className="sbs-head"><b>Says</b><PageChip page={claim.page} /></div>
+                <div className="sbs-head"><b>Says</b><PageChip page={claim.page} title={saysDoc} /></div>
                 <blockquote className="sbs-quote">{quote}”</blockquote>
               </div>
               <div className="sbs-col">
-                <div className="sbs-head"><b>Discloses</b>{evidence.label && <span className="sbs-head-l">· {evidence.label}</span>}<PageChip page={evidence.page} /></div>
+                <div className="sbs-head"><b>Discloses</b><PageChip page={evidence.page} title={discDoc} /></div>
+                {evidence.label && <div className="sbs-head-l">{evidence.label}</div>}
                 <div className="sbs-bars" role="img" aria-label={`${evidence.label || 'Disclosed series'}: ${series.map((v, j) => `${years[j] ? `${years[j]} ` : ''}${v}${unit}`).join(', ')}`}>
                   {series.map((v, j) => {
                     const pctH = Math.max(0, Math.min(100, (v / max) * 100))
@@ -83,7 +84,7 @@ export default function SideBySideModule({ company }) {
                 </div>
               </div>
             </div>
-            <p className="sbs-foot">{sameDoc ? 'Same report, both pages, no other source.' : 'Two filings by the same company, no other source.'}{doc && <> <code>{doc}</code></>}</p>
+            <p className="sbs-foot">{sameDoc ? 'Same report, both pages, no other source.' : 'Two filings by the same company, no other source.'}</p>
           </div>
         )
       })}

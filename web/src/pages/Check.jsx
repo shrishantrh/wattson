@@ -13,6 +13,7 @@ import { href } from '../router.js'
 import ingest from '../data/ingest_status.json'
 import SideBySideModule, { sideBySideOf } from '../components/modules/SideBySideModule.jsx'
 import { relocateModule } from '../components/modules/RelocateModule.jsx'
+import { innovLadderModule } from '../components/modules/InnovLadderModule.jsx'
 
 // A grid that generates far less than it uses is mostly imports; its footprint share is not what the site consumes.
 const importerNote = d => { const g = d && d.type === 'zone' && d.parent ? d.parent : d; const gen = g?.total_avg_mw?.['2025']?.all, dem = d?.demand?.['2025']?.avg_mw; return gen && dem && gen / dem < 0.5 ? `generates ${Math.round(gen / dem * 100)}% of what it uses, the rest is imported` : null }
@@ -70,6 +71,7 @@ export default function Check({ route }) {
     const a = checkAnswer(data)
     const modules = [
       ...(sideBySideOf(data).length ? [{ id: 'sbs', title: 'Says, and discloses, in the same report', render: () => <SideBySideModule company={data} /> }] : []),
+      ...(innovLadderModule.applies({ company: data }) ? [{ id: innovLadderModule.id, title: innovLadderModule.title, render: () => innovLadderModule.render({ company: data }) }] : []),
       { id: 'sites', title: 'Where its sites draw power', render: () => (
         <>
           <div className="rows">
