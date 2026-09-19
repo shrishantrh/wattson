@@ -80,3 +80,30 @@ Every finding carries `verification.human_reread_rendered_page`. All six were
 checked by a human re-reading the **rendered PDF page** — a different instrument
 from the text extractor that produced the quote. Nothing reaches the UI on regex
 alone.
+
+## Cross-document: ESG report vs 10-K
+
+The strongest findings compare the sustainability report against the 10-K —
+a marketing document against one filed under legal liability.
+
+| | |
+|---|---|
+| MSFT ESG p6 | "In FY25, we matched 100% of our annual global electricity consumption with renewable energy." |
+| MSFT 10-K Item 1A | "AI development and deployment has and will likely continue to raise energy use and emissions, making it harder to meet these goals." |
+| GOOGL ESG p4 | "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)" |
+| GOOGL 10-K Item 1A | "For instance, AI's energy and water demands have made efforts to reduce our emissions more complex and challenging across every level." |
+
+Both 10-K quotes are verbatim in the filing; re-check with
+`python3 -m engine.contradict.verify_tenk`.
+
+What does **not** count: every 10-K carries generic climate boilerplate, and
+Amazon's Item 1A lists transition risks (compliance costs, customer behaviour,
+reputational damage). Neither is a company conceding its own footprint is
+growing. Meta's single climate sentence in Item 1A is about natural disasters.
+Both are excluded by test.
+
+**A false negative is also a failure.** A general-purpose page fetcher was the
+first independent check on the Microsoft quote and reported it absent — the
+filing is 8.6 MB and the fetcher truncated it. The sentence is present, exactly
+once. Going to the primary source settled it. Dropping a true finding on a
+tool's say-so would have been the mirror image of shipping a false one.
