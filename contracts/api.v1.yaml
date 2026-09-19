@@ -1,0 +1,365 @@
+openapi: 3.0.3
+info:
+  title: Wattson API
+  version: "1.0.0"
+  description: >
+    Wattson serves precomputed grid analysis. Every number originates in EIA-930 via PUDL and is
+    computed by the frozen pipeline in scripts/ (L1-L4). The API reads exports; it never recomputes
+    grid physics. POST /api/site is the only live computation and it only ranks precomputed scores.
+
+    CONVENTIONS, binding on every endpoint:
+      - All carbon-free shares and ratios are 0-1 fractions. Never percentages.
+      - growth_pct is the one exception: it is a percent in the source and passes through unchanged.
+      - Carbon-free = nuclear + hydro + wind + solar + geothermal. Storage excluded.
+        Other/unknown is in the denominator only.
+      - Overnight = 00:00-05:59 local. Daytime = 10:00-15:59 local. Baseline year 2019.
+      - Data snapshot ends 2026-09-05. Partial months are dropped from trailing-12 series.
+      - Zones inherit the parent BA's generation figures (cf_inherited_from_ba: true); zones carry
+        demand only. Any response containing a zone MUST carry this flag.
+      - meta.caveats and per-region data_flags are honesty requirements, not decoration. Every
+        response that carries regional numbers carries its caveats. The UI cannot render a warning
+        the API dropped.
+      - heatmap_uri IS NOT A PROMISE. All 124 region rows carry a non-null heatmap_uri, but three
+        of them (AEC, OVEC, SWPW) point at files that do not exist. A non-null heatmap_uri does NOT
+        imply a fetchable heatmap. Every consumer MUST handle a 404 on the heatmap and render an
+        empty state. Servers MUST set heatmap_available so the client does not have to probe.
+      - Site objects carry BOTH `zone` and `pjm_zone` with identical values. New web/ reads `zone`;
+        the frozen dashboard/ reads `pjm_zone`. Do not drop either.
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/regions:
+    get:
+      summary: All scored regions, ranked by detector score
+      description: >
+        111 regions scored. Detector method frozen before results were seen:
+        score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z.
+        Regions under 500 MW average demand excluded. Peak is the 99.5th percentile hour.
+        Pattern labels are descriptive only and never touch the score.
+
+        COUNT MISMATCH, BY DESIGN: this endpoint returns the 111 DETECTOR-SCORED regions.
+        /api/region/{id} serves all 124, including 13 that were excluded from scoring (under the
+        500 MW cut, or missing demand). The ranked list is NOT the universe of valid ids. AEC,
+        OVEC and SWPW — the three with dangling heatmaps — are among the 13, so they are
+        reachable only by a typed URL, never from the list.
+      responses:
+        "200":
+          description: Ranked regions
+          content: {application/json: {schema: {$ref: '#/components/schemas/RegionsResponse'}}}
+  /api/region/{id}:
+    get:
+      summary: Full detail for one region
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string},
+           description: "Region id, URL-encoded. Zones use BA/ZONE, e.g. PJM%2FDOM."}
+      responses:
+        "200":
+          description: Region detail
+          content: {application/json: {schema: {$ref: '#/components/schemas/RegionDetailResponse'}}}
+        "404": {description: Unknown region id}
+  /api/companies:
+    get:
+      summary: Company watchlist summary
+      description: >
+        Reads claims/companies.json when it exists, else claims/companies.mock.json.
+        is_mock MUST be true in the fallback case so the UI can show the MOCK DATA banner.
+      responses:
+        "200":
+          content: {application/json: {schema: {$ref: '#/components/schemas/CompaniesResponse'}}}
+  /api/company/{ticker}:
+    get:
+      summary: One company, claims with verdicts and evidence
+      parameters:
+        - {name: ticker, in: path, required: true, schema: {type: string}}
+      responses:
+        "200":
+          content: {application/json: {schema: {$ref: '#/components/schemas/Company'}}}
+        "404": {description: Unknown ticker}
+  /api/site:
+    post:
+      summary: Rank candidate metros for new flat 24/7 load
+      description: >
+        THE core computation. Ranks on the frozen siting score from regions.json; it does not
+        re-tune or invent a score. In one sentence: we rank on how clean the overnight grid is
+        today, whether it is getting cleaner, and how much clean headroom is left relative to
+        demand. Unmappable metros are returned with a null score and a reason, never dropped.
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/SiteRequest'}}}
+      responses:
+        "200":
+          content: {application/json: {schema: {$ref: '#/components/schemas/SiteResponse'}}}
+  /api/alerts:
+    get:
+      summary: Ranked, deduped alerts
+      description: >
+        severity = magnitude x persistence x recency. One alert per region. Raw source has 162.
+        WACM and every region flagged exclude_from_alerts MUST be absent.
+      responses:
+        "200":
+          content: {application/json: {schema: {$ref: '#/components/schemas/AlertsResponse'}}}
+  /api/export/{kind}.csv:
+    get:
+      summary: CSV of the underlying series
+      parameters:
+        - {name: kind, in: path, required: true,
+           schema: {type: string, enum: [regions, alerts, companies]}}
+      responses:
+        "200": {description: CSV, content: {text/csv: {schema: {type: string}}}}
+components:
+  schemas:
+    Meta:
+      type: object
+      required: [generated, data_snapshot_end, caveats]
+      properties:
+        generated: {type: string, example: "2026-09-19"}
+        data_snapshot_end: {type: string, example: "2026-09-05"}
+        baseline_year: {type: integer, example: 2019}
+        caveats:
+          type: array
+          items: {type: string}
+          description: Honesty caveats. MUST be rendered, not swallowed.
+    Operator:
+      type: object
+      required: [utility, mapping_note]
+      properties:
+        utility: {type: string}
+        parent: {type: string, nullable: true}
+        ticker: {type: string, nullable: true}
+        mapping_note: {type: string, example: "hand-mapped"}
+    Detection:
+      type: object
+      required: [rank, score, growth_pct, pattern]
+      properties:
+        rank: {type: integer}
+        score: {type: number}
+        growth_pct: {type: number, description: "PERCENT, not a fraction. Passed through unchanged."}
+        overnight_growth_pct: {type: number}
+        overnight_excess: {type: number}
+        neighbor_divergence: {type: number}
+        pattern:
+          type: string
+          enum: ["flat-load growth", "possible midday solar suppression", "mixed"]
+          description: Descriptive only. Never contributes to the score.
+    Siting:
+      type: object
+      required: [siting_score, overnight_cf_share_2025, ratio_slope_per_year,
+                 overnight_clean_mw_over_demand]
+      properties:
+        siting_score: {type: number, minimum: 0, maximum: 1}
+        siting_rank: {type: integer}
+        overnight_cf_share_2025: {type: number, minimum: 0, maximum: 1}
+        change_since_2019: {type: number}
+        overnight_clean_mw_over_demand: {type: number}
+        ratio_slope_per_year: {type: number, description: "Slope only. No years-remaining, no nameplate headroom."}
+    RegionSummary:
+      type: object
+      required: [id, ba, name, detection, siting, operator, cf_inherited_from_ba]
+      properties:
+        id: {type: string, example: "PJM/DOM"}
+        ba: {type: string}
+        zone: {type: string, nullable: true}
+        name: {type: string}
+        detection: {$ref: '#/components/schemas/Detection'}
+        siting: {$ref: '#/components/schemas/Siting'}
+        operator: {$ref: '#/components/schemas/Operator'}
+        cf_inherited_from_ba: {type: boolean}
+        exclude_from_alerts: {type: boolean}
+        data_flags: {type: array, items: {type: string}, nullable: true}
+    RegionsResponse:
+      type: object
+      required: [meta, count, regions]
+      properties:
+        meta: {$ref: '#/components/schemas/Meta'}
+        count: {type: integer, example: 111}
+        regions: {type: array, items: {$ref: '#/components/schemas/RegionSummary'}}
+    RegionDetailResponse:
+      type: object
+      required: [meta, region]
+      properties:
+        meta: {$ref: '#/components/schemas/Meta'}
+        region:
+          type: object
+          required: [id, ba, name, heatmap_uri, heatmap_available, cf_inherited_from_ba,
+                     cf_share, demand, detection, siting, operators]
+          properties:
+            id: {type: string}
+            cf_share:
+              type: object
+              description: "year -> {overnight, daytime, all}, all 0-1 fractions"
+            demand:
+              type: object
+              description: "year -> {avg_mw, overnight_avg_mw, peak_mw, p995_mw, load_factor, hours}"
+            fuel_delta_overnight_gw:
+              type: object
+              description: "fuel -> GW change 2019->2025 in overnight generation"
+            overnight_fuel_mw: {type: object}
+            siting: {$ref: '#/components/schemas/Siting'}
+            detection: {$ref: '#/components/schemas/Detection'}
+            operators: {type: array, items: {$ref: '#/components/schemas/Operator'}}
+            profile_24h: {type: object, description: "year -> 24 hourly CF shares, local time"}
+            heatmap_uri:
+              type: string
+              nullable: true
+              example: "data/heatmaps/PJM.json"
+              description: >
+                Path relative to dashboard/public. MAY DANGLE. AEC, OVEC and SWPW carry a URI whose
+                file does not exist. Never assume this resolves.
+            heatmap_available:
+              type: boolean
+              description: >
+                Server-side existence check on heatmap_uri. REQUIRED. False for AEC, OVEC, SWPW.
+                Clients render the empty state on false rather than fetching and failing.
+            cf_inherited_from_ba: {type: boolean}
+            data_flags: {type: array, items: {type: string}, nullable: true}
+    SiteRequest:
+      type: object
+      required: [mw, metros]
+      properties:
+        mw: {type: number, example: 300}
+        metros: {type: array, items: {type: string}, example: ["Phoenix", "N. Virginia", "Omaha"]}
+        flat_247: {type: boolean, default: true}
+    SiteCandidate:
+      type: object
+      required: [metro, region_id, siting_score, verdict_rank, reason]
+      description: >
+        An unmappable metro is STILL RETURNED, with null score/rank and reason
+        no_region_mapping. Never silently dropped — a missing candidate looks like an answer.
+      properties:
+        metro: {type: string}
+        region_id: {type: string, nullable: true}
+        verdict_rank: {type: integer, nullable: true}
+        siting_score: {type: number, nullable: true}
+        components:
+          type: object
+          description: The three components, broken out so the ranking is explainable on stage.
+          properties:
+            level_overnight_cf_share_2025: {type: number}
+            direction_ratio_slope_per_year: {type: number}
+            headroom_overnight_clean_mw_over_demand: {type: number}
+            change_since_2019: {type: number}
+        detector: {$ref: '#/components/schemas/Detection'}
+        fuel_that_filled_growth:
+          type: object
+          properties: {fuel: {type: string}, gw: {type: number}}
+        operator: {$ref: '#/components/schemas/Operator'}
+        cf_inherited_from_ba: {type: boolean}
+        data_flags: {type: array, items: {type: string}, nullable: true}
+        reason:
+          type: string
+          nullable: true
+          enum: [no_region_mapping, null]
+          description: Set when the metro could not be mapped. The candidate is still returned.
+    SiteResponse:
+      type: object
+      required: [request, method, candidates, unmapped_metros, caveats]
+      properties:
+        request: {$ref: '#/components/schemas/SiteRequest'}
+        method: {type: string, description: The one-sentence explanation of the ranking.}
+        candidates: {type: array, items: {$ref: '#/components/schemas/SiteCandidate'}}
+        unmapped_metros: {type: array, items: {type: string}}
+        caveats: {type: array, items: {type: string}}
+    Site:
+      type: object
+      required: [metro, ba, zone, pjm_zone, serving_utility, source_type]
+      description: A physical datacenter site. Built from the serving utility outward, never from the state.
+      properties:
+        metro: {type: string}
+        ba: {type: string, description: "Must be in contracts/ba_codes.txt"}
+        zone: {type: string, nullable: true, description: "Canonical. New web/ reads this."}
+        pjm_zone: {type: string, nullable: true, description: "Identical value. Frozen dashboard/ reads this. Do not drop."}
+        serving_utility: {type: string}
+        source_type: {type: string, enum: [utility_tariff, company_disclosure, press, inferred]}
+        source_url: {type: string, nullable: true}
+    Claim:
+      type: object
+      required: [claim_id, verbatim, source_doc, page, year, falsifiability, verdict,
+                 cannot_verify_reason, evidence]
+      properties:
+        claim_id: {type: string}
+        verbatim: {type: string}
+        source_doc: {type: string}
+        page: {type: integer, nullable: true}
+        year: {type: integer}
+        metric: {type: string, nullable: true}
+        magnitude: {type: number, nullable: true}
+        unit: {type: string, nullable: true}
+        timeframe: {type: string, nullable: true}
+        scope: {type: string, nullable: true, example: market_based}
+        falsifiability: {type: number, minimum: 0, maximum: 1}
+        greenwash_patterns: {type: array, items: {type: string}}
+        verdict:
+          type: string
+          enum: [true_on_paper, contradicted, unfalsifiable, cannot_verify]
+          description: Never "they lied". Annual matched claims are true under the GHG Protocol market-based method.
+        cannot_verify_reason:
+          type: string
+          nullable: true
+          enum: [no_falsifiable_content, no_site_mapping, ba_out_of_coverage, year_out_of_range, null]
+          description: Required and non-null whenever verdict is cannot_verify. The reason is what makes it deliberate rather than a failure state.
+        physical_min: {type: number, nullable: true}
+        physical_max: {type: number, nullable: true}
+        physical_mean_unweighted: {type: number, nullable: true}
+        confidence: {type: string, enum: [high, medium, low]}
+        evidence: {type: array, items: {$ref: '#/components/schemas/Evidence'}}
+    Evidence:
+      type: object
+      required: [type]
+      properties:
+        type: {type: string, enum: [grid, internal_contradiction, cross_doc_contradiction, note]}
+        ba: {type: string, nullable: true}
+        year: {type: integer, nullable: true}
+        cf_share: {type: number, nullable: true}
+        source_doc: {type: string, nullable: true}
+        page: {type: integer, nullable: true}
+        note: {type: string, nullable: true}
+    Company:
+      type: object
+      required: [company, ticker, is_mock, sites, claims, cannot_verify_count, notes]
+      properties:
+        company: {type: string}
+        ticker: {type: string}
+        is_mock: {type: boolean}
+        sites: {type: array, items: {$ref: '#/components/schemas/Site'}}
+        claims: {type: array, items: {$ref: '#/components/schemas/Claim'}}
+        talk_score: {type: number, minimum: 0, maximum: 1, nullable: true}
+        talk_score_method: {type: string}
+        walk_score: {type: number, minimum: 0, maximum: 1, nullable: true}
+        walk_score_method: {type: string}
+        coverage: {type: number}
+        unverifiable_share: {type: number}
+        cannot_verify_count: {type: integer, description: Rendered on screen. Must be accurate.}
+        notes: {type: array, items: {type: string}}
+    CompaniesResponse:
+      type: object
+      required: [is_mock, count, cannot_verify_total, companies]
+      properties:
+        is_mock: {type: boolean, description: True when serving companies.mock.json. Drives the MOCK DATA banner.}
+        count: {type: integer}
+        cannot_verify_total: {type: integer}
+        companies: {type: array, items: {type: object}}
+        notes: {type: array, items: {type: string}}
+    Alert:
+      type: object
+      required: [region, rule, severity, first_crossed, current_value]
+      properties:
+        region: {type: string}
+        name: {type: string}
+        rule: {type: string}
+        severity: {type: number, description: magnitude x persistence x recency}
+        threshold: {type: number}
+        baseline_2019: {type: number, nullable: true}
+        current_value: {type: number}
+        first_crossed: {type: string, example: "2020-04"}
+        months_active_streak: {type: integer}
+        description: {type: string}
+    AlertsResponse:
+      type: object
+      required: [count, excluded_regions, alerts]
+      properties:
+        generated: {type: string}
+        latest_month: {type: string}
+        count: {type: integer, maximum: 20}
+        count_before_ranking: {type: integer}
+        excluded_regions: {type: array, items: {type: string}, example: ["WACM"]}
+        alerts: {type: array, items: {$ref: '#/components/schemas/Alert'}}

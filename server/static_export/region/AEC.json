@@ -1,0 +1,379 @@
+{
+ "meta": {
+  "generated": "2026-09-19",
+  "data_snapshot_end": "2026-09-05",
+  "baseline_year": 2019,
+  "overnight_hours_local": "00:00-05:59",
+  "daytime_hours_local": "10:00-15:59",
+  "caveats": [
+   "Generation within a footprint, not consumption; interchange not allocated.",
+   "Average grid mix, not marginal emissions.",
+   "Regions are coarse; PJM spans Chicago to New Jersey.",
+   "Zones inherit the parent BA's generation figures.",
+   "Operator table is hand-mapped.",
+   "Detector flags flat 24/7 load in general (datacenters, crypto mining, oilfield electrification); language is 'consistent with'."
+  ]
+ },
+ "region": {
+  "id": "AEC",
+  "ba": "AEC",
+  "zone": null,
+  "type": "ba",
+  "name": "PowerSouth Energy Cooperative",
+  "ba_name": "PowerSouth Energy Cooperative",
+  "region_eia": "Southeast",
+  "timezone": "America/Chicago",
+  "cf_inherited_from_ba": false,
+  "cf_share": {
+   "2019": {
+    "overnight": 0.003,
+    "daytime": 0.003,
+    "all": 0.003
+   },
+   "2020": {
+    "overnight": 0.002,
+    "daytime": 0.003,
+    "all": 0.003
+   },
+   "2021": {
+    "overnight": 0.005,
+    "daytime": 0.009,
+    "all": 0.009
+   }
+  },
+  "cf_avg_mw": {
+   "2019": {
+    "overnight": 2.0,
+    "daytime": 2.0,
+    "all": 2.0
+   },
+   "2020": {
+    "overnight": 1.0,
+    "daytime": 2.0,
+    "all": 2.0
+   },
+   "2021": {
+    "overnight": 2.0,
+    "daytime": 5.0,
+    "all": 5.0
+   }
+  },
+  "total_avg_mw": {
+   "2019": {
+    "overnight": 493.0,
+    "daytime": 649.0,
+    "all": 604.0
+   },
+   "2020": {
+    "overnight": 471.0,
+    "daytime": 596.0,
+    "all": 562.0
+   },
+   "2021": {
+    "overnight": 458.0,
+    "daytime": 595.0,
+    "all": 556.0
+   }
+  },
+  "demand": {
+   "2019": {
+    "avg_mw": 536.0,
+    "overnight_avg_mw": 434.0,
+    "peak_mw": 995.0,
+    "p995_mw": 916.0,
+    "load_factor": 0.585,
+    "hours": 8760
+   },
+   "2020": {
+    "avg_mw": 528.0,
+    "overnight_avg_mw": 432.0,
+    "peak_mw": 1017.0,
+    "p995_mw": 916.0,
+    "load_factor": 0.576,
+    "hours": 8784
+   },
+   "2021": {
+    "avg_mw": 555.0,
+    "overnight_avg_mw": 459.0,
+    "peak_mw": 1077.0,
+    "p995_mw": 943.0,
+    "load_factor": 0.589,
+    "hours": 5832
+   }
+  },
+  "detection": null,
+  "fuel_delta_overnight_gw": null,
+  "overnight_fuel_mw": {
+   "2019": {
+    "nuclear": null,
+    "hydro": 2.0,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 394.0,
+    "coal": 101.0,
+    "oil": null,
+    "other": 4.0
+   },
+   "2020": {
+    "nuclear": null,
+    "hydro": 1.0,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 430.0,
+    "coal": 40.0,
+    "oil": null,
+    "other": 5.0
+   },
+   "2021": {
+    "nuclear": null,
+    "hydro": 2.0,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 451.0,
+    "coal": 0.0,
+    "oil": null,
+    "other": 4.0
+   }
+  },
+  "siting": {
+   "overnight_cf_share_2025": null,
+   "change_since_2019": null,
+   "overnight_clean_mw_over_demand": null,
+   "ratio_2019": 0.003,
+   "ratio_slope_per_year": null,
+   "siting_score": null,
+   "siting_rank": null,
+   "n_ranked": 52
+  },
+  "operators": [],
+  "interchange": {
+   "2019": {
+    "overnight_net_export_mw": 48.0,
+    "all_hours_net_export_mw": 59.0
+   },
+   "2020": {
+    "overnight_net_export_mw": 35.0,
+    "all_hours_net_export_mw": 30.0
+   },
+   "2021": {
+    "overnight_net_export_mw": -2.0,
+    "all_hours_net_export_mw": 0.0
+   }
+  },
+  "data_flags": [],
+  "exclude_from_alerts": false,
+  "heatmap_uri": "data/heatmaps/AEC.json",
+  "profile_24h": {
+   "2019": [
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.005,
+    0.005,
+    0.005,
+    0.004,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003
+   ],
+   "2025": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  "trailing12": {
+   "month": [
+    "2019-06",
+    "2019-07",
+    "2019-08",
+    "2019-09",
+    "2019-10",
+    "2019-11",
+    "2019-12",
+    "2020-01",
+    "2020-02",
+    "2020-03",
+    "2020-04",
+    "2020-05",
+    "2020-06",
+    "2020-07",
+    "2020-08",
+    "2020-09",
+    "2020-10",
+    "2020-11",
+    "2020-12",
+    "2021-01",
+    "2021-02",
+    "2021-03",
+    "2021-04",
+    "2021-05",
+    "2021-06",
+    "2021-07",
+    "2021-08"
+   ],
+   "overnight_share": [
+    0.004,
+    0.004,
+    0.004,
+    0.004,
+    0.004,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.002,
+    0.001,
+    0.001,
+    0.001,
+    0.001,
+    0.001,
+    0.002,
+    0.002,
+    0.002,
+    0.002,
+    0.002,
+    0.002,
+    0.003,
+    0.003,
+    0.003,
+    0.004,
+    0.004,
+    0.004
+   ],
+   "daytime_share": [
+    0.004,
+    0.004,
+    0.004,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.002,
+    0.002,
+    0.002,
+    0.002,
+    0.002,
+    0.002,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.004,
+    0.004,
+    0.004,
+    0.005,
+    0.006,
+    0.008
+   ],
+   "overnight_clean_mw": [
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0
+   ],
+   "overnight_total_mw": [
+    534.0,
+    528.0,
+    518.0,
+    521.0,
+    508.0,
+    493.0,
+    493.0,
+    485.0,
+    490.0,
+    483.0,
+    483.0,
+    475.0,
+    475.0,
+    474.0,
+    476.0,
+    472.0,
+    475.0,
+    465.0,
+    471.0,
+    466.0,
+    471.0,
+    471.0,
+    469.0,
+    468.0,
+    461.0,
+    448.0,
+    442.0
+   ]
+  },
+  "operator": {
+   "utility": null,
+   "parent": null,
+   "ticker": null,
+   "mapping_note": "hand-mapped"
+  },
+  "heatmap_available": false,
+  "corrections": null
+ }
+}

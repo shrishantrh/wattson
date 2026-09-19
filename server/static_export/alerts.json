@@ -1,0 +1,346 @@
+{
+ "generated": null,
+ "latest_month": "2026-08",
+ "is_ranked": true,
+ "count": 14,
+ "count_before_ranking": 14,
+ "excluded_regions": [],
+ "rules": null,
+ "alerts": [
+  {
+   "region": "ERCO/FWES",
+   "rule": "demand_up_20pct",
+   "threshold": 4085,
+   "baseline_2019": 3404,
+   "unit": "MW",
+   "first_crossed": "2022-05",
+   "active": true,
+   "months_active_streak": 52,
+   "latest_month": "2026-08",
+   "current_value": 7543.532657616435,
+   "name": "Far West",
+   "description": "Overnight demand (trailing 12 months) at least 20% above 2019",
+   "severity": 0.3805775526230774,
+   "severity_factors": {
+    "magnitude": 1.0160201696875544,
+    "persistence": 1.0,
+    "recency": 0.3745767692191704,
+    "neutral_applied": []
+   },
+   "tier": "primary"
+  },
+  {
+   "region": "ERCO/NRTH",
+   "rule": "detector_top10",
+   "threshold": 10,
+   "baseline_2019": null,
+   "unit": "rank",
+   "first_crossed": null,
+   "active": true,
+   "months_active_streak": null,
+   "latest_month": null,
+   "current_value": 1,
+   "growth_pct": 94.6,
+   "score": 16.47,
+   "name": "North",
+   "description": "Flat-load detector: top 10 with pattern 'flat-load growth'",
+   "severity": 0.3680709758862779,
+   "severity_factors": {
+    "magnitude": 1.0,
+    "persistence": 0.7083333333333334,
+    "recency": 0.5196296130159217,
+    "neutral_applied": [
+     "persistence",
+     "recency"
+    ]
+   },
+   "tier": "primary"
+  },
+  {
+   "region": "SWPP/OPPD",
+   "rule": "demand_record_high",
+   "threshold": null,
+   "baseline_2019": 1160,
+   "unit": "MW",
+   "new_highs_last_12_months": 12,
+   "first_crossed": "2024-01",
+   "active": true,
+   "months_active_streak": 32,
+   "latest_month": "2026-08",
+   "current_value": 1799.001610043014,
+   "name": "Omaha Public Power District",
+   "description": "Overnight demand (trailing 12 months) at an all-time high",
+   "severity": 0.30326597631179303,
+   "severity_factors": {
+    "magnitude": 0.5508634569336327,
+    "persistence": 1.0,
+    "recency": 0.5505283977265715,
+    "neutral_applied": []
+   },
+   "tier": "primary"
+  },
+  {
+   "region": "AZPS",
+   "rule": "detector_top10",
+   "threshold": 10,
+   "baseline_2019": null,
+   "unit": "rank",
+   "first_crossed": null,
+   "active": true,
+   "months_active_streak": null,
+   "latest_month": null,
+   "current_value": 3,
+   "growth_pct": 31.0,
+   "score": 9.01,
+   "name": "Arizona Public Service Company",
+   "description": "Flat-load detector: top 10 with pattern 'flat-load growth'",
+   "severity": 0.29445678070902237,
+   "severity_factors": {
+    "magnitude": 0.8,
+    "persistence": 0.7083333333333334,
+    "recency": 0.5196296130159217,
+    "neutral_applied": [
+     "persistence",
+     "recency"
+    ]
+   },
+   "tier": "primary"
+  },
+  {
+   "region": "PJM/DOM",
+   "rule": "demand_record_high",
+   "threshold": null,
+   "baseline_2019": 10060,
+   "unit": "MW",
+   "new_highs_last_12_months": 12,
+   "first_crossed": "2024-12",
+   "active": true,
+   "months_active_streak": 21,
+   "latest_month": "2026-08",
+   "current_value": 14807.3309368224,
+   "name": "Dominion Virginia Power zone",
+   "description": "Overnight demand (trailing 12 months) at an all-time high",
+   "severity": 0.2809446027859384,
+   "severity_factors": {
+    "magnitude": 0.47190168358075546,
+    "persistence": 0.875,
+    "recency": 0.6803950000871885,
+    "neutral_applied": []
+   },
+   "tier": "primary"
+  },
+  {
+   "region": "TEPC",
+   "rule": "detector_top10",
+   "threshold": 10,
+   "baseline_2019": null,
+   "unit": "rank",
+   "first_crossed": null,
+   "active": true,
+   "months_active_streak": null,
+   "latest_month": null,
+   "current_value": 4,
+   "growth_pct": 15.1,
+   "score": 8.51,
+   "name": "Tucson Electric Power Company",
+   "description": "Flat-load detector: top 10 with pattern 'flat-load growth'",
+   "severity": 0.2576496831203945,
+   "severity_factors": {
+    "magnitude": 0.7,
+    "persistence": 0.7083333333333334,
+    "recency": 0.5196296130159217,
+    "neutral_applied": [
+     "persistence",
+     "recency"
+    ]
+   },
+   "tier": "primary"
+  },
+  {
+   "region": "SWPP/GRDA",
+   "rule": "demand_up_20pct",
+   "threshold": 794,
+   "baseline_2019": 662,
+   "unit": "MW",
+   "first_crossed": "2022-12",
+   "active": true,
+   "months_active_streak": 24,
+   "latest_month": "2026-08",
+   "current_value": 1017.5009240691056,
+   "name": "Grand River Dam Authority",
+   "description": "Overnight demand (trailing 12 months) at least 20% above 2019",
+   "severity": 0.14470908030237337,
+   "severity_factors": {
+    "magnitude": 0.33761468892614144,
+    "persistence": 1.0,
+    "recency": 0.42862199142653645,
+    "neutral_applied": []
+   },
+   "tier": "supporting"
+  },
+  {
+   "region": "PSEI",
+   "rule": "clean_mw_below_2019",
+   "threshold": 461,
+   "baseline_2019": 470,
+   "unit": "MW",
+   "first_crossed": "2021-06",
+   "active": true,
+   "months_active_streak": 63,
+   "latest_month": "2026-08",
+   "current_value": 257.9146118721461,
+   "name": "Puget Sound Energy",
+   "description": "Overnight clean generation (trailing 12 months) at least 2% below 2019",
+   "severity": 0.1309604839448634,
+   "severity_factors": {
+    "magnitude": 0.4320965704847955,
+    "persistence": 1.0,
+    "recency": 0.3030815167033861,
+    "neutral_applied": []
+   },
+   "tier": "supporting"
+  },
+  {
+   "region": "ERCO",
+   "rule": "detector_top10",
+   "threshold": 10,
+   "baseline_2019": null,
+   "unit": "rank",
+   "first_crossed": null,
+   "active": true,
+   "months_active_streak": null,
+   "latest_month": null,
+   "current_value": 8,
+   "growth_pct": 27.2,
+   "score": 5.14,
+   "name": "Electric Reliability Council of Texas, Inc.",
+   "description": "Flat-load detector: top 10 with pattern 'flat-load growth'",
+   "severity": 0.11042129276588336,
+   "severity_factors": {
+    "magnitude": 0.3,
+    "persistence": 0.7083333333333334,
+    "recency": 0.5196296130159217,
+    "neutral_applied": [
+     "persistence",
+     "recency"
+    ]
+   },
+   "tier": "supporting"
+  },
+  {
+   "region": "ERCO/SOUT",
+   "rule": "demand_up_20pct",
+   "threshold": 3604,
+   "baseline_2019": 3003,
+   "unit": "MW",
+   "first_crossed": "2024-06",
+   "active": true,
+   "months_active_streak": 22,
+   "latest_month": "2026-08",
+   "current_value": 4126.5340527598355,
+   "name": "South",
+   "description": "Overnight demand (trailing 12 months) at least 20% above 2019",
+   "severity": 0.09668523396802084,
+   "severity_factors": {
+    "magnitude": 0.1740040135730388,
+    "persistence": 0.9166666666666666,
+    "recency": 0.6061630334067722,
+    "neutral_applied": []
+   },
+   "tier": "supporting"
+  },
+  {
+   "region": "ERCO/SCEN",
+   "rule": "demand_up_20pct",
+   "threshold": 7129,
+   "baseline_2019": 5941,
+   "unit": "MW",
+   "first_crossed": "2023-08",
+   "active": true,
+   "months_active_streak": 37,
+   "latest_month": "2026-08",
+   "current_value": 8012.908887817709,
+   "name": "South Central",
+   "description": "Overnight demand (trailing 12 months) at least 20% above 2019",
+   "severity": 0.07439058136826368,
+   "severity_factors": {
+    "magnitude": 0.14878116273652736,
+    "persistence": 1.0,
+    "recency": 0.5,
+    "neutral_applied": []
+   },
+   "tier": "supporting"
+  },
+  {
+   "region": "SC",
+   "rule": "detector_top10",
+   "threshold": 10,
+   "baseline_2019": null,
+   "unit": "rank",
+   "first_crossed": null,
+   "active": true,
+   "months_active_streak": null,
+   "latest_month": null,
+   "current_value": 9,
+   "growth_pct": 28.3,
+   "score": 5.08,
+   "name": "South Carolina Public Service Authority",
+   "description": "Flat-load detector: top 10 with pattern 'flat-load growth'",
+   "severity": 0.07361419517725559,
+   "severity_factors": {
+    "magnitude": 0.2,
+    "persistence": 0.7083333333333334,
+    "recency": 0.5196296130159217,
+    "neutral_applied": [
+     "persistence",
+     "recency"
+    ]
+   },
+   "tier": "supporting"
+  },
+  {
+   "region": "NYIS",
+   "rule": "cf_share_down_3pts",
+   "threshold": 0.624,
+   "baseline_2019": 0.654,
+   "unit": "share",
+   "first_crossed": "2020-09",
+   "active": true,
+   "months_active_streak": 72,
+   "latest_month": "2026-08",
+   "current_value": 0.4355371504800416,
+   "name": "New York Independent System Operator",
+   "description": "Overnight carbon-free share (trailing 12 months) at least 3 points below 2019",
+   "severity": 0.055677476984907805,
+   "severity_factors": {
+    "magnitude": 0.21846284951995842,
+    "persistence": 1.0,
+    "recency": 0.2548601609255362,
+    "neutral_applied": []
+   },
+   "tier": "chronic"
+  },
+  {
+   "region": "CPLW",
+   "rule": "cf_share_down_3pts",
+   "threshold": 0.204,
+   "baseline_2019": 0.234,
+   "unit": "share",
+   "first_crossed": "2020-02",
+   "active": true,
+   "months_active_streak": 79,
+   "latest_month": "2026-08",
+   "current_value": 0.0177209183140831,
+   "name": "Duke Energy Progress West",
+   "description": "Overnight carbon-free share (trailing 12 months) at least 3 points below 2019",
+   "severity": 0.048170689158638286,
+   "severity_factors": {
+    "magnitude": 0.21627908168591692,
+    "persistence": 1.0,
+    "recency": 0.22272467953508485,
+    "neutral_applied": []
+   },
+   "tier": "chronic"
+  }
+ ]
+}

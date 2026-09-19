@@ -1,0 +1,171 @@
+{
+ "request": {
+  "mw": 300,
+  "metros": [
+   "Dallas",
+   "Columbus",
+   "Portland"
+  ],
+  "flat_247": true
+ },
+ "method": "Ranked on overnight carbon-free share today, whether it is improving, and overnight clean MW relative to overnight demand. Frozen siting score from the published index; no re-tuning.",
+ "candidates": [
+  {
+   "metro": "Dallas",
+   "region_id": "ERCO/NCEN",
+   "name": "North Central",
+   "reason": null,
+   "siting_score": 0.603,
+   "siting_rank": 18,
+   "components": {
+    "level_overnight_cf_share_2025": 0.413,
+    "direction_ratio_slope_per_year": -0.0,
+    "headroom_overnight_clean_mw_over_demand": 0.417,
+    "change_since_2019": 0.014
+   },
+   "detector": {
+    "rank": 91,
+    "score": -1.32,
+    "growth_pct": 14.2,
+    "overnight_growth_pct": 16.2,
+    "overnight_excess": 1.9,
+    "neighbor_divergence": -12.2,
+    "load_factor_delta": 0.029,
+    "pattern": "flat-load growth"
+   },
+   "fuel_that_filled_growth": {
+    "fuel": "gas",
+    "gw": 6.62
+   },
+   "fuel_delta_overnight_gw": {
+    "nuclear": 0.07,
+    "hydro": -0.03,
+    "wind": 5.53,
+    "solar": 0.0,
+    "geothermal": null,
+    "gas": 6.62,
+    "coal": 0.08,
+    "oil": null,
+    "other": -0.05
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ],
+   "verdict_rank": 1
+  },
+  {
+   "metro": "Columbus",
+   "region_id": "PJM/AEP",
+   "name": "American Electric Power zone",
+   "reason": null,
+   "siting_score": 0.436,
+   "siting_rank": 34,
+   "components": {
+    "level_overnight_cf_share_2025": 0.39,
+    "direction_ratio_slope_per_year": -0.0044,
+    "headroom_overnight_clean_mw_over_demand": 0.408,
+    "change_since_2019": -0.042
+   },
+   "detector": {
+    "rank": 19,
+    "score": 2.29,
+    "growth_pct": 9.2,
+    "overnight_growth_pct": 12.6,
+    "overnight_excess": 3.4,
+    "neighbor_divergence": 10.4,
+    "load_factor_delta": 0.021,
+    "pattern": "mixed"
+   },
+   "fuel_that_filled_growth": {
+    "fuel": "gas",
+    "gw": 10.74
+   },
+   "fuel_delta_overnight_gw": {
+    "nuclear": -0.95,
+    "hydro": -0.22,
+    "wind": 1.07,
+    "solar": 0.01,
+    "geothermal": null,
+    "gas": 10.74,
+    "coal": -2.52,
+    "oil": 0.15,
+    "other": 0.41
+   },
+   "operator": {
+    "utility": "AEP Ohio, Appalachian Power, Indiana Michigan Power, Kentucky Power",
+    "parent": "American Electric Power",
+    "ticker": "AEP",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": true,
+   "data_flags": [
+    "Generation numbers are the parent BA's (zones report demand only)."
+   ],
+   "verdict_rank": 2
+  },
+  {
+   "metro": "Portland",
+   "region_id": "PGE",
+   "name": "Portland General Electric Company",
+   "reason": null,
+   "siting_score": 0.25,
+   "siting_rank": 42,
+   "components": {
+    "level_overnight_cf_share_2025": 0.227,
+    "direction_ratio_slope_per_year": 0.0013,
+    "headroom_overnight_clean_mw_over_demand": 0.093,
+    "change_since_2019": -0.112
+   },
+   "detector": {
+    "rank": 15,
+    "score": 3.11,
+    "growth_pct": 14.3,
+    "overnight_growth_pct": 21.9,
+    "overnight_excess": 7.6,
+    "neighbor_divergence": 9.7,
+    "load_factor_delta": -0.031,
+    "pattern": "flat-load growth"
+   },
+   "fuel_that_filled_growth": {
+    "fuel": "gas",
+    "gw": 0.39
+   },
+   "fuel_delta_overnight_gw": {
+    "nuclear": null,
+    "hydro": 0.04,
+    "wind": 0.0,
+    "solar": null,
+    "geothermal": null,
+    "gas": 0.39,
+    "coal": 0.0,
+    "oil": null,
+    "other": -0.01
+   },
+   "operator": {
+    "utility": null,
+    "parent": null,
+    "ticker": null,
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "data_flags": [],
+   "verdict_rank": 3
+  }
+ ],
+ "unmapped_metros": [],
+ "caveats": [
+  "Generation within a footprint, not consumption; interchange not allocated.",
+  "Average grid mix, not marginal emissions.",
+  "Regions are coarse; PJM spans Chicago to New Jersey.",
+  "Zones inherit the parent BA's generation figures.",
+  "Operator table is hand-mapped.",
+  "Detector flags flat 24/7 load in general (datacenters, crypto mining, oilfield electrification); language is 'consistent with'."
+ ]
+}

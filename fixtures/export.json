@@ -1,0 +1,69 @@
+{
+ "kinds": [
+  "regions",
+  "alerts",
+  "companies"
+ ],
+ "regions": {
+  "path": "/api/export/regions.csv",
+  "columns": [
+   "id",
+   "ba",
+   "zone",
+   "name",
+   "detector_rank",
+   "detector_score",
+   "growth_pct",
+   "overnight_growth_pct",
+   "overnight_excess",
+   "pattern",
+   "siting_score",
+   "siting_rank",
+   "overnight_cf_share_2025",
+   "ratio_slope_per_year",
+   "utility",
+   "parent",
+   "ticker",
+   "cf_inherited_from_ba"
+  ],
+  "rows": 111
+ },
+ "alerts": {
+  "path": "/api/export/alerts.csv",
+  "columns": [
+   "region",
+   "name",
+   "rule",
+   "severity",
+   "first_crossed",
+   "months_active_streak",
+   "current_value",
+   "threshold",
+   "baseline_2019"
+  ],
+  "rows": null
+ },
+ "companies": {
+  "path": "/api/export/companies.csv",
+  "columns": [
+   "company",
+   "ticker",
+   "claim_id",
+   "verbatim",
+   "source_doc",
+   "page",
+   "year",
+   "metric",
+   "magnitude",
+   "scope",
+   "falsifiability",
+   "verdict",
+   "cannot_verify_reason",
+   "physical_min",
+   "physical_max",
+   "physical_mean_unweighted"
+  ],
+  "rows": 3
+ },
+ "note": "All shares are 0-1 fractions. growth_pct is a percent, passed through from source unchanged."
+}

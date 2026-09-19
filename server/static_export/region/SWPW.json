@@ -1,0 +1,157 @@
+{
+ "meta": {
+  "generated": "2026-09-19",
+  "data_snapshot_end": "2026-09-05",
+  "baseline_year": 2019,
+  "overnight_hours_local": "00:00-05:59",
+  "daytime_hours_local": "10:00-15:59",
+  "caveats": [
+   "Generation within a footprint, not consumption; interchange not allocated.",
+   "Average grid mix, not marginal emissions.",
+   "Regions are coarse; PJM spans Chicago to New Jersey.",
+   "Zones inherit the parent BA's generation figures.",
+   "Operator table is hand-mapped.",
+   "Detector flags flat 24/7 load in general (datacenters, crypto mining, oilfield electrification); language is 'consistent with'."
+  ]
+ },
+ "region": {
+  "id": "SWPW",
+  "ba": "SWPW",
+  "zone": null,
+  "type": "ba",
+  "name": "Southwest Power Pool West",
+  "ba_name": "Southwest Power Pool West",
+  "region_eia": "Northwest",
+  "timezone": "America/Denver",
+  "cf_inherited_from_ba": false,
+  "cf_share": {
+   "2026": {
+    "overnight": 0.437,
+    "daytime": 0.55,
+    "all": 0.491
+   }
+  },
+  "cf_avg_mw": {
+   "2026": {
+    "overnight": 1109.0,
+    "daytime": 1664.0,
+    "all": 1431.0
+   }
+  },
+  "total_avg_mw": {
+   "2026": {
+    "overnight": 2537.0,
+    "daytime": 3022.0,
+    "all": 2918.0
+   }
+  },
+  "demand": {
+   "2026": {
+    "avg_mw": 3149.0,
+    "overnight_avg_mw": 2806.0,
+    "peak_mw": 4866.0,
+    "p995_mw": 4706.0,
+    "load_factor": 0.669,
+    "hours": 3792
+   }
+  },
+  "detection": null,
+  "fuel_delta_overnight_gw": null,
+  "overnight_fuel_mw": {
+   "2026": {
+    "nuclear": 0.0,
+    "hydro": 602.0,
+    "wind": 480.0,
+    "solar": 27.0,
+    "geothermal": null,
+    "gas": 465.0,
+    "coal": 903.0,
+    "oil": 41.0,
+    "other": 20.0
+   }
+  },
+  "siting": {
+   "overnight_cf_share_2025": null,
+   "change_since_2019": null,
+   "overnight_clean_mw_over_demand": null,
+   "ratio_2019": null,
+   "ratio_slope_per_year": null,
+   "siting_score": null,
+   "siting_rank": null,
+   "n_ranked": 52
+  },
+  "operators": [],
+  "interchange": {
+   "2026": {
+    "overnight_net_export_mw": -356.0,
+    "all_hours_net_export_mw": -347.0
+   }
+  },
+  "data_flags": [],
+  "exclude_from_alerts": false,
+  "heatmap_uri": "data/heatmaps/SWPW.json",
+  "profile_24h": {
+   "2019": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "2025": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  "trailing12": null,
+  "operator": {
+   "utility": null,
+   "parent": null,
+   "ticker": null,
+   "mapping_note": "hand-mapped"
+  },
+  "heatmap_available": false,
+  "corrections": null
+ }
+}
