@@ -232,3 +232,9 @@ a.gpin:hover .gpin-label { border-color: var(--line-focus); }
 @media (prefers-reduced-motion: reduce) { .fade-up, .stagger > * { animation: none; } .globe-host { transition: none; } [data-tip]::after { transition: none; } }
 
 @media (max-width: 900px) { .column { width: calc(100% - 44px); } .globe-host.with-column { left: 0; opacity: 0.5; } .quick { width: 220px; } .tagline { display: none; } }
+
+/* compare card: one segment per candidate, width = clean share at night */
+.sharebar { display: flex; gap: 3px; height: 6px; margin-top: 14px; }
+.sharebar span { display: block; height: 100%; background: var(--ink-2); border-radius: 2px; opacity: 0.55; }
+.sharebar span.best { background: var(--accent); opacity: 1; }
+.note.live b { color: var(--ink); font-weight: 500; }

@@ -29,7 +29,7 @@ export default function Compare({ route }) {
   const globe = useMemo(() => {
     const pts = cands.filter(c => c.lat != null)
     return { view: fitView(pts), points: pts.map(c => ({ id: c.region_id, lat: c.lat, lng: c.lng, r: 0.2, color: c === answer?.best ? tk.accent : tk.ink2 })), rings: pts.filter(c => c === answer?.best).map(c => ({ id: c.region_id, lat: c.lat, lng: c.lng, color: tk.accent, maxR: 3, speed: 0.8, period: 1600 })),
-      markers: pts.map(c => ({ id: c.region_id, lat: c.lat, lng: c.lng, label: `${c.rank}  ${c.metro} · ${pct0(c.siting?.overnight_cf_share_2025)}`, href: href.region(c.region_id), color: c === answer?.best ? tk.accent : tk.ink2, lead: c === answer?.best })) }
+      markers: pts.map(c => ({ id: c.region_id, lat: c.lat, lng: c.lng, label: `${c.rank}  ${c.metro} · ${pct0(c.siting?.overnight_cf_share_2025)}`, tip: `${c.metro}: ${pct1(c.siting?.overnight_cf_share_2025)} clean at night, ${trend(c.siting?.ratio_slope_per_year)}${c.detector?.rank ? `, flat-load rank #${c.detector.rank}` : ''}`, href: href.region(c.region_id), color: c === answer?.best ? tk.accent : tk.ink2, lead: c === answer?.best })) }
   }, [cands, answer, tk])
   const go = (m = request.metros, load = mw) => { window.location.hash = href.compare({ mw: Number(load) || 300, metros: m, evidence }) }
   const addMetro = e => { e.preventDefault(); const m = matchMetro(add); if (m && !request.metros.some(x => matchMetro(x)?.metro === m.metro)) go([...request.metros, m.metro]); setAdd('') }
@@ -89,7 +89,9 @@ export default function Compare({ route }) {
           {data.unmapped.length > 0 && <div className="banner">Not in our map yet: {data.unmapped.join(', ')}. Try a nearby major city.</div>}
           <h1 className="verdict">{answer.sentence}</h1>
           <div className="nums" style={{ gridTemplateColumns: `repeat(${Math.max(1, Math.min(3, cands.length))}, 1fr)` }}>{answer.numbers.map((n, i) => <Num key={i} num={n.raw != null ? n.raw * 100 : undefined} format={pctFmt} value={n.value} label={n.label} sub={n.sub} accent={n.accent} />)}</div>
-          <p className="note" style={{ marginTop: 12 }}>Ranked on clean power at night, whether it is improving, and clean power relative to demand. Equal weight, frozen before any result was seen.</p>
+          <div className="sharebar" aria-hidden="true">{cands.map(c => { const v = c.siting?.overnight_cf_share_2025 ?? 0; return <span key={c.region_id} className={c === answer.best ? 'best' : ''} style={{ width: `${Math.max(2, v * 100) / cands.length}%` }} title={`${c.metro} ${pct0(v)}`} /> })}</div>
+          {answer.best?.siting?.overnight_cf_share_2025 != null && <p className="note live" style={{ marginTop: 10 }}>At <b>{n0(Number(mw) || load)} MW</b>, {answer.best.metro} would draw about <b>{n0((Number(mw) || load) * (1 - answer.best.siting.overnight_cf_share_2025))} MW</b> from fossil generation at night on the 2025 mix{cands[1]?.siting?.overnight_cf_share_2025 != null ? <>, versus <b>{n0((Number(mw) || load) * (1 - cands[1].siting.overnight_cf_share_2025))} MW</b> in {cands[1].metro}</> : null}. Average mix, not marginal.</p>}
+          <p className="note" style={{ marginTop: 8 }}>Ranked on clean power at night, whether it is improving, and clean power relative to demand. Equal weight, frozen before any result was seen.</p>
           <Evidence open={evidence} onToggle={toggle} label="Show why" />
         </Card>
         {evidence && <Workspace id="compare" modules={modules} />}

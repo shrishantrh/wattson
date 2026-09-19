@@ -215,6 +215,7 @@ function makeMarkerElement(d) {
   if (d.color) el.style.setProperty('--pin', d.color)
   el.innerHTML = '<span class="gpin-tile"></span><span class="gpin-stem"></span>' + (d.label ? '<span class="gpin-label"></span>' : '')
   if (d.label) el.querySelector('.gpin-label').textContent = d.label
+  if (d.label && d.tip) el.querySelector('.gpin-label').setAttribute('data-tip', d.tip)
   el.style.pointerEvents = d.href ? 'auto' : 'none'
   return el
 }
@@ -247,7 +248,7 @@ function markerVisibility(el, isVisible) { el.style.opacity = isVisible ? '1' : 
  * @param {() => void} [props.onReady] called once the globe is initialised and the first view is applied
  * @param {(point: object, event: MouseEvent, coords: { lat: number, lng: number, altitude: number }) => void} [props.onPointClick]
  * @param {(point: object|null) => void} [props.onPointHover]
- * @param {Array<{ id: string|number, lat: number, lng: number, label?: string, color?: string, hollow?: boolean, muted?: boolean, lead?: boolean, href?: string }>} [props.markers] HTML pin markers (tile + stem + label) anchored to the surface
+ * @param {Array<{ id: string|number, lat: number, lng: number, label?: string, tip?: string, color?: string, hollow?: boolean, muted?: boolean, lead?: boolean, href?: string }>} [props.markers] HTML pin markers (tile + stem + label) anchored to the surface
  */
 export default function Globe({
   style = 'dots',
