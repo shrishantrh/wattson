@@ -11,3 +11,6 @@ dashboard/dist/
 
 # D1 ingest: downloaded source PDFs are large binaries, keep them out of git
 claims/raw/pdf/
+
+# demo video renders (rebuild with: node web/scripts/narrate.mjs && node web/scripts/film.mjs)
+docs/wattson-demo.gif

@@ -1,0 +1,84 @@
+{
+  "backend": "say:Samantha@170",
+  "generated": "2026-09-19T22:12:16.322Z",
+  "shots": {
+    "flat": {
+      "durationMs": 3584,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-0.m4a",
+      "words": 11
+    },
+    "night": {
+      "durationMs": 7259,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-1.m4a",
+      "words": 25
+    },
+    "two": {
+      "durationMs": 5586,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-2.m4a",
+      "words": 15
+    },
+    "landing": {
+      "durationMs": 1003,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-3.m4a",
+      "words": 3
+    },
+    "type": {
+      "durationMs": 0
+    },
+    "google": {
+      "durationMs": 8119,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-5.m4a",
+      "words": 24
+    },
+    "evidence": {
+      "durationMs": 9112,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-6.m4a",
+      "words": 20
+    },
+    "chip": {
+      "durationMs": 4698,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-7.m4a",
+      "words": 8
+    },
+    "compare": {
+      "durationMs": 9618,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-8.m4a",
+      "words": 25
+    },
+    "shape": {
+      "durationMs": 7694,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-9.m4a",
+      "words": 18
+    },
+    "nearby": {
+      "durationMs": 4244,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-10.m4a",
+      "words": 11
+    },
+    "sweep": {
+      "durationMs": 10616,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-11.m4a",
+      "words": 22
+    },
+    "detector": {
+      "durationMs": 9522,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-12.m4a",
+      "words": 21
+    },
+    "found": {
+      "durationMs": 5795,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-13.m4a",
+      "words": 17
+    },
+    "sources": {
+      "durationMs": 5371,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-14.m4a",
+      "words": 11
+    },
+    "end": {
+      "durationMs": 3299,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-15.m4a",
+      "words": 9
+    }
+  }
+}
