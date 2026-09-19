@@ -97,10 +97,11 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
 // Registry entry, same shape as the modules in ./index.js (the integrator registers it there).
 // ctx = { detail, region_id, load_mw? }. A zone's profile is its parent grid's.
 const labelOf = d => d?.c?.label || d?.name || d?.id || null
-const gridOf = d => (d?.type === 'zone' && d?.parent && typeof d.parent === 'object' ? d.parent : d)
+// The grid whose generation the profile belongs to: a zone's parent BA (by object or by `ba`), else the region itself.
+const gridLabel = d => (d?.type === 'zone' ? d.parent?.id || d.parent?.ba || d.ba || null : d?.id || d?.ba || null)
 // oxlint-disable-next-line react/only-export-components -- a registry entry, not a component
 export const shapeModule = {
   id: 'shape', title: 'What your load shape would run on',
   applies: ctx => !!profileOf(ctx?.detail),
-  render: ctx => <ShapeModule profile={profilesOf(ctx?.detail) || profileOf(ctx?.detail)} label={labelOf(ctx?.detail)} loadMW={Number(ctx?.load_mw) || 300} grid={gridOf(ctx?.detail)?.id || ctx?.detail?.ba || null} inherited={!!ctx?.detail?.cf_inherited_from_ba} />,
+  render: ctx => <ShapeModule profile={profilesOf(ctx?.detail) || profileOf(ctx?.detail)} label={labelOf(ctx?.detail)} loadMW={Number(ctx?.load_mw) || 300} grid={gridLabel(ctx?.detail)} inherited={!!ctx?.detail?.cf_inherited_from_ba} />,
 }

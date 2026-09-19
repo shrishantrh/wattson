@@ -41,18 +41,24 @@ export function detectorTitle(det) {
   return { title: `${n} regions scored from demand alone. ${leads} flagged ${leads === 1 ? 'region is' : 'regions are'} not known datacenter clusters.`, sub: `Validation named in advance: ${ranks}. Flat 24/7 load raises the overnight floor faster than the mean, and the detector reads that fingerprint without a company list.` }
 }
 
+// The engine's corrected 2019 overnight clean share, when it published one.
+export const correctedBaseline = region => { const c = (region?.corrections?.corrections || region?.parent?.corrections?.corrections || []).find(x => x.path === 'cf_share.2019'); return c?.corrected?.overnight ?? null }
+
 // Region page.
 export function regionTitle(region, label) {
   const d = region?.demand || {}, cf = region?.cf_share || {}
   const g = d['2025']?.overnight_avg_mw / d['2019']?.overnight_avg_mw - 1
+  // When the engine has corrected the 2019 baseline (AZPS counted SRP's nuclear), the change is
+  // measured from the corrected figure, and the sentence says so.
+  const corr = correctedBaseline(region)
   const sitingChange = region?.siting?.change_since_2019 ?? region?.parent?.siting?.change_since_2019
-  const o = sitingChange ?? (cf['2025']?.overnight - cf['2019']?.overnight)
+  const o = corr != null ? (cf['2025']?.overnight ?? region?.siting?.overnight_cf_share_2025) - corr : (sitingChange ?? (cf['2025']?.overnight - cf['2019']?.overnight))
   const name = label || region?.name || region?.id
   if (!Number.isFinite(g)) return { title: `${name}`, sub: '' }
   const grew = g >= 0 ? `grew ${pct0(g)}` : `fell ${pct0(-g)}`
   const grid = region?.cf_inherited_from_ba ? `The grid serving it (${region.ba})` : 'Its grid'
   const clean = !Number.isFinite(o) ? '' : Math.abs(o) < 0.01 ? `${grid} is no cleaner at night than in 2019.` : o < 0 ? `${grid} is ${pts1(o).replace('−', '')} less clean at night.` : `${grid} is ${pts1(o).replace('+', '')} cleaner at night.`
-  return { title: `${name}'s overnight demand ${grew} since 2019. ${clean}`, sub: `Average demand ${n0(d['2019']?.avg_mw)} MW to ${n0(d['2025']?.avg_mw)} MW; overnight ${n0(d['2019']?.overnight_avg_mw)} MW to ${n0(d['2025']?.overnight_avg_mw)} MW.` }
+  return { title: `${name}'s overnight demand ${grew} since 2019. ${clean}${corr != null ? ' (from the corrected 2019 figure)' : ''}`, sub: `Average demand ${n0(d['2019']?.avg_mw)} MW to ${n0(d['2025']?.avg_mw)} MW; overnight ${n0(d['2019']?.overnight_avg_mw)} MW to ${n0(d['2025']?.overnight_avg_mw)} MW.` }
 }
 
 // Site page.

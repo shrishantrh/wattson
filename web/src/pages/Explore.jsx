@@ -18,6 +18,7 @@ const US = { lat: 38.5, lng: -97, altitude: 1.5 }
 const SECTORS = ['All', 'Eastern', 'Texas', 'Western']
 const NAMED_FALLBACK = ['PJM/DOM', 'PJM/AEP', 'SWPP/OPPD', 'ERCO/NCEN']
 const exploreHref = ({ x, y, sel, sector }) => href.explore({ x, y, ...(sel ? { sel } : {}), ...(sector && sector !== 'All' ? { sector } : {}) })
+const axisLabel = m => (['%', '×', 'rank'].includes(m.unit) ? m.label : `${m.label} (${m.unit})`)   // tick labels already carry %, × and #
 
 // "Across 111 regions, demand growth and overnight excess correlate r = 0.61: places that grew
 // fast also grew faster at night." Generated from the numbers; presets supply the reading.
@@ -26,9 +27,10 @@ function sentence({ n, mx, my, r, preset, sector }) {
   if (r == null) return { text: `${where}, ${mx.phrase} and ${my.phrase} cannot be correlated: too few points or no spread.`, strength: '' }
   const a = Math.abs(r), dir = a < 0.1 ? 'none' : r > 0 ? 'pos' : 'neg'
   const strength = a < 0.1 ? 'no correlation' : a < 0.3 ? `weak ${r > 0 ? 'positive' : 'negative'} correlation` : a < 0.6 ? `moderate ${r > 0 ? 'positive' : 'negative'} correlation` : `strong ${r > 0 ? 'positive' : 'negative'} correlation`
+  const verb = a < 0.1 ? 'barely correlate' : a < 0.3 ? 'correlate only weakly' : a < 0.6 ? 'correlate' : 'correlate strongly'
   const generic = { pos: `higher ${mx.phrase} goes with higher ${my.phrase}`, neg: `higher ${mx.phrase} goes with lower ${my.phrase}`, none: `${mx.phrase} says little about ${my.phrase}` }
   const reading = preset?.reading?.[dir] || generic[dir]
-  return { text: `${where}, ${mx.phrase} and ${my.phrase} correlate r = ${r.toFixed(2)}: ${reading}.`, strength }
+  return { text: `${where}, ${mx.phrase} and ${my.phrase} ${verb}, r = ${r.toFixed(2)}: ${reading}${a < 0.3 && dir !== 'none' ? ', but only a little' : ''}.`, strength }
 }
 
 export default function Explore({ route }) {
@@ -49,7 +51,8 @@ export default function Explore({ route }) {
   const all = useMemo(() => {
     const flags = data?.meta?.data_flags || {}
     const named = new Set(data?.meta?.validation_named_in_advance || NAMED_FALLBACK)
-    return (data?.regions || []).map(r => ({ id: r.id, x: mx.get(r), y: my.get(r), label: r.c?.label || r.name || r.id, sector: sectorOf(r), flagged: !!flags[r.id] || !!r.exclude_from_alerts, named: named.has(r.id), lat: r.c?.lat, lng: r.c?.lng, region: r }))
+    // Hollow = data-flagged (WACM) or carrying a correction overlay (AZPS's generation break); the values plotted are the published ones.
+    return (data?.regions || []).map(r => ({ id: r.id, x: mx.get(r), y: my.get(r), label: r.c?.label || r.name || r.id, sector: sectorOf(r), flagged: !!flags[r.id] || !!r.exclude_from_alerts || !!r.has_corrections, named: named.has(r.id), lat: r.c?.lat, lng: r.c?.lng, region: r }))
       .filter(p => Number.isFinite(p.x) && Number.isFinite(p.y))
   }, [data, mx, my])
   const visible = useMemo(() => (sector === 'All' ? all : all.filter(p => p.sector === sector)), [all, sector])
@@ -97,8 +100,8 @@ export default function Explore({ route }) {
         </div>
         {data && (
           <>
-            <Scatter points={visible} xLabel={`${mx.label}${mx.unit === '%' || mx.unit === 'pts' ? '' : ` (${mx.unit})`}`} yLabel={my.label} xFormat={mx.format} yFormat={my.format} xTick={tickFormat(mx)} yTick={tickFormat(my)} width={700} height={420} selectedId={sel} onSelect={id => go({ sel: id === sel ? null : id })} quadrants={!!preset?.quadrants} quadrantLabel={preset?.quadrantLabel || ''} fitLine />
-            <div className="legend xp-legend"><span><i className="ink2" />Eastern</span><span><i className="ink" />Texas</span><span><i className="dim" />Western</span><span><i className="hollow" />data-flagged</span><span><i className="ring" />named in advance</span><span><i className="line" />least-squares fit</span>{preset?.quadrants && <span><i className="cross" />medians</span>}<span className="xp-legend-hint">click a point to pin it</span></div>
+            <Scatter points={visible} xLabel={axisLabel(mx)} yLabel={axisLabel(my)} xFormat={mx.format} yFormat={my.format} xTick={tickFormat(mx)} yTick={tickFormat(my)} width={700} height={420} selectedId={sel} onSelect={id => go({ sel: id === sel ? null : id })} quadrants={!!preset?.quadrants} quadrantLabel={preset?.quadrantLabel || ''} fitLine />
+            <div className="legend xp-legend"><span><i className="ink2" />Eastern</span><span><i className="ink" />Texas</span><span><i className="dim" />Western</span><span><i className="hollow" />data-flagged or corrected</span><span><i className="ring" />named in advance</span><span><i className="line" />least-squares fit</span>{preset?.quadrants && <span><i className="cross" />medians</span>}<span className="xp-legend-hint">click a point to pin it</span></div>
           </>
         )}
       </Card>

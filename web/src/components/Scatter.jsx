@@ -81,7 +81,7 @@ export default function Scatter({ points = [], xLabel = '', yLabel = '', xFormat
           const cx = sx(p.x), cy = sy(p.y), sel = p.id === selectedId
           const lw = textW(p.label || p.id, 11), left = cx + 10 + lw > right
           return (
-            <g key={p.id} className={`xp-pt ${sectorClass(p.sector)}${p.flagged ? ' hollow' : ''}${p.named ? ' named' : ''}${sel ? ' sel' : ''}${hoverId === p.id ? ' hov' : ''}`} onMouseEnter={() => enter(p)} onClick={() => onSelect?.(p.id)}>
+            <g key={p.id} className={`xp-pt ${sectorClass(p.sector)}${p.flagged ? ' hollow' : ''}${p.named ? ' named' : ''}${sel ? ' sel' : ''}${hoverId === p.id ? ' hov' : ''}`} onMouseEnter={() => enter(p)} onMouseLeave={leave} onClick={() => onSelect?.(p.id)}>
               <circle className="xp-hit" cx={cx} cy={cy} r="9" />
               {p.named && <circle className="xp-ring" cx={cx} cy={cy} r="7" />}
               <circle className="xp-dot" cx={cx} cy={cy} r={sel ? 4 : 2.5} />
