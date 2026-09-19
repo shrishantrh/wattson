@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Shell from '../console/Console.jsx'
 import { Card, Num, Section, KV, HourBars } from '../console/widgets.jsx'
+import YearSlider, { useYearPlayback } from '../components/YearSlider.jsx'
+import traj from '../data/trajectory.json'
 import coords from '../data/region_coords.json'
 import { loadOpening, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
@@ -47,6 +49,9 @@ export default function Found({ route }) {
   const { loading, error, data, reload } = useAsync(loadOpening, [])
   const scene = SCENES.some(([id]) => id === route.params?.s) ? route.params.s : 'headline'
   const [replay, setReplay] = useState(0)
+  const yp = useYearPlayback(traj.years)
+  const yi = traj.years.indexOf(yp.year)
+  const nightOf = id => traj.regions[id]?.night?.[yi] ?? null
   const p = useSweep(scene === 'sweep', replay)
   const tk = useMemo(readTokens, [])
   const det = data?.detector
@@ -57,10 +62,10 @@ export default function Found({ route }) {
   const named = useMemo(() => scored.filter(r => r.validation || leads.has(r.id)).sort((a, b) => a.rank - b.rank), [scored, leads])
   const dom = coords.regions['PJM/DOM']
   const points = useMemo(() => {
-    if (scene === 'detector') return scored.map(r => ({ id: r.id, lat: r.c.lat, lng: r.c.lng, r: r.score > 0 ? 0.16 + 0.22 * Math.min(1, r.score / 10) : 0.11, color: r.data_flagged ? tk.ink2 : r.score > 0 ? tk.accent : tk.muted, hollow: !!r.data_flagged }))
+    if (scene === 'detector') return scored.map(r => { const n = nightOf(r.id); return { id: r.id, lat: r.c.lat, lng: r.c.lng, r: n == null ? 0.11 : 0.12 + 0.3 * n, color: r.data_flagged ? tk.ink2 : n == null ? tk.muted : n < 0.3 ? tk.accent : n < 0.6 ? tk.ink2 : tk.ink, hollow: !!r.data_flagged || !!traj.regions[r.id]?.corrected } })
     if (scene !== 'headline') return pulses.map(r => ({ id: r.id, lat: r.c.lat, lng: r.c.lng, r: 0.18, color: tk.accent }))
     return [{ id: 'PJM/DOM', lat: dom.lat, lng: dom.lng, r: 0.22, color: tk.accent }]
-  }, [scene, scored, pulses, tk, dom])
+  }, [scene, scored, pulses, tk, dom, yi])   // eslint-disable-line react-hooks/exhaustive-deps
   const rings = useMemo(() => {
     if (scene === 'headline') return [{ id: 'PJM/DOM', lat: dom.lat, lng: dom.lng, color: tk.accent, maxR: 3, speed: 0.8, period: 1600 }]
     if (scene === 'night' || scene === 'detector') return pulses.map(r => ({ id: r.id, lat: r.c.lat, lng: r.c.lng, color: tk.accent, maxR: 2.4, speed: 0.7, period: 1500 }))
@@ -113,7 +118,9 @@ export default function Found({ route }) {
         {scene === 'detector' && <>
           <h1 className="verdict">{detT.title}</h1>
           <p className="note" style={{ marginTop: 10 }}>{detT.sub}</p>
-          <div className="legend"><span><i /> flat load rising</span><span><i className="dim" /> not rising</span><span><i className="hollow" /> data flagged</span><span><i className="ink" /> named in advance</span></div>
+          <YearSlider years={traj.years} value={yp.year} onChange={yp.setYear} playing={yp.playing} onPlay={v => (v ? yp.play() : yp.setPlaying(false))} label="clean power at night, by year" />
+          <div className="legend"><span><i /> under 30% clean at night</span><span><i className="dim" /> 30–60%</span><span><i className="ink" /> over 60%</span><span><i className="hollow" /> data flagged or corrected</span></div>
+          <p className="note" style={{ marginTop: 10 }}>{(() => { const by = traj.summary?.by_year?.[yi]; const d = traj.summary?.biggest_drop?.[0], u = traj.summary?.biggest_rise?.[0]; return by && d && u ? `In ${yp.year} the median region ran ${Math.round((by.median_night || 0) * 100)}% clean at night. From 2019 to 2025 the biggest fall was ${coords.regions[d.id]?.label || d.id} (${Math.round(d.from * 100)}% to ${Math.round(d.to * 100)}%), the biggest rise ${coords.regions[u.id]?.label || u.id} (${Math.round(u.from * 100)}% to ${Math.round(u.to * 100)}%). Press play.` : '' })()}</p>
         </>}
       </Card>
       {scene === 'headline' && <Section title="Clean share by hour on that grid, 2025 (night in ember)"><HourBars values={pjm.profile_24h?.['2025'] || pjm.profile_24h} /></Section>}
