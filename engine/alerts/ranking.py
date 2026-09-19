@@ -32,6 +32,22 @@ DEFAULT_LIMIT = 14
 
 DETECTOR_RANK_CUTOFF = 10
 
+#: Tier boundaries, placed on the two largest breaks in the observed severity
+#: distribution rather than on round numbers: 6 -> 7 drops 78% (the largest
+#: gap anywhere in the ranking) and 12 -> 13 drops 32% (where demand-growth
+#: evidence ends and the chronic carbon-free-share tail begins).
+TIER_PRIMARY_THROUGH = 6
+TIER_SUPPORTING_THROUGH = 12
+
+
+def tier_for(position: int) -> str:
+    """Tier for a 1-based position in the ranked list."""
+    if position <= TIER_PRIMARY_THROUGH:
+        return "primary"
+    if position <= TIER_SUPPORTING_THROUGH:
+        return "supporting"
+    return "chronic"
+
 
 def _months(ym: str) -> int:
     year, month = ym.split("-")
@@ -198,6 +214,8 @@ def rank(alerts, regions, limit: int = DEFAULT_LIMIT,
 
     ordered = sorted(strongest.values(),
                      key=lambda e: (-e["severity"], e["region"]))
+    for position, entry in enumerate(ordered, 1):
+        entry["tier"] = tier_for(position)
     if len(ordered) > limit:
         dropped["over_limit"] = len(ordered) - limit
         ordered = ordered[:limit]

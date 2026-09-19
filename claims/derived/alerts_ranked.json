@@ -26,7 +26,8 @@
         "persistence": 1.0,
         "recency": 0.3745767692191704,
         "neutral_applied": []
-      }
+      },
+      "tier": "primary"
     },
     {
       "region": "ERCO/NRTH",
@@ -52,7 +53,8 @@
           "persistence",
           "recency"
         ]
-      }
+      },
+      "tier": "primary"
     },
     {
       "region": "SWPP/OPPD",
@@ -74,7 +76,8 @@
         "persistence": 1.0,
         "recency": 0.5505283977265715,
         "neutral_applied": []
-      }
+      },
+      "tier": "primary"
     },
     {
       "region": "AZPS",
@@ -100,7 +103,8 @@
           "persistence",
           "recency"
         ]
-      }
+      },
+      "tier": "primary"
     },
     {
       "region": "PJM/DOM",
@@ -122,7 +126,8 @@
         "persistence": 0.875,
         "recency": 0.6803950000871885,
         "neutral_applied": []
-      }
+      },
+      "tier": "primary"
     },
     {
       "region": "TEPC",
@@ -148,7 +153,8 @@
           "persistence",
           "recency"
         ]
-      }
+      },
+      "tier": "primary"
     },
     {
       "region": "SWPP/GRDA",
@@ -169,7 +175,8 @@
         "persistence": 1.0,
         "recency": 0.42862199142653645,
         "neutral_applied": []
-      }
+      },
+      "tier": "supporting"
     },
     {
       "region": "PSEI",
@@ -190,7 +197,8 @@
         "persistence": 1.0,
         "recency": 0.3030815167033861,
         "neutral_applied": []
-      }
+      },
+      "tier": "supporting"
     },
     {
       "region": "ERCO",
@@ -216,7 +224,8 @@
           "persistence",
           "recency"
         ]
-      }
+      },
+      "tier": "supporting"
     },
     {
       "region": "ERCO/SOUT",
@@ -237,7 +246,8 @@
         "persistence": 0.9166666666666666,
         "recency": 0.6061630334067722,
         "neutral_applied": []
-      }
+      },
+      "tier": "supporting"
     },
     {
       "region": "ERCO/SCEN",
@@ -258,7 +268,8 @@
         "persistence": 1.0,
         "recency": 0.5,
         "neutral_applied": []
-      }
+      },
+      "tier": "supporting"
     },
     {
       "region": "SC",
@@ -284,7 +295,8 @@
           "persistence",
           "recency"
         ]
-      }
+      },
+      "tier": "supporting"
     },
     {
       "region": "NYIS",
@@ -305,7 +317,8 @@
         "persistence": 1.0,
         "recency": 0.2548601609255362,
         "neutral_applied": []
-      }
+      },
+      "tier": "chronic"
     },
     {
       "region": "CPLW",
@@ -326,7 +339,8 @@
         "persistence": 1.0,
         "recency": 0.22272467953508485,
         "neutral_applied": []
-      }
+      },
+      "tier": "chronic"
     }
   ],
   "withheld_for_review": [

@@ -240,3 +240,29 @@ def test_structural_alerts_do_not_sweep_the_whole_top_of_the_ranking():
     out = rk.rank(structural + timeseries, regions, limit=10)
     top5 = [a["rule"] for a in out["alerts"][:5]]
     assert "demand_up_20pct" in top5, f"structural swept the top: {top5}"
+
+
+# --- tiers -----------------------------------------------------------------
+
+def _ranked_of(n):
+    alerts = [alert(region=f"R{i}", current_value=2000.0 - i * 10) for i in range(n)]
+    regions = {f"R{i}": region(id=f"R{i}") for i in range(n)}
+    return rk.rank(alerts, regions, limit=n)["alerts"]
+
+
+def test_top_six_alerts_are_the_primary_tier():
+    assert [a["tier"] for a in _ranked_of(14)[:6]] == ["primary"] * 6
+
+
+def test_ranks_seven_to_twelve_are_the_supporting_tier():
+    assert [a["tier"] for a in _ranked_of(14)[6:12]] == ["supporting"] * 6
+
+
+def test_ranks_beyond_twelve_are_the_chronic_tier():
+    assert [a["tier"] for a in _ranked_of(14)[12:]] == ["chronic"] * 2
+
+
+def test_tier_is_assigned_by_position_not_by_rule():
+    """Tiers mark where the severity distribution breaks, nothing else."""
+    tiers = {a["tier"] for a in _ranked_of(14)}
+    assert tiers == {"primary", "supporting", "chronic"}
