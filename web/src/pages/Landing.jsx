@@ -16,7 +16,7 @@ export default function Landing() {
       <div className="examples">
         <div className="ex-row"><span className="ex-label">Check a company</span>{COMPANIES.map(c => <Chip key={c.ticker} href={href.check(c.ticker)}>{c.name}</Chip>)}<Chip href={href.companies()}>All four side by side</Chip></div>
         <div className="ex-row"><span className="ex-label">Compare locations</span><Chip href={href.compare(DEMO_COMPARE)}>{DEMO_COMPARE.mw} MW: {DEMO_COMPARE.metros.join(' vs ')}</Chip></div>
-        <div className="ex-row"><span className="ex-label">Explore</span><Chip href={href.screen('rising')}>Where new load is landing</Chip><Chip href={href.screen('cleanest')}>Cleanest grids at night</Chip><Chip href={href.screen('worsening')}>Getting worse fastest</Chip><Chip href={href.explore({ preset: 'fingerprint' })}>Explore correlations</Chip><Chip href={href.alerts()}>What changed this month</Chip></div>
+        <div className="ex-row"><span className="ex-label">Explore</span><Chip href={href.screen('rising')}>Where new load is landing</Chip><Chip href={href.screen('cleanest')}>Cleanest grids at night</Chip><Chip href={href.screen('worsening')}>Getting worse fastest</Chip><Chip href={href.explore({ preset: 'fingerprint' })}>Explore correlations</Chip><Chip href={href.alerts()}>What changed this month</Chip><Chip href={href.data('claims')}>The data, as sheets</Chip></div>
       </div>
       <a className="found-link" href={href.found()}>What we found in the grid data →</a>
     </>

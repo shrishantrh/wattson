@@ -238,3 +238,11 @@ a.gpin:hover .gpin-label { border-color: var(--line-focus); }
 .sharebar span { display: block; height: 100%; background: var(--ink-2); border-radius: 2px; opacity: 0.55; }
 .sharebar span.best { background: var(--accent); opacity: 1; }
 .note.live b { color: var(--ink); font-weight: 500; }
+
+/* claim vs physical */
+.gapbar { display: grid; gap: 5px; margin: 8px 0 4px; }
+.gapbar-row { display: grid; grid-template-columns: 56px 1fr 56px; gap: 8px; align-items: center; font-size: 11px; color: var(--muted); }
+.gapbar-t { position: relative; height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+.gapbar-t i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 3px; }
+.gapbar-v { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink); text-align: right; }
+.gapbar-v.accent { color: var(--accent); }

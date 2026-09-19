@@ -1,0 +1,35 @@
+# Publishes web/dist to GitHub Pages. The build is fully static: sync-fixtures.mjs copies the
+# committed server/static_export into web/public/api, so no Python and no API server are needed.
+# The Pages URL is the leave-behind; the primary demo runs from a local build (docs/DEPLOY.md).
+name: pages
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: pages, cancel-in-progress: true }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22', cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: npm ci
+        working-directory: web
+      - run: npm run build 2>&1 | tee build.log
+        working-directory: web
+      # The app silently falls back to contract fixtures if the export is missing; fail loudly instead.
+      - run: grep -q "static export synced" web/build.log
+      - run: test -f web/dist/api/regions.json && test -f web/dist/api/facilities.json && test -f web/dist/api/company/GOOGL.json
+      - run: node test/smoke.mjs
+        working-directory: web
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: web/dist }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: '${{ steps.d.outputs.page_url }}' }
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4

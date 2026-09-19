@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
-import { Card, Num, Evidence, Chip, KV } from '../console/widgets.jsx'
+import { Card, Num, Evidence, Chip, KV, Ticks } from '../console/widgets.jsx'
 import Workspace from '../components/Workspace.jsx'
 import Sparkline from '../components/Sparkline.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
@@ -17,6 +17,18 @@ import SideBySideModule, { sideBySideOf } from '../components/modules/SideBySide
 const importerNote = d => { const g = d && d.type === 'zone' && d.parent ? d.parent : d; const gen = g?.total_avg_mw?.['2025']?.all, dem = d?.demand?.['2025']?.avg_mw; return gen && dem && gen / dem < 0.5 ? `generates ${Math.round(gen / dem * 100)}% of what it uses, the rest is imported` : null }
 
 const VERDICT = { true_on_paper: 'true on paper', contradicted: 'contradicted', unfalsifiable: 'too vague to check', cannot_verify: "can't verify" }
+const PATTERN = { hidden_tradeoff: 'hidden trade-off: a true number that hides the cost next to it', vague_wording: 'vague wording: nothing measurable', no_proof: 'no proof offered', irrelevant: 'irrelevant to the impact', lesser_of_two_evils: 'lesser of two evils', worshiping_false_labels: 'a label that sounds like a standard', fibbing: 'contradicted by its own filing' }
+// Claimed vs physical, drawn: a full-width claimed bar and the physical range under it.
+function GapBar({ claim }) {
+  if (claim.magnitude == null || claim.unit !== 'fraction' || claim.physical_min == null) return null
+  const c = Math.min(1, claim.magnitude), lo = claim.physical_min, hi = claim.physical_max ?? claim.physical_min
+  return (
+    <div className="gapbar" aria-label={`claimed ${Math.round(c * 100)}%, physically ${Math.round(lo * 100)} to ${Math.round(hi * 100)}%`}>
+      <div className="gapbar-row"><span className="gapbar-l">claims</span><span className="gapbar-t"><i style={{ width: `${c * 100}%`, background: 'var(--ink-2)' }} /></span><span className="gapbar-v">{Math.round(c * 100)}%</span></div>
+      <div className="gapbar-row"><span className="gapbar-l">its grids</span><span className="gapbar-t"><i style={{ left: `${lo * 100}%`, width: `${Math.max(1.5, (hi - lo) * 100)}%`, background: 'var(--accent)' }} /></span><span className="gapbar-v accent">{Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`}</span></div>
+    </div>
+  )
+}
 const REASON = { no_falsifiable_content: 'nothing measurable in the claim', no_site_mapping: 'no site could be mapped to a grid', ba_out_of_coverage: 'its grid is outside our coverage', year_out_of_range: 'the year is outside the data' }
 const pctFmt = n => `${Math.round(n)}%`
 
@@ -77,7 +89,9 @@ export default function Check({ route }) {
             return (
               <div className="claim" key={k.claim_id}>
                 <div className="q">“{k.verbatim}”</div>
-                <div className="m"><span>{k.source_doc}{k.page ? `, p. ${k.page}` : ''}{k.year ? ` · ${k.year}` : ''}</span><Chip small accent={k.verdict === 'contradicted'}>{VERDICT[k.verdict] || k.verdict}</Chip>{k.cannot_verify_reason && <span>{REASON[k.cannot_verify_reason] || k.cannot_verify_reason.replace(/_/g, ' ')}</span>}</div>
+                <div className="m"><span>{k.source_doc}{k.page ? `, p. ${k.page}` : ''}{k.year ? ` · ${k.year}` : ''}</span><Chip small accent={k.verdict === 'contradicted'}>{VERDICT[k.verdict] || k.verdict}</Chip>{k.cannot_verify_reason && <span>{REASON[k.cannot_verify_reason] || k.cannot_verify_reason.replace(/_/g, ' ')}</span>}{(k.greenwash_patterns || []).map(g => <span key={g} className="chip sm" data-tip={PATTERN[g] || g}>{g.replace(/_/g, ' ')}</span>)}</div>
+                <GapBar claim={k} />
+                {k.falsifiability != null && <div className="m" style={{ alignItems: 'center' }}><span style={{ width: 84 }}>checkable</span><span style={{ width: 90 }}><Ticks value={k.falsifiability * 100} max={100} n={10} /></span><span>{Math.round(k.falsifiability * 100)}%{k.scope ? ` · ${k.scope.replace(/_/g, ' ')}` : ''}</span></div>}
                 {contra && <div className="why">Contradicted in {contra.source_doc}{contra.page ? `, p. ${contra.page}` : ''}: {contra.note}</div>}
                 {!contra && reason && <div className="why">{reason.note.replace(/^cannot_verify:\s*/, '')}</div>}
               </div>
@@ -104,6 +118,7 @@ export default function Check({ route }) {
         <Card title={<><b>{data.company}</b> · {data.ticker}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
           <h1 className="verdict">{a.sentence}</h1>
           {a.numbers.length > 0 && <div className="nums">{a.numbers.map((n, i) => <Num key={i} {...n} />)}</div>}
+          {a.primary?.magnitude != null && a.primary.unit === 'fraction' && a.primary.physical_mean_unweighted != null && <p className="note" style={{ marginTop: 12 }}>The gap: <b style={{ color: 'var(--ink)' }}>{Math.round((a.primary.magnitude - a.primary.physical_mean_unweighted) * 100)} points</b> between what is claimed on paper and what its grids physically generated, averaged across sites.</p>}
           <Evidence open={evidence} onToggle={toggle} />
         </Card>
         {evidence && <Workspace id="check" modules={modules} />}

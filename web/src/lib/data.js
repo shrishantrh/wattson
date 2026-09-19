@@ -136,8 +136,8 @@ export async function loadCompanies() {
 export async function loadFacilities() {
   try {
     const raw = await tryEach([...(api ? [() => getJSON(`${api}/api/facilities`)] : []), () => staticExport('facilities'), () => fixture('facilities')])
-    const list = (raw.facilities || raw.sites || raw || []).map(s => { const region_id = s.region_id || (s.zone ? `${s.ba}/${s.zone}` : s.ba); const rc = coords.regions[region_id] || coords.regions[s.ba]; return { ...s, region_id, lat: s.lat ?? s.latitude ?? rc?.lat, lng: s.lng ?? s.lon ?? s.longitude ?? rc?.lng, grid_label: rc?.label || s.ba } })
-    return { facilities: list, no_listed_equity_count: raw.no_listed_equity_count ?? list.filter(s => !(s.ticker || s.operator?.ticker)).length, source: 'engine' }
+    const list = (raw.facilities || raw.sites || raw || []).map(s => { const region_id = s.region_id || (s.zone ? `${s.ba}/${s.zone}` : s.ba); const rc = coords.regions[region_id] || coords.regions[s.ba]; return { ...s, region_id, lat: s.lat ?? s.latitude ?? rc?.lat, lng: s.lng ?? s.lon ?? s.longitude ?? rc?.lng, grid_label: rc?.label || s.ba, ticker_utility: s.utility_ticker ?? s.ticker_utility ?? null } })
+    return { facilities: list, no_listed_equity_count: raw.no_listed_equity_count ?? list.filter(s => !s.ticker_utility).length, notes: raw.notes || [], source: 'engine' }
   } catch (e) {
     if (e.name !== 'NotFound') throw e
     const cos = await loadCompanies(); const out = []

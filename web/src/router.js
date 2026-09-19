@@ -22,6 +22,7 @@ export const href = {
   method: () => '#/method',
   screen: by => (by ? `#/screen?by=${by}` : '#/screen'),
   alerts: () => '#/alerts',
+  data: t => (t ? `#/data?t=${t}` : '#/data'),
   companies: () => '#/companies',
   explore: (params) => { const q = new URLSearchParams(params || {}).toString(); return q ? `#/explore?${q}` : '#/explore' },
 }

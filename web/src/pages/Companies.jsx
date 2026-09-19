@@ -16,7 +16,7 @@ export default function Companies() {
   const fac = useAsync(loadFacilities, [])
   const sites = { data: fac.data?.facilities || [] }
   const pts = (sites.data || []).filter(s => s.lat != null)
-  const globe = useMemo(() => ({ view: fitView(pts), points: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, r: 0.18, color: tk.ink2 })), markers: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, label: `${s.ticker} · ${(s.metro || s.name || '').split(',')[0]}`, tip: `${s.serving_utility || s.utility || ''} · ${s.grid_label}${s.ticker_utility || s.operator?.ticker ? ` · ${s.ticker_utility || s.operator.ticker}` : ' · no listed equity'}`, href: href.region(s.region_id), color: tk.ink2 })) }), [pts, tk])
+  const globe = useMemo(() => ({ view: fitView(pts), points: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, r: 0.18, color: tk.ink2 })), markers: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, label: `${s.ticker} · ${(s.metro || s.name || '').split(',')[0]}`, tip: `${s.serving_utility || s.utility || ''} · ${s.grid_label}${s.cf_share_2025 != null ? ` · ${Math.round(s.cf_share_2025 * 100)}% clean` : ''}${s.ticker_utility ? ` · ${s.ticker_utility}` : ' · no listed equity'}`, href: href.region(s.region_id), color: tk.ink2 })) }), [pts, tk])
   const back = () => { window.location.hash = href.landing() }
   let column
   if (loading) column = <Card title={<b>Companies</b>} onClose={back}><Loading what="the watchlist" /></Card>

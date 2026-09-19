@@ -45,7 +45,7 @@ export function StageProvider({ children }) {
         <header className="topbar">
           <a className="brand" href="#/"><span className="wordmark">Wattson</span><span className="tagline">It follows the power, not the press release.</span></a>
           {spec.page !== 'landing' && <QuickSearch />}
-          <nav className="toplinks"><a href={href.found()} className={spec.page === 'found' ? 'on' : ''}>What we found</a><a href={href.method()} className={spec.page === 'method' ? 'on' : ''}>Method</a></nav>
+          <nav className="toplinks"><a href={href.data()} className={spec.page === 'data' ? 'on' : ''}>Data</a><a href={href.found()} className={spec.page === 'found' ? 'on' : ''}>What we found</a><a href={href.method()} className={spec.page === 'method' ? 'on' : ''}>Method</a></nav>
         </header>
         <div className="stage-ctl">
           <button type="button" onClick={() => setZoom(z => Math.min(6, z + 1))} aria-label="Zoom in">+</button>
