@@ -1,0 +1,433 @@
+{
+ "meta": {
+  "generated": "2026-09-19",
+  "data_snapshot_end": "2026-09-05",
+  "baseline_year": 2019,
+  "overnight_hours_local": "00:00-05:59",
+  "daytime_hours_local": "10:00-15:59",
+  "caveats": [
+   "Generation within a footprint, not consumption; interchange not allocated.",
+   "Average grid mix, not marginal emissions.",
+   "Regions are coarse; PJM spans Chicago to New Jersey.",
+   "Zones inherit the parent BA's generation figures.",
+   "Operator table is hand-mapped.",
+   "Detector flags flat 24/7 load in general (datacenters, crypto mining, oilfield electrification); language is 'consistent with'."
+  ]
+ },
+ "region": {
+  "id": "HST",
+  "ba": "HST",
+  "zone": null,
+  "type": "ba",
+  "name": "City of Homestead",
+  "ba_name": "City of Homestead",
+  "region_eia": "Florida",
+  "timezone": "America/New_York",
+  "cf_inherited_from_ba": false,
+  "cf_share": {
+   "2019": {
+    "overnight": 0.0,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2020": {
+    "overnight": 0.0,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2021": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2022": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2023": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2024": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2025": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2026": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   }
+  },
+  "cf_avg_mw": {
+   "2019": {
+    "overnight": 0.0,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2020": {
+    "overnight": 0.0,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2021": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2022": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2023": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2024": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2025": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   },
+   "2026": {
+    "overnight": null,
+    "daytime": 0.0,
+    "all": 0.0
+   }
+  },
+  "total_avg_mw": {
+   "2019": {
+    "overnight": 1.0,
+    "daytime": 2.0,
+    "all": 2.0
+   },
+   "2020": {
+    "overnight": 3.0,
+    "daytime": 4.0,
+    "all": 3.0
+   },
+   "2021": {
+    "overnight": null,
+    "daytime": 1.0,
+    "all": 1.0
+   },
+   "2022": {
+    "overnight": null,
+    "daytime": 1.0,
+    "all": 1.0
+   },
+   "2023": {
+    "overnight": null,
+    "daytime": 1.0,
+    "all": 1.0
+   },
+   "2024": {
+    "overnight": null,
+    "daytime": 1.0,
+    "all": 1.0
+   },
+   "2025": {
+    "overnight": null,
+    "daytime": 1.0,
+    "all": 1.0
+   },
+   "2026": {
+    "overnight": null,
+    "daytime": 1.0,
+    "all": 1.0
+   }
+  },
+  "demand": {
+   "2019": {
+    "avg_mw": 67.0,
+    "overnight_avg_mw": 54.0,
+    "peak_mw": 115.0,
+    "p995_mw": 109.0,
+    "load_factor": 0.615,
+    "hours": 8760
+   },
+   "2020": {
+    "avg_mw": 68.0,
+    "overnight_avg_mw": 55.0,
+    "peak_mw": 117.0,
+    "p995_mw": 111.0,
+    "load_factor": 0.616,
+    "hours": 8784
+   },
+   "2021": {
+    "avg_mw": 68.0,
+    "overnight_avg_mw": 55.0,
+    "peak_mw": 116.0,
+    "p995_mw": 111.0,
+    "load_factor": 0.614,
+    "hours": 8760
+   },
+   "2022": {
+    "avg_mw": 71.0,
+    "overnight_avg_mw": 57.0,
+    "peak_mw": 119.0,
+    "p995_mw": 114.0,
+    "load_factor": 0.624,
+    "hours": 8760
+   },
+   "2023": {
+    "avg_mw": 72.0,
+    "overnight_avg_mw": 58.0,
+    "peak_mw": 125.0,
+    "p995_mw": 119.0,
+    "load_factor": 0.607,
+    "hours": 8760
+   },
+   "2024": {
+    "avg_mw": 73.0,
+    "overnight_avg_mw": 60.0,
+    "peak_mw": 126.0,
+    "p995_mw": 121.0,
+    "load_factor": 0.604,
+    "hours": 8784
+   },
+   "2025": {
+    "avg_mw": 73.0,
+    "overnight_avg_mw": 59.0,
+    "peak_mw": 125.0,
+    "p995_mw": 121.0,
+    "load_factor": 0.606,
+    "hours": 8760
+   },
+   "2026": {
+    "avg_mw": 76.0,
+    "overnight_avg_mw": 62.0,
+    "peak_mw": 137.0,
+    "p995_mw": 126.0,
+    "load_factor": 0.604,
+    "hours": 5952
+   }
+  },
+  "detection": null,
+  "fuel_delta_overnight_gw": {
+   "nuclear": null,
+   "hydro": null,
+   "wind": null,
+   "solar": null,
+   "geothermal": null,
+   "gas": -0.0,
+   "coal": null,
+   "oil": null,
+   "other": null
+  },
+  "overnight_fuel_mw": {
+   "2019": {
+    "nuclear": null,
+    "hydro": null,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 0.0,
+    "coal": null,
+    "oil": null,
+    "other": null
+   },
+   "2020": {
+    "nuclear": null,
+    "hydro": null,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 0.0,
+    "coal": null,
+    "oil": null,
+    "other": null
+   },
+   "2021": {
+    "nuclear": null,
+    "hydro": null,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 0.0,
+    "coal": null,
+    "oil": null,
+    "other": null
+   },
+   "2022": {
+    "nuclear": null,
+    "hydro": null,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 0.0,
+    "coal": null,
+    "oil": null,
+    "other": null
+   },
+   "2023": {
+    "nuclear": null,
+    "hydro": null,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 0.0,
+    "coal": null,
+    "oil": null,
+    "other": null
+   },
+   "2024": {
+    "nuclear": null,
+    "hydro": null,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 0.0,
+    "coal": null,
+    "oil": null,
+    "other": null
+   },
+   "2025": {
+    "nuclear": null,
+    "hydro": null,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 0.0,
+    "coal": null,
+    "oil": null,
+    "other": null
+   },
+   "2026": {
+    "nuclear": null,
+    "hydro": null,
+    "wind": null,
+    "solar": null,
+    "geothermal": null,
+    "gas": 0.0,
+    "coal": null,
+    "oil": null,
+    "other": null
+   }
+  },
+  "siting": {
+   "overnight_cf_share_2025": null,
+   "change_since_2019": null,
+   "overnight_clean_mw_over_demand": null,
+   "ratio_2019": 0.0,
+   "ratio_slope_per_year": null,
+   "siting_score": null,
+   "siting_rank": null,
+   "n_ranked": 52
+  },
+  "operators": [],
+  "interchange": {
+   "2019": {
+    "overnight_net_export_mw": -54.0,
+    "all_hours_net_export_mw": -67.0
+   },
+   "2020": {
+    "overnight_net_export_mw": -55.0,
+    "all_hours_net_export_mw": -68.0
+   },
+   "2021": {
+    "overnight_net_export_mw": -55.0,
+    "all_hours_net_export_mw": -68.0
+   },
+   "2022": {
+    "overnight_net_export_mw": -57.0,
+    "all_hours_net_export_mw": -71.0
+   },
+   "2023": {
+    "overnight_net_export_mw": -58.0,
+    "all_hours_net_export_mw": -72.0
+   },
+   "2024": {
+    "overnight_net_export_mw": -60.0,
+    "all_hours_net_export_mw": -73.0
+   },
+   "2025": {
+    "overnight_net_export_mw": -59.0,
+    "all_hours_net_export_mw": -74.0
+   },
+   "2026": {
+    "overnight_net_export_mw": -62.0,
+    "all_hours_net_export_mw": -76.0
+   }
+  },
+  "data_flags": [],
+  "exclude_from_alerts": false,
+  "heatmap_uri": "data/heatmaps/HST.json",
+  "profile_24h": {
+   "2019": [
+    0.0,
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "2025": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    null,
+    null,
+    null,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    null,
+    null,
+    null
+   ]
+  },
+  "trailing12": null,
+  "operator": {
+   "utility": null,
+   "parent": null,
+   "ticker": null,
+   "mapping_note": "hand-mapped"
+  },
+  "heatmap_available": true,
+  "corrections": null
+ }
+}

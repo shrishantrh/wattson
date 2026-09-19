@@ -1,0 +1,208 @@
+{
+ "company": "Microsoft",
+ "ticker": "MSFT",
+ "sites": [
+  {
+   "metro": "Quincy",
+   "state": "WA",
+   "ba": "GCPD",
+   "zone": null,
+   "pjm_zone": null,
+   "serving_utility": "Grant County PUD",
+   "source_type": "press",
+   "source_url": "https://www.datacenterknowledge.com/hyperscalers/microsoft-s-energy-practices-in-quincy-under-fire",
+   "note": "TRAP, OPPOSITE DIRECTION: naive geography gives BPAT (0.913 in 2025). Actual is Grant County PUD (GCPD), which reads 1.00 -- essentially all Columbia River hydro. The naive mapping makes this site look DIRTIER than it is. Magnitude is small in 2025 (~9 points) because BPAT is also very clean.",
+   "cf_share_2025": 1.0
+  },
+  {
+   "metro": "Goodyear / El Mirage",
+   "state": "AZ",
+   "ba": "AZPS",
+   "zone": null,
+   "pjm_zone": null,
+   "serving_utility": "Arizona Public Service",
+   "source_type": "press",
+   "source_url": "https://www.goodyearaz.gov/Home/Components/News/News/9849",
+   "note": "Detector rank 3. APS named as Microsoft's partner for the Goodyear/El Mirage campuses. CAUTION: AZPS generation-side figures are under investigation for a reporting artefact; demand-side rank is sound.",
+   "cf_share_2025": 0.285
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "MSFT-2026-001",
+   "verbatim": "In FY25, we matched 100% of our annual global electricity consumption with renewable energy.",
+   "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+   "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+   "page": 6,
+   "year": 2026,
+   "metric": "renewable_electricity_share",
+   "magnitude": 1.0,
+   "unit": "fraction",
+   "timeframe": "annual",
+   "scope": "market_based",
+   "falsifiability": 0.85,
+   "greenwash_patterns": [
+    "hidden_tradeoff"
+   ],
+   "kind": "annual_scope",
+   "verdict": "true_on_paper",
+   "cannot_verify_reason": null,
+   "physical_min": 0.285,
+   "physical_max": 1.0,
+   "physical_mean_unweighted": 0.642,
+   "confidence": "high",
+   "verification": {
+    "human_reread_rendered_page": true,
+    "method": "human re-read of the rendered PDF page",
+    "pages_checked": [
+     6
+    ]
+   },
+   "evidence": [
+    {
+     "type": "grid",
+     "ba": "GCPD",
+     "year": 2025,
+     "cf_share": 1.0
+    },
+    {
+     "type": "grid",
+     "ba": "AZPS",
+     "year": 2025,
+     "cf_share": 0.285
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+     "page": 6,
+     "note": "The claim \"matched 100%\" is qualified in the same sentence by \"annual\"."
+    }
+   ]
+  },
+  {
+   "claim_id": "MSFT-2026-002",
+   "verbatim": "In FY25, we matched 100% of our annual global electricity consumption with renewable energy.",
+   "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+   "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+   "page": 6,
+   "year": 2026,
+   "metric": "renewable_electricity_share",
+   "magnitude": 1.0,
+   "unit": "fraction",
+   "timeframe": "annual",
+   "scope": "market_based",
+   "falsifiability": 0.85,
+   "greenwash_patterns": [],
+   "kind": "claim_vs_emissions_growth",
+   "verdict": "true_on_paper",
+   "cannot_verify_reason": null,
+   "physical_min": 0.285,
+   "physical_max": 1.0,
+   "physical_mean_unweighted": 0.642,
+   "confidence": "high",
+   "verification": {
+    "human_reread_rendered_page": true,
+    "method": "human re-read of the rendered PDF page",
+    "pages_checked": [
+     6
+    ]
+   },
+   "evidence": [
+    {
+     "type": "grid",
+     "ba": "GCPD",
+     "year": 2025,
+     "cf_share": 1.0
+    },
+    {
+     "type": "grid",
+     "ba": "AZPS",
+     "year": 2025,
+     "cf_share": 0.285
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+     "page": 6,
+     "note": "The document states \"matched 100%\" on page 6 and discloses \"up from nearly 2%\" on page 6, i.e. rising emissions. Annual matching is an accounting result; it does not mean the load was served by clean power hour by hour, which is what an hourly grid index measures."
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+     "page": 6,
+     "note": "Scope 3 remains the largest share of our footprint overall, but one of the clearest changes this year was the growing contribution of Scope 2, which represents 13% of our total emissions\u2014up from nearly 2% last year."
+    }
+   ]
+  },
+  {
+   "claim_id": "MSFT-2026-003",
+   "verbatim": "In FY25, we matched 100% of our annual global electricity consumption with renewable energy.",
+   "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+   "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+   "page": 6,
+   "year": 2026,
+   "metric": "renewable_electricity_share",
+   "magnitude": 1.0,
+   "unit": "fraction",
+   "timeframe": "annual",
+   "scope": "market_based",
+   "falsifiability": 0.85,
+   "greenwash_patterns": [],
+   "kind": "esg_claim_vs_10k_risk_language",
+   "verdict": "true_on_paper",
+   "cannot_verify_reason": null,
+   "physical_min": 0.285,
+   "physical_max": 1.0,
+   "physical_mean_unweighted": 0.642,
+   "confidence": "high",
+   "verification": {
+    "human_reread_rendered_page": true,
+    "method": "human re-read of the rendered PDF page",
+    "pages_checked": [
+     6
+    ],
+    "tenk_quote": "checked verbatim against the raw SEC filing HTML; re-runnable via python3 -m engine.contradict.verify_tenk"
+   },
+   "evidence": [
+    {
+     "type": "grid",
+     "ba": "GCPD",
+     "year": 2025,
+     "cf_share": 1.0
+    },
+    {
+     "type": "grid",
+     "ba": "AZPS",
+     "year": 2025,
+     "cf_share": 0.285
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "msft-20260630.htm",
+     "page": null,
+     "note": "The sustainability report states \"In FY25, we matched 100% of our annual global electricity consumption with renewable energy.\" on page 6, while the 10-K states, in Item 1A under legal liability: \"AI development and deployment has and will likely continue to raise energy use and emissions, making it harder to meet these goals.\""
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+     "page": null,
+     "note": "AI development and deployment has and will likely continue to raise energy use and emissions, making it harder to meet these goals."
+    }
+   ]
+  }
+ ],
+ "talk_score": 0.55,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.642,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 0,
+ "notes": [
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "Every quote was read off the rendered PDF page or raw SEC HTML by a human."
+ ],
+ "is_mock": false
+}

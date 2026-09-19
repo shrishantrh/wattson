@@ -1,0 +1,330 @@
+{
+  "META": {
+    "findings": [
+      {
+        "kind": "annual_scope",
+        "claim": {
+          "page": 18,
+          "quote": "Since 2020, we have matched 100% of our annual electricity use with clean and renewable energy."
+        },
+        "counterpoint": null,
+        "note": "The claim \"100% of our annual electricity\" is qualified in the same sentence by \"annual\".",
+        "source_doc": "Meta_2025-Sustainability-Report.pdf",
+        "source_url": "https://sustainability.atmeta.com/wp-content/uploads/2025/08/Meta_2025-Sustainability-Report.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "Meta_2025-Sustainability-Report.pdf",
+          "page": 18,
+          "note": "The claim \"100% of our annual electricity\" is qualified in the same sentence by \"annual\"."
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            18
+          ]
+        }
+      }
+    ],
+    "verification": {
+      "page_audit": "all 309 chunks verbatim on the page they cite",
+      "extraction": "column-aware; multi-column pages read one column at a time"
+    },
+    "tenk": {
+      "chunks": 19,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+      "note": "Items 1 and 1A only. HTML filings have no pages, so these chunks carry a locator and a null page rather than an invented page number."
+    },
+    "scope2_extraction": "not_disclosed_in_text"
+  },
+  "MSFT": {
+    "findings": [
+      {
+        "kind": "annual_scope",
+        "claim": {
+          "page": 6,
+          "quote": "In FY25, we matched 100% of our annual global electricity consumption with renewable energy."
+        },
+        "counterpoint": null,
+        "note": "The claim \"matched 100%\" is qualified in the same sentence by \"annual\".",
+        "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+        "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+          "page": 6,
+          "note": "The claim \"matched 100%\" is qualified in the same sentence by \"annual\"."
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            6
+          ]
+        }
+      },
+      {
+        "kind": "claim_vs_emissions_growth",
+        "claim": {
+          "page": 6,
+          "quote": "In FY25, we matched 100% of our annual global electricity consumption with renewable energy."
+        },
+        "counterpoint": {
+          "page": 6,
+          "quote": "Scope 3 remains the largest share of our footprint overall, but one of the clearest changes this year was the growing contribution of Scope 2, which represents 13% of our total emissions—up from nearly 2% last year."
+        },
+        "note": "The document states \"matched 100%\" on page 6 and discloses \"up from nearly 2%\" on page 6, i.e. rising emissions. Annual matching is an accounting result; it does not mean the load was served by clean power hour by hour, which is what an hourly grid index measures.",
+        "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+        "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+          "page": 6,
+          "note": "The document states \"matched 100%\" on page 6 and discloses \"up from nearly 2%\" on page 6, i.e. rising emissions. Annual matching is an accounting result; it does not mean the load was served by clean power hour by hour, which is what an hourly grid index measures."
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            6
+          ]
+        }
+      },
+      {
+        "kind": "esg_claim_vs_10k_risk_language",
+        "ticker": "MSFT",
+        "claim": {
+          "page": 6,
+          "quote": "In FY25, we matched 100% of our annual global electricity consumption with renewable energy.",
+          "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+          "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf"
+        },
+        "counterpoint": {
+          "page": null,
+          "quote": "AI development and deployment has and will likely continue to raise energy use and emissions, making it harder to meet these goals.",
+          "locator": {
+            "type": "html_anchor",
+            "item": "1A",
+            "char_offset": 49641
+          },
+          "source_doc": "msft-20260630.htm",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+        },
+        "note": "The sustainability report states \"In FY25, we matched 100% of our annual global electricity consumption with renewable energy.\" on page 6, while the 10-K states, in Item 1A under legal liability: \"AI development and deployment has and will likely continue to raise energy use and emissions, making it harder to meet these goals.\"",
+        "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+        "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "msft-20260630.htm",
+          "page": null,
+          "note": "The sustainability report states \"In FY25, we matched 100% of our annual global electricity consumption with renewable energy.\" on page 6, while the 10-K states, in Item 1A under legal liability: \"AI development and deployment has and will likely continue to raise energy use and emissions, making it harder to meet these goals.\""
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            6
+          ],
+          "tenk_quote": "checked verbatim against the raw SEC filing HTML; re-runnable via python3 -m engine.contradict.verify_tenk"
+        }
+      }
+    ],
+    "verification": {
+      "page_audit": "all 309 chunks verbatim on the page they cite",
+      "extraction": "column-aware; multi-column pages read one column at a time"
+    },
+    "tenk": {
+      "chunks": 11,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+      "note": "Items 1 and 1A only. HTML filings have no pages, so these chunks carry a locator and a null page rather than an invented page number."
+    },
+    "scope2_extraction": "not_disclosed_in_text"
+  },
+  "GOOGL": {
+    "findings": [
+      {
+        "kind": "annual_claim_vs_disclosed_hourly_cfe",
+        "ticker": "GOOGL",
+        "claim": {
+          "page": 4,
+          "quote": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)"
+        },
+        "counterpoint": {
+          "page": 94,
+          "label": "CFE across Google data centers (hourly)",
+          "unit": "%",
+          "years": [
+            2021,
+            2022,
+            2023,
+            2024,
+            2025
+          ],
+          "values": [
+            65,
+            64,
+            64,
+            66,
+            65
+          ],
+          "source_doc": "google-2026-environmental-report.pdf",
+          "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf"
+        },
+        "note": "The report claims, on page 4: \"Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis) 4\". The same report discloses, on page 94, CFE across Google data centers (hourly) of 2021: 65%, 2022: 64%, 2023: 64%, 2024: 66%, 2025: 65%. Annual matching and hourly carbon-free supply are different measurements, and the company publishes both.",
+        "source_doc": "google-2026-environmental-report.pdf",
+        "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "google-2026-environmental-report.pdf",
+          "page": 94,
+          "note": "The report claims, on page 4: \"Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis) 4\". The same report discloses, on page 94, CFE across Google data centers (hourly) of 2021: 65%, 2022: 64%, 2023: 64%, 2024: 66%, 2025: 65%. Annual matching and hourly carbon-free supply are different measurements, and the company publishes both."
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            4,
+            94
+          ]
+        }
+      },
+      {
+        "kind": "annual_scope",
+        "claim": {
+          "page": 4,
+          "quote": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)"
+        },
+        "counterpoint": null,
+        "note": "The claim \"matched 100%\" is qualified in the same sentence by \"annual\".",
+        "source_doc": "google-2026-environmental-report.pdf",
+        "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "google-2026-environmental-report.pdf",
+          "page": 4,
+          "note": "The claim \"matched 100%\" is qualified in the same sentence by \"annual\"."
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            4
+          ]
+        }
+      },
+      {
+        "kind": "hourly_claim",
+        "claim": {
+          "page": 4,
+          "quote": "It was with this same bold spirit that, at the beginning of the decade, we set net zero and 24/7 carbon-free energy2 (CFE) moonshots that were intentionally aspirational and designed to push the frontiers of what’s possible in energy systems and data center operations."
+        },
+        "counterpoint": null,
+        "note": "States an hourly / 24-7 clean-energy claim, which is stronger and more falsifiable than annual matching.",
+        "source_doc": "google-2026-environmental-report.pdf",
+        "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "google-2026-environmental-report.pdf",
+          "page": 4,
+          "note": "States an hourly / 24-7 clean-energy claim, which is stronger and more falsifiable than annual matching."
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            4
+          ]
+        }
+      },
+      {
+        "kind": "claim_vs_demand_growth",
+        "claim": {
+          "page": 4,
+          "quote": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)"
+        },
+        "counterpoint": {
+          "page": 4,
+          "quote": "In 2025, we navigated our largest load growth in history—a 37% annual increase in electricity demand."
+        },
+        "note": "The document states \"matched 100%\" on page 4 and discloses \"37% annual increase in electricity demand\" on page 4, i.e. rising electricity consumption. Annual matching is an accounting result; it does not mean the load was served by clean power hour by hour, which is what an hourly grid index measures.",
+        "source_doc": "google-2026-environmental-report.pdf",
+        "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "google-2026-environmental-report.pdf",
+          "page": 4,
+          "note": "The document states \"matched 100%\" on page 4 and discloses \"37% annual increase in electricity demand\" on page 4, i.e. rising electricity consumption. Annual matching is an accounting result; it does not mean the load was served by clean power hour by hour, which is what an hourly grid index measures."
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            4
+          ]
+        }
+      },
+      {
+        "kind": "esg_claim_vs_10k_risk_language",
+        "ticker": "GOOGL",
+        "claim": {
+          "page": 4,
+          "quote": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)",
+          "source_doc": "google-2026-environmental-report.pdf",
+          "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf"
+        },
+        "counterpoint": {
+          "page": null,
+          "quote": "For instance, AI's energy and water demands have made efforts to reduce our emissions more complex and challenging across every level.",
+          "locator": {
+            "type": "html_anchor",
+            "item": "1A",
+            "char_offset": 48648
+          },
+          "source_doc": "goog-20251231.htm",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm"
+        },
+        "note": "The sustainability report states \"Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis) 4\" on page 4, while the 10-K states, in Item 1A under legal liability: \"For instance, AI's energy and water demands have made efforts to reduce our emissions more complex and challenging across every level.\"",
+        "source_doc": "google-2026-environmental-report.pdf",
+        "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "goog-20251231.htm",
+          "page": null,
+          "note": "The sustainability report states \"Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis) 4\" on page 4, while the 10-K states, in Item 1A under legal liability: \"For instance, AI's energy and water demands have made efforts to reduce our emissions more complex and challenging across every level.\""
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            4
+          ],
+          "tenk_quote": "checked verbatim against the raw SEC filing HTML; re-runnable via python3 -m engine.contradict.verify_tenk"
+        }
+      }
+    ],
+    "verification": {
+      "page_audit": "all 309 chunks verbatim on the page they cite",
+      "extraction": "column-aware; multi-column pages read one column at a time"
+    },
+    "tenk": {
+      "chunks": 9,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
+      "note": "Items 1 and 1A only. HTML filings have no pages, so these chunks carry a locator and a null page rather than an invented page number."
+    },
+    "scope2_extraction": "present_only_in_endnotes"
+  },
+  "AMZN": {
+    "findings": [],
+    "verification": {
+      "page_audit": "all 309 chunks verbatim on the page they cite",
+      "extraction": "column-aware; multi-column pages read one column at a time"
+    },
+    "tenk": {
+      "chunks": 6,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+      "note": "Items 1 and 1A only. HTML filings have no pages, so these chunks carry a locator and a null page rather than an invented page number."
+    },
+    "scope2_extraction": "not_disclosed_in_text",
+    "gap": "No intra-document finding. Amazon's headline 100%-matched claim is on page 5 inside an infographic, which extracts as fragments ('100% matched 100% matched') rather than a sentence. A quotable restatement does exist on page 10 and is used for the cross-document check, but nothing in the report qualifies or undercuts it in the same sentence, so nothing is reported."
+  }
+}

@@ -1,0 +1,222 @@
+{
+ "company": "Alphabet (Google)",
+ "ticker": "GOOGL",
+ "sites": [
+  {
+   "metro": "Moncks Corner (Berkeley County)",
+   "state": "SC",
+   "ba": "SC",
+   "zone": null,
+   "pjm_zone": null,
+   "serving_utility": "Berkeley Electric Cooperative (power from Santee Cooper)",
+   "source_type": "press",
+   "source_url": "https://www.postandcourier.com/business/industry/santee-cooper-google-data-center-sc-electric/article_453dc24b-8d98-42ce-95c0-de176eac45dd.html",
+   "note": "COARSE-REGION CAVEAT, IMPORTANT. Served by Berkeley Electric Cooperative, a member of Central Electric, which buys from Santee Cooper. The SC balancing authority reads 0.056 carbon-free in 2025, which is genuinely coal- and gas-heavy -- BUT Santee Cooper's jointly-owned V.C. Summer nuclear reports under the SCEG balancing authority (0.421), not under SC. So the SC footprint understates the carbon-free content of power actually available to this site. Never present 0.056 without this caveat.",
+   "cf_share_2025": 0.056
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "GOOGL-2026-001",
+   "verbatim": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)",
+   "source_doc": "google-2026-environmental-report.pdf",
+   "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+   "page": 4,
+   "year": 2026,
+   "metric": "renewable_electricity_share",
+   "magnitude": 1.0,
+   "unit": "fraction",
+   "timeframe": "annual",
+   "scope": "market_based",
+   "falsifiability": 0.85,
+   "greenwash_patterns": [
+    "hidden_tradeoff"
+   ],
+   "kind": "annual_scope",
+   "verdict": "true_on_paper",
+   "cannot_verify_reason": null,
+   "physical_min": 0.056,
+   "physical_max": 0.056,
+   "physical_mean_unweighted": 0.056,
+   "confidence": "high",
+   "verification": {
+    "human_reread_rendered_page": true,
+    "method": "human re-read of the rendered PDF page",
+    "pages_checked": [
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "type": "grid",
+     "ba": "SC",
+     "year": 2025,
+     "cf_share": 0.056
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "google-2026-environmental-report.pdf",
+     "page": 4,
+     "note": "The claim \"matched 100%\" is qualified in the same sentence by \"annual\"."
+    }
+   ]
+  },
+  {
+   "claim_id": "GOOGL-2026-002",
+   "verbatim": "It was with this same bold spirit that, at the beginning of the decade, we set net zero and 24/7 carbon-free energy2 (CFE) moonshots that were intentionally aspirational and designed to push the frontiers of what\u2019s possible in energy systems and data center operations.",
+   "source_doc": "google-2026-environmental-report.pdf",
+   "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+   "page": 4,
+   "year": 2026,
+   "metric": "renewable_electricity_share",
+   "magnitude": null,
+   "unit": "fraction",
+   "timeframe": "annual",
+   "scope": "market_based",
+   "falsifiability": 0.6,
+   "greenwash_patterns": [],
+   "kind": "hourly_claim",
+   "verdict": "true_on_paper",
+   "cannot_verify_reason": null,
+   "physical_min": 0.056,
+   "physical_max": 0.056,
+   "physical_mean_unweighted": 0.056,
+   "confidence": "high",
+   "verification": {
+    "human_reread_rendered_page": true,
+    "method": "human re-read of the rendered PDF page",
+    "pages_checked": [
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "type": "grid",
+     "ba": "SC",
+     "year": 2025,
+     "cf_share": 0.056
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "google-2026-environmental-report.pdf",
+     "page": 4,
+     "note": "States an hourly / 24-7 clean-energy claim, which is stronger and more falsifiable than annual matching."
+    }
+   ]
+  },
+  {
+   "claim_id": "GOOGL-2026-003",
+   "verbatim": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)",
+   "source_doc": "google-2026-environmental-report.pdf",
+   "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+   "page": 4,
+   "year": 2026,
+   "metric": "renewable_electricity_share",
+   "magnitude": 1.0,
+   "unit": "fraction",
+   "timeframe": "annual",
+   "scope": "market_based",
+   "falsifiability": 0.85,
+   "greenwash_patterns": [],
+   "kind": "claim_vs_demand_growth",
+   "verdict": "true_on_paper",
+   "cannot_verify_reason": null,
+   "physical_min": 0.056,
+   "physical_max": 0.056,
+   "physical_mean_unweighted": 0.056,
+   "confidence": "high",
+   "verification": {
+    "human_reread_rendered_page": true,
+    "method": "human re-read of the rendered PDF page",
+    "pages_checked": [
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "type": "grid",
+     "ba": "SC",
+     "year": 2025,
+     "cf_share": 0.056
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "google-2026-environmental-report.pdf",
+     "page": 4,
+     "note": "The document states \"matched 100%\" on page 4 and discloses \"37% annual increase in electricity demand\" on page 4, i.e. rising electricity consumption. Annual matching is an accounting result; it does not mean the load was served by clean power hour by hour, which is what an hourly grid index measures."
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "google-2026-environmental-report.pdf",
+     "page": 4,
+     "note": "In 2025, we navigated our largest load growth in history\u2014a 37% annual increase in electricity demand."
+    }
+   ]
+  },
+  {
+   "claim_id": "GOOGL-2026-004",
+   "verbatim": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)",
+   "source_doc": "google-2026-environmental-report.pdf",
+   "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+   "page": 4,
+   "year": 2026,
+   "metric": "renewable_electricity_share",
+   "magnitude": 1.0,
+   "unit": "fraction",
+   "timeframe": "annual",
+   "scope": "market_based",
+   "falsifiability": 0.85,
+   "greenwash_patterns": [],
+   "kind": "esg_claim_vs_10k_risk_language",
+   "verdict": "true_on_paper",
+   "cannot_verify_reason": null,
+   "physical_min": 0.056,
+   "physical_max": 0.056,
+   "physical_mean_unweighted": 0.056,
+   "confidence": "high",
+   "verification": {
+    "human_reread_rendered_page": true,
+    "method": "human re-read of the rendered PDF page",
+    "pages_checked": [
+     4
+    ],
+    "tenk_quote": "checked verbatim against the raw SEC filing HTML; re-runnable via python3 -m engine.contradict.verify_tenk"
+   },
+   "evidence": [
+    {
+     "type": "grid",
+     "ba": "SC",
+     "year": 2025,
+     "cf_share": 0.056
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "goog-20251231.htm",
+     "page": null,
+     "note": "The sustainability report states \"Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis) 4\" on page 4, while the 10-K states, in Item 1A under legal liability: \"For instance, AI's energy and water demands have made efforts to reduce our emissions more complex and challenging across every level.\""
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "google-2026-environmental-report.pdf",
+     "page": null,
+     "note": "For instance, AI's energy and water demands have made efforts to reduce our emissions more complex and challenging across every level."
+    }
+   ]
+  }
+ ],
+ "talk_score": 0.394,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.056,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 0,
+ "notes": [
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "Every quote was read off the rendered PDF page or raw SEC HTML by a human.",
+  "Santee Cooper's jointly-owned V.C. Summer nuclear reports under the SCEG balancing authority (0.421 in 2025), not under SC (0.056). The SC footprint understates the carbon-free content of power available to sites in this territory."
+ ],
+ "is_mock": false
+}

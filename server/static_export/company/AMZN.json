@@ -1,0 +1,70 @@
+{
+ "company": "Amazon",
+ "ticker": "AMZN",
+ "sites": [
+  {
+   "metro": "Loudoun County / Ashburn",
+   "state": "VA",
+   "ba": "PJM",
+   "zone": "PJM/DOM",
+   "pjm_zone": "PJM/DOM",
+   "serving_utility": "Dominion Energy Virginia",
+   "source_type": "company_disclosure",
+   "source_url": "https://rmi.org/amazon-dominion-virginia-power-reach-breakthrough-renewable-energy-agreement/",
+   "note": "Detector rank 6. Dominion Virginia Power provides retail service to AWS's Northern Virginia data centers. NOVEC also serves parts of the region; sites outside Dominion territory are NOT covered by this row.",
+   "cf_share_2025": 0.393
+  },
+  {
+   "metro": "Loudoun/Prince William (NOVEC territory)",
+   "state": "VA",
+   "ba": "PJM",
+   "zone": "PJM/DOM",
+   "pjm_zone": "PJM/DOM",
+   "serving_utility": "Northern Virginia Electric Cooperative",
+   "source_type": "press",
+   "source_url": "https://dcmap.us/markets/northern-virginia/",
+   "note": "Separate row on purpose: NOVEC is a different serving utility from Dominion in the same metro and is building substation capacity outside Dominion's territory for AWS. Same BA/zone footprint, different retail provider.",
+   "cf_share_2025": 0.393
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "AMZN-2026-001",
+   "verbatim": null,
+   "source_doc": null,
+   "source_url": null,
+   "page": null,
+   "year": 2026,
+   "metric": null,
+   "magnitude": null,
+   "unit": null,
+   "timeframe": null,
+   "scope": null,
+   "falsifiability": null,
+   "greenwash_patterns": [],
+   "kind": "no_finding",
+   "verdict": "cannot_verify",
+   "cannot_verify_reason": "no_falsifiable_content",
+   "physical_min": null,
+   "physical_max": null,
+   "physical_mean_unweighted": null,
+   "confidence": "high",
+   "note": "No intra-document finding. Amazon's headline 100%-matched claim is on page 5 inside an infographic, which extracts as fragments ('100% matched 100% matched') rather than a sentence. A quotable restatement does exist on page 10 and is used for the cross-document check, but nothing in the report qualifies or undercuts it in the same sentence, so nothing is reported.",
+   "evidence": []
+  }
+ ],
+ "talk_score": null,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.393,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 1,
+ "notes": [
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "Every quote was read off the rendered PDF page or raw SEC HTML by a human."
+ ],
+ "is_mock": false
+}
