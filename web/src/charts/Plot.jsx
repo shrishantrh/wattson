@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Thin Plotly wrapper. Re-plots when data/layout change, reflows on container resize, purges on unmount.
 //
-// Plotly (plotly.js-dist-min, 4.8 MB minified) is the largest thing in the app and only the heatmap
+// Plotly (plotly.js-cartesian-dist-min, 4.8 MB minified) is the largest thing in the app and only the heatmap
 // uses it, so it is loaded on demand with a dynamic import the first time a <Plot> mounts. The
 // module promise is memoised: every later <Plot> resolves synchronously and never shows the
 // placeholder. Nothing else in charts/ may import plotly statically; builders.js and theme.js only
@@ -15,7 +15,7 @@ let plotlyPromise = null
 function loadPlotly() {
   if (plotlyModule) return Promise.resolve(plotlyModule)
   if (!plotlyPromise) {
-    plotlyPromise = import('plotly.js-dist-min')
+    plotlyPromise = import('plotly.js-cartesian-dist-min')
       .then(m => { plotlyModule = m.default || m; return plotlyModule })
       .catch(err => { plotlyPromise = null; throw err })
   }

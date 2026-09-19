@@ -15,11 +15,12 @@
   --accent: #ff7a4a;
   --accent-soft: rgba(255, 122, 74, 0.16);
 
-  /* hairlines: soft = structure (cards, rows), strong = interactive edges, focus = hover/focus */
+  /* hairlines: soft = structure (cards, row dividers), strong = resting control edges,
+     focus = hover. Keyboard focus is the ring, never a border change alone. */
   --line-soft: rgba(255, 255, 255, 0.06);
-  --line-strong: rgba(255, 255, 255, 0.14);
-  --line-focus: rgba(255, 255, 255, 0.28);
-  --ring: 0 0 0 2px rgba(255, 255, 255, 0.18);
+  --line-strong: rgba(255, 255, 255, 0.1);
+  --line-focus: rgba(255, 255, 255, 0.2);
+  --ring: 0 0 0 2px rgba(255, 255, 255, 0.25);
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.4);
 
@@ -33,6 +34,8 @@
   --t-hero: clamp(56px, 7.6vw, 118px);
   --t-h1: clamp(28px, 3.4vw, 46px);
   --t-h2: 22px;
+  --t-verdict: 21px;         /* the one sentence on a card */
+  --t-num: 26px;             /* the three figures under it */
   --t-body: 15px;
   --t-small: 13px;
   --t-micro: 11px;
@@ -46,9 +49,12 @@
 
   --pad: 28px;
   --radius-sm: 8px;
+  --radius-ctl: 10px;        /* chips, buttons, fields, segmented controls */
   --radius: 12px;
   --radius-card: 14px;
   --radius-lg: 16px;
+  --h-ctl: 32px;             /* every control in a row shares this height */
+  --h-ctl-sm: 24px;
   --maxw: 1200px;
 
   --dur-fast: 150ms;
