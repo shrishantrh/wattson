@@ -1,100 +1,124 @@
-"""PDF text extraction that keeps the page number attached to the text, and
-reads multi-column pages one column at a time.
+"""PDF text extraction that keeps the page number attached to the text and
+reconstructs the reading order of a laid-out report page.
 
-pdfplumber's default extract_text() reads straight across the page, so on a
-two-column layout it splices the columns together mid-sentence and produces text
-that appears nowhere in the document. Since every quote we show on screen is
-meant to be verbatim, that is unusable: we assemble the columns ourselves.
+Reading a report page straight across splices its columns together mid
+sentence and produces text that appears nowhere in the document. Since every
+quote we show on screen is meant to be verbatim, that is unusable.
 
-A gutter is a vertical strip where word density collapses relative to the rest of
-the page. It is a density trough rather than a strictly empty strip, because a
-real report almost always has a few elements straddling the gap -- a rule,
-a caption, a banner -- and requiring perfect emptiness finds no gutter at all.
-Troughs are only looked for in the middle of the page, so page margins do not
-register, and a page whose text is too sparse to have a reliable density profile
-is treated as a single column.
+An earlier version of this module clustered individual WORDS by x coordinate.
+That fixed plain two-column body text and failed on everything else: word
+boxes do not separate cleanly when columns sit close together, a full-width
+header gets torn across the bands and loses words, tables flatten into a wall
+of orphaned numbers, and a page with two text layers interleaves per character
+("632%3% C apPituarlc ghoasoedds").
+
+PyMuPDF hands back layout BLOCKS -- paragraphs and table rows already grouped
+by the renderer -- which removes all four failure modes at once. What is left
+is ordering the blocks, which is what this module does: a block spanning most
+of the page width is a banner that separates one horizontal section from the
+next, and within a section the blocks are read column by column.
 """
 
-import pdfplumber
+import pymupdf
 
-MIN_GUTTER_PT = 14         # narrower than this is word spacing, not a column gap
-FULL_WIDTH_FRACTION = 0.4  # a word this wide spans columns: a banner, not body
-LINE_TOLERANCE_PT = 3.0    # words within this vertical distance share a line
-TROUGH_FRACTION = 0.12     # density this far below the page's peak reads as a gap
-MIN_PEAK_DENSITY = 3       # below this the page is too sparse to profile
-EDGE_MARGIN = 0.15         # ignore troughs in the outer 15% -- those are margins
+FULL_WIDTH_FRACTION = 0.60  # a block this wide spans the columns: a banner
+COLUMN_X0_GAP = 30          # difference in LEFT EDGE that starts a new column
+TEXT_BLOCK = 0              # PyMuPDF block type; 1 is an image
 
 
-def _gutters(words, page_width):
-    """x-ranges where word density collapses: the gaps between columns."""
-    density = [0] * (int(page_width) + 2)
-    for w in words:
-        if (w["x1"] - w["x0"]) > FULL_WIDTH_FRACTION * page_width:
-            continue
-        for x in range(max(0, int(w["x0"])), min(len(density), int(w["x1"]) + 1)):
-            density[x] += 1
+def _order_blocks(blocks, page_width):
+    """Reading order: banners split the page, columns are read left to right."""
+    ordered, pending = [], []
 
-    peak = max(density)
-    if peak < MIN_PEAK_DENSITY:
-        return []
-    threshold = max(1, TROUGH_FRACTION * peak)
-    low, high = EDGE_MARGIN * page_width, (1 - EDGE_MARGIN) * page_width
+    def flush():
+        if not pending:
+            return
+        # Cluster on the LEFT EDGE, not on the gap to the previous block's
+        # right edge. Columns share a left margin, whereas right edges are
+        # ragged: on Google's executive summary one heading block ends exactly
+        # where the next column begins, and gap-on-right-edge merged the two
+        # columns into one, splicing every sentence on the page.
+        columns, current = [], []
+        for block in sorted(pending, key=lambda b: b[0]):
+            if current and block[0] - current[-1][0] > COLUMN_X0_GAP:
+                columns.append(current)
+                current = [block]
+            else:
+                current.append(block)
+        if current:
+            columns.append(current)
+        for column in columns:
+            ordered.extend(sorted(column, key=lambda b: b[1]))
+        pending.clear()
 
-    gaps, x = [], 0
-    while x < len(density):
-        if density[x] > threshold:
-            x += 1
-            continue
-        start = x
-        while x < len(density) and density[x] <= threshold:
-            x += 1
-        if x - start >= MIN_GUTTER_PT and start > low and x < high:
-            gaps.append((start, x))
-    return gaps
-
-
-def _band_edges(words, page_width):
-    edges = [0.0]
-    for start, end in _gutters(words, page_width):
-        edges.append((start + end) / 2.0)
-    edges.append(float(page_width) + 1)
-    return edges
-
-
-def _lines(words):
-    """Group words into visual lines, then read each line left to right."""
-    out, current, current_top = [], [], None
-    for w in sorted(words, key=lambda w: (w["top"], w["x0"])):
-        if current_top is None or abs(w["top"] - current_top) <= LINE_TOLERANCE_PT:
-            current.append(w)
-            current_top = w["top"] if current_top is None else current_top
+    for block in sorted(blocks, key=lambda b: b[1]):
+        if (block[2] - block[0]) > FULL_WIDTH_FRACTION * page_width:
+            flush()
+            ordered.append(block)
         else:
-            out.append(current)
-            current, current_top = [w], w["top"]
-    if current:
-        out.append(current)
-    return [" ".join(w["text"] for w in sorted(line, key=lambda w: w["x0"]))
-            for line in out]
+            pending.append(block)
+    flush()
+    return ordered
+
+
+INNER_GUTTER_PT = 20   # a gap this wide INSIDE one block is a real column gap
+MIN_COLUMN_LINES = 2   # ...but only if both sides are more than a stray label
+
+
+def _split_wide_block(block, words):
+    """Some PDFs emit two columns as a single full-width block. Split it when
+    its own words fall into separated x-clusters that are each several lines
+    deep; a genuine banner heading is one cluster and passes through."""
+    x0, top, x1, bottom = block[:4]
+    inside = [w for w in words
+              if w[0] >= x0 - 1 and w[2] <= x1 + 1
+              and w[1] >= top - 1 and w[3] <= bottom + 1]
+    if not inside:
+        return None
+
+    clusters, current = [], [inside[0]]
+    for w in sorted(inside, key=lambda w: w[0])[1:]:
+        if w[0] - max(c[2] for c in current) > INNER_GUTTER_PT:
+            clusters.append(current)
+            current = [w]
+        else:
+            current.append(w)
+    clusters.append(current)
+    if len(clusters) < 2:
+        return None
+    if any(len({round(w[1]) for w in c}) < MIN_COLUMN_LINES for c in clusters):
+        return None
+
+    out = []
+    for c in clusters:
+        lines = {}
+        for w in c:
+            lines.setdefault(round(w[1]), []).append(w)
+        out.append(" ".join(" ".join(w[4] for w in sorted(ws, key=lambda w: w[0]))
+                            for _, ws in sorted(lines.items())))
+    return out
 
 
 def page_text(page):
-    words = page.extract_words(use_text_flow=False, keep_blank_chars=False)
-    if not words:
+    blocks = [b for b in page.get_text("blocks") if b[6] == TEXT_BLOCK]
+    if not blocks:
         return ""
 
-    edges = _band_edges(words, page.width)
-    bands = [[] for _ in range(len(edges) - 1)]
-    for w in words:
-        mid = (w["x0"] + w["x1"]) / 2.0
-        for i in range(len(edges) - 1):
-            if edges[i] <= mid < edges[i + 1]:
-                bands[i].append(w)
-                break
-
-    return "\n".join("\n".join(_lines(b)) for b in bands if b)
+    words = page.get_text("words")
+    width = page.rect.width
+    parts = []
+    for b in _order_blocks(blocks, width):
+        if (b[2] - b[0]) > FULL_WIDTH_FRACTION * width:
+            split = _split_wide_block(b, words)
+            if split:
+                parts.extend(split)
+                continue
+        if b[4].strip():
+            parts.append(b[4].strip())
+    return "\n".join(parts)
 
 
 def extract_pages(path):
     """Return [(page_number, text)] with page numbers 1-indexed as printed."""
-    with pdfplumber.open(str(path)) as pdf:
-        return [(i, page_text(p)) for i, p in enumerate(pdf.pages, 1)]
+    with pymupdf.open(str(path)) as doc:
+        return [(i, page_text(page)) for i, page in enumerate(doc, 1)]
