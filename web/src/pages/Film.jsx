@@ -210,7 +210,7 @@ function Slide({ kind, on }) {
         <div className="film-strip" aria-label="A flat 24/7 load, every hour the same">{Array.from({ length: 24 }, (_, h) => <i key={h} className={h < 6 ? 'night' : ''} style={{ transitionDelay: `${350 + h * 45}ms` }} />)}</div>
         <div className="film-strip-axis"><span>midnight</span><span>6am</span><span>noon</span><span>6pm</span><span>midnight</span></div>
       </div>
-      <p {...rise(320, 'film-foot')}>A flat 24/7 load: every hour the same, night in ember.</p>
+      <p {...rise(320, 'film-foot')}>A flat 24/7 load: every hour the same, all night and all day.</p>
     </div>
   )
   if (kind === 'night') return <NightSlide on={on} />
