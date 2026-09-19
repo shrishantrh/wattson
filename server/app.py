@@ -294,19 +294,31 @@ def get_facilities():
             "source_type": f["source_type"], "source_url": f["source_url"],
             "note": f.get("note") or None,
         })
-    no_equity = [r for r in rows if not r["utility_ticker"]]
+    # Two different things, deliberately not conflated: a site whose serving utility is
+    # KNOWN and has no listed equity (public power, a cooperative, a state authority) is
+    # a finding. A site whose serving utility we could not establish is a coverage gap.
+    # Counting them together would inflate the finding with our own ignorance.
+    resolved = [r for r in rows if r["serving_utility"]]
+    no_equity = [r for r in resolved if not r["utility_ticker"]]
+    unresolved = [r for r in rows if not r["serving_utility"]]
     return {
         "count": len(rows),
         "facilities": rows,
         "no_listed_equity_count": len(no_equity),
+        "resolved_count": len(resolved),
+        "unresolved_utility_count": len(unresolved),
         "notes": [
             "Sites are mapped from the serving utility outward, never inferred from the state.",
             "utility_parent and utility_ticker describe the SERVING UTILITY's owner, not the "
             "datacenter operator.",
-            f"{len(no_equity)} of {len(rows)} sites are served by public power districts or "
-            "member-owned cooperatives with no listed equity. Cheap hydro and wind sit "
+            f"{len(no_equity)} of the {len(resolved)} sites whose serving utility we could "
+            "establish are served by public power districts, member-owned cooperatives or "
+            "state authorities with no listed equity. Cheap hydro and wind sit "
             "disproportionately with public power, so a material share of this buildout lands "
             "where there is no stock to trade.",
+            f"A further {len(unresolved)} sites have no serving utility recorded. That is a "
+            "coverage gap in our research, not a finding about the site, and it is counted "
+            "separately so it cannot inflate the figure above.",
             "Coverage is partial and hand-curated. Absence of a site is not evidence it does "
             "not exist.",
         ],
