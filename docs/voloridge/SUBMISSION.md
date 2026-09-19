@@ -19,7 +19,9 @@ not increased since 2019. Every added gigawatt of overnight generation was fossi
 | Total generation | — | **+8.7 GW** |
 | Net exports | 3,814 MW | 2,489 MW |
 
-Clean generation flat within 100 MW while total grew 8.7 GW. Exports *fell* 1.3 GW, so that growth
+2025 clean generation is within 100 MW of 2019 (81 MW apart) while total grew 8.7 GW. The path
+between them is not flat: the series runs 34,316-36,299 MW and 2020 sits 1,384 MW below 2019. The
+claim is about the endpoints, seven years apart, and we state it that way. Exports *fell* 1.3 GW, so that growth
 served PJM's own load rather than leaving the footprint. The gap is fossil.
 
 Why it has gone unnoticed: the environmental story of AI is told in annual totals, and totals hide
@@ -27,8 +29,10 @@ it. Solar cleaned up the middle of the day and did nothing for the middle of the
 draws the same power at 3am in January as at noon in June, so roughly half of AI's demand lands in
 hours that have not improved in seven years.
 
-Nationally the same split: overnight clean output rose 14 GW but overnight *total* rose 45 GW, so
-overnight share slipped 0.405 → 0.397. Daytime share went 0.372 → 0.465.
+Nationally the same split: overnight clean output rose from 159.0 to 173.4 GW — up 14.3 GW — but
+overnight *total* rose faster, so overnight share slipped 0.405 → 0.397. Daytime share went
+0.372 → 0.465. The share fall must never be shown without the absolute rise beside it: clean
+generation grew, it just grew slower than demand.
 
 This is not an accusation against any company. Annual renewable matching is a legitimate accounting
 method under the GHG Protocol. It describes contracts. We measured physics.
@@ -131,7 +135,8 @@ A monitoring tool that opens on results, not a prompt.
 - **Siting score** — the actionable output. Overnight clean share today, its 2019–2025 slope, and
   overnight clean MW relative to overnight demand. Ask it where to put 300 MW of flat load across
   Phoenix, Northern Virginia and Omaha and it answers Omaha 0.737 (wind filled +4.16 GW), Northern
-  Virginia 0.436 (gas filled +10.74 GW), Phoenix 0.173.
+  Virginia 0.436, Phoenix 0.449. Phoenix's published score of 0.173 is corrected: it rests on the
+  AZPS figures fixed below, and the API applies the correction and returns both values.
 - **Claim verification** — company statements checked against the grid their sites physically draw
   from. Verdicts are `true_on_paper | contradicted | unfalsifiable | cannot_verify`, never "they
   lied," and `cannot_verify` carries an enumerated reason and a visible count.
@@ -157,11 +162,135 @@ lookup, where it produces confidently wrong balancing-authority mappings, and ou
 - Generation within a footprint, not consumption. Interchange is not allocated.
 - Average grid mix, not marginal emissions.
 - Regions are coarse; PJM spans Chicago to New Jersey.
-- Zones inherit the parent BA's generation figures; zones report demand only.
+- Zones inherit the parent BA's generation figures; zones report demand only. This is a trap we
+  walked into ourselves: PJM/DOM's `fuel_delta_overnight_gw.gas` reads 10.74 GW, but that is PJM's
+  figure, byte-identical across every PJM zone. Dominion's OWN overnight demand grew 3,973 MW,
+  roughly half of PJM's 8.7 GW overnight growth. Say PJM-wide gas rose 10.74 GW and Dominion's own
+  overnight demand rose about 4 GW. Never attribute the 10.74 to Dominion.
 - The detector cannot distinguish a datacenter from a crypto mine.
 - Facility and operator mapping is hand-curated. Operator tickers are unverified.
 - Hourly data updated with each release. PUDL is a snapshot ending 2026-09-05, not a live feed.
 - Dominion's roughly +4 GW overnight is about half of PJM's overnight growth. Half, not all.
+
+---
+
+## We swept the whole dataset for the bug we found
+
+Finding one reporting error is an anecdote. We turned it into a method and ran it across
+every balancing authority.
+
+**69 BAs swept. One permanent material break in a carbon-free fuel in the entire dataset:
+AZPS nuclear. One case of two BAs reporting the same generation hour by hour: AZPS and
+SRP, correlation 0.9953, identical within 5 MW in 97.8% of hours over the 180 days before
+the break. No other pair comes close.**
+
+48 clean, 1 coverage gap, 20 with a break in a minor fuel. PJM, ERCOT, CAISO, TEPC, WACM,
+SC, SOCO, DUK, TVA, SCEG and BPAT are all clean, so nothing under the headline finding is
+affected.
+
+**What was actually wrong with AZPS.** Through 2019, Arizona Public Service and Salt River
+Project each reported the same roughly 3,900 MW of nuclear. Their combined output was
+about 1.8 times Palo Verde's nameplate capacity. Last hour reported 2019-12-04 07:00 UTC,
+then 17 months of nulls, then a literal zero. Every other AZPS fuel continues across that
+date. A step on one date, not a decline.
+
+Consequence: our own published figure said AZPS overnight clean share **fell** from 0.620
+to 0.104. On a consistent basis it **rose** from 0.017. **Wrong in direction, not
+magnitude.** It is corrected in the product as an overlay that shows the published value,
+the corrected value and the evidence side by side, rather than silently swapped.
+
+**Four false-positive classes had to be eliminated first.** Each would have been a wrong
+public claim about a named grid operator.
+
+*Pre-2019 coverage.* The first PJM run flagged a break in every fuel on 2018-07-11, which
+would have read as a catastrophe under our biggest region. PJM simply stops reporting: 251
+of 365 days null in 2018, 1 of 2,806 from 2019 onward. Chasing it produced the
+discriminator the sweep now rests on: **every fuel stopping together means the BA stopped
+reporting; one fuel stopping while the others continue means the generation was
+reattributed.** Only the second is a finding.
+
+*Refuelling outages.* A 30-day window flagged nuclear at BPAT, NYISO, SCEG and SPP. All
+four resume — nuclear refuelling runs past thirty days. Only AZPS never comes back.
+
+*The 2024 category split*, already known, excluded by fuel and date.
+
+*A seasonal artefact in our own method.* A 60-day before/after comparison cannot detect
+reattribution at all. It confidently "explained" nearly every candidate, because national
+gas swings tens of gigawatts seasonally and the test simply names whichever large BA
+happened to rise. Only direct hour-by-hour pair comparison works. We nearly shipped the
+version that was wrong twenty times over.
+
+**Trap 10: the `reported` generation column contains integer-overflow sentinels.** 75
+hours carry values like 429,497,248 MW and 2,576,980,992 MW, against roughly 450,000 MW of
+total US generation. `net_generation_adjusted_mwh` has zero such hours and is the column
+the pipeline uses, so our results are unaffected — but that choice is now verified rather
+than assumed. Anyone reaching for the reported column gets a 2.5-billion-megawatt hydro
+hour in BANC.
+
+
+### Testing our own claim at full scale, on your hardware
+
+We published a claim: the AZPS/SRP double-count was the only pair of balancing
+authorities reporting the same generation as each other. That came from investigating
+Arizona and then checking its neighbour. It had never been tested exhaustively.
+
+So we tested it. **Every unordered pair of balancing authorities, every fuel, every hour
+both report, in 90-day windows stepped 30 days: 4,430 pairs with enough data across
+580,410 window comparisons, nine workers on the 48-core instance, 17.1 seconds.**
+
+34 pairs exceed 0.90 correlation. **Two are actual duplicates.**
+
+| Pair | Fuel | Correlation | Identical within 5 MW | Combined |
+|---|---|---|---|---|
+| **AZPS / SRP** | nuclear | **0.999982** | **99.58%** | 7,746 MW vs a 3,937 MW plant |
+| PNM / TEPC | solar | 0.94 | 51% | 145.7 MW |
+
+The Arizona duplication is now established by exhaustive search rather than by
+investigation. The second is small, affects no published figure, and we name it as a
+**candidate** rather than a finding.
+
+**The first version of this sweep had two bugs, and both are the point.**
+
+It swept 2019–2026 as a single window and **missed AZPS/SRP — the very pair it was
+written to find.** The duplication ended on 2019-12-04, and the post-break period, where
+AZPS reads zero against SRP's 3,900 MW, destroys the correlation. *A duplication that
+stops is invisible to a whole-period test.* Hence sliding windows.
+
+It also reported BANC/PACW solar as a duplicate at "53% identical". Solar is zero at
+night for both, so **any two solar series match trivially in the dark.** Hours where both
+are near zero are now dropped before comparing.
+
+And correlation alone is not evidence. LDWP/NEVP solar correlates at **0.979** and is not
+a duplicate, because their values differ by 71 MW on average. Two balancing authorities
+in one region share weather and load shape. **The discriminator is whether the numbers are
+identical, not whether they move together** — a test built on correlation would have
+produced dozens of false accusations about named grid operators.
+
+---
+
+## An independent check on the whole index
+
+Google publishes grid carbon-free share per balancing authority in its environmental
+report — the same quantity we compute from EIA-930, calculated independently, by a
+different organisation, from different inputs.
+
+| BA | Google | Wattson |
+|---|---|---|
+| ERCOT | 46 | 46.1 |
+| Duke | 57 | 57.5 |
+| Southern | 33 | 32.5 |
+| PJM | 40 | 39.3 |
+| MISO | 36 | 34.9 |
+| SPP | 47 | 45.6 |
+| TVA | 47 | 48.7 |
+
+**7 of 11 within 2 points, median difference −0.5 points.**
+
+Three outliers are recorded as open questions rather than errors. The clearest, SC, is a
+good illustration of a caveat we already publish: we read Santee Cooper's balancing
+authority alone, while Google appears to aggregate it with SCEG next door, which holds the
+jointly-owned nuclear. The outlier argues for the honesty of our regional caveat rather
+than against the accuracy of the index.
 
 ---
 
@@ -183,6 +312,8 @@ Re-ran the full pipeline end to end on a Voloridge-provided `i7i.12xlarge`
 | `export_json` | 5.7 s |
 | **Total** | **under 2 minutes** |
 
+Raw timings: `docs/voloridge/artifacts/ec2_run.log`.
+
 The 3.7-second fetch is the in-region advantage: same AWS region as the PUDL bucket.
 
 **The results are identical across a Python and pandas major version boundary.** The
@@ -193,7 +324,7 @@ pandas 2.3.3. Every headline figure reproduced exactly:
 |---|---|---|
 | Regions / detector-scored | 124 / 111 | 124 / 111 |
 | Dominion rank, score | 6, 7.71 | 6, 7.71 |
-| Dominion overnight gas 2019→2025 | +10.74 GW | +10.74 GW |
+| PJM overnight gas 2019→2025 | +10.74 GW | +10.74 GW |
 | PJM overnight clean generation | 35,700 → 35,619 MW | 35,700 → 35,619 MW |
 | National overnight CF share | 0.405 → 0.397 | 0.405 → 0.397 |
 

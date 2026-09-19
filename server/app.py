@@ -113,13 +113,29 @@ def post_site(req: SiteRequest):
             cands.append({"metro": metro, "region_id": None, "siting_score": None,
                           "verdict_rank": None, "reason": "no_region_mapping"})
             continue
-        s, dt = r.get("siting") or {}, r.get("detection") or {}
+        s, dt = dict(r.get("siting") or {}), r.get("detection") or {}
+        # Apply the corrections overlay. AZPS's published siting components are known
+        # wrong -- two of them have the wrong SIGN -- so ranking Phoenix on the published
+        # numbers would contradict our own correction on the same screen.
+        corr = data.corrections_for(rid) or {}
+        applied = {}
+        for c in (corr.get("corrections") or []):
+            path = c.get("path", "")
+            if not path.startswith("siting."):
+                continue
+            field = path.split(".", 1)[1]
+            if field in s and "corrected" in c:
+                applied[field] = {"published": s[field], "corrected": c["corrected"],
+                                  "confidence": c.get("confidence"),
+                                  "evidence": c.get("evidence")}
+                s[field] = c["corrected"]
         fd = r.get("fuel_delta_overnight_gw") or {}
         grew = [(k, v) for k, v in fd.items() if isinstance(v, (int, float)) and v > 0]
         filled = max(grew, key=lambda kv: kv[1]) if grew else (None, None)
         cands.append({
             "metro": metro, "region_id": rid, "name": r["name"], "reason": None,
             "siting_score": s.get("siting_score"), "siting_rank": s.get("siting_rank"),
+            "corrections_applied": applied or None,
             "components": {
                 "level_overnight_cf_share_2025": s.get("overnight_cf_share_2025"),
                 "direction_ratio_slope_per_year": s.get("ratio_slope_per_year"),
@@ -142,7 +158,9 @@ def post_site(req: SiteRequest):
         "request": req.model_dump(),
         "method": ("Ranked on overnight carbon-free share today, whether it is improving, and "
                    "overnight clean MW relative to overnight demand. Frozen siting score from "
-                   "the published index; no re-tuning."),
+                   "the published index; no re-tuning. Where a published value is known to be "
+                   "wrong, the correction is applied and both values are returned in "
+                   "corrections_applied."),
         "candidates": ordered,
         "unmapped_metros": unmapped,
         "caveats": data.meta()["caveats"],

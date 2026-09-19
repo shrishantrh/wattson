@@ -29,6 +29,71 @@
    "timeframe": "annual",
    "scope": "market_based",
    "falsifiability": 0.85,
+   "greenwash_patterns": [],
+   "kind": "annual_claim_vs_disclosed_hourly_cfe",
+   "verdict": "true_on_paper",
+   "cannot_verify_reason": null,
+   "physical_min": 0.056,
+   "physical_max": 0.056,
+   "physical_mean_unweighted": 0.056,
+   "confidence": "high",
+   "verification": {
+    "human_reread_rendered_page": true,
+    "method": "human re-read of the rendered PDF page",
+    "pages_checked": [
+     4,
+     94
+    ]
+   },
+   "evidence": [
+    {
+     "type": "grid",
+     "ba": "SC",
+     "year": 2025,
+     "cf_share": 0.056
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "google-2026-environmental-report.pdf",
+     "page": 94,
+     "note": "CFE across Google data centers (hourly) \u2014 2021: 65%, 2022: 64%, 2023: 64%, 2024: 66%, 2025: 65%",
+     "values": [
+      65,
+      64,
+      64,
+      66,
+      65
+     ],
+     "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "label": "CFE across Google data centers (hourly)"
+    },
+    {
+     "type": "internal_contradiction",
+     "source_doc": "google-2026-environmental-report.pdf",
+     "page": 94,
+     "note": "The report claims, on page 4: \"Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis) 4\". The same report discloses, on page 94, CFE across Google data centers (hourly) of 2021: 65%, 2022: 64%, 2023: 64%, 2024: 66%, 2025: 65%. Annual matching and hourly carbon-free supply are different measurements, and the company publishes both."
+    }
+   ]
+  },
+  {
+   "claim_id": "GOOGL-2026-002",
+   "verbatim": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)",
+   "source_doc": "google-2026-environmental-report.pdf",
+   "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+   "page": 4,
+   "year": 2026,
+   "metric": "renewable_electricity_share",
+   "magnitude": 1.0,
+   "unit": "fraction",
+   "timeframe": "annual",
+   "scope": "market_based",
+   "falsifiability": 0.85,
    "greenwash_patterns": [
     "hidden_tradeoff"
    ],
@@ -62,7 +127,7 @@
    ]
   },
   {
-   "claim_id": "GOOGL-2026-002",
+   "claim_id": "GOOGL-2026-003",
    "verbatim": "It was with this same bold spirit that, at the beginning of the decade, we set net zero and 24/7 carbon-free energy2 (CFE) moonshots that were intentionally aspirational and designed to push the frontiers of what\u2019s possible in energy systems and data center operations.",
    "source_doc": "google-2026-environmental-report.pdf",
    "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
@@ -105,7 +170,7 @@
    ]
   },
   {
-   "claim_id": "GOOGL-2026-003",
+   "claim_id": "GOOGL-2026-004",
    "verbatim": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)",
    "source_doc": "google-2026-environmental-report.pdf",
    "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
@@ -149,12 +214,15 @@
      "type": "internal_contradiction",
      "source_doc": "google-2026-environmental-report.pdf",
      "page": 4,
-     "note": "In 2025, we navigated our largest load growth in history\u2014a 37% annual increase in electricity demand."
+     "note": "In 2025, we navigated our largest load growth in history\u2014a 37% annual increase in electricity demand.",
+     "values": null,
+     "years": null,
+     "label": null
     }
    ]
   },
   {
-   "claim_id": "GOOGL-2026-004",
+   "claim_id": "GOOGL-2026-005",
    "verbatim": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)",
    "source_doc": "google-2026-environmental-report.pdf",
    "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
@@ -197,14 +265,17 @@
     },
     {
      "type": "internal_contradiction",
-     "source_doc": "google-2026-environmental-report.pdf",
+     "source_doc": "goog-20251231.htm",
      "page": null,
-     "note": "For instance, AI's energy and water demands have made efforts to reduce our emissions more complex and challenging across every level."
+     "note": "For instance, AI's energy and water demands have made efforts to reduce our emissions more complex and challenging across every level.",
+     "values": null,
+     "years": null,
+     "label": null
     }
    ]
   }
  ],
- "talk_score": 0.394,
+ "talk_score": 0.405,
  "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
  "walk_score": 0.056,
  "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",

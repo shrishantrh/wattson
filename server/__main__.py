@@ -31,6 +31,7 @@ def static_export(out_dir: Path) -> int:
     w("health.json", A.health())
     w("alerts.json", A.get_alerts())
     w("companies.json", A.get_companies())
+    w("facilities.json", A.get_facilities())
 
     # Every region the detail endpoint accepts, not just the 111 ranked ones.
     # Files are named with the id URL-encoded so PJM/DOM -> region/PJM%2FDOM.json
@@ -67,6 +68,7 @@ def static_export(out_dir: Path) -> int:
             "region": "region/{URL-encoded id}.json  (124 ids; the ranked list has 111)",
             "alerts": "alerts.json",
             "companies": "companies.json",
+            "facilities": "facilities.json",
             "company": "company/{TICKER}.json",
             "site": "site/{preset}.json",
         },

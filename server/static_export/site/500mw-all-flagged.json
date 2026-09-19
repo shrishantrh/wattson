@@ -13,7 +13,7 @@
   ],
   "flat_247": true
  },
- "method": "Ranked on overnight carbon-free share today, whether it is improving, and overnight clean MW relative to overnight demand. Frozen siting score from the published index; no re-tuning.",
+ "method": "Ranked on overnight carbon-free share today, whether it is improving, and overnight clean MW relative to overnight demand. Frozen siting score from the published index; no re-tuning. Where a published value is known to be wrong, the correction is applied and both values are returned in corrections_applied.",
  "candidates": [
   {
    "metro": "Omaha",
@@ -22,6 +22,7 @@
    "reason": null,
    "siting_score": 0.737,
    "siting_rank": 10,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.519,
     "direction_ratio_slope_per_year": 0.0101,
@@ -72,6 +73,7 @@
    "reason": null,
    "siting_score": 0.603,
    "siting_rank": 18,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.413,
     "direction_ratio_slope_per_year": -0.0,
@@ -122,6 +124,7 @@
    "reason": null,
    "siting_score": 0.603,
    "siting_rank": 18,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.413,
     "direction_ratio_slope_per_year": -0.0,
@@ -166,12 +169,93 @@
    "verdict_rank": 3
   },
   {
+   "metro": "Phoenix",
+   "region_id": "AZPS",
+   "name": "Arizona Public Service Company",
+   "reason": null,
+   "siting_score": 0.449,
+   "siting_rank": 32,
+   "corrections_applied": {
+    "change_since_2019": {
+     "published": -0.517,
+     "corrected": 0.087,
+     "confidence": "proven",
+     "evidence": "Published value has the wrong SIGN: it reports a 0.517 fall where the like-for-like change is an increase. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
+    },
+    "ratio_slope_per_year": {
+     "published": -0.1105,
+     "corrected": 0.011,
+     "confidence": "proven",
+     "evidence": "Wrong sign, driven entirely by the inflated 2019 point. Recomputed over 2019-2025 with nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
+    },
+    "ratio_2019": {
+     "published": 1.145,
+     "corrected": 0.0118,
+     "confidence": "proven",
+     "evidence": "Overnight clean MW over overnight demand, nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
+    },
+    "siting_score": {
+     "published": 0.173,
+     "corrected": 0.449,
+     "confidence": "proven",
+     "evidence": "Recomputed with the corrected change_since_2019. siting_score is a mean of cross-sectional percentile ranks, so one region's correction moves the table."
+    },
+    "siting_rank": {
+     "published": 49,
+     "corrected": 32,
+     "confidence": "high_confidence_inference",
+     "evidence": "Recomputed over the same 52 ranked BAs. The published file stores rounded components while the pipeline ranked on full precision, so this method reproduces 41 of 52 published ranks exactly. Treat the corrected rank as +/- 2."
+    }
+   },
+   "components": {
+    "level_overnight_cf_share_2025": 0.104,
+    "direction_ratio_slope_per_year": 0.011,
+    "headroom_overnight_clean_mw_over_demand": 0.057,
+    "change_since_2019": 0.087
+   },
+   "detector": {
+    "rank": 3,
+    "score": 9.01,
+    "growth_pct": 31.0,
+    "overnight_growth_pct": 43.3,
+    "overnight_excess": 12.3,
+    "neighbor_divergence": 26.4,
+    "load_factor_delta": 0.051,
+    "pattern": "flat-load growth"
+   },
+   "fuel_that_filled_growth": {
+    "fuel": "gas",
+    "gw": 0.31
+   },
+   "fuel_delta_overnight_gw": {
+    "nuclear": -3.61,
+    "hydro": 0.0,
+    "wind": 0.21,
+    "solar": -0.01,
+    "geothermal": null,
+    "gas": 0.31,
+    "coal": -0.3,
+    "oil": 0.0,
+    "other": 0.0
+   },
+   "operator": {
+    "utility": "Arizona Public Service",
+    "parent": "Pinnacle West Capital",
+    "ticker": "PNW",
+    "mapping_note": "hand-mapped"
+   },
+   "cf_inherited_from_ba": false,
+   "data_flags": [],
+   "verdict_rank": 4
+  },
+  {
    "metro": "Tucson",
    "region_id": "TEPC",
    "name": "Tucson Electric Power Company",
    "reason": null,
    "siting_score": 0.442,
    "siting_rank": 32,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.078,
     "direction_ratio_slope_per_year": 0.0137,
@@ -211,7 +295,7 @@
    },
    "cf_inherited_from_ba": false,
    "data_flags": [],
-   "verdict_rank": 4
+   "verdict_rank": 5
   },
   {
    "metro": "N. Virginia",
@@ -220,6 +304,7 @@
    "reason": null,
    "siting_score": 0.436,
    "siting_rank": 34,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.39,
     "direction_ratio_slope_per_year": -0.0044,
@@ -261,7 +346,7 @@
    "data_flags": [
     "Generation numbers are the parent BA's (zones report demand only)."
    ],
-   "verdict_rank": 5
+   "verdict_rank": 6
   },
   {
    "metro": "Columbus",
@@ -270,6 +355,7 @@
    "reason": null,
    "siting_score": 0.436,
    "siting_rank": 34,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.39,
     "direction_ratio_slope_per_year": -0.0044,
@@ -311,7 +397,7 @@
    "data_flags": [
     "Generation numbers are the parent BA's (zones report demand only)."
    ],
-   "verdict_rank": 6
+   "verdict_rank": 7
   },
   {
    "metro": "Portland",
@@ -320,6 +406,7 @@
    "reason": null,
    "siting_score": 0.25,
    "siting_rank": 42,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.227,
     "direction_ratio_slope_per_year": 0.0013,
@@ -355,54 +442,6 @@
     "utility": null,
     "parent": null,
     "ticker": null,
-    "mapping_note": "hand-mapped"
-   },
-   "cf_inherited_from_ba": false,
-   "data_flags": [],
-   "verdict_rank": 7
-  },
-  {
-   "metro": "Phoenix",
-   "region_id": "AZPS",
-   "name": "Arizona Public Service Company",
-   "reason": null,
-   "siting_score": 0.173,
-   "siting_rank": 49,
-   "components": {
-    "level_overnight_cf_share_2025": 0.104,
-    "direction_ratio_slope_per_year": -0.1105,
-    "headroom_overnight_clean_mw_over_demand": 0.057,
-    "change_since_2019": -0.517
-   },
-   "detector": {
-    "rank": 3,
-    "score": 9.01,
-    "growth_pct": 31.0,
-    "overnight_growth_pct": 43.3,
-    "overnight_excess": 12.3,
-    "neighbor_divergence": 26.4,
-    "load_factor_delta": 0.051,
-    "pattern": "flat-load growth"
-   },
-   "fuel_that_filled_growth": {
-    "fuel": "gas",
-    "gw": 0.31
-   },
-   "fuel_delta_overnight_gw": {
-    "nuclear": -3.61,
-    "hydro": 0.0,
-    "wind": 0.21,
-    "solar": -0.01,
-    "geothermal": null,
-    "gas": 0.31,
-    "coal": -0.3,
-    "oil": 0.0,
-    "other": 0.0
-   },
-   "operator": {
-    "utility": "Arizona Public Service",
-    "parent": "Pinnacle West Capital",
-    "ticker": "PNW",
     "mapping_note": "hand-mapped"
    },
    "cf_inherited_from_ba": false,

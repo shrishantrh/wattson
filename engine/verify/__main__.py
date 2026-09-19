@@ -96,11 +96,33 @@ def build():
             magnitude = 1.0 if "100%" in quote else None
             cp = f.get("counterpoint")
             evidence = list(ev_grid)
-            evidence.append({k: v for k, v in f["evidence"].items()})
+            # The counterpoint goes FIRST. Consumers take the first contradiction they
+            # find, and for a disclosed-table finding the table IS the evidence -- the
+            # finding's own prose note mostly restates the claim.
+            cp_first = bool(cp and cp.get("values"))
+            if not cp_first:
+                evidence.append({k: v for k, v in f["evidence"].items()})
             if cp:
+                # A counterpoint is usually a quote. Sometimes it is a disclosed TABLE --
+                # Google's hourly CFE row is the strongest finding in the corpus and it has
+                # no sentence to quote. Render the numbers, and fall back to the finding's
+                # own note rather than emitting a null.
+                if cp.get("quote"):
+                    cp_note = cp["quote"]
+                elif cp.get("values"):
+                    years, vals = cp.get("years") or [], cp["values"]
+                    series = ", ".join(f"{y}: {v}{cp.get('unit', '')}"
+                                       for y, v in zip(years, vals))
+                    cp_note = f"{cp.get('label', 'Disclosed figures')} — {series}"
+                else:
+                    cp_note = f.get("note")
                 evidence.append({"type": "internal_contradiction",
-                                 "source_doc": f["source_doc"], "page": cp.get("page"),
-                                 "note": cp.get("quote")})
+                                 "source_doc": cp.get("source_doc") or f["source_doc"],
+                                 "page": cp.get("page"), "note": cp_note,
+                                 "values": cp.get("values"), "years": cp.get("years"),
+                                 "label": cp.get("label")})
+                if cp_first:
+                    evidence.append({k: v for k, v in f["evidence"].items()})
             if shares:
                 verdict, reason = "true_on_paper", None
             else:
