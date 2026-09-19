@@ -8,3 +8,6 @@ __pycache__/
 .env
 dashboard/node_modules/
 dashboard/dist/
+
+# D1 ingest: downloaded source PDFs are large binaries, keep them out of git
+claims/raw/pdf/
