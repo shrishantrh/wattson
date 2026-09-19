@@ -159,8 +159,7 @@
 .mod-sbs .sbs-head b { color: var(--ink-2); font-weight: 500; }
 .mod-sbs .sbs-chip { text-transform: none; letter-spacing: 0; }
 .mod-sbs .sbs-quote { font-size: 15px; }
-.mod-sbs .sbs-bar-t::before { content: ''; position: absolute; left: 50%; right: auto; bottom: 0; top: 0; width: 12px; margin-left: -6px; border-radius: 2px 2px 0 0; background: var(--n3); }   /* the rest of the 0-100 scale, so the gap to the claim is visible */
-.mod-sbs .sbs-bar-i { background: var(--clean); z-index: 1; }
+.mod-sbs .sbs-bar-i { background: var(--clean); }
 .mod-sbs .sbs-bar-v { color: var(--ink-2); }
 .mod-sbs .sbs-bar:last-child .sbs-bar-i { background: var(--clean); }
 .mod-sbs .sbs-bar:last-child .sbs-bar-v { color: var(--ink); }

@@ -65,6 +65,10 @@ export async function loadRegion(id) {
     async () => { const f = await fixture('region'); if (f.regions) { const r = f.regions[id]; if (!r) throw new NotFound(`Region ${id}`, Object.keys(f.regions)); return { ...r, _provisional: f._provisional } } if (f.region?.id === id) return { ...f.region, meta: f.meta }; throw new NotFound(`Region ${id}`, f.region ? [f.region.id] : []) },
   ])
   const r = raw.region ? { ...raw.region, meta: raw.meta } : raw
+  // The export carries a heatmap_uri rather than the grid itself; fetch it once so the module can draw.
+  if (!r.heatmap && r.heatmap_available && r.heatmap_uri) {
+    try { r.heatmap = await getJSON(`${base}${String(r.heatmap_uri).replace(/^\//, '')}`) } catch { /* not shipped in this build */ }
+  }
   return { ...r, operators_manual: r.operators_manual || r.operators || [], c: coords.regions[id] }
 }
 

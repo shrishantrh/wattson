@@ -18,7 +18,7 @@
 .ws-pop { position: absolute; right: 0; top: calc(100% + 6px); width: 264px; background: var(--surface-a); backdrop-filter: blur(12px); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow); padding: 4px; z-index: 20; }
 .ws-pop-head { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px 6px; font-size: 12px; font-weight: 500; color: var(--ink-2); }
 .ws-pop-hint { font-size: 11px; font-weight: 400; color: var(--muted); }
-.ws-pop-list { display: flex; flex-direction: column; max-height: 44vh; overflow: auto; scrollbar-width: thin; padding: 2px 0; border-top: 1px solid var(--line-soft); }
+.ws-pop-list { display: flex; flex-direction: column; max-height: min(40vh, 240px); overflow: auto; scrollbar-width: thin; padding: 2px 0; border-top: 1px solid var(--line-soft); }
 .ws-pop-row { display: flex; align-items: center; gap: 9px; padding: 7px 10px; border-radius: 7px; font-size: 13px; color: var(--ink); cursor: pointer; user-select: none; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
 .ws-pop-row:hover { background: rgba(255, 255, 255, 0.05); }
 .ws-pop-row:focus-within { background: rgba(255, 255, 255, 0.05); box-shadow: var(--ring); }

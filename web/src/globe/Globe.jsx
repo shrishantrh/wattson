@@ -282,6 +282,7 @@ export default function Globe({
   const [mat, setMat] = useState(null)
   const [land, setLand] = useState(null) // dots style: { field, states } once the TopoJSON is in
   const [readyTick, setReadyTick] = useState(0)
+  const [dotTick, setDotTick] = useState(0) // bumped when the dot mesh is (re)attached
   // Stabilised so an inline `heat={[...]}` does not repaint 15k instance colours every render.
   const stableHeat = useStableList(heat)
 
@@ -456,8 +457,7 @@ export default function Globe({
         g.pointOfView(v, 0)
       }
       appliedViewRef.current = v
-      if (import.meta.env.DEV) window.__wglobe = g
-      setDayNightUniforms(matRef.current, { globeLat: v.lat, globeLng: v.lng })
+        setDayNightUniforms(matRef.current, { globeLat: v.lat, globeLng: v.lng })
       setReadyTick((t) => t + 1)
     }
     apply()
@@ -540,27 +540,38 @@ export default function Globe({
 
   // 9. The dot field: one InstancedMesh added straight to the ThreeGlobe group (the same frame
   //    of reference three-globe's own layers use), rebuilt only when the field itself changes.
+  //    The group is not in the scene on the frame the globe reports ready, so the attach retries
+  //    on a timer (a timer, not a frame: a globe mounted in a background tab gets no frames).
   useEffect(() => {
     const g = globeRef.current
-    if (import.meta.env.DEV) console.log('[dbg dots]', { readyTick, g: !!g, isDots, land: !!land, field: !!(land && land.field) })
     if (!readyTick || !g || !isDots || !land || !land.field) return undefined
-    const scene = g.scene && g.scene()
-    const globeObj = scene && scene.children.find((o) => typeof o.getGlobeRadius === 'function')
-    if (!globeObj) return undefined
-    const mesh = buildDotMesh(land.field, g.getGlobeRadius(), LAND_ALT)
-    dotMeshRef.current = mesh
-    globeObj.add(mesh)
-    if (import.meta.env.DEV) { console.log('[dbg dots] added', mesh.count, globeObj.uuid); setTimeout(() => console.log('[dbg dots] 2s later parent=', mesh.parent && mesh.parent.uuid), 2000) }
+    let mesh = null
+    let timer = 0
+    let tries = 0
+    const attach = () => {
+      const scene = g.scene && g.scene()
+      const globeObj = scene && scene.children.find((o) => typeof o.getGlobeRadius === 'function')
+      if (!globeObj) {
+        if (tries++ < 120) timer = setTimeout(attach, 16)
+        return
+      }
+      mesh = buildDotMesh(land.field, g.getGlobeRadius(), LAND_ALT)
+      globeObj.add(mesh)
+      dotMeshRef.current = mesh
+      setDotTick((t) => t + 1) // the colours are written by the effect below
+    }
+    attach()
     return () => {
-      if (import.meta.env.DEV) console.log('[dbg dots] cleanup')
+      clearTimeout(timer)
+      tries = Infinity
       dotMeshRef.current = null
       disposeDotMesh(mesh)
     }
   }, [readyTick, isDots, land])
 
-  // 9b. Colours: repaint instance colours in place on a palette or `heat` change. No geometry
-  //     is touched, so a page can recolour the whole map by grid cleanliness for the price of
-  //     one pass over the instance colour buffer.
+  // 9b. Colours: write every instance colour on attach, and repaint in place on a palette or
+  //     `heat` change. No geometry is touched, so a page can recolour the whole map by grid
+  //     cleanliness for the price of one pass over the instance colour buffer.
   useEffect(() => {
     const mesh = dotMeshRef.current
     if (!mesh || !land || !land.field) return
@@ -577,7 +588,7 @@ export default function Globe({
       },
       stableHeat.length ? stableHeat : null,
     )
-  }, [land, stableHeat, sphereColor, usColor, neighborColor, otherColor, cleanColor, fossilColor, readyTick])
+  }, [land, dotTick, stableHeat, sphereColor, usColor, neighborColor, otherColor, cleanColor, fossilColor])
 
   // 10. Take the state border lines out of the pointer raycast. globe.gl raycasts every scene
   //     object and applies pointerEventsFilter afterwards, so without this each hover would
