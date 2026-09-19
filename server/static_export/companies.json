@@ -30,13 +30,13 @@
   {
    "company": "Alphabet (Google)",
    "ticker": "GOOGL",
-   "talk_score": 0.394,
+   "talk_score": 0.405,
    "walk_score": 0.056,
    "coverage": 1.0,
    "unverifiable_share": null,
    "cannot_verify_count": 0,
    "n_sites": 1,
-   "n_claims": 4,
+   "n_claims": 5,
    "is_mock": false
   },
   {

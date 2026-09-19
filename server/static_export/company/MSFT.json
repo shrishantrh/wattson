@@ -130,7 +130,10 @@
      "type": "internal_contradiction",
      "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
      "page": 6,
-     "note": "Scope 3 remains the largest share of our footprint overall, but one of the clearest changes this year was the growing contribution of Scope 2, which represents 13% of our total emissions\u2014up from nearly 2% last year."
+     "note": "Scope 3 remains the largest share of our footprint overall, but one of the clearest changes this year was the growing contribution of Scope 2, which represents 13% of our total emissions\u2014up from nearly 2% last year.",
+     "values": null,
+     "years": null,
+     "label": null
     }
    ]
   },
@@ -184,9 +187,12 @@
     },
     {
      "type": "internal_contradiction",
-     "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf",
+     "source_doc": "msft-20260630.htm",
      "page": null,
-     "note": "AI development and deployment has and will likely continue to raise energy use and emissions, making it harder to meet these goals."
+     "note": "AI development and deployment has and will likely continue to raise energy use and emissions, making it harder to meet these goals.",
+     "values": null,
+     "years": null,
+     "label": null
     }
    ]
   }

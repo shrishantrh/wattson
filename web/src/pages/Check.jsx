@@ -92,6 +92,11 @@ export default function Check({ route }) {
           <p className="note" style={{ marginTop: 10 }}>Grid-only and average mix: contracted clean power (PPAs, RECs) is not counted, which is why an annual "100% renewable" claim can be true on paper while its sites physically run on much less.</p>
         </>
       ) },
+      { id: 'caveats', title: 'What this number does not mean', render: () => (
+        <ul className="note" style={{ margin: 0, paddingLeft: 18 }}>
+          {(data.notes || []).map((n, i) => <li key={i} style={{ marginBottom: 6 }}>{n}</li>)}
+        </ul>
+      ) },
       { id: 'night', title: 'Why night matters', default: false, render: () => <p className="note">Since 2019 the US grid got cleaner during the day and stood still at night. A datacenter draws the same power at 3am as at noon, so half of its electricity lands in the hours that did not improve. <a href={href.found('sweep')} className="ink2">See the numbers →</a></p> },
     ]
     column = (
