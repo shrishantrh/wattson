@@ -160,6 +160,60 @@ to reducing deforestation risks" promises nothing measurable. Years are
 therefore stripped before looking for a number. That recovered **186 real
 quantified claims** (655 -> 841) without touching a single score.
 
+## The deterministic cap, and why it is not overruling the model
+
+Two rounds of anchor work cut over-scoring from 30% of high scores to 15% and
+then **plateaued**. The remaining cases are not a prompting problem, so they
+are handled with arithmetic instead.
+
+**The rule:** if `magnitude` is null AND `timeframe` is null AND the verbatim
+contains no quantity once years are stripped, then falsifiability cannot exceed
+**0.25**, whatever the model returned. The model's own value is preserved as
+`falsifiability_model` and `falsifiability_capped` records that it fired. The
+override is never silent.
+
+This is not a second opinion. Falsifiability is defined as *how checkable a
+claim is against physical or public data*. A claim with no quantity and no date
+is uncheckable by that definition — there is no figure or deadline that could
+be found wrong. When the model returns `magnitude: null` and
+`falsifiability: 0.90` on the same object, it is **contradicting its own
+structured output**, and catching that is arithmetic.
+
+Effect across all four companies: **171 claims capped**, claims scoring >=0.8
+fell from 988 to 872, and genuine escapes are now **zero**.
+
+### The real finding, which is about LLM-scored rubrics
+
+The classifier reads **specificity of language** where the rubric means
+**checkability of content**. Named partners, named technologies and named
+sites make a sentence sound precise while committing to no measurable amount:
+
+> "The selected mix has been poured in our newest data centers, including in
+> slab-on-grade applications that require stringent performance requirements."
+> — scored 0.90 against an anchor that says 0.25, twice, after two anchor
+> revisions aimed directly at it.
+
+This is documented as a **known limitation handled by a deterministic guard**,
+not as a solved problem. An LLM asked to score a rubric will track surface
+specificity unless something outside the model holds it to the definition.
+
+### A quantity is a standalone number
+
+The first version of the cap tested for any digit after stripping years, and a
+list of trade-association memberships escaped it — because of the "2" inside
+**C2ES** and a footnote marker glued to **"Alliance3"**. Neither is a quantity.
+Digits welded into a word no longer count.
+
+### The cap must be idempotent
+
+`--reclassify` re-reads its own output, and the first version read the
+already-capped `falsifiability` back into `falsifiability_model` on a second
+pass — destroying the only record of what the model actually said. It showed up
+as `capped` falling from 163 to 8 and the count of model scores >=0.8 changing
+from 988 to 880, a number that cannot legitimately change. The data was
+restored from the pre-cap commit and the operation is now a fixed point, with a
+test asserting it.
+
 ## Residual anchor non-compliance, reported not fixed
 
 After the anchor author added a fifth low anchor and a fourth edge rule for
@@ -190,6 +244,13 @@ all, dropped with reason `no_citation`.
 The ingest layer's own `quality.flag` is honoured before this module's gate
 runs. D1 flags `tabular` and `suspect` chunks with stated reasons; re-deriving
 that here would only be a second opinion on someone else's measurement.
+
+Their reasons — *"35% of tokens are numeric: a table, not prose"*, *"case flips
+inside 2% of words: text layers may be interleaved per character"* — are the
+same heuristics this module's gate arrived at independently, written by a
+different agent against the same corpus. Convergence is not proof, but two
+independent passes reaching the same signatures is mild evidence both are
+measuring something real rather than each inventing a plausible test.
 
 ## Worktree hazard: a "local" git exclude is not local
 

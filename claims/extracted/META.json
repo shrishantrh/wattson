@@ -61,9 +61,9 @@
     "10k": 3
   },
   "evidence_class": {
-    "quantified": 129,
-    "dated_commitment": 23,
-    "qualitative": 93
+    "quantified": 127,
+    "dated_commitment": 24,
+    "qualitative": 94
   },
   "evidence_class_note": "Computed from the model's own returned fields; it never changes the model's falsifiability score. The score alone is not safe to sort on: the model rates specific-sounding activity statements highly even with no number and no date. Filter to 'quantified' for anything shown next to a grid figure.",
   "verbatim_check": {
@@ -109,7 +109,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As a result of our clean and renewable energy procurement, we have reduced our emissions by 23.8 million metric tons (M MT) of carbon dioxide equivalent (CO2e) since 2021.",
@@ -133,7 +135,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Wind and solar projects supported by Meta over the last decade are adding more than 15 gigawatts (GW) of clean and renewable energy to grids globally.",
@@ -157,7 +161,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By the end of 2024, 48% of our suppliers, based on their contribution to our emissions, have set science\u2011aligned emissions reduction targets.",
@@ -181,7 +187,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2017, Meta has supported over 40 water restoration projects across nine watersheds.",
@@ -205,7 +213,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024 alone, operational water restoration projects returned more than 1.6 billion gallons of water to high and medium water stress regions.",
@@ -229,7 +239,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, we reached more than 60,000 manufacturing workers through capacity building initiatives to build knowledge, skills, and management systems on human rights and environmental compliance topics.",
@@ -253,7 +265,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The majority of our emissions are connected to our\u2248supply chain, and we are engaging with our suppliers to accelerate their efforts to reduce their emissions.",
@@ -263,7 +277,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our\u2248supply chain",
-      "falsifiability": 0.7,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 4,
@@ -277,7 +291,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.7,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "By the end of 2024, more than 50% of our owned data center campus footprint was planned, installed, or preserved to intentionally support local, native, biodiverse habitats. That equals more than 4,000 acres.",
@@ -303,7 +319,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "For example, we worked with the Tennessee Environmental Council and Sumner County Schools to support the installation of 6,000 square feet of pollinator gardens in six schools near our Gallatin data center.",
@@ -327,7 +345,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our standard data center design dedicates the vast majority of unbuilt outdoor spaces to restore native habitat and largely eliminates turf and exotic ornamental species.",
@@ -353,7 +373,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We ended 2024 with offices in more than 90 cities across North America, Europe, the Middle East, Africa, Asia Pacific, and Latin America. We also had 27 owned data center locations in operation or under construction globally.",
@@ -377,7 +399,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are designing our data centers to support current products and for future generations of AI growth.",
@@ -403,7 +427,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "we are working to restore more water than we consume;",
@@ -413,7 +439,7 @@
       "unit": null,
       "timeframe": null,
       "scope": null,
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "unbounded_timeframe",
         "aspirational_verb"
@@ -430,7 +456,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Reduce our Scope 1 and 2 emissions by 42% in 2031 from a 2021 baseline.",
@@ -454,7 +482,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Enable at least two-thirds of our suppliers to set science-aligned emissions reduction targets by 2026.",
@@ -478,7 +508,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Not exceed our 2021 baseline Scope 3 emissions by the end of 2031.",
@@ -502,7 +534,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Continue to match 100% of our electricity use with clean and renewable energy to support our operations.",
@@ -529,7 +563,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "2025 Meta Sustainability Report 8 Goals Our core sustainability strategy is informed by our goals to achieve net zero emissions across our value chain and become water positive in 2030.",
@@ -556,7 +592,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Restore 200% of the water we consume in high water stress regions and 100% of the water we consume in medium water stress regions.",
@@ -582,7 +620,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, these operational restoration projects restored over 1.6 billion gallons of water to high and medium water stress regions.",
@@ -606,7 +646,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Meta-supported wind and solar projects are adding more than 15 GW of clean and renewable energy to grids globally.",
@@ -630,7 +672,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "48% of our suppliers, based on their contribution to our emissions, set science-aligned emissions reduction targets.",
@@ -654,7 +698,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2017, we have funded more than 40 water restoration projects in nine watersheds.",
@@ -678,7 +724,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As of 2024, >50% of our operational data center campus footprint, more than 4,000 acres, was planned, installed, or preserved to intentionally support local, biodiverse habitats with native species.",
@@ -704,7 +752,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We achieved LEED Volume pre- certification of our prototype data center design and have streamlined more than 60% of the LEED measures for which we seek certification.",
@@ -728,7 +778,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Once all projects are fully implemented, they are expected to restore more than 2.9 billion gallons of water annually.",
@@ -755,7 +807,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2020, we have maintained net zero emissions in our operations,1 matched 100% of our electricity use with clean and renewable energy, and have set a goal to achieve net zero emissions across our value chain in 2030.",
@@ -779,7 +833,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, our net emissions equaled 8.2 M MT of CO2e.",
@@ -803,7 +859,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We removed 50,000 metric tons of CO2 through carbon removal projects to cover our Scope 1 and 2 emissions. MT CO2e",
@@ -827,7 +885,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Select Scope 3 categories are calculated using Meta\u2019s Management\u2019s Criteria.",
@@ -851,7 +911,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our annual data and methodology details for calculating our environmental footprint can be found in our Environmental Data Index\u2197.",
@@ -875,7 +937,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have conducted an assessment to determine relevant Scope 3 categories.",
@@ -899,7 +963,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Reducing our Scope 1 and 2 emissions by 42% in 2031 from a 2021 baseline.",
@@ -923,7 +989,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Not exceeding our 2021 baseline Scope 3 emissions by the end of 2031.",
@@ -947,7 +1015,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Enabling at least two-thirds of our suppliers, based on their contribution to our emissions, to set science-aligned GHG reduction targets by 2026.",
@@ -971,7 +1041,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our Net Zero Hub tool forecasts our future-state emissions based on numerous data inputs, such as planned business growth, to model emissions scenarios and provides insights on how Meta is tracking toward our net zero goal.",
@@ -997,7 +1069,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Comprehensive data and advanced tooling provide the fundamental building blocks to fully understand and effectively manage our emissions.",
@@ -1023,7 +1097,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We leverage our expertise in data science to create emissions management tools for our teams and improve the granularity, accuracy, and measurement of our GHG data.",
@@ -1049,7 +1125,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "A new internal metric, real-time server fleet utilization effectiveness, allows us to monitor the emissions associated with the embodied carbon of our data center servers and components.",
@@ -1059,7 +1137,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "data center servers and components",
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 15,
@@ -1073,7 +1151,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "As part of the RETINAS initiative\u2197, this metric allows us to measure server resource usage (e.g., compute, storage) and efficiency in our large-scale data center server fleet in near real-time.",
@@ -1097,7 +1177,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To improve consistency and reliability, we consolidate thousands of GHG data sources into a tool that helps us calculate total GHG emissions from purchased goods and services like hardware, transportation, waste, and product usage.",
@@ -1121,7 +1203,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our omni tool simulates the emission outputs from planned activities to reduce emissions associated with the construction of new data center buildings.",
@@ -1145,7 +1229,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This tool enables our design, engineering, and construction teams to rapidly scale new approaches to deploy low carbon materials and adapt our data center designs to help achieve our net zero goal.",
@@ -1172,7 +1258,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Meta obtains a \u201cbest estimate\u201d embodied carbon emission factor for each of the unique IT hardware components in our data centers.",
@@ -1182,7 +1270,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our data centers",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 16,
@@ -1196,7 +1284,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "In response, we developed a methodology\u2197 to estimate and track the carbon emissions of hundreds of millions of components in our data centers.",
@@ -1206,7 +1296,7 @@
       "unit": "components (hundreds of millions)",
       "timeframe": null,
       "scope": "our data centers",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 16,
@@ -1220,7 +1310,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Our total 2024 emissions with contractual instruments applied (8.2 M MT CO2e) were 48% less than our location\u2011based emissions (15.6 M MT CO2e).",
@@ -1244,7 +1336,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Examples of this include matching 100% of the energy we use with over 15 GW of clean and renewable energy",
@@ -1268,7 +1362,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "purchasing of over 4 million gallons of sustainable aviation fuel for business travel since 2021, which has up to an 80% lower carbon footprint than traditional jet fuel.",
@@ -1292,7 +1388,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have set a science-aligned emissions reduction target in line with what is necessary to transition to a zero-carbon future, and we have roadmapped our strategy to systematically transform the way we do business.",
@@ -1319,7 +1417,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As a result of matching 100% of our electricity use with clean and renewable energy, we have reduced our operational emissions by 6 M MT of CO2e in 2024.",
@@ -1343,7 +1443,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As a result, we have reduced our value chain emissions by 1.4 M MT of CO2e in 2024.",
@@ -1367,7 +1469,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Renewable energy procurement has helped us reduce our overall emissions by a total of 23.8 M MT of CO2e since 2021.",
@@ -1391,7 +1495,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Over the last decade, we have contracted for over 15 GW of new clean and renewable energy across the globe, making us one of the world\u2019s largest corporate buyers.",
@@ -1415,7 +1521,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2020, we have matched\u2197 100% of our annual electricity use with clean and renewable energy.",
@@ -1439,7 +1547,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As of the end of 2024, 89 of the 128 projects in our portfolio were online and producing power.",
@@ -1463,7 +1573,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Partnership with Singapore renewable energy developer Sembcorp to support a 150 MW floating solar project, which will be the largest in the country once completed.",
@@ -1489,7 +1601,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Partnership with Highfield Energy Services on one of the largest solar agreements in Ireland, supporting 190 MW of solar from two projects in Wexford and Meath, close to our Clonee Data Center.",
@@ -1515,7 +1629,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Partnership with New Mexico energy provider PNM and NextEra Energy Resources on Sky Ranch Solar Energy Center, a 190 MW solar facility paired with a 50 MW four-hour battery energy storage system in New Mexico.",
@@ -1539,7 +1655,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We routinely partner with energy providers on long-term power purchase agreements (PPAs) to match our electricity use with clean and renewable energy.",
@@ -1563,7 +1681,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Meta has supported one form of energy storage technology by contracting to bring 100 MW of four- hour duration battery storage to support the grid in New Mexico.",
@@ -1587,7 +1707,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We announced an agreement with Sage Geosystems\u2197 to support the first deployment of next-generation geothermal power at scale east of the Rocky Mountains. This project \u2014 which will deliver up to 150 MW of new geothermal baseload power \u2014 will help significantly expand the use of geothermal power in the US and allows us to further diversify our portfolio with this clean, affordable, and resilient power source.",
@@ -1611,7 +1733,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.88,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "A partnership between the Meta Fundamental AI Research Team and Carnegie Mellon University, Open Catalyst\u2019s goal is to enable researchers to screen millions \u2014 possibly billions \u2014 of catalysts per year.",
@@ -1621,7 +1745,7 @@
       "unit": "catalysts per year",
       "timeframe": null,
       "scope": null,
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "aspirational_verb"
       ],
@@ -1637,7 +1761,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "By developing AI to accurately predict atomic interactions faster than the compute-heavy simulations scientists rely on today, calculations that take modern laboratories days could instead take seconds.",
@@ -1647,7 +1773,7 @@
       "unit": null,
       "timeframe": null,
       "scope": null,
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "undefined_baseline"
       ],
@@ -1663,7 +1789,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Open Catalyst aims to discover low cost catalysts that can drive the chemical reactions necessary to convert excess solar and wind energy into other fuels that may be used to generate electricity when other sources of renewable energy are unavailable.",
@@ -1689,7 +1817,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In June 2025, Meta signed a 20-year PPA with Constellation\u2197 for the output of the Clinton Clean Energy Center to support our clean energy goals and operations in the region with 1,121 MW of emissions-free nuclear energy.",
@@ -1713,7 +1843,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The agreement will also expand Clinton\u2019s clean energy output by 30 MW through plant uprates.",
@@ -1737,7 +1869,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This agreement demonstrates the value of existing nuclear infrastructure, ensuring the Clinton Clean Energy Center will continue to operate for another two decades.",
@@ -1761,7 +1895,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "It will preserve 1,100 high- paying local jobs, deliver $13.5 million in annual tax revenue and add $1 million in charitable giving to local nonprofits over five years.",
@@ -1785,7 +1921,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our aim is to add one to four GW of new nuclear generation capacity in the US to be delivered starting in the early 2030s.",
@@ -1809,7 +1947,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In early 2025, Meta joined peers in pledging to support the goal of tripling global nuclear capacity by 2050.",
@@ -1833,7 +1973,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The selected mix has been poured in our newest data centers, including in slab-on-grade applications that require stringent performance requirements for a data center building section at our Rosemount, Minnesota location.",
@@ -1843,7 +1985,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "newest data centers, including Rosemount, Minnesota location",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 23,
@@ -1857,7 +1999,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We have incorporated low carbon concrete into specifications for our latest data center designs.",
@@ -1867,7 +2011,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "latest data center designs",
-      "falsifiability": 0.6,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 23,
@@ -1881,7 +2025,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Just through the optimization of the mix proportions of conventional concrete materials, AI was able to generate a new formula that achieved a 40% carbon reduction compared against the industry baseline while showing superior curing speed and strength.",
@@ -1907,7 +2053,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are piloting and deploying concrete with significantly lower embodied carbon emissions\u2197.",
@@ -1933,7 +2081,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We announced an agreement with CarbonBuilt\u2197 to upgrade additional concrete masonry plants and scale production of its low carbon concrete.",
@@ -1957,7 +2107,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are also providing carbon finance to CarbiCrete to scale the production of cement-free concrete\u2197 with a number of concrete manufacturers.",
@@ -1981,7 +2133,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "With Infrastructure Masons and more than 70 companies, including the largest data center operators, we formed the iMasons Climate Accord\u2197 to reduce carbon in digital infrastructure materials, products, and power.",
@@ -2005,7 +2159,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "An independent governing body has been tasked with adopting or developing a standard methodology for measuring carbon in digital infrastructure.",
@@ -2029,7 +2185,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through this collaborative effort, we have called on concrete suppliers\u2197 to support greater transparency by providing Environmental Product Declarations (EPDs) disclosing embodied carbon.",
@@ -2053,7 +2211,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Incorporating mass timber in the construction of administrative buildings like these will reduce the embodied carbon of the materials being substituted by approximately 41%.",
@@ -2079,7 +2239,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our first mass timber administrative building was erected at our Aiken, South Carolina data center campus in 2025.",
@@ -2103,7 +2265,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This includes Southwire, a copper wire supplier, whose copper is produced with 100% renewable energy.",
@@ -2127,7 +2291,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have begun using this copper in two of our data center locations.",
@@ -2151,7 +2317,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At another data center site under construction, we plan to partner with manufacturers who are matching energy use in the steel production process with 100% renewable energy to reduce emissions associated with structural steel.",
@@ -2178,7 +2346,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.5,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also aim to incorporate near-zero- emissions steel in our construction and build the market for this steel through our membership in RMI\u2019s Sustainable Steel Buyers Platform\u2197.",
@@ -2188,7 +2358,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our construction",
-      "falsifiability": 0.3,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "vague_commitment",
         "aspirational_verb"
@@ -2205,7 +2375,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.3,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "To reduce the emissions associated with data center construction, we have begun piloting mass timber\u2197 in the construction of buildings on our data center campuses.",
@@ -2231,7 +2403,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We will begin incorporating mass timber into additional administrative buildings, warehouses, and even data halls that house the servers that connect people to our technologies.",
@@ -2258,7 +2432,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our Clonee, Ireland site was the first site to transition to HVO and in early 2025 we expanded our use of HVO to five additional sites in North America.",
@@ -2282,7 +2458,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In Altoona, Iowa, we have tested low-emission construction equipment, including solar hybrid lighting towers, temporary power generators with battery backup, and electric heaters.",
@@ -2306,7 +2484,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Diesel consumption from backup power generation accounts for a considerable portion of the operational emissions from our data centers.",
@@ -2332,7 +2512,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have studied the viability of replacing conventional diesel with renewable hydrotreated vegetable oil (HVO) and have approved the use of this fuel at several data center locations.",
@@ -2356,7 +2538,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have also started using HVO in construction equipment and vehicles where we are breaking ground on new data centers.",
@@ -2380,7 +2564,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are working to reduce emissions from on-site construction activities by exploring electrification of construction equipment and increasing electric vehicle charging stations.",
@@ -2407,7 +2593,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are partnering with general contractors and equipment suppliers to thoroughly evaluate this equipment with a goal to eventually scale its use across our construction sites globally if it meets our performance criteria.",
@@ -2434,7 +2622,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This year, we will pilot the use of HVO in heavy duty earth works equipment to assess the feasibility of expanding the use of HVO across our construction projects.",
@@ -2460,7 +2650,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Decarbonizing necessary emergency backup power generators is critical to reach our net zero target while keeping our data centers operational.",
@@ -2486,7 +2678,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2021, Meta has purchased nearly 4 million gallons of sustainable aviation fuel (SAF) certificates.",
@@ -2510,7 +2704,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The SAF we procure is certified by accredited third parties that independently verify that biofuel feedstocks are managed responsibly.",
@@ -2520,7 +2716,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "SAF procured by Meta",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 26,
@@ -2534,7 +2730,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Over the next five years, SABA members have committed to purchase SAF certificates representing nearly 50 million gallons of high- integrity SAF, which is equivalent to approximately 500,000 tons of abated CO2e.",
@@ -2558,7 +2756,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We calculate emissions from individual trip segment- level data by incorporating information on the type of aircraft or specific hotel, thereby enabling a level of granularity to encourage improved decision making to reduce business travel emissions.",
@@ -2568,7 +2768,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "business travel emissions (Meta)",
-      "falsifiability": 0.7,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 26,
@@ -2582,7 +2782,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.7,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "SAF is a drop-in fuel made with renewable or waste feedstocks that has up to an 80% lower carbon footprint than traditional jet fuel.",
@@ -2606,7 +2808,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through SABA and in direct coordination with our airline partners, Meta will continue to adopt SAF to help decrease the environmental footprint of business travel.",
@@ -2616,7 +2820,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Meta business travel",
-      "falsifiability": 0.3,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "aspirational_verb"
       ],
@@ -2632,7 +2836,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.3,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We are also supporting procurement for a number of alternative fuels that help us address emissions associated with employee travel and commute.",
@@ -2658,7 +2864,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At the end of 2024, we successfully piloted renewable diesel fuel in our Bay Area employee shuttle fleet, already saving an estimated 3,000 MT CO2e.",
@@ -2682,7 +2890,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, more than a dozen ZEMBA members, including Meta, collectively committed\u2197 to purchase the environmental attributes associated with over 1 billion twenty-foot shipping container-miles of zero-emission shipping on a route from Singapore to Rotterdam, Netherlands in 2025 \u2013 2026.",
@@ -2706,7 +2916,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This contract will avoid at least 82,000 MT of CO2e by using Hapag-Lloyd\u2019s independently certified, waste- based biomethane.",
@@ -2730,7 +2942,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In September 2023, Meta joined the Zero Emission Maritime Buyers Alliance (ZEMBA).",
@@ -2754,7 +2968,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Looking ahead, we plan to deploy renewable diesel to our shuttle fleets in other locations.",
@@ -2781,7 +2997,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In addition to participating in ZEMBA\u2019s inaugural offtake, we also signed an offtake agreement for sustainable maritime fuel certificates with the Danish shipping company NORDEN\u2197.",
@@ -2805,7 +3023,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have conducted some of the first LCAs for fiber networks, which inform how to best incorporate low carbon construction materials and fuels to drive emissions reductions as we expand our network infrastructure.",
@@ -2815,7 +3035,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "fiber networks",
-      "falsifiability": 0.7,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 28,
@@ -2829,7 +3049,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.7,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "This approach enables us to extend the life of individual components, such as dual in-line memory modules (DIMMs) in our server racks, which have been a focus since 2021.",
@@ -2855,7 +3077,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.45,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We prioritize the use of post-consumer recycled (PCR) plastics and recycled metal (e.g., copper, aluminum, and steel) in our data center IT hardware, such as server racks.",
@@ -2881,7 +3105,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through 2024, the team partnered with over 15 suppliers on our journey to shift the entire supply chain to leverage renewable energy.",
@@ -2908,7 +3134,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are working to transition to lower emission transportation modes such as ocean freight, which emits approximately 10% of the carbon emissions of air freight.",
@@ -2932,7 +3160,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are focusing efforts to reduce emissions associated with our consumer hardware such as our Meta Quest and Ray-Ban Meta devices.",
@@ -2959,7 +3189,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.08,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We design products with a focus on robustness, reliability, and sustainability, aiming to maximize lifespan while minimizing waste and emissions through optimized material selection and reduced weight.",
@@ -2986,7 +3218,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.08,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By the end of 2024, 48% of our suppliers, based on their contribution to our emissions, have set science-aligned emissions reduction targets.",
@@ -3012,7 +3246,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The program expanded to 183 suppliers in 2024, representing over half of our supplier-contributed emissions.",
@@ -3038,7 +3274,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By 2026, we aim to engage two-thirds of our suppliers, based on their contribution to our emissions, to set science-aligned GHG reduction targets.",
@@ -3065,7 +3303,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2021, we started working with 39 key suppliers to calculate and report GHG emissions and identify reduction opportunities.",
@@ -3089,7 +3329,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2023, Meta and five other leading corporations launched CEPA\u2197 to support and accelerate suppliers\u2019 renewable energy purchases and further the decarbonization of global supply chains.",
@@ -3099,7 +3341,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "global supply chains",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "aspirational_verb"
       ],
@@ -3115,7 +3357,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Starting in the Asia- Pacific region, the founding organizations pooled their expertise and internal training resources to design country-specific curricula to help trainees procure clean energy.",
@@ -3139,7 +3383,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Additionally, the Academy provides virtual training through webinars and presentations throughout the year.",
@@ -3163,7 +3409,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Meta has launched request for proposals since 2024 for value chain interventions for emissions reduction, and this year we are focusing our RFP\u2197 on the following sectors: \u2022 Semiconductor manufacturing \u2022 Chemicals manufacturing \u2022 Truck transportation \u2022 Copper mining and manufacturing \u2022 Steel and iron mining and manufacturing \u2022 Cement and concrete manufacturing \u2022 Space heating of commercial buildings \u2022 Addressing fugitive emissions of fluorinated greenhouse gases in commercial settings \u2022 Air transportation \u2022 Aluminum production and processing \u2022 Maritime transportation",
@@ -3187,7 +3435,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "While our climate strategy prioritizes emissions reduction, some residual emissions from hard-to- abate sectors will remain in 2030.",
@@ -3211,7 +3461,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Any residual emissions we cannot eliminate will require carbon removal projects to reach net zero emissions.",
@@ -3221,7 +3473,7 @@
       "unit": null,
       "timeframe": null,
       "scope": null,
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "offset_dependence"
       ],
@@ -3237,7 +3489,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Emerging technologies like direct air capture (DAC) offer a high global climate mitigation potential and will be a necessary complement to emissions reductions and nature-based carbon removals.",
@@ -3247,7 +3501,7 @@
       "unit": null,
       "timeframe": null,
       "scope": null,
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "unattributed_superlative"
       ],
@@ -3263,7 +3517,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "With members including Meta, Google, Microsoft, Salesforce, and McKinsey, the coalition conducted its first RFP\u2197 focused on reforestation and agroforestry projects.",
@@ -3273,7 +3529,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Symbiosis Coalition",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 34,
@@ -3287,7 +3543,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "This year, we are happy to share progress of our partnership by contracting for our first batch of carbon credits with the Fon du Lac Band of Lake Superior Chippewa community in Minnesota.",
@@ -3311,7 +3569,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The Symbiosis Coalition\u2197 is an advance market commitment (AMC) which aims to send a strong demand signal to accelerate the development of up to 20 million tons of nature-based carbon removal credits by 2030.",
@@ -3337,7 +3597,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through this partnership, we pledged to develop no fewer than three carbon removal credit generating projects that protect and restore forest lands through Indigenous, tribal, and community leadership.",
@@ -3363,7 +3625,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.7,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Finalists from this initial RFP will demonstrate the high bar for quality for next-generation nature restoration projects, with the aim to catalyze the development of similar projects in the future.",
@@ -3390,7 +3654,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.08,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Earlier this year, Meta announced a long-term contract\u2197 with EFM, a forest investment and management firm, for the delivery of 676,000 nature-based carbon removal credits through 2035.",
@@ -3414,7 +3680,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The project is expected to support the transition of 68,000 acres of forestland to climate-smart management on Washington\u2019s Olympic Peninsula.",
@@ -3438,7 +3706,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Meta signed a long-term contract with BTG Pactual Timberland Investment Group (TIG)\u2197 for the delivery of 1.3 million nature-based carbon removal credits, with options for delivery of an additional 2.6 million credits through 2038.",
@@ -3462,7 +3732,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The credits will be delivered as part of BTG Pactual TIG\u2019s $1 billion reforestation and restoration strategy, which focuses on the conservation, restoration, and planting of deforested and degraded properties in selected regions in Latin America.",
@@ -3486,7 +3758,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Conservation International serves as Impact Advisor to ensure the strategy enhances biodiversity and supports inclusive and equitable community development.",
@@ -3510,7 +3784,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We leveraged our DINOv2 AI training algorithm\u2197 and collaborated with World Resources Institute (WRI) to launch an open source map of global tree canopy height at a 1-meter resolution\u2197, allowing the detection of individual trees.",
@@ -3534,7 +3810,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "However, critical gaps remain in the scientific understanding of the structure and extent of global forests, particularly in dynamic and more dispersed forest systems such as agroforestry, drylands forests, and alpine forests, which together constitute more than a third of the world\u2019s forests.",
@@ -3544,7 +3822,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "global forests",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 36,
@@ -3558,7 +3836,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Forests harbor most of Earth\u2019s terrestrial biodiversity and play a critical role in the uptake of carbon dioxide from the atmosphere.",
@@ -3568,7 +3848,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Earth (terrestrial)",
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 36,
@@ -3582,7 +3862,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "To manage physical risks, we have identified and deployed over 100 climate resilience measures.",
@@ -3606,7 +3888,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Examples of physical risks we assess include climate-related extreme weather events, especially in the US where the majority of our data centers are located, causing disruptions that may lead to incremental data center operation costs and interruptions to our programs.",
@@ -3616,7 +3900,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our data centers",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 37,
@@ -3630,7 +3914,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "In 2024, we piloted an internal carbon price concept to drive internal awareness of emissions and to incorporate the cost of carbon into our decision making.",
@@ -3654,7 +3940,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We piloted the concept in five test cases and used a shadow price per ton to accelerate action toward our net zero goal.",
@@ -3678,7 +3966,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The pilot helped us improve our emissions data and better understand the financial implications of those emissions.",
@@ -3702,7 +3992,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The cost of carbon was generally a very small proportion of total costs and a shadow price also did not create a direct incentive to drive new decision\u2011making.",
@@ -3726,7 +4018,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This includes membership in the: \u2022 Beyond Alliance\u2197 \u2022 Clean Energy Buyers Alliance\u2197 \u2022 Advanced Energy United\u2197 \u2022 American Council on Renewable Energy (ACORE)\u2197 \u2022 C2ES\u2197 \u2022 Clean Grid Alliance\u21973",
@@ -3750,7 +4044,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Outside of the US, we are members of the: \u2022 European Climate Pact\u2197 \u2022 Climate Neutral Data Centre Pact\u2197 \u2022 DIGITALEUROPE\u2197 \u2022 RE-Source\u2197 \u2022 Asia Clean Energy Coalition\u2197",
@@ -3760,7 +4056,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Outside of the US",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 40,
@@ -3774,7 +4070,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We actively participate in buyer alliances and coalitions that aim to unlock private sector finance that both help companies achieve climate goals more efficiently and drive scale for climate solutions we need to achieve a low carbon economy.",
@@ -3800,7 +4098,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "According to Instagram\u2019s 2023 trend report, technology has become a vital source of social and sustainability information for young adults in the US, with 50% relying on it for such content.",
@@ -3824,7 +4124,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Throughout the year, we organized a variety of online and in-person events to engage with the climate creator community, nurturing meaningful connections and collaborations. \u2022 During Earth Month, this group generated 13 million impressions on Threads, showcasing their reach and impact.",
@@ -3848,7 +4150,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 We amplified climate voices across our editorial channels with five dedicated features throughout the year, reaching a combined audience of more than 20 million.",
@@ -3872,7 +4176,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Two Climate Creators attended COP29 wearing Ray-Ban Meta smart glasses. Through their content on Instagram and Threads, they connected with nearly half a million people, inspiring thoughtful conversations about the meaningful intersection of technology and sustainability.",
@@ -3896,7 +4202,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Across Meta, 1 billion people interact monthly with sustainability-related ads, helping them discover businesses that value sustainable practices and products with more sustainable attributes.",
@@ -3920,7 +4228,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We launched a label highlighting 2.5 million \u201cpre- owned\u201d products shown on Facebook Feed to help people make more informed purchase decisions.",
@@ -3944,7 +4254,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Ad Net Zero is an industry-wide initiative aimed at reducing the carbon impact of developing, producing, and running advertising to net zero emissions by the end of 2030.",
@@ -3970,7 +4282,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As a founding member and active contributor, Meta has supported the development of the Global Media Sustainability Framework (GMSF), which provides a standardized framework for measuring and managing the carbon emissions associated with media activities.",
@@ -3994,7 +4308,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have also developed custom video compression hardware\u2197, a scalable video code\u2197 for all devices and traffic optimization solutions in collaboration with Telef\u00f3nica and Vodafone.",
@@ -4018,7 +4334,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In the UK, the AdGreen levy helps fund continued efforts to reduce emissions from ad production.",
@@ -4042,7 +4360,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Initially launched in 2024, the GMSF will continue to be refined in 2025, with our ongoing involvement helping to shape its development and promote sustainable practices across the advertising industry.",
@@ -4068,7 +4388,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This work, along with Ad Net Zero, will help our industry decarbonize and align on standardized benchmarks for measuring environmental impact.",
@@ -4094,7 +4416,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This design requires fewer square feet to provide similar compute capacity to previous data center designs, improving delivery time and cost efficiency.",
@@ -4104,7 +4428,7 @@
       "unit": "square feet",
       "timeframe": null,
       "scope": "next-generation data centers",
-      "falsifiability": 0.45,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 44,
@@ -4118,7 +4442,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.45,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "we use AI throughout our data center lifecycle to enable more sustainable designs, operations, and processes.",
@@ -4144,7 +4470,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.15,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "91% of our owned data center construction waste4 was diverted from landfills in 2024.",
@@ -4168,7 +4496,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "100% of our owned data centers are certified LEED Gold or higher.",
@@ -4192,7 +4522,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "100% of our owned and operated data center and office electricity is matched with clean and renewable energy.",
@@ -4216,7 +4548,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We achieved LEED Volume pre-certification of our prototype data center design typology in late 2024.",
@@ -4240,7 +4574,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our comprehensive approach has led to 100% of our operational data center buildings earning, at minimum, LEED Gold certification, dating back to our Prineville data center certification in 2011.",
@@ -4266,7 +4602,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, 11 total data centers earned LEED Gold certification, our largest number of projects certified in one year since before 2019.",
@@ -4290,7 +4628,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To date, we have certified 52 LEED Gold data center buildings, totaling nearly 36 million square feet.",
@@ -4314,7 +4654,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To date, we have certified 52 LEED Gold data center buildings, totaling nearly 36 million square feet.",
@@ -4338,7 +4680,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have prototyped more than 60% of our typically pursued LEED credits and developed custom product approaches for our complex strategies, including energy modeling and carbon modeling.",
@@ -4364,7 +4708,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are targeting a 50% reduction in office carbon emissions in 2030 (from a 2019 baseline), which we aim to achieve through the following reduction goals: 32% in office energy consumption 50% in waste generated by office operations 35% in employee commute emissions 40% in embodied carbon of building materials and furniture 54% in carbon intensity of culinary offerings",
@@ -4390,7 +4736,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "All Meta offices over 100,000 square feet are required to be LEED Gold or higher, and some offices also adhere to Fitwel, GreenStar, ISO 50001, and WELL standards.",
@@ -4416,7 +4764,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Bay Area We transitioned our Bay Area fleet of active employee shuttle buses to renewable diesel, a lower carbon alternative to conventional diesel fuel.",
@@ -4426,7 +4776,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Bay Area employee shuttle buses",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 47,
@@ -4440,7 +4790,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Meta publicly reports on the carbon footprint of our global offices.",
@@ -4464,7 +4816,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This shift has eliminated the use of approximately 24,800 liters (L) of chemicals and saved over 1,420 kilograms (kg) of plastic packaging.",
@@ -4488,7 +4842,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Where 10 collections per week were the previous norm, the office now only requires two collections each month.",
@@ -4512,7 +4868,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The latest honey harvest yielded 75 kg, equivalent to 300 jars.",
@@ -4536,7 +4894,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Compactors introduced for general waste and dry mixed recycling have helped reduce both waste volume and transport frequency.",
@@ -4560,7 +4920,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The office\u2019s cleaning team replaced chemical- based products with a system that uses ionized water, reducing reliance on harmful substances and single-use plastic.",
@@ -4584,7 +4946,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The Dublin team collects coffee grounds from office machines, which are then used as compost across campus plantings.",
@@ -4608,7 +4972,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2021, we announced our goal to be water positive in 2030. This means that Meta will return more water than we consume in our operations through water restoration initiatives that address shared water challenges and support water stewardship in the watersheds where we operate.",
@@ -4632,7 +4998,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At the watershed level, we aim to restore 200% of consumption in high water stress regions and 100% of consumption in medium water stress regions.",
@@ -4658,7 +5026,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Because our data centers are responsible for the bulk of our water use, reducing our data center water consumption and being more efficient in our data center operations will be key to reaching our water positive goal.",
@@ -4668,7 +5038,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our data centers",
-      "falsifiability": 0.5,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 49,
@@ -4682,7 +5052,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.5,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We leverage digital twin models of our data center cooling systems to generate accurate estimates of short- and long-term water usage under current and projected operating conditions.",
@@ -4706,7 +5078,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The bulk of water consumption in data centers is attributed to the management of air flow and cooling of the server halls.",
@@ -4716,7 +5090,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "data centers",
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 50,
@@ -4730,7 +5104,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Our data centers strive to minimize water use and prioritize on-site water efficiency in a number of ways, including: \u2022 Optimizing for water efficiency in data centers. \u2022 Landscaping with native and/or drought- resistant vegetation. \u2022 Completing water budgeting and flow meter audits. \u2022 Incorporating water-saving fixtures and technologies within data center facilities.",
@@ -4756,7 +5132,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024 alone, these operational restoration projects returned over 1.59 billion gallons of water to high and medium water stress regions.",
@@ -4780,7 +5158,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2017, we have funded more than 40 water restoration projects in nine watersheds.",
@@ -4804,7 +5184,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Once all projects are fully implemented, they are expected to restore 2.9 to 3.4 billion gallons of water annually.",
@@ -4830,7 +5212,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We share progress toward our 2030 water positive goal and our water use in our annual sustainability report.",
@@ -4857,7 +5241,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The N-Drip Irrigation Conversion project in the Platte River Basin, Nebraska, focuses on enhancing water stewardship by converting 100 acres of cropland from traditional flood irrigation to advanced N-Drip precision drip irrigation systems. This transition aims to significantly reduce water withdrawals from the basin while maintaining crop yields, addressing the challenges posed by climate change- driven water scarcity, and increasing agricultural demand. By delivering water directly to crop root zones with real-time soil moisture management, the project minimizes evaporation and runoff, improving irrigation efficiency and supporting more sustainable agricultural practices. The initiative includes installation of sensors and smart irrigation management technology to optimize water use and provide detailed annual water savings reports. Investing in this project exemplifies our commitment to climate adaptation, water conservation, and agricultural resilience, contributing an estimated volumetric water benefit of 65.5 million gallons annually over 10 years, while fostering collaboration with local technical partners and farmers to ensure long-term ecosystem and community benefits.",
@@ -4881,7 +5267,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The Peatland Restoration project in the Wicklow Mountains Special Area of Conservation aims to restore 450 hectares of degraded blanket bogs, enhancing water storage capacity, protecting existing carbon stocks, reducing emissions, and increasing carbon sequestration potential. Located just south of Dublin, this ecologically vital upland habitat has suffered from drainage, peat extraction, fires, and overgrazing, leading to significant degradation and increased vulnerability to climate impacts. Through active rewetting techniques such as peat dams and coir bunding, the project will rehabilitate the peatland ecosystem, supporting biodiversity, improving water quality, and mitigating wildfire risks. Investing in this initiative exemplifies a strong commitment to climate action and ecosystem resilience by preserving critical carbon-rich habitats and fostering sustainable land management in collaboration with local partners and the National Parks and Wildlife Service. The project is expected to deliver volumetric water benefits of 21 to 43 million gallons annually over a 10-year period, contributing to long-term environmental and community benefits.",
@@ -4905,7 +5293,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The N-Drip Irrigation Conversion project in the Platte River Basin, Nebraska, focuses on enhancing water stewardship by converting 100 acres of cropland from traditional flood irrigation to advanced N-Drip precision drip irrigation systems.",
@@ -4929,7 +5319,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The Peatland Restoration project in the Wicklow Mountains Special Area of Conservation aims to restore 450 hectares of degraded blanket bogs, enhancing water storage capacity, protecting existing carbon stocks, reducing emissions, and increasing carbon sequestration potential.",
@@ -4953,7 +5345,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through an agreement with FIDO Tech, Meta will fund the use of FIDO AI\u2197 to reduce leakage across 300 km of clean water pipeline network in the city of Farmington, New Mexico as part of our water restoration program.",
@@ -4977,7 +5371,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through an agreement with FIDO Tech, Meta will fund the use of FIDO AI\u2197 to reduce leakage across 300 km of clean water pipeline network in the city of Farmington, New Mexico as part of our water restoration program. The project will deliver an estimated 248 to 391 million gallons of water per year by using the FIDO AI technology that identifies leaks and ranks them by size for effective prioritization and repair.",
@@ -5001,7 +5397,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Focusing on labor and environmental standards within our manufacturing supply chain enables us to protect workers; proactively identify, assess, and mitigate risks to our business; and strengthen responsible manufacturing practices.",
@@ -5025,7 +5423,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To learn more about how we are supporting key suppliers in accelerating their efforts to reduce emissions, please visit our net zero supplier engagement section.",
@@ -5051,7 +5451,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our Responsible Supply Chain (RSC) program\u2197 strives to empower workers and protect the environment through open and frequent communication with our suppliers, initiatives that support safe, healthy, and fair working conditions, and a deep understanding of core sustainability issues.",
@@ -5077,7 +5479,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.08,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "2024 Supplier Audit Findings by RBA Code of Conduct Section Labor 49.0% Health and safety 31.7% Environment 8.8% Management systems 7.6% Ethics 2.9%",
@@ -5101,7 +5505,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, several suppliers with strong systems in place for managing labor standards and environmental compliance in their supply chains were given recognition for their efforts during supplier business reviews with cross-functional teams and senior management.",
@@ -5125,7 +5531,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, we doubled the number of supplier sites participating in the RBA\u2019s Responsible Factory Initiative to build knowledge, skills, and management systems on human rights and environmental compliance topics.",
@@ -5149,7 +5557,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "After completing this program, suppliers demonstrated RSC performance and RBA Code compliance improvements.",
@@ -5175,7 +5585,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Meta conducts risk-based supply chain due diligence in accordance with internationally recognized due diligence standards and principles.",
@@ -5199,7 +5611,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our program includes tantalum, tin, tungsten, and gold (3TG).",
@@ -5223,7 +5637,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Meta is committed to the responsible sourcing of minerals used in Reality Labs devices and compliance with applicable regulatory requirements, including the Dodd-Frank Wall Street Reform and Consumer Protection Act of 2010.",
@@ -5250,7 +5666,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By 2024, the focus on preservation and restoration practices was programmatically connected to each step of data center development: diligence, planning, design, construction, and operation.",
@@ -5274,7 +5692,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2023, our standard data center design dedicates the vast majority of unbuilt outdoor spaces to restore native habitat and largely eliminates turf and exotic ornamental species.",
@@ -5300,7 +5720,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are committed to supporting biodiversity at our data center properties.",
@@ -5327,7 +5749,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Meta is committed to playing a positive role and investing in the long-term vitality of the communities in which we operate our data centers.",
@@ -5354,7 +5778,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Over 50% of our owned operational data center campus footprint \u2014 more than 4,000 acres \u2014 was planned, installed, or preserved to support local habitats with native species.",
@@ -5380,7 +5806,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Over 50% of our owned operational data center campus footprint \u2014 more than 4,000 acres \u2014 was planned, installed, or preserved to support local habitats with native species.",
@@ -5406,7 +5834,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, we continued to increase this footprint, incrementally adding additional acreage of biodiverse landscape to our portfolio with each new campus.",
@@ -5430,7 +5860,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our first data center in Prineville, Oregon \u2014 and our first native habitat restoration project \u2014 began in 2010. Targeting the restoration of 200+ acres of arid, native Sagebrush Steppe landscape marked a significant deviation from typical turf-gravel industrial landscapes and an immense cross- functional partnership.",
@@ -5454,7 +5886,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In addition to seeding throughout the campus, we planted over 170,000 native plant plugs along visible roadways and paths, providing both beauty and a diverse local seed bank.",
@@ -5478,7 +5912,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The Prineville landscape supports 20 beehives placed and managed by a local beekeeper.",
@@ -5502,7 +5938,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also partnered with local ranchers to use sheep and goats to help control or eradicate invasive cheatgrass infestations.",
@@ -5526,7 +5964,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Year 5 \u2013 6 Ecological restoration is complete in the older parts of the restored campus. The native shrubs, sage, and rabbitbrush are now dominant with patches of native grasses and perennials in between.",
@@ -5550,7 +5990,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Year 3 The native grasses are outcompeting the weeds and some native perennials and shrubs are starting to take hold.",
@@ -5574,7 +6016,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Prineville, Oregon Restoration Year 1 The white lines are temporary irrigation, which was necessary to get the native plants going (ahead of the weeds).",
@@ -5598,7 +6042,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.45,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our 1,500 acre property was around 95% exotic grass upon purchase.",
@@ -5622,7 +6068,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "A Black Belt Prairie restoration garden and seed processing facility at our Montgomery data center campus will allow us to produce, harvest, and plant our own diverse mix of locally native seeds and help restore this endangered ecosystem.",
@@ -5632,7 +6080,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our Montgomery data center campus",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 66,
@@ -5646,7 +6094,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Our restoration project at this campus will increase the amount of Black Belt Prairie habitat in the world, of which only 1 \u2013 3%6 remains.",
@@ -5672,7 +6122,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The seeds were cleaned, dried, and stored in our onsite processing facility to be planted in our 10-acre onsite restoration garden.",
@@ -5696,7 +6148,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Instead of maintaining turf at this data center, we will plant Black Belt Prairie seeds on any areas disturbed during construction.",
@@ -5720,7 +6174,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Before breaking ground at our Aiken campus, we partnered with the South Carolina State Forestry Commission to perform a prescribed burn over 400 acres.",
@@ -5744,7 +6200,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Utah After three failed attempts to grow grass and other plants at our Eagle Mountain data center, we adjusted our approach. Soil testing revealed extremely high levels of salt. As construction progressed in other areas of the campus, a local habitat restoration expert established onsite test plots to study the use of soil restoration amendments and paired appropriate plant species with site conditions. The results of this adaptive, nature-based solution included using a greenhouse to grow 34,000 native plant plugs that are ready as each area is targeted for completion and an innovation for mechanized plug installation across large commercial sites.",
@@ -5768,7 +6226,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Utah After three failed attempts to grow grass and other plants at our Eagle Mountain data center, we adjusted our approach. Soil testing revealed extremely high levels of salt. As construction progressed in other areas of the campus, a local habitat restoration expert established onsite test plots to study the use of soil restoration amendments and paired appropriate plant species with site conditions. The results of this adaptive, nature-based solution included using a greenhouse to grow 34,000 native plant plugs that are ready as each area is targeted for completion and an innovation for mechanized plug installation across large commercial sites. Success at this data center required patience, but we are confident our approach will yield another 240 acres of restored Sagebrush Steppe ecosystem.",
@@ -5792,7 +6252,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.7,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Before breaking ground at our Aiken campus, we partnered with the South Carolina State Forestry Commission to perform a prescribed burn over 400 acres. The project was a cost- and nature- effective way to protect sensitive soils and promote native plant species by reducing weed competition, recycling nutrients, building soil, controlling pests, and reducing risk of wildfire.",
@@ -5816,7 +6278,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "While prescribed burning is a common landscape tool used throughout the world, after this successful pilot we have deployed prescribed burns as a tool at several other locations and have embedded this tool into our land management program as a standard option for native habitat restoration and responsible land stewardship.",
@@ -5840,7 +6304,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Meta provided support for the installation of 6,000 square feet of pollinator gardens in six schools near our Gallatin data center, offering students hands-on opportunities to learn about sustainable practices and environmental conservation.",
@@ -5864,7 +6330,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The City of Fort Worth and Texas Parks and Wildlife Department\u2019s investment in the hiking trails, resident bison herd, prairie dog colony, marsh boardwalk, and the Hardwicke Interpretive Center provides more than 63,000 visitors each year with the opportunity to experience nature in their community.",
@@ -5888,7 +6356,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We aim to combat illegal wildlife trafficking across our platforms and are part of the Coalition to End Wildlife Trafficking Online\u2197.",
@@ -5898,7 +6368,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our platforms / membership in the Coalition to End Wildlife Trafficking Online",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "aspirational_verb"
       ],
@@ -5914,7 +6384,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Near our Mesa data center, we partnered with the Arizona Sustainability Alliance, the City of Mesa, Valley Metro, local high school student Environmental Club volunteers, and the Mayor and Councilmembers to plant several hundred native, low-water-use trees, plants, and shrubs at the Superstition Springs Transit Center.",
@@ -5924,7 +6396,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Superstition Springs Transit Center (near Mesa data center)",
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 68,
@@ -5938,7 +6410,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "In addition, we actively monitor endangered species content per our Community Standards and maintain ongoing enforcement in this space.",
@@ -5948,7 +6422,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "endangered species content on our platforms",
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 68,
@@ -5962,7 +6436,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Meta helped fund the Lotus Marsh Boardwalk at the Fort Worth Nature Center and Refuge near our Fort Worth data center.",
@@ -5986,7 +6462,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We regularly collaborate with our conservation partners to better understand the data and methods in which illegal wildlife trade might be facilitated across our technologies.",
@@ -6010,7 +6488,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Submarine cable systems \u2014 or subsea cables \u2014 are the backbone of global digital infrastructure, accounting for more than 95% of intercontinental traffic\u2197 across the world\u2019s oceans enabling communication.",
@@ -6034,7 +6514,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We aim to prioritize environmental protection during the installation and operation of our subsea cable systems and leverage industry-leading practices, including:",
@@ -6061,7 +6543,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.08,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We have designed and built our own data centers and key portions of our technical infrastructure through which we serve our products, and we plan to continue to significantly expand the size of our infrastructure primarily through data centers, subsea and terrestrial fiber optic cable systems, and other projects.",
@@ -6089,7 +6573,9 @@
       "doc_year": 2025,
       "doc_type": "10k",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "we will need an increasing amount of technical infrastructure, including network capacity, computing power, and related energy requirements, to continue to satisfy our needs.",
@@ -6114,7 +6600,9 @@
       "doc_year": 2025,
       "doc_type": "10k",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Global climate change could result in certain types of natural disasters occurring more frequently or with more intense effects.",
@@ -6139,7 +6627,9 @@
       "doc_year": 2025,
       "doc_type": "10k",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     }
   ]
 }

@@ -108,7 +108,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Our delivery station in Elkhart, Indiana",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 2,
@@ -122,7 +122,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "The Climate Pledge\u2014our goal to reach net-zero carbon emissions across our global operations by 2040\u2014and create strategic, actionable plans to achieve them.",
@@ -146,7 +148,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our scientists and engineers retrofitted automated packaging machines with paper-based alternatives, avoiding 288 million single-use plastic bags in North America.",
@@ -170,7 +174,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "For families experiencing hunger, we've adapted our logistics to deliver meals where they're needed, and since 2020, we\u2019ve delivered 60 million meals to 200,000 U.S. households.",
@@ -194,7 +200,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As we recently shared, we\u2019ve been inventing and investing in technology to increase our water usage efficiency across our data center footprint for many years already, and today our data centers are seven times more water-efficient than the industry average.",
@@ -218,7 +226,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also have more buildings than any other cloud provider using reclaimed water, and we\u2019re investing in water replenishment projects around the world that have helped us get 75% of the way toward our goal to be water positive by 2030.",
@@ -244,7 +254,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We operate the largest corporate electric vehicle fleet in North America, and 52,700 of our electric delivery vans delivered 2.4 billion packages around the world.",
@@ -270,7 +282,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "When disasters strike, we use our delivery infrastructure to move life-saving resources and support first responders, including committing to provide over 2,000 free rapid response technology systems that deliver power, connectivity, and water after disasters in minutes to nonprofit partners at no cost by 2027.",
@@ -294,7 +308,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "And we've worked alongside housing experts and local governments to fund and accelerate affordable housing in our hometown communities, committing $3.6 billion to help create or preserve over 35,000 affordable homes.",
@@ -318,7 +334,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Across Europe, 75 micromobility hubs delivered packages and groceries using electric cargo bikes and other zero-exhaust-emission vehicles, reducing noise and emissions in urban neighborhoods where we operate.",
@@ -342,7 +360,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This early commitment has led us to become one of the largest corporate purchasers of renewable energy for six years in a row, one of the most energy- efficient data center operators in the world, and an early investor in new technologies like small modular reactors (SMRs).",
@@ -368,7 +388,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we shipped more packages than ever while generating less waste per unit shipped than the previous year.",
@@ -392,7 +414,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We\u2019re also reimagining the buildings behind our deliveries, including our first delivery station constructed using mass timber\u2014a material that can hold its own against concrete and steel in terms of structural strength, is less carbon- intensive to produce, and retains the carbon that the trees sequestered before the trees were harvested.",
@@ -402,7 +426,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our delivery station / buildings behind deliveries",
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 3,
@@ -416,7 +440,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We prioritize business with suppliers who help us meet our decarbonization goals; and we engage with our suppliers to set credible targets, share their progress, and avoid carbon emissions over time.",
@@ -442,7 +468,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are committed to addressing sustainability at every stage of our value chain.",
@@ -468,7 +496,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We continually seek new and better ways to serve customers, offering lower prices, more convenient services, and a larger selection of more sustainable products.",
@@ -494,7 +524,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At least 100,000 electric delivery vans on the road by 2030, from Rivian and other manufacturers",
@@ -518,7 +550,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Deploy 10,000 electric vehicles (EVs) in India by 2025",
@@ -542,7 +576,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We achieved 33 of 35 commodities sourcing goals in 2025.",
@@ -566,7 +602,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Match 100% of the electricity consumed by our global operations with renewable energy by 2025\u2014 five years ahead of our original target of 2030",
@@ -590,7 +628,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Reach net-zero carbon emissions across our global operations by 2040",
@@ -614,7 +654,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Invest in wind and solar capacity equal to the energy use of all active Echo, Fire TV, and Ring devices worldwide by 2025\u00b6",
@@ -638,7 +680,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon will be water positive across data centers by 2030, returning more water to communities than we use in our direct data center operations",
@@ -662,7 +706,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon will be water positive in India by 2027, returning more water to communities in India than we use in our direct operations",
@@ -686,7 +732,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Reduce food waste by 50% across U.S. and Europe operations by 2030\u00a7",
@@ -712,7 +760,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Inspire and invite others to sign The Climate Pledge and join us on a mission to reach net-zero carbon emissions by 2040",
@@ -738,7 +788,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As of 2025, AI utility monitoring tools quickly identify leaks, malfunctioning HVAC and refrigeration systems, and operational opportunities at 820 Amazon buildings.",
@@ -762,7 +814,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, Amazon adopted use of an AI tool, BNG.AI, to enable rapid assessment of the biodiversity value of potential development sites in the UK.",
@@ -786,7 +840,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are committed to sourcing carbon-free energy and returning more water to our communities than we withdraw for our data center operations.",
@@ -796,7 +852,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our data center operations",
-      "falsifiability": 0.6,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "unbounded_timeframe",
         "aspirational_verb"
@@ -813,7 +869,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Additionally, we pay for the full electricity costs of our data centers while making substantial investments in building new energy generation and transmission infrastructure that benefits our broader communities.",
@@ -823,7 +881,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our data centers; broader communities",
-      "falsifiability": 0.6,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "unattributed_superlative"
       ],
@@ -839,7 +897,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "The Idaho National Laboratory and Lawrence Livermore National Laboratory are using our AI technology to help advance the next generation of safe nuclear energy.",
@@ -849,7 +909,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Idaho National Laboratory and Lawrence Livermore National Laboratory",
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 6,
@@ -863,7 +923,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Although AI can increase energy and water demand in data centers, we are pioneering designs such as configurable liquid-to-chip cooling that substantially reduce both.",
@@ -873,7 +935,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "data centers",
-      "falsifiability": 0.3,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "undefined_baseline",
         "aspirational_verb"
@@ -890,7 +952,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.3,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "In 2025, we developed an AI system to identify the material composition of unsellable and non-donatable inventory, such as multilayer plastics, textiles, and certain electronics, to drive more effective sorting and recycling.",
@@ -914,7 +978,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We were a founding partner in the launch of the Water-AI Nexus Center of Excellence, a collaborative effort to advance water sustainability for AI infrastructure.",
@@ -938,7 +1004,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "From 2024 to 2025, absolute emissions increased 16% and carbon intensity increased 3%.4,5",
@@ -962,7 +1030,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our supply chain emissions account for 76% of our carbon footprint, and these emissions increased 20% compared to 2024.",
@@ -986,7 +1056,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Typically, ordering online instead of driving to multiple stores generates fewer carbon emissions, and Amazon has reduced emissions per shipped unit by 7% compared to 2024",
@@ -1010,7 +1082,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Additionally, when a business moves from an on-premises data center to an Amazon data center, research estimates that data is processed 4.1 times more efficiently.3",
@@ -1034,7 +1108,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our approach is grounded in climate science and centers on The Climate Pledge , our commitment to reach net-zero carbon emissions across our global operations by 2040.",
@@ -1058,7 +1134,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we engaged our top suppliers\u2014who represented 70% of our supply chain emissions\u2014to join The Climate Pledge, set credible targets, share their progress, and reduce emissions over time.6",
@@ -1082,7 +1160,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As of the end of 2025, 62% of these suppliers located in more than 40 countries had credible decarbonization plans in place, a 23% year-over- year increase.7",
@@ -1106,7 +1186,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "2.4B Packages delivered by electric vehicles in 2025 alone and more than 4.5 billion since 2023",
@@ -1130,7 +1212,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "7% Reduction in emissions per shipped unit compared to 2024, and 39% compared to 2019",
@@ -1154,7 +1238,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, 72% of Amazon Private Brands Tier 1 apparel suppliers completed the Higg FEM, up from 61% in 2024, and their average score increased by 15% year over year.",
@@ -1178,7 +1264,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We sold our first credits in 2025 and are working to expand credit availability in 2026.",
@@ -1202,7 +1290,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The potential impact of this work is significant: if these suppliers achieve net-zero carbon alongside us, they would eliminate more than 11 billion metric tons of CO2e emissions\u2014the equivalent of eliminating the emissions from driving all passenger vehicles in the U.S. for approximately 11 years.",
@@ -1226,7 +1316,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "38% Decrease in carbon intensity since 2019 while revenue increased 156% demonstrating that we are decoupling growth from emissions and that our longer-term strategy is working",
@@ -1250,7 +1342,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, 61 building projects across Amazon\u2014 including data centers and fulfillment centers\u2014 incorporated lower-carbon building materials, such as mass timber and lower-carbon concrete, steel, and aluminum, avoiding 195,000 metric tons of embodied CO\u2082e compared to traditional construction materials.",
@@ -1274,7 +1368,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, only 3% of our transoceanic shipments traveled by air, down from 10% in 2024.",
@@ -1298,7 +1394,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we purchased 18.2 million gallons of blended and Book and Claim SAF.11",
@@ -1322,7 +1420,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Ocean freight accounted for 97% of our transoceanic shipments in 2025.",
@@ -1346,7 +1446,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In combination with Amazon Day, a delivery option that allows members to pick a specific day of the week to receive all weekly orders in fewer consolidated shipments, and other shipping programs, customers helped us avoid an estimated 499 million delivery trips, 471 million boxes, and 248,000 metric tons of CO\u2082e in 2025.",
@@ -1370,7 +1472,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, our transportation network expanded to more than 52,700 electric delivery vans globally\u2014including 37,400 in the U.S., 10,900 in Europe, and 4,400 in India.",
@@ -1394,7 +1498,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In the U.S., our electric delivery network is supported by more than 50,500 chargers at 380 delivery stations, making Amazon the largest operator of private EV charging infrastructure in the U.S.",
@@ -1420,7 +1526,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Lower-carbon steel: We constructed 33 data centers with lower-carbon steel in 2025, in addition to 67 since 2023.",
@@ -1444,7 +1552,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Lower-carbon concrete: We constructed 39 data centers with lower-carbon concrete in 2025, in addition to 74 since 2023.",
@@ -1468,7 +1578,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Mass timber: In 2025, six Amazon buildings in design or construction integrated mass timber elements including a delivery station in Elkhart, Indiana .",
@@ -1492,7 +1604,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Lower-carbon copper: In early 2026, Amazon agreed to be the first customer for Rio Tinto's lower-carbon copper produced using Nuton bioleaching technology.",
@@ -1516,7 +1630,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Emissions from our direct operations represent 19% of our carbon footprint, and we reduce them through delivery network efficiencies, scaling electric vehicles (EVs), and deploying lower-carbon fuels.",
@@ -1540,7 +1656,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This strategy has helped us reduce emissions per shipped unit by 7% compared to 2024 and 39% compared to 2019.",
@@ -1564,7 +1682,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We grew our electric delivery van fleet by 68% in 2025, enabling us to deliver 2.4 billion packages via electric delivery vans.",
@@ -1588,7 +1708,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Additionally, we had more than 12,700 total EVs deployed in India at the end of 2025, an increase from more than 10,000 EVs in 2024.",
@@ -1612,7 +1734,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also built 22 operations buildings with lower- carbon steel.",
@@ -1636,7 +1760,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also built 14 operations buildings with lower-carbon concrete.",
@@ -1660,7 +1786,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We aim to have at least 100,000 electric delivery vans on the road globally by 2030.12",
@@ -1686,7 +1814,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, 342 Whole Foods Market stores used natural or lower-GWP refrigerants in primary refrigeration systems, with 29 stores relying on natural refrigerants, 20 using a combination of natural and other refrigerants, and 293 using other lower-GWP refrigerants.",
@@ -1710,7 +1840,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Emissions from Purchased Electricity Indirect emissions from purchasing electricity represent 5% of our total carbon footprint and increased 34% in 2025, driven by electricity use in data centers, electrification of our delivery network, and building electrification.",
@@ -1734,7 +1866,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, Amazon\u2019s data centers achieved a global PUE of 1.14, nearly 9% better than the public cloud industry average of 1.25 and 30% better than the on-premises enterprise data center average of 1.63.13",
@@ -1758,7 +1892,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon has invested billions of dollars scaling carbon- free energy, which has enabled more than 712 projects in 30 countries as of January 2026\u2014including 80 new projects in 2025\u2014representing 42 GW of carbon-free energy capacity, enough to power 13 million U.S. homes for a year and avoid 48 million metric tons of CO2e once fully operational.14",
@@ -1782,7 +1918,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we achieved: \u2022 131,000 GW-hours (GWh) of carbon-free energy production annually. \u2022 375 utility-scale projects in our portfolio globally, including 264 solar, 109 wind, and two nuclear projects as of January 2026. \u2022 18 new rooftop solar projects installed, bringing the total to 337 projects at our fulfillment centers, sortation centers, and stores around the globe.",
@@ -1806,7 +1944,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To meet strong customer demand, in 2025 we added more data center capacity globally than any other company, including more than 1.2 gigawatt (GW) in Q4 alone, and we expect AI and cloud services to continue growing.",
@@ -1832,7 +1972,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon data centers and services in 35 countries\u2014including all of our data centers in Europe, the Middle East, and Africa (EMEA), Singapore, and Indonesia \u2014were ISO 50001 Energy Management certified in 2025.",
@@ -1856,7 +1998,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "These investments enabled us to match 100% of the electricity consumed by Amazon operations with renewable energy sources for the third year in a row.",
@@ -1880,7 +2024,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our custom- designed chips\u2014including Trainium3 for AI model training\u2014 offer over five times higher output tokens (i.e., AI-generated responses) per megawatt (MW) of power and four times better performance per MW than its predecessor, while maintaining the same latency or response time per user.",
@@ -1904,7 +2050,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This approach reduces mechanical energy consumption compared to traditional cooling methods by up to 50% during peak cooling\u2014without increasing water usage on a per MW basis.",
@@ -1928,7 +2076,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We matched 100% of the electricity used by active Echo, Fire TV, and Ring devices in 2024 and 2025, and we aim to keep matching this electricity use going forward.",
@@ -1955,7 +2105,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 10 new carbon-free energy projects announced in the U.S. as of January 2026, which will add 5.5 GW of capacity to the grid once fully operational.",
@@ -1979,7 +2131,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In total, Amazon has announced 291 projects across 30 states, which will bring 25.6 GW of expected capacity to the grid once fully operational.",
@@ -2003,7 +2157,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 55 new carbon-free energy projects announced in Europe as of January 2026, which will add 1.4 GW of capacity to the grid once fully operational.",
@@ -2027,7 +2183,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In total, Amazon has announced 287 projects across 15 countries, which will bring 10.7 GW of expected capacity to the grid once fully operational.",
@@ -2051,7 +2209,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 11 new carbon-free energy projects in Australia and three in India\u2014announced as of January 2026, adding more than 565 MW of capacity in Australia and 581 MW in India, respectively.",
@@ -2075,7 +2235,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon has made an investment in SMR developer X-energy to help bring 5 GW of new nuclear energy to the U.S. grid by 2039.",
@@ -2099,7 +2261,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also expanded our existing nuclear energy relationship with Talen Energy , which will provide 1,900 MW of carbon-free nuclear power through 2042, with options to extend.",
@@ -2123,7 +2287,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By the end of 2025, Amazon had 15 solar energy projects paired with battery energy storage systems, representing 2.3 GW of capacity, up from 2.1 GW in 2024.",
@@ -2147,7 +2313,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By 2022, we had contracted enough renewable energy capacity to meet our 2025 projections.",
@@ -2171,7 +2339,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2016, the program has saved over 1.6 billion kilowatt- hours (kWh), generated $7.2 million in utility rebates, and avoided nearly 1.2 million metric tons of CO2e.",
@@ -2195,7 +2365,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, the program reached significant milestones in scale and energy efficiency by optimizing lighting load demands and introducing advanced lighting controls at 32 sites, which saved 10 million kWh and avoided 7,000 metric tons of CO\u2082e.",
@@ -2219,7 +2391,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we reduced energy consumption by 131 million kWh and avoided 38,000 metric tons of CO2e, in addition to saving 62 million kWh and avoiding 24,000 metric tons of CO2e in 2024.",
@@ -2243,7 +2417,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We set a goal to invest in new renewable energy capacity to match the electricity used by our customers' Echo, Fire TV, and Ring devices by 2025.",
@@ -2267,7 +2443,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, Amazon\u2019s buildings portfolio included active facilities in 66 countries including operations facilities, grocery stores, corporate offices, and data centers.",
@@ -2291,7 +2469,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon also has the largest international portfolio of Living Future Zero Carbon certified building space with five certified buildings.",
@@ -2317,7 +2497,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As of the end of 2025, 820 Amazon buildings used AI tools to monitor HVAC and water utilities, and 81 buildings used AI tools to monitor refrigeration systems.",
@@ -2341,7 +2523,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we expanded our carbon neutralization strategy to explore super pollutant segments like rice methane abatement and refrigerant destruction, recognizing the importance of addressing methane and other high-GWP greenhouse gases for achieving global climate targets.",
@@ -2365,7 +2549,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, Amazon's inset projects helped us reduce emissions by 199,400 metric tons of CO\u2082e.15",
@@ -2389,7 +2575,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By the end of 2025, 656 signatories across 61* industries and 49 countries had joined, including the new addition of 16 of Amazon's top suppliers.",
@@ -2413,7 +2601,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The 16-week program launched in July 2025 with 14 companies, eight of which advanced to the next phase, which included virtual workshops with Amazon mentors and final pitches to executives in November 2025.",
@@ -2437,7 +2627,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In India, Laneshift completed 600 trips on the Bengaluru- Chennai corridor in a first-of-its-kind e-truck highway demonstration, driving significant growth in e-truck orders and securing several long-term contracts.",
@@ -2461,7 +2653,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In Brazil, the Laneshift e-Dutra Coalition\u2014 comprising C40 Cities, Smart Freight Centre, CALSTART, and other organizations\u2014launched a project to deploy electric trucks and charging infrastructure along the Rio de Janeiro\u2013S\u00e3o Paulo corridor, with the goal of 1,000 electric trucks operating daily by 2030.",
@@ -2485,7 +2679,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon co-founded The Climate Pledge in 2019 as both a commitment and a catalyst\u2014bringing companies together to reach net-zero carbon emissions by 2040.",
@@ -2509,7 +2705,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, this included investing in improving manure management to reduce methane on dairy farms that supply products to our grocery stores, and substituting conventional fossil fuels with lower-carbon alternatives in the ships, planes, and trucks that carry our goods.",
@@ -2533,7 +2731,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we: \u2022 Calculated and published the estimated product carbon footprints of 100% of our Amazon Grocery Private Brands food products, 64% of our Amazon Private Brands products, and 90% of Amazon Devices products that launched in 2025.",
@@ -2557,7 +2757,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through the Climate Pledge Fund \u2014our $2 billion venture investment program launched in 2020\u2014we have invested in companies developing climate solutions across transportation, logistics, energy, and manufacturing.",
@@ -2581,7 +2783,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As of the end of 2025, 75% of Echo and Fire TV devices featured Low Power Mode, compared to over 71% in 2024.",
@@ -2605,7 +2809,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon Smart Thermostats can enable carbon emissions reductions and help save an average of approximately 8% of heating and cooling bills in the U.S.",
@@ -2629,7 +2835,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We continued to advocate for updated carbon accounting guidelines for the Greenhouse Gas Protocol as a co-founder of the Emissions First Partnership, a coalition committed to modernizing carbon accounting standards for the power sector.",
@@ -2653,7 +2861,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Building on this work, we launched our Climate Finance program in 2025 to catalyze decarbonization investments by providing long-term demand signals, unlocking access to financing for project developers, and establishing blended finance partnerships with development finance institutions and private investors.",
@@ -2677,7 +2887,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "AWS Sustainability Console , an AWS service that incorporates and replaces the previous Customer Carbon Footprint Tool, allows customers to measure, track, and reduce their estimated environmental impact across AWS services. The methodology behind sustainability calculations (e.g., carbon footprint and allocation to customers) is third-party verified and publicly available. Customers can access granular data by AWS region, service, usage account, and fiscal year, among others, across Scope 1, 2, and 3 carbon emissions, in convenient formats such as dashboard visualizations, comma-separated values files, and APls.",
@@ -2701,7 +2913,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, Amazon Private Brands used 17% recycled polyester in apparel and 100% of the cotton used in apparel was from more sustainable sources.",
@@ -2725,7 +2939,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Though our emissions increased in 2025, we remain steadfast in our commitment to sustainability.",
@@ -2749,7 +2965,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.75,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2026, Amazon Private Brands will continue to increase the percentage of apparel made from U.S. Cotton.",
@@ -2776,7 +2994,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "India faces some of the world\u2019s highest levels of water stress, holding 18% of the global population but only 4% of global fresh water resources .",
@@ -2800,7 +3020,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we were 120% water positive in India, achieving our goal two years early.",
@@ -2824,7 +3046,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As of 2025, on-site sewage treatment plants at 28 buildings in India recycled wastewater, providing an estimated 298 million liters of water annually for toilet flushing and irrigation.",
@@ -2848,7 +3072,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, on-site rainwater harvesting pits collected approximately 178 million liters of water, which percolated back to groundwater, replenishing local water sources.",
@@ -2872,7 +3098,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, water replenishment projects returned 9.4 billion liters of water to communities.",
@@ -2896,7 +3124,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are funding increased capacity for on-site sewage treatment plants at 23 fulfillment centers, expanding the treatment and reclamation of wastewater for non-potable applications such as cleaning and cooling.",
@@ -2920,7 +3150,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At the end of 2025, we had invested in 45 replenishment projects globally, which we expect will collectively return more than 18 billion liters of water annually once completed.",
@@ -2946,7 +3178,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, we expanded our water commitments by establishing a new goal to become water positive across our direct operations in India by 2027, which includes operations buildings, corporate offices, and data centers.",
@@ -2970,7 +3204,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We initially anticipated replenishing 2.5 billion liters of water annually once fully implemented, but early results show that we are on track to exceed those expectations.",
@@ -2997,7 +3233,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.5,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we sold 72 million retail sellers\u2019 items on Amazon Outlet.",
@@ -3021,7 +3259,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we reduced the percentage of damaged items within Amazon\u2019s operations by 21% compared to 2024.",
@@ -3045,7 +3285,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, this program prevented 6.4 million returns, an 11% increase from 2024.",
@@ -3069,7 +3311,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, customers traded in 835,000 devices.",
@@ -3093,7 +3337,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "16M Meals-equivalent donated in Europe",
@@ -3117,7 +3363,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "36M Meals-equivalent donated in the U.S",
@@ -3141,7 +3389,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Reduce food waste by 50% across U.S. and Europe operations by 203018",
@@ -3167,7 +3417,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Hard drive purchases avoided since 2023 by consolidating functional drives from multiple aging racks into fewer, fully functional racks",
@@ -3191,7 +3443,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we helped sellers resell or donate 529 million items globally.",
@@ -3215,7 +3469,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we donated or supported our sellers to donate 216 million items worldwide.",
@@ -3239,7 +3495,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we donated the equivalent of 52 million meals globally\u2014 including 16 million in Europe and 36 million in the U.S.",
@@ -3263,7 +3521,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, our European operations achieved a 49% reduction in food waste intensity compared to a 2021 baseline, and our U.S. operations achieved a 23% reduction.",
@@ -3287,7 +3547,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, human and animal consumption accounted for 99% of our total food handled in Europe and 97% of food handled in the U.S.",
@@ -3311,7 +3573,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we continued to implement and expand these efforts at 671 locations and diverted 102,700 tons of food waste.",
@@ -3335,7 +3599,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We offer customers the option to purchase previously used versions of 14% of the products they view.",
@@ -3359,7 +3625,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Whole Foods Market also expanded its collaboration with Too Good To Go , an app that connects customers with unsold food at discounted prices, helping to prevent waste across 530 stores and saving the equivalent of 1.55 million meals in 2025.",
@@ -3383,7 +3651,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "\u2022 Refurbishing products: When pre-owned products are in need of refurbishment, Amazon Renewed offers professionally inspected, cleaned, refurbished, tested, and discounted products backed by a minimum 90-day warranty sold by Amazon\u2019s qualified selling partners.",
@@ -3407,7 +3677,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon has set a goal to reduce food waste across our U.S. and Europe operations by 50% by 2030.",
@@ -3431,7 +3703,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We resell the majority of returned products as new.",
@@ -3441,7 +3715,7 @@
       "unit": null,
       "timeframe": null,
       "scope": null,
-      "falsifiability": 0.6,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 18,
@@ -3455,7 +3729,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Amazon's size and fit recommendation widget also helps shoppers choose the right fit for clothing prior to purchasing, generating 3.2 billion size recommendations in 2025.",
@@ -3479,7 +3755,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By the end of 2025, components across Echo, Fire TV, Fire Tablets, and Kindle were made either predominantly or entirely from recycled materials\u2014including 57% recycled plastic, 98% recycled yarn, 98% recycled aluminum, and 90% recycled magnesium.",
@@ -3505,7 +3783,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Select Kindle Scribe models featured 100% recycled cobalt in batteries and 85% recycled tin in the solder used on printed circuit boards.",
@@ -3531,7 +3811,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we expanded the use of universal plastic pallets and GoCarts \u2014reusable and repairable cart systems that replace traditional wooden pallets and cardboard containers\u2014avoiding the use of 35 million wood pallets.",
@@ -3555,7 +3837,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, these initiatives enabled the reuse or donation of 343,000 assets and materials.",
@@ -3579,7 +3863,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "All final assembly sites worldwide for Echo, Kindle, Ring, Fire Tablet, and Fire TV devices achieved or renewed UL Solutions\u2019 Zero Waste to Landfill (ZWTL) certification at the Silver level or higher in 2025.19",
@@ -3605,7 +3891,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "UL Solutions examined 2025 waste data from 89 supplier sites across our Devices business and verified, to a reasonable level of assurance, a 99% waste diversion rate, including 6% through thermal processing with energy recovery.",
@@ -3631,7 +3919,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since this program was launched in 2020, reverse logistics vendors like RRL have enabled Amazon to source retired components for reuse in data centers or for resale, which prevented 225,000 metric tons of CO2e.20",
@@ -3655,7 +3945,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we launched 30 new devices and accessories with a SCS Recycled Content or a Carbon Trust certification, which are recognized by our Climate Pledge Friendly program.",
@@ -3679,7 +3971,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon programs have avoided the purchase of over one million new hard drives since 2023.",
@@ -3703,7 +3997,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, RRL retained UL Solutions\u2019 highest Zero Waste certification (Platinum level) for its Ireland facility and is pursuing certifications across additional reverse logistics locations.",
@@ -3729,7 +4025,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, RRL facilities began using AI-powered robots to demanufacture AWS equipment.",
@@ -3753,7 +4051,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, Amazon reduced our waste per shipped unit by 5% compared to 2024.",
@@ -3777,7 +4077,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we diverted 84% of our waste from landfill, including 82% through recycling or composting and 2% through incineration with energy recovery.",
@@ -3801,7 +4103,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Landfill or incineration without energy recovery accounted for 16% of our waste.",
@@ -3825,7 +4129,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Cardboard and wood represent 64% of Amazon\u2019s operational waste footprint, and we recycle almost 100% of it.",
@@ -3849,7 +4155,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Monitoring waste intensity\u2014grams of waste produced per shipped unit\u2014helps us gauge progress and identify opportunities for improvement.",
@@ -3873,7 +4181,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we shipped 11% of global shipments without additional Amazon packaging.",
@@ -3897,7 +4207,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since we launched the Ships in Product Packaging program in 2020, 7.9 billion packages across North America and Europe used only the manufacturers\u2019 packaging and an Amazon shipping label.",
@@ -3921,7 +4233,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we qualified 28 million unique products for this program globally.",
@@ -3945,7 +4259,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "flexible paper packaging, which is up to 90% lighter than comparable cardboard boxes.",
@@ -3969,7 +4285,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By using lighter, right-sized packaging, we have avoided 5.4 million metric tons of packaging materials in North America and Europe since 2015.",
@@ -3993,7 +4311,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we started rolling out a 54% smaller shipping label for small ship packages in Japan, reducing overall adhesive and paper use by 6%.",
@@ -4017,7 +4337,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through these efforts, we have avoided 223,616 metric tons of single-use plastic packaging globally since 2020.",
@@ -4041,7 +4363,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we reduced our total plastic packaging globally from 74,137 metric tons in 2024 to 74,073 metric tons in 2025.",
@@ -4065,7 +4389,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In North America, we avoided 288 million plastic bags in 2025,",
@@ -4089,7 +4415,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "and 52% of fulfillment centers in North America did not ship plastic delivery packaging.",
@@ -4113,7 +4441,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As a result, we saw a year-over-year decrease in the number of shipments that contained single-use plastic delivery packaging, from 65% of shipments in 2023, to 37% of shipments in 2024, to 27% of shipments in 2025.",
@@ -4137,7 +4467,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This means that, in 2025, 73% of shipments in North America were recyclable in household waste streams, up from 63% in 2024.",
@@ -4161,7 +4493,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In Europe, customers have been able to recycle all delivery packaging with their household recycling since 2023.",
@@ -4185,7 +4519,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, 77% of new devices featured 100% recyclable packaging in the U.S., with 31 devices in total, down from 42 in 2024 due to the types of devices released in 2025.",
@@ -4211,7 +4547,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Through the introduction of stronger Forest Stewardship Council- certified paper bags at checkout, Whole Foods Market reduced the need for double bagging and avoided the use of 51 million checkout bags in North America in 2025.",
@@ -4237,7 +4575,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our packaging reduces reliance on virgin tree-based and bleached fibers, resulting in an average of 95% of wood fiber-based materials from responsibly managed forests or recycled sources used in packaging across our device product line.",
@@ -4263,7 +4603,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Beginning in 2025, we installed automated packaging machines in European fulfillment centers that create custom-sized cardboard boxes and paper bags in real time, precisely matching packaging to each item, avoiding excess material.",
@@ -4289,7 +4631,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, Amazon pursued innovative solutions for hard-to-recover materials \u2014particularly plastics that are difficult to recycle through conventional systems.",
@@ -4315,7 +4659,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon collaborated with the National Renewable Energy Laboratory to develop a novel recycling technology and worked with Glacier AI vision systems in 2024 and 2025 to identify biopolyester packaging in mixed waste streams.",
@@ -4339,7 +4685,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This enabled us to work with startup company EsterCycle to produce closed loop bioplastics.",
@@ -4363,7 +4711,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon piloted biopolyester materials in new packaging applications such as compostable produce bags, protective bags for liquids, and book wrapping to test material performance.",
@@ -4387,7 +4737,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, 3Keel, a third-party consultancy, confirmed that Amazon Private Brands Europe increased the percentage of verified Deforestation- and Conversion-Free (DCF) soy in our supply chain to 10%, from 6% in 2024. The remaining 90% supported deforestation-free production via mass balance and regional credits.24",
@@ -4413,7 +4765,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, 34% of all products sold at Whole Foods Market\u2014and 61% of fresh produce sold\u2014were organic.",
@@ -4437,7 +4791,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2019, through the Right Now Climate Fund, we have invested in projects across 16 countries, protected and restored 72,600 hectares of land, supported 2,200 species, planted 2.6 million trees, and benefited 2.4 million people with increased access to nature.",
@@ -4461,7 +4817,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Whole Foods Market and Amazon Private Brands achieved 33 of 35 commodities goals and ambitions, including sourcing 100% of Whole Foods Market and Amazon Private Brands beef, cocoa, coffee, and tea from regions of low deforestation risk.",
@@ -4485,7 +4843,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also fell short of our goal to source 100% of Amazon Grocery Private Brands palm oil from regions of low deforestation risk or with full supply chain traceability, achieving 94% compliance in Amazon Private Brands North America.",
@@ -4509,7 +4869,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Whole Foods Market and Amazon Private Brands Europe both achieved 100% compliance.",
@@ -4533,7 +4895,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Together with 20 food and beverage brands, Whole Foods Market and Mad Agriculture launched a wilding pilot in 2025 to plant and maintain 1,000 acres of reconstructed prairie, most of which are on farms that supply ingredients to brands Amazon sells.",
@@ -4557,7 +4921,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The pilot raised $1 million and committed technical support to a coalition of companies investing in biodiversity restoration.",
@@ -4581,7 +4947,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The Right Now Climate Fund is Amazon\u2019s $100 million commitment to restore ecosystems, support biodiversity, and benefit communities where we operate.",
@@ -4605,7 +4973,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The majority of the soy used by Amazon Private Brands North America and Whole Foods Market private brands products comes from domestic sources with minimal deforestation risk.",
@@ -4615,7 +4985,7 @@
       "unit": "percent",
       "timeframe": null,
       "scope": "Amazon Private Brands North America and Whole Foods Market private brands products",
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [
         "vague_commitment"
       ],
@@ -4631,7 +5001,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We did not meet our goal to source 100% deforestation-free soy, but we are committed to continue working toward our ambition.",
@@ -4657,7 +5029,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we gathered data to quantify baseline habitat conversion risk and land use footprints for our four main sourcing businesses\u2014Amazon Private Brands, Print on Demand, Amazon Grocery Private Brands, and Packaging.",
@@ -4681,7 +5055,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2022, Amazon committed to reducing deforestation risks from products containing palm oil, paper, beef, soy, cocoa, coffee, and tea.",
@@ -4707,7 +5083,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At the end of 2025, 4.2 million products recognized by certifications in our Climate Pledge Friendly program were available to customers for purchase in 14 countries, an 86% increase compared to 2024.",
@@ -4731,7 +5109,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "An independent study published in the Harvard Business Review in 2025 found that products with sustainability certifications experienced a 14% increase in consumer demand over an eight-week period following certification \u2014underscoring the momentum behind the program\u2019s expansion.",
@@ -4755,7 +5135,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This study builds on a 2024 study by the Marshall School of Business at the University of Southern California , with Amazon support, which reported a 12.5% increase in overall sales for certified products within the first year.25",
@@ -4779,7 +5161,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Climate Pledge Friendly enables customers to discover products with sustainability features through badging and detailed product information across more than 62 trusted certifications as of the end of 2025.",
@@ -4803,7 +5187,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, five new certifications were added to the Climate Pledge Friendly portfolio, reflecting the program\u2019s intentionally rigorous evaluation and approval process.",
@@ -4827,7 +5213,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Since 2020, 187 million customers switched to Climate Pledge Friendly-badged products, including 43 million in 2025.",
@@ -4851,7 +5239,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Adoption by businesses also expanded, with 93,100 Amazon Business customers implementing preferential buying policies for Climate Pledge Friendly-badged products in 2025, up from 75,200 in 2024.",
@@ -4875,7 +5265,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We added badged products from over 18,000 new selling partners, and expanded the recognized certification portfolio to reflect regional needs and sustainability priorities.",
@@ -4899,7 +5291,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "At the end of 2025, 10% of products purchased by customers in the U.S. included a sustainability feature based on approved Climate Pledge Friendly certifications, and 38% of Amazon Private Brands sales were from products recognized by Climate Pledge Friendly certifications.",
@@ -4923,7 +5317,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In agriculture and food, we added Australian Organic , Aquaculture Stewardship Council , regenagri for regenerative agriculture, and COSMOS Organic for natural and organic cosmetics.",
@@ -4947,7 +5343,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we focused on carbon-free energy procurement, climate finance, and community-based carbon neutralization projects.",
@@ -4971,7 +5369,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This approach helps align our net-zero carbon commitment while upholding our human rights principles.",
@@ -4995,7 +5395,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon supports the Resilient Futures Fund, a private sector initiative that provides capital and targeted support to accelerate solutions that can generate new opportunities, drive economic growth, and foster healthier environments and stronger communities.",
@@ -5019,7 +5421,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We aim to integrate human rights due diligence into our decarbonization efforts, so we can better identify how our shift to a green economy might affect the communities in our value chain and drive positive outcomes.",
@@ -5045,7 +5449,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.08,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, we offered flexible commuter subsidies in 75% of countries where employees live or work, supporting public transit or bicycle commuting.",
@@ -5069,7 +5475,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Commuter Benefits Our commuter benefits reduce transportation costs while supporting environmental sustainability.",
@@ -5095,7 +5503,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.08,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon Devices joined the Clean Electronics Production Network, a multi-stakeholder membership organization with the mission of reducing worker exposure to toxic chemicals in the electronics industry.",
@@ -5105,7 +5515,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Amazon Devices supply chain (electronics)",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 38,
@@ -5119,7 +5529,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We require suppliers to comply with applicable environmental laws and regulations.",
@@ -5143,7 +5555,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon supports supplier decarbonization actions through a procurement training program designed to equip our procurement teams with the tools and knowledge needed to effectively engage suppliers on carbon emissions reductions.",
@@ -5167,7 +5581,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We strive to source products and services that avoid environmental harm.",
@@ -5193,7 +5609,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We also encourage them to engage in efforts that support environmental sustainability and make progress toward reducing effects on the environment within their operations and supply chain.",
@@ -5219,7 +5637,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "This could include reducing consumption of energy and water or generation of greenhouse gas emissions, waste, and hazardous materials.",
@@ -5245,7 +5665,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Whole Foods Market donated 26 million meals of unsold food to over 1,000 food rescue and redistribution programs across the U.S. These efforts reduce waste, support food security, and help build a more sustainable food system.",
@@ -5271,7 +5693,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We share our advanced technology and innovation with local partners to help rapidly restore internet connectivity, power sources, and communication capabilities in the aftermath of disasters.",
@@ -5295,7 +5719,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Our disaster relief tech kits provide connectivity and power to first responders when traditional systems fail during disasters like hurricanes and wildfires.",
@@ -5319,7 +5745,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The Sustainability team reports to the senior leadership team on various aspects of our environmental, sustainability, and other relevant practices on a quarterly basis.",
@@ -5343,7 +5771,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon\u2019s senior leadership team also holds quarterly business reviews with business-level leadership teams to track progress toward meeting our commitments under The Climate Pledge.",
@@ -5367,7 +5797,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon has a Human Rights Officer (HRO) who oversees risk management of human rights and environmental risks to meet regulatory requirements.",
@@ -5377,7 +5809,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Amazon",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 43,
@@ -5391,7 +5823,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Our companywide carbon system of record provides business-level emissions information that allows teams to track decarbonization progress.",
@@ -5401,7 +5835,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "companywide",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 43,
@@ -5415,7 +5849,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Amazon's Sustainability team coordinates efforts across the company to oversee operational changes that help avoid carbon in our business.",
@@ -5442,7 +5878,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.15,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We are working to apply these established frameworks to the supply chains that support AI services, assessing environmental and human rights risks associated with AI-related hardware and services.",
@@ -5468,7 +5906,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We recognize that industry-wide standards for production- side AI effects are still evolving, and we will engage with emerging frameworks, report transparently on our progress, and contribute to greater accountability across the sector.",
@@ -5494,7 +5934,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The development of AI systems depends on physical and human infrastructures that carry environmental and human rights risks\u2014from sourcing rare earth minerals and critical materials for hardware, to energy and water consumption in data centers, to labor conditions for data annotation and content moderation workers whose work underpins model training.",
@@ -5518,7 +5960,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2024, 6% of soy in our European private brands supply chains was verified Deforestation- and Conversion-Free, an increase from 4% in 2023.",
@@ -5542,7 +5986,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In 2025, 10% of soy in our European private brands supply chains was verified Deforestation- and Conversion-Free, an increase from 6% in 2024.E",
@@ -5566,7 +6012,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon Fresh Private Brands joined the Retail Soy Group in Europe.",
@@ -5576,7 +6024,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Amazon Fresh Private Brands",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 47,
@@ -5590,7 +6038,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "By 2025, source Private Brands beef from regions of low deforestation risk or with full supply chain traceability, demonstrating that the products did not contribute to deforestation.",
@@ -5614,7 +6064,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "In Europe, source soy in our grocery and consumable Private Brands supply chains that is deforestation free by 2025, with a cut-off date of 2020.D",
@@ -5638,7 +6090,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By 2025, source Private Brands chocolate bars, chocolate chips, and baking chocolate/powder products that are certified by Rainforest Alliance, Fairtrade International, Fair Trade USA, or other independently verified third-party certifications, such as Cocoa Horizons.",
@@ -5662,7 +6116,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By 2025, source Private Brands packaged bean, ground, instant, and liquid coffee products that are Rainforest Alliance, Fairtrade International, or Fair Trade USA certified. 365 by Whole Foods Market- branded and Whole Foods Market- branded products",
@@ -5686,7 +6142,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "By 2025, source Private Brands bagged tea products based on the tea leaf (Camellia sinensis) certified by Rainforest Alliance, Fairtrade International, or Fair Trade USA. 365 by Whole Foods Market-branded products",
@@ -5710,7 +6168,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon Private Brands Europe did not have tea products in 2024.",
@@ -5734,7 +6194,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "dated_commitment"
+      "evidence_class": "dated_commitment",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "To support the elimination of deforestation associated with raw materials and ingredients within our food and consumables Private Brands supply chains, Amazon has made commitments for the use of palm oil, paper and paper packaging, beef, soy, cocoa, coffee, and tea.",
@@ -5744,7 +6206,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "food and consumables Private Brands supply chains",
-      "falsifiability": 0.6,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 47,
@@ -5758,7 +6220,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.6,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "We continued to work with suppliers to increase the amount of fiber from responsibly managed forests and/or recycled materials used in our paper-based primary packaging.",
@@ -5784,7 +6248,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.2,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We strive to use sustainably sourced fiber in our grocery and consumable Private Brands paper-based primary packaging.",
@@ -5810,7 +6276,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As of the end of 2024, 22% of the pork we sourced came from group housing or crate-free systems.",
@@ -5834,7 +6302,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "As of the end of 2025, 100% of the pork we sourced came from group housing or crate-free systems.",
@@ -5858,7 +6328,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Amazon Private Brands shell eggs sold in Europe were free-range or barn-raised.",
@@ -5868,7 +6340,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Amazon Private Brands shell eggs sold in Europe",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 48,
@@ -5882,7 +6354,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Egg products sold in Whole Foods Market dairy cases in the U.S. go beyond cage-free by meeting the Animal Welfare Standards for Laying Hens",
@@ -5892,7 +6366,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Egg products sold in Whole Foods Market dairy cases in the U.S.",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 48,
@@ -5906,7 +6380,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Canned tuna in grocery and in Whole Foods Market\u2019s own kitchens is traceable to the boats and must be sourced from fisheries that are using one-by-one catch methods and are certified sustainable by the MSC or rated Green or Yellow by the Monterey Bay Aquarium Seafood Watch program.",
@@ -5916,7 +6392,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "canned tuna in grocery and Whole Foods Market\u2019s kitchens",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 49,
@@ -5930,7 +6406,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Polyester in Amazon Private Brands apparel was recycled polyester.",
@@ -5940,7 +6418,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Amazon Private Brands apparel",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 49,
@@ -5954,7 +6432,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Whole Foods Market sells only wild-caught seafood from fisheries that are certified sustainable by the Marine Stewardship Council (MSC) or rated Green or Yellow by the Monterey Bay Aquarium Seafood Watch Program.",
@@ -5964,7 +6444,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Whole Foods Market wild-caught seafood",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 49,
@@ -5978,7 +6458,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "All our farmed seafood is Responsibly Farmed seafood.",
@@ -5988,7 +6470,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "our farmed seafood",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 49,
@@ -6002,7 +6484,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "A Whole Foods Market sells only recycled materials or FSC-certified products.",
@@ -6012,7 +6496,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Whole Foods Market",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 49,
@@ -6026,7 +6510,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "The following certifications or programs are accepted for wild-caught seafood: Marine Stewardship Council; rated Green or Yellow by the Monterey Bay Aquarium Seafood Watch program; or rated A, B, or C in an FIP.",
@@ -6036,7 +6522,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "wild-caught seafood",
-      "falsifiability": 0.8,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 49,
@@ -6050,7 +6536,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.8,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "In 2024, we reported that 90% of our highest-emitting suppliers had decarbonization plans in place, which represented 50% of our carbon emissions. In 2025, we expanded the scope of our top suppliers to include those that represent 70% of our Scope 3 emissions.",
@@ -6074,7 +6562,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "Scopes 1, 3.1, 3.3, and 3.4 include the application of Environmental Attribute Certificates (EACs): 41.2K metric tons of C O 2 e reduction of Scope 1 through Sustainable Aviation Fuel certificates (SAFc) and Renewable Diesel certificates (RD); 23.7K metric tons of C O 2 e reduction in Scope 3.1 through sustainable agricultural certificates; 4.3K metric tons of C O 2 e increase in Scope 3.3 accounting for the full life cycle carbon emissions of Scope 1 SAFc and RD; and 138.8K metric tons of C O 2 e reduction in Scope 3.4 through SAFc and Sustainable Marine Fuel certificates. The net impact from EACs to our emissions is 199.4K M T C O 2 e. Learn more about carbon insets and EACs on Amazon\u2019s Sustainability Exchange",
@@ -6100,7 +6590,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "quantified"
+      "evidence_class": "quantified",
+      "falsifiability_model": 0.95,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "The scope of these metrics includes inbound prep packaging, which includes some plastic, as well as outbound delivery packaging. In Europe, we have eliminated plastic from outbound delivery packaging.",
@@ -6110,7 +6602,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "Europe outbound delivery packaging",
-      "falsifiability": 0.9,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 50,
@@ -6124,7 +6616,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.9,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "At our new delivery station in Elkhart, Indiana, a bioretention pond stores and filters stormwater, increasing on-site carbon sequestration and biodiversity.",
@@ -6134,7 +6628,7 @@
       "unit": null,
       "timeframe": null,
       "scope": "new delivery station in Elkhart, Indiana",
-      "falsifiability": 0.85,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 50,
@@ -6148,7 +6642,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.85,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "In 2025, we began reporting grams carbon dioxide equivalent per dollar of revenue and have updated carbon intensity figures for all years reported (from per dollar of gross merchandise sales) to better align to independent reporting standards. Learn more about how we calculate carbon intensity",
@@ -6158,7 +6654,7 @@
       "unit": "gCO2e/$Revenue",
       "timeframe": null,
       "scope": null,
-      "falsifiability": 0.4,
+      "falsifiability": 0.25,
       "greenwash_patterns": [],
       "verbatim_whitespace_repaired": false,
       "page": 50,
@@ -6172,7 +6668,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.4,
+      "falsifiability_capped": true
     },
     {
       "verbatim": "Through the Right Now Climate Fund, Amazon supports the work of ICLEI South Asia to establish urban food gardens in city schools throughout India, encouraging healthy eating and offering hands-on learning.",
@@ -6196,7 +6694,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.25,
+      "falsifiability_capped": false
     },
     {
       "verbatim": "We work to eliminate unnecessary packaging while optimizing material, weight, and recyclability.",
@@ -6222,7 +6722,9 @@
       "doc_year": 2025,
       "doc_type": "esg",
       "chunk_quality_flag": "ok",
-      "evidence_class": "qualitative"
+      "evidence_class": "qualitative",
+      "falsifiability_model": 0.05,
+      "falsifiability_capped": false
     }
   ]
 }
