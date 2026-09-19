@@ -38,12 +38,12 @@ export default function Companies() {
             {list.map(c => (
               <a className="row" key={c.ticker} href={href.check(c.ticker)} style={{ gridTemplateColumns: '1fr 150px 76px' }}>
                 <div><div className="t">{c.company} <span className="muted">{c.ticker}</span></div><div className="d">{c.n_claims ?? '—'} claims · {c.n_sites ?? '—'} sites · {c.cannot_verify_count ?? 0} can't verify · coverage {pct0(c.coverage)}</div></div>
-                <div style={{ display: 'grid', gap: 4 }}><div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><span className="muted" style={{ fontSize: 10, width: 30 }}>talk</span><Ticks value={(c.talk_score ?? 0) * 100} max={100} n={12} accent /></div><div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><span className="muted" style={{ fontSize: 10, width: 30 }}>walk</span><Ticks value={(c.walk_score ?? 0) * 100} max={100} n={12} /></div></div>
-                <div className="n">{pct0(c.talk_score)} <small>/</small> {pct0(c.walk_score)}</div>
+                <div style={{ display: 'grid', gap: 4 }}><div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><span className="muted" style={{ fontSize: 10, width: 30 }}>talk</span>{c.talk_score == null ? <span className="muted" style={{ fontSize: 11 }}>not scored — no falsifiable claim</span> : <Ticks value={c.talk_score * 100} max={100} n={12} accent />}</div><div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><span className="muted" style={{ fontSize: 10, width: 30 }}>walk</span><Ticks value={(c.walk_score ?? 0) * 100} max={100} n={12} /></div></div>
+                <div className="n">{c.talk_score == null ? '—' : pct0(c.talk_score)} <small>/</small> {pct0(c.walk_score)}</div>
               </a>
             ))}
           </div>
-          <p className="note" style={{ marginTop: 10 }}>Sites are on the globe; click one for its grid. The gap between talk and walk is the story, not a verdict on honesty: annual matching is true under the market-based method.</p>
+          <p className="note" style={{ marginTop: 10 }}>Sites are on the globe; click one for its grid. The gap between talk and walk is the story, not a verdict on honesty: annual matching is true under the market-based method.{list.some(c => c.talk_score == null) && <> {list.filter(c => c.talk_score == null).map(c => c.company).join(', ')} {list.filter(c => c.talk_score == null).length === 1 ? 'is' : 'are'} not plotted: no claim in their documents qualifies or undercuts itself, so there is nothing to score. That is a result, not a zero.</>}</p>
         </Card>
       </>
     )

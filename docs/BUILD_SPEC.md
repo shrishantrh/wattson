@@ -43,10 +43,16 @@ GET  /api/export/{kind}.csv
    (AEC, OVEC, SWPW) point at files that do not exist. `dashboard/` survives by catching the failed
    load. Any new consumer must too. `fixtures/region_no_heatmap.json` exists so the empty state gets
    built rather than discovered live.
-2. **`data/` does not exist on this machine at all**, in any worktree — it is gitignored and was
-   never cloned. The committed exports under `dashboard/public/data/` are the ONLY data here.
-   Nothing can re-run `scripts/`; re-fetching is ~375 MB. Any diff touching
-   `dashboard/public/data/*` was hand-edited and will be rejected at the gate.
+2. **`data/` does not exist on this machine** — it is gitignored and was never cloned, so the
+   committed exports under `dashboard/public/data/` are the only data present.
+   **CORRECTED: an earlier version of this note said the raw data could not be regenerated
+   here. That was wrong and nobody had tested it.** The PUDL parquet sits in a public S3
+   bucket with anonymous access and pulls in under a minute; `scripts/vendor/pudl_fetch.py`
+   already defaults to unsigned. That wrong belief nearly cost us the AZPS investigation,
+   which only happened because an agent tested the assumption instead of accepting it.
+   The narrower claim still holds and is the one the gate runs on: `dashboard/public/data/*`
+   cannot be regenerated *without* that fetch, so any diff against it is hand-edited until
+   someone shows the re-run.
 3. **`zone` vs `pjm_zone`.** New `web/` reads `zone`; frozen `dashboard/` reads `pjm_zone`
    (`Companies.jsx:32`). Every site object ships BOTH keys with identical values. Note that
    `scripts/export_json.py:233` also emits `pjm_zone` — two producers, so they must not disagree.

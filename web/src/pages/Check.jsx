@@ -87,7 +87,7 @@ export default function Check({ route }) {
       ) },
       { id: 'talkwalk', title: 'Talk vs walk', render: () => (
         <>
-          <div className="nums" style={{ marginTop: 0 }}><Num num={(data.talk_score ?? 0) * 100} format={pctFmt} label="talk" sub="how bold the claims are" accent /><Num num={(data.walk_score ?? 0) * 100} format={pctFmt} label="walk" sub="clean share across its sites" /><Num num={(data.coverage ?? 0) * 100} format={pctFmt} label="coverage" sub="claims we could check" /></div>
+          <div className="nums" style={{ marginTop: 0 }}>{data.talk_score == null ? <Num num={null} format={() => '—'} label="talk" sub="no falsifiable claim to score" accent /> : <Num num={data.talk_score * 100} format={pctFmt} label="talk" sub="how bold the claims are" accent />}<Num num={(data.walk_score ?? 0) * 100} format={pctFmt} label="walk" sub="clean share across its sites" /><Num num={(data.coverage ?? 0) * 100} format={pctFmt} label="coverage" sub="claims we could check" /></div>
           <KV rows={[['talk', data.talk_score_method || 'boldness × specificity, 0–1'], ['walk', data.walk_score_method || 'mean physical clean share across mapped sites, grid-only, unweighted']]} />
           <p className="note" style={{ marginTop: 10 }}>Grid-only and average mix: contracted clean power (PPAs, RECs) is not counted, which is why an annual "100% renewable" claim can be true on paper while its sites physically run on much less.</p>
         </>
