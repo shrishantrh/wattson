@@ -98,6 +98,23 @@ Those are chronic level differences, not news. WALC's crossing is dated
 2019-06, the first month of the baseline year, meaning it has been below its
 own 2019 baseline for essentially the entire series.
 
+## Tiers
+
+Each ranked alert carries `tier`, so the UI renders the grouping without
+re-deriving the cut. The boundaries sit on the two largest breaks in the
+severity distribution, not on round numbers.
+
+| Tier | Ranks | Break below | Reading |
+|---|---|---|---|
+| `primary` | 1-6 | **78%** (6 -> 7) — the largest gap anywhere in the ranking | The story |
+| `supporting` | 7-12 | 32% (12 -> 13) | Supporting demand-growth evidence |
+| `chronic` | 13-14 | — | Chronic carbon-free-share tail |
+
+The 78% drop between ranks 6 and 7 is a fact about the data, not a layout
+convenience: the six primary alerts are separated from everything below them
+by a gap four times larger than any other in the top half. Ranks 1-6 are
+ERCO/FWES, ERCO/NRTH, SWPP/OPPD, AZPS, PJM/DOM and TEPC.
+
 ## Data problems found, reported, not fixed
 
 `data/` is absent on every machine in this run, so the pipeline cannot be

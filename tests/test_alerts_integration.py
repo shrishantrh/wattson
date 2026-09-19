@@ -101,3 +101,14 @@ def test_all_six_partial_month_gas_alerts_are_withheld(result):
             if a["withheld_reason"] == "partial_month_2026_09"]
     assert {a["region"] for a in held} == {
         "LDWP", "WALC", "SCEG", "PACW", "AECI", "PNM"}
+
+
+def test_every_ranked_alert_carries_a_tier(result):
+    assert all(a["tier"] in {"primary", "supporting", "chronic"}
+               for a in result["alerts"])
+
+
+def test_tier_counts_match_the_observed_severity_breaks(result):
+    import collections
+    counts = collections.Counter(a["tier"] for a in result["alerts"])
+    assert counts == {"primary": 6, "supporting": 6, "chronic": 2}
