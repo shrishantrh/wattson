@@ -176,5 +176,6 @@ export function useRegionDetails(ids) {
   }, [key])
   return data || {}
 }
-export const nightSeries = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; return g?.cf_share ? ['2019', '2020', '2021', '2022', '2023', '2024', '2025'].map(y => g.cf_share[y]?.overnight ?? null) : null }
+// The engine's corrected 2019 figure replaces the published one where a correction exists (AZPS).
+export const nightSeries = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; if (!g?.cf_share) return null; const corr = (detail?.corrections?.corrections || g?.corrections?.corrections || []).find(x => x.path === 'cf_share.2019'); return ['2019', '2020', '2021', '2022', '2023', '2024', '2025'].map(y => (y === '2019' && corr?.corrected?.overnight != null ? corr.corrected.overnight : g.cf_share[y]?.overnight ?? null)) }
 export const hourProfile = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; return g?.profile_24h?.['2025'] || g?.profile_24h || null }

@@ -86,7 +86,7 @@ Dallas (ERCOT/NCEN). Ranks are reported as they came out.
 
 Validation: DOM 6th, OPPD 7th, AEP 19th, **Dallas 91st**. Dominion's load factor moved
 0.628 to 0.670 (0.590 to 0.617 on raw peak, matching the hand estimate). On a 2019 to
-2026 Jan–Aug basis DOM is 3rd, OPPD 6th, AEP 12th, NCEN 84th.
+2026 Jan–Aug basis DOM is 3rd, OPPD 6th, AEP 12th, NCEN 81st.
 
 **The Dallas miss, and why.** NCEN grew 14%, but the median ERCOT zone grew about 26%,
 so its neighbor divergence is −12: the detector penalizes zones inside a BA that is

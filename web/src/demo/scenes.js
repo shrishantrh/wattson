@@ -2,8 +2,8 @@
 const q = h => new URLSearchParams(h.split('?')[1] || '')
 export const SCENES = [
   { id: 'landing', route: '#/?demo=1', match: h => /^#\/?(\?|$)/.test(h), title: 'Ask' },
-  { id: 'check', route: '#/check/META?demo=1', match: h => h.startsWith('#/check/META') && !q(h).get('evidence'), title: 'Check Meta' },
-  { id: 'check-evidence', route: '#/check/META?evidence=1&demo=1', match: h => h.startsWith('#/check/META') && !!q(h).get('evidence'), title: 'The evidence' },
+  { id: 'check', route: '#/check/GOOGL?demo=1', match: h => h.startsWith('#/check/GOOGL') && !q(h).get('evidence'), title: 'Check Google' },
+  { id: 'check-evidence', route: '#/check/GOOGL?evidence=1&demo=1', match: h => h.startsWith('#/check/GOOGL') && !!q(h).get('evidence'), title: 'Page 4 vs page 94' },
   { id: 'companies', route: '#/companies?demo=1', match: h => h.startsWith('#/companies'), title: 'Four companies' },
   { id: 'compare', route: '#/compare?mw=300&metros=Phoenix%7CNorthern%20Virginia%7COmaha&demo=1', match: h => h.startsWith('#/compare') && !q(h).get('evidence'), title: 'Compare 300 MW' },
   { id: 'compare-evidence', route: '#/compare?mw=300&metros=Phoenix%7CNorthern%20Virginia%7COmaha&evidence=1&demo=1', match: h => h.startsWith('#/compare') && !!q(h).get('evidence'), title: 'Why Omaha' },

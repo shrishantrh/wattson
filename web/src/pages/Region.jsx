@@ -20,12 +20,6 @@ const pctFmt = n => `${n.toFixed(1)}%`
 const mwFmt = n => n0(n)
 const ptsValue = x => (x == null ? '—' : pts1(x).replace(' pts', ''))
 
-// Three grey lines, no spinner: the header's shape before its words arrive.
-function Skeleton() {
-  const line = w => ({ height: 12, width: w, borderRadius: 6, background: 'var(--line)', margin: '10px 0' })
-  return <div aria-busy="true" aria-label="Loading"><div style={line('72%')} /><div style={line('100%')} /><div style={line('46%')} /></div>
-}
-
 function NotFoundState({ label, error }) {
   const avail = (error?.available || []).filter(Boolean)
   return (
@@ -62,7 +56,7 @@ export default function Region({ route }) {
 
   if (loading || error) {
     const title = <><b>{c?.place || label}</b>{c ? ` · ${id.split('/')[0]} grid` : ''}</>
-    return <Shell page="region" globe={globe} column={<Card title={title} onClose={back}>{loading ? <Skeleton /> : error.name === 'NotFound' ? <NotFoundState label={label} error={error} /> : <ErrorState error={error} onRetry={reload} />}</Card>} columnWidth={COLUMN} />
+    return <Shell page="region" globe={globe} column={<Card title={title} onClose={back}>{loading ? <Loading what={label} /> : error.name === 'NotFound' ? <NotFoundState label={label} error={error} /> : <ErrorState error={error} onRetry={reload} />}</Card>} columnWidth={COLUMN} />
   }
 
   const t = regionTitle(data, label)
