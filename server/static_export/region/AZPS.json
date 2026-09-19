@@ -26,9 +26,9 @@
   "cf_inherited_from_ba": false,
   "cf_share": {
    "2019": {
-    "overnight": 0.62,
-    "daytime": 0.651,
-    "all": 0.616
+    "overnight": 0.017,
+    "daytime": 0.167,
+    "all": 0.083
    },
    "2020": {
     "overnight": 0.015,
@@ -68,9 +68,9 @@
   },
   "cf_avg_mw": {
    "2019": {
-    "overnight": 3373.0,
-    "daytime": 3736.0,
-    "all": 3538.0
+    "overnight": 34.7,
+    "daytime": 402.2,
+    "all": 201.1
    },
    "2020": {
     "overnight": 26.0,
@@ -233,7 +233,7 @@
    "score_2026_jan_aug": 7.01
   },
   "fuel_delta_overnight_gw": {
-   "nuclear": -3.61,
+   "nuclear": 0.0,
    "hydro": 0.0,
    "wind": 0.21,
    "solar": -0.01,
@@ -335,12 +335,12 @@
   },
   "siting": {
    "overnight_cf_share_2025": 0.104,
-   "change_since_2019": -0.517,
+   "change_since_2019": 0.087,
    "overnight_clean_mw_over_demand": 0.057,
-   "ratio_2019": 1.145,
-   "ratio_slope_per_year": -0.1105,
-   "siting_score": 0.173,
-   "siting_rank": 49,
+   "ratio_2019": 0.0118,
+   "ratio_slope_per_year": 0.011,
+   "siting_score": 0.449,
+   "siting_rank": 32,
    "n_ranked": 52
   },
   "operators": [
@@ -390,30 +390,30 @@
   "heatmap_uri": "data/heatmaps/AZPS.json",
   "profile_24h": {
    "2019": [
-    0.599,
-    0.609,
-    0.621,
-    0.63,
-    0.634,
-    0.632,
-    0.622,
-    0.615,
-    0.621,
-    0.637,
-    0.651,
-    0.659,
-    0.658,
-    0.653,
-    0.648,
-    0.64,
-    0.626,
-    0.612,
-    0.59,
-    0.569,
-    0.56,
-    0.561,
-    0.57,
-    0.583
+    0.033,
+    0.02,
+    0.011,
+    0.011,
+    0.011,
+    0.01,
+    0.01,
+    0.02,
+    0.064,
+    0.123,
+    0.156,
+    0.172,
+    0.174,
+    0.171,
+    0.168,
+    0.162,
+    0.152,
+    0.133,
+    0.1,
+    0.066,
+    0.049,
+    0.044,
+    0.042,
+    0.039
    ],
    "2025": [
     0.116,
@@ -1205,6 +1205,17 @@
    "published_data_flags": [],
    "published_exclude_from_alerts": false,
    "recommended_handling": "Treat AZPS generation-side history as beginning 2021-01-01, or apply this overlay. Either way stop publishing a decline."
-  }
+  },
+  "corrections_applied_paths": [
+   "cf_share.2019",
+   "cf_avg_mw.2019",
+   "fuel_delta_overnight_gw.nuclear",
+   "siting.change_since_2019",
+   "siting.ratio_slope_per_year",
+   "siting.ratio_2019",
+   "siting.siting_score",
+   "siting.siting_rank",
+   "profile_24h.2019"
+  ]
  }
 }

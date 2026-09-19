@@ -86,7 +86,23 @@ def get_region(region_id: str):
     out["heatmap_available"] = data.heatmap_available(r.get("heatmap_uri"))
     # Known-wrong published values, with corrections and evidence. Served alongside the
     # published numbers, never silently substituted for them.
-    out["corrections"] = data.corrections_for(region_id)
+    corr = data.corrections_for(region_id)
+    out["corrections"] = corr
+    # Apply corrections in place on nested series too. The published values are still
+    # served under `corrections`, so nothing is lost -- but a consumer reading
+    # region.profile_24h["2019"] directly must not get a figure we have already shown,
+    # on the same screen, to be wrong. AZPS was rendering its corrected 2019 share in
+    # the header and its published one in the load-shape module.
+    applied = []
+    for c in ((corr or {}).get("corrections") or []):
+        path, val = c.get("path", ""), c.get("corrected")
+        if "." not in path or val is None:
+            continue
+        field, key = path.split(".", 1)
+        if field in out and isinstance(out[field], dict) and key in out[field]:
+            out[field][key] = val
+            applied.append(path)
+    out["corrections_applied_paths"] = applied or None
     return {"meta": data.public_meta(), "region": out}
 
 

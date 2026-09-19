@@ -899,6 +899,7 @@
    "mapping_note": "hand-mapped"
   },
   "heatmap_available": true,
-  "corrections": null
+  "corrections": null,
+  "corrections_applied_paths": null
  }
 }

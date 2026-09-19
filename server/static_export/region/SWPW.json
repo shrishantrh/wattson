@@ -152,6 +152,7 @@
    "mapping_note": "hand-mapped"
   },
   "heatmap_available": false,
-  "corrections": null
+  "corrections": null,
+  "corrections_applied_paths": null
  }
 }
