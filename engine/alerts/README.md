@@ -6,7 +6,7 @@ ranked shortlist fit for a demo screen.
 ```bash
 source ~/hackmit-venv/bin/activate
 python3 -m engine.alerts          # writes claims/derived/alerts_ranked.json
-python3 -m engine.alerts 15       # optional: a different cap
+python3 -m engine.alerts 20       # optional: a different cap
 python3 -m pytest tests/ -q       # 57 tests
 ```
 
@@ -63,12 +63,40 @@ Applied in order. Every input alert is accounted for in `dropped` plus
 3. `demand_record_high` unless the region is detector top 10 — 42 of 50 dropped
 4. Withheld for data quality — 8 (see below)
 5. Dedupe to the strongest alert per region — 22 dropped
-6. Cap at 20 — 13 dropped
+6. Cap at 14 — 19 dropped
 
 Note on the cap: withholding the 8 bad alerts did **not** shrink the list,
-because the cap is binding. 33 regions remain eligible, so freed slots are
-refilled from the waiting list and `over_limit` simply fell from 17 to 13.
-Changing the shortlist length is a separate decision — pass a limit argument.
+because the cap binds, not the filters. 33 regions remain eligible, so freed
+slots are refilled from the waiting list. Shortlist length is therefore an
+independent editorial decision, not a consequence of filtering.
+
+### Why the cap is 14
+
+The severity distribution has real tiers, and the cut is placed on a gap
+rather than at a round number:
+
+| Break | Drop | Reading |
+|---|---|---|
+| 6 -> 7 | 78% | Top 6 are a distinct tier: the story |
+| 12 -> 13 | 32% | Demand-growth evidence ends, chronic share tail begins |
+| **14 -> 15** | **71%** | **Largest gap in the tail — the cut** |
+| 15 -> 16 | 1.1% | Plateau |
+| 16 -> 17 | 1.4% | Plateau |
+| 17 -> 18 | 1.3% | Plateau |
+
+Ranks 15-18 (WALC, TVA, IPCO, ISNE) sit within 1.4% of each other at
+severities 0.0282 / 0.0279 / 0.0275 / 0.0271. That spread is far smaller than
+the uncertainty in the tuning constants — the 24-month persistence saturation
+and the 3-year recency half-life were both chosen, not fitted. Cutting at 15
+would keep WALC over TVA on a 1.1% margin and present a coin flip as a
+ranking. Cutting at 14 lands on a 71% cliff, so every survivor is separated
+from the next by a real gap.
+
+The tail below the cut is also homogeneous: ranks 15-19 are all
+`cf_share_down_3pts` with crossings in 2019-2020 and streaks of 65-79 months.
+Those are chronic level differences, not news. WALC's crossing is dated
+2019-06, the first month of the baseline year, meaning it has been below its
+own 2019 baseline for essentially the entire series.
 
 ## Data problems found, reported, not fixed
 

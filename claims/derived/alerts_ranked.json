@@ -4,8 +4,8 @@
   "method": "severity = magnitude x persistence x recency. magnitude is the distance past each rule's threshold normalised to that region's own scale; persistence saturates at 24 months; recency decays with a 3-year half-life. Deduplicated to the strongest alert per region. Ranking and filtering only: alert text, thresholds and first_crossed dates are unchanged.",
   "source_alerts_total": 162,
   "source_alerts_active": 105,
-  "limit": 20,
-  "count": 20,
+  "limit": 14,
+  "count": 14,
   "alerts": [
     {
       "region": "ERCO/FWES",
@@ -327,132 +327,6 @@
         "recency": 0.22272467953508485,
         "neutral_applied": []
       }
-    },
-    {
-      "region": "WALC",
-      "rule": "cf_share_down_3pts",
-      "threshold": 0.608,
-      "baseline_2019": 0.638,
-      "unit": "share",
-      "first_crossed": "2019-06",
-      "active": true,
-      "months_active_streak": 76,
-      "latest_month": "2026-08",
-      "current_value": 0.4905151973699186,
-      "name": "Western Area Power Administration - Desert Southwest Region",
-      "description": "Overnight carbon-free share (trailing 12 months) at least 3 points below 2019",
-      "severity": 0.02815918360164984,
-      "severity_factors": {
-        "magnitude": 0.1474848026300814,
-        "persistence": 1.0,
-        "recency": 0.1909293913643304,
-        "neutral_applied": []
-      }
-    },
-    {
-      "region": "TVA",
-      "rule": "cf_share_down_3pts",
-      "threshold": 0.521,
-      "baseline_2019": 0.551,
-      "unit": "share",
-      "first_crossed": "2024-09",
-      "active": true,
-      "months_active_streak": 24,
-      "latest_month": "2026-08",
-      "current_value": 0.5076183258463648,
-      "name": "Tennessee Valley Authority",
-      "description": "Overnight carbon-free share (trailing 12 months) at least 3 points below 2019",
-      "severity": 0.027860030563306305,
-      "severity_factors": {
-        "magnitude": 0.04338167415363525,
-        "persistence": 1.0,
-        "recency": 0.6422073630593558,
-        "neutral_applied": []
-      }
-    },
-    {
-      "region": "IPCO",
-      "rule": "cf_share_down_3pts",
-      "threshold": 0.769,
-      "baseline_2019": 0.799,
-      "unit": "share",
-      "first_crossed": "2020-04",
-      "active": true,
-      "months_active_streak": 65,
-      "latest_month": "2026-08",
-      "current_value": 0.6803281499386165,
-      "name": "Idaho Power Company",
-      "description": "Overnight carbon-free share (trailing 12 months) at least 3 points below 2019",
-      "severity": 0.027468816258045998,
-      "severity_factors": {
-        "magnitude": 0.11867185006138359,
-        "persistence": 1.0,
-        "recency": 0.2314686780718226,
-        "neutral_applied": []
-      }
-    },
-    {
-      "region": "ISNE",
-      "rule": "cf_share_down_3pts",
-      "threshold": 0.475,
-      "baseline_2019": 0.505,
-      "unit": "share",
-      "first_crossed": "2020-06",
-      "active": true,
-      "months_active_streak": 75,
-      "latest_month": "2026-08",
-      "current_value": 0.3922350600108064,
-      "name": "ISO New England Inc.",
-      "description": "Overnight carbon-free share (trailing 12 months) at least 3 points below 2019",
-      "severity": 0.02712627830588497,
-      "severity_factors": {
-        "magnitude": 0.11276493998919362,
-        "persistence": 1.0,
-        "recency": 0.24055595922353623,
-        "neutral_applied": []
-      }
-    },
-    {
-      "region": "PGE",
-      "rule": "cf_share_down_3pts",
-      "threshold": 0.309,
-      "baseline_2019": 0.339,
-      "unit": "share",
-      "first_crossed": "2020-04",
-      "active": true,
-      "months_active_streak": 43,
-      "latest_month": "2026-08",
-      "current_value": 0.2359928781437371,
-      "name": "Portland General Electric Company",
-      "description": "Overnight carbon-free share (trailing 12 months) at least 3 points below 2019",
-      "severity": 0.023842922328052324,
-      "severity_factors": {
-        "magnitude": 0.10300712185626293,
-        "persistence": 1.0,
-        "recency": 0.2314686780718226,
-        "neutral_applied": []
-      }
-    },
-    {
-      "region": "PNM/PNM",
-      "rule": "demand_up_20pct",
-      "threshold": 1053,
-      "baseline_2019": 878,
-      "unit": "MW",
-      "first_crossed": "2025-07",
-      "active": true,
-      "months_active_streak": 14,
-      "latest_month": "2026-08",
-      "current_value": 1096.2800319764037,
-      "name": "PNM System Firm Load",
-      "description": "Overnight demand (trailing 12 months) at least 20% above 2019",
-      "severity": 0.022387447211596634,
-      "severity_factors": {
-        "magnitude": 0.04929388607790858,
-        "persistence": 0.5833333333333334,
-        "recency": 0.7785647265364468,
-        "neutral_applied": []
-      }
     }
   ],
   "withheld_for_review": [
@@ -652,6 +526,6 @@
     "excluded_region": 0,
     "record_high_not_top10": 42,
     "deduped_same_region": 22,
-    "over_limit": 13
+    "over_limit": 19
   }
 }

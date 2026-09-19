@@ -25,7 +25,10 @@ DEFAULT_AS_OF_MONTH = "2026-08"
 
 PERSISTENCE_SATURATION_MONTHS = 24
 RECENCY_HALF_LIFE_YEARS = 3.0
-DEFAULT_LIMIT = 20
+# 14, not 15: the largest gap in the tail is 14 -> 15 (71%), and ranks 15-18
+# sit on a plateau 1.1-1.4% apart. Cutting at 15 would split a four-way tie
+# and present the coin-flip winner as a ranking. See README.
+DEFAULT_LIMIT = 14
 
 DETECTOR_RANK_CUTOFF = 10
 
