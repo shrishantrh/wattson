@@ -20,9 +20,9 @@ const pageFiles = import.meta.glob('./pages/*.jsx')
 const Missing = ({ name }) => <div className="card" style={{ position: 'fixed', left: 22, top: 66, width: 420, zIndex: 60 }}><p className="note">The {name} page is not built yet.</p><a className="btn" href="#/" style={{ marginTop: 10, display: 'inline-block' }}>Back to start</a></div>
 const lazyPage = name => lazy(() => (pageFiles[`./pages/${name}.jsx`] ? pageFiles[`./pages/${name}.jsx`]() : Promise.resolve({ default: () => <Missing name={name} /> })))
 const Film = lazyPage('Film')
-const Screener = lazyPage('Screener'), Explore = lazyPage('Explore'), Alerts = lazyPage('Alerts'), Companies = lazyPage('Companies'), Data = lazyPage('Data'), Irradiance = lazyPage('Irradiance')
+const Screener = lazyPage('Screener'), Explore = lazyPage('Explore'), Alerts = lazyPage('Alerts'), Companies = lazyPage('Companies'), Data = lazyPage('Data'), Irradiance = lazyPage('Irradiance'), Alpha = lazyPage('Alpha')
 
-const PAGES = { landing: Landing, check: Check, compare: Compare, found: Found, region: Region, method: Method, screen: Screener, explore: Explore, alerts: Alerts, companies: Companies, irradiance: Irradiance, data: Data }
+const PAGES = { landing: Landing, check: Check, compare: Compare, found: Found, region: Region, method: Method, screen: Screener, explore: Explore, alerts: Alerts, companies: Companies, irradiance: Irradiance, data: Data, alpha: Alpha }
 
 export default function App() {
   const hash = useHash()

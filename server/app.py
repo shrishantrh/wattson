@@ -454,3 +454,21 @@ def get_ask_status():
     import os
     return {"available": bool(os.environ.get("OPENAI_API_KEY")),
             "model": ask_layer.MODEL, "tools": sorted(ask_layer.TOOLS)}
+
+
+@app.get("/api/alpha")
+def get_alpha():
+    """The chain from a metered grid measurement to a tradable instrument.
+
+    region -> fuel that filled its growth -> serving utility -> parent -> ticker
+    -> the markets where that region's tightness is priced.
+
+    An INPUT to a trade, not a trade. No forecast, no backtest, no
+    recommendation: we have no validation that this signal predicts any price.
+    Every instrument row carries a reason citing a number from our own data.
+
+    The Kalshi snapshot is read from a build-time cache, never fetched here.
+    Kalshi's read API needs no auth, so no secret is involved at any layer.
+    """
+    from engine.alpha import build as alpha_build
+    return alpha_build.build()

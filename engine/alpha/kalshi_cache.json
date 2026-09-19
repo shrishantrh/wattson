@@ -1,0 +1,1050 @@
+{
+ "fetched_at": "2026-09-19T22:58:38+00:00",
+ "source": "https://api.elections.kalshi.com/trade-api/v2",
+ "available": true,
+ "error": null,
+ "series": {
+  "KXTXERCOTPEAK": {
+   "label": "ERCOT annual peak system load",
+   "markets": [
+    {
+     "ticker": "KXTXERCOTPEAK-27JAN01-T93000",
+     "title": "Will integrated system load on the ERCOT grid during 2026 get above 93,000 MW?",
+     "strike": "Above 93,000 MW",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.0400",
+     "last": "0.0300",
+     "close_time": "2027-01-01T06:29:00Z"
+    },
+    {
+     "ticker": "KXTXERCOTPEAK-27JAN01-T92500",
+     "title": "Will integrated system load on the ERCOT grid during 2026 get above 92,500 MW?",
+     "strike": "Above 92,500 MW",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.0400",
+     "last": "0.0300",
+     "close_time": "2027-01-01T06:29:00Z"
+    },
+    {
+     "ticker": "KXTXERCOTPEAK-27JAN01-T91500",
+     "title": "Will integrated system load on the ERCOT grid during 2026 get above 91,500 MW?",
+     "strike": "Above 91,500 MW",
+     "yes_bid": "0.0400",
+     "yes_ask": "0.0500",
+     "last": "0.0500",
+     "close_time": "2027-01-01T06:29:00Z"
+    },
+    {
+     "ticker": "KXTXERCOTPEAK-27JAN01-T98000",
+     "title": "Will integrated system load on the ERCOT grid during 2026 get above 98,000 MW?",
+     "strike": "Above 98,000 MW",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.0300",
+     "last": "0.0200",
+     "close_time": "2027-01-01T06:29:00Z"
+    },
+    {
+     "ticker": "KXTXERCOTPEAK-27JAN01-T96000",
+     "title": "Will integrated system load on the ERCOT grid during 2026 get above 96,000 MW?",
+     "strike": "Above 96,000 MW",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.0300",
+     "last": "0.0200",
+     "close_time": "2027-01-01T06:29:00Z"
+    },
+    {
+     "ticker": "KXTXERCOTPEAK-27JAN01-T94000",
+     "title": "Will integrated system load on the ERCOT grid during 2026 get above 94,000 MW?",
+     "strike": "Above 94,000 MW",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.0400",
+     "last": "0.0300",
+     "close_time": "2027-01-01T06:29:00Z"
+    },
+    {
+     "ticker": "KXTXERCOTPEAK-27JAN01-T92000",
+     "title": "Will integrated system load on the ERCOT grid during 2026 get above 92,000 MW?",
+     "strike": "Above 92,000 MW",
+     "yes_bid": "0.0400",
+     "yes_ask": "0.0500",
+     "last": "0.0400",
+     "close_time": "2027-01-01T06:29:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXNATGASD": {
+   "label": "Henry Hub natural gas, daily settle",
+   "markets": [
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.145",
+     "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.145",
+     "yes_bid": "0.0900",
+     "yes_ask": "0.3500",
+     "last": "0.0800",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.140",
+     "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.140",
+     "yes_bid": "0.1100",
+     "yes_ask": "0.3600",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.135",
+     "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.135",
+     "yes_bid": "0.1000",
+     "yes_ask": "0.3700",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.130",
+     "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.130",
+     "yes_bid": "0.1300",
+     "yes_ask": "0.3900",
+     "last": "0.1100",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.125",
+     "title": "Will the natural gas close price be above 3.125 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.125",
+     "yes_bid": "0.1400",
+     "yes_ask": "0.3800",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.120",
+     "title": "Will the natural gas close price be above 3.120 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.120",
+     "yes_bid": "0.1500",
+     "yes_ask": "0.3900",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.115",
+     "title": "Will the natural gas close price be above 3.115 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.115",
+     "yes_bid": "0.1800",
+     "yes_ask": "0.1900",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.110",
+     "title": "Will the natural gas close price be above 3.110 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.110",
+     "yes_bid": "0.1700",
+     "yes_ask": "0.2000",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.105",
+     "title": "Will the natural gas close price be above 3.105 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.105",
+     "yes_bid": "0.1900",
+     "yes_ask": "0.2100",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.100",
+     "title": "Will the natural gas close price be above 3.100 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.100",
+     "yes_bid": "0.2300",
+     "yes_ask": "0.2400",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.095",
+     "title": "Will the natural gas close price be above 3.095 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.095",
+     "yes_bid": "0.2500",
+     "yes_ask": "0.2600",
+     "last": "0.2100",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.090",
+     "title": "Will the natural gas close price be above 3.090 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.090",
+     "yes_bid": "0.2500",
+     "yes_ask": "0.2700",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.085",
+     "title": "Will the natural gas close price be above 3.085 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.085",
+     "yes_bid": "0.2900",
+     "yes_ask": "0.3000",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.080",
+     "title": "Will the natural gas close price be above 3.080 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.080",
+     "yes_bid": "0.3100",
+     "yes_ask": "0.3200",
+     "last": "0.3400",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.075",
+     "title": "Will the natural gas close price be above 3.075 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.075",
+     "yes_bid": "0.3300",
+     "yes_ask": "0.3400",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.070",
+     "title": "Will the natural gas close price be above 3.070 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.070",
+     "yes_bid": "0.3500",
+     "yes_ask": "0.3700",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.065",
+     "title": "Will the natural gas close price be above 3.065 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.065",
+     "yes_bid": "0.3700",
+     "yes_ask": "0.4000",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.060",
+     "title": "Will the natural gas close price be above 3.060 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.060",
+     "yes_bid": "0.4000",
+     "yes_ask": "0.4300",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.055",
+     "title": "Will the natural gas close price be above 3.055 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.055",
+     "yes_bid": "0.4200",
+     "yes_ask": "0.4600",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.050",
+     "title": "Will the natural gas close price be above 3.050 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.050",
+     "yes_bid": "0.4500",
+     "yes_ask": "0.4900",
+     "last": "0.5100",
+     "close_time": "2026-09-21T21:00:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXNATGASMON": {
+   "label": "Henry Hub natural gas, monthly settle",
+   "markets": [
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.899",
+     "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.899",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.0100",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.799",
+     "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.799",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.0100",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.699",
+     "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.699",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.599",
+     "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.599",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.499",
+     "title": "Will the natural gas close price be above 4.499 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.499",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.399",
+     "title": "Will the natural gas close price be above 4.399 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.399",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.299",
+     "title": "Will the natural gas close price be above 4.299 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.299",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.0400",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.199",
+     "title": "Will the natural gas close price be above 4.199 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.199",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.0400",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.099",
+     "title": "Will the natural gas close price be above 4.099 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.099",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.0400",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.999",
+     "title": "Will the natural gas close price be above 3.999 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.999",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.0300",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.899",
+     "title": "Will the natural gas close price be above 3.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.899",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.0300",
+     "last": "0.0600",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.799",
+     "title": "Will the natural gas close price be above 3.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.799",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.0300",
+     "last": "0.0800",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.699",
+     "title": "Will the natural gas close price be above 3.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.699",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.0300",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.599",
+     "title": "Will the natural gas close price be above 3.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.599",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.0400",
+     "last": "0.0300",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.499",
+     "title": "Will the natural gas close price be above 3.499 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.499",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.0600",
+     "last": "0.0200",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.399",
+     "title": "Will the natural gas close price be above 3.399 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.399",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.0800",
+     "last": "0.0400",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.299",
+     "title": "Will the natural gas close price be above 3.299 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.299",
+     "yes_bid": "0.0800",
+     "yes_ask": "0.1500",
+     "last": "0.1000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.199",
+     "title": "Will the natural gas close price be above 3.199 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.199",
+     "yes_bid": "0.1900",
+     "yes_ask": "0.2600",
+     "last": "0.2000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T3.099",
+     "title": "Will the natural gas close price be above 3.099 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.099",
+     "yes_bid": "0.3400",
+     "yes_ask": "0.4100",
+     "last": "0.3400",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T2.999",
+     "title": "Will the natural gas close price be above 2.999 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $2.999",
+     "yes_bid": "0.5000",
+     "yes_ask": "0.5100",
+     "last": "0.6200",
+     "close_time": "2026-09-30T21:00:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXMARCELLUSGAS": {
+   "label": "Marcellus dry gas production",
+   "markets": [
+    {
+     "ticker": "KXMARCELLUSGAS-27MAR31-T9.00",
+     "title": "Will dry natural gas production from the Marcellus formation for 2026 be above 9.00 Tcf?",
+     "strike": "Above 9.00 Tcf",
+     "yes_bid": "0.9700",
+     "yes_ask": "0.9800",
+     "last": "0.9700",
+     "close_time": "2027-03-31T15:29:00Z"
+    },
+    {
+     "ticker": "KXMARCELLUSGAS-27MAR31-T9.25",
+     "title": "Will dry natural gas production from the Marcellus formation for 2026 be above 9.25 Tcf?",
+     "strike": "Above 9.25 Tcf",
+     "yes_bid": "0.9500",
+     "yes_ask": "0.9600",
+     "last": "0.9500",
+     "close_time": "2027-03-31T15:29:00Z"
+    },
+    {
+     "ticker": "KXMARCELLUSGAS-27MAR31-T9.75",
+     "title": "Will dry natural gas production from the Marcellus formation for 2026 be above 9.75 Tcf?",
+     "strike": "Above 9.75 Tcf",
+     "yes_bid": "0.5900",
+     "yes_ask": "0.6000",
+     "last": "0.6000",
+     "close_time": "2027-03-31T15:29:00Z"
+    },
+    {
+     "ticker": "KXMARCELLUSGAS-27MAR31-T9.50",
+     "title": "Will dry natural gas production from the Marcellus formation for 2026 be above 9.50 Tcf?",
+     "strike": "Above 9.50 Tcf",
+     "yes_bid": "0.8600",
+     "yes_ask": "0.8700",
+     "last": "0.8600",
+     "close_time": "2027-03-31T15:29:00Z"
+    },
+    {
+     "ticker": "KXMARCELLUSGAS-27MAR31-T10.25",
+     "title": "Will dry natural gas production from the Marcellus formation for 2026 be above 10.25 Tcf?",
+     "strike": "Above 10.25 Tcf",
+     "yes_bid": "0.0400",
+     "yes_ask": "0.0500",
+     "last": "0.0500",
+     "close_time": "2027-03-31T15:29:00Z"
+    },
+    {
+     "ticker": "KXMARCELLUSGAS-27MAR31-T10.00",
+     "title": "Will dry natural gas production from the Marcellus formation for 2026 be above 10.00 Tcf?",
+     "strike": "Above 10.00 Tcf",
+     "yes_bid": "0.1600",
+     "yes_ask": "0.1700",
+     "last": "0.1600",
+     "close_time": "2027-03-31T15:29:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXPOWERKWH": {
+   "label": "US average retail electricity price",
+   "markets": [
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T20.4",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
+     "strike": "Above 20.4\u00a2",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    },
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T20.2",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
+     "strike": "Above 20.2\u00a2",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    },
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T20.0",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
+     "strike": "Above 20.0\u00a2",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.1100",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    },
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T19.8",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
+     "strike": "Above 19.8\u00a2",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.1800",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    },
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T19.6",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.6\u00a2?",
+     "strike": "Above 19.6\u00a2",
+     "yes_bid": "0.3100",
+     "yes_ask": "0.5100",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    },
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T19.4",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.4\u00a2?",
+     "strike": "Above 19.4\u00a2",
+     "yes_bid": "0.7600",
+     "yes_ask": "0.9600",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    },
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T19.2",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.2\u00a2?",
+     "strike": "Above 19.2\u00a2",
+     "yes_bid": "0.8800",
+     "yes_ask": "0.9900",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXDATACENTCON": {
+   "label": "US private datacenter construction spending",
+   "markets": [
+    {
+     "ticker": "KXDATACENTCON-26OCT01-T85.0",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
+     "strike": "Above $85.0B",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.9800",
+     "last": "0.0600",
+     "close_time": "2026-10-01T13:59:00Z"
+    },
+    {
+     "ticker": "KXDATACENTCON-26OCT01-T82.5",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
+     "strike": "Above $82.5B",
+     "yes_bid": "0.2100",
+     "yes_ask": "0.3300",
+     "last": "0.2100",
+     "close_time": "2026-10-01T13:59:00Z"
+    },
+    {
+     "ticker": "KXDATACENTCON-26OCT01-T80.0",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
+     "strike": "Above $80.0B",
+     "yes_bid": "0.1500",
+     "yes_ask": "0.4700",
+     "last": "0.4000",
+     "close_time": "2026-10-01T13:59:00Z"
+    },
+    {
+     "ticker": "KXDATACENTCON-26OCT01-T77.5",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
+     "strike": "Above $77.5B",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2026-10-01T13:59:00Z"
+    },
+    {
+     "ticker": "KXDATACENTCON-26OCT01-T75.0",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $75.0B?",
+     "strike": "Above $75.0B",
+     "yes_bid": "0.0500",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2026-10-01T13:59:00Z"
+    },
+    {
+     "ticker": "KXDATACENTCON-26OCT01-T72.5",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $72.5B?",
+     "strike": "Above $72.5B",
+     "yes_bid": "0.9100",
+     "yes_ask": "0.9900",
+     "last": "0.9500",
+     "close_time": "2026-10-01T13:59:00Z"
+    },
+    {
+     "ticker": "KXDATACENTCON-26OCT01-T70.0",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $70.0B?",
+     "strike": "Above $70.0B",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.9900",
+     "last": "0.9200",
+     "close_time": "2026-10-01T13:59:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXUSADATACENTERS": {
+   "label": "Number of US datacenters",
+   "markets": [
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T6000",
+     "title": "Will the United States have at least 6,000 data centers listed in 2026?",
+     "strike": "At least 6,000",
+     "yes_bid": "0.1200",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5900",
+     "title": "Will the United States have at least 5,900 data centers listed in 2026?",
+     "strike": "At least 5,900",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5800",
+     "title": "Will the United States have at least 5,800 data centers listed in 2026?",
+     "strike": "At least 5,800",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.9700",
+     "last": "0.0000",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5700",
+     "title": "Will the United States have at least 5,700 data centers listed in 2026?",
+     "strike": "At least 5,700",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5600",
+     "title": "Will the United States have at least 5,600 data centers listed in 2026?",
+     "strike": "At least 5,600",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5500",
+     "title": "Will the United States have at least 5,500 data centers listed in 2026?",
+     "strike": "At least 5,500",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.4300",
+     "last": "0.3900",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5400",
+     "title": "Will the United States have at least 5,400 data centers listed in 2026?",
+     "strike": "At least 5,400",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.7500",
+     "last": "0.5600",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5300",
+     "title": "Will the United States have at least 5,300 data centers listed in 2026?",
+     "strike": "At least 5,300",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.7500",
+     "last": "0.6100",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5200",
+     "title": "Will the United States have at least 5,200 data centers listed in 2026?",
+     "strike": "At least 5,200",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.9800",
+     "last": "0.6900",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5100",
+     "title": "Will the United States have at least 5,100 data centers listed in 2026?",
+     "strike": "At least 5,100",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.9700",
+     "last": "0.8300",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T5000",
+     "title": "Will the United States have at least 5,000 data centers listed in 2026?",
+     "strike": "At least 5,000",
+     "yes_bid": "0.1400",
+     "yes_ask": "0.9800",
+     "last": "0.9500",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T4900",
+     "title": "Will the United States have at least 4,900 data centers listed in 2026?",
+     "strike": "At least 4,900",
+     "yes_bid": "0.1100",
+     "yes_ask": "0.9900",
+     "last": "0.9900",
+     "close_time": "2027-01-07T15:00:00Z"
+    },
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T4800",
+     "title": "Will the United States have at least 4,800 data centers listed in 2026?",
+     "strike": "At least 4,800",
+     "yes_bid": "0.9600",
+     "yes_ask": "0.9900",
+     "last": "0.9500",
+     "close_time": "2027-01-07T15:00:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXRATEPAYERLAW": {
+   "label": "Federal datacenter power-cost standards",
+   "markets": [
+    {
+     "ticker": "KXRATEPAYERLAW-26SEP-YES",
+     "title": "Will data center power-cost standards become law?",
+     "strike": "Yes",
+     "yes_bid": "0.0800",
+     "yes_ask": "0.1500",
+     "last": "0.1400",
+     "close_time": "2027-01-01T04:59:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXTLNA": {
+   "label": "Talen Energy annual generation",
+   "markets": [
+    {
+     "ticker": "KXTLNA-27FEBGEN-66",
+     "title": "Will Talen Energy Corporation report above 66 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 66 TWh",
+     "yes_bid": "0.0000",
+     "yes_ask": "1.0000",
+     "last": "0.0000",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-65",
+     "title": "Will Talen Energy Corporation report above 65 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 65 TWh",
+     "yes_bid": "0.0000",
+     "yes_ask": "1.0000",
+     "last": "0.0000",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-64",
+     "title": "Will Talen Energy Corporation report above 64 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 64 TWh",
+     "yes_bid": "0.0000",
+     "yes_ask": "1.0000",
+     "last": "0.2200",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-63",
+     "title": "Will Talen Energy Corporation report above 63 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 63 TWh",
+     "yes_bid": "0.0000",
+     "yes_ask": "1.0000",
+     "last": "0.5000",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-62",
+     "title": "Will Talen Energy Corporation report above 62 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 62 TWh",
+     "yes_bid": "0.2000",
+     "yes_ask": "1.0000",
+     "last": "0.2800",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-61",
+     "title": "Will Talen Energy Corporation report above 61 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 61 TWh",
+     "yes_bid": "0.2200",
+     "yes_ask": "1.0000",
+     "last": "0.6900",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-60",
+     "title": "Will Talen Energy Corporation report above 60 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 60 TWh",
+     "yes_bid": "0.2600",
+     "yes_ask": "1.0000",
+     "last": "0.6600",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-59",
+     "title": "Will Talen Energy Corporation report above 59 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 59 TWh",
+     "yes_bid": "0.3000",
+     "yes_ask": "1.0000",
+     "last": "0.0000",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-58",
+     "title": "Will Talen Energy Corporation report above 58 total generation (twh) in fiscal 2026?",
+     "strike": "Above 58 TWh",
+     "yes_bid": "0.3500",
+     "yes_ask": "0.9000",
+     "last": "0.8100",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-57",
+     "title": "Will Talen Energy Corporation report above 57 total generation (twh) in fiscal 2026?",
+     "strike": "Above 57 TWh",
+     "yes_bid": "0.4600",
+     "yes_ask": "0.9900",
+     "last": "0.0000",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-56",
+     "title": "Will Talen Energy Corporation report above 56 total generation (twh) in fiscal 2026?",
+     "strike": "Above 56 TWh",
+     "yes_bid": "0.5700",
+     "yes_ask": "0.9900",
+     "last": "0.8500",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-55",
+     "title": "Will Talen Energy Corporation report above 55 total generation (twh) in fiscal 2026?",
+     "strike": "Above 55 TWh",
+     "yes_bid": "0.6700",
+     "yes_ask": "0.9900",
+     "last": "0.0000",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-54",
+     "title": "Will Talen Energy Corporation report above 54 total generation (twh) in fiscal 2026?",
+     "strike": "Above 54 TWh",
+     "yes_bid": "0.6500",
+     "yes_ask": "0.9900",
+     "last": "0.0000",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-53",
+     "title": "Will Talen Energy Corporation report Above 53 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 53 TWh",
+     "yes_bid": "0.9400",
+     "yes_ask": "0.9900",
+     "last": "0.9100",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-52",
+     "title": "Will Talen Energy Corporation report Above 52 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 52 TWh",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.9900",
+     "last": "0.9200",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-51",
+     "title": "Will Talen Energy Corporation report Above 51 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 51 TWh",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.9900",
+     "last": "0.9200",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-50",
+     "title": "Will Talen Energy Corporation report Above 50 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 50 TWh",
+     "yes_bid": "0.9400",
+     "yes_ask": "0.9900",
+     "last": "0.9900",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-49",
+     "title": "Will Talen Energy Corporation report Above 49 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 49 TWh",
+     "yes_bid": "0.9200",
+     "yes_ask": "0.9900",
+     "last": "0.9300",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-48",
+     "title": "Will Talen Energy Corporation report Above 48 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 48 TWh",
+     "yes_bid": "0.9300",
+     "yes_ask": "0.9900",
+     "last": "0.9400",
+     "close_time": "2027-05-02T05:00:00Z"
+    },
+    {
+     "ticker": "KXTLNA-27FEBGEN-47",
+     "title": "Will Talen Energy Corporation report Above 47 TWh total generation (twh) in fiscal 2026?",
+     "strike": "Above 47 TWh",
+     "yes_bid": "0.9400",
+     "yes_ask": "0.9900",
+     "last": "0.9500",
+     "close_time": "2027-05-02T05:00:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXILNUCLEAR": {
+   "label": "Illinois nuclear generation",
+   "markets": [
+    {
+     "ticker": "KXILNUCLEAR-27FEB28-T102.5",
+     "title": "Will Illinois utility-scale net electricity generation from nuclear energy for 2026 be above 102.5 TWh?",
+     "strike": "Above 102.5 TWh",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.0300",
+     "last": "0.0300",
+     "close_time": "2027-02-28T14:59:00Z"
+    },
+    {
+     "ticker": "KXILNUCLEAR-27FEB28-T87.5",
+     "title": "Will Illinois utility-scale net electricity generation from nuclear energy for 2026 be above 87.5 TWh?",
+     "strike": "Above 87.5 TWh",
+     "yes_bid": "0.9600",
+     "yes_ask": "0.9700",
+     "last": "0.9700",
+     "close_time": "2027-02-28T14:59:00Z"
+    },
+    {
+     "ticker": "KXILNUCLEAR-27FEB28-T90.0",
+     "title": "Will Illinois utility-scale net electricity generation from nuclear energy for 2026 be above 90.0 TWh?",
+     "strike": "Above 90.0 TWh",
+     "yes_bid": "0.9500",
+     "yes_ask": "0.9600",
+     "last": "0.9500",
+     "close_time": "2027-02-28T14:59:00Z"
+    },
+    {
+     "ticker": "KXILNUCLEAR-27FEB28-T97.5",
+     "title": "Will Illinois utility-scale net electricity generation from nuclear energy for 2026 be above 97.5 TWh?",
+     "strike": "Above 97.5 TWh",
+     "yes_bid": "0.5500",
+     "yes_ask": "0.5600",
+     "last": "0.4800",
+     "close_time": "2027-02-28T14:59:00Z"
+    },
+    {
+     "ticker": "KXILNUCLEAR-27FEB28-T95.0",
+     "title": "Will Illinois utility-scale net electricity generation from nuclear energy for 2026 be above 95.0 TWh?",
+     "strike": "Above 95.0 TWh",
+     "yes_bid": "0.8500",
+     "yes_ask": "0.8600",
+     "last": "0.8600",
+     "close_time": "2027-02-28T14:59:00Z"
+    },
+    {
+     "ticker": "KXILNUCLEAR-27FEB28-T92.5",
+     "title": "Will Illinois utility-scale net electricity generation from nuclear energy for 2026 be above 92.5 TWh?",
+     "strike": "Above 92.5 TWh",
+     "yes_bid": "0.9400",
+     "yes_ask": "0.9500",
+     "last": "0.9400",
+     "close_time": "2027-02-28T14:59:00Z"
+    },
+    {
+     "ticker": "KXILNUCLEAR-27FEB28-T100.0",
+     "title": "Will Illinois utility-scale net electricity generation from nuclear energy for 2026 be above 100.0 TWh?",
+     "strike": "Above 100.0 TWh",
+     "yes_bid": "0.0900",
+     "yes_ask": "0.1000",
+     "last": "0.1000",
+     "close_time": "2027-02-28T14:59:00Z"
+    }
+   ],
+   "error": null
+  },
+  "KXUTILITYPJMWEST": {
+   "label": "PJM West electricity prices",
+   "markets": [],
+   "error": null
+  },
+  "KXERCOTX": {
+   "label": "Texas share of electricity from renewables",
+   "markets": [],
+   "error": null
+  }
+ }
+}
