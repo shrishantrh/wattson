@@ -12,7 +12,7 @@ import { href } from '../../router.js'
 // accounting, and this is where the power comes from. No chart; two numbers and a sentence.
 const shortName = c => COMPANIES.find(x => x.ticker === c?.ticker)?.name || c?.company || c?.ticker || 'the company'
 const shortMetro = m => String(m || '').replace(/\s*\([^)]*\)/g, '').split(',')[0].trim() || 'this site'
-const pct1 = n => `${n.toFixed(1)}%`
+const pct1 = n => (n == null || Number.isNaN(Number(n)) ? '—' : `${Number(n).toFixed(1)}%`)
 const range = (s, d = 0) => (s?.n ? (s.min === s.max ? pct(s.min, d) : `${pct(s.min, d)}–${pct(s.max, d)}`) : '—')
 
 export default function RelocateModule({ company }) {
