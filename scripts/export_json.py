@@ -196,6 +196,9 @@ def main():
                     "Detector flags flat 24/7 load in general (datacenters, crypto mining, oilfield electrification); language is 'consistent with'."],
         "data_flags": DATA_FLAGS,
     }
+    us_share, us_mw, us_tot = cf_block("US")
+    meta["national"] = {"cf_share": us_share, "cf_avg_mw": us_mw, "total_avg_mw": us_tot, "trailing12": trailing("US"),
+                        "note": "Sum of per-BA averages over all reporting BAs; consistent with EIA's published mix."}
     (OUT / "regions.json").write_text(json.dumps({"meta": meta, "regions": regions}, indent=None))
     print(f"regions.json: {len(regions)} regions ({sum(1 for x in regions if x['type']=='zone')} zones)")
 

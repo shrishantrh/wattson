@@ -15,7 +15,7 @@ their facilities draw from. The spec is [docs/spec.md](docs/spec.md).
 | PJM overnight clean generation, avg MW | 35,700 | 35,619 |
 | PJM overnight total generation, avg MW | 82,539 | 91,240 |
 | PJM overnight carbon-free share | 0.433 | 0.390 |
-| PJM overnight net export, avg MW | 3,821 | 2,490 |
+| PJM overnight net export, avg MW | 3,814 | 2,489 |
 | Dominion (N. Virginia) zone overnight demand, avg MW | 10,060 | 14,033 |
 
 Overnight is 00:00–05:59 local time; daytime is 10:00–15:59. Baseline year is 2019.
