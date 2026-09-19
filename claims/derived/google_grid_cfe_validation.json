@@ -1,0 +1,91 @@
+{
+  "what": "Wattson 2025 all-hours carbon-free share vs Google's published 2025 Grid CFE, by balancing authority",
+  "google_source": {
+    "document": "Google 2026 Environmental Report",
+    "page": 94,
+    "table": "Data center grid region CFE",
+    "column": "Grid CFE",
+    "url": "https://sustainability.google/files/google-2026-environmental-report.pdf"
+  },
+  "comparisons": [
+    {
+      "ba": "BPAT",
+      "google_grid_cfe_pct": 84,
+      "wattson_cf_share_pct": 91.3,
+      "difference_pts": 7.3
+    },
+    {
+      "ba": "DUK",
+      "google_grid_cfe_pct": 57,
+      "wattson_cf_share_pct": 57.5,
+      "difference_pts": 0.5
+    },
+    {
+      "ba": "ERCO",
+      "google_grid_cfe_pct": 46,
+      "wattson_cf_share_pct": 46.1,
+      "difference_pts": 0.1
+    },
+    {
+      "ba": "MISO",
+      "google_grid_cfe_pct": 36,
+      "wattson_cf_share_pct": 34.9,
+      "difference_pts": -1.1
+    },
+    {
+      "ba": "NEVP",
+      "google_grid_cfe_pct": 32,
+      "wattson_cf_share_pct": 25.8,
+      "difference_pts": -6.2
+    },
+    {
+      "ba": "PJM",
+      "google_grid_cfe_pct": 40,
+      "wattson_cf_share_pct": 39.3,
+      "difference_pts": -0.7
+    },
+    {
+      "ba": "SC",
+      "google_grid_cfe_pct": 25,
+      "wattson_cf_share_pct": 5.6,
+      "difference_pts": -19.4
+    },
+    {
+      "ba": "SOCO",
+      "google_grid_cfe_pct": 33,
+      "wattson_cf_share_pct": 32.5,
+      "difference_pts": -0.5
+    },
+    {
+      "ba": "SRP",
+      "google_grid_cfe_pct": 56,
+      "wattson_cf_share_pct": 59.9,
+      "difference_pts": 3.9
+    },
+    {
+      "ba": "SWPP",
+      "google_grid_cfe_pct": 47,
+      "wattson_cf_share_pct": 45.6,
+      "difference_pts": -1.4
+    },
+    {
+      "ba": "TVA",
+      "google_grid_cfe_pct": 47,
+      "wattson_cf_share_pct": 48.7,
+      "difference_pts": 1.7
+    }
+  ],
+  "summary": {
+    "n": 11,
+    "within_2_points": 7,
+    "median_difference_pts": -0.5,
+    "mean_difference_pts": -1.4
+  },
+  "interpretation": "7 of 11 balancing authorities agree within 2 percentage points, median difference -0.5 pts. Two independent calculations of the same physical quantity land in the same place, which is meaningful external validation of the index.",
+  "outliers_are_questions_not_errors": {
+    "SC": "We read SC as Santee Cooper alone; Google's 'South Carolina Regional Grid' likely aggregates SC with SCEG. A footprint definition mismatch, not necessarily an error on either side.",
+    "BPAT": "Ours is 7 pts higher. BPA is overwhelmingly hydro and the treatment of hydro and of imports may differ.",
+    "NEVP": "Ours is 6 pts lower. Unexplained; worth a look."
+  },
+  "caveat": "Google's regional definitions and methodology are its own. Close agreement is strong evidence; a gap is a question."
+}

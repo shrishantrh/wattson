@@ -8,6 +8,7 @@ import pathlib
 import re
 
 from engine.contradict.crossdoc import find_cross_doc
+from engine.contradict.hourly import find_disclosed_hourly_cfe
 from engine.contradict.detect import build_report
 
 RAW = pathlib.Path("claims/raw")
@@ -18,7 +19,7 @@ TICKERS = ("META", "MSFT", "GOOGL", "AMZN")
 # A self-consistent re-extraction cannot catch a systematic extraction bias,
 # which is exactly how the column-splicing bug survived the first audit.
 VERIFIED_PAGES = {("META", 18), ("MSFT", 6),
-                  ("GOOGL", 4), ("GOOGL", 19), ("GOOGL", 28)}
+                  ("GOOGL", 4), ("GOOGL", 19), ("GOOGL", 28), ("GOOGL", 94)}
 
 # Pattern 1 from the brief -- a near-zero market-based Scope 2 alongside a large
 # location-based Scope 2 -- is NOT implemented as a detector. The figures live in
@@ -61,6 +62,12 @@ def main():
               for tk in TICKERS}
     report = build_report(corpus)
 
+    # A disclosed hourly CFE figure beside the annual claim, both the
+    # company's own numbers. No inference at all, so it leads.
+    for tk in TICKERS:
+        for f in find_disclosed_hourly_cfe(tk, corpus[tk]):
+            report[tk]["findings"].insert(0, f)
+
     # Cross-document: the ESG brochure against the 10-K filed under liability.
     for tk in TICKERS:
         tenk_path = RAW / f"{tk}_10k.jsonl"
@@ -82,13 +89,14 @@ def main():
     for tk, block in report.items():
         for f in block["findings"]:
             for side in ("claim", "counterpoint"):
-                if f.get(side):
+                # A tabular counterpoint carries parsed values, not a quote.
+                if f.get(side) and "quote" in f[side]:
                     f[side]["quote"] = clean(f[side]["quote"])
             f["note"] = clean(f["note"])
             f["evidence"]["note"] = f["note"]
 
             pages = {f["claim"]["page"]}
-            if f["counterpoint"] and f["counterpoint"]["page"] is not None:
+            if f["counterpoint"] and f["counterpoint"].get("page") is not None:
                 pages.add(f["counterpoint"]["page"])
             ok = all((tk, p) in VERIFIED_PAGES for p in pages if p is not None)
             f["verification"] = {

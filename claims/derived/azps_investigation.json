@@ -1,0 +1,133 @@
+{
+  "region": "AZPS",
+  "question": "Is the 0.62 -> 0.104 overnight carbon-free collapse real?",
+  "answer": "No. It is an artefact of removing generation that AZPS and SRP were both reporting. The 2019 baseline was inflated; the 2025 figure is the sound one.",
+  "break": {
+    "fuel": "nuclear",
+    "last_hour_with_generation_utc": "2019-12-04 07:00:00",
+    "last_value_mw": 3974,
+    "detected_step_date": "2019-12-05",
+    "level_before_mw": 3180,
+    "then": "reported as missing (NaN) until 2021-05, then as literal zero from 2021-05 onwards",
+    "shape": "step change on a single date, not a decline"
+  },
+  "duplication_evidence": {
+    "hours_both_reported_2019": 7976,
+    "correlation": 0.994765,
+    "mean_abs_difference_mw": 2.82,
+    "share_of_hours_within_5mw": 0.9878,
+    "azps_mean_mw": 3619,
+    "srp_mean_mw": 3622,
+    "combined_before_mw": 7087,
+    "combined_after_mw": 3637,
+    "palo_verde_nameplate_mw": 3937
+  },
+  "overnight_by_year": {
+    "2015": {
+      "clean_mw": 0.0,
+      "total_mw": 0.0,
+      "cf_share": null,
+      "cf_share_excluding_nuclear": null
+    },
+    "2016": {
+      "clean_mw": 0.0,
+      "total_mw": 0.0,
+      "cf_share": null,
+      "cf_share_excluding_nuclear": null
+    },
+    "2017": {
+      "clean_mw": 0.0,
+      "total_mw": 0.0,
+      "cf_share": null,
+      "cf_share_excluding_nuclear": null
+    },
+    "2018": {
+      "clean_mw": 1746.7,
+      "total_mw": 2957.9,
+      "cf_share": 0.591,
+      "cf_share_excluding_nuclear": 0.01
+    },
+    "2019": {
+      "clean_mw": 3371.6,
+      "total_mw": 5433.9,
+      "cf_share": 0.62,
+      "cf_share_excluding_nuclear": 0.017
+    },
+    "2020": {
+      "clean_mw": 25.9,
+      "total_mw": 1776.0,
+      "cf_share": 0.015,
+      "cf_share_excluding_nuclear": 0.015
+    },
+    "2021": {
+      "clean_mw": 69.6,
+      "total_mw": 1903.9,
+      "cf_share": 0.037,
+      "cf_share_excluding_nuclear": 0.037
+    },
+    "2022": {
+      "clean_mw": 147.1,
+      "total_mw": 2179.5,
+      "cf_share": 0.067,
+      "cf_share_excluding_nuclear": 0.067
+    },
+    "2023": {
+      "clean_mw": 216.8,
+      "total_mw": 2130.6,
+      "cf_share": 0.102,
+      "cf_share_excluding_nuclear": 0.102
+    },
+    "2024": {
+      "clean_mw": 265.5,
+      "total_mw": 2272.8,
+      "cf_share": 0.117,
+      "cf_share_excluding_nuclear": 0.117
+    },
+    "2025": {
+      "clean_mw": 239.1,
+      "total_mw": 2382.7,
+      "cf_share": 0.1,
+      "cf_share_excluding_nuclear": 0.1
+    },
+    "2026": {
+      "clean_mw": 427.9,
+      "total_mw": 2666.7,
+      "cf_share": 0.16,
+      "cf_share_excluding_nuclear": 0.16
+    }
+  },
+  "other_azps_fuels": {
+    "coal": "dips to ~100 MW in early 2020 and recovers to ~970 MW by June 2020; continues to 2026. Operational variation plus the Navajo Generating Station closure, not a reporting break.",
+    "gas": "continuous throughout, no step."
+  },
+  "wacm": {
+    "same_signature": false,
+    "generation_step_breaks": {
+      "coal": null,
+      "gas": "2019-05-02",
+      "hydro": "2024-07-02",
+      "hydro_excluding_pumped_storage": null,
+      "solar": "2024-07-02",
+      "solar_wo_integrated_battery_storage": null,
+      "wind": "2024-07-02",
+      "wind_wo_integrated_battery_storage": null
+    },
+    "note": "WACM's anomaly is demand-side and gradual: demand rises from ~2,300 MW (2021) to ~4,000 MW (Dec 2022) over about six months, with generation rising and exports falling from ~1,400 MW to ~400 MW. A ramp, not a step. Different mechanism from AZPS; it remains unexplained."
+  },
+  "note_on_2024_07_02": "Step breaks appear in solar/wind/hydro for many BAs on 2024-07-02. That is the EIA fuel-category split (solar -> solar_wo_integrated_battery_storage etc). scripts/carbon_free_index.py already sums both parent and child categories, so published shares are NOT affected. Checked, not assumed.",
+  "confidence": {
+    "proven": [
+      "AZPS and SRP reported the same physical generation hour by hour through 2019: correlation 0.995, identical within 5 MW in 98.8% of hours.",
+      "Their combined reported output (~7,090 MW) is about 1.8x the nameplate of the plant (3,937 MW), so it cannot all be real.",
+      "The AZPS series ends in a step on one date, not a decline."
+    ],
+    "high_confidence_inference": [
+      "The plant is Palo Verde: it is the only nuclear station in Arizona, the magnitude matches its nameplate, and the profile is flat across all hours. Not confirmed against plant-level EIA-860 data.",
+      "EIA corrected the attribution so the plant counts once, under SRP. The internal reason is not visible in this dataset."
+    ],
+    "not_established": [
+      "Why the correction happened on that particular date.",
+      "Why the series was missing for 17 months before becoming zero."
+    ]
+  }
+}
