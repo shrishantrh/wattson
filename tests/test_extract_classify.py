@@ -52,3 +52,40 @@ def test_summary_counts_every_class():
 def test_a_magnitude_with_no_unit_still_counts_as_quantified():
     """'27 owned data center locations' has a number and no unit."""
     assert C.evidence_class(claim(magnitude=27.0, metric="locations")) == "quantified"
+
+
+# --- multi-number claims ---------------------------------------------------
+
+def test_claim_with_two_numbers_is_still_quantified():
+    """The model leaves `magnitude` null when a claim carries more than one
+    number, which silently misfiled real targets as qualitative."""
+    c = claim(verbatim="Restore 200% of the water we consume in high water "
+                       "stress regions and 100% in medium stress regions.")
+    assert C.evidence_class(c) == "quantified"
+
+
+def test_a_bare_year_is_not_a_quantity():
+    c = claim(verbatim="In 2022, Amazon committed to reducing deforestation "
+                       "risks from products containing palm oil and soy.")
+    assert C.evidence_class(c) == "qualitative"
+
+
+def test_percentages_in_prose_count_as_quantities():
+    c = claim(verbatim="Select Kindle Scribe models featured 100% recycled "
+                       "cobalt in batteries and 85% recycled tin.")
+    assert C.evidence_class(c) == "quantified"
+
+
+def test_a_year_plus_a_real_quantity_is_quantified():
+    c = claim(verbatim="In 2025 we delivered 131,000 GWh of carbon-free energy.")
+    assert C.evidence_class(c) == "quantified"
+
+
+def test_explicit_magnitude_still_wins():
+    assert C.evidence_class(claim(magnitude=5.0, verbatim="no digits here")) == "quantified"
+
+
+def test_timeframe_only_claim_stays_a_dated_commitment():
+    c = claim(verbatim="We will reach this goal by the end of the decade.",
+              timeframe="end of the decade")
+    assert C.evidence_class(c) == "dated_commitment"

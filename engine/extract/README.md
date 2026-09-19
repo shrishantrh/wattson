@@ -122,6 +122,87 @@ offered beside it, computed from the model's own fields:
 on falsifiability alone would put "we announced an agreement" level with "62% of
 electricity from carbon-free sources".
 
+## The guards were tested against a clean corpus
+
+The first run used a corpus that was still column-spliced. D1 then replaced the
+PDF extractor with PyMuPDF and regenerated everything. **Chunk counts were
+identical at 309, so matching counts proved nothing** — the text changed
+underneath. Re-running the same code over both is a direct test of whether the
+guards detect real corruption or just fire on hard text.
+
+Same 309 ESG chunks, same model, same code:
+
+| | spliced corpus | clean corpus |
+|---|---|---|
+| gated out (mechanical) | 36 | 20 |
+| flagged illegible by the model | **52** | **16** |
+| claims extracted | 1,179 | 1,305 |
+
+The legibility guard fell by 69% and claim yield rose 11%, which is what you
+would expect if splicing was both triggering the guard and suppressing real
+claims. The 16 that remain were checked by hand and are genuine: seven are
+still column splices, seven are navigation rails flattened into the text
+(`Overview Progress Appendix Climate and Energy Water Waste...` repeated on
+AMZN pages 14, 15, 24, 36), two are truncated. **No false positives found.**
+
+## A bug this found in our own classifier
+
+The model returns `magnitude: null` whenever a claim carries more than one
+number. `evidence_class` keyed on `magnitude`, so real quantitative targets
+were being filed as `qualitative`:
+
+> "Restore 200% of the water we consume in high water stress regions and 100%
+> of the water we consume in medium water stress regions."
+
+30% of claims classed `qualitative` contained a numeral. A bare digit test
+over-corrects, because a year is not a quantity — "In 2022, Amazon committed
+to reducing deforestation risks" promises nothing measurable. Years are
+therefore stripped before looking for a number. That recovered **186 real
+quantified claims** (655 -> 841) without touching a single score.
+
+## Residual anchor non-compliance, reported not fixed
+
+After the anchor author added a fifth low anchor and a fourth edge rule for
+activity statements, META claims scoring >=0.8 with neither a number nor a date
+fell from **37 of 124 (30%) to 21 of 143 (15%)**. Halved, not eliminated:
+
+> "The selected mix has been poured in our newest data centers, including in
+> slab-on-grade applications..." — still 0.90, against an anchor that says
+> score at or below 0.25.
+
+The anchor is working and the model still overshoots on some activity
+statements. This is reported rather than patched, for the same reason as
+before: calibration belongs to the anchor author, and `evidence_class` already
+gives the demo a structural filter that does not depend on the score.
+
+## Two source types, two kinds of citation
+
+ESG reports are paginated PDFs and carry a `page`. 10-K filings are SEC HTML:
+they carry `page: null` and an `html_anchor` locator with the Item number and a
+character offset.
+
+The invariant is therefore **not** "every claim has a page". It is **every
+claim has a citation a human can follow**. Inventing a page number for an HTML
+filing would be fabricating provenance, which is the failure this module exists
+to prevent. A chunk offering neither a page nor a locator yields no claims at
+all, dropped with reason `no_citation`.
+
+The ingest layer's own `quality.flag` is honoured before this module's gate
+runs. D1 flags `tabular` and `suspect` chunks with stated reasons; re-deriving
+that here would only be a second opinion on someone else's measurement.
+
+## Worktree hazard: a "local" git exclude is not local
+
+While keeping files owned by other branches out of these commits, the obvious
+move is `.git/info/exclude`. **In a linked worktree that is a trap.** `.git` is
+a file pointing at the common git dir, so the exclude lands in the *shared*
+repository directory and applies to every other worktree — it would have
+silently hidden another agent's own files from their `git add`, and the
+symptom would have looked like that agent forgetting to commit.
+
+Use explicit paths with `git add` instead. Nothing in this module's commits
+relies on an exclude.
+
 ## Precision over recall
 
 Most chunks contain no claim and the correct output for them is an empty array.

@@ -13,12 +13,31 @@ the score is left untouched and this axis is offered beside it.
 from __future__ import annotations
 
 import collections
+import re
+
+#: Years are not quantities. "In 2022, Amazon committed to..." carries a digit
+#: and promises nothing measurable, so years are removed before looking for
+#: one. Without this, 30% of qualitative claims look quantified.
+_YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
+_DIGIT = re.compile(r"\d")
+
+
+def has_quantity(verbatim: str) -> bool:
+    """A number that is not merely a date.
+
+    The model returns `magnitude: null` whenever a claim carries more than one
+    number, which silently misfiled real targets ("Restore 200% ... and 100%
+    ...") as qualitative. This recovers them without touching the score.
+    """
+    return bool(_DIGIT.search(_YEAR.sub(" ", verbatim or "")))
 
 CLASSES = ("quantified", "dated_commitment", "qualitative")
 
 
 def evidence_class(claim: dict) -> str:
     if claim.get("magnitude") is not None:
+        return "quantified"
+    if has_quantity(claim.get("verbatim", "")):
         return "quantified"
     if claim.get("timeframe"):
         return "dated_commitment"

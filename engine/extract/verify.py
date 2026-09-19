@@ -38,6 +38,21 @@ def _find_span(needle: str, haystack: str) -> str | None:
     return haystack[start:end]
 
 
+def _citation(chunk: dict):
+    """A citation a human can follow, or None.
+
+    ESG PDFs carry a page. SEC 10-K filings are HTML with `page: null` and an
+    html_anchor locator. Inventing a page number for an HTML filing would be
+    fabricating provenance, so a chunk offering neither is not publishable.
+    """
+    if chunk.get("page") is not None:
+        return {"type": "page", "page": chunk["page"]}
+    locator = chunk.get("locator")
+    if locator:
+        return {**locator}
+    return None
+
+
 def reconcile(claims, chunk: dict):
     """Return (kept, dropped, stats).
 
@@ -47,9 +62,20 @@ def reconcile(claims, chunk: dict):
     kept, dropped = [], []
     stats = {"exact": 0, "repaired": 0, "dropped": 0}
 
+    citation = _citation(chunk)
+
     for claim in claims:
         quote = claim.get("verbatim") or ""
         repaired = False
+
+        if citation is None:
+            stats["dropped"] += 1
+            dropped.append({
+                "reason": "no_citation",
+                "model_verbatim": quote,
+                "source_doc": chunk.get("source_doc"),
+            })
+            continue
 
         if quote and quote in text:
             stats["exact"] += 1
@@ -72,11 +98,15 @@ def reconcile(claims, chunk: dict):
         entry["verbatim"] = quote
         entry["verbatim_whitespace_repaired"] = repaired
         # Provenance from the chunk record, not the model.
-        entry["page"] = chunk["page"]
+        entry["page"] = chunk.get("page")
+        entry["citation"] = citation
         entry["source_doc"] = chunk["source_doc"]
         entry["source_url"] = chunk["source_url"]
         entry["ticker"] = chunk["ticker"]
         entry["doc_year"] = chunk["year"]
+        entry["doc_type"] = chunk.get("doc_type")
+        if chunk.get("quality"):
+            entry["chunk_quality_flag"] = chunk["quality"].get("flag")
         kept.append(entry)
 
     return kept, dropped, stats
