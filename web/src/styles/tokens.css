@@ -1,0 +1,29 @@
+/* Wattson design tokens. Taken from the reference boards: near-black with a faint cool
+   tint, grayscale ink, ONE ember signal color (the thing being burned), mono micro-labels,
+   very light display numerals. Swap values here only; nothing else declares a color. */
+:root {
+  --bg: #0a0c0b;
+  --surface: #111413;
+  --surface-2: #171b19;
+  --ink: #e9ece9;
+  --ink-2: #a2a8a4;
+  --muted: #676d69;
+  --line: #222725;
+  --accent: #ff7a4a;
+  --accent-soft: rgba(255, 122, 74, 0.16);
+
+  --font-ui: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "SF Pro Display", "Helvetica Neue", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --t-hero: clamp(56px, 7.6vw, 118px);
+  --t-h1: clamp(28px, 3.4vw, 46px);
+  --t-h2: 22px;
+  --t-body: 15px;
+  --t-small: 13px;
+  --t-micro: 11px;
+
+  --pad: 28px;
+  --radius: 4px;
+  --maxw: 1200px;
+}
