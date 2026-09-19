@@ -1,0 +1,445 @@
+{
+  "generated": "2026-09-19",
+  "source_table": "scripts/operators_manual.json",
+  "source_table_is_read_only": true,
+  "method": "Each distinct (utility, ticker) row checked on three separable questions: the ticker exists on the exchange named; it belongs to the parent we name rather than a similarly-named entity; and that parent still owns this utility today. Company IR pages and SEC filings were used as evidence; ticker-lookup sites were not accepted for the ownership question.",
+  "summary": {
+    "rows": 23,
+    "by_status": {
+      "corrected": 1,
+      "verified": 22
+    },
+    "with_ticker": 16,
+    "without_ticker": 7,
+    "pending_change": 2
+  },
+  "operators": [
+    {
+      "utility": "AEP Texas North",
+      "parent": "American Electric Power",
+      "ticker": "AEP",
+      "role": "transmission & distribution",
+      "regions": [
+        "ERCO/NRTH",
+        "ERCO/FWES"
+      ],
+      "status": "corrected",
+      "exchange": "Nasdaq Global Select",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "fail"
+      },
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/ex2120254q.htm",
+      "correction": {
+        "field": "utility",
+        "old": "AEP Texas North",
+        "new": "AEP Texas",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/ex2120254q.htm",
+        "reason": "AEP Texas North Company ceased to exist: it merged with AEP Texas Central Company into AEP Texas Inc., effective 2016-12-31. AEP's Exhibit 21 subsidiary list as of 2025-12-31 contains 'AEP Texas Inc.' and no 'AEP Texas North Company' (only 'AEP Texas North Generation Company LLC', a different entity). The ticker AEP and the parent are correct; only the utility name is stale, by about ten years."
+      },
+      "notes": "'AEP Texas North' does survive informally as the AEP North TDU service-territory / rate-zone label, so it is not nonsense as a zone name. It is wrong as the name of a utility company."
+    },
+    {
+      "utility": "AEP Ohio, Appalachian Power, Indiana Michigan Power, Kentucky Power",
+      "parent": "American Electric Power",
+      "ticker": "AEP",
+      "role": "distribution (AEP East zone)",
+      "regions": [
+        "PJM/AEP"
+      ],
+      "status": "verified",
+      "exchange": "Nasdaq Global Select",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/ex2120254q.htm",
+      "notes": "All four appear in AEP's Exhibit 21 as of 2025-12-31, under legal names Ohio Power Company (d/b/a AEP Ohio), Appalachian Power Company, Indiana Michigan Power Company and Kentucky Power Company. Kentucky Power is still AEP-owned: the 2021 sale to Liberty/Algonquin was terminated."
+    },
+    {
+      "utility": "AEP Texas",
+      "parent": "American Electric Power",
+      "ticker": "AEP",
+      "role": "transmission & distribution",
+      "regions": [
+        "ERCO"
+      ],
+      "status": "verified",
+      "exchange": "Nasdaq Global Select",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/ex2120254q.htm",
+      "notes": "'AEP Texas Inc.' appears in AEP's Exhibit 21 as of 2025-12-31. AEP trades on Nasdaq, not the NYSE: it moved its listing on 2020-10-01."
+    },
+    {
+      "utility": "Black Hills Colorado Electric / Cheyenne Light",
+      "parent": "Black Hills Corp",
+      "ticker": "BKH",
+      "role": "distribution",
+      "regions": [
+        "WACM"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://ir.blackhillscorp.com/news-releases/news-release-details/black-hills-corp-and-northwestern-energy-shareholders-approve",
+      "pending_change": "BKH is merging with NorthWestern Energy in an all-stock merger of equals announced 2025-08-18. Shareholders of both approved it on 2026-04-02; it had not closed as of this check. On close the parent is renamed Bright Horizon Energy, Inc. and adopts a NEW ticker, so BKH will stop being correct. Expected close was second half of 2026, i.e. now. Re-check before any public use."
+    },
+    {
+      "utility": "Constellation Energy",
+      "parent": "Constellation Energy",
+      "ticker": "CEG",
+      "role": "generation (Calpine acquisition announced 2025)",
+      "regions": [
+        "ERCO",
+        "PJM"
+      ],
+      "status": "verified",
+      "exchange": "Nasdaq",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://investors.constellationenergy.com/news-releases/news-release-details/constellation-completes-calpine-transaction-powering-americas",
+      "notes": "Constellation completed its acquisition of Calpine on 2026-01-07; Calpine LLC is now an indirect wholly owned subsidiary. This enlarges CEG's ERCOT and PJM generation footprint relative to what the hand-mapped table assumed."
+    },
+    {
+      "utility": "CenterPoint Energy Houston Electric",
+      "parent": "CenterPoint Energy",
+      "ticker": "CNP",
+      "role": "transmission & distribution",
+      "regions": [
+        "ERCO"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.businesswire.com/news/home/20260422904150/en/CenterPoint-Energy-reports-strong-Q1-2026-results-reiterates-full-year-2026-guidance-provides-an-update-on-Houston-Electric-load-growth"
+    },
+    {
+      "utility": "Dominion Energy Virginia",
+      "parent": "Dominion Energy",
+      "ticker": "D",
+      "role": "vertically integrated (DOM zone)",
+      "regions": [
+        "PJM"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://investors.dominionenergy.com/home/default.aspx"
+    },
+    {
+      "utility": "Virginia Electric and Power (Dominion Energy Virginia)",
+      "parent": "Dominion Energy",
+      "ticker": "D",
+      "role": "vertically integrated",
+      "regions": [
+        "PJM/DOM"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://investors.dominionenergy.com/home/default.aspx",
+      "notes": "Virginia Electric and Power Company does business as Dominion Energy Virginia and is a subsidiary of Dominion Energy, Inc. Both spellings in the manual table name the same entity and both are correct."
+    },
+    {
+      "utility": "Tucson Electric Power",
+      "parent": "Fortis Inc. (via UNS Energy)",
+      "ticker": "FTS",
+      "role": "vertically integrated",
+      "regions": [
+        "TEPC"
+      ],
+      "status": "verified",
+      "exchange": "NYSE and TSX (dual-listed)",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.fortisinc.com/company/our-companies/index",
+      "notes": "CLAUDE.md flagged FTS as doubtful. It is correct. Fortis Inc. lists UNS Energy among its operating companies and describes it as the parent of Tucson Electric Power. Fortis is dual-listed on the TSX and NYSE under FTS, so FTS is the right symbol for a US-facing table."
+    },
+    {
+      "utility": "NRG Energy",
+      "parent": "NRG Energy",
+      "ticker": "NRG",
+      "role": "generation (ERCOT-wide)",
+      "regions": [
+        "ERCO/NRTH",
+        "ERCO"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.nrg.com/investors/overview.html",
+      "notes": "Parent and operating company are the same entity."
+    },
+    {
+      "utility": "Arizona Public Service",
+      "parent": "Pinnacle West Capital",
+      "ticker": "PNW",
+      "role": "vertically integrated",
+      "regions": [
+        "AZPS"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0000764622/000076462226000041/pnw-20260630.htm",
+      "notes": "Arizona Public Service is the principal subsidiary of Pinnacle West Capital Corporation."
+    },
+    {
+      "utility": "Oncor Electric Delivery",
+      "parent": "Sempra",
+      "ticker": "SRE",
+      "role": "transmission & distribution",
+      "regions": [
+        "ERCO/NRTH",
+        "ERCO/FWES",
+        "ERCO"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.sempra.com/sempra-energy-completes-acquisition-majority-stake-oncor",
+      "notes": "Sempra holds an 80.25% indirect stake in Oncor, not full ownership; the remainder is held by Texas Transmission Investment LLC. 'Parent: Sempra' is fair for a who-serves-the-load table but is a majority stake, not outright ownership. The parent renamed itself from Sempra Energy to Sempra in 2023."
+    },
+    {
+      "utility": "San Diego Gas & Electric",
+      "parent": "Sempra",
+      "ticker": "SRE",
+      "role": "transmission & distribution",
+      "regions": [
+        "CISO/SDGE"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.sempra.com/our-family-companies"
+    },
+    {
+      "utility": "Talen Energy",
+      "parent": "Talen Energy",
+      "ticker": "TLN",
+      "role": "generation",
+      "regions": [
+        "PJM"
+      ],
+      "status": "verified",
+      "exchange": "Nasdaq Global Select",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.nasdaq.com/market-activity/stocks/tln",
+      "notes": "Talen relisted on Nasdaq on 2024-07-10 under TLN and was trading as of 2026-09-14. Parent and operating company are the same entity."
+    },
+    {
+      "utility": "Texas-New Mexico Power",
+      "parent": "TXNM Energy",
+      "ticker": "TXNM",
+      "role": "transmission & distribution",
+      "regions": [
+        "ERCO/FWES"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0001108426/000110842626000048/pnm-20260630.htm",
+      "pending_change": "TXNM is being acquired by Blackstone Infrastructure at $61.25/share. Shareholders approved on 2025-08-28; PUCT and FERC approved in February 2026; the New Mexico PRC and NRC approvals were still outstanding at this check, and the termination date was extended to 2027-05-31 with closing now expected in the first half of 2027. On close the shares are delisted from the NYSE and TXNM stops being a valid ticker. Correct today; re-check before publication.",
+      "notes": "CLAUDE.md flagged TXNM as doubtful. It is correct. TXNM Energy's own Form 10-Q cover page for the quarter ended 2026-06-30 gives 'Common Stock, no par value', symbol 'TXNM', 'New York Stock Exchange', and states that TNMP's shares are all held indirectly by TXNM as of 2026-07-24. The parent was renamed from PNM Resources to TXNM Energy in 2024, which is the likely source of the doubt."
+    },
+    {
+      "utility": "Vistra",
+      "parent": "Vistra Corp",
+      "ticker": "VST",
+      "role": "generation (ERCOT-wide)",
+      "regions": [
+        "ERCO/NRTH",
+        "ERCO/FWES",
+        "ERCO",
+        "PJM"
+      ],
+      "status": "verified",
+      "exchange": "NYSE",
+      "checks": {
+        "ticker_and_exchange": "pass",
+        "ticker_belongs_to_parent": "pass",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://investor.vistracorp.com/",
+      "notes": "Parent and operating company are the same entity."
+    },
+    {
+      "utility": "Central Electric Power Cooperative",
+      "parent": "member-owned",
+      "ticker": null,
+      "role": "G&T cooperative (Santee Cooper's largest customer)",
+      "regions": [
+        "SC"
+      ],
+      "status": "verified",
+      "exchange": null,
+      "checks": {
+        "ticker_and_exchange": "n/a",
+        "ticker_belongs_to_parent": "n/a",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://cepci.org/",
+      "notes": "South Carolina's generation and transmission cooperative, supplying the state's 19 distribution cooperatives."
+    },
+    {
+      "utility": "Colorado Springs Utilities",
+      "parent": "City of Colorado Springs",
+      "ticker": null,
+      "role": "municipal",
+      "regions": [
+        "WACM"
+      ],
+      "status": "verified",
+      "exchange": null,
+      "checks": {
+        "ticker_and_exchange": "n/a",
+        "ticker_belongs_to_parent": "n/a",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.csu.org/about/our-history",
+      "notes": "Community-owned four-service municipal utility; the city took ownership in 1925."
+    },
+    {
+      "utility": "Northern Virginia Electric Cooperative (NOVEC)",
+      "parent": "member-owned",
+      "ticker": null,
+      "role": "distribution cooperative",
+      "regions": [
+        "PJM/DOM"
+      ],
+      "status": "verified",
+      "exchange": null,
+      "checks": {
+        "ticker_and_exchange": "n/a",
+        "ticker_belongs_to_parent": "n/a",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.novec.com/About_NOVEC/NOVEC-At-A-Glance.cfm",
+      "notes": "Member-owned distribution cooperative, Virginia's largest."
+    },
+    {
+      "utility": "Omaha Public Power District",
+      "parent": "public (Nebraska)",
+      "ticker": null,
+      "role": "public power, vertically integrated",
+      "regions": [
+        "SWPP/OPPD"
+      ],
+      "status": "verified",
+      "exchange": null,
+      "checks": {
+        "ticker_and_exchange": "n/a",
+        "ticker_belongs_to_parent": "n/a",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://oppd.com/",
+      "notes": "Nebraska public power district; publicly owned, no shareholders."
+    },
+    {
+      "utility": "Santee Cooper (South Carolina Public Service Authority)",
+      "parent": "State of South Carolina",
+      "ticker": null,
+      "role": "state-owned, vertically integrated",
+      "regions": [
+        "SC"
+      ],
+      "status": "verified",
+      "exchange": null,
+      "checks": {
+        "ticker_and_exchange": "n/a",
+        "ticker_belongs_to_parent": "n/a",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.santeecooper.com/global-news/2026/021926-Santee-Cooper-Board-Approves-$460-Million-Bond-Sale.aspx",
+      "notes": "Still state-owned. Privatisation was proposed repeatedly and did not happen; the legislature's overhaul did not include a sale. Separately, a potential sale of its interest in the unfinished V.C. Summer reactors to Brookfield is under negotiation with a decision deadline in 2028 \u2014 that is an asset sale, not a change of the utility's ownership."
+    },
+    {
+      "utility": "Tri-State Generation and Transmission",
+      "parent": "member-owned",
+      "ticker": null,
+      "role": "generation & transmission cooperative",
+      "regions": [
+        "WACM"
+      ],
+      "status": "verified",
+      "exchange": null,
+      "checks": {
+        "ticker_and_exchange": "n/a",
+        "ticker_belongs_to_parent": "n/a",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://tristate.coop/about-us",
+      "notes": "Not-for-profit member-owned generation and transmission cooperative."
+    },
+    {
+      "utility": "Western Area Power Administration, Rocky Mountain Region",
+      "parent": "U.S. Department of Energy",
+      "ticker": null,
+      "role": "federal power marketer / BA operator",
+      "regions": [
+        "WACM"
+      ],
+      "status": "verified",
+      "exchange": null,
+      "checks": {
+        "ticker_and_exchange": "n/a",
+        "ticker_belongs_to_parent": "n/a",
+        "parent_owns_utility_today": "pass"
+      },
+      "source_url": "https://www.wapa.gov/project/rocky-mountain-region/",
+      "notes": "A power marketing administration of the US Department of Energy. Federal; no ticker exists to be wrong."
+    }
+  ]
+}
