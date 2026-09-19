@@ -2,6 +2,7 @@
 import { useMemo, useState } from 'react'
 import { downloadCSV } from '../lib/csv.js'
 import '../styles/workspace.css'
+import '../styles/pages.css'
 
 // <Table columns rows sortKey defaultSort onRowClick rowHref rowKey filter csvName dense maxHeight />
 // columns: [{ key, label, raw?(row) -> value, num?, format?(value, row) -> text, render?(row) -> node,
@@ -75,6 +76,7 @@ const NONE = []
 export default function Table({ columns, rows, sortKey, defaultSort, onSortChange, onRowClick, rowHref, rowKey, filter = false, filterPlaceholder, csvName, dense = false, emptyText = 'No rows', maxHeight, className = '', toolbar }) {
   const [sort, setSort] = useState(() => parseSort(sortKey, defaultSort, columns))
   const [q, setQ] = useState('')
+  const [compact, setCompact] = useState(!!dense)   // `dense` is the starting density; the toolbar switches it
   const filtered = useMemo(() => filterRows(rows || NONE, columns, q), [rows, columns, q])
   const sorted = useMemo(() => sortRows(filtered, columns, sort), [filtered, columns, sort])
   const total = rows ? rows.length : 0
@@ -92,12 +94,16 @@ export default function Table({ columns, rows, sortKey, defaultSort, onSortChang
     window.location.assign(h)   // works for '#/...' too and fires hashchange
   }
   return (
-    <div className={`tbl ${dense ? 'dense' : ''} ${className}`}>
+    <div className={`tbl ${compact ? 'dense' : ''} ${className}`}>
       {showBar && (
         <div className="tbl-bar">
           {filter && <input className="tbl-filter" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder={filterPlaceholder || (typeof filter === 'string' ? filter : 'Filter rows')} aria-label="Filter rows" />}
           {toolbar}
           <span className="tbl-count">{q ? `${sorted.length} of ${plural(total)}` : plural(total)}</span>
+          <span className="tbl-density" role="group" aria-label="Row density">
+            <button type="button" aria-pressed={!compact} onClick={() => setCompact(false)}>Comfortable</button>
+            <button type="button" aria-pressed={compact} onClick={() => setCompact(true)}>Compact</button>
+          </span>
           {csvName && <button type="button" className="tbl-csv" onClick={() => downloadCSV(csvName, columns.filter(c => c.csv !== false), sorted)} disabled={!sorted.length} title="Download these rows as CSV">CSV</button>}
         </div>
       )}
@@ -126,7 +132,8 @@ export default function Table({ columns, rows, sortKey, defaultSort, onSortChang
                 <tr key={keyOf(r, i)} className={clickable ? 'clickable' : ''} tabIndex={clickable ? 0 : undefined} onClick={clickable ? e => go(r, e) : undefined} onKeyDown={clickable ? e => { if (e.key === 'Enter') go(r, e) } : undefined}>
                   {columns.map((c, ci) => {
                     const node = c.render ? c.render(r) : cellText(c, r)
-                    return <td key={c.key} className={`${c.num ? 'num' : ''} ${c.dim ? 'dim' : ''}`}>{ci === 0 && h ? <a className="tbl-link" href={h} tabIndex={-1}>{node}</a> : node}</td>
+                    const inner = ci === 0 && h ? <a className="tbl-link" href={h} tabIndex={-1}>{node}</a> : c.num ? node : <span className="tbl-cell">{node}</span>
+                    return <td key={c.key} className={`${c.num ? 'num' : ''} ${c.dim ? 'dim' : ''}`} title={typeof node === 'string' && node !== '—' ? node : undefined}>{inner}</td>
                   })}
                 </tr>
               )

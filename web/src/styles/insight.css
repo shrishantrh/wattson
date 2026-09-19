@@ -1,0 +1,154 @@
+/* The "what am I looking at" panel (components/Insight.jsx). Bottom-right corner, clear of the
+   stage controls (right edge, vertically centred), of the result column (left) and of the tour
+   caption (bottom centre, 520px wide, so a 300px card at the right edge never meets it).
+   Collapsed it is one 32px round button; expanded it is a 300px card. Nothing else styles it. */
+
+.insight-fab,
+.insight {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 28;                 /* under the tour card (31) and the palette, over the stage */
+}
+
+/* collapsed */
+.insight-fab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 12px 0 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: var(--surface-a);
+  color: var(--ink-2);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+.insight-fab:hover { color: var(--ink); border-color: var(--line-focus); }
+.insight-fab:active { transform: scale(0.98); }
+.insight-fab:focus-visible { outline: none; box-shadow: var(--ring); }
+.insight-fab svg { color: var(--accent); flex: none; }
+
+/* expanded */
+.insight {
+  width: 300px;
+  max-height: min(360px, calc(100vh - 260px));
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding: 14px 16px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--surface-a);
+  box-shadow: var(--shadow);
+  color: var(--ink-2);
+  animation: insight-in var(--dur-fast) var(--ease);
+}
+.insight::-webkit-scrollbar { width: 5px; }
+.insight::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+
+@keyframes insight-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+.insight-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
+.insight-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--ink);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.insight-x {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.insight-x:hover { color: var(--ink); border-color: var(--line-focus); }
+.insight-x:focus-visible { outline: none; box-shadow: var(--ring); }
+
+.insight-lines { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.insight-lines li {
+  position: relative;
+  padding-left: 12px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+.insight-lines li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 4px;
+  height: 1px;
+  background: var(--muted);
+}
+
+.insight-hint {
+  margin: 10px 0 0;
+  padding-left: 9px;
+  border-left: 2px solid var(--accent);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.insight-acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.insight-act {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: var(--h-ctl-sm);
+  padding: 0 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--ink-2);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.insight-act:hover { color: var(--ink); border-color: var(--line-focus); }
+.insight-act:focus-visible { outline: none; box-shadow: var(--ring); }
+.insight-act svg { color: var(--accent); }
+
+.insight-foot { margin: 11px 0 0; font-size: 11px; line-height: 1.4; color: var(--muted); }
+.insight-foot .kbd { font-family: var(--font-mono); font-size: 10px; color: var(--ink-2); }
+
+/* narrow screens: the column goes full width, so the panel stays collapsed-sized and low */
+@media (max-width: 900px) {
+  .insight { width: min(300px, calc(100vw - 36px)); max-height: min(320px, calc(100vh - 180px)); bottom: 14px; }
+  .insight-fab { bottom: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .insight { animation: none; }
+  .insight-fab:active { transform: none; }
+}
+
+/* Leading icons on the top-bar links (console/Console.jsx). base.css owns the links themselves;
+   these three rules only make room for the glyph and tie it to the link's own hover state. */
+.toplinks a { display: inline-flex; align-items: center; gap: 6px; }
+.toplinks a svg { color: var(--muted); transition: color var(--dur-fast) var(--ease); }
+.toplinks a:hover svg, .toplinks a.on svg { color: var(--accent); }

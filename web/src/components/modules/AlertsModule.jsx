@@ -1,6 +1,8 @@
 import { useMemo } from 'react'
 import { loadAlerts, useAsync } from '../../lib/data.js'
 import { fmt, pct } from '../../lib/format.js'
+import { Ticks } from '../../console/widgets.jsx'
+import { Mod, Lead, Empty } from './Shell.jsx'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const asList = a => (Array.isArray(a) ? a : Array.isArray(a?.alerts) ? a.alerts : [])
@@ -13,8 +15,10 @@ const detail = (a, parentLevel, ba) => {
   if (parentLevel) parts.push(`whole ${ba} grid`)
   return parts.filter(Boolean).join(' · ')
 }
+const sev = a => (a.severity == null || Number.isNaN(Number(a.severity)) ? null : Number(a.severity))
 
-// Active alerts for one region, plus its parent grid's when the region is a zone.
+// Active alerts for one region, plus its parent grid's when the region is a zone. The card leads
+// with the count; every row carries its severity as a bar and its exact value on the right.
 // `alerts` is the payload the caller already loaded ({ alerts: [...] } or an array); when absent we
 // use the alerts embedded in the region detail, and failing that load them here.
 export default function AlertsView({ region_id, alerts, detail: region }) {
@@ -27,24 +31,34 @@ export default function AlertsView({ region_id, alerts, detail: region }) {
     const own = all.filter(a => a.region === region_id), parent = ba ? all.filter(a => a.region === ba) : []
     return [...own.map(a => ({ a, parentLevel: false })), ...parent.map(a => ({ a, parentLevel: true }))]
   }, [needLoad, data, given, region_id, ba])
-  if (needLoad && loading) return <p className="mod-empty">Loading alerts…</p>
-  if (needLoad && error) return <p className="mod-empty">No alerts available.</p>
-  if (!mine.length) return <p className="mod-empty">No active alerts here.{region?.exclude_from_alerts ? ' This region is excluded from alerts because its data is flagged.' : ''}</p>
+  if (needLoad && loading) return <Empty>Loading alerts…</Empty>
+  if (needLoad && error) return <Empty>No alerts available.</Empty>
+  if (!mine.length) return <Empty>No active alerts here.{region?.exclude_from_alerts ? ' This region is excluded from alerts because its data is flagged.' : ''}</Empty>
   const latest = mine.map(({ a }) => a.latest_month).filter(Boolean).sort().pop()
+  const atParent = mine.filter(x => x.parentLevel).length
+  const label = `active alert${mine.length === 1 ? '' : 's'} here${atParent ? `, ${fmt(atParent)} of them for the whole ${ba} grid` : ''}`
   return (
-    <div className="mod-alerts">
-      <ul className="mod-rows">
-        {mine.map(({ a, parentLevel }, i) => (
-          <li key={`${a.region}-${a.rule}-${i}`} className="mod-row">
-            <div className="mod-cell">
-              <div className="mod-t">{a.description || a.rule}</div>
-              <div className="mod-d">{a.severity != null && <span className="mod-sev">severity {Number(a.severity).toFixed(2)}{a.tier ? ` · ${a.tier}` : ''} · </span>}{detail(a, parentLevel, ba)}</div>
+    <Mod
+      className="mod-alerts"
+      caption="A rule crosses when a trailing-12-month figure passes its 2019 baseline and stays past it."
+      lead={<Lead value={fmt(mine.length)} label={label} t={mine.length ? 'warn' : undefined} />}
+      foot={`EIA-930 hourly via PUDL. Trailing-12-month values${latest ? ` through ${month(latest)}` : ''}, compared with 2019.`}
+    >
+      <div className="mod-rows">
+        {mine.map(({ a, parentLevel }, i) => {
+          const s = sev(a)
+          return (
+            <div key={`${a.region}-${a.rule}-${i}`} className="mod-alert">
+              <div className="mod-cell">
+                <div className="mod-t">{a.description || a.rule}</div>
+                <div className="mod-d">{s != null && <>severity {s.toFixed(2)}{a.tier ? ` · ${a.tier}` : ''}{detail(a, parentLevel, ba) ? ' · ' : ''}</>}{detail(a, parentLevel, ba)}</div>
+              </div>
+              <span className="mod-tk" title={s != null ? `severity ${s.toFixed(2)} of 1` : 'no severity'}><Ticks value={s ?? 0} max={1} n={8} accent label={s != null ? `severity ${s.toFixed(2)} of 1` : 'no severity given'} /></span>
+              <span className="mod-n">{value(a.current_value, a.unit)}{a.baseline_2019 != null && <small> vs {value(a.baseline_2019, a.unit)}</small>}</span>
             </div>
-            <span className="mod-n">{value(a.current_value, a.unit)}{a.baseline_2019 != null && <small> vs {value(a.baseline_2019, a.unit)}</small>}</span>
-          </li>
-        ))}
-      </ul>
-      <p className="mod-foot">Trailing-12-month values{latest ? ` through ${month(latest)}` : ''}, compared with 2019.</p>
-    </div>
+          )
+        })}
+      </div>
+    </Mod>
   )
 }

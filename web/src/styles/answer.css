@@ -1,0 +1,152 @@
+/* The answer surface: the two pages that answer a question (Check, Compare).
+   Everything here is prefixed .ans- and scoped to the answer card, so the shared
+   primitives (.card, .nums, .num, .toggle, .note, .chip, .formline, .gapbar,
+   .sharebar) keep their global meaning. Colour: --ink-2 for a claim (an accounting
+   fact, neither good nor bad), --clean / --fossil for what a grid physically ran on,
+   --warn only for the honesty note. One accent, no gradients, no glow. */
+
+/* ---------- the sticky mini-header ----------
+   It sits in the flow directly above the answer card and is pulled under it by a
+   negative margin (its own height + the column's 10px gap), so while the answer is
+   on screen the card covers it, and it is revealed the moment the card scrolls past.
+   The card is made fully opaque by an inset fill of its own surface token so nothing
+   ghosts through. Pure CSS: no scroll listener, no observer. */
+.ans-sticky {
+  --ans-sticky-h: 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: var(--ans-sticky-h);
+  min-height: var(--ans-sticky-h);
+  padding: 0 16px;
+  background: var(--surface-a);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: calc(-1 * (var(--ans-sticky-h) + 10px));
+  overflow: hidden;
+}
+.ans-sticky-name { font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ans-sticky-v { font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+.ans-sticky-v b { color: var(--ink); font-weight: 500; }
+.ans-sticky-v .clean { color: var(--clean); }
+.ans-sticky-v .fossil { color: var(--fossil); }
+
+/* ---------- the answer card ----------
+   Heavier than the evidence cards below it: more padding, a larger sentence and a
+   hairline of clean at the top edge. */
+.card.ans-card {
+  position: relative;
+  z-index: 2;
+  padding: 22px 22px 18px;
+  box-shadow: inset 0 2px 0 var(--clean-line), inset 0 0 0 100vmax var(--surface-a), var(--shadow-sm);
+}
+.ans-card .verdict { font-size: 22px; line-height: 1.28; }
+.ans-card .card-head { margin-bottom: 12px; }
+
+/* ---------- claimed vs measured: one comparison, one scale ----------
+   Two rows on the same 0-100% track. The claim is neutral ink; the measured value
+   carries the clean/fossil pair. The difference is stated once, under the track. */
+.ans-gap { margin-top: 16px; display: grid; gap: 10px; }
+.ans-gap-row { display: grid; grid-template-columns: 64px minmax(40px, 1fr) auto; gap: 10px; align-items: center; }
+.ans-gap-k { font-size: 11px; color: var(--muted); line-height: 1.2; }
+.ans-gap-t { position: relative; height: 10px; border-radius: 3px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.ans-gap-t i { position: absolute; top: 0; bottom: 0; border-radius: 3px; background: var(--ink-2); transition: width var(--dur) var(--ease), left var(--dur) var(--ease); }
+.ans-gap-t i.clean { background: var(--clean); }
+.ans-gap-t i.fossil { background: var(--fossil); }
+.ans-gap-v {
+  font-family: var(--font-display);
+  font-weight: var(--w-num);
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: var(--ff-num);
+  color: var(--ink-2);
+  white-space: nowrap;
+  text-align: right;
+  min-width: 96px;
+}
+.ans-gap-v.clean { color: var(--clean); }
+.ans-gap-v.fossil { color: var(--fossil); }
+.ans-gap-v.long { font-size: 21px; }
+.ans-gap-say { margin: 2px 0 0; padding-left: 10px; border-left: 2px solid var(--fossil-line); font-size: 12px; line-height: 1.45; color: var(--muted); }
+.ans-gap-say b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+/* the figures that are not part of the comparison sit under it, quieter */
+.nums.ans-meta { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line-soft); gap: 14px; }
+.nums.ans-meta .num .v { font-size: 17px; }
+
+/* ---------- the honesty note ----------
+   Never hidden, never the heaviest thing on the card: a compact disclosure with a
+   leading warn rule. Open where the caveat changes how the number should be read. */
+.ans-why { margin-top: 14px; padding-left: 10px; border-left: 2px solid var(--warn-line); }
+.ans-why > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ink-2);
+  transition: color var(--dur-fast) var(--ease);
+}
+.ans-why > summary::-webkit-details-marker { display: none; }
+.ans-why > summary::after { content: '▾'; font-size: 9px; color: var(--muted); transition: transform var(--dur-fast) var(--ease); }
+.ans-why[open] > summary::after { transform: rotate(180deg); }
+.ans-why > summary:hover { color: var(--ink); }
+.ans-why > summary:focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--radius-sm); }
+.ans-why .note { margin: 6px 0 0; }
+
+/* ---------- Compare: one control group ---------- */
+.ans-controls {
+  background: var(--surface-2);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  padding: 12px 12px 10px;
+  margin-bottom: 14px;
+}
+.ans-controls .formline { margin-bottom: 0; }
+.ans-controls .formline .field { background: var(--n1); }
+/* the shape picker is a refinement of the request above it, not a peer of it */
+.ans-controls-sub { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line-soft); }
+.ans-controls-k { display: block; font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.ans-controls-sub .shape-picker { transform-origin: left center; }
+.ans-controls-sub .seg button { font-size: 11px; }
+.ans-controls-sub .note { margin-top: 6px; }
+
+/* ---------- Compare: the ranking ---------- */
+.ans-rank { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 2px; }
+.ans-rank li { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 7px 0; border-top: 1px solid var(--line-soft); }
+.ans-rank li:first-child { border-top: none; }
+.ans-rank-n { font-family: var(--font-mono); font-size: 11px; font-variant-numeric: tabular-nums; color: var(--muted); }
+.ans-rank-name { min-width: 0; font-size: 13px; color: var(--ink-2); overflow-wrap: anywhere; }
+.ans-rank-name small { display: block; font-size: 11px; color: var(--muted); }
+.ans-rank-v {
+  font-family: var(--font-display);
+  font-weight: var(--w-num);
+  font-size: 19px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: var(--ff-num);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.ans-rank li.is-best { padding: 4px 0 10px; }
+.ans-rank li.is-best .ans-rank-n { color: var(--ink); }
+.ans-rank li.is-best .ans-rank-name { font-size: 14px; color: var(--ink); }
+.ans-rank li.is-best .ans-rank-v { font-size: 30px; }
+.ans-rank li.is-best .ans-rank-v.clean { color: var(--clean); }
+.ans-rank li.is-best .ans-rank-v.fossil { color: var(--fossil); }
+
+@media (max-width: 900px) {
+  .ans-card .verdict { font-size: 19px; }
+  .ans-gap-v { font-size: 22px; min-width: 84px; }
+  .ans-gap-v.long { font-size: 18px; }
+  .ans-rank li.is-best .ans-rank-v { font-size: 26px; }
+}

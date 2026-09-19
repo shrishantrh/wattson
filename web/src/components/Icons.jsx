@@ -1,8 +1,11 @@
-// Wattson icon set. 24-unit grid, 1.5 stroke, round caps and joins, no fill (except the
-// six dots of Drag). Each icon takes `size` (px, default 16) and passes everything else to
-// the <svg>, so className, style, onClick and aria-* all work. Decorative by default
-// (aria-hidden); pass aria-hidden={false} and aria-label for a meaningful icon.
-// Drawn by hand in the Lucide idiom. ICONS is the same set as a name -> component map.
+// Wattson icon set. One drawing system: a 24-unit grid, 1.5 stroke, round caps and joins, no
+// fill (except the six dots of Drag and the two bars of Pause), corners at r=2, and every glyph
+// sized to the same optical square — the busy ones sit inside 3..21, the quiet ones inside 4..20,
+// so a chevron does not read lighter than a table next to it in the same row.
+// Each icon takes `size` (px, default 16) and passes everything else to the <svg>, so className,
+// style, onClick and aria-* all work. Decorative by default (aria-hidden); pass aria-hidden={false}
+// and aria-label for a meaningful icon. Drawn by hand in the Lucide idiom, not copied from it.
+// ICONS is the same set as a name -> component map.
 
 function Svg({ size = 16, children, ...props }) {
   return (
@@ -12,112 +15,176 @@ function Svg({ size = 16, children, ...props }) {
   )
 }
 
+/* ---- find, mark, arrange ---- */
+
 export function Search(props) {
-  return <Svg {...props}><circle cx="11" cy="11" r="7" /><path d="m16.5 16.5 4.5 4.5" /></Svg>
+  return <Svg {...props}><circle cx="10.75" cy="10.75" r="6.75" /><path d="m15.7 15.7 4.3 4.3" /></Svg>
 }
 
 export function Pin(props) {
-  return <Svg {...props}><path d="M12 21.5s-7-5.8-7-11.3a7 7 0 0 1 14 0c0 5.5-7 11.3-7 11.3Z" /><circle cx="12" cy="10.2" r="2.5" /></Svg>
+  return <Svg {...props}><path d="M12 21c-4-4.3-6-7.5-6-9.9A6 6 0 0 1 18 11c0 2.4-2 5.6-6 10Z" /><circle cx="12" cy="11" r="2.25" /></Svg>
+}
+
+export function Place(props) {
+  return <Svg {...props}><circle cx="12" cy="12" r="3" /><path d="M12 3v3M12 18v3M3 12h3M18 12h3" /><circle cx="12" cy="12" r="7.5" /></Svg>
 }
 
 export function Table(props) {
-  return <Svg {...props}><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9.5h18M3 15h18M9.5 9.5V20" /></Svg>
+  return <Svg {...props}><rect x="3.5" y="4.5" width="17" height="15" rx="2" /><path d="M3.5 9.5h17M3.5 14.5h17M9.5 9.5v10" /></Svg>
 }
 
 export function Layers(props) {
-  return <Svg {...props}><path d="m12 3 9 4.75L12 12.5 3 7.75 12 3Z" /><path d="m3 12.25 9 4.75 9-4.75" /><path d="m3 16.75 9 4.75 9-4.75" /></Svg>
+  return <Svg {...props}><path d="m12 3.5 8.5 4.25L12 12 3.5 7.75 12 3.5Z" /><path d="m3.5 12 8.5 4.25L20.5 12" /><path d="m3.5 16.25 8.5 4.25 8.5-4.25" /></Svg>
 }
 
-export function Sun(props) {
-  return <Svg {...props}><circle cx="12" cy="12" r="4" /><path d="M12 2.5V4.5M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" /></Svg>
+export function Filter(props) {
+  return <Svg {...props}><path d="M3.5 5.5h17l-6.75 7.75v5.5l-3.5 1.75v-7.25L3.5 5.5Z" /></Svg>
 }
 
-export function Moon(props) {
-  return <Svg {...props}><path d="M21 13.2A8.4 8.4 0 0 1 10.8 3a8.4 8.4 0 1 0 10.2 10.2Z" /></Svg>
+export function Sort(props) {
+  return <Svg {...props}><path d="M7 4.5v15M7 4.5 4 7.5M7 4.5l3 3" /><path d="M17 19.5v-15M17 19.5l-3-3M17 19.5l3-3" /></Svg>
 }
 
-export function ZoomIn(props) {
-  return <Svg {...props}><circle cx="11" cy="11" r="7" /><path d="m16.5 16.5 4.5 4.5M11 8v6M8 11h6" /></Svg>
-}
-
-export function ZoomOut(props) {
-  return <Svg {...props}><circle cx="11" cy="11" r="7" /><path d="m16.5 16.5 4.5 4.5M8 11h6" /></Svg>
-}
-
-export function Close(props) {
-  return <Svg {...props}><path d="M6 6l12 12M18 6 6 18" /></Svg>
+export function Reset(props) {
+  return <Svg {...props}><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5" /><path d="M4 4v4.5h4.5" /></Svg>
 }
 
 export function Drag(props) {
   return (
     <Svg {...props}>
       <g fill="currentColor" stroke="none">
-        <circle cx="9" cy="6" r="1.3" /><circle cx="15" cy="6" r="1.3" />
-        <circle cx="9" cy="12" r="1.3" /><circle cx="15" cy="12" r="1.3" />
-        <circle cx="9" cy="18" r="1.3" /><circle cx="15" cy="18" r="1.3" />
+        <circle cx="9.5" cy="6" r="1.25" /><circle cx="14.5" cy="6" r="1.25" />
+        <circle cx="9.5" cy="12" r="1.25" /><circle cx="14.5" cy="12" r="1.25" />
+        <circle cx="9.5" cy="18" r="1.25" /><circle cx="14.5" cy="18" r="1.25" />
       </g>
     </Svg>
   )
 }
 
-export function Csv(props) {
-  return <Svg {...props}><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z" /><path d="M14 3v5h5" /><path d="M8.5 12h7M8.5 15h7M8.5 18h7" /></Svg>
+/* ---- day, night, power, time ---- */
+
+export function Sun(props) {
+  return <Svg {...props}><circle cx="12" cy="12" r="4" /><path d="M12 3v2.25M12 18.75V21M3 12h2.25M18.75 12H21M5.64 5.64l1.6 1.6M16.76 16.76l1.6 1.6M18.36 5.64l-1.6 1.6M7.24 16.76l-1.6 1.6" /></Svg>
 }
 
-export function Link(props) {
-  return <Svg {...props}><path d="M10.5 13.5a4.5 4.5 0 0 0 6.4 0l2.6-2.6a4.5 4.5 0 0 0-6.4-6.4L11.8 5.8" /><path d="M13.5 10.5a4.5 4.5 0 0 0-6.4 0l-2.6 2.6a4.5 4.5 0 0 0 6.4 6.4l1.3-1.3" /></Svg>
+export function Moon(props) {
+  return <Svg {...props}><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" /></Svg>
 }
 
-export function Info(props) {
-  return <Svg {...props}><circle cx="12" cy="12" r="9.25" /><path d="M12 11v5.5M12 7.75h.01" /></Svg>
+export function Day(props) {
+  return <Svg {...props}><path d="M3.5 18h17" /><circle cx="12" cy="13.5" r="3.75" /><path d="M12 4.5v2M4.6 8.1l1.4 1.4M19.4 8.1 18 9.5" /></Svg>
 }
 
-export function Keyboard(props) {
-  return <Svg {...props}><rect x="2" y="6" width="20" height="12" rx="2" /><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M9 14h6" /></Svg>
+export function Night(props) {
+  return <Svg {...props}><path d="M19.5 14.6A7.6 7.6 0 0 1 10 5a7.6 7.6 0 1 0 9.5 9.6Z" /><path d="M6 4.5v2.4M4.8 5.7h2.4" /></Svg>
 }
 
-export function Copy(props) {
-  return <Svg {...props}><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15h-.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5" /></Svg>
+export function Bolt(props) {
+  return <Svg {...props}><path d="M13.5 3 5.5 13.5h5.5L10.5 21l8-10.5H13L13.5 3Z" /></Svg>
 }
 
-export function Check(props) {
-  return <Svg {...props}><path d="m5 12.5 4.5 4.5L19 7" /></Svg>
+export function Clock(props) {
+  return <Svg {...props}><circle cx="12" cy="12" r="8.5" /><path d="M12 7.25V12l3.25 2" /></Svg>
 }
 
-export function ArrowRight(props) {
-  return <Svg {...props}><path d="M4 12h16M14 6l6 6-6 6" /></Svg>
-}
-
-export function ArrowLeft(props) {
-  return <Svg {...props}><path d="M20 12H4M10 6l-6 6 6 6" /></Svg>
-}
-
-export function ChevronDown(props) {
-  return <Svg {...props}><path d="m6 9 6 6 6-6" /></Svg>
-}
-
-export function ChevronUp(props) {
-  return <Svg {...props}><path d="m6 15 6-6 6 6" /></Svg>
-}
+/* ---- views ---- */
 
 export function Globe(props) {
-  return <Svg {...props}><circle cx="12" cy="12" r="9.25" /><path d="M2.75 12h18.5" /><path d="M12 2.75c-2.6 2.6-3.9 5.7-3.9 9.25s1.3 6.65 3.9 9.25c2.6-2.6 3.9-5.7 3.9-9.25S14.6 5.35 12 2.75Z" /></Svg>
+  return <Svg {...props}><circle cx="12" cy="12" r="8.75" /><path d="M3.25 12h17.5" /><path d="M12 3.25c2.4 2.4 3.6 5.3 3.6 8.75S14.4 18.35 12 20.75c-2.4-2.4-3.6-5.3-3.6-8.75S9.6 5.65 12 3.25Z" /></Svg>
 }
 
 export function Map2D(props) {
-  return <Svg {...props}><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2V6Z" /><path d="M9 4v14M15 6v14" /></Svg>
+  return <Svg {...props}><path d="m3.5 6.25 5.75-2 5.5 2 5.75-2v13.5l-5.75 2-5.5-2-5.75 2V6.25Z" /><path d="M9.25 4.25v13.5M14.75 6.25v13.5" /></Svg>
 }
 
-export function Filter(props) {
-  return <Svg {...props}><path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5Z" /></Svg>
+export function ZoomIn(props) {
+  return <Svg {...props}><circle cx="10.75" cy="10.75" r="6.75" /><path d="m15.7 15.7 4.3 4.3" /><path d="M10.75 8v5.5M8 10.75h5.5" /></Svg>
 }
 
-export function Reset(props) {
-  return <Svg {...props}><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6.02L3.5 8.5" /><path d="M3.5 3.5v5h5" /></Svg>
+export function ZoomOut(props) {
+  return <Svg {...props}><circle cx="10.75" cy="10.75" r="6.75" /><path d="m15.7 15.7 4.3 4.3" /><path d="M8 10.75h5.5" /></Svg>
+}
+
+/* ---- people, places, files ---- */
+
+export function Company(props) {
+  return <Svg {...props}><path d="M3.5 20.5h17" /><path d="M4.5 20.5V7.25L12 4l7.5 3.25V20.5" /><path d="M8.5 10.5h2M13.5 10.5h2M8.5 14h2M13.5 14h2" /><path d="M10 20.5v-3h4v3" /></Svg>
+}
+
+export function Csv(props) {
+  return <Svg {...props}><path d="M13.5 3.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9l-5.5-5.5Z" /><path d="M13.5 3.5V9H19" /><path d="M8.5 12.5h7M8.5 16h4.5" /></Svg>
+}
+
+export function Download(props) {
+  return <Svg {...props}><path d="M12 3.5v11.5" /><path d="m7.75 10.75 4.25 4.25 4.25-4.25" /><path d="M4.5 17.5v1a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1" /></Svg>
+}
+
+export function Link(props) {
+  return <Svg {...props}><path d="M10.5 13.5a4.25 4.25 0 0 0 6 0l2.25-2.25a4.25 4.25 0 0 0-6-6L11.5 6.5" /><path d="M13.5 10.5a4.25 4.25 0 0 0-6 0L5.25 12.75a4.25 4.25 0 0 0 6 6l1.25-1.25" /></Svg>
+}
+
+export function External(props) {
+  return <Svg {...props}><path d="M19.5 13.5v5a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2v-11a2 2 0 0 1 2-2h5" /><path d="M14.5 3.5h6v6" /><path d="m20.5 3.5-8 8" /></Svg>
+}
+
+export function Copy(props) {
+  return <Svg {...props}><rect x="9" y="9" width="11.5" height="11.5" rx="2" /><path d="M5.5 15h-.5a1.5 1.5 0 0 1-1.5-1.5v-9A1.5 1.5 0 0 1 5 3h9a1.5 1.5 0 0 1 1.5 1.5V5" /></Svg>
+}
+
+/* ---- state and transport ---- */
+
+export function Close(props) {
+  return <Svg {...props}><path d="M6.25 6.25 17.75 17.75M17.75 6.25 6.25 17.75" /></Svg>
+}
+
+export function Check(props) {
+  return <Svg {...props}><path d="m4.5 12.5 4.75 4.75L19.5 7" /></Svg>
+}
+
+export function Info(props) {
+  return <Svg {...props}><circle cx="12" cy="12" r="8.75" /><path d="M12 11.25V16.5" /><path d="M12 7.75h.01" /></Svg>
+}
+
+export function Help(props) {
+  return <Svg {...props}><circle cx="12" cy="12" r="8.75" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.35 2.35c-.55.2-.85.7-.85 1.3v.6" /><path d="M12 16.75h.01" /></Svg>
+}
+
+export function Play(props) {
+  return <Svg {...props}><path d="M7.5 4.75 19 12 7.5 19.25V4.75Z" /></Svg>
+}
+
+export function Pause(props) {
+  return <Svg {...props}><path d="M9 4.75v14.5M15 4.75v14.5" /></Svg>
+}
+
+export function Keyboard(props) {
+  return <Svg {...props}><rect x="2.5" y="6" width="19" height="12" rx="2" /><path d="M6.25 10h.02M10 10h.02M13.75 10h.02M17.5 10h.02M6.25 14h.02M17.5 14h.02M9.25 14h5.5" /></Svg>
+}
+
+/* ---- direction ---- */
+
+export function ArrowRight(props) {
+  return <Svg {...props}><path d="M4 12h15.5M13.5 6l6 6-6 6" /></Svg>
+}
+
+export function ArrowLeft(props) {
+  return <Svg {...props}><path d="M20 12H4.5M10.5 6l-6 6 6 6" /></Svg>
+}
+
+export function ChevronDown(props) {
+  return <Svg {...props}><path d="m6.5 9.5 5.5 5.5 5.5-5.5" /></Svg>
+}
+
+export function ChevronUp(props) {
+  return <Svg {...props}><path d="m6.5 14.5 5.5-5.5 5.5 5.5" /></Svg>
 }
 
 // oxlint-disable-next-line react/only-export-components
 export const ICONS = {
-  Search, Pin, Table, Layers, Sun, Moon, ZoomIn, ZoomOut, Close, Drag, Csv, Link, Info, Keyboard,
-  Copy, Check, ArrowRight, ArrowLeft, ChevronDown, ChevronUp, Globe, Map2D, Filter, Reset,
+  Search, Pin, Place, Table, Layers, Filter, Sort, Reset, Drag,
+  Sun, Moon, Day, Night, Bolt, Clock,
+  Globe, Map2D, ZoomIn, ZoomOut,
+  Company, Csv, Download, Link, External, Copy,
+  Close, Check, Info, Help, Play, Pause, Keyboard,
+  ArrowRight, ArrowLeft, ChevronDown, ChevronUp,
 }

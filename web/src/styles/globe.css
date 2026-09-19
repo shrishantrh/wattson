@@ -1,0 +1,64 @@
+/* Globe-owned styles: the canvas host, and the parts of a pin that the globe (not the design
+   system) decides. The pin's look — tile, label, colours — stays in base.css; what lives here
+   is only what depends on the camera or on globe data. */
+
+.wglobe {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* The canvas itself never takes the pointer cursor away from the page chrome above it. */
+.wglobe canvas {
+  display: block;
+  outline: none;
+}
+
+/* --gstem is written per pin by Globe.jsx from the camera altitude: a longer stem when the
+   globe is far away and the pins crowd together, shorter when it fills the screen. Every other
+   pin in a large set gets an extra step so two neighbouring labels never sit on one line. */
+.gpin.gpin-dyn .gpin-stem {
+  height: var(--gstem, 24px);
+  transition: height 140ms var(--ease, ease);
+}
+
+.gpin.gpin-dyn .gpin-label {
+  bottom: var(--gstem, 24px);
+  transition: opacity var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), bottom 140ms var(--ease, ease);
+}
+
+/* A ranked pin carries its number in the dot, so a list on the left and the map agree without
+   a legend. The tile grows just enough to hold two digits at 9px. */
+.gpin.has-rank .gpin-tile {
+  left: -7.5px;
+  bottom: -7.5px;
+  width: 15px;
+  height: 15px;
+  display: grid;
+  place-items: center;
+}
+
+.gpin.has-rank .gpin-rank {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--bg, #0a0c0b);
+  transform: translateY(0.5px);
+}
+
+/* Hollow pins have no fill to sit the numeral on, so it takes the pin colour instead. */
+.gpin.has-rank.hollow .gpin-rank {
+  color: var(--pin);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gpin.gpin-dyn .gpin-stem,
+  .gpin.gpin-dyn .gpin-label {
+    transition: none;
+  }
+}

@@ -136,8 +136,12 @@ function Module({ module: m, onHide }) {
         <span className="ws-title">{m.title}</span>
         <span className="ws-tools">
           {m.right}
-          <button type="button" ref={setActivatorNodeRef} className="ws-handle" title="Drag to reorder. Keyboard: Space, arrows, Space" {...attributes} {...listeners} aria-label={`Reorder ${label(m)}`}>⋮⋮</button>
-          <button type="button" className="ws-hide" onClick={onHide} title="Hide" aria-label={`Hide ${label(m)}`}>×</button>
+          <button type="button" ref={setActivatorNodeRef} className="ws-handle" title="Drag to reorder. Keyboard: Space, arrows, Space" {...attributes} {...listeners} aria-label={`Reorder ${label(m)}`}>
+            <svg viewBox="0 0 10 14" width="10" height="14" aria-hidden="true"><circle cx="3" cy="3" r="1" /><circle cx="7" cy="3" r="1" /><circle cx="3" cy="7" r="1" /><circle cx="7" cy="7" r="1" /><circle cx="3" cy="11" r="1" /><circle cx="7" cy="11" r="1" /></svg>
+          </button>
+          <button type="button" className="ws-hide" onClick={onHide} title="Hide" aria-label={`Hide ${label(m)}`}>
+            <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" /></svg>
+          </button>
         </span>
       </header>
       {typeof m.render === 'function' ? m.render() : m.render ?? null}
@@ -164,13 +168,15 @@ function Customize({ ws }) {
       </button>
       {open && (
         <div className="ws-pop" role="dialog" aria-label="Customize modules">
-          <div className="ws-pop-head">Modules. Drag ⋮⋮ on a card to reorder.</div>
-          {ws.modules.map(m => (
-            <label key={m.id} className={`ws-pop-row ${ws.enabled[m.id] ? '' : 'off'}`}>
-              <input type="checkbox" checked={!!ws.enabled[m.id]} onChange={e => ws.toggle(m.id, e.target.checked)} />
-              <span>{m.title}</span>
-            </label>
-          ))}
+          <div className="ws-pop-head">Modules<span className="ws-pop-hint">drag the handle on a card to reorder</span></div>
+          <div className="ws-pop-list">
+            {ws.modules.map(m => (
+              <label key={m.id} className={`ws-pop-row ${ws.enabled[m.id] ? '' : 'off'}`}>
+                <input type="checkbox" checked={!!ws.enabled[m.id]} onChange={e => ws.toggle(m.id, e.target.checked)} />
+                <span>{m.title}</span>
+              </label>
+            ))}
+          </div>
           <div className="ws-pop-foot">
             <button type="button" className="ws-linkbtn" onClick={ws.showAll} disabled={n === total}>Show all</button>
             <button type="button" className="ws-linkbtn" onClick={() => { ws.reset(); setOpen(false) }} disabled={ws.isDefault}>Reset</button>

@@ -1,0 +1,230 @@
+/* Wattson motion. One rule governs everything here: motion only ever expresses a state change
+   the user caused, or a piece of data arriving. Nothing loops, nothing idles, nothing bounces,
+   nothing animates on a timer. If you cannot name the user action or the data that triggered a
+   movement, it does not belong in this file.
+
+   Budget: 120-180ms for interface feedback (hover, press, a chevron turning), 260-420ms for
+   something entering (a card, a figure, a disclosure, the globe acknowledging a navigation).
+   Easing: --mo-out (ease-out) for anything arriving or settling, --mo-in (a shorter ease-in)
+   for anything leaving. Entrances never overshoot.
+
+   Everything is switched off in ONE place, at the bottom of this file, under
+   @media (prefers-reduced-motion: reduce).
+
+   Cascade note: this file is imported at the top of base.css, so rules that must beat an
+   existing base.css declaration of the same specificity are written with an `.app ` prefix
+   (everything in the product is inside .app). New behaviour uses `.mo-` class names. */
+
+:root {
+  --mo-out: cubic-bezier(0.22, 0.8, 0.28, 1);  /* entering, settling */
+  --mo-in: cubic-bezier(0.4, 0, 1, 1);          /* leaving */
+  --mo-fast: 120ms;    /* hover, press, border and background */
+  --mo-ui: 180ms;      /* a control changing state (chevron, segment, palette) */
+  --mo-enter: 320ms;   /* a card entering */
+  --mo-num: 420ms;     /* the figure, the payoff */
+  --mo-stagger: 40ms;  /* between cards in the left column */
+}
+
+/* ---------------------------------------------------------------- 1. route transitions
+   Console.jsx keys .column on the route, so the column remounts when the route changes and the
+   cards replay their entrance. They rise 6px and fade, 40ms apart, capped at the sixth: past
+   that the delay would outlast the content and the page would feel slow rather than sequenced.
+   fill-mode is `backwards` (not `both`): the end keyframe equals the element's resting state, so
+   dropping the fill after the run hands hover transforms back to the element. */
+.app .fade-up,
+.app .stagger > * { animation-name: fade-up; animation-duration: var(--mo-enter); animation-timing-function: var(--mo-out); animation-fill-mode: backwards; }
+.app .stagger > :nth-child(2) { animation-delay: calc(1 * var(--mo-stagger)); }
+.app .stagger > :nth-child(3) { animation-delay: calc(2 * var(--mo-stagger)); }
+.app .stagger > :nth-child(4) { animation-delay: calc(3 * var(--mo-stagger)); }
+.app .stagger > :nth-child(5) { animation-delay: calc(4 * var(--mo-stagger)); }
+.app .stagger > :nth-child(6) { animation-delay: calc(5 * var(--mo-stagger)); }
+.app .stagger > :nth-child(n + 7) { animation-delay: calc(5 * var(--mo-stagger)); }
+
+/* the left column itself: the wrapper's width is dragged by the resize handle, so only the
+   card entrance moves here. The column's own scroll is never animated. */
+.mo-col { will-change: auto; }
+
+/* ---------------------------------------------------------------- 2. the number is the payoff
+   Display figures do not fade in; they rise a third of their own height and settle, so the eye
+   lands on the digits last. NumberTicker (components/NumberTicker.jsx) owns the DIGITS: it
+   counts the value from its previous reading and marks itself data-ticking while it does.
+   This file owns the ELEMENT. The two never run together: a figure that is mid-tick does not
+   also slide, and a figure that is entering is not ticking (the ticker starts at its target on
+   mount). One-off on mount only; a value changing later is the ticker's job, not a re-entrance. */
+.app .num .v,
+.app .hero-num,
+.app .pair .val { animation: mo-rise var(--mo-num) var(--mo-out) backwards; }
+.app .num .v:has(.ticker[data-ticking]),
+.app .hero-num:has(.ticker[data-ticking]),
+.app .pair .val:has(.ticker[data-ticking]) { animation: none; }
+
+@keyframes mo-rise {
+  from { opacity: 0; transform: translateY(0.3em); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------------- 3. hover and press
+   One response for every control: 120ms on border, background and colour; a 1px lift where the
+   thing reads as a surface you could pick up (buttons, chips, cards, rows); a press that puts it
+   back down. Controls that sit flush in a rail (segmented buttons, the stage controls) do not
+   lift, they only brighten. */
+.app .btn,
+.app .chip,
+.app .toggle,
+.app .close,
+.app .searchbox button,
+.app .seg button,
+.app .stage-ctl button,
+.app .field,
+.app .quick,
+.app .searchbox,
+.app .card { transition: color var(--mo-fast) var(--mo-out), border-color var(--mo-fast) var(--mo-out), background-color var(--mo-fast) var(--mo-out), box-shadow var(--mo-fast) var(--mo-out), transform var(--mo-fast) var(--mo-out); }
+
+.app .btn:hover:not(:disabled),
+.app .chip:hover:not(:disabled),
+.app .searchbox button:hover:not(:disabled) { transform: translateY(-1px); }
+.app .btn:active:not(:disabled),
+.app .chip:active:not(:disabled),
+.app .searchbox button:active:not(:disabled) { transform: translateY(0) scale(0.985); transition-duration: 60ms; transition-timing-function: var(--mo-in); }
+.app .toggle:active:not(:disabled),
+.app .close:active:not(:disabled),
+.app .stage-ctl button:active:not(:disabled),
+.app .seg button:active:not(:disabled) { transform: scale(0.98); transition-duration: 60ms; transition-timing-function: var(--mo-in); }
+.app .btn:disabled:hover, .app .chip:disabled:hover { transform: none; }
+
+/* cards that are links lift with their border */
+.app a.card:hover, .app .card.link:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.app a.card:active, .app .card.link:active { transform: none; transition-duration: 60ms; }
+
+/* ranked-list rows: the affordance is revealed, not advertised. The chevron's space is
+   reserved at rest (padding-right), so nothing reflows when it appears. */
+.app a.row { position: relative; padding-right: 16px; border-radius: 6px; transition: background-color var(--mo-fast) var(--mo-out), color var(--mo-fast) var(--mo-out); }
+.app a.row::after { content: '›'; position: absolute; right: 2px; top: 50%; margin-top: -0.62em; font-size: 14px; line-height: 1.2; color: var(--muted); opacity: 0; transform: translateX(-3px); transition: opacity var(--mo-fast) var(--mo-out), transform var(--mo-fast) var(--mo-out); pointer-events: none; }
+.app a.row:hover { background: rgba(255, 255, 255, 0.04); }
+.app a.row:hover::after, .app a.row:focus-visible::after { opacity: 1; transform: none; }
+.app a.row:active { background: rgba(255, 255, 255, 0.07); transition-duration: 60ms; }
+
+/* table rows: same grammar, drawn on the last cell so the arrow sits at the right edge */
+.app .tbl tbody tr { transition: background-color var(--mo-fast) var(--mo-out); }
+.app .tbl tbody tr.clickable:hover { background: rgba(255, 255, 255, 0.045); }
+.app .tbl tbody tr.clickable:active { background: rgba(255, 255, 255, 0.075); transition-duration: 60ms; }
+.app .tbl tbody tr.clickable td:last-child { position: relative; }
+.app .tbl tbody tr.clickable td:last-child::after { content: '›'; position: absolute; right: 2px; top: 50%; transform: translate(-3px, -50%); color: var(--muted); font-size: 13px; line-height: 1; opacity: 0; transition: opacity var(--mo-fast) var(--mo-out), transform var(--mo-fast) var(--mo-out); pointer-events: none; }
+.app .tbl tbody tr.clickable:hover td:last-child::after,
+.app .tbl tbody tr.clickable:focus-visible td:last-child::after { opacity: 1; transform: translate(0, -50%); }
+
+/* pins on the globe: hovering a pin is a user action, so the tag may answer. The dot does not
+   pulse and the pin never moves on its own; opacity is still driven by the globe's own data. */
+.app a.gpin .gpin-label { transition: opacity var(--mo-fast) var(--mo-out), border-color var(--mo-fast) var(--mo-out), transform var(--mo-fast) var(--mo-out); }
+.app a.gpin:hover .gpin-label { transform: translateX(-50%) translateY(-1px); }
+.app a.gpin.left:hover .gpin-label { transform: translateX(-100%) translateY(-1px); }
+.app a.gpin.right:hover .gpin-label { transform: translateY(-1px); }
+.app .gpin-tile { transition: transform var(--mo-fast) var(--mo-out); }
+.app a.gpin:hover .gpin-tile { transform: scale(1.25); }
+
+/* ---------------------------------------------------------------- 4. disclosure
+   "Show the evidence" / "Show why". Two mechanisms, both measurement-free:
+
+   (a) .mo-disclose wraps content that STAYS MOUNTED: a grid whose single row goes 0fr -> 1fr.
+       Use this whenever the markup can keep the wrapper around (it is the cleanest: it
+       interpolates real height with no JS, no max-height guess, no ResizeObserver).
+   (b) the evidence in this app is mounted and unmounted by React, so there is no wrapper to
+       transition. It gets the same reading as an animation from height:0 to height:auto, which
+       modern engines interpolate because of interpolate-size below. Where interpolate-size is
+       not supported the height keyframes are simply dropped and the content fades and rises
+       instead — no measuring, no jump, no layout thrash. */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+}
+
+.mo-disclose { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--mo-ui) var(--mo-out), opacity var(--mo-ui) var(--mo-out); opacity: 0; }
+.mo-disclose > * { min-height: 0; overflow: hidden; }
+.mo-disclose[data-open='true'], .mo-disclose.is-open { grid-template-rows: 1fr; opacity: 1; }
+
+/* the evidence stack that follows an expanded toggle, inside the card and after it */
+.app .toggle[aria-expanded='true'] ~ *,
+.app .column > .card:has(.toggle[aria-expanded='true']) + * { animation: mo-disclose 260ms var(--mo-out) backwards; }
+
+@keyframes mo-disclose {
+  from { height: 0; opacity: 0; overflow: hidden; transform: translateY(-2px); }
+  to { height: auto; opacity: 1; overflow: hidden; transform: none; }
+}
+
+/* the chevron turns instead of being swapped. The glyph the component prints is suppressed and
+   redrawn here so there is something continuous to rotate. */
+.app .toggle > span:last-child { font-size: 0; line-height: 1; }
+.app .toggle > span:last-child::after { content: '▾'; display: inline-block; font-size: 12px; line-height: 1; transition: transform var(--mo-ui) var(--mo-out); }
+.app .toggle[aria-expanded='true'] > span:last-child::after { transform: rotate(180deg); }
+
+/* ---------------------------------------------------------------- 5. the globe acknowledges
+   The globe is a persistent stage; the pages float over it. When the route changes it does two
+   things and nothing else: it eases its horizontal offset to the column's new edge instead of
+   jumping, and it dips a few percent while the new cards come in, then returns. This is the one
+   signature movement in the product. It runs once per navigation, it is under half a second,
+   and nothing else on the stage ever moves by itself. */
+.app .globe-host { transition: left var(--mo-num) var(--mo-out), right var(--mo-num) var(--mo-out), opacity var(--mo-ui) var(--mo-out); }
+.app .globe-host.mo-nav { animation: mo-stage-ack 420ms var(--mo-out) 1; }
+
+@keyframes mo-stage-ack {
+  0% { opacity: 1; }
+  28% { opacity: 0.93; }
+  100% { opacity: 1; }
+}
+
+/* ---------------------------------------------------------------- 6. focus and keyboard
+   The ring is feedback about where you are, not an animation: it appears on the frame the focus
+   moves. Nothing about a focused element transitions while it is focused. */
+.app *:focus-visible { transition: none; }
+
+/* the palette and any dialog: scale from 0.98 with a fade, 160ms, ease-out. The scrim fades on
+   its own so the panel is never seen against a hard cut. */
+.pal-overlay, .app .pal-overlay { animation: mo-scrim 160ms var(--mo-out) backwards; }
+.pal-panel, .app .pal-panel,
+.app [role='dialog'] { animation: mo-dialog 160ms var(--mo-out) backwards; }
+
+@keyframes mo-scrim { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mo-dialog { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: none; } }
+
+/* ---------------------------------------------------------------- 7. scroll
+   Long evidence stacks should read as continuous rather than cut off at the column edges. The
+   masks are driven by the column's own scroll position (a scroll timeline, not a listener and
+   not a rAF), so the top mask only exists once there is something above and the bottom mask
+   disappears at the end. Where scroll-driven animation is unsupported the column simply has no
+   mask, which is the current behaviour. */
+@supports (animation-timeline: scroll()) {
+  .app .column.mo-col {
+    mask-image: none;
+    animation: mo-col-mask linear both;
+    animation-timeline: scroll(self block);
+  }
+  @keyframes mo-col-mask {
+    0% { mask-image: linear-gradient(to bottom, #000 0px, #000 0px, #000 calc(100% - 26px), transparent 100%); }
+    7% { mask-image: linear-gradient(to bottom, transparent 0px, #000 26px, #000 calc(100% - 26px), transparent 100%); }
+    93% { mask-image: linear-gradient(to bottom, transparent 0px, #000 26px, #000 calc(100% - 26px), transparent 100%); }
+    100% { mask-image: linear-gradient(to bottom, transparent 0px, #000 26px, #000 100%, #000 100%); }
+  }
+}
+
+/* ---------------------------------------------------------------- the switch
+   One place. Anything animated or transitioned anywhere in the app collapses to an instant state
+   change here: durations and delays go to zero, iteration counts to one, scroll timelines are
+   detached, and the globe's offset and dip stop moving. Static styling (colour on hover, the
+   focus ring, the revealed chevron, the scroll masks' final look) is untouched, so no affordance
+   is lost — only the movement is. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .app .column.mo-col { animation: none !important; animation-timeline: auto !important; mask-image: none !important; }
+  .app .globe-host, .app .globe-host.mo-nav { transition: none !important; animation: none !important; opacity: 1 !important; }
+  .app .btn:hover, .app .chip:hover, .app a.card:hover, .app .card.link:hover,
+  .app .searchbox button:hover, .app a.gpin:hover .gpin-label, .app a.gpin:hover .gpin-tile { transform: none !important; }
+  .app .btn:active, .app .chip:active, .app .toggle:active, .app .close:active,
+  .app .seg button:active, .app .stage-ctl button:active, .app .searchbox button:active { transform: none !important; }
+  .mo-disclose { transition: none; }
+}

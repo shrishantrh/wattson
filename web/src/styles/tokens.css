@@ -1,28 +1,70 @@
-/* Wattson design tokens. Taken from the reference boards: near-black with a faint cool
-   tint, grayscale ink, ONE ember signal color (the thing being burned), mono micro-labels,
-   light display numerals. Swap values here only; nothing else declares a color.
+/* Wattson design tokens. Near-black with a faint cool tint, grayscale ink, and TWO signal
+   hues that carry the product's core opposition: clean power is cool (--clean, a desaturated
+   cyan-teal) and fossil generation is the ember (--fossil, the existing accent). One amber
+   (--warn) is reserved for data that is flagged or corrected. Nothing else in the app is
+   allowed to be coloured: three hues on screen at most, and each one means something.
+   Swap values here only; nothing else declares a color.
    Type: Inter (opsz axis, so 14px reads as Inter Text and 40px+ as Inter Display) for all
-   UI and numerals; JetBrains Mono for small figures, keys and axis labels only. */
+   UI and numerals; JetBrains Mono for small figures, keys and axis labels only.
+
+   Contrast (WCAG, measured against --surface, the worst opaque case for body copy):
+   --ink 15.9 · --ink-2 9.4 · --muted 5.9 · --clean 10.1 · --fossil 7.1 · --warn 9.6.
+   Every foreground token passes AA (4.5) on every surface in the ramp, including --surface-3. */
 :root {
-  --bg: #0a0c0b;
-  --surface: #111413;
-  --surface-2: #171b19;
-  --surface-a: rgba(17, 20, 19, 0.94); /* floating surfaces over the globe */
-  --ink: #e9ece9;
-  --ink-2: #a2a8a4;
-  --muted: #676d69;
-  --line: #222725;
-  --accent: #ff7a4a;
+  /* neutral ramp: n1-n3 are surfaces (page, card, raised), n4-n5 are hairlines.
+     Each surface step is a real luminance step, so a card reads as a panel, not a tint. */
+  --n1: #080a09;                       /* page background */
+  --n2: #121615;                       /* card */
+  --n3: #1a1f1d;                       /* raised: popovers, the palette, the tour caption */
+  --n4: rgba(255, 255, 255, 0.08);     /* hairline, structural */
+  --n5: rgba(255, 255, 255, 0.14);     /* hairline, resting control edge */
+
+  --bg: #080a09;                       /* = --n1 (literal: charts/theme.js reads these and needs hex) */
+  --surface: #121615;                  /* = --n2 */
+  --surface-2: #1a1f1d;                /* = --n3 */
+  --surface-3: #212724;                /* the top of the ladder: menus above a raised panel */
+  /* floating surfaces over the globe. 0.97 rather than 0.94, over a base three points lighter
+     than the old #111413: at 0.94 the globe's dot matrix showed through as texture inside the
+     card and the panel read as fog. Opacity alone would have made a darker-than-page card;
+     lifting the base too is what makes it read as lit and sitting above the stage. */
+  --surface-a: rgba(20, 25, 23, 0.97);
+  --surface-a-2: rgba(28, 34, 32, 0.97); /* raised floating surface over the globe */
+
+  --ink: #edf0ed;
+  --ink-2: #b4bcb7;                    /* secondary copy; was #a2a8a4 (7.6 on surface) */
+  --muted: #8b948f;                    /* 11-12px labels; was #676d69 (3.1 on surface, failing) */
+  --line: #232827;
+
+  /* the two signal hues */
+  --accent: #ff7a4a;                   /* kept: fossil, the thing being burned */
   --accent-soft: rgba(255, 122, 74, 0.16);
+  --fossil: #ff7a4a;                   /* = --accent, literal so JS can read it */
+  --fossil-soft: rgba(255, 122, 74, 0.16);
+  --fossil-ink: #ff8f66;               /* fossil text sitting on --fossil-soft */
+  --fossil-line: rgba(255, 122, 74, 0.45);
+  --clean: #4fd4d0;                    /* hsl(178 62% 57%): carbon-free generation */
+  --clean-soft: rgba(79, 212, 208, 0.16);
+  --clean-ink: #66dcd8;
+  --clean-line: rgba(79, 212, 208, 0.45);
+  --clean-dim: rgba(79, 212, 208, 0.42); /* the same series, de-emphasised (daytime hours) */
+  --warn: #e8b43f;                     /* data flagged, corrected or provisional */
+  --warn-soft: rgba(232, 180, 63, 0.16);
+  --warn-line: rgba(232, 180, 63, 0.45);
+
+  /* semantic aliases: a direction of travel, not a new hue */
+  --pos: #4fd4d0;                      /* improving  (= --clean) */
+  --neg: #ff7a4a;                      /* getting worse (= --fossil) */
+  --pos-soft: rgba(79, 212, 208, 0.16);
+  --neg-soft: rgba(255, 122, 74, 0.16);
 
   /* hairlines: soft = structure (cards, row dividers), strong = resting control edges,
      focus = hover. Keyboard focus is the ring, never a border change alone. */
-  --line-soft: rgba(255, 255, 255, 0.06);
-  --line-strong: rgba(255, 255, 255, 0.1);
-  --line-focus: rgba(255, 255, 255, 0.2);
-  --ring: 0 0 0 2px rgba(255, 255, 255, 0.25);
-  --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
-  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --line-soft: rgba(255, 255, 255, 0.08);   /* = --n4 */
+  --line-strong: rgba(255, 255, 255, 0.14); /* = --n5 */
+  --line-focus: rgba(255, 255, 255, 0.26);
+  --ring: 0 0 0 2px rgba(255, 255, 255, 0.34);
+  --shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 6px 20px rgba(0, 0, 0, 0.5);
 
   --font-ui: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
   --font-display: 'Inter Variable', system-ui, -apple-system, 'Helvetica Neue', sans-serif;

@@ -7,6 +7,7 @@ import { loadRegions, loadAlerts, loadCompanies, loadCompany, loadFacilities, us
 import { Loading, ErrorState } from '../components/States.jsx'
 import { pct1 } from '../lib/findings.js'
 import { href } from '../router.js'
+import '../styles/pages.css'
 
 // The sheets: every dataset the answers are built from, sortable, filterable, exportable.
 const SHEETS = [
@@ -39,10 +40,10 @@ export default function Data({ route }) {
   const column = (
     <>
       <Card title={<><b>Data</b> · the sheets behind every answer</>} onClose={back}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{SHEETS.map(([id, label]) => <Chip key={id} small active={id === t} href={`#/data?t=${id}`}>{label}</Chip>)}</div>
-        <p className="note" style={{ marginTop: 10 }}>Sort any column, filter any text, download the CSV. Hourly EIA-930 via PUDL through 2026-09-05; claims read off the rendered pages of each company's own reports; site mapping and operators hand-curated.</p>
+        <div className="pg-chips">{SHEETS.map(([id, label]) => <Chip key={id} small active={id === t} href={`#/data?t=${id}`}>{label}</Chip>)}</div>
+        <p className="pg-lede">Sort any column, filter any text, download the CSV. Hourly EIA-930 via PUDL through 2026-09-05; claims read off the rendered pages of each company's own reports; site mapping and operators hand-curated.</p>
       </Card>
-      {loading ? <Card><Loading what="the sheet" /></Card> : error ? <Card><ErrorState error={error} onRetry={reload} /></Card> : <Card><Table columns={data.columns} rows={data.rows} sortKey={data.sortKey} defaultSort={data.defaultSort} rowHref={data.rowHref} rowKey={data.rowKey} filter csvName={`wattson-${t}`} dense /></Card>}
+      {loading ? <Card><Loading what="the sheet" /></Card> : error ? <Card><ErrorState error={error} onRetry={reload} /></Card> : <Card><Table columns={data.columns} rows={data.rows} sortKey={data.sortKey} defaultSort={data.defaultSort} rowHref={data.rowHref} rowKey={data.rowKey} filter csvName={`wattson-${t}`} dense maxHeight="min(66vh, 720px)" /></Card>}
     </>
   )
   return <Shell page="data" globe={globe} column={column} columnWidth={860} />

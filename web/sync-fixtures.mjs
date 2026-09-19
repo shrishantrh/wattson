@@ -14,6 +14,12 @@ const used = {}
 for (const f of jsons(provisional)) { cpSync(new URL(f, provisional), new URL(f, dstFix)); used[f] = 'provisional' }
 for (const f of jsons(contract)) { cpSync(new URL(f, contract), new URL(f, dstFix)); used[f] = 'fixtures/' }
 console.log('fixtures synced:', Object.entries(used).map(([f, src]) => `${f} (${src})`).join(', ') || 'none')
+// The 365x24 heatmaps the region pages draw; the export only carries a heatmap_uri.
+const heat = new URL('../dashboard/public/data/heatmaps/', import.meta.url)
+const dstHeat = new URL('./public/data/heatmaps/', import.meta.url)
+rmSync(new URL('./public/data/', import.meta.url), { recursive: true, force: true })
+if (existsSync(heat)) { mkdirSync(dstHeat, { recursive: true }); let n = 0; for (const f of jsons(heat)) { cpSync(new URL(f, heat), new URL(f, dstHeat)); n++ } console.log('heatmaps synced:', n) }
+else console.log('no heatmaps found')
 rmSync(dstApi, { recursive: true, force: true })
 if (existsSync(staticExport)) { cpSync(staticExport, dstApi, { recursive: true }); console.log('static export synced from server/static_export -> public/api') }
 else console.log('no server/static_export yet; the app reads fixtures')

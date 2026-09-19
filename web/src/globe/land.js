@@ -121,3 +121,107 @@ export function loadStateMesh() {
   }
   return statesPromise
 }
+
+// ---------- dot field: one H3 cell per land dot, built once per page ----------
+
+const US_RES = 4 // ~26 km cells over the US: the country we actually talk about reads detailed
+const WORLD_RES = 3 // ~68 km cells everywhere else: context, and the cost the old layer already paid
+const EARTH_KM = 6371
+
+let fieldPromise = null
+
+// Yield to the event loop between chunks. Deliberately NOT requestAnimationFrame: a globe
+// mounted in a background tab gets no frames, and the build would never finish. A MessageChannel
+// task is not clamped the way a background setTimeout is, so the field still completes.
+const yieldToLoop = () =>
+  new Promise((resolve) => {
+    if (typeof MessageChannel === 'function') {
+      const ch = new MessageChannel()
+      ch.port1.onmessage = () => {
+        ch.port1.close()
+        resolve()
+      }
+      ch.port2.postMessage(0)
+    } else {
+      setTimeout(resolve, 0)
+    }
+  })
+
+/**
+ * Land as an H3 cell field: one dot per cell, at resolution 4 over the United States and 3
+ * over the rest of the world, with each cell's true area (so a dot can be sized by the cell
+ * it stands for) and a flag for cells on the edge of the land mass (coastlines and borders).
+ *
+ * Built once per page and cached, off the countries GeoJSON. The work is chunked across
+ * animation frames so the ~0.8 s of h3 polygon filling never lands as one long task.
+ *
+ * @returns {Promise<{ count: number, lat: Float32Array, lng: Float32Array, radiusKm: Float32Array, cls: Uint8Array, edge: Uint8Array }>}
+ * `cls` is 2 for the US, 1 for Canada/Mexico, 0 for the rest; `edge` is 1 when the cell has a
+ * missing neighbour; `radiusKm` is the radius of a disc with the cell's area.
+ */
+export function loadDotField() {
+  if (!fieldPromise) {
+    fieldPromise = buildDotField().catch((err) => {
+      fieldPromise = null
+      throw err
+    })
+  }
+  return fieldPromise
+}
+
+async function buildDotField() {
+  const { cellToLatLng, cellArea, gridDisk, polygonToCells } = await import('h3-js')
+  const countries = await loadCountries()
+  const cells = new Map() // h3 index -> class (2 US, 1 neighbour, 0 rest)
+
+  let since = performance.now()
+  for (const f of countries) {
+    const us = isUS(f)
+    const cls = us ? 2 : isUSNeighbor(f) ? 1 : 0
+    const res = us ? US_RES : WORLD_RES
+    const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates
+    for (const rings of polys) {
+      let out
+      try {
+        out = polygonToCells(rings, res, true)
+      } catch {
+        continue // a ring h3 cannot fill: that polygon simply gets no dots
+      }
+      for (const c of out) {
+        const prev = cells.get(c)
+        if (prev === undefined || prev < cls) cells.set(c, cls)
+      }
+    }
+    if (performance.now() - since > 12) {
+      await yieldToLoop()
+      since = performance.now()
+    }
+  }
+
+  const count = cells.size
+  const lat = new Float32Array(count)
+  const lng = new Float32Array(count)
+  const radiusKm = new Float32Array(count)
+  const cls = new Uint8Array(count)
+  const edge = new Uint8Array(count)
+  let i = 0
+  since = performance.now()
+  for (const [cell, klass] of cells) {
+    const ll = cellToLatLng(cell)
+    lat[i] = ll[0]
+    lng[i] = ll[1]
+    radiusKm[i] = Math.sqrt(cellArea(cell, 'km2') / Math.PI)
+    cls[i] = klass
+    // A cell missing any of its six neighbours sits on a coast or a land border.
+    const disk = gridDisk(cell, 1)
+    let n = 0
+    for (const d of disk) if (cells.has(d)) n++
+    edge[i] = n < disk.length ? 1 : 0
+    i++
+    if ((i & 1023) === 0 && performance.now() - since > 12) {
+      await yieldToLoop()
+      since = performance.now()
+    }
+  }
+  return { count, lat, lng, radiusKm, cls, edge, earthKm: EARTH_KM }
+}

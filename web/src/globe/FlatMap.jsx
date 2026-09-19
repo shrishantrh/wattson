@@ -58,11 +58,12 @@ function projection(size, bbox) {
  * canvas, lays a faint daylight wash over the day side when `terminator` is enabled, and
  * overlays points, pulse rings and labels as SVG.
  *
- * Accepted but ignored (no meaning in 2D): interactive, autoRotate, atmosphere, quality,
- * terminator.dayDim.
+ * Accepted but ignored (no meaning in 2D): interactive, autoRotate, intro, heat, markers,
+ * atmosphere, quality, style, landColors, terminator.dayDim.
  *
  * @param {object} props
  * @param {{ lat: number, lng: number, altitude: number }} [props.view]
+ * @param {{ lat: number, lng: number, altitude?: number }} [props.focus] overrides `view` while set, as on the globe
  * @param {{ lat: [number, number], lng: [number, number] }} [props.bbox]
  * @param {Array<{ id, lat, lng, r?, color?, hollow? }>} [props.points] `r` in degrees, as on the globe
  * @param {Array<{ id, lat, lng, color?, maxR?, speed?, period? }>} [props.rings] degrees, degrees/second, milliseconds
@@ -75,6 +76,7 @@ function projection(size, bbox) {
  */
 export default function FlatMap({
   view = DEFAULT_VIEW,
+  focus,
   bbox: bboxProp,
   points = EMPTY,
   rings = EMPTY,
@@ -98,10 +100,13 @@ export default function FlatMap({
     onReadyRef.current = onReady
   })
 
-  const hasView = !!view
-  const viewLat = view ? view.lat : undefined
-  const viewLng = view ? view.lng : undefined
-  const viewAlt = view ? view.altitude : undefined
+  // `focus` wins over `view` while it is set, as on the globe; there is no camera to ease, so
+  // the crop simply moves.
+  const cam = focus ? { lat: focus.lat, lng: focus.lng, altitude: focus.altitude != null ? focus.altitude : (view ? view.altitude : undefined) } : view
+  const hasView = !!cam
+  const viewLat = cam ? cam.lat : undefined
+  const viewLng = cam ? cam.lng : undefined
+  const viewAlt = cam ? cam.altitude : undefined
   const bbox = useMemo(
     () => bboxFromView(hasView ? { lat: viewLat, lng: viewLng, altitude: viewAlt } : null, bboxProp),
     [hasView, viewLat, viewLng, viewAlt, bboxProp],

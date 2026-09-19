@@ -1,25 +1,33 @@
 @import './tokens.css';
+/* motion.css owns every movement in the app (entrances, hover/press, disclosure, the globe's
+   acknowledgement of a navigation) and the single prefers-reduced-motion switch that turns all
+   of it off. Rules there are written to sit on top of the ones below. */
+@import './motion.css';
 
 /* Wattson. Input-first: the globe, one box, one answer, evidence on request.
    Rules: Inter for everything you read, JetBrains Mono for small figures and keys only.
-   One accent, no glow, no blur. Motion only after a user action or a data change.
+   Two signal hues and only two: --clean (cyan-teal, carbon-free generation) against
+   --fossil (the ember, what is burned), plus --warn amber for data that is flagged or
+   corrected. Nothing is coloured for decoration; chrome and controls stay neutral so the
+   two hues always read as data. No glow, no blur. Motion only after a user action or a
+   data change.
    Rhythm: 4/8 spacing; controls 32px tall with a 10px radius; cards 14px; hairlines at 6%
    (structure), 10% (control edges), 20% (hover). Type: verdict 21/600, numerals 26/300,
    labels 11-12 muted, chips and buttons 13/500. Lines are for lists; cards use space. */
 *, *::before, *::after { box-sizing: border-box; }
 * { scrollbar-width: thin; }
-html { -webkit-text-size-adjust: 100%; scrollbar-color: rgba(255, 255, 255, 0.12) transparent; }
+html { -webkit-text-size-adjust: 100%; scrollbar-color: rgba(255, 255, 255, 0.16) transparent; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 14px; line-height: 1.5; font-feature-settings: var(--ff-ui); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow: hidden; }
 a { color: inherit; text-decoration: none; }
 button, input { font: inherit; color: inherit; }
 h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 p { margin: 0; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
-::selection { background: rgba(233, 236, 233, 0.18); color: var(--ink); }
+::selection { background: rgba(237, 240, 237, 0.22); color: var(--ink); }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.16); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--line-focus); }
 /* focus: one 2px ring on every interactive element, keyboard only. Text inputs inside a box
    (.searchbox, .quick, the palette) hand the ring to the box so ring and border align. */
 :where(button, a, [tabindex]):focus-visible { outline: none; box-shadow: var(--ring); }
@@ -29,7 +37,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .mono, .quick .k, .stage-ctl button, .row .n, .kvrows li span:last-child, .field, .ring text, .hourbars-axis, .pair .delta, .ruler, .demo-hud, .kbd { font-feature-settings: normal; letter-spacing: 0; }
 .muted { color: var(--muted); }
 .ink2 { color: var(--ink-2); }
-.accent { color: var(--accent); }
+/* meaning, not decoration: .accent/.fossil/.neg = burned or getting worse, .clean/.pos =
+   carbon-free or improving, .warn = the figure is flagged or corrected. */
+.accent, .fossil, .neg { color: var(--fossil); }
+.clean, .pos { color: var(--clean); }
+.warn { color: var(--warn); }
 
 /* stage */
 .app { position: fixed; inset: 0; background: var(--bg); }
@@ -60,7 +72,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .stage-ctl button { width: var(--h-ctl); height: var(--h-ctl); border-radius: var(--radius-ctl); border: 1px solid var(--line-strong); background: var(--surface-a); color: var(--ink-2); cursor: pointer; font-size: 13px; display: grid; place-items: center; font-family: var(--font-mono); transition: var(--tr-ui); }
 .stage-ctl button:hover { color: var(--ink); border-color: var(--line-focus); }
 .stage-ctl button:active { transform: scale(0.98); }
-.stage-ctl button.on { color: var(--accent); border-color: var(--accent); }
+.stage-ctl button.on { color: var(--ink); border-color: var(--line-focus); background: var(--surface-a-2); }
 .stage-ctl .gap { height: 6px; }
 
 /* landing overlay: headline, one line, the box, two rows of chips, three steps. Centred on the
@@ -78,17 +90,19 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .searchbox button { background: var(--ink); color: var(--bg); border: 0; border-radius: 8px; height: 38px; padding: 0 16px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
 .searchbox button:hover { background: #fff; }
 .searchbox button:active { transform: scale(0.98); }
-.hint { margin-top: 10px; font-size: 13px; color: var(--accent); min-height: 18px; text-align: center; }
+.hint { margin-top: 10px; font-size: 13px; color: var(--warn); min-height: 18px; text-align: center; }
 .examples { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; align-items: center; }
 .ex-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; }
 .ex-label { font-size: 12px; color: var(--muted); margin-right: 4px; }
 .chip { display: inline-flex; align-items: center; gap: 6px; height: var(--h-ctl); border: 1px solid var(--line-strong); background: var(--surface-a); border-radius: var(--radius-ctl); padding: 0 12px; font-size: 13px; font-weight: 500; line-height: 1; color: var(--ink-2); cursor: pointer; white-space: nowrap; user-select: none; transition: var(--tr-ui); }
 .chip:hover { color: var(--ink); border-color: var(--line-focus); }
 .chip:active { transform: scale(0.98); }
-.chip.on { color: var(--ink); border-color: var(--accent); }
+.chip.on { color: var(--ink); border-color: var(--line-focus); background: rgba(255, 255, 255, 0.07); }
 .chip.dim { color: var(--muted); border-style: dashed; }
 .chip.sm { height: var(--h-ctl-sm); padding: 0 9px; font-size: 12px; border-radius: var(--radius-sm); }
-.chip.accent { color: var(--accent); border-color: var(--accent); }
+.chip.accent, .chip.fossil { color: var(--fossil-ink); border-color: var(--fossil-line); background: var(--fossil-soft); }
+.chip.clean { color: var(--clean-ink); border-color: var(--clean-line); background: var(--clean-soft); }
+.chip.warn { color: var(--warn); border-color: var(--warn-line); background: var(--warn-soft); }
 .chip .x { color: var(--muted); font-size: 12px; margin-left: 2px; transition: color var(--dur-fast) var(--ease); }
 .chip .x:hover { color: var(--ink); }
 /* how it works: three numbered steps under the chips. 12px, one line each, a mono numeral in a
@@ -105,9 +119,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .column::-webkit-scrollbar { width: 5px; }
 .column-wrap { position: absolute; top: 66px; left: 22px; bottom: 18px; z-index: 4; }
 .column-wrap > .column { position: absolute; inset: 0; width: auto; left: 0; top: 0; bottom: 0; }
-.card { background: var(--surface-a); border: 1px solid var(--line-soft); border-radius: var(--radius-card); padding: 18px 20px; flex: none; min-width: 0; overflow-wrap: break-word; transition: border-color var(--dur-fast) var(--ease); }
+.card { background: var(--surface-a); border: 1px solid var(--line-strong); border-radius: var(--radius-card); padding: 18px 20px; flex: none; min-width: 0; overflow-wrap: break-word; box-shadow: var(--shadow-sm); transition: border-color var(--dur-fast) var(--ease); }
+/* .card.raised: the next step up the ladder (popovers, the palette, the tour caption) */
+.card.raised { background: var(--surface-a-2); box-shadow: var(--shadow); }
 .card > * { min-width: 0; }
-a.card:hover, .card.link:hover { border-color: var(--line-strong); }
+a.card:hover, .card.link:hover { border-color: var(--line-focus); }
 .card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 28px; margin-bottom: 12px; }
 .eyebrow { font-size: 12px; font-weight: 500; color: var(--muted); line-height: 1.3; }
 .eyebrow b { color: var(--ink); font-weight: 500; }
@@ -121,7 +137,9 @@ a.card:hover, .card.link:hover { border-color: var(--line-strong); }
 .verdict .accent { font-weight: 600; }
 .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
 .num .v { font-family: var(--font-display); font-weight: var(--w-num); font-size: var(--t-num); letter-spacing: -0.02em; line-height: 1.05; font-variant-numeric: tabular-nums; font-feature-settings: var(--ff-num); white-space: nowrap; }
-.num .v.accent { color: var(--accent); }
+.num .v.accent, .num .v.fossil, .num .v.neg { color: var(--fossil); }
+.num .v.clean, .num .v.pos { color: var(--clean); }
+.num .v.warn { color: var(--warn); }
 .num .l { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.35; }
 .num .s { font-size: 11px; color: var(--ink-2); }
 .toggle { margin-top: 16px; width: 100%; height: var(--h-ctl); display: flex; justify-content: space-between; align-items: center; background: transparent; border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); padding: 0 12px; font-size: 13px; font-weight: 500; color: var(--ink-2); cursor: pointer; transition: var(--tr-ui); }
@@ -141,13 +159,15 @@ a.card:hover, .card.link:hover { border-color: var(--line-strong); }
 .row .d { font-size: 12px; color: var(--muted); margin-top: 1px; }
 .row .n { font-family: var(--font-mono); font-size: 12px; color: var(--ink); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .row .n small { color: var(--muted); font-size: 11px; }
-.row.lead .t { color: var(--accent); }
+.row.lead .t { color: var(--fossil); }
+.row.clean .t { color: var(--clean); }
 .claim { padding: 12px 0; border-top: 1px solid var(--line-soft); }
 .claim:first-child { border-top: 0; padding-top: 2px; }
 .claim .q { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.45; }
 .claim .m { font-size: 12px; color: var(--muted); margin-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.claim .why { font-size: 12px; color: var(--ink-2); margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--accent); }
-.kvrows li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid rgba(255, 255, 255, 0.06); font-size: 13px; }
+.claim .why { font-size: 12px; color: var(--ink-2); margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--fossil); }
+.claim.clean .why { border-left-color: var(--clean); }
+.kvrows li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line-soft); font-size: 13px; }
 .kvrows li:first-child { border-top: 0; }
 .kvrows li > span { min-width: 0; overflow-wrap: anywhere; }
 .kvrows li span:first-child { color: var(--muted); }
@@ -156,7 +176,7 @@ a.card:hover, .card.link:hover { border-color: var(--line-strong); }
 .note b { color: var(--ink-2); font-weight: 500; }
 .formline { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
 .formline:last-child { margin-bottom: 0; }
-.field { height: var(--h-ctl); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); padding: 0 10px; font-size: 13px; color: var(--ink); outline: none; font-family: var(--font-mono); transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.field { height: var(--h-ctl); background: rgba(255, 255, 255, 0.05); border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); padding: 0 10px; font-size: 13px; color: var(--ink); outline: none; font-family: var(--font-mono); transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
 .field::placeholder { color: var(--muted); }
 .field:focus { border-color: var(--line-focus); }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: var(--h-ctl); background: transparent; border: 1px solid var(--line-strong); color: var(--ink-2); border-radius: var(--radius-ctl); padding: 0 12px; font-size: 13px; font-weight: 500; line-height: 1; cursor: pointer; white-space: nowrap; user-select: none; transition: var(--tr-ui); }
@@ -168,28 +188,43 @@ a.card:hover, .card.link:hover { border-color: var(--line-strong); }
 .instrument { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
 .ring { width: 56px; height: 56px; }
 .ring circle { fill: none; stroke-width: 3; }
-.ring .track { stroke: rgba(255, 255, 255, 0.08); }
-.ring .val { stroke: var(--accent); transform: rotate(-90deg); transform-origin: 50% 50%; }
+.ring .track { stroke: rgba(255, 255, 255, 0.1); }
+/* the ring reads a carbon-free share (Compare.jsx passes clean-at-night), so its arc is
+   clean; .ring.fossil for the inverse reading. */
+.ring .val { stroke: var(--clean); transform: rotate(-90deg); transform-origin: 50% 50%; }
+.ring.fossil .val { stroke: var(--fossil); }
 .ring text { font-family: var(--font-mono); font-size: 12px; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
 .ticks { display: inline-flex; gap: 2px; height: 8px; width: 100%; }
-.ticks i { flex: 1; background: rgba(255, 255, 255, 0.08); border-radius: 1px; }
+.ticks i { flex: 1; background: rgba(255, 255, 255, 0.1); border-radius: 1px; }
 .ticks i.on { background: var(--ink-2); }
-.ticks.accent i.on { background: var(--accent); }
+.ticks.accent i.on, .ticks.fossil i.on { background: var(--fossil); }
+.ticks.clean i.on { background: var(--clean); }
+.ticks.warn i.on { background: var(--warn); }
 .hourbars { display: flex; align-items: flex-end; gap: 3px; height: 54px; }
-.hourbars i { flex: 1; background: rgba(255, 255, 255, 0.18); min-height: 2px; border-radius: 1px; }
-.hourbars i.night { background: var(--accent); }
-.hourbars i.day { background: var(--ink-2); }
+.hourbars i { flex: 1; background: rgba(255, 255, 255, 0.16); min-height: 2px; border-radius: 1px; }
+/* every bar is a CLEAN share (widgets.jsx labels each one "% clean"), so the series is one
+   hue: night (00:00-05:59, the hours the whole argument turns on) at full strength, daytime
+   dimmed, the rest neutral. Ember here would say "fossil", the opposite of what it measures. */
+.hourbars i.night { background: var(--clean); }
+.hourbars i.day { background: var(--clean-dim); }
+/* .hourbars.fossil: the same 24 bars when the values are a fossil share instead */
+.hourbars.fossil i.night { background: var(--fossil); }
+.hourbars.fossil i.day { background: rgba(255, 122, 74, 0.42); }
 .hourbars-axis { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--muted); margin-top: 5px; }
-.seg { display: inline-flex; flex-wrap: wrap; min-height: var(--h-ctl); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); padding: 3px; gap: 2px; }
-.seg button { background: transparent; border: 0; border-radius: 7px; height: var(--h-ctl-sm); padding: 0 10px; font-size: 12px; font-weight: 500; line-height: 1; color: var(--muted); cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
-.seg button.on { background: rgba(255, 255, 255, 0.1); color: var(--ink); }
+.seg { display: inline-flex; flex-wrap: wrap; min-height: var(--h-ctl); background: rgba(255, 255, 255, 0.05); border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); padding: 3px; gap: 2px; }
+.seg button { background: transparent; border: 0; border-radius: 7px; height: var(--h-ctl-sm); padding: 0 10px; font-size: 12px; font-weight: 500; line-height: 1; color: var(--ink-2); cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
+.seg button.on { background: rgba(255, 255, 255, 0.12); color: var(--ink); }
 .seg button:hover { color: var(--ink); }
 .state { padding: 12px 0; color: var(--muted); font-size: 13px; }
 .state.error { color: var(--ink); }
 .state .btn { margin-left: 10px; }
 .banner { border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); padding: 8px 12px; font-size: 12px; color: var(--ink-2); margin-bottom: 12px; }
-.banner-error { border-color: var(--accent); color: var(--ink); }
-.banner-provisional { border-style: dashed; color: var(--muted); }
+/* amber = the data is flagged, corrected or provisional (it is used for caveats as well as
+   render failures); clean and fossil banners state which way a finding cuts. */
+.banner-error { border-color: var(--warn-line); background: var(--warn-soft); color: var(--ink); }
+.banner-provisional { border-style: dashed; border-color: var(--warn-line); color: var(--ink-2); }
+.banner-clean { border-color: var(--clean-line); background: var(--clean-soft); color: var(--ink); }
+.banner-fossil { border-color: var(--fossil-line); background: var(--fossil-soft); color: var(--ink); }
 
 /* the finding (evidence) */
 .hero-num { font-family: var(--font-display); font-weight: var(--w-num); font-size: clamp(40px, 3.4vw, 54px); letter-spacing: -0.03em; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: var(--ff-num); margin-top: 14px; }
@@ -198,15 +233,19 @@ a.card:hover, .card.link:hover { border-color: var(--line-strong); }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
 .pair .label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
 .pair .val { font-family: var(--font-display); font-weight: var(--w-num); font-size: 40px; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; font-feature-settings: var(--ff-num); }
-.pair .val.accent { color: var(--accent); }
+.pair .val.accent, .pair .val.fossil { color: var(--fossil); }
+.pair .val.clean { color: var(--clean); }
 .pair .delta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
 .yearrow { display: flex; align-items: flex-end; gap: 14px; margin-top: 14px; }
 .yearrow .year { font-family: var(--font-display); font-weight: var(--w-num); font-size: 26px; line-height: 1; min-width: 3ch; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; font-feature-settings: var(--ff-num); }
 .ruler { position: relative; flex: 1; display: flex; justify-content: space-between; border-top: 1px solid var(--line-strong); padding-top: 7px; font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
 .ruler span.on { color: var(--ink); }
-.ruler i { position: absolute; left: 0; top: -1px; height: 2px; background: var(--accent); }
+.ruler i { position: absolute; left: 0; top: -1px; height: 2px; background: var(--fossil); }
+.ruler.clean i { background: var(--clean); }
 .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; font-size: 11px; color: var(--muted); }
-.legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; background: var(--accent); }
+.legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; background: var(--fossil); }
+.legend i.clean { background: var(--clean); }
+.legend i.warn { background: var(--warn); }
 .legend i.hollow { background: transparent; border: 1px solid var(--ink-2); }
 .legend i.dim { background: var(--muted); }
 .legend i.ink { background: var(--ink); }
@@ -216,18 +255,20 @@ a.card:hover, .card.link:hover { border-color: var(--line-strong); }
    carries the accent on its border. */
 .gpin { --pin: var(--accent); position: relative; display: block; width: 0; height: 0; color: var(--ink); transition: opacity var(--dur-fast) var(--ease); }
 .gpin-stem { position: absolute; left: -0.5px; bottom: 0; width: 1px; height: 24px; background: var(--pin); opacity: 0.8; }
-.gpin-tile { position: absolute; left: -3.5px; bottom: -3.5px; width: 7px; height: 7px; border-radius: 50%; background: var(--pin); box-shadow: 0 0 0 2px rgba(10, 12, 11, 0.9); }
+.gpin-tile { position: absolute; left: -3.5px; bottom: -3.5px; width: 7px; height: 7px; border-radius: 50%; background: var(--pin); box-shadow: 0 0 0 2px rgba(8, 10, 9, 0.92); }
 .gpin.hollow .gpin-tile { background: transparent; border: 1px solid var(--pin); }
 .gpin.muted { --pin: var(--muted); }
-.gpin-label { position: absolute; left: -2px; bottom: 24px; transform: translateX(-50%); white-space: nowrap; font-family: var(--font-ui); font-size: 11px; font-weight: 500; letter-spacing: 0; color: var(--ink); background: var(--surface-a); padding: 4px 9px; line-height: 1.2; border-radius: 7px; border: 1px solid rgba(255, 255, 255, 0.12); transition: opacity var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.gpin.clean { --pin: var(--clean); }
+.gpin.warn { --pin: var(--warn); }
+.gpin-label { position: absolute; left: -2px; bottom: 24px; transform: translateX(-50%); white-space: nowrap; font-family: var(--font-ui); font-size: 11px; font-weight: 500; letter-spacing: 0; color: var(--ink); background: var(--surface-a-2); padding: 4px 9px; line-height: 1.2; border-radius: 7px; border: 1px solid var(--line-strong); box-shadow: var(--shadow-sm); transition: opacity var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
 .gpin-label b { color: var(--pin); font-weight: 600; margin-right: 5px; }
-.gpin.lead .gpin-label { border-color: var(--accent); }
+.gpin.lead .gpin-label { border-color: var(--pin); }
 .gpin.left .gpin-label { transform: translateX(-100%); left: -8px; }
 .gpin.right .gpin-label { transform: none; left: 8px; }
 a.gpin:hover .gpin-label { border-color: var(--line-focus); }
 
 .demo-hud { position: fixed; bottom: 14px; right: 60px; z-index: 30; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); background: var(--surface-a); border: 1px solid var(--line-strong); border-radius: 8px; padding: 6px 10px; }
-.demo-hud b { color: var(--accent); font-weight: 500; }
+.demo-hud b { color: var(--fossil); font-weight: 500; }
 
 /* utilities */
 .kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; font-family: var(--font-mono); font-size: 10px; font-weight: 500; line-height: 1; color: var(--muted); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-strong); border-radius: 5px; box-shadow: inset 0 -1px 0 var(--line-soft); vertical-align: middle; }
@@ -241,7 +282,7 @@ a.gpin:hover .gpin-label { border-color: var(--line-focus); }
 .pill.on { color: var(--ink); border-color: var(--line-focus); }
 /* .skeleton: solid placeholder blocks for text still loading. No shimmer, no motion.
    Stack them for lines: <div class="skeleton lg"/><div class="skeleton w-2"/> */
-.skeleton { display: block; height: 12px; width: 100%; border-radius: 6px; background: rgba(255, 255, 255, 0.07); }
+.skeleton { display: block; height: 12px; width: 100%; border-radius: 6px; background: rgba(255, 255, 255, 0.08); }
 .skeleton + .skeleton { margin-top: 10px; }
 .skeleton.lg { height: 20px; border-radius: 7px; }
 .skeleton.num { height: 26px; width: 56%; }
@@ -264,7 +305,7 @@ a.gpin:hover .gpin-label { border-color: var(--line-focus); }
 
 /* tooltip: [data-tip="text"] shows above on hover/focus; data-tip-side="left" for the right-edge controls */
 :where([data-tip]) { position: relative; }
-[data-tip]::after { content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%) translateY(2px); padding: 4px 8px; font-family: var(--font-ui); font-size: 11px; font-weight: 500; line-height: 1.3; letter-spacing: 0; text-transform: none; white-space: nowrap; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line-strong); border-radius: 6px; box-shadow: var(--shadow-sm); opacity: 0; pointer-events: none; z-index: 20; transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+[data-tip]::after { content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%) translateY(2px); padding: 4px 8px; font-family: var(--font-ui); font-size: 11px; font-weight: 500; line-height: 1.3; letter-spacing: 0; text-transform: none; white-space: nowrap; color: var(--ink); background: var(--surface-3); border: 1px solid var(--line-strong); border-radius: 6px; box-shadow: var(--shadow); opacity: 0; pointer-events: none; z-index: 20; transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
 [data-tip]:hover::after, [data-tip]:focus-visible::after { opacity: 1; transform: translateX(-50%) translateY(0); }
 [data-tip-side="left"]::after { left: auto; right: calc(100% + 8px); bottom: auto; top: 50%; transform: translateY(-50%) translateX(2px); }
 [data-tip-side="left"]:hover::after, [data-tip-side="left"]:focus-visible::after { transform: translateY(-50%) translateX(0); }
@@ -298,17 +339,27 @@ a.gpin:hover .gpin-label { border-color: var(--line-focus); }
 
 /* compare card: one segment per candidate, width = clean share at night */
 .sharebar { display: flex; gap: 3px; height: 6px; margin-top: 14px; }
-.sharebar span { display: block; height: 100%; background: var(--ink-2); border-radius: 2px; opacity: 0.55; }
-.sharebar span.best { background: var(--accent); opacity: 1; }
+.sharebar span { display: block; height: 100%; background: var(--ink-2); border-radius: 2px; opacity: 0.5; }
+/* width = carbon-free share at night, so the winner is the cleanest grid: clean, not ember */
+.sharebar span.best { background: var(--clean); opacity: 1; }
+.sharebar span.worst { background: var(--fossil); opacity: 1; }
 .note.live b { color: var(--ink); font-weight: 500; }
 
 /* claim vs physical */
 .gapbar { display: grid; gap: 5px; margin: 8px 0 4px; }
 .gapbar-row { display: grid; grid-template-columns: 56px 1fr 56px; gap: 8px; align-items: center; font-size: 11px; color: var(--muted); }
-.gapbar-t { position: relative; height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
-.gapbar-t i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 3px; }
+.gapbar-t { position: relative; height: 8px; background: rgba(255, 255, 255, 0.09); border-radius: 3px; overflow: hidden; }
+/* the claimed figure stays neutral (it is a statement, not a measurement); the measured band
+   carries the hue: ember when the grid is dirtier than the claim, clean when it holds up.
+   Check.jsx passes a background inline; the modifiers below are for rows that do not. */
+.gapbar-t i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 3px; background: var(--ink-2); }
+.gapbar-t i.clean, .gapbar-row.clean .gapbar-t i { background: var(--clean); }
+.gapbar-t i.fossil, .gapbar-row.fossil .gapbar-t i { background: var(--fossil); }
+.gapbar-t i.claim { background: var(--ink-2); }
 .gapbar-v { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink); text-align: right; }
-.gapbar-v.accent { color: var(--accent); }
+/* His colour semantics win: clean is cool, fossil is ember, measured for contrast. */
+.gapbar-v.accent, .gapbar-v.fossil { color: var(--fossil); }
+.gapbar-v.clean { color: var(--clean); }
 
 /* --- ask layer ---------------------------------------------------------------- */
 .pal-askbar { display: flex; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }

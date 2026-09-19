@@ -1,9 +1,13 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import '../styles/companies.css'
+import '../styles/dataviz.css'
 
 // <Dumbbell rows={[{ id, label, a, b, aLabel?, bLabel?, href? }]} aLabel="talk" bLabel="walk" format={v => `${Math.round(v)}%`} gap={20} />
-// One row per item on a 0–100 axis: a hollow dot at `a`, a filled dot at `b`, a thin line between them.
-// The line turns accent only when b trails a by more than `gap` points; everything else stays in ink.
+// One row per item on a 0–100 axis: a hollow neutral dot at `a` (what is said), a filled clean dot
+// at `b` (what the grid actually delivers), and a thick round-capped segment between them. The
+// segment turns ember only when b trails a by more than `gap` points; everything else stays neutral.
+// The 50% gridline is drawn a step stronger and its axis label brightened, so every row is read
+// against the same halfway mark.
 // Values are 0–100; a null value draws no dot. Rows are links when `href` is given. Pure SVG, measured
 // to the container's width so text stays at CSS pixel sizes (13px labels, 12px mono values).
 const ROW = 34, AXIS = 22, R = 4
@@ -34,7 +38,7 @@ export default function Dumbbell({ rows = [], aLabel = 'talk', bLabel = 'walk', 
     <div ref={host} className="co-dumbbell">
       {w > 0 && (
         <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} role="img" aria-label={`${aLabel} against ${bLabel} for ${n} ${n === 1 ? 'row' : 'rows'}, 0 to 100 percent`}>
-          {[0, 25, 50, 75, 100].map(t => <line key={t} className="co-grid" x1={px(t)} x2={px(t)} y1={0} y2={axisY} />)}
+          {[0, 25, 50, 75, 100].map(t => <line key={t} className={t === 50 ? 'co-half' : 'co-grid'} x1={px(t)} x2={px(t)} y1={0} y2={axisY + 4} />)}
           {rows.map((r, i) => {
             const y = i * ROW + ROW / 2
             const both = isNum(r.a) && isNum(r.b)
@@ -56,7 +60,7 @@ export default function Dumbbell({ rows = [], aLabel = 'talk', bLabel = 'walk', 
             return r.href ? <a key={r.id ?? i} className="co-link" href={r.href}>{body}</a> : <g key={r.id ?? i}>{body}</g>
           })}
           <line className="co-tick" x1={x0} x2={x1} y1={axisY + 0.5} y2={axisY + 0.5} />
-          {[0, 50, 100].map(t => <text key={t} className="co-axis" x={px(t)} y={axisY + 14} textAnchor={t === 0 ? 'start' : t === 100 ? 'end' : 'middle'}>{t === 100 ? '100%' : t}</text>)}
+          {[0, 50, 100].map(t => <text key={t} className={`co-axis${t === 50 ? ' mid' : ''}`} x={px(t)} y={axisY + 14} textAnchor={t === 0 ? 'start' : t === 100 ? 'end' : 'middle'}>{t === 100 ? '100%' : t}</text>)}
           <g className="co-legend">
             <circle className="co-a" cx={4} cy={axisY + 10.5} r={3} />
             <text className="co-axis" x={11} y={axisY + 14}>{aLabel}</text>

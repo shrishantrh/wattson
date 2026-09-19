@@ -4,7 +4,9 @@
 name: pages
 on:
   push:
-    branches: [master]
+    # Whichever of these is pushed last is what the live site shows. Until the freeze the UI
+    # lives on ui/shell; after the release merge, master. Concurrency below makes the latest win.
+    branches: [master, integration, ui/shell]
   workflow_dispatch:
 permissions: { contents: read, pages: write, id-token: write }
 concurrency: { group: pages, cancel-in-progress: true }
