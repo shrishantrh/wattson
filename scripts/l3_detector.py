@@ -18,6 +18,17 @@ Components (all in percentage points except load factor):
   score = z(overnight_excess) + z(neighbor_divergence) + 0.5 * z(load_factor_delta)
           with robust z-scores (median / MAD) across all scored regions.
 
+METHOD FROZEN 2026-09-19 after the first run: weights, the 500 MW cut and the
+p99.5 peak were set before looking at the ranking and are not tuned to it. The
+validation regions (PJM/DOM, PJM/AEP, SWPP/OPPD, ERCO/NCEN) were named in advance.
+The detector flags flat 24/7 load in general: datacenters, crypto mining,
+oilfield electrification. Use "consistent with" language.
+
+pattern label (descriptive, not part of the score):
+  flat-load growth                    growth >= 10% and overnight_excess > 0
+  possible midday solar suppression   growth < 5% and overnight_excess >= 5 points
+  mixed                               everything else
+
 Outputs (data/processed/):
   l3_region_year.csv   region, year, window, avg_mw, overnight_avg_mw, peak_mw, p995_mw, load_factor (p99.5), load_factor_max, hours
   l3_detector.csv      one row per region: components, score, rank
@@ -120,7 +131,18 @@ def detect(stats: pd.DataFrame, codes: pd.DataFrame, window="calendar", base=BAS
     r["score"] = r.z_overnight_excess + r.z_neighbor_divergence + 0.5 * r.z_load_factor_delta
     r = r.sort_values("score", ascending=False)
     r["rank"] = np.arange(1, len(r) + 1)
+    r["pattern"] = r.apply(pattern_label, axis=1)
     return r.reset_index().rename(columns={"index": "region"})
+
+
+def pattern_label(row) -> str:
+    """Descriptive label only; does not affect the score or rank (method frozen).
+    'high' overnight excess = 5 points, about the median plus one robust SD."""
+    if row.growth_pct >= 10 and row.overnight_excess > 0:
+        return "flat-load growth"
+    if row.growth_pct < 5 and row.overnight_excess >= 5:
+        return "possible midday solar suppression"
+    return "mixed"
 
 
 if __name__ == "__main__":
