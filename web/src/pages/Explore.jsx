@@ -33,6 +33,13 @@ function sentence({ n, mx, my, r, preset, sector }) {
   return { text: `${where}, ${mx.phrase} and ${my.phrase} ${verb}, r = ${r.toFixed(2)}: ${reading}${a < 0.3 && dir !== 'none' ? ', but only a little' : ''}.`, strength }
 }
 
+// Pins close together label to opposite sides so they never overlap.
+function sideLabels(pins, dLng = 7, dLat = 2.6) {
+  const out = pins.map(p => ({ ...p }))
+  for (const a of out) for (const b of out) { if (a === b || a.lng >= b.lng) continue; if (Math.abs(a.lng - b.lng) < dLng && Math.abs(a.lat - b.lat) < dLat) a.side = 'left' }
+  return out
+}
+
 export default function Explore({ route }) {
   const { loading, error, data, reload } = useAsync(loadRegions, [])
   const tk = useMemo(() => readTokens(), [])
@@ -75,7 +82,7 @@ export default function Explore({ route }) {
     const located = visible.filter(p => p.lat != null && p.lng != null)
     return { view: sector === 'All' ? US : fitView(located, US), interactive: true,
       points: located.map(p => ({ id: p.id, lat: p.lat, lng: p.lng, r: p.id === sel ? 0.2 : 0.12, color: p.id === sel ? tk.accent : col[p.sector], hollow: p.flagged })),
-      markers: located.filter(p => p.named || p.id === sel).map(p => ({ id: p.id, lat: p.lat, lng: p.lng, label: `${p.label} · ${my.format(p.y)}`, tip: `${mx.short} ${mx.format(p.x)}`, href: href.region(p.id), color: p.id === sel ? tk.accent : tk.ink2, lead: p.id === sel, hollow: p.flagged })) }
+      markers: sideLabels(located.filter(p => p.named || p.id === sel).map(p => ({ id: p.id, lat: p.lat, lng: p.lng, label: `${p.label} · ${my.format(p.y)}`, tip: `${mx.short} ${mx.format(p.x)}`, href: href.region(p.id), color: p.id === sel ? tk.accent : tk.ink2, lead: p.id === sel, hollow: p.flagged }))) }
   }, [visible, sel, sector, tk, mx, my])
 
   const s = data ? sentence({ n: visible.length, mx, my, r: stats.r, preset, sector }) : null

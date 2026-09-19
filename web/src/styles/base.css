@@ -155,7 +155,7 @@ a.card:hover, .card.link:hover { border-color: var(--line-strong); }
 .hourbars i.night { background: var(--accent); }
 .hourbars i.day { background: var(--ink-2); }
 .hourbars-axis { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--muted); margin-top: 5px; }
-.seg { display: inline-flex; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-soft); border-radius: 10px; padding: 3px; gap: 2px; }
+.seg { display: inline-flex; flex-wrap: wrap; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-soft); border-radius: 10px; padding: 3px; gap: 2px; }
 .seg button { background: transparent; border: 0; border-radius: 7px; height: 24px; padding: 0 10px; font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
 .seg button.on { background: rgba(255, 255, 255, 0.1); color: var(--ink); }
 .seg button:hover { color: var(--ink); }
