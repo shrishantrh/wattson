@@ -122,6 +122,20 @@ paths:
       responses:
         "200":
           content: {application/json: {schema: {$ref: '#/components/schemas/SearchStatus'}}}
+  /api/alpha:
+    get:
+      summary: Grid measurement to tradable instrument, with the limits attached
+      description: >
+        For each featured detector region: the fuel that filled its overnight growth,
+        the serving utilities we have verified, their parents and tickers, and the
+        commodity and event markets where that region's tightness is priced.
+        An INPUT to a trade, not a trade. No forecast, no backtest, no recommendation;
+        we have no validation that this signal predicts any price. Every instrument row
+        carries a one-sentence reason citing a number from our own data. The Kalshi
+        event-market snapshot is cached at build time and never fetched at render time.
+      responses:
+        "200":
+          description: Chains, instruments and the stated limits
   /api/irradiance:
     get:
       summary: NASA POWER irradiance overlay on daytime vs overnight clean share

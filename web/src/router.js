@@ -21,6 +21,7 @@ export const href = {
   region: id => `#/region/${encodeURIComponent(id)}`,
   method: () => '#/method',
   irradiance: () => '#/irradiance',
+  alpha: () => '#/alpha',
   screen: by => (by ? `#/screen?by=${by}` : '#/screen'),
   alerts: () => '#/alerts',
   data: t => (t ? `#/data?t=${t}` : '#/data'),

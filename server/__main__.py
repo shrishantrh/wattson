@@ -33,6 +33,11 @@ def static_export(out_dir: Path) -> int:
     w("companies.json", A.get_companies())
     w("facilities.json", A.get_facilities())
     try:
+        w("alpha.json", A.get_alpha())
+    except Exception as e:  # noqa: BLE001 — the rest of the demo must still export
+        print(f"skip alpha export: {e}", file=sys.stderr)
+
+    try:
         w("irradiance.json", A.get_irradiance())
     except Exception as e:  # noqa: BLE001 — static export should still finish if overlay missing
         print(f"skip irradiance export: {e}", file=sys.stderr)
