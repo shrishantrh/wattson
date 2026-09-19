@@ -108,6 +108,7 @@ export function normalizeSite(raw, request) {
 const sameRequest = (a, b) => a && b && Number(a.mw) === Number(b.mw) && a.metros.length === b.metros.length && a.metros.every(m => b.metros.some(x => (resolvePlace(x)?.region_id && resolvePlace(x)?.region_id === resolvePlace(m)?.region_id) || slug(x) === slug(m)))
 export async function loadSite(request) {
   const req = { mw: Number(request?.mw) || 300, metros: request?.metros || [], flat_247: true }
+  if (!req.metros.length) return { request: { mw: req.mw, metros: [], flat: true }, candidates: [], method: '', unmapped: [], caveats: [] }   // nothing asked, nothing baked
   if (api) return normalizeSite(await getJSON(`${api}/api/site`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(req) }), req)
   const raw = await tryEach([() => staticExport(`site/${req.mw}mw-${req.metros.map(slug).join('-')}`), () => fixture('site')])
   const norm = normalizeSite(raw, req)

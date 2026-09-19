@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { useHash, parseHash } from './router.js'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
+import { Loading } from './components/States.jsx'
 import { StageProvider } from './console/Console.jsx'
 import { useDemoMode, DemoHud } from './demo/DemoMode.jsx'
 import { CommandPalette } from './components/CommandPalette.jsx'
@@ -31,7 +32,7 @@ export default function App() {
   return (
     <ErrorBoundary>
       <StageProvider>
-        <ErrorBoundary key={pageKey}><Suspense fallback={null}><Page route={route} demo={demo.on} /></Suspense></ErrorBoundary>
+        <ErrorBoundary key={pageKey}><Suspense fallback={<div className="card" style={{ position: 'fixed', left: 22, top: 66, width: 420, zIndex: 4 }}><Loading what="the page" /></div>}><Page route={route} demo={demo.on} /></Suspense></ErrorBoundary>
         <DemoHud on={demo.on} idx={demo.idx} />
         <Tour on={demo.on} idx={demo.idx} />
         <CommandPalette />
