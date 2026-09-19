@@ -114,7 +114,12 @@ export function checkAnswer(c) {
     verdict: primary.verdict, primary,
     numbers: [
       { value: primary.metric === 'renewable_electricity_share' ? pct0(primary.magnitude) : claimed, label: 'claimed', sub: primary.scope ? primary.scope.replace(/_/g, ' ') : null },
-      { value: range || '—', label: sites.length === 1 ? 'actually clean at the site' : 'actually clean, by site', sub: 'grid average, all hours', accent: true },
+      // A claim we cannot verify has no physical range, but the company's sites still have
+      // a measured grid share. Show it, and label it so it never reads as a verification
+      // of the claim it sits beside.
+      range
+        ? { value: range, label: sites.length === 1 ? 'actually clean at the site' : 'actually clean, by site', sub: 'grid average, all hours', accent: true }
+        : { value: c.walk_score != null ? pct0(c.walk_score) : '—', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: c.walk_score != null ? 'grid average, all hours \u2014 not a check of this claim' : 'no mapped site with grid data', accent: true },
       { value: String(sites.length), label: sites.length === 1 ? 'site checked' : 'sites checked', sub: cv ? `${cv} claim${cv === 1 ? '' : 's'} can't be verified` : null },
     ],
   }

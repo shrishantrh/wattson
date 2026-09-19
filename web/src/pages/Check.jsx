@@ -29,7 +29,14 @@ export default function Check({ route }) {
   const known = COMPANIES.find(c => c.ticker === ticker)
   const sites = data?.sites || []
   const details = useRegionDetails(evidence ? sites.map(s => s.region_id) : [])
-  const bySite = useMemo(() => Object.fromEntries((data?.claims || []).flatMap(k => (k.evidence || []).filter(e => e.type === 'grid').map(e => [e.ba, e]))), [data])
+  const bySite = useMemo(() => {
+    // Grid evidence attached to claims, then the site's own cf_share_2025 as a fallback.
+    // A company whose only claim is cannot_verify has no evidence array, and its sites
+    // would otherwise render an em dash for a share we already have.
+    const fromClaims = Object.fromEntries((data?.claims || []).flatMap(k => (k.evidence || []).filter(e => e.type === 'grid').map(e => [e.ba, e])))
+    const fromSites = Object.fromEntries((data?.sites || []).filter(s => s.cf_share_2025 != null).map(s => [s.ba, { type: 'grid', ba: s.ba, year: 2025, cf_share: s.cf_share_2025 }]))
+    return { ...fromSites, ...fromClaims }
+  }, [data])
   const globe = useMemo(() => {
     const pts = sites.filter(s => s.lat != null)
     return { view: fitView(pts), points: pts.map(s => ({ id: s.metro, lat: s.lat, lng: s.lng, r: 0.2, color: tk.accent })), rings: pts.map(s => ({ id: s.metro, lat: s.lat, lng: s.lng, color: tk.accent, maxR: 2, speed: 0.6, period: 1800 })),
@@ -76,10 +83,12 @@ export default function Check({ route }) {
             const reason = (k.evidence || []).find(e => e.type === 'note' && /cannot_verify/.test(e.note || ''))
             return (
               <div className="claim" key={k.claim_id}>
-                <div className="q">“{k.verbatim}”</div>
-                <div className="m"><span>{k.source_doc}{k.page ? `, p. ${k.page}` : ''}{k.year ? ` · ${k.year}` : ''}</span><Chip small accent={k.verdict === 'contradicted'}>{VERDICT[k.verdict] || k.verdict}</Chip>{k.cannot_verify_reason && <span>{REASON[k.cannot_verify_reason] || k.cannot_verify_reason.replace(/_/g, ' ')}</span>}</div>
+                {k.verbatim ? <div className="q">“{k.verbatim}”</div>
+                  : <div className="q" style={{ fontStyle: 'normal', opacity: 0.85 }}>No quotable claim found in this company's documents.</div>}
+                <div className="m"><span>{k.source_doc || 'no source document'}{k.page ? `, p. ${k.page}` : (k.locator?.item ? `, Item ${k.locator.item}` : '')}{k.year ? ` · ${k.year}` : ''}</span><Chip small accent={k.verdict === 'contradicted'}>{VERDICT[k.verdict] || k.verdict}</Chip>{k.cannot_verify_reason && <span>{REASON[k.cannot_verify_reason] || k.cannot_verify_reason.replace(/_/g, ' ')}</span>}</div>
                 {contra && <div className="why">Contradicted in {contra.source_doc}{contra.page ? `, p. ${contra.page}` : ''}: {contra.note}</div>}
                 {!contra && reason && <div className="why">{reason.note.replace(/^cannot_verify:\s*/, '')}</div>}
+                {!contra && !reason && k.note && <div className="why">{k.note}</div>}
               </div>
             )
           })}
