@@ -162,6 +162,11 @@ def main():
         "fuel_delta_overnight_gw": pjm["fuel_delta_overnight_gw"],
         "dom_overnight_demand_mw": two(dom["demand"], "overnight_avg_mw"),
         "dom_avg_demand_mw": two(dom["demand"], "avg_mw"),
+        "profile_24h": pjm.get("profile_24h"),
+        "overnight_fuel_mw": pjm.get("overnight_fuel_mw"),
+        "cf_share": pjm.get("cf_share"),
+        "cf_avg_mw": pjm.get("cf_avg_mw"),
+        "total_avg_mw": pjm.get("total_avg_mw")
     }
 
     flagged_ids = set(meta["data_flags"].keys())

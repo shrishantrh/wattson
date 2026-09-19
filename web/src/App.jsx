@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
 import { useHash, parseHash } from './router.js'
-import Topbar from './components/Topbar.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import { useDemoMode, DemoHud } from './demo/DemoMode.jsx'
 import Opening from './pages/Opening.jsx'
@@ -15,12 +13,10 @@ export default function App() {
   const hash = useHash()
   const route = parseHash(hash)
   const demo = useDemoMode(hash)
-  const pageKey = `${route.page}:${route.id || route.ticker || ''}`
-  useEffect(() => { if (route.page !== 'opening') window.scrollTo(0, 0) }, [pageKey, route.page])
   const Page = PAGES[route.page] || Opening
+  const pageKey = `${PAGES[route.page] ? route.page : 'opening'}:${route.id || route.ticker || ''}`
   return (
     <ErrorBoundary>
-      <Topbar page={PAGES[route.page] ? route.page : 'opening'} />
       <ErrorBoundary key={pageKey}><Page route={route} demo={demo.on} /></ErrorBoundary>
       <DemoHud on={demo.on} idx={demo.idx} />
     </ErrorBoundary>
