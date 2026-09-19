@@ -8,7 +8,7 @@
   ],
   "flat_247": true
  },
- "method": "Ranked on overnight carbon-free share today, whether it is improving, and overnight clean MW relative to overnight demand. Frozen siting score from the published index; no re-tuning.",
+ "method": "Ranked on overnight carbon-free share today, whether it is improving, and overnight clean MW relative to overnight demand. Frozen siting score from the published index; no re-tuning. Where a published value is known to be wrong, the correction is applied and both values are returned in corrections_applied.",
  "candidates": [
   {
    "metro": "Dallas",
@@ -17,6 +17,7 @@
    "reason": null,
    "siting_score": 0.603,
    "siting_rank": 18,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.413,
     "direction_ratio_slope_per_year": -0.0,
@@ -67,6 +68,7 @@
    "reason": null,
    "siting_score": 0.436,
    "siting_rank": 34,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.39,
     "direction_ratio_slope_per_year": -0.0044,
@@ -117,6 +119,7 @@
    "reason": null,
    "siting_score": 0.25,
    "siting_rank": 42,
+   "corrections_applied": null,
    "components": {
     "level_overnight_cf_share_2025": 0.227,
     "direction_ratio_slope_per_year": 0.0013,
