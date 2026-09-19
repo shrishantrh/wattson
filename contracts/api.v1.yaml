@@ -36,6 +36,12 @@ paths:
         score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z.
         Regions under 500 MW average demand excluded. Peak is the 99.5th percentile hour.
         Pattern labels are descriptive only and never touch the score.
+
+        COUNT MISMATCH, BY DESIGN: this endpoint returns the 111 DETECTOR-SCORED regions.
+        /api/region/{id} serves all 124, including 13 that were excluded from scoring (under the
+        500 MW cut, or missing demand). The ranked list is NOT the universe of valid ids. AEC,
+        OVEC and SWPW — the three with dangling heatmaps — are among the 13, so they are
+        reachable only by a typed URL, never from the list.
       responses:
         "200":
           description: Ranked regions
@@ -115,6 +121,7 @@ components:
           description: Honesty caveats. MUST be rendered, not swallowed.
     Operator:
       type: object
+      required: [utility, mapping_note]
       properties:
         utility: {type: string}
         parent: {type: string, nullable: true}
@@ -122,6 +129,7 @@ components:
         mapping_note: {type: string, example: "hand-mapped"}
     Detection:
       type: object
+      required: [rank, score, growth_pct, pattern]
       properties:
         rank: {type: integer}
         score: {type: number}
@@ -135,6 +143,8 @@ components:
           description: Descriptive only. Never contributes to the score.
     Siting:
       type: object
+      required: [siting_score, overnight_cf_share_2025, ratio_slope_per_year,
+                 overnight_clean_mw_over_demand]
       properties:
         siting_score: {type: number, minimum: 0, maximum: 1}
         siting_rank: {type: integer}
@@ -144,6 +154,7 @@ components:
         ratio_slope_per_year: {type: number, description: "Slope only. No years-remaining, no nameplate headroom."}
     RegionSummary:
       type: object
+      required: [id, ba, name, detection, siting, operator, cf_inherited_from_ba]
       properties:
         id: {type: string, example: "PJM/DOM"}
         ba: {type: string}
@@ -157,16 +168,20 @@ components:
         data_flags: {type: array, items: {type: string}, nullable: true}
     RegionsResponse:
       type: object
+      required: [meta, count, regions]
       properties:
         meta: {$ref: '#/components/schemas/Meta'}
         count: {type: integer, example: 111}
         regions: {type: array, items: {$ref: '#/components/schemas/RegionSummary'}}
     RegionDetailResponse:
       type: object
+      required: [meta, region]
       properties:
         meta: {$ref: '#/components/schemas/Meta'}
         region:
           type: object
+          required: [id, ba, name, heatmap_uri, heatmap_available, cf_inherited_from_ba,
+                     cf_share, demand, detection, siting, operators]
           properties:
             id: {type: string}
             cf_share:
@@ -206,6 +221,10 @@ components:
         flat_247: {type: boolean, default: true}
     SiteCandidate:
       type: object
+      required: [metro, region_id, siting_score, verdict_rank, reason]
+      description: >
+        An unmappable metro is STILL RETURNED, with null score/rank and reason
+        no_region_mapping. Never silently dropped — a missing candidate looks like an answer.
       properties:
         metro: {type: string}
         region_id: {type: string, nullable: true}
@@ -233,6 +252,7 @@ components:
           description: Set when the metro could not be mapped. The candidate is still returned.
     SiteResponse:
       type: object
+      required: [request, method, candidates, unmapped_metros, caveats]
       properties:
         request: {$ref: '#/components/schemas/SiteRequest'}
         method: {type: string, description: The one-sentence explanation of the ranking.}
@@ -241,6 +261,7 @@ components:
         caveats: {type: array, items: {type: string}}
     Site:
       type: object
+      required: [metro, ba, zone, pjm_zone, serving_utility, source_type]
       description: A physical datacenter site. Built from the serving utility outward, never from the state.
       properties:
         metro: {type: string}
@@ -252,6 +273,8 @@ components:
         source_url: {type: string, nullable: true}
     Claim:
       type: object
+      required: [claim_id, verbatim, source_doc, page, year, falsifiability, verdict,
+                 cannot_verify_reason, evidence]
       properties:
         claim_id: {type: string}
         verbatim: {type: string}
@@ -281,6 +304,7 @@ components:
         evidence: {type: array, items: {$ref: '#/components/schemas/Evidence'}}
     Evidence:
       type: object
+      required: [type]
       properties:
         type: {type: string, enum: [grid, internal_contradiction, cross_doc_contradiction, note]}
         ba: {type: string, nullable: true}
@@ -291,6 +315,7 @@ components:
         note: {type: string, nullable: true}
     Company:
       type: object
+      required: [company, ticker, is_mock, sites, claims, cannot_verify_count, notes]
       properties:
         company: {type: string}
         ticker: {type: string}
@@ -307,6 +332,7 @@ components:
         notes: {type: array, items: {type: string}}
     CompaniesResponse:
       type: object
+      required: [is_mock, count, cannot_verify_total, companies]
       properties:
         is_mock: {type: boolean, description: True when serving companies.mock.json. Drives the MOCK DATA banner.}
         count: {type: integer}
@@ -315,6 +341,7 @@ components:
         notes: {type: array, items: {type: string}}
     Alert:
       type: object
+      required: [region, rule, severity, first_crossed, current_value]
       properties:
         region: {type: string}
         name: {type: string}
@@ -328,6 +355,7 @@ components:
         description: {type: string}
     AlertsResponse:
       type: object
+      required: [count, excluded_regions, alerts]
       properties:
         generated: {type: string}
         latest_month: {type: string}
