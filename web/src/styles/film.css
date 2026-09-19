@@ -1,0 +1,80 @@
+/* The film overlay (pages/Film.jsx): full-screen story slides, a fake cursor, a click ripple, a
+   caption plate and a progress line, all fixed over whatever page is showing. Nothing here takes
+   pointer events. Dark, Inter, one ember accent, no gradients, no blur; motion is opacity, translate
+   and scale transitions only. */
+body[data-film="1"] .demo-hud, body[data-film="1"] .tour-progress, body[data-film="1"] .tour-card, body[data-film="1"] .tour-focus { display: none !important; }
+body[data-film="1"] { cursor: none; }
+
+.film-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; z-index: 1010; background: var(--accent); pointer-events: none; transition: width 250ms linear; }
+
+/* slides: the card cross-fades 400 ms; its parts rise in with per-element delays */
+.film-slide { position: fixed; inset: 0; z-index: 1005; background: var(--bg); color: var(--ink); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 400ms ease; }
+.film-slide.show { opacity: 1; }
+.film-slide .rise { opacity: 0; transform: translateY(10px); transition: opacity 400ms ease, transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.film-slide.show .rise { opacity: 1; transform: none; }
+.film-slide-body { max-width: 720px; padding: 0 48px; text-align: center; }
+.film-slide-body.wide { max-width: 900px; width: 100%; text-align: left; }
+.film-wordmark { font-family: var(--font-display); font-weight: 600; font-size: 96px; letter-spacing: -0.03em; line-height: 1; }
+.film-tagline { margin: 18px 0 0; font-size: 22px; color: var(--ink-2); }
+.film-credit { margin: 40px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--muted); }
+.film-eyebrow { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.film-h { font-family: var(--font-display); font-weight: 600; font-size: 46px; letter-spacing: -0.02em; line-height: 1.1; text-wrap: balance; margin: 0 0 36px; max-width: 18ch; }
+.film-count { color: var(--accent); font-variant-numeric: tabular-nums; }
+.film-foot { margin: 36px 0 0; font-size: 18px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty; max-width: 62ch; }
+
+/* the 24-hour strip: 24 bars of one height, filling in order */
+.film-strip-wrap { max-width: 720px; }
+.film-strip { display: flex; gap: 6px; align-items: flex-end; height: 140px; }
+.film-strip i { flex: 1; height: 100%; background: var(--ink-2); border-radius: 3px 3px 0 0; transform: scaleY(0); transform-origin: bottom; transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.film-strip i.night { background: var(--accent); }
+.film-slide.show .film-strip i { transform: scaleY(1); }
+.film-strip-axis { display: flex; justify-content: space-between; margin-top: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+
+/* the two national numbers and their bars */
+.film-bignums { display: flex; gap: 64px; margin-bottom: 28px; }
+.film-bignum .v { font-family: var(--font-display); font-weight: 300; font-size: 88px; letter-spacing: -0.03em; line-height: 1; font-feature-settings: var(--ff-num); font-variant-numeric: tabular-nums; }
+.film-bignum.accent .v { color: var(--accent); }
+.film-bignum .l { margin-top: 8px; font-size: 15px; color: var(--ink-2); }
+.film-bars { display: flex; flex-direction: column; gap: 22px; max-width: 720px; }
+.film-bar-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; color: var(--ink-2); margin-bottom: 8px; }
+.film-bar-v small { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.film-bar-track { position: relative; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.08); }
+.film-bar-track .fill { position: absolute; left: 0; top: 0; bottom: 0; width: var(--w); border-radius: 3px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 1400ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.film-slide.show .film-bar-track .fill { transform: scaleX(1); }
+.film-bar.accent .film-bar-track .fill { background: var(--accent); }
+.film-bar-track .tick { position: absolute; top: -7px; width: 2px; height: 20px; margin-left: -1px; background: var(--bg); box-shadow: 0 0 0 1.5px var(--ink-2); }
+
+/* the two questions, one after the other */
+.film-qs { display: flex; flex-direction: column; gap: 22px; margin: 0; }
+.film-qs li { display: flex; align-items: baseline; gap: 22px; font-family: var(--font-display); font-weight: 600; font-size: 40px; letter-spacing: -0.02em; line-height: 1.15; }
+.film-qs li b { font-family: var(--font-mono); font-weight: 500; font-size: 18px; color: var(--accent); min-width: 28px; }
+
+/* what we found: two columns, a list and chips */
+.film-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.film-col-h { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.film-list { display: flex; flex-direction: column; }
+.film-list li { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--line-soft); font-size: 19px; }
+.film-list li b { font-family: var(--font-mono); font-weight: 500; font-size: 15px; color: var(--ink-2); }
+.film-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.film-chips.big { gap: 10px; max-width: 760px; }
+.film-chip { display: inline-flex; align-items: baseline; gap: 6px; height: 34px; line-height: 34px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); font-size: 15px; font-weight: 500; color: var(--ink); background: var(--surface); }
+.film-chips.big .film-chip { height: 40px; line-height: 40px; font-size: 17px; font-family: var(--font-mono); font-weight: 400; }
+.film-chip.accent { border-color: var(--accent); color: var(--accent); }
+.film-chip b { font-family: var(--font-mono); font-weight: 500; font-size: 12px; color: var(--ink-2); }
+
+/* cursor and click */
+.film-cursor { position: fixed; left: 0; top: 0; z-index: 1002; width: 22px; height: 22px; pointer-events: none; transform: translate(-9999px, -9999px); transition: transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 250ms ease; will-change: transform; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45)); }
+.film-cursor svg { display: block; width: 22px; height: 22px; }
+.film-cursor.pressed svg { transform: scale(0.9); transform-origin: 3px 3px; }
+
+.film-ripple { position: fixed; left: 0; top: 0; z-index: 1001; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.85); pointer-events: none; opacity: 0; animation: film-ripple 520ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+@keyframes film-ripple {
+  0% { transform: scale(0.25); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* caption plate */
+.film-caption { position: fixed; left: 32px; bottom: 32px; z-index: 1000; max-width: min(760px, calc(100vw - 64px)); padding: 20px; border-radius: 16px; background: rgba(10, 12, 11, 0.7); color: var(--ink); pointer-events: none; opacity: 0; transform: translateY(6px); transition: opacity 250ms ease, transform 250ms ease; }
+.film-caption.show { opacity: 1; transform: translateY(0); }
+.film-title { font-family: var(--font-display); font-weight: 600; font-size: 44px; letter-spacing: -0.02em; line-height: 1.1; text-wrap: balance; margin: 0; }
+.film-sub { margin: 8px 0 0; font-size: 18px; line-height: 1.4; color: var(--ink-2); text-wrap: pretty; }

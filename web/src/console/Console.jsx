@@ -15,16 +15,15 @@ export function StageProvider({ children }) {
   const [spec, setSpec] = useState({})
   const [cap, setCap] = useState(() => detectGlobeCapability())
   useEffect(() => { if (cap !== 'webgl') { const id = setTimeout(() => setCap(detectGlobeCapability()), 1500); return () => clearTimeout(id) } }, [cap])
-  const [flatPref, setFlat] = useState(false)
   const [style, setStyle] = useState(() => { try { return localStorage.getItem('wattson.globe.style') || 'dots' } catch { return 'dots' } })
   const [zoom, setZoom] = useState(0)
   useEffect(() => { try { localStorage.setItem('wattson.globe.style', style) } catch { /* private mode */ } }, [style])
   // View toggles from the command palette and anywhere else: window.dispatchEvent(new CustomEvent('wattson:toggle', { detail: { key } }))
   useEffect(() => {
-    const on = e => { const k = e.detail?.key; if (k === '2d') setFlat(v => !v); else if (k === 'night' || k === 'style') setStyle(v => (v === 'night' ? 'dots' : 'night')) }
+    const on = e => { const k = e.detail?.key; if (k === 'night' || k === 'style') setStyle(v => (v === 'night' ? 'dots' : 'night')) }
     window.addEventListener('wattson:toggle', on); return () => window.removeEventListener('wattson:toggle', on)
   }, [])
-  const flat = flatPref || cap !== 'webgl'
+  const flat = cap !== 'webgl'
   const g = spec.globe || {}
   const baseView = g.view || US
   useEffect(() => { setZoom(0) }, [baseView.lat, baseView.lng, baseView.altitude])
@@ -39,19 +38,18 @@ export function StageProvider({ children }) {
       <div className="app">
         <div className="stage" aria-hidden="true">
           <div className={`globe-host ${flat ? 'flat' : ''} ${spec.column ? 'with-column' : ''}`} style={spec.column ? { left: colWidth + (flat ? 60 : 0) } : undefined}>
-            <GlobeC view={view} points={g.points || NONE} rings={g.rings || NONE} labels={NONE} markers={g.markers || NONE} terminator={terminator} interactive={g.interactive ?? !!spec.column} autoRotate={0} atmosphere={style === 'night' ? { color: '#ffffff', altitude: 0.1 } : { color: '#ffffff', altitude: 0.08 }} quality="auto" style={style} landColors={g.landColors} />
+            <GlobeC view={view} points={g.points || NONE} rings={g.rings || NONE} labels={NONE} markers={g.markers || NONE} terminator={terminator} interactive={g.interactive ?? !!spec.column} autoRotate={g.autoRotate ?? 0} atmosphere={style === 'night' ? { color: '#ffffff', altitude: 0.1 } : { color: '#ffffff', altitude: 0.08 }} quality="auto" style={style} landColors={g.landColors} />
           </div>
         </div>
         <header className="topbar">
           <a className="brand" href="#/"><span className="wordmark">Wattson</span><span className="tagline">It follows the power, not the press release.</span></a>
           {spec.page !== 'landing' && <QuickSearch />}
-          <nav className="toplinks"><a href={href.found()} className={spec.page === 'found' ? 'on' : ''}>What we found</a><a href={href.method()} className={spec.page === 'method' ? 'on' : ''}>Method</a></nav>
+          <nav className="toplinks"><a href={href.data()} className={spec.page === 'data' ? 'on' : ''}>Data</a><a href={href.found()} className={spec.page === 'found' ? 'on' : ''}>What we found</a><a href={href.method()} className={spec.page === 'method' ? 'on' : ''}>Method</a></nav>
         </header>
         <div className="stage-ctl">
           <button type="button" onClick={() => setZoom(z => Math.min(6, z + 1))} aria-label="Zoom in">+</button>
           <button type="button" onClick={() => setZoom(z => Math.max(-4, z - 1))} aria-label="Zoom out">−</button>
           <span className="gap" />
-          <button type="button" className={flat ? 'on' : ''} onClick={() => setFlat(v => !v)} disabled={cap !== 'webgl'} aria-label="Toggle 2D">{flat ? '3D' : '2D'}</button>
           <button type="button" className={style === 'night' ? 'on' : ''} onClick={() => setStyle(v => (v === 'night' ? 'dots' : 'night'))} aria-label="Toggle night lights" data-tip="Night lights">☾</button>
         </div>
         {spec.column && <div className="column-wrap" style={{ width: colWidth }}><div className="column">{spec.column}</div>{!spec.columnWidth && <ResizeHandle {...handleProps} />}</div>}

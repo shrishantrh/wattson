@@ -1,0 +1,35 @@
+/* Loading, error, offline, empty and pending states (components/States.jsx), the render-error
+   fallback (components/ErrorBoundary.jsx) and the top-bar search trigger's focus ring
+   (components/QuickSearch.jsx). Colors come from tokens.css; the rgba fallbacks match it.
+   Solid blocks, no animation: the skeleton is a shape, not a spinner. */
+
+/* visually hidden, still read aloud */
+.st-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* skeleton: sized like a card's .verdict sentence, its .nums row and a .num .l caption */
+.st-loading { position: relative; padding: 2px 0 4px; }
+.st-line { display: block; background: rgba(255, 255, 255, 0.07); border-radius: 6px; }
+.st-sentence { height: 22px; width: 88%; margin: 3px 0 4px; }
+.st-nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+.st-nums .st-line { height: 26px; width: 72%; }
+.st-caption { height: 10px; width: 42%; margin-top: 8px; border-radius: 4px; }
+
+/* error and offline: one line, then the actions */
+.st-error { padding: 10px 0 4px; color: var(--ink, #e9ece9); }
+.st-msg { margin: 0; font-size: 13px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-offline .st-msg { white-space: normal; }
+.st-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.state .st-actions .btn { margin-left: 0; }
+
+/* empty and pending: quiet, muted, no chrome */
+.st-empty { font-size: 13px; color: var(--muted, #676d69); }
+.st-pending { margin: 0; padding: 8px 0; font-size: 12px; color: var(--muted, #676d69); border-left: 2px dashed var(--line-strong, rgba(255, 255, 255, 0.14)); padding-left: 10px; }
+
+/* render-error fallback: fixed card at the column's spot */
+.st-boundary { position: fixed; left: 22px; top: 66px; width: 420px; max-width: calc(100vw - 44px); z-index: 60; }
+.st-boundary .banner { margin-bottom: 10px; }
+.st-stack { display: block; margin: 0 0 12px; font-family: var(--font-mono, ui-monospace, Menlo, monospace); font-size: 11px; line-height: 1.4; color: var(--muted, #676d69); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-boundary .st-actions { margin-top: 0; }
+
+/* top-bar search trigger: a ring you can see, only from the keyboard */
+.st-quick:focus-visible { outline: none; box-shadow: var(--ring, 0 0 0 2px rgba(255, 255, 255, 0.18)); border-color: var(--line-focus, rgba(255, 255, 255, 0.28)); }

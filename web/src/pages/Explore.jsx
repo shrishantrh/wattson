@@ -4,7 +4,7 @@ import { Card, Chip, KV } from '../console/widgets.jsx'
 import Scatter from '../components/Scatter.jsx'
 import { loadRegions, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
-import { METRICS, PRESETS, DEFAULT_PRESET, metric, tickFormat, pearson, linfit, quantiles, outliers, sectorOf } from '../lib/metrics.js'
+import { METRICS, PRESETS, DEFAULT_PRESET, metric, tickFormat, pearson, linfit, quantiles, outliers, sectorOf, GENERATION_SIDE } from '../lib/metrics.js'
 import { signed } from '../lib/format.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
@@ -22,15 +22,17 @@ const axisLabel = m => (['%', '×', 'rank'].includes(m.unit) ? m.label : `${m.la
 
 // "Across 111 regions, demand growth and overnight excess correlate r = 0.61: places that grew
 // fast also grew faster at night." Generated from the numbers; presets supply the reading.
-function sentence({ n, mx, my, r, preset, sector }) {
-  const where = sector === 'All' ? `Across ${n} regions` : `Across ${n} ${sector} regions`
-  if (r == null) return { text: `${where}, ${mx.phrase} and ${my.phrase} cannot be correlated: too few points or no spread.`, strength: '' }
+function sentence({ n, unit = 'regions', enough = true, mx, my, r, preset, sector }) {
+  const where = sector === 'All' ? `Across ${n} ${unit}` : `Across ${n} ${sector} ${unit}`
+  const basisNote = unit === 'grids' ? ' (one point per grid, since zones inherit their grid\'s generation figures; flagged and corrected grids left out)' : ' (flagged and corrected regions left out)'
+  if (!enough) return { text: `${where}${basisNote}, too few independent points to quote a correlation; the chart shows the pattern.`, strength: '' }
+  if (r == null) return { text: `${where}, ${mx.phrase} and ${my.phrase} cannot be correlated: no spread.`, strength: '' }
   const a = Math.abs(r), dir = a < 0.1 ? 'none' : r > 0 ? 'pos' : 'neg'
   const strength = a < 0.1 ? 'no correlation' : a < 0.3 ? `weak ${r > 0 ? 'positive' : 'negative'} correlation` : a < 0.6 ? `moderate ${r > 0 ? 'positive' : 'negative'} correlation` : `strong ${r > 0 ? 'positive' : 'negative'} correlation`
   const verb = a < 0.1 ? 'barely correlate' : a < 0.3 ? 'correlate only weakly' : a < 0.6 ? 'correlate' : 'correlate strongly'
   const generic = { pos: `higher ${mx.phrase} goes with higher ${my.phrase}`, neg: `higher ${mx.phrase} goes with lower ${my.phrase}`, none: `${mx.phrase} says little about ${my.phrase}` }
   const reading = preset?.reading?.[dir] || generic[dir]
-  return { text: `${where}, ${mx.phrase} and ${my.phrase} ${verb}, r = ${r.toFixed(2)}: ${reading}${a < 0.3 && dir !== 'none' ? ', but only a little' : ''}.`, strength }
+  return { text: `${where}${basisNote}, ${mx.phrase} and ${my.phrase} ${verb}, r = ${r.toFixed(2)}: ${reading}${a < 0.3 && dir !== 'none' ? ', but only a little' : ''}.`, strength }
 }
 
 // Pins close together label to opposite sides so they never overlap.
@@ -63,11 +65,21 @@ export default function Explore({ route }) {
       .filter(p => Number.isFinite(p.x) && Number.isFinite(p.y))
   }, [data, mx, my])
   const visible = useMemo(() => (sector === 'All' ? all : all.filter(p => p.sector === sector)), [all, sector])
+  // Statistics run on independent points only: flagged or corrected regions are drawn but left out, and when
+  // both axes are generation-side, zones (which inherit their grid's figures) collapse to one point per grid.
+  const basis = useMemo(() => {
+    const clean = visible.filter(p => !p.flagged)
+    if (!(GENERATION_SIDE.has(mx.key) && GENERATION_SIDE.has(my.key))) return { pts: clean, unit: 'regions' }
+    const seen = new Map()
+    for (const p of clean) { const g = p.id.includes('/') ? p.id.split('/')[0] : p.id; if (!seen.has(g) || !p.id.includes('/')) seen.set(g, p) }
+    return { pts: [...seen.values()], unit: 'grids' }
+  }, [visible, mx, my])
   const stats = useMemo(() => {
-    const xs = visible.map(p => p.x), ys = visible.map(p => p.y)
+    const xs = basis.pts.map(p => p.x), ys = basis.pts.map(p => p.y)
     const fit = linfit(xs, ys)
-    return { r: pearson(xs, ys), fit, outs: outliers(visible, fit, 5), xm: quantiles(xs, [0.5])[0], ym: quantiles(ys, [0.5])[0] }
-  }, [visible])
+    const enough = basis.pts.length >= 40
+    return { r: enough ? pearson(xs, ys) : null, n: basis.pts.length, unit: basis.unit, enough, fit, outs: outliers(basis.pts, fit, 5), xm: quantiles(xs, [0.5])[0], ym: quantiles(ys, [0.5])[0] }
+  }, [basis])
   const selected = visible.find(p => p.id === sel) || null
   const inSector = (s, id) => !id || s === 'All' || all.some(p => p.id === id && p.sector === s)
 
@@ -85,7 +97,7 @@ export default function Explore({ route }) {
       markers: sideLabels(located.filter(p => p.named || p.id === sel).map(p => ({ id: p.id, lat: p.lat, lng: p.lng, label: `${p.label} · ${my.format(p.y)}`, tip: `${mx.short} ${mx.format(p.x)}`, href: href.region(p.id), color: p.id === sel ? tk.accent : tk.ink2, lead: p.id === sel, hollow: p.flagged }))) }
   }, [visible, sel, sector, tk, mx, my])
 
-  const s = data ? sentence({ n: visible.length, mx, my, r: stats.r, preset, sector }) : null
+  const s = data ? sentence({ n: stats.n, unit: stats.unit, enough: stats.enough, mx, my, r: stats.r, preset, sector }) : null
   const slopeText = stats.fit.slope == null ? '—' : `${signed(stats.fit.slope, Math.abs(stats.fit.slope) < 0.1 ? 3 : 2)} ${my.unit} per ${mx.unit === '%' ? '1%' : mx.unit === 'pts' ? 'pt' : mx.unit}`
   const pick = (axis, key) => go(axis === 'x' ? { x: key } : { y: key })
 

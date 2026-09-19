@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import coords from '../data/region_coords.json'
 import metros from '../data/metros.json'
+import { resolvePlace } from './query.js'
 
 // Data access, in resolution order:
 //   1. VITE_API_BASE set  -> the engine's live endpoints (contracts/api.v1.yaml)
@@ -74,7 +75,7 @@ export function normalizeCompany(raw, ticker) {
   else if (Array.isArray(raw?.companies)) c = raw.companies.find(x => x.ticker === ticker)
   if (!c || (c.ticker && c.ticker !== ticker)) throw new NotFound(`Company ${ticker}`, raw?.companies ? (Array.isArray(raw.companies) ? raw.companies.map(x => x.ticker) : Object.keys(raw.companies)) : c?.ticker ? [c.ticker] : [])
   const sites = (c.sites || []).map(s => {
-    const zone = s.zone ?? s.pjm_zone ?? null, region_id = s.region_id || (zone ? `${s.ba}/${zone}` : s.ba)
+    const zone = s.zone ?? s.pjm_zone ?? null, region_id = s.region_id || (zone ? (String(zone).includes('/') ? zone : `${s.ba}/${zone}`) : s.ba)   // a zone may already be a full id
     const m = metroFor(s.metro), rc = coords.regions[region_id] || coords.regions[s.ba]
     return { ...s, zone, region_id, lat: s.lat ?? m?.lat ?? rc?.lat, lng: s.lng ?? m?.lng ?? rc?.lng, grid_label: rc?.label || s.ba }
   })
@@ -104,9 +105,10 @@ export function normalizeSite(raw, request) {
   }).sort((a, b) => a.rank - b.rank)
   return { request: req, candidates, method: raw.method || raw.ranking_key || 'Ranked on clean share at night, whether it is improving, and clean power relative to demand.', unmapped: raw.unmapped_metros || [], caveats: raw.caveats || [], _provisional: raw._provisional }
 }
-const sameRequest = (a, b) => a && b && Number(a.mw) === Number(b.mw) && a.metros.length === b.metros.length && a.metros.every(m => b.metros.some(x => metroFor(x)?.metro === metroFor(m)?.metro || slug(x) === slug(m)))
+const sameRequest = (a, b) => a && b && Number(a.mw) === Number(b.mw) && a.metros.length === b.metros.length && a.metros.every(m => b.metros.some(x => (resolvePlace(x)?.region_id && resolvePlace(x)?.region_id === resolvePlace(m)?.region_id) || slug(x) === slug(m)))
 export async function loadSite(request) {
   const req = { mw: Number(request?.mw) || 300, metros: request?.metros || [], flat_247: true }
+  if (!req.metros.length) return { request: { mw: req.mw, metros: [], flat: true }, candidates: [], method: '', unmapped: [], caveats: [] }   // nothing asked, nothing baked
   if (api) return normalizeSite(await getJSON(`${api}/api/site`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(req) }), req)
   const raw = await tryEach([() => staticExport(`site/${req.mw}mw-${req.metros.map(slug).join('-')}`), () => fixture('site')])
   const norm = normalizeSite(raw, req)
@@ -115,8 +117,9 @@ export async function loadSite(request) {
   const regs = await loadRegions()
   const unmapped = [], cands = []
   for (const name of req.metros) {
-    const m = metroFor(name); const r = m && regs.regions.find(x => x.id === m.region_id)
+    const m = resolvePlace(name); const r = m && regs.regions.find(x => x.id === m.region_id)
     if (!m || !r) { unmapped.push(name); continue }
+    if (cands.some(c => c.region_id === m.region_id)) continue   // the same place named twice
     let detail = null; try { detail = await loadRegion(m.region_id) } catch { /* no detail in this source */ }
     const gen = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail
     cands.push({ metro: m.metro, region_id: m.region_id, siting: r.siting || gen?.siting, detector: r.detection, operator: r.operator || (detail?.operators_manual || [])[0] || null, name: m.serving_utility, fuel_delta_overnight_gw: gen?.fuel_delta_overnight_gw, demand: detail?.demand?.['2025'] || null, cf_inherited_from_ba: r.cf_inherited_from_ba, data_flags: r.data_flags || [], lat: m.lat, lng: m.lng })
@@ -136,8 +139,8 @@ export async function loadCompanies() {
 export async function loadFacilities() {
   try {
     const raw = await tryEach([...(api ? [() => getJSON(`${api}/api/facilities`)] : []), () => staticExport('facilities'), () => fixture('facilities')])
-    const list = (raw.facilities || raw.sites || raw || []).map(s => { const region_id = s.region_id || (s.zone ? `${s.ba}/${s.zone}` : s.ba); const rc = coords.regions[region_id] || coords.regions[s.ba]; return { ...s, region_id, lat: s.lat ?? s.latitude ?? rc?.lat, lng: s.lng ?? s.lon ?? s.longitude ?? rc?.lng, grid_label: rc?.label || s.ba } })
-    return { facilities: list, no_listed_equity_count: raw.no_listed_equity_count ?? list.filter(s => !(s.ticker || s.operator?.ticker)).length, source: 'engine' }
+    const list = (raw.facilities || raw.sites || raw || []).map(s => { const region_id = s.region_id || (s.zone ? `${s.ba}/${s.zone}` : s.ba); const rc = coords.regions[region_id] || coords.regions[s.ba]; return { ...s, region_id, lat: s.lat ?? s.latitude ?? rc?.lat, lng: s.lng ?? s.lon ?? s.longitude ?? rc?.lng, grid_label: rc?.label || s.ba, ticker_utility: s.utility_ticker ?? s.ticker_utility ?? null } })
+    return { facilities: list, no_listed_equity_count: raw.no_listed_equity_count ?? list.filter(s => !s.ticker_utility).length, notes: raw.notes || [], source: 'engine' }
   } catch (e) {
     if (e.name !== 'NotFound') throw e
     const cos = await loadCompanies(); const out = []
@@ -174,7 +177,8 @@ export function useRegionDetails(ids) {
   }, [key])
   return data || {}
 }
-export const nightSeries = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; return g?.cf_share ? ['2019', '2020', '2021', '2022', '2023', '2024', '2025'].map(y => g.cf_share[y]?.overnight ?? null) : null }
+// The engine's corrected 2019 figure replaces the published one where a correction exists (AZPS).
+export const nightSeries = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; if (!g?.cf_share) return null; const corr = (detail?.corrections?.corrections || g?.corrections?.corrections || []).find(x => x.path === 'cf_share.2019'); return ['2019', '2020', '2021', '2022', '2023', '2024', '2025'].map(y => (y === '2019' && corr?.corrected?.overnight != null ? corr.corrected.overnight : g.cf_share[y]?.overnight ?? null)) }
 export const hourProfile = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; return g?.profile_24h?.['2025'] || g?.profile_24h || null }
 
 // ---------- irradiance (satellite overlay) ----------

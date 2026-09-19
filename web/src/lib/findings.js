@@ -108,7 +108,7 @@ export function checkAnswer(c) {
   const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'Too vague to check.', cannot_verify: "Can't be checked from grid data." }[primary.verdict] || ''
   const lo = primary.physical_min, hi = primary.physical_max
   const range = lo != null && hi != null ? (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`) : null
-  const phys = range ? ` Physically, its ${sites.length === 1 ? 'site runs' : 'sites run'} on ${range} clean power.` : ''
+  const phys = range ? (sites.length === 1 ? ` The grid under its one mapped site generated ${range} clean power.` : ` Physically, its sites run on ${range} clean power.`) : ''
   return {
     sentence: `${c.company} says ${claimed}. ${verdictText}${phys}`,
     verdict: primary.verdict, primary,
@@ -129,11 +129,20 @@ export function compareAnswer(res, { shapeLabel } = {}) {
   const cs = res?.candidates || []
   if (!cs.length) return { sentence: 'No known locations to compare.', numbers: [] }
   const share = c => c.siting?.overnight_cf_share_2025, s = c => c.siting?.ratio_slope_per_year, chg = c => c.siting?.change_since_2019
-  const bad = cs.filter(c => caveatFor(c.region_id))
-  const clean = cs.filter(c => !caveatFor(c.region_id))
-  const best = clean[0] || cs[0], second = clean[1]
-  let sentence = shapeLabel ? `For a ${shapeLabel} load, ${best.metro} is your cleanest option: ${pct0(share(best))} clean power over the hours it would use.` : `${best.metro} is your cleanest option: ${pct0(share(best))} clean power at night and ${trendWord(chg(best), s(best))}.`
-  if (second) sentence += shapeLabel ? ` ${second.metro} is ${pct0(share(second))}.` : ` ${second.metro} is ${pct0(share(second))} and ${trendWord(chg(second), s(second))}.`
-  if (bad.length) sentence += ` ${bad.map(c => `${c.metro} is ${pct0(share(c))} and its published history is corrected here, so read its trend with care`).join('; ')}.`
+  const best = cs[0]
+  // In rank order, so the words match the numbers. The frozen score ranks on level, direction and
+  // headroom, so a place whose corrected history rises from a very low base can rank above a cleaner
+  // one; when that happens the sentence says so instead of hiding it.
+  let sentence = shapeLabel
+    ? `For a ${shapeLabel} load, ${best.metro} is your cleanest option: ${pct0(share(best))} clean power over the hours it would use.`
+    : `${best.metro} is your cleanest option: ${pct0(share(best))} clean power at night and ${trendWord(chg(best), s(best))}.`
+  cs.slice(1).forEach((c, i) => {
+    const cav = caveatFor(c.region_id)
+    const cleanerBelow = cs.slice(i + 2).some(o => (share(o) ?? -1) > (share(c) ?? -1))
+    if (shapeLabel) sentence += ` ${c.metro} is ${pct0(share(c))}.`
+    else if (cav && cleanerBelow) sentence += ` ${c.metro} ranks ${ordinal(c.rank)} on the score because its corrected history is rising from a very low base, but it runs on ${pct0(share(c))} clean at night today.`
+    else if (cav) sentence += ` ${c.metro} is ${pct0(share(c))}; its published history is corrected here, so read its trend with care.`
+    else sentence += ` ${c.metro} is ${pct0(share(c))} and ${trendWord(chg(c), s(c))}.`
+  })
   return { sentence, best, numbers: cs.map(c => ({ value: pct0(share(c)), raw: share(c), label: `${c.rank}. ${c.metro}`, sub: caveatFor(c.region_id) ? 'history corrected' : trendWord(chg(c), s(c)), accent: c === best })) }
 }

@@ -1,0 +1,37 @@
+/* Nearby cleaner grids (components/modules/NearbyModule). Renders inside a caller's card, so there is
+   no outer surface: a sentence, a radius control, two figures, compact rows. The one accent is the
+   fossil MW here (the thing being burned); candidates are ink. Colors come from tokens.css only. */
+
+.nb { min-width: 0; }
+.nb-sentence { font-size: 13px; color: var(--ink); line-height: 1.5; margin: 0 0 10px; }
+.nb-sentence b { font-weight: 500; }
+.nb-empty { font-size: 12px; color: var(--muted); line-height: 1.45; padding: 2px 0; }
+
+/* radius control: a .seg for the three radii, the origin beside it */
+.nb-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; margin-bottom: 10px; }
+.nb-seg button { padding: 0 9px; font-family: var(--font-mono); font-size: 11.5px; font-feature-settings: normal; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.nb-from { font-size: 11px; color: var(--muted); line-height: 1.3; min-width: 0; }
+.nb-from b { color: var(--ink-2); font-weight: 500; }
+.nb-caveat { font-size: 11px; color: var(--ink-2); line-height: 1.45; border: 1px solid var(--line-strong); border-radius: 8px; padding: 6px 9px; margin-bottom: 10px; }
+
+/* the answer: fossil MW here (accent) beside fossil MW at the cleanest grid in range */
+.nb-nums { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+/* rows: place, distance, clean at night, fossil MW; the whole row links to the region */
+.nb-rows { display: flex; flex-direction: column; }
+.nb-row { display: grid; grid-template-columns: minmax(0, 1fr) 54px 56px 70px; gap: 10px; align-items: center; padding: 7px 0; border-top: 1px solid var(--line-soft); color: inherit; text-decoration: none; }
+.nb-row.nb-hdr { padding: 0 0 5px; border-top: 0; }
+.nb-row.nb-hdr span { font-size: 10.5px; color: var(--muted); line-height: 1.2; text-align: right; }
+.nb-row.nb-hdr span:first-child { text-align: left; }
+a.nb-row:hover .nb-t { text-decoration: underline; text-underline-offset: 2px; }
+.nb-row.nb-flagged .nb-t, .nb-row.nb-flagged .nb-n { color: var(--muted); }
+.nb-cell { min-width: 0; }
+.nb-t { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nb-d { font-size: 11px; color: var(--muted); margin-top: 1px; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nb-n { font-family: var(--font-mono); font-size: 12px; color: var(--ink); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
+.nb-n small { color: var(--muted); font-size: 10.5px; }
+.nb-n.accent { color: var(--accent); }
+.nb-mark { display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px dashed var(--line-strong); border-radius: 4px; font-size: 10px; line-height: 15px; color: var(--muted); vertical-align: 1px; }
+
+.nb-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.nb-foot { font-size: 11px; color: var(--muted); line-height: 1.45; margin-top: 8px; }

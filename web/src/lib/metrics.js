@@ -26,6 +26,10 @@ const night = r => r?.siting?.overnight_cf_share_2025 ?? r?.cf_share_2025?.overn
 const day = r => r?.cf_share_2025?.daytime ?? null
 
 // Ordered as they appear in the axis pickers. `phrase` is the lower-case noun used in sentences.
+// Metrics that come from a grid's generation. Zones report demand only and inherit these from their grid,
+// so statistics over them must use one point per grid, not one per zone.
+export const GENERATION_SIDE = new Set(['night_cf', 'day_cf', 'day_night_gap', 'change_since_2019', 'ratio_slope_per_year', 'clean_over_demand', 'siting_score', 'siting_rank'])
+
 export const METRICS = [
   { key: 'growth_pct', label: 'Demand growth since 2019', short: 'Growth', phrase: 'demand growth', unit: '%', get: r => num(r?.detection?.growth_pct), format: fmtSignedPct },
   { key: 'overnight_growth_pct', label: 'Overnight demand growth since 2019', short: 'Night growth', phrase: 'overnight growth', unit: '%', get: r => num(r?.detection?.overnight_growth_pct), format: fmtSignedPct },
