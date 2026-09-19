@@ -203,3 +203,40 @@ def test_ranking_does_not_mutate_the_input_alert():
     a = alert()
     rk.rank([a], {"XX": region()})
     assert "severity" not in a
+
+
+# --- unknown factors must not be an advantage ------------------------------
+
+def test_unknown_persistence_scores_at_the_population_neutral_not_best_case():
+    """A missing factor scored 1.0 beats every alert that actually has one."""
+    assert rk.persistence(alert(months_active_streak=None), neutral=0.3) == 0.3
+
+
+def test_unknown_recency_scores_at_the_population_neutral_not_best_case():
+    assert rk.recency(alert(first_crossed=None), neutral=0.3) == 0.3
+
+
+def test_neutral_is_the_median_of_observed_values():
+    observed = [alert(months_active_streak=m) for m in (6, 12, 24)]
+    # persistences are 0.25, 0.5, 1.0 -> median 0.5
+    assert rk.neutral_persistence(observed) == 0.5
+
+
+def test_structural_alerts_do_not_sweep_the_whole_top_of_the_ranking():
+    """Detector alerts carry no time series; they must not crowd out the rest
+    purely because their missing factors were scored as perfect."""
+    structural = [
+        alert(region=f"D{i}", rule="detector_top10", unit="rank", threshold=10,
+              baseline_2019=None, current_value=i + 1,
+              months_active_streak=None, first_crossed=None)
+        for i in range(8)
+    ]
+    timeseries = [
+        alert(region=f"T{i}", rule="demand_up_20pct", current_value=1900.0,
+              months_active_streak=36, first_crossed="2025-06")
+        for i in range(5)
+    ]
+    regions = {a["region"]: region(id=a["region"]) for a in structural + timeseries}
+    out = rk.rank(structural + timeseries, regions, limit=10)
+    top5 = [a["rule"] for a in out["alerts"][:5]]
+    assert "demand_up_20pct" in top5, f"structural swept the top: {top5}"

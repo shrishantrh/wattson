@@ -10,10 +10,15 @@ persistence sustained crossings beat one-month spikes; saturates at 24 months
             so a chronic alert cannot dominate on age alone.
 recency     recent crossings outrank old ones; three-year half-life.
 
-Structural alerts (the flat-load detector) carry no time series, so their
-persistence and recency are neutral 1.0 and severity reduces to magnitude.
+Structural alerts (the flat-load detector) carry no time series. A missing
+factor is scored at the population MEDIAN, never at the best possible value:
+scoring an unknown as 1.0 hands those alerts a free pass on two of the three
+factors and lets them sweep the top of the board on an assumption rather than
+on evidence.
 """
 from __future__ import annotations
+
+from statistics import median
 
 # Latest complete month in the exported feed. Overridden by the caller.
 DEFAULT_AS_OF_MONTH = "2026-08"
@@ -68,31 +73,61 @@ def magnitude(a: dict) -> float:
     return _pos((current - threshold) / baseline)
 
 
-def persistence(a: dict) -> float:
+def persistence(a: dict, neutral: float = 1.0) -> float:
     streak = a.get("months_active_streak")
     if streak is None:
-        return 1.0
+        return neutral
     return min(1.0, streak / PERSISTENCE_SATURATION_MONTHS)
 
 
-def recency(a: dict, as_of_month: str = DEFAULT_AS_OF_MONTH) -> float:
+def recency(a: dict, as_of_month: str = DEFAULT_AS_OF_MONTH,
+            neutral: float = 1.0) -> float:
     crossed = a.get("first_crossed")
     if crossed is None:
-        return 1.0
+        return neutral
     years = max(0.0, (_months(as_of_month) - _months(crossed)) / 12.0)
     return 0.5 ** (years / RECENCY_HALF_LIFE_YEARS)
 
 
-def severity(a: dict, as_of_month: str = DEFAULT_AS_OF_MONTH) -> float:
-    return float(magnitude(a) * persistence(a) * recency(a, as_of_month))
+def neutral_persistence(alerts) -> float:
+    """Median persistence among alerts that actually report a streak."""
+    observed = [persistence(a) for a in alerts
+                if a.get("months_active_streak") is not None]
+    return median(observed) if observed else 1.0
+
+
+def neutral_recency(alerts, as_of_month: str = DEFAULT_AS_OF_MONTH) -> float:
+    """Median recency among alerts that actually report a crossing date."""
+    observed = [recency(a, as_of_month) for a in alerts
+                if a.get("first_crossed") is not None]
+    return median(observed) if observed else 1.0
+
+
+def severity(a: dict, as_of_month: str = DEFAULT_AS_OF_MONTH,
+             neutral_p: float = 1.0, neutral_r: float = 1.0) -> float:
+    return float(magnitude(a)
+                 * persistence(a, neutral_p)
+                 * recency(a, as_of_month, neutral_r))
+
+
+def _is_top10(region: dict) -> bool:
+    detection = region.get("detection") or {}
+    rank_ = detection.get("rank")
+    return rank_ is not None and rank_ <= DETECTOR_RANK_CUTOFF
 
 
 def rank(alerts, regions, limit: int = DEFAULT_LIMIT,
-         as_of_month: str = DEFAULT_AS_OF_MONTH) -> dict:
+         as_of_month: str = DEFAULT_AS_OF_MONTH, withhold=None) -> dict:
     """Filter, score, dedupe by region and cap.
 
     regions maps region id -> region record from regions.json.
-    Returns {"alerts": [...], "dropped": {reason: count}}.
+
+    `withhold` is an optional predicate over a scored alert. Matching alerts
+    are pulled out BEFORE deduplication and returned separately, so a known
+    artefact is surfaced with its reason instead of disappearing into the
+    dedupe count.
+
+    Returns {"alerts": [...], "withheld": [...], "dropped": {reason: count}}.
     """
     dropped = {
         "inactive": 0,
@@ -101,7 +136,8 @@ def rank(alerts, regions, limit: int = DEFAULT_LIMIT,
         "deduped_same_region": 0,
         "over_limit": 0,
     }
-    scored = []
+
+    eligible = []
     for a in alerts:
         if not a.get("active"):
             dropped["inactive"] += 1
@@ -116,14 +152,36 @@ def rank(alerts, regions, limit: int = DEFAULT_LIMIT,
             dropped["record_high_not_top10"] += 1
             continue
 
+        eligible.append(a)
+
+    # Neutral values come from the surviving population, so "unknown" lands in
+    # the middle of the field rather than at the top of it.
+    neutral_p = neutral_persistence(eligible)
+    neutral_r = neutral_recency(eligible, as_of_month)
+
+    scored = []
+    for a in eligible:
         entry = dict(a)
-        entry["severity"] = severity(a, as_of_month)
+        entry["severity"] = severity(a, as_of_month, neutral_p, neutral_r)
         entry["severity_factors"] = {
             "magnitude": magnitude(a),
-            "persistence": persistence(a),
-            "recency": recency(a, as_of_month),
+            "persistence": persistence(a, neutral_p),
+            "recency": recency(a, as_of_month, neutral_r),
+            "neutral_applied": [
+                k for k, present in (
+                    ("persistence", a.get("months_active_streak") is not None),
+                    ("recency", a.get("first_crossed") is not None),
+                ) if not present
+            ],
         }
         scored.append(entry)
+
+    withheld = []
+    if withhold is not None:
+        remaining = []
+        for entry in scored:
+            (withheld if withhold(entry) else remaining).append(entry)
+        scored = remaining
 
     strongest = {}
     for entry in scored:
@@ -141,10 +199,6 @@ def rank(alerts, regions, limit: int = DEFAULT_LIMIT,
         dropped["over_limit"] = len(ordered) - limit
         ordered = ordered[:limit]
 
-    return {"alerts": ordered, "dropped": dropped}
-
-
-def _is_top10(region: dict) -> bool:
-    detection = region.get("detection") or {}
-    rank_ = detection.get("rank")
-    return rank_ is not None and rank_ <= DETECTOR_RANK_CUTOFF
+    withheld.sort(key=lambda e: (-e["severity"], e["region"]))
+    return {"alerts": ordered, "withheld": withheld, "dropped": dropped,
+            "neutral_factors": {"persistence": neutral_p, "recency": neutral_r}}
