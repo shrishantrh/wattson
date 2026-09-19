@@ -40,6 +40,10 @@ function Zone({ icon: Icon, children, right }) {
 }
 // A module header that says what kind of evidence it is.
 const mtitle = (Icon, text) => <span className="ans-mtitle"><Icon size={13} />{text}</span>
+// The generated answer is one paragraph. The first sentence IS the answer; the rest qualifies it,
+// so it is set as body copy under it. Split only after a lowercase letter, digit, % or ) so that
+// "N. Virginia" and initials stay whole. The words themselves are never changed.
+const leadRest = s => { const m = String(s || '').match(/^([\s\S]*?[a-z0-9%)]\.)\s+([\s\S]+)$/); return m ? [m[1], m[2]] : [s, null] }
 const VERDICT_ICON = { true_on_paper: CheckIcon, contradicted: CloseIcon, unfalsifiable: Help, cannot_verify: Info }
 
 // Claimed vs measured on ONE track: a claim is an accounting fact (neutral ink), what the
@@ -160,9 +164,12 @@ export default function Check({ route }) {
     const importer = sites.map(st => importerNote(details[st.region_id])).find(Boolean)
     const headlineGap = !!track && p.physical_mean_unweighted != null && sites.length >= 2 && !siteNote && !importer
     const gapPts = track && p.physical_mean_unweighted != null ? Math.round((p.magnitude - p.physical_mean_unweighted) * 100) : null
-    const reading = headlineGap || !track ? null : `${sites.length === 1 ? 'One mapped site, so this is that grid, not the company. ' : ''}${siteNote || (importer ? `One of its grids ${importer}, so its footprint share is not what the site consumes.` : "The physical figure is the average of its mapped sites' grids.")}`
+    // Two short rows rather than one long paragraph: what the figure covers, then why it is low.
+    const scopeLine = headlineGap || !track ? null : sites.length === 1 ? 'One mapped site, so this is that grid, not the company.' : "The physical figure is the average of its mapped sites' grids."
+    const whyLine = headlineGap || !track ? null : siteNote || (importer ? `One of its grids ${importer}, so its footprint share is not what the site consumes.` : null)
     const VerdictIcon = VERDICT_ICON[a.verdict] || Info
     const modCount = modules.length
+    const [lead, rest] = leadRest(a.sentence)
     column = (
       <>
         <Breadcrumbs trail={crumbs} />
@@ -172,7 +179,8 @@ export default function Check({ route }) {
           <span className="ans-sticky-v"><b>{claimText}</b> claimed · <b className={measuredTone}>{measuredText}</b> measured</span>
         </div>
         <Card className="ans-card" title={<><b>{data.company}</b> · {data.ticker}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
-          <h1 className="verdict">{a.sentence}</h1>
+          <h1 className="verdict ans-lead">{lead}</h1>
+          {rest && <p className="ans-rest">{rest}</p>}
           {track ? (
             <>
               <AnsGap
@@ -184,10 +192,11 @@ export default function Check({ route }) {
               {a.numbers.length > 2 && <div className="nums ans-meta" style={{ gridTemplateColumns: `repeat(${a.numbers.length - 2}, auto)` }}>{a.numbers.slice(2).map((n, i) => <Num key={i} {...n} />)}</div>}
             </>
           ) : a.numbers.length > 0 && <div className="nums">{a.numbers.map((n, i) => <Num key={i} {...n} />)}</div>}
-          <details className="ans-why" open={!!reading}>
+          <details className="ans-why" open={!!whyLine}>
             <summary>Why this number is conservative</summary>
             <dl className="ans-dl">
-              {reading && <div><dt>how to read it</dt><dd>{reading}</dd></div>}
+              {scopeLine && <div><dt>what it covers</dt><dd>{scopeLine}</dd></div>}
+              {whyLine && <div><dt>why it reads low</dt><dd>{whyLine}</dd></div>}
               <div><dt>basis</dt><dd>Grid-only, average mix; contracted clean power is not counted.</dd></div>
             </dl>
           </details>

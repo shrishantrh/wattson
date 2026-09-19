@@ -24,6 +24,10 @@ const pctFmt = n => `${Math.round(n)}%`
 function Zone({ icon: Icon, children, right }) {
   return <div className="ans-sec"><Icon size={12} /><span>{children}</span>{right && <span className="ans-sec-r">{right}</span>}</div>
 }
+// The generated answer is one paragraph. The first sentence IS the answer; the rest qualifies it,
+// so it is set as body copy under it. Split only after a lowercase letter, digit, % or ) so that
+// "N. Virginia" and initials stay whole. The words themselves are never changed.
+const leadRest = s => { const m = String(s || '').match(/^([\s\S]*?[a-z0-9%)]\.)\s+([\s\S]+)$/); return m ? [m[1], m[2]] : [s, null] }
 const mtitle = (Icon, text) => <span className="ans-mtitle"><Icon size={13} />{text}</span>
 
 // Question 2: "Where should I put a datacenter so it runs on the cleanest power?"
@@ -121,6 +125,7 @@ export default function Compare({ route }) {
     ]
     const bestShare = answer.best?.siting?.overnight_cf_share_2025
     const bestTone = bestShare != null && bestShare >= 0.5 ? 'clean' : 'fossil'
+    const [cmpLead, cmpRest] = leadRest(answer.sentence)
     column = (
       <>
         <Breadcrumbs trail={crumbs} />
@@ -133,7 +138,8 @@ export default function Compare({ route }) {
           {controls}
           {data.unmapped.length > 0 && <div className="banner">Not in the data: {data.unmapped.join(', ')}. Try a nearby city or a grid name.</div>}
           {cands.length === 0 && <p className="note" style={{ margin: '8px 0 12px' }}>Nothing to rank yet. Add a place above, or start from the example: <Chip small href={href.compare(DEMO_COMPARE)}>{DEMO_COMPARE.mw} MW: {DEMO_COMPARE.metros.join(' vs ')}</Chip></p>}
-          <h1 className="verdict">{answer.sentence}</h1>
+          <h1 className="verdict ans-lead">{cmpLead}</h1>
+          {cmpRest && <p className="ans-rest">{cmpRest}</p>}
           <ol className="ans-rank">
             {answer.numbers.map((n, i) => (
               <li key={i} className={i === 0 ? 'is-best' : ''}>

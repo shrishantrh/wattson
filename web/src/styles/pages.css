@@ -58,8 +58,9 @@
 .xp-head .xp-strength { display: inline-block; margin: 0; padding: 2px 7px; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.04); }
 
 .xp-axes { gap: 10px 8px; margin-top: 12px; align-items: flex-end; }
+.xp-axes label.xp-pick { display: flex; align-items: stretch; }
 .xp-pick { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1 1 210px; }
-.xp-pick > span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.xp-pick > span { text-align: left; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .xp-field { position: relative; display: block; min-width: 0; }
 /* a static chevron, not decoration: it is the select's affordance */
 .xp-field::after { content: ''; position: absolute; right: 11px; top: 50%; width: 7px; height: 7px; margin-top: -5px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: rotate(45deg); pointer-events: none; }
