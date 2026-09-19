@@ -75,7 +75,7 @@ export function normalizeCompany(raw, ticker) {
   else if (Array.isArray(raw?.companies)) c = raw.companies.find(x => x.ticker === ticker)
   if (!c || (c.ticker && c.ticker !== ticker)) throw new NotFound(`Company ${ticker}`, raw?.companies ? (Array.isArray(raw.companies) ? raw.companies.map(x => x.ticker) : Object.keys(raw.companies)) : c?.ticker ? [c.ticker] : [])
   const sites = (c.sites || []).map(s => {
-    const zone = s.zone ?? s.pjm_zone ?? null, region_id = s.region_id || (zone ? `${s.ba}/${zone}` : s.ba)
+    const zone = s.zone ?? s.pjm_zone ?? null, region_id = s.region_id || (zone ? (String(zone).includes('/') ? zone : `${s.ba}/${zone}`) : s.ba)   // a zone may already be a full id
     const m = metroFor(s.metro), rc = coords.regions[region_id] || coords.regions[s.ba]
     return { ...s, zone, region_id, lat: s.lat ?? m?.lat ?? rc?.lat, lng: s.lng ?? m?.lng ?? rc?.lng, grid_label: rc?.label || s.ba }
   })

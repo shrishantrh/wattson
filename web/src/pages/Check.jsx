@@ -12,6 +12,7 @@ import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import ingest from '../data/ingest_status.json'
 import SideBySideModule, { sideBySideOf } from '../components/modules/SideBySideModule.jsx'
+import { relocateModule } from '../components/modules/RelocateModule.jsx'
 
 // A grid that generates far less than it uses is mostly imports; its footprint share is not what the site consumes.
 const importerNote = d => { const g = d && d.type === 'zone' && d.parent ? d.parent : d; const gen = g?.total_avg_mw?.['2025']?.all, dem = d?.demand?.['2025']?.avg_mw; return gen && dem && gen / dem < 0.5 ? `generates ${Math.round(gen / dem * 100)}% of what it uses, the rest is imported` : null }
@@ -111,6 +112,7 @@ export default function Check({ route }) {
           {(data.notes || []).map((n, i) => <li key={i} style={{ marginBottom: 6 }}>{n}</li>)}
         </ul>
       ) },
+      ...(relocateModule.applies({ company: data }) ? [{ id: relocateModule.id, title: relocateModule.title, render: () => relocateModule.render({ company: data }) }] : []),
       { id: 'night', title: 'Why night matters', default: false, render: () => <p className="note">Since 2019 the US grid got cleaner during the day and stood still at night. A datacenter draws the same power at 3am as at noon, so half of its electricity lands in the hours that did not improve. <a href={href.found('sweep')} className="ink2">See the numbers →</a></p> },
     ]
     column = (

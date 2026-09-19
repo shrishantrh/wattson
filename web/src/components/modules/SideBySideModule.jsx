@@ -1,4 +1,6 @@
+/* oxlint-disable react/only-export-components -- sideBySideOf is a pure selector that Check.jsx imports */
 import { useEffect, useState } from 'react'
+import '../../styles/companies.css'
 // Source pages, when rendered: public/evidence/index.json maps a claim id to
 // { says: { src, page, boxes: [[x,y,w,h] in 0..1] }, discloses: { src, page, boxes } }. Boxes are drawn as highlights.
 function useEvidenceIndex() {
@@ -31,26 +33,57 @@ export function sideBySideOf(company) {
   return out
 }
 
+// The page cite as a mono chip; dashed when the source has no page (raw SEC HTML).
+function PageChip({ page }) {
+  return <span className={`sbs-chip${page == null ? ' dim' : ''}`}>{page == null ? 'no page' : `p. ${page}`}</span>
+}
+
 export default function SideBySideModule({ company }) {
   const pairs = sideBySideOf(company)
   const idx = useEvidenceIndex()
   if (!pairs.length) return null
   return (
-    <div className="mod-sbs">
+    <div className="mod-sbs sbs-wrap">
       {pairs.map(({ claim, evidence, series }, i) => {
-        const years = evidence.years || evidence.labels || series.map((_, j) => '')
+        const years = evidence.years || evidence.labels || series.map(() => '')
+        const unit = evidence.unit || '%'
         const max = Math.max(...series, 100)
         const pages = idx[claim.claim_id]
+        const doc = evidence.source_doc || claim.source_doc || null
+        const sameDoc = !claim.source_doc || !evidence.source_doc || claim.source_doc === evidence.source_doc
+        const quote = String(claim.verbatim || '').replace(/^[“"]+/, '').replace(/[”"]+$/, '')
         return (
-          <div key={i} className="sbs" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 12 }}>
-            {pages?.says && <PageCrop item={pages.says} caption="The claim, on the company's own page" />}
-            {pages?.discloses && <PageCrop item={pages.discloses} caption="The disclosure, same report" />}
-            <div><div className="section-title"><span>Says · p. {claim.page ?? '—'}</span></div><p className="q" style={{ fontSize: 13 }}>“{claim.verbatim}”</p></div>
-            <div>
-              <div className="section-title"><span>{evidence.label || 'Discloses'} · p. {evidence.page ?? '—'}</span></div>
-              <div className="hourbars" style={{ height: 48 }}>{series.map((v, j) => <i key={j} style={{ height: `${(v / max) * 100}%`, background: 'var(--ink-2)' }} title={`${years[j] || ''} ${v}${evidence.unit || '%'}`} />)}</div>
-              <div className="hourbars-axis">{series.map((v, j) => <span key={j}>{years[j] ? `${years[j]} ` : ''}{v}{evidence.unit || '%'}</span>)}</div>
+          <div key={claim.claim_id || i} className="sbs">
+            {(pages?.says || pages?.discloses) && (
+              <div className="sbs-crops">
+                {pages?.says && <PageCrop item={pages.says} caption="The claim, on the company's own page" />}
+                {pages?.discloses && <PageCrop item={pages.discloses} caption="The disclosure, same report" />}
+              </div>
+            )}
+            <div className="sbs-pair">
+              <div className="sbs-col">
+                <div className="sbs-head"><b>Says</b><PageChip page={claim.page} /></div>
+                <blockquote className="sbs-quote">{quote}”</blockquote>
+              </div>
+              <div className="sbs-col">
+                <div className="sbs-head"><b>Discloses</b>{evidence.label && <span className="sbs-head-l">· {evidence.label}</span>}<PageChip page={evidence.page} /></div>
+                <div className="sbs-bars" role="img" aria-label={`${evidence.label || 'Disclosed series'}: ${series.map((v, j) => `${years[j] ? `${years[j]} ` : ''}${v}${unit}`).join(', ')}`}>
+                  {series.map((v, j) => {
+                    const pctH = Math.max(0, Math.min(100, (v / max) * 100))
+                    return (
+                      <div className="sbs-bar" key={j} title={`${years[j] ? `${years[j]} · ` : ''}${v}${unit}`}>
+                        <div className="sbs-bar-t">
+                          <span className="sbs-bar-v" style={{ bottom: `calc(${pctH}% + 5px)` }}>{v}{unit}</span>
+                          <i className="sbs-bar-i" style={{ height: `${pctH}%` }} />
+                        </div>
+                        <span className="sbs-bar-y">{years[j] ?? ''}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
+            <p className="sbs-foot">{sameDoc ? 'Same report, both pages, no other source.' : 'Two filings by the same company, no other source.'}{doc && <> <code>{doc}</code></>}</p>
           </div>
         )
       })}
