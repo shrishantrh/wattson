@@ -54,3 +54,20 @@ the whole team. The address is never hardcoded and never committed.
 Two things are unresolved before EDGAR output can be written, see the handoff notes:
 10-K filings on EDGAR are HTML and have **no page numbers**, so they cannot satisfy
 the `page` contract without inventing one.
+
+## Two lessons worth keeping
+
+**A self-consistent check cannot find a systematic bias in the instrument it
+checks with.** The first page audit compared every chunk against the same
+extraction that produced it. It proved provenance — the text really did come
+from that page — and was structurally incapable of noticing that the extraction
+had scrambled reading order across columns. Necessary, not sufficient. The
+audit that actually caught it re-read the *rendered* page: a different
+instrument. Five spot-checks on two-column pages would have found it on day one.
+
+**A result that looks tidy, or looks empty, is data about your pipeline.** The
+contradiction detector returned five findings for Microsoft and zero for Meta,
+although Meta makes the same annual-matching claim in plainer language. That
+asymmetry made no sense, and chasing it — rather than accepting the output —
+is what surfaced the column-splicing bug. The null result diagnosed the
+upstream defect.
