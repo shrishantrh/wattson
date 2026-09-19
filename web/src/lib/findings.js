@@ -120,15 +120,16 @@ export function checkAnswer(c) {
   }
 }
 
-export function compareAnswer(res) {
+export function compareAnswer(res, { shapeLabel } = {}) {
   const cs = res?.candidates || []
   if (!cs.length) return { sentence: 'No known locations to compare.', numbers: [] }
   const share = c => c.siting?.overnight_cf_share_2025, s = c => c.siting?.ratio_slope_per_year, chg = c => c.siting?.change_since_2019
   const bad = cs.filter(c => caveatFor(c.region_id))
   const clean = cs.filter(c => !caveatFor(c.region_id))
   const best = clean[0] || cs[0], second = clean[1]
-  let sentence = `${best.metro} is your cleanest option: ${pct0(share(best))} clean power at night and ${trendWord(chg(best), s(best))}.`
-  if (second) sentence += ` ${second.metro} is ${pct0(share(second))} and ${trendWord(chg(second), s(second))}.`
+  const what = shapeLabel ? `over the hours a ${shapeLabel} load uses` : 'at night'
+  let sentence = shapeLabel ? `For a ${shapeLabel} load, ${best.metro} is your cleanest option: ${pct0(share(best))} clean power ${what}.` : `${best.metro} is your cleanest option: ${pct0(share(best))} clean power at night and ${trendWord(chg(best), s(best))}.`
+  if (second) sentence += shapeLabel ? ` ${second.metro} is ${pct0(share(second))}.` : ` ${second.metro} is ${pct0(share(second))} and ${trendWord(chg(second), s(second))}.`
   if (bad.length) sentence += ` ${bad.map(c => `${c.metro} is ${pct0(share(c))} and its published history is corrected here, so read its trend with care`).join('; ')}.`
   return { sentence, best, numbers: cs.map(c => ({ value: pct0(share(c)), raw: share(c), label: `${c.rank}. ${c.metro}`, sub: caveatFor(c.region_id) ? 'history corrected' : trendWord(chg(c), s(c)), accent: c === best })) }
 }

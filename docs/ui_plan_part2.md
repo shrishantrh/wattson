@@ -17,7 +17,7 @@ ranked alerts, four companies' ESG text). No new pipeline work.
 - Alerts with severity = magnitude × persistence × recency, first-crossed month, streak.
 - ESG report text, page-cited, for Meta, Google, Microsoft, Amazon (309 chunks).
 
-## K. The load-shape simulator (101–108) `[now]`
+## K. The load-shape simulator (101–108) `[done]`
 
 101. A load has a shape. Flat 24/7 (a datacenter), business hours, overnight-heavy (fleet charging, batch jobs), daytime-following. Each shape weights the 24-hour clean profile differently, so the same place gives a different clean share for each.
 102. Shape picker on the compare card: switching shape re-ranks the candidates live.
@@ -28,7 +28,7 @@ ranked alerts, four companies' ESG text). No new pipeline work.
 107. Region page module: "What your load shape would run on".
 108. Sentence: "In Northern Virginia a flat 300 MW runs on 39% clean power; on business hours 42%; shifting a fifth into the cleanest hours gets 43%."
 
-## L. Explore: any two metrics across 111 regions (109–116) `[now]`
+## L. Explore: any two metrics across 111 regions (109–116) `[done]`
 
 109. Scatter with axis pickers over 14 metrics, Pearson r, least-squares line, top-5 outliers.
 110. Preset "Flat-load fingerprint": growth vs overnight excess, the four named clusters labelled. The detector as a picture.
@@ -44,16 +44,16 @@ ranked alerts, four companies' ESG text). No new pipeline work.
 117. Time machine: a year slider on the detector map recolours every pin by night clean share 2019 → 2025. Watch the mid-Atlantic dim.
 118. Season split from the heatmap: winter nights vs summer nights per region (solar's absence in December).
 119. Weekday vs weekend night share from the heatmap dates (industrial vs residential load).
-120. "What changed this month": Yash's 14 alerts as a feed with severity bars, first-crossed dates, and the place pinned.
+120. `[done]` "What changed this month": Yash's 14 alerts as a feed with severity bars, first-crossed dates, and the place pinned.
 121. Trailing-12 series with the 2019 reference line, per region.
-122. Import dependence: BAs whose night demand exceeds their night generation (PACW generates a quarter of what it uses). Show it on the site rows so a 93% figure is not read as consumption.
+122. `[done]` Import dependence: BAs whose night demand exceeds their night generation (PACW generates a quarter of what it uses). Show it on the site rows so a 93% figure is not read as consumption.
 123. Streaks: how many months a region has been above its 2019 night demand.
 124. Snapshot date and data vintage on every card footer, generated from the export.
 
 ## N. Companies (125–132) `[next]`, blocked on Yash's E2/E4/E5
 
-125. Reading progress per company: pages and chunks read, extraction pending or done (from claims/raw). Replaces "isn't verified yet".
-126. Peer comparison: four companies side by side, talk vs walk, physical range, cannot-verify count.
+125. `[done]` Reading progress per company: pages and chunks read, extraction pending or done (from claims/raw). Replaces "isn't verified yet".
+126. `[done]` Peer comparison: four companies side by side, talk vs walk, physical range, cannot-verify count.
 127. Relocation what-if: move one site to another grid and watch the physical range move.
 128. Portfolio: enter several sites, get the weighted physical share and the weakest site.
 129. Claim timeline: claims by year with the grid share of that year beside each.
