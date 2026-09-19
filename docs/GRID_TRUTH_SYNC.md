@@ -1,3 +1,5 @@
+Project was renamed to Wattson on Sept 19.
+
 # Grid Truth: team sync brief
 
 HackMIT 2026, Sept 19-20. Team: Yash + Shri. Last updated Saturday afternoon.

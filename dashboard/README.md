@@ -1,4 +1,4 @@
-# Grid Truth dashboard
+# Wattson dashboard
 
 Static Vite + React + Plotly site. No backend. Reads `public/data/regions.json`,
 `public/data/heatmaps/<BA>.json`, `public/data/alerts.json` (all produced by

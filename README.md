@@ -1,4 +1,6 @@
-# Grid Truth
+# Wattson
+
+*It follows the power, not the press release.*
 
 **PJM overnight clean generation has been flat within 100 MW since 2019, while overnight generation rose 8.7 GW and exports fell.**
 

@@ -10,8 +10,8 @@ cleanly, and a company watchlist checks clean-energy claims against the grid the
 actually use. Headline: PJM overnight clean generation has been flat within 100 MW since
 2019 while overnight generation rose 8.7 GW and exports fell.
 
-The project was called "Grid Truth"; the rename to Wattson has NOT been done in code,
-README, docs, or the dashboard yet. Full spec: `docs/spec.md` (the Amendments block at
+The project was called "Grid Truth" and was renamed to Wattson on Sept 19 (user-facing
+name only; folders, scripts, data files, and JSON fields keep their old names). Full spec: `docs/spec.md` (the Amendments block at
 the top overrides the body). `docs/GRID_TRUTH_SYNC.md` is older background.
 
 **Deadline: 11:00am Sunday, September 20, 2026.**
@@ -92,7 +92,7 @@ into `dashboard/public/claims/` (`dashboard/sync-claims.mjs`).
 - Yash: `claims/`. He delivers `claims/companies.json` (schema in `docs/spec.md`). Until it
   exists the dashboard loads `claims/companies.mock.json` behind a visible MOCK DATA banner;
   the mock's claim text is illustrative, its grid evidence numbers are real.
-- Remote: github.com/shrishantrh/grid-truth (private). Commit after each step, push when
+- Remote: github.com/shrishantrh/wattson (private). Commit after each step, push when
   something works. Never put credentials in the repo.
 
 ## Known open issues

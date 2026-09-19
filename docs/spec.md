@@ -1,3 +1,5 @@
+Project was renamed to Wattson on Sept 19.
+
 # Grid Truth
 
 Measuring and acting on the environmental impact of the AI datacenter buildout.

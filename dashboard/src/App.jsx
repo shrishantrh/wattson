@@ -32,7 +32,7 @@ export default function App() {
   return (
     <>
       <div className="topbar"><div className="topbar-inner">
-        <a className="brand" href="#/">Grid Truth<span className="sub">hourly carbon-free monitor, US balancing authorities</span></a>
+        <a className="brand" href="#/">Wattson<span className="sub">It follows the power, not the press release.</span></a>
         <nav className="nav">{NAV.map(([k, l]) => <a key={k} href={`#/${k}`} className={route.page === k ? 'active' : ''}>{l}</a>)}</nav>
       </div></div>
       <main className="page">
