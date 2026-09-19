@@ -1,0 +1,82 @@
+{
+ "_note": "Ingest progress from claims/raw/*.jsonl (Yash, E1). Regenerate with node scripts/ingest_status.mjs.",
+ "generated": "2026-09-19",
+ "companies": {
+  "AMZN": {
+   "documents": [
+    {
+     "kind": "10k",
+     "chunks": 6,
+     "pages": 1,
+     "source_doc": "amzn-20251231.htm"
+    },
+    {
+     "kind": "esg",
+     "chunks": 51,
+     "pages": 51,
+     "source_doc": "2025-amazon-sustainability-report.pdf"
+    }
+   ],
+   "chunks": 57,
+   "pages": 52,
+   "extracted": false
+  },
+  "GOOGL": {
+   "documents": [
+    {
+     "kind": "10k",
+     "chunks": 9,
+     "pages": 1,
+     "source_doc": "goog-20251231.htm"
+    },
+    {
+     "kind": "esg",
+     "chunks": 118,
+     "pages": 117,
+     "source_doc": "google-2026-environmental-report.pdf"
+    }
+   ],
+   "chunks": 127,
+   "pages": 118,
+   "extracted": false
+  },
+  "META": {
+   "documents": [
+    {
+     "kind": "10k",
+     "chunks": 19,
+     "pages": 1,
+     "source_doc": "meta-20251231.htm"
+    },
+    {
+     "kind": "esg",
+     "chunks": 74,
+     "pages": 74,
+     "source_doc": "Meta_2025-Sustainability-Report.pdf"
+    }
+   ],
+   "chunks": 93,
+   "pages": 75,
+   "extracted": false
+  },
+  "MSFT": {
+   "documents": [
+    {
+     "kind": "10k",
+     "chunks": 11,
+     "pages": 1,
+     "source_doc": "msft-20260630.htm"
+    },
+    {
+     "kind": "esg",
+     "chunks": 66,
+     "pages": 66,
+     "source_doc": "2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf"
+    }
+   ],
+   "chunks": 77,
+   "pages": 67,
+   "extracted": false
+  }
+ }
+}

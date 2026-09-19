@@ -11,6 +11,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from server import data
+from server import irradiance_narrate as narrate
 
 app = FastAPI(title="Wattson API", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
@@ -264,6 +265,63 @@ def health():
     return {"ok": True, "regions": len(data.regions_by_id()),
             "companies_are_mock": data.companies_doc()["is_mock"],
             "alerts_are_ranked": data.alerts_doc()["is_ranked"]}
+
+
+@app.get("/api/irradiance")
+def get_irradiance():
+    """NASA POWER surface irradiance overlay on daytime vs overnight clean share.
+
+    Precomputed illustration. Irradiance is flat; that is the finding. See
+    claims/derived/irradiance.json and the honesty caveats in the payload.
+    """
+    try:
+        return data.irradiance_doc()
+    except FileNotFoundError as e:
+        raise HTTPException(404, str(e)) from e
+
+
+class NarrateRequest(BaseModel):
+    region: str = Field(..., description="Region id as in irradiance.json, e.g. ERCO/NRTH")
+    voice_id: str = Field("leo", description="xAI TTS voice id (leo = instructional)")
+
+
+@app.get("/api/irradiance/script/{region_id:path}")
+def get_irradiance_script(region_id: str):
+    """Return the spoken script for one region (no TTS). Useful for transcripts."""
+    try:
+        doc = data.irradiance_doc()
+    except FileNotFoundError as e:
+        raise HTTPException(404, str(e)) from e
+    try:
+        script = narrate.build_script(doc, region_id)
+    except KeyError:
+        raise HTTPException(404, f"unknown irradiance region: {region_id}") from None
+    return {"region": region_id, "script": script, "chars": len(script)}
+
+
+@app.post("/api/irradiance/narrate")
+def post_irradiance_narrate(req: NarrateRequest):
+    """Generate a Grok Voice narration for one irradiance region from the data."""
+    try:
+        doc = data.irradiance_doc()
+    except FileNotFoundError as e:
+        raise HTTPException(404, str(e)) from e
+    try:
+        script = narrate.build_script(doc, req.region)
+    except KeyError:
+        raise HTTPException(404, f"unknown irradiance region: {req.region}") from None
+    try:
+        audio = narrate.synthesize(script, voice_id=req.voice_id)
+    except RuntimeError as e:
+        raise HTTPException(503, str(e)) from e
+    return Response(
+        audio,
+        media_type="audio/mpeg",
+        headers={
+            "Content-Disposition": f'inline; filename="{req.region.replace("/", "_")}.mp3"',
+            "X-Wattson-Script-Chars": str(len(script)),
+        },
+    )
 
 
 @app.get("/api/facilities")

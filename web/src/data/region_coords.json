@@ -1,0 +1,757 @@
+{
+  "_note": "HAND-MAPPED approximate load centroids, September 2026. Not derived from the data. Zones use their main load center; balancing authorities use the center of their service territory.",
+  "_uncertain": [
+    "WAUW",
+    "SWPW",
+    "SWPP/SECI",
+    "PJM/AP",
+    "MISO/0027",
+    "SWPP/CSWS"
+  ],
+  "regions": {
+    "ERCO/NRTH": {
+      "lat": 33.7,
+      "lng": -97.6,
+      "label": "N. Texas",
+      "place": "ERCOT North weather zone (Wichita Falls / Sherman / Denton)"
+    },
+    "ERCO/FWES": {
+      "lat": 31.95,
+      "lng": -102.15,
+      "label": "Permian",
+      "place": "Permian Basin, Midland / Odessa (ERCOT Far West)"
+    },
+    "AZPS": {
+      "lat": 33.6,
+      "lng": -112.1,
+      "label": "Phoenix",
+      "place": "Phoenix (Arizona Public Service)"
+    },
+    "TEPC": {
+      "lat": 32.2,
+      "lng": -110.9,
+      "label": "Tucson",
+      "place": "Tucson (Tucson Electric Power)"
+    },
+    "WACM": {
+      "lat": 41.1,
+      "lng": -104.8,
+      "label": "WAPA Rockies",
+      "place": "WAPA Rocky Mountain (Loveland CO / Cheyenne WY; CO / WY / NE / SD federal and co-op loads)"
+    },
+    "PJM/DOM": {
+      "lat": 38.95,
+      "lng": -77.45,
+      "label": "N. Virginia",
+      "place": "Northern Virginia (Loudoun / Fairfax), Dominion zone"
+    },
+    "SWPP/OPPD": {
+      "lat": 41.26,
+      "lng": -95.94,
+      "label": "Omaha",
+      "place": "Omaha, Nebraska (Omaha Public Power District)"
+    },
+    "ERCO": {
+      "lat": 31.0,
+      "lng": -99.0,
+      "label": "ERCOT",
+      "place": "ERCOT, Texas interconnection (service-territory center)"
+    },
+    "SC": {
+      "lat": 33.7,
+      "lng": -79.9,
+      "label": "Santee Cooper",
+      "place": "Moncks Corner / coastal SC (Santee Cooper)"
+    },
+    "CISO/SDGE": {
+      "lat": 32.72,
+      "lng": -117.16,
+      "label": "San Diego",
+      "place": "San Diego (SDG&E)"
+    },
+    "PNM/PNM": {
+      "lat": 35.08,
+      "lng": -106.65,
+      "label": "Albuquerque",
+      "place": "Albuquerque (PNM system firm load zone)"
+    },
+    "CISO/PGAE": {
+      "lat": 37.6,
+      "lng": -121.9,
+      "label": "Bay Area",
+      "place": "San Francisco Bay Area / Central Valley (PG&E)"
+    },
+    "SRP": {
+      "lat": 33.4,
+      "lng": -111.8,
+      "label": "SRP (Phoenix)",
+      "place": "Tempe / Mesa, east Phoenix metro (Salt River Project)"
+    },
+    "ERCO/SOUT": {
+      "lat": 27.2,
+      "lng": -97.9,
+      "label": "S. Texas",
+      "place": "Corpus Christi / Rio Grande Valley (ERCOT South)"
+    },
+    "PGE": {
+      "lat": 45.5,
+      "lng": -122.7,
+      "label": "Portland OR",
+      "place": "Portland, Oregon (Portland General Electric; Hillsboro datacenters)"
+    },
+    "ERCO/SCEN": {
+      "lat": 29.85,
+      "lng": -98.1,
+      "label": "Austin/S.A.",
+      "place": "Austin / San Antonio (ERCOT South Central)"
+    },
+    "NYIS/ZONE": {
+      "lat": 43.1,
+      "lng": -75.23,
+      "label": "Utica NY",
+      "place": "Utica (NYISO Zone E Mohawk Valley)"
+    },
+    "NYIS/ZOND": {
+      "lat": 44.7,
+      "lng": -73.45,
+      "label": "Plattsburgh",
+      "place": "Plattsburgh, North Country (NYISO Zone D North)"
+    },
+    "PJM/AEP": {
+      "lat": 39.96,
+      "lng": -83.0,
+      "label": "Columbus OH",
+      "place": "Columbus, Ohio area (AEP zone: OH / IN / WV / VA / KY)"
+    },
+    "NYIS/ZONG": {
+      "lat": 41.7,
+      "lng": -73.92,
+      "label": "Hudson Valley",
+      "place": "Poughkeepsie (NYISO Zone G Hudson Valley)"
+    },
+    "CISO": {
+      "lat": 36.5,
+      "lng": -119.5,
+      "label": "CAISO",
+      "place": "California ISO (service-territory center, Central Valley)"
+    },
+    "SWPP/OKGE": {
+      "lat": 35.47,
+      "lng": -97.52,
+      "label": "Oklahoma City",
+      "place": "Oklahoma City (OG&E)"
+    },
+    "SWPP/SPS": {
+      "lat": 34.4,
+      "lng": -101.85,
+      "label": "Amarillo",
+      "place": "Texas Panhandle, Amarillo / Lubbock (Southwestern Public Service)"
+    },
+    "FPL": {
+      "lat": 27.5,
+      "lng": -80.8,
+      "label": "FPL",
+      "place": "Florida Power & Light (south and east Florida; Miami-Palm Beach load center, territory center near Vero Beach)"
+    },
+    "SWPP/WAUE": {
+      "lat": 45.9,
+      "lng": -99.0,
+      "label": "Dakotas",
+      "place": "Bismarck ND / Watertown SD (WAPA Upper Great Plains East)"
+    },
+    "NYIS/ZONF": {
+      "lat": 42.65,
+      "lng": -73.75,
+      "label": "Albany",
+      "place": "Albany (NYISO Zone F Capital)"
+    },
+    "GCPD": {
+      "lat": 47.2,
+      "lng": -119.3,
+      "label": "Grant Co. WA",
+      "place": "Moses Lake / Ephrata / Quincy, WA (Grant County PUD; Quincy datacenters)"
+    },
+    "SWPP/NPPD": {
+      "lat": 41.43,
+      "lng": -97.37,
+      "label": "NPPD Nebraska",
+      "place": "Columbus, NE / outstate Nebraska (Nebraska Public Power District)"
+    },
+    "NYIS/ZONA": {
+      "lat": 42.89,
+      "lng": -78.88,
+      "label": "Buffalo",
+      "place": "Buffalo, western New York (NYISO Zone A West)"
+    },
+    "SWPP/GRDA": {
+      "lat": 36.3,
+      "lng": -95.3,
+      "label": "Pryor OK",
+      "place": "Pryor / Vinita, northeast Oklahoma (Grand River Dam Authority; MidAmerica Industrial Park)"
+    },
+    "FPC": {
+      "lat": 28.5,
+      "lng": -82.5,
+      "label": "Duke Florida",
+      "place": "St. Petersburg / central and west Florida (Duke Energy Florida, formerly Progress)"
+    },
+    "NYIS/ZONC": {
+      "lat": 43.05,
+      "lng": -76.15,
+      "label": "Syracuse",
+      "place": "Syracuse (NYISO Zone C Central)"
+    },
+    "ISNE/4001": {
+      "lat": 43.66,
+      "lng": -70.26,
+      "label": "Maine",
+      "place": "Portland, Maine (ISO-NE Maine zone)"
+    },
+    "PJM/JC": {
+      "lat": 40.3,
+      "lng": -74.3,
+      "label": "Central NJ",
+      "place": "Central New Jersey (Freehold / Morristown), JCP&L zone"
+    },
+    "MISO/0035": {
+      "lat": 41.59,
+      "lng": -93.62,
+      "label": "Iowa/Missouri",
+      "place": "Iowa / Missouri (Des Moines), MISO Zones 3 and 5"
+    },
+    "NYIS/ZONB": {
+      "lat": 43.16,
+      "lng": -77.61,
+      "label": "Rochester",
+      "place": "Rochester (NYISO Zone B Genesee)"
+    },
+    "LGEE": {
+      "lat": 38.2,
+      "lng": -85.7,
+      "label": "Louisville",
+      "place": "Louisville / Lexington, KY (LG&E and KU)"
+    },
+    "ISNE/4006": {
+      "lat": 41.95,
+      "lng": -70.7,
+      "label": "SE Mass.",
+      "place": "Plymouth / Cape Cod / New Bedford (ISO-NE Southeast Massachusetts zone)"
+    },
+    "SWPP": {
+      "lat": 38.5,
+      "lng": -97.5,
+      "label": "SPP",
+      "place": "Southwest Power Pool (service-territory center, central Kansas)"
+    },
+    "NYIS/ZONI": {
+      "lat": 40.93,
+      "lng": -73.9,
+      "label": "Yonkers",
+      "place": "Yonkers / lower Westchester (NYISO Zone I Dunwoodie)"
+    },
+    "PJM/PL": {
+      "lat": 40.6,
+      "lng": -75.5,
+      "label": "Allentown PA",
+      "place": "Allentown / Lehigh Valley (PPL zone)"
+    },
+    "BANC": {
+      "lat": 38.6,
+      "lng": -121.5,
+      "label": "Sacramento",
+      "place": "Sacramento (Balancing Authority of Northern California, SMUD)"
+    },
+    "PJM/EKPC": {
+      "lat": 38.0,
+      "lng": -84.2,
+      "label": "E. Kentucky",
+      "place": "Eastern Kentucky (Winchester / Lexington area), EKPC zone"
+    },
+    "CISO/SCE": {
+      "lat": 34.06,
+      "lng": -117.65,
+      "label": "Inland Empire",
+      "place": "Los Angeles basin east, Ontario / Inland Empire (Southern California Edison)"
+    },
+    "ISNE/4002": {
+      "lat": 42.99,
+      "lng": -71.46,
+      "label": "New Hampshire",
+      "place": "Manchester, NH (ISO-NE New Hampshire zone)"
+    },
+    "PNM": {
+      "lat": 35.1,
+      "lng": -106.6,
+      "label": "New Mexico",
+      "place": "Albuquerque / Santa Fe (Public Service Company of New Mexico, BA)"
+    },
+    "NYIS/ZONK": {
+      "lat": 40.75,
+      "lng": -73.3,
+      "label": "Long Island",
+      "place": "Long Island, Hauppauge (NYISO Zone K)"
+    },
+    "MISO/8910": {
+      "lat": 30.45,
+      "lng": -91.15,
+      "label": "MISO South",
+      "place": "Arkansas / Louisiana / Mississippi / SE Texas (Baton Rouge), MISO Zones 8, 9, 10"
+    },
+    "FMPP": {
+      "lat": 28.5,
+      "lng": -81.4,
+      "label": "Orlando (FMPP)",
+      "place": "Orlando / Lakeland (Florida Municipal Power Pool)"
+    },
+    "BPAT": {
+      "lat": 46.5,
+      "lng": -120.5,
+      "label": "BPA",
+      "place": "Bonneville Power Administration (Columbia River basin, WA / OR / ID)"
+    },
+    "PJM/PN": {
+      "lat": 40.6,
+      "lng": -78.8,
+      "label": "Johnstown PA",
+      "place": "Johnstown / Altoona / Erie, western PA (Penelec zone)"
+    },
+    "PJM": {
+      "lat": 40.0,
+      "lng": -79.5,
+      "label": "PJM",
+      "place": "PJM Interconnection (service-territory center, Chicago to New Jersey)"
+    },
+    "PJM/PS": {
+      "lat": 40.73,
+      "lng": -74.17,
+      "label": "Newark NJ",
+      "place": "Newark, northern New Jersey (PSEG zone)"
+    },
+    "ISNE/4003": {
+      "lat": 44.48,
+      "lng": -73.21,
+      "label": "Vermont",
+      "place": "Burlington, VT (ISO-NE Vermont zone)"
+    },
+    "TEC": {
+      "lat": 27.9,
+      "lng": -82.5,
+      "label": "Tampa",
+      "place": "Tampa (Tampa Electric)"
+    },
+    "ERCO/COAS": {
+      "lat": 29.76,
+      "lng": -95.37,
+      "label": "Houston",
+      "place": "Houston (ERCOT Coast)"
+    },
+    "ISNE/4005": {
+      "lat": 41.82,
+      "lng": -71.41,
+      "label": "Rhode Island",
+      "place": "Providence, RI (ISO-NE Rhode Island zone)"
+    },
+    "IPCO": {
+      "lat": 43.6,
+      "lng": -116.2,
+      "label": "Boise",
+      "place": "Boise / southern Idaho (Idaho Power)"
+    },
+    "MISO/0001": {
+      "lat": 44.98,
+      "lng": -93.27,
+      "label": "Minneapolis",
+      "place": "Minnesota / Dakotas (Minneapolis), MISO Zone 1"
+    },
+    "TVA": {
+      "lat": 35.5,
+      "lng": -86.5,
+      "label": "TVA",
+      "place": "Tennessee Valley Authority (Tennessee and surrounding states)"
+    },
+    "ISNE/4008": {
+      "lat": 42.36,
+      "lng": -71.06,
+      "label": "Boston",
+      "place": "Boston (ISO-NE Northeast Massachusetts / Boston zone)"
+    },
+    "ERCO/EAST": {
+      "lat": 32.35,
+      "lng": -95.3,
+      "label": "Tyler TX",
+      "place": "Tyler / East Texas (ERCOT East)"
+    },
+    "NYIS": {
+      "lat": 42.9,
+      "lng": -75.5,
+      "label": "NYISO",
+      "place": "New York ISO (service-territory center, central New York)"
+    },
+    "JEA": {
+      "lat": 30.3,
+      "lng": -81.7,
+      "label": "Jacksonville",
+      "place": "Jacksonville, FL (JEA)"
+    },
+    "PJM/ATSI": {
+      "lat": 41.3,
+      "lng": -81.6,
+      "label": "Cleveland",
+      "place": "Cleveland / Akron, northern Ohio (ATSI / FirstEnergy zone)"
+    },
+    "ISNE": {
+      "lat": 43.0,
+      "lng": -71.5,
+      "label": "ISO-NE",
+      "place": "ISO New England (service-territory center, southern New Hampshire)"
+    },
+    "PJM/CE": {
+      "lat": 41.85,
+      "lng": -87.75,
+      "label": "Chicago",
+      "place": "Chicago (ComEd zone)"
+    },
+    "PJM/DPL": {
+      "lat": 39.0,
+      "lng": -75.5,
+      "label": "Delmarva",
+      "place": "Delmarva Peninsula (Dover / Wilmington DE, Salisbury MD)"
+    },
+    "ISNE/4007": {
+      "lat": 42.1,
+      "lng": -72.6,
+      "label": "Springfield MA",
+      "place": "Springfield / Worcester (ISO-NE Western/Central Massachusetts zone)"
+    },
+    "ISNE/4004": {
+      "lat": 41.76,
+      "lng": -72.68,
+      "label": "Connecticut",
+      "place": "Hartford, CT (ISO-NE Connecticut zone)"
+    },
+    "PJM/BC": {
+      "lat": 39.29,
+      "lng": -76.61,
+      "label": "Baltimore",
+      "place": "Baltimore (BGE zone)"
+    },
+    "PJM/DAY": {
+      "lat": 39.76,
+      "lng": -84.19,
+      "label": "Dayton",
+      "place": "Dayton, Ohio (Dayton Power & Light zone)"
+    },
+    "PJM/PEP": {
+      "lat": 38.9,
+      "lng": -77.03,
+      "label": "Washington DC",
+      "place": "Washington DC and Maryland suburbs (Pepco zone)"
+    },
+    "CPLE": {
+      "lat": 35.8,
+      "lng": -78.6,
+      "label": "Raleigh",
+      "place": "Raleigh, NC (Duke Energy Progress East)"
+    },
+    "NEVP": {
+      "lat": 36.2,
+      "lng": -115.1,
+      "label": "Las Vegas",
+      "place": "Las Vegas (Nevada Power / NV Energy South)"
+    },
+    "DUK": {
+      "lat": 35.2,
+      "lng": -80.8,
+      "label": "Charlotte",
+      "place": "Charlotte, NC (Duke Energy Carolinas)"
+    },
+    "PJM/ME": {
+      "lat": 40.34,
+      "lng": -75.93,
+      "label": "Reading PA",
+      "place": "Reading, PA (Met-Ed zone)"
+    },
+    "SCL": {
+      "lat": 47.6,
+      "lng": -122.33,
+      "label": "Seattle",
+      "place": "Seattle (Seattle City Light)"
+    },
+    "EPE": {
+      "lat": 31.8,
+      "lng": -106.4,
+      "label": "El Paso",
+      "place": "El Paso, TX / Las Cruces, NM (El Paso Electric)"
+    },
+    "SWPP/SECI": {
+      "lat": 38.88,
+      "lng": -99.32,
+      "label": "W. Kansas",
+      "place": "Western Kansas, Hays / Garden City (Sunflower Electric)"
+    },
+    "PJM/DUQ": {
+      "lat": 40.44,
+      "lng": -79.99,
+      "label": "Pittsburgh",
+      "place": "Pittsburgh (Duquesne Light zone)"
+    },
+    "NYIS/ZONJ": {
+      "lat": 40.71,
+      "lng": -74.0,
+      "label": "NYC",
+      "place": "New York City (NYISO Zone J)"
+    },
+    "PJM/AP": {
+      "lat": 39.5,
+      "lng": -78.5,
+      "label": "W. MD / WV",
+      "place": "Western Maryland / northern West Virginia / SW Pennsylvania (Hagerstown), Allegheny Power zone"
+    },
+    "LDWP": {
+      "lat": 34.05,
+      "lng": -118.25,
+      "label": "Los Angeles",
+      "place": "Los Angeles (LADWP)"
+    },
+    "PACE": {
+      "lat": 40.9,
+      "lng": -111.7,
+      "label": "Salt Lake City",
+      "place": "Salt Lake City / Utah / Wyoming / SE Idaho (PacifiCorp East, Rocky Mountain Power)"
+    },
+    "PJM/DEOK": {
+      "lat": 39.1,
+      "lng": -84.5,
+      "label": "Cincinnati",
+      "place": "Cincinnati / northern Kentucky (Duke Energy Ohio/Kentucky zone)"
+    },
+    "SWPP/MPS": {
+      "lat": 39.77,
+      "lng": -94.85,
+      "label": "St. Joseph MO",
+      "place": "St. Joseph / north of Kansas City (KCP&L Greater Missouri Operations)"
+    },
+    "SWPP/KCPL": {
+      "lat": 39.1,
+      "lng": -94.58,
+      "label": "Kansas City",
+      "place": "Kansas City (Evergy / KCP&L)"
+    },
+    "MISO": {
+      "lat": 43.0,
+      "lng": -91.0,
+      "label": "MISO",
+      "place": "MISO (service-territory center, Upper Midwest)"
+    },
+    "PJM/PE": {
+      "lat": 39.95,
+      "lng": -75.17,
+      "label": "Philadelphia",
+      "place": "Philadelphia (PECO zone)"
+    },
+    "ERCO/NCEN": {
+      "lat": 32.85,
+      "lng": -96.95,
+      "label": "Dallas",
+      "place": "Dallas-Fort Worth (ERCOT North Central)"
+    },
+    "PJM/AE": {
+      "lat": 39.36,
+      "lng": -74.42,
+      "label": "Atlantic City",
+      "place": "Atlantic City, southern New Jersey (Atlantic Electric zone)"
+    },
+    "SOCO": {
+      "lat": 33.0,
+      "lng": -85.0,
+      "label": "Southern Co.",
+      "place": "Southern Company (Georgia / Alabama / Mississippi; Atlanta-Birmingham)"
+    },
+    "PSCO": {
+      "lat": 39.7,
+      "lng": -105.0,
+      "label": "Denver",
+      "place": "Denver / Front Range (Public Service Company of Colorado, Xcel)"
+    },
+    "MISO/0006": {
+      "lat": 39.77,
+      "lng": -86.16,
+      "label": "Indianapolis",
+      "place": "Indiana (Indianapolis), MISO Zone 6"
+    },
+    "MISO/0027": {
+      "lat": 42.7,
+      "lng": -85.5,
+      "label": "WI / Michigan",
+      "place": "Wisconsin / Michigan (between Milwaukee and Detroit), MISO Zones 2 and 7"
+    },
+    "MISO/0004": {
+      "lat": 39.2,
+      "lng": -89.8,
+      "label": "Downstate IL",
+      "place": "Downstate Illinois (Springfield / St. Louis Metro East, Ameren), MISO Zone 4"
+    },
+    "PACW": {
+      "lat": 44.0,
+      "lng": -122.5,
+      "label": "W. Oregon",
+      "place": "Western Oregon, Willamette Valley (PacifiCorp West, Pacific Power)"
+    },
+    "SWPP/CSWS": {
+      "lat": 35.0,
+      "lng": -95.2,
+      "label": "Tulsa (AEPW)",
+      "place": "Tulsa / Shreveport (AEP West: PSO and SWEPCO; OK / AR / LA / E. TX)"
+    },
+    "SWPP/EDE": {
+      "lat": 37.08,
+      "lng": -94.5,
+      "label": "Joplin MO",
+      "place": "Joplin, Missouri (Empire District Electric)"
+    },
+    "AVA": {
+      "lat": 47.7,
+      "lng": -117.4,
+      "label": "Spokane",
+      "place": "Spokane, WA (Avista)"
+    },
+    "SWPP/WR": {
+      "lat": 38.3,
+      "lng": -96.6,
+      "label": "Wichita/Topeka",
+      "place": "Topeka / Wichita, eastern Kansas (Westar / Evergy Kansas)"
+    },
+    "SCEG": {
+      "lat": 33.9,
+      "lng": -81.0,
+      "label": "Columbia SC",
+      "place": "Columbia, SC (Dominion Energy South Carolina, formerly SCE&G)"
+    },
+    "SWPP/WFEC": {
+      "lat": 35.07,
+      "lng": -98.24,
+      "label": "SW Oklahoma",
+      "place": "Anadarko / southwest Oklahoma (Western Farmers Electric Cooperative)"
+    },
+    "TPWR": {
+      "lat": 47.25,
+      "lng": -122.45,
+      "label": "Tacoma",
+      "place": "Tacoma, WA (Tacoma Power)"
+    },
+    "CPLW": {
+      "lat": 35.6,
+      "lng": -82.6,
+      "label": "Asheville",
+      "place": "Asheville, NC (Duke Energy Progress West)"
+    },
+    "WALC": {
+      "lat": 33.5,
+      "lng": -114.0,
+      "label": "WAPA Desert SW",
+      "place": "WAPA Desert Southwest (Parker-Davis, lower Colorado River; Arizona / S. Nevada federal loads)"
+    },
+    "NWMT": {
+      "lat": 46.6,
+      "lng": -112.0,
+      "label": "Montana",
+      "place": "Helena / Butte / Billings (NorthWestern Energy Montana)"
+    },
+    "AECI": {
+      "lat": 37.5,
+      "lng": -92.5,
+      "label": "S. Missouri",
+      "place": "Springfield, MO area (Associated Electric Cooperative; rural MO / IA / OK co-ops)"
+    },
+    "PSEI": {
+      "lat": 47.6,
+      "lng": -122.2,
+      "label": "Puget Sound",
+      "place": "Bellevue / Seattle suburbs (Puget Sound Energy)"
+    },
+    "ERCO/WEST": {
+      "lat": 32.1,
+      "lng": -100.1,
+      "label": "Abilene",
+      "place": "Abilene / San Angelo (ERCOT West)"
+    },
+    "SPA": {
+      "lat": 35.9,
+      "lng": -94.0,
+      "label": "SWPA hydro",
+      "place": "Ozarks AR / MO / OK (Southwestern Power Administration federal hydro)"
+    },
+    "IID": {
+      "lat": 32.8,
+      "lng": -115.5,
+      "label": "Imperial Val.",
+      "place": "El Centro / Imperial Valley, CA (Imperial Irrigation District)"
+    },
+    "CHPD": {
+      "lat": 47.4,
+      "lng": -120.3,
+      "label": "Wenatchee WA",
+      "place": "Wenatchee, WA (Chelan County PUD)"
+    },
+    "DOPD": {
+      "lat": 47.85,
+      "lng": -119.9,
+      "label": "Douglas Co. WA",
+      "place": "East Wenatchee, WA (Douglas County PUD, Wells Dam)"
+    },
+    "WAUW": {
+      "lat": 47.5,
+      "lng": -106.0,
+      "label": "E. Montana",
+      "place": "WAPA Upper Great Plains West (eastern Montana, Fort Peck / Miles City)"
+    },
+    "TIDC": {
+      "lat": 37.5,
+      "lng": -120.85,
+      "label": "Turlock CA",
+      "place": "Turlock / Modesto, CA (Turlock Irrigation District)"
+    },
+    "SEC": {
+      "lat": 28.0,
+      "lng": -81.5,
+      "label": "Seminole (FL)",
+      "place": "Seminole Electric Cooperative (member co-ops across Florida; Tampa HQ)"
+    },
+    "GVL": {
+      "lat": 29.65,
+      "lng": -82.3,
+      "label": "Gainesville",
+      "place": "Gainesville, FL (Gainesville Regional Utilities)"
+    },
+    "TAL": {
+      "lat": 30.4,
+      "lng": -84.3,
+      "label": "Tallahassee",
+      "place": "Tallahassee, FL (City of Tallahassee)"
+    },
+    "AEC": {
+      "lat": 31.3,
+      "lng": -85.9,
+      "label": "PowerSouth AL",
+      "place": "Andalusia, south Alabama / NW Florida (PowerSouth Energy Cooperative)"
+    },
+    "HST": {
+      "lat": 25.5,
+      "lng": -80.5,
+      "label": "Homestead FL",
+      "place": "Homestead, FL (City of Homestead)"
+    },
+    "OVEC": {
+      "lat": 39.0,
+      "lng": -83.0,
+      "label": "Ohio Valley",
+      "place": "Piketon, OH / Madison, IN (Ohio Valley Electric Corp; Kyger Creek and Clifty Creek plants)"
+    },
+    "SWPW": {
+      "lat": 42.5,
+      "lng": -105.5,
+      "label": "SPP West",
+      "place": "Southwest Power Pool West (Western Interconnection RTO footprint: Wyoming / Colorado / Montana / western Dakotas)"
+    }
+  }
+}

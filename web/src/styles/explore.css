@@ -1,0 +1,60 @@
+/* Explore: the scatter and its controls. Quiet: axis text 10px mono muted, grey dots by
+   interconnection, one accent (the selected point). Western is the lighter-weight grey. */
+:root { --xp-east: var(--ink-2); --xp-west: var(--muted); --xp-texas: var(--ink); }
+
+.xp-q { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; text-wrap: pretty; }
+.xp-sub { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.xp-strength { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); margin-right: 8px; }
+.xp-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.xp-axes { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+.xp-axes label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.xp-axes select.field { max-width: 236px; cursor: pointer; }
+.xp-swap { width: 32px; padding: 0; font-family: var(--font-mono); }
+.xp-sectors { display: inline-flex; gap: 6px; margin-left: auto; }
+
+/* chart */
+.xp-chart { display: block; width: 100%; height: auto; margin-top: 6px; font-family: var(--font-mono); font-size: 10px; overflow: visible; }
+.xp-axis line { stroke: var(--line-strong); stroke-width: 1; }
+.xp-axis text { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
+.xp-axis .xp-axis-label { fill: var(--muted); font-family: var(--font-ui); font-size: 11px; }
+.xp-empty { fill: var(--muted); font-family: var(--font-ui); font-size: 12px; }
+.xp-quad { fill: rgba(255, 255, 255, 0.03); }
+.xp-quad-label { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
+.xp-median { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; opacity: 0.7; }
+.xp-fit { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 5 4; fill: none; }
+
+/* points: the sector sets --xp-c; flagged is hollow; named has a ring and a label; selected is the accent */
+.xp-pt { --xp-c: var(--xp-east); cursor: pointer; }
+.xp-pt.west { --xp-c: var(--xp-west); }
+.xp-pt.texas { --xp-c: var(--xp-texas); }
+.xp-pt.other { --xp-c: var(--xp-west); }
+.xp-pt.sel { --xp-c: var(--accent); }
+.xp-hit { fill: transparent; }
+.xp-dot { fill: var(--xp-c); stroke: none; transition: r var(--dur-fast) var(--ease), fill var(--dur-fast) var(--ease), stroke var(--dur-fast) var(--ease); }
+.xp-pt.hollow .xp-dot { fill: var(--surface); stroke: var(--xp-c); stroke-width: 1.2; }
+.xp-pt:hover .xp-dot, .xp-pt.hov .xp-dot { r: 4px; }
+.xp-ring { fill: none; stroke: var(--xp-c); stroke-width: 1; opacity: 0.85; transition: stroke var(--dur-fast) var(--ease); }
+.xp-name { fill: var(--ink-2); font-family: var(--font-ui); font-size: 11px; font-weight: 500; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; transition: fill var(--dur-fast) var(--ease); }
+.xp-pt.sel .xp-name { fill: var(--ink); }
+.xp-tip { pointer-events: none; }
+.xp-tip rect { fill: var(--surface-2); stroke: var(--line-strong); stroke-width: 1; }
+.xp-tip text { fill: var(--ink); font-family: var(--font-ui); font-size: 11px; font-weight: 500; }
+.xp-tip text.v { fill: var(--ink-2); font-family: var(--font-mono); font-size: 10px; font-weight: 400; }
+
+/* legend below the chart (extends .legend from base.css) */
+.xp-legend { margin-top: 8px; align-items: center; }
+.xp-legend i.ink2 { background: var(--ink-2); }
+.xp-legend i.hollow { border-color: var(--ink-2); }
+.xp-legend i.ring { background: var(--ink-2); box-shadow: 0 0 0 2px var(--surface-a), 0 0 0 3px var(--ink-2); }
+.xp-legend i.line, .xp-legend i.cross { width: 14px; height: 0; border-radius: 0; background: none; border-top: 1px dashed var(--muted); vertical-align: middle; }
+.xp-legend-hint { margin-left: auto; color: var(--muted); }
+
+/* the selected region, under the fit numbers */
+.xp-sel { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line-soft); font-size: 12px; color: var(--ink-2); }
+.xp-sel b { color: var(--ink); font-weight: 500; }
+.xp-sel .mono { font-size: 11px; }
+.xp-sel .xp-open { color: var(--ink); font-weight: 500; margin-left: auto; transition: color var(--dur-fast) var(--ease); }
+.xp-sel .xp-open:hover { color: var(--accent); }
+.xp-sel .close { width: 24px; height: 24px; }
+
+@media (prefers-reduced-motion: reduce) { .xp-dot, .xp-ring, .xp-name { transition: none; } }

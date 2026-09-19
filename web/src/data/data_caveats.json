@@ -1,0 +1,5 @@
+{
+ "_note": "HAND-NOTED data issues from the pipeline review (CLAUDE.md, Sept 2026) and the engine corrections. Shown next to any number from these regions.",
+ "AZPS": "The published 2019 figure (62% clean at night) counted nuclear that SRP reported at the same hours; the engine corrects it to 2%. Corrected, Phoenix rose from 2% to 10% clean at night: improving from a very low base, not collapsing. Published and corrected are shown side by side on the region page.",
+ "WACM": "Demand rose about 1.5 GW during 2022 while generation stayed flat and exports fell to zero. Not explained by the data; could be a footprint change. Kept in the ranking, excluded from alerts."
+}

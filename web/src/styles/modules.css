@@ -1,0 +1,59 @@
+/* Evidence modules (components/modules). Each renders inside a caller's card, so there is no
+   outer surface here: compact rows, 12-13px text, 11px labels, mono figures. The one accent is
+   fossil fuel and a clean share that fell. Colors come from tokens.css only. */
+
+/* shared */
+.mod-foot { font-size: 11px; color: var(--muted); line-height: 1.45; margin-top: 8px; }
+.mod-note { font-size: 11px; color: var(--muted); line-height: 1.4; min-width: 0; }
+.mod-empty { font-size: 12px; color: var(--muted); line-height: 1.45; padding: 2px 0; }
+.mod-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; min-height: 20px; }
+.mod-head-right { justify-content: flex-end; }
+.mod-chip { display: inline-flex; align-items: center; height: 20px; padding: 0 7px; border: 1px solid var(--line-strong); border-radius: 6px; font-size: 11px; font-weight: 500; line-height: 1; color: var(--ink-2); white-space: nowrap; flex: none; }
+.mod-chip.dim { color: var(--muted); border-style: dashed; cursor: default; }
+.mod-chip.mono { font-family: var(--font-mono); font-weight: 400; font-size: 10.5px; font-feature-settings: normal; letter-spacing: 0; }
+.mod-chip[data-tip]::after { white-space: normal; width: max-content; max-width: 240px; text-align: left; }
+.mod-rows { display: flex; flex-direction: column; }
+.mod-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-top: 1px solid var(--line-soft); }
+.mod-row:first-child { border-top: 0; padding-top: 0; }
+.mod-cell { min-width: 0; }
+.mod-t { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.35; }
+.mod-d { font-size: 11px; color: var(--muted); margin-top: 1px; line-height: 1.35; }
+.mod-n { font-family: var(--font-mono); font-size: 12px; color: var(--ink); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
+.mod-n small { color: var(--muted); font-size: 10.5px; }
+.mod-sev { display: inline-block; margin-right: 6px; padding: 0 5px; border: 1px solid var(--line-strong); border-radius: 4px; font-size: 10px; line-height: 15px; color: var(--ink-2); text-transform: lowercase; }
+
+/* heatmap */
+.mod-heatmap .plot { width: 100%; }
+
+/* fuel delta: signed CSS bars on one scale, zero line where the most negative bar ends */
+.mod-sums { display: flex; gap: 20px; margin-bottom: 10px; }
+.mod-sum { min-width: 0; }
+.mod-sum-v { display: block; font-family: var(--font-mono); font-size: 14px; line-height: 1.2; color: var(--ink); font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
+.mod-sum-v.accent { color: var(--accent); }
+.mod-sum-l { font-size: 11px; color: var(--muted); line-height: 1.3; }
+.mod-bars { display: flex; flex-direction: column; gap: 5px; }
+.mod-bar { display: grid; grid-template-columns: 64px 1fr 66px; gap: 8px; align-items: center; }
+.mod-bar-name { font-size: 12px; color: var(--ink-2); }
+.mod-bar-track { position: relative; display: block; height: 10px; }
+.mod-bar-track::before { content: ''; position: absolute; top: -2px; bottom: -2px; left: var(--zero, 0%); width: 1px; background: var(--line-strong); }
+.mod-bar-fill { position: absolute; top: 1px; bottom: 1px; min-width: 1px; border-radius: 1px; background: var(--ink-2); }
+.mod-bar-fill.fossil { background: var(--accent); }
+.mod-bar-fill.other { background: var(--muted); }
+.mod-bar-val { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
+.mod-bar-val.accent { color: var(--accent); }
+
+/* history: three rows of seven small bars */
+.mod-hist { display: flex; flex-direction: column; gap: 10px; }
+.mod-hist-row { display: grid; grid-template-columns: 82px 1fr auto; gap: 10px; align-items: end; }
+.mod-hist-l { font-size: 11px; color: var(--muted); line-height: 1.3; padding-bottom: 15px; }
+.mod-hist-mid { min-width: 0; }
+.mod-hist-bars { display: flex; align-items: flex-end; gap: 4px; height: 34px; }
+.mod-hist-bars i { flex: 1; min-height: 2px; border-radius: 1px; background: rgba(255, 255, 255, 0.16); }
+.mod-hist-bars i.last { background: var(--ink-2); }
+.mod-hist-bars i.last.down { background: var(--accent); }
+.mod-hist-years { display: flex; gap: 4px; margin-top: 4px; font-family: var(--font-mono); font-size: 9.5px; line-height: 11px; color: var(--muted); font-feature-settings: normal; letter-spacing: 0; }
+.mod-hist-years span { flex: 1; text-align: center; }
+.mod-hist-v { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink); text-align: right; white-space: nowrap; padding-bottom: 15px; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
+.mod-hist-v .from { color: var(--muted); }
+.mod-hist-v.accent { color: var(--accent); }
+.mod-hist-v.accent .from { color: var(--muted); }

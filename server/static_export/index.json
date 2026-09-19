@@ -21,12 +21,13 @@
   "alerts": "alerts.json",
   "companies": "companies.json",
   "company": "company/{TICKER}.json",
-  "site": "site/{preset}.json"
+  "site": "site/{preset}.json",
+  "irradiance": "irradiance.json"
  },
  "site_presets": [
   "300mw-phoenix-nova-omaha",
   "300mw-dallas-columbus-portland",
   "500mw-all-flagged"
  ],
- "files": 136
+ "files": 137
 }

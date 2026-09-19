@@ -1,0 +1,312 @@
+{
+ "generated": "2026-09-19",
+ "source": "NASA POWER (power.larc.nasa.gov), daily point API, community=RE",
+ "parameter": "ALLSKY_SFC_SW_DWN",
+ "units": "kWh/m^2/day",
+ "baseline_year": "2019",
+ "compare_year": "2025",
+ "purpose": "Independent check on the shape of the headline finding. Satellite irradiance owes nothing to our pipeline, so it can show that the daytime resource did not change while the daytime clean share did.",
+ "national_reference": {
+  "2019": {
+   "overnight": 0.405,
+   "daytime": 0.372,
+   "all": 0.377
+  },
+  "2025": {
+   "overnight": 0.397,
+   "daytime": 0.465,
+   "all": 0.414
+  },
+  "note": "National figures are for context. Five points do not test a national claim."
+ },
+ "conclusion": {
+  "statement": "Surface irradiance is flat at all five points: year-to-year variation is 1.06-2.65% with no trend, so the solar resource available in 2025 is the same resource that was there in 2019. Any change in daytime carbon-free share is therefore about the capacity built to catch that resource, not about the sunlight itself. The pattern of daytime share rising while overnight does not appears cleanly in 2 of 5 regions (PJM/DOM, ERCO/NRTH). The others are reported as they are, not dropped.",
+  "irradiance_is_flat_everywhere": true,
+  "supporting_regions": [
+   "PJM/DOM",
+   "ERCO/NRTH"
+  ],
+  "non_supporting_regions": [
+   "AZPS",
+   "SWPP/OPPD",
+   "CISO"
+  ]
+ },
+ "caveats": [
+  "Each region is represented by a single hand-picked point. That point is not a centroid, not a load-weighted average, and not the region. A balancing authority is a large, irregular, multi-state footprint: PJM alone spans Chicago to New Jersey.",
+  "This is an illustration of a mechanism, not a causal estimate. No share of the change in carbon-free generation is attributed to irradiance, and no coefficient is reported.",
+  "Irradiance barely changes from year to year. Installed solar capacity is what changed. Flat irradiance is the expected and correct result here, not a failed test.",
+  "Carbon-free includes nuclear, hydro, wind and geothermal as well as solar. Only solar is diurnal, so a region's daytime-versus-overnight split is not a pure solar signal. A wind-heavy region can raise its overnight share without any solar at all.",
+  "Three of the five regions are zones whose carbon-free share is inherited from the parent balancing authority, so for those the share describes a much larger footprint than the irradiance point does.",
+  "Generation within a footprint, not consumption; interchange is not allocated."
+ ],
+ "regions": [
+  {
+   "region": "PJM/DOM",
+   "name": "Dominion Virginia Power zone",
+   "point": {
+    "lat": 39.04,
+    "lon": -77.49,
+    "place": "Ashburn, VA",
+    "note": "representative point, not a centroid"
+   },
+   "cf_inherited_from_ba": true,
+   "cf_share_actually_describes": "PJM",
+   "irradiance": {
+    "units": "kWh/m^2/day",
+    "years": [
+     "2019",
+     "2020",
+     "2021",
+     "2022",
+     "2023",
+     "2024",
+     "2025"
+    ],
+    "annual_mean": {
+     "2019": 4.0013,
+     "2020": 3.9601,
+     "2021": 4.0342,
+     "2022": 4.0618,
+     "2023": 4.1222,
+     "2024": 4.0522,
+     "2025": 4.0382
+    },
+    "mean": 4.0386,
+    "range": 0.1621,
+    "year_to_year_variation_pct": 1.16,
+    "is_flat": true,
+    "change_pct_2019_2025": 0.92
+   },
+   "cf_share": {
+    "2019": {
+     "daytime": 0.376,
+     "overnight": 0.433
+    },
+    "2025": {
+     "daytime": 0.416,
+     "overnight": 0.39
+    },
+    "daytime_change_pts": 4.0,
+    "overnight_change_pts": -4.3
+   },
+   "verdict": "supports",
+   "scale_mismatch_note": "PJM/DOM is a zone and reports demand only; its carbon-free share is PJM's. The irradiance point is Ashburn, VA, inside the zone, while the share describes the whole of PJM. Treat the pairing as illustrative."
+  },
+  {
+   "region": "AZPS",
+   "name": "Arizona Public Service Company",
+   "point": {
+    "lat": 33.45,
+    "lon": -112.07,
+    "place": "Phoenix, AZ",
+    "note": "representative point, not a centroid"
+   },
+   "cf_inherited_from_ba": false,
+   "cf_share_actually_describes": "AZPS",
+   "irradiance": {
+    "units": "kWh/m^2/day",
+    "years": [
+     "2019",
+     "2020",
+     "2021",
+     "2022",
+     "2023",
+     "2024",
+     "2025"
+    ],
+    "annual_mean": {
+     "2019": 5.7956,
+     "2020": 5.9653,
+     "2021": 5.7681,
+     "2022": 5.8572,
+     "2023": 5.8214,
+     "2024": 5.8208,
+     "2025": 5.7802
+    },
+    "mean": 5.8298,
+    "range": 0.1972,
+    "year_to_year_variation_pct": 1.06,
+    "is_flat": true,
+    "change_pct_2019_2025": -0.27
+   },
+   "cf_share": {
+    "2019": {
+     "daytime": 0.651,
+     "overnight": 0.62
+    },
+    "2025": {
+     "daytime": 0.476,
+     "overnight": 0.104
+    },
+    "daytime_change_pts": -17.5,
+    "overnight_change_pts": -51.6
+   },
+   "verdict": "unusable",
+   "data_caveat": "Overnight clean share reads ~0.15 in 2025 against 0.62 in 2019 and overnight clean generation ~356 MW against a 3,373 MW 2019 baseline. CLAUDE.md records this as almost certainly a reporting change, not a real collapse; no real grid loses 87% of its clean generation. AZPS's DEMAND-side numbers are sound and still rank: it holds detector rank 3 on demand evidence alone."
+  },
+  {
+   "region": "SWPP/OPPD",
+   "name": "Omaha Public Power District",
+   "point": {
+    "lat": 41.26,
+    "lon": -95.93,
+    "place": "Omaha, NE",
+    "note": "representative point, not a centroid"
+   },
+   "cf_inherited_from_ba": true,
+   "cf_share_actually_describes": "SWPP",
+   "irradiance": {
+    "units": "kWh/m^2/day",
+    "years": [
+     "2019",
+     "2020",
+     "2021",
+     "2022",
+     "2023",
+     "2024",
+     "2025"
+    ],
+    "annual_mean": {
+     "2019": 3.9824,
+     "2020": 4.1936,
+     "2021": 4.2908,
+     "2022": 4.3117,
+     "2023": 4.2182,
+     "2024": 4.3165,
+     "2025": 4.1819
+    },
+    "mean": 4.2136,
+    "range": 0.3341,
+    "year_to_year_variation_pct": 2.55,
+    "is_flat": true,
+    "change_pct_2019_2025": 5.01
+   },
+   "cf_share": {
+    "2019": {
+     "daytime": 0.357,
+     "overnight": 0.467
+    },
+    "2025": {
+     "daytime": 0.414,
+     "overnight": 0.519
+    },
+    "daytime_change_pts": 5.7,
+    "overnight_change_pts": 5.2
+   },
+   "verdict": "does_not_separate",
+   "scale_mismatch_note": "SWPP/OPPD is a zone and reports demand only; its carbon-free share is SWPP's. The irradiance point is Omaha, NE, inside the zone, while the share describes the whole of SWPP. Treat the pairing as illustrative.",
+   "why_it_does_not_support": {
+    "post_hoc": true,
+    "reading": "SWPP's overnight carbon-free share is HIGHER than its daytime share in every year (0.467 vs 0.357 in 2019), which is the signature of wind rather than solar. Wind is not diurnal, so both halves of the day rose together (+5.7 daytime, +5.2 overnight) and the two cannot separate. This is what the overlay should look like on a wind-led grid."
+   }
+  },
+  {
+   "region": "ERCO/NRTH",
+   "name": "North",
+   "point": {
+    "lat": 32.78,
+    "lon": -96.8,
+    "place": "Dallas, TX",
+    "note": "representative point, not a centroid"
+   },
+   "cf_inherited_from_ba": true,
+   "cf_share_actually_describes": "ERCO",
+   "irradiance": {
+    "units": "kWh/m^2/day",
+    "years": [
+     "2019",
+     "2020",
+     "2021",
+     "2022",
+     "2023",
+     "2024",
+     "2025"
+    ],
+    "annual_mean": {
+     "2019": 4.648,
+     "2020": 4.6153,
+     "2021": 4.5785,
+     "2022": 4.975,
+     "2023": 4.7647,
+     "2024": 4.7266,
+     "2025": 4.8047
+    },
+    "mean": 4.7304,
+    "range": 0.3964,
+    "year_to_year_variation_pct": 2.65,
+    "is_flat": true,
+    "change_pct_2019_2025": 3.37
+   },
+   "cf_share": {
+    "2019": {
+     "daytime": 0.287,
+     "overnight": 0.399
+    },
+    "2025": {
+     "daytime": 0.576,
+     "overnight": 0.413
+    },
+    "daytime_change_pts": 28.9,
+    "overnight_change_pts": 1.4
+   },
+   "verdict": "supports",
+   "scale_mismatch_note": "ERCO/NRTH is a zone and reports demand only; its carbon-free share is ERCO's. The irradiance point is Dallas, TX, inside the zone, while the share describes the whole of ERCO. Treat the pairing as illustrative."
+  },
+  {
+   "region": "CISO",
+   "name": "California Independent System Operator",
+   "point": {
+    "lat": 36.7,
+    "lon": -119.8,
+    "place": "Central Valley, CA",
+    "note": "representative point, not a centroid"
+   },
+   "cf_inherited_from_ba": false,
+   "cf_share_actually_describes": "CISO",
+   "irradiance": {
+    "units": "kWh/m^2/day",
+    "years": [
+     "2019",
+     "2020",
+     "2021",
+     "2022",
+     "2023",
+     "2024",
+     "2025"
+    ],
+    "annual_mean": {
+     "2019": 5.3725,
+     "2020": 5.3475,
+     "2021": 5.4965,
+     "2022": 5.5449,
+     "2023": 5.323,
+     "2024": 5.3904,
+     "2025": 5.3505
+    },
+    "mean": 5.4036,
+    "range": 0.2219,
+    "year_to_year_variation_pct": 1.44,
+    "is_flat": true,
+    "change_pct_2019_2025": -0.41
+   },
+   "cf_share": {
+    "2019": {
+     "daytime": 0.689,
+     "overnight": 0.495
+    },
+    "2025": {
+     "daytime": 0.641,
+     "overnight": 0.458
+    },
+    "daytime_change_pts": -4.8,
+    "overnight_change_pts": -3.7
+   },
+   "verdict": "contradicts",
+   "why_it_does_not_support": {
+    "post_hoc": true,
+    "reading": "CISO's overnight share rose far more than its daytime share from 2020 onward (+9.5 vs +0.7 points), and its overnight fuel deltas show wind up 0.63 GW while hydro fell 0.59 GW. Its 2019 daytime share was also an unusually high starting point, with a step down in 2020. A hydro-exposed, wind-adding grid is not where a solar signal shows up cleanly."
+   }
+  }
+ ]
+}
