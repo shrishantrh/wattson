@@ -9,6 +9,7 @@ import { signed } from '../lib/format.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import '../styles/explore.css'
+import '../styles/pages.css'
 
 // Explore: any two metrics across the scored regions as a scatter, with the correlation, the
 // fit and the outliers. The flat-load detector's own view is the first preset (growth vs
@@ -106,14 +107,17 @@ export default function Explore({ route }) {
       <Card title={<><b>Explore</b> · {data ? `${all.length} regions` : 'regions'} · any two metrics</>} onClose={back}>
         {loading ? <Loading what="the regions" /> : error ? <ErrorState error={error} onRetry={reload} /> : (
           <>
-            <p className="xp-q">{s.text}</p>
-            <p className="xp-sub">{s.strength && <span className="xp-strength">{s.strength}</span>}{preset ? preset.question : `${mx.label} against ${my.label}.`} {preset?.note}</p>
+            <div className="xp-head">
+              {s.strength && <span className="xp-strength">{s.strength}</span>}
+              <p className="xp-q">{s.text}</p>
+            </div>
+            <p className="xp-sub">{preset ? preset.question : `${mx.label} against ${my.label}.`} {preset?.note}</p>
           </>
         )}
         <div className="xp-presets">{PRESETS.map(p => <Chip key={p.key} small active={preset?.key === p.key} href={exploreHref({ x: p.x, y: p.y, sel, sector })}>{p.label}</Chip>)}</div>
         <div className="xp-axes">
-          <label>x<select className="field" value={xKey} onChange={e => pick('x', e.target.value)} aria-label="x axis metric">{METRICS.map(m => <option key={m.key} value={m.key}>{m.label}</option>)}</select></label>
-          <label>y<select className="field" value={yKey} onChange={e => pick('y', e.target.value)} aria-label="y axis metric">{METRICS.map(m => <option key={m.key} value={m.key}>{m.label}</option>)}</select></label>
+          <label className="xp-pick"><span>x axis</span><span className="xp-field"><select className="field" value={xKey} onChange={e => pick('x', e.target.value)} aria-label="x axis metric">{METRICS.map(m => <option key={m.key} value={m.key}>{m.label}</option>)}</select></span></label>
+          <label className="xp-pick"><span>y axis</span><span className="xp-field"><select className="field" value={yKey} onChange={e => pick('y', e.target.value)} aria-label="y axis metric">{METRICS.map(m => <option key={m.key} value={m.key}>{m.label}</option>)}</select></span></label>
           <button type="button" className="btn xp-swap" onClick={() => go({ x: yKey, y: xKey })} aria-label="Swap axes" data-tip="Swap axes">⇄</button>
           <span className="xp-sectors">{SECTORS.map(x => <Chip key={x} small active={x === sector} onClick={() => go({ sector: x, sel: inSector(x, sel) ? sel : null })}>{x}</Chip>)}</span>
         </div>

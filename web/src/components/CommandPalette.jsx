@@ -50,7 +50,8 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   const hasQuery = q.trim().length > 0
   const showList = hasQuery || emptyLimit > 0
   return (
-    <Command shouldFilter={false} loop label="Wattson commands" className={`pal ${className}`}>
+    <Command shouldFilter={false} loop label="Wattson commands" className={`pal ${className}`}
+      onKeyDown={e => { if (e.key === 'Escape' && emptyLimit === 0 && hasQuery) { e.preventDefault(); e.stopPropagation(); setQ('') } }}>
       <Command.Input className="pal-input" value={q} onValueChange={setQ} placeholder={placeholder} autoFocus={autoFocus} autoComplete="off" spellCheck={false} aria-label={placeholder} />
       {showList && (
         <Command.List className="pal-list">
@@ -60,6 +61,7 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
                 <Command.Item key={it.id} value={it.id} className={`pal-item${it.unknown ? ' unknown' : ''}${it.id === 'ask' ? ' ask' : ''}`} disabled={!!it.unknown} onSelect={() => run(it)}>
                   <span className="pal-label">{it.label}</span>
                   {it.hint && <span className={`pal-hint${it.mono ? ' mono' : ''}`}>{it.hint}</span>}
+                  {!it.unknown && <span className="pal-go" aria-hidden="true">↵</span>}
                 </Command.Item>
               ))}
             </Command.Group>
@@ -68,7 +70,7 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
           {loading && list.length > 0 && hasQuery && <div className="pal-empty small">Regions still loading…</div>}
         </Command.List>
       )}
-      {footer && <div className="pal-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div>}
+      {footer && showList && <div className="pal-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> {emptyLimit > 0 ? 'close' : 'clear'}</span></div>}
     </Command>
   )
 }
@@ -117,12 +119,14 @@ export function CommandPalette({ open: openProp, onOpenChange, limit = 6, emptyL
   )
 }
 
-// Inline: nothing under the input until the user has typed at least one character.
-export function CommandInline({ autoFocus = false, placeholder = 'Check a company or compare places to build', limit = 5, className = '' }) {
+// Inline: nothing under the input until the user has typed at least one character. The ⌘K badge
+// sits in the input row and steps aside as soon as the box has focus.
+export function CommandInline({ autoFocus = false, placeholder = 'Try: Google  ·  or  300 MW: Phoenix vs Omaha', limit = 5, className = '' }) {
   const { groups, loading } = useCommands()
   return (
     <div className={`pal-inline ${className}`}>
-      <Palette groups={groups} loading={loading} limit={limit} emptyLimit={0} autoFocus={autoFocus} placeholder={placeholder} />
+      <kbd className="pal-inline-k" aria-hidden="true">⌘K</kbd>
+      <Palette groups={groups} loading={loading} limit={limit} emptyLimit={0} autoFocus={autoFocus} placeholder={placeholder} footer />
     </div>
   )
 }

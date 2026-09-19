@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Globe, FlatMap, detectGlobeCapability } from '../globe'
-import { href } from '../router.js'
+import { href, useHash, parseHash } from '../router.js'
 import QuickSearch from '../components/QuickSearch.jsx'
 import { useColumnWidth, ResizeHandle } from '../components/ColumnResize.jsx'
 import Insight from '../components/Insight.jsx'
@@ -31,6 +31,19 @@ export function StageProvider({ children }) {
   useEffect(() => { setZoom(0) }, [baseView.lat, baseView.lng, baseView.altitude])
   const view = useMemo(() => ({ ...baseView, altitude: Math.min(3, Math.max(0.45, baseView.altitude * Math.pow(0.8, zoom))) }), [baseView, zoom])
   const terminator = useMemo(() => (style === 'night' ? { enabled: true, sunLng: 60, sunLat: 0, dayDim: 0.3, ...(g.terminator || {}) } : { enabled: false }), [style, g.terminator])
+  // One key per destination, so the column's cards replay their entrance on navigation rather
+  // than only on first paint, and the globe dips once to acknowledge it. `evidence` is stripped:
+  // opening the evidence is a disclosure inside the page, not a new destination, and it must not
+  // remount the column or re-run the stage motion.
+  const hash = useHash()
+  const routeKey = useMemo(() => {
+    const r = parseHash(hash)
+    const p = { ...r.params }
+    delete p.evidence
+    return `${r.page}|${r.id || r.ticker || (r.metros || []).join('~')}|${new URLSearchParams(p).toString()}`
+  }, [hash])
+  const [navAck, setNavAck] = useState(false)
+  useEffect(() => { setNavAck(true); const id = setTimeout(() => setNavAck(false), 460); return () => clearTimeout(id) }, [routeKey])
   const [colW, handleProps] = useColumnWidth('column', 420, 340, 760)
   const colWidth = spec.column ? spec.columnWidth || colW : 0
   const GlobeC = flat ? FlatMap : Globe
@@ -39,7 +52,7 @@ export function StageProvider({ children }) {
     <StageCtx.Provider value={ctx}>
       <div className="app">
         <div className="stage" aria-hidden="true">
-          <div className={`globe-host ${flat ? 'flat' : ''} ${spec.column ? 'with-column' : ''}`} style={spec.column ? { left: colWidth + (flat ? 60 : 0) } : undefined}>
+          <div className={`globe-host ${flat ? 'flat' : ''} ${spec.column ? 'with-column' : ''} ${navAck ? 'mo-nav' : ''}`} style={spec.column ? { left: colWidth + (flat ? 60 : 0) } : undefined}>
             <GlobeC view={view} points={g.points || NONE} rings={g.rings || NONE} labels={NONE} markers={g.markers || NONE} terminator={terminator} interactive={g.interactive ?? !!spec.column} autoRotate={g.autoRotate ?? 0} atmosphere={style === 'night' ? { color: '#ffffff', altitude: 0.1 } : { color: '#ffffff', altitude: 0.08 }} quality="auto" style={style} landColors={g.landColors} />
           </div>
         </div>
@@ -54,7 +67,7 @@ export function StageProvider({ children }) {
           <span className="gap" />
           <button type="button" className={style === 'night' ? 'on' : ''} onClick={() => setStyle(v => (v === 'night' ? 'dots' : 'night'))} aria-label="Toggle night lights" data-tip="Night lights" data-tip-side="left"><Night size={15} /></button>
         </div>
-        {spec.column && <div className="column-wrap" style={{ width: colWidth }}><div className="column">{spec.column}</div>{!spec.columnWidth && <ResizeHandle {...handleProps} />}</div>}
+        {spec.column && <div className="column-wrap" style={{ width: colWidth }}><div className="column stagger mo-col" key={routeKey} data-route={routeKey}>{spec.column}</div>{!spec.columnWidth && <ResizeHandle {...handleProps} />}</div>}
         {spec.overlay && <div className="overlay">{spec.overlay}</div>}
         {spec.foot && <div className="foot">{spec.foot}</div>}
         {children}

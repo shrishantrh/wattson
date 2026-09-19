@@ -7,6 +7,7 @@ import { readTokens } from '../lib/tokens.js'
 import { pct1, pts1 } from '../lib/findings.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
+import '../styles/pages.css'
 
 // The screener: every scored region as a sortable table. The quant view.
 const PRESETS = [
@@ -47,12 +48,12 @@ export default function Screener({ route }) {
   const column = (
     <>
       <Card title={<><b>Screener</b> · {rows.length} regions · hourly grid data</>} onClose={back}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{PRESETS.map(p => <Chip key={p[0]} small active={p[0] === preset[0] && !sort} href={href.screen(p[0])}>{p[1]}</Chip>)}</div>
-        <p className="note" style={{ marginTop: 10 }}>Clean share of what each grid generated at night in 2025, how it moved since 2019, its yearly trend, clean power relative to night demand, and the flat-load detector's rank. Zones inherit their grid's generation figures. Top 12 of the current sort are pinned on the globe.</p>
+        <div className="pg-chips">{PRESETS.map(p => <Chip key={p[0]} small active={p[0] === preset[0] && !sort} href={href.screen(p[0])}>{p[1]}</Chip>)}</div>
+        <p className="pg-lede">Clean share of what each grid generated at night in 2025, how it moved since 2019, its yearly trend, clean power relative to night demand, and the flat-load detector's rank. Zones inherit their grid's generation figures. Top 12 of the current sort are pinned on the globe.</p>
       </Card>
       {loading ? <Card><Loading what="the screener" /></Card> : error ? <Card><ErrorState error={error} onRetry={reload} /></Card> : (
         <Card>
-          <Table columns={columns} rows={rows} sortKey={sortKey} sortDir={sortDir} onSort={(key, dir) => setSort({ key, dir })} rowHref={r => href.region(r.id)} filter csvName="wattson-screener" dense />
+          <Table columns={columns} rows={rows} sortKey={sortKey} sortDir={sortDir} onSort={(key, dir) => setSort({ key, dir })} rowHref={r => href.region(r.id)} filter csvName="wattson-screener" dense maxHeight="min(66vh, 720px)" />
         </Card>
       )}
     </>

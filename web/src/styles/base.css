@@ -1,4 +1,8 @@
 @import './tokens.css';
+/* motion.css owns every movement in the app (entrances, hover/press, disclosure, the globe's
+   acknowledgement of a navigation) and the single prefers-reduced-motion switch that turns all
+   of it off. Rules there are written to sit on top of the ones below. */
+@import './motion.css';
 
 /* Wattson. Input-first: the globe, one box, one answer, evidence on request.
    Rules: Inter for everything you read, JetBrains Mono for small figures and keys only.
