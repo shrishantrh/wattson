@@ -1,0 +1,20 @@
+# Allowed balancing authority codes for site mapping (contracts/api.v1.yaml -> Site.ba).
+# Two agents will invent different spellings if this file does not exist. It is the authority.
+PJM
+ERCO
+MISO
+CISO
+SWPP
+BPAT
+PACW
+GCPD
+SOCO
+DUK
+AZPS
+TEPC
+SRP
+NYIS
+ISNE
+TVA
+OPPD
+PGE

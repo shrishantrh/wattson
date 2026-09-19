@@ -1,0 +1,19 @@
+{
+ "generated": "2026-09-19",
+ "latest_month": "2026-08",
+ "rules": {
+  "demand_up_20pct": "Overnight demand (trailing 12 months) at least 20% above 2019",
+  "demand_record_high": "Overnight demand (trailing 12 months) at an all-time high",
+  "cf_share_down_3pts": "Overnight carbon-free share (trailing 12 months) at least 3 points below 2019",
+  "gas_share_up_3pts_yoy": "Overnight gas share (trailing 12 months) up at least 3 points year over year",
+  "clean_mw_below_2019": "Overnight clean generation (trailing 12 months) at least 2% below 2019",
+  "detector_top10": "Flat-load detector: top 10 with pattern 'flat-load growth'"
+ },
+ "excluded_regions": [
+  "WACM"
+ ],
+ "note": "Ranked and deduped by engine/alerts. severity = magnitude x persistence x recency. One alert per region.",
+ "count_before_ranking": 162,
+ "count": 0,
+ "alerts": []
+}

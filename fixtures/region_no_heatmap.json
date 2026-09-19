@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "generated": "2026-09-19",
+  "data_snapshot_end": "2026-09-05",
+  "caveats": [
+   "Generation within a footprint, not consumption; interchange not allocated.",
+   "Average grid mix, not marginal emissions.",
+   "Regions are coarse; PJM spans Chicago to New Jersey.",
+   "Zones inherit the parent BA's generation figures.",
+   "Operator table is hand-mapped.",
+   "Detector flags flat 24/7 load in general (datacenters, crypto mining, oilfield electrification); language is 'consistent with'."
+  ]
+ },
+ "_fixture_note": "EMPTY-STATE FIXTURE. AEC carries a non-null heatmap_uri pointing at a file that does not exist. heatmap_available is false. Build the empty state against this, do not discover it live.",
+ "region": {
+  "id": "AEC",
+  "ba": "AEC",
+  "zone": null,
+  "type": "ba",
+  "name": "PowerSouth Energy Cooperative",
+  "ba_name": "PowerSouth Energy Cooperative",
+  "region_eia": "Southeast",
+  "timezone": "America/Chicago",
+  "cf_inherited_from_ba": false,
+  "cf_share": {
+   "2019": {
+    "overnight": 0.003,
+    "daytime": 0.003,
+    "all": 0.003
+   },
+   "2020": {
+    "overnight": 0.002,
+    "daytime": 0.003,
+    "all": 0.003
+   },
+   "2021": {
+    "overnight": 0.005,
+    "daytime": 0.009,
+    "all": 0.009
+   }
+  },
+  "demand": {
+   "2019": {
+    "avg_mw": 536.0,
+    "overnight_avg_mw": 434.0,
+    "peak_mw": 995.0,
+    "p995_mw": 916.0,
+    "load_factor": 0.585,
+    "hours": 8760
+   },
+   "2020": {
+    "avg_mw": 528.0,
+    "overnight_avg_mw": 432.0,
+    "peak_mw": 1017.0,
+    "p995_mw": 916.0,
+    "load_factor": 0.576,
+    "hours": 8784
+   },
+   "2021": {
+    "avg_mw": 555.0,
+    "overnight_avg_mw": 459.0,
+    "peak_mw": 1077.0,
+    "p995_mw": 943.0,
+    "load_factor": 0.589,
+    "hours": 5832
+   }
+  },
+  "detection": null,
+  "fuel_delta_overnight_gw": null,
+  "siting": {
+   "overnight_cf_share_2025": null,
+   "change_since_2019": null,
+   "overnight_clean_mw_over_demand": null,
+   "ratio_2019": 0.003,
+   "ratio_slope_per_year": null,
+   "siting_score": null,
+   "siting_rank": null,
+   "n_ranked": 52
+  },
+  "operators": [],
+  "data_flags": [],
+  "exclude_from_alerts": false,
+  "heatmap_uri": "data/heatmaps/AEC.json",
+  "heatmap_available": false
+ }
+}

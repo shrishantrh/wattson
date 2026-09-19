@@ -1,0 +1,336 @@
+{
+ "meta": {
+  "generated": "2026-09-19",
+  "data_snapshot_end": "2026-09-05",
+  "caveats": [
+   "Generation within a footprint, not consumption; interchange not allocated.",
+   "Average grid mix, not marginal emissions.",
+   "Regions are coarse; PJM spans Chicago to New Jersey.",
+   "Zones inherit the parent BA's generation figures.",
+   "Operator table is hand-mapped.",
+   "Detector flags flat 24/7 load in general (datacenters, crypto mining, oilfield electrification); language is 'consistent with'."
+  ],
+  "overnight_hours_local": "00:00-05:59",
+  "daytime_hours_local": "10:00-15:59"
+ },
+ "region": {
+  "id": "PJM/DOM",
+  "ba": "PJM",
+  "zone": "DOM",
+  "type": "zone",
+  "name": "Dominion Virginia Power zone",
+  "ba_name": "PJM Interconnection, LLC",
+  "region_eia": "Mid-Atlantic",
+  "timezone": "America/New_York",
+  "cf_inherited_from_ba": true,
+  "cf_share": {
+   "2019": {
+    "overnight": 0.433,
+    "daytime": 0.376,
+    "all": 0.391
+   },
+   "2020": {
+    "overnight": 0.434,
+    "daytime": 0.381,
+    "all": 0.396
+   },
+   "2021": {
+    "overnight": 0.422,
+    "daytime": 0.38,
+    "all": 0.389
+   },
+   "2022": {
+    "overnight": 0.415,
+    "daytime": 0.385,
+    "all": 0.39
+   },
+   "2023": {
+    "overnight": 0.421,
+    "daytime": 0.396,
+    "all": 0.398
+   },
+   "2024": {
+    "overnight": 0.411,
+    "daytime": 0.406,
+    "all": 0.397
+   },
+   "2025": {
+    "overnight": 0.39,
+    "daytime": 0.416,
+    "all": 0.393
+   },
+   "2026": {
+    "overnight": 0.379,
+    "daytime": 0.421,
+    "all": 0.39
+   }
+  },
+  "demand": {
+   "2019": {
+    "avg_mw": 11681.0,
+    "overnight_avg_mw": 10060.0,
+    "peak_mw": 19803.0,
+    "p995_mw": 18593.0,
+    "load_factor": 0.628,
+    "hours": 8760
+   },
+   "2020": {
+    "avg_mw": 11515.0,
+    "overnight_avg_mw": 10075.0,
+    "peak_mw": 20073.0,
+    "p995_mw": 18715.0,
+    "load_factor": 0.615,
+    "hours": 8784
+   },
+   "2021": {
+    "avg_mw": 12419.0,
+    "overnight_avg_mw": 10928.0,
+    "peak_mw": 20493.0,
+    "p995_mw": 19379.0,
+    "load_factor": 0.641,
+    "hours": 8760
+   },
+   "2022": {
+    "avg_mw": 13114.0,
+    "overnight_avg_mw": 11666.0,
+    "peak_mw": 22415.0,
+    "p995_mw": 20136.0,
+    "load_factor": 0.651,
+    "hours": 8760
+   },
+   "2023": {
+    "avg_mw": 13271.0,
+    "overnight_avg_mw": 11847.0,
+    "peak_mw": 22050.0,
+    "p995_mw": 20348.0,
+    "load_factor": 0.652,
+    "hours": 8760
+   },
+   "2024": {
+    "avg_mw": 14188.0,
+    "overnight_avg_mw": 12752.0,
+    "peak_mw": 23220.0,
+    "p995_mw": 21915.0,
+    "load_factor": 0.647,
+    "hours": 8784
+   },
+   "2025": {
+    "avg_mw": 15395.0,
+    "overnight_avg_mw": 14033.0,
+    "peak_mw": 24957.0,
+    "p995_mw": 22978.0,
+    "load_factor": 0.67,
+    "hours": 8760
+   },
+   "2026": {
+    "avg_mw": 16845.0,
+    "overnight_avg_mw": 15332.0,
+    "peak_mw": 25413.0,
+    "p995_mw": 24376.0,
+    "load_factor": 0.691,
+    "hours": 5928
+   }
+  },
+  "detection": {
+   "growth_pct": 31.8,
+   "overnight_growth_pct": 39.5,
+   "overnight_excess": 7.7,
+   "load_factor_delta": 0.042,
+   "load_factor_max_delta": 0.027,
+   "neighbor_divergence": 32.9,
+   "score": 7.71,
+   "rank": 6,
+   "n_scored": 111,
+   "pattern": "flat-load growth",
+   "avg_mw_2019": 11681.0,
+   "avg_mw_2025": 15395.0,
+   "rank_2026_jan_aug": 3,
+   "score_2026_jan_aug": 7.84
+  },
+  "fuel_delta_overnight_gw": {
+   "nuclear": -0.95,
+   "hydro": -0.22,
+   "wind": 1.07,
+   "solar": 0.01,
+   "geothermal": null,
+   "gas": 10.74,
+   "coal": -2.52,
+   "oil": 0.15,
+   "other": 0.41
+  },
+  "overnight_fuel_mw": {
+   "2019": {
+    "nuclear": 31855.0,
+    "hydro": 954.0,
+    "wind": 2882.0,
+    "solar": 9.0,
+    "geothermal": null,
+    "gas": 27451.0,
+    "coal": 18391.0,
+    "oil": 173.0,
+    "other": 824.0
+   },
+   "2020": {
+    "nuclear": 30720.0,
+    "hydro": 880.0,
+    "wind": 2708.0,
+    "solar": 6.0,
+    "geothermal": null,
+    "gas": 29291.0,
+    "coal": 14352.0,
+    "oil": 193.0,
+    "other": 960.0
+   },
+   "2021": {
+    "nuclear": 31156.0,
+    "hydro": 918.0,
+    "wind": 3314.0,
+    "solar": 6.0,
+    "geothermal": null,
+    "gas": 28798.0,
+    "coal": 18577.0,
+    "oil": 215.0,
+    "other": 856.0
+   },
+   "2022": {
+    "nuclear": 31070.0,
+    "hydro": 783.0,
+    "wind": 3803.0,
+    "solar": 11.0,
+    "geothermal": null,
+    "gas": 31747.0,
+    "coal": 17429.0,
+    "oil": 261.0,
+    "other": 770.0
+   },
+   "2023": {
+    "nuclear": 31256.0,
+    "hydro": 763.0,
+    "wind": 3539.0,
+    "solar": 8.0,
+    "geothermal": null,
+    "gas": 35434.0,
+    "coal": 12278.0,
+    "oil": 218.0,
+    "other": 944.0
+   },
+   "2024": {
+    "nuclear": 31062.0,
+    "hydro": 798.0,
+    "wind": 3786.0,
+    "solar": 24.0,
+    "geothermal": null,
+    "gas": 37134.0,
+    "coal": 12593.0,
+    "oil": 244.0,
+    "other": 1222.0
+   },
+   "2025": {
+    "nuclear": 30908.0,
+    "hydro": 737.0,
+    "wind": 3955.0,
+    "solar": 19.0,
+    "geothermal": null,
+    "gas": 38190.0,
+    "coal": 15873.0,
+    "oil": 327.0,
+    "other": 1232.0
+   },
+   "2026": {
+    "nuclear": 31455.0,
+    "hydro": 809.0,
+    "wind": 4005.0,
+    "solar": 30.0,
+    "geothermal": null,
+    "gas": 40249.0,
+    "coal": 16739.0,
+    "oil": 429.0,
+    "other": 2154.0
+   }
+  },
+  "siting": {
+   "overnight_cf_share_2025": 0.39,
+   "change_since_2019": -0.042,
+   "overnight_clean_mw_over_demand": 0.408,
+   "ratio_2019": 0.443,
+   "ratio_slope_per_year": -0.0044,
+   "siting_score": 0.436,
+   "siting_rank": 34,
+   "n_ranked": 52
+  },
+  "operators": [
+   {
+    "utility": "Virginia Electric and Power (Dominion Energy Virginia)",
+    "role": "vertically integrated",
+    "parent": "Dominion Energy",
+    "ticker": "D"
+   },
+   {
+    "utility": "Northern Virginia Electric Cooperative (NOVEC)",
+    "role": "distribution cooperative",
+    "parent": "member-owned",
+    "ticker": null
+   }
+  ],
+  "data_flags": [
+   "Generation numbers are the parent BA's (zones report demand only)."
+  ],
+  "exclude_from_alerts": false,
+  "heatmap_uri": "data/heatmaps/PJM.json",
+  "profile_24h": {
+   "2019": [
+    0.419,
+    0.43,
+    0.437,
+    0.441,
+    0.439,
+    0.43,
+    0.417,
+    0.404,
+    0.394,
+    0.386,
+    0.379,
+    0.375,
+    0.375,
+    0.374,
+    0.375,
+    0.375,
+    0.373,
+    0.371,
+    0.367,
+    0.366,
+    0.366,
+    0.368,
+    0.383,
+    0.401
+   ],
+   "2025": [
+    0.373,
+    0.384,
+    0.391,
+    0.396,
+    0.4,
+    0.399,
+    0.395,
+    0.39,
+    0.388,
+    0.401,
+    0.413,
+    0.417,
+    0.418,
+    0.418,
+    0.416,
+    0.414,
+    0.408,
+    0.398,
+    0.388,
+    0.375,
+    0.365,
+    0.36,
+    0.36,
+    0.364
+   ]
+  },
+  "heatmap_available": true
+ }
+}
