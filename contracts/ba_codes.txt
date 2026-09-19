@@ -1,20 +1,139 @@
-# Allowed balancing authority codes for site mapping (contracts/api.v1.yaml -> Site.ba).
-# Two agents will invent different spellings if this file does not exist. It is the authority.
-PJM
-ERCO
-MISO
-CISO
-SWPP
-BPAT
-PACW
-GCPD
-SOCO
-DUK
-AZPS
-TEPC
-SRP
-NYIS
-ISNE
-TVA
-OPPD
-PGE
+# Valid balancing-authority codes for Site.ba. GENERATED FROM
+# dashboard/public/data/regions.json -- do not hand-edit.
+#
+# The previous hand-typed version, taken from the spec prose, was wrong in BOTH
+# directions: it listed OPPD as a BA when OPPD is a ZONE (SWPP/OPPD), so any row
+# written as ba: "OPPD" resolved to nothing; and it omitted seven BAs we actually
+# need, including SC -- Santee Cooper, detector rank 9, where Google's South
+# Carolina site sits. A contract that forces a wrong value is worse than no contract.
+#
+# A SITE maps to a BA code below. Some sites sit inside a ZONE of a BA; zone ids are
+# listed in the second block and go in Site.zone (and Site.pjm_zone, same value).
+
+# --- 56 BALANCING AUTHORITIES ---
+AEC    PowerSouth Energy Cooperative
+AECI   Associated Electric Cooperative, Inc.
+AVA    Avista Corporation
+AZPS   Arizona Public Service Company
+BANC   Balancing Authority of Northern California
+BPAT   Bonneville Power Administration
+CHPD   Public Utility District No. 1 of Chelan County
+CISO   California Independent System Operator
+CPLE   Duke Energy Progress East
+CPLW   Duke Energy Progress West
+DOPD   PUD No. 1 of Douglas County
+DUK    Duke Energy Carolinas
+EPE    El Paso Electric Company
+ERCO   Electric Reliability Council of Texas, Inc.
+FMPP   Florida Municipal Power Pool
+FPC    Progress Energy Florida
+FPL    Florida Power & Light Company
+GCPD   Public Utility District No. 2 of Grant County, Washington
+GVL    Gainesville Regional Utilities
+HST    City of Homestead
+IID    Imperial Irrigation District
+IPCO   Idaho Power Company
+ISNE   ISO New England Inc.
+JEA    Jacksonville Energy
+LDWP   Los Angeles Department of Water and Power
+LGEE   LG&E and KU Services Company as agent for Louisville Gas and
+MISO   Midcontinent Independent Transmission System Operator, Inc..
+NEVP   Nevada Power Company
+NWMT   NorthWestern Energy (NWMT)
+NYIS   New York Independent System Operator
+OVEC   Ohio Valley Electric Corporation
+PACE   PacifiCorp - East
+PACW   PacifiCorp - West
+PGE    Portland General Electric Company
+PJM    PJM Interconnection, LLC
+PNM    Public Service Company of New Mexico
+PSCO   Public Service Company of Colorado
+PSEI   Puget Sound Energy
+SC     South Carolina Public Service Authority
+SCEG   South Carolina Electric & Gas Company
+SCL    Seattle City Light
+SEC    Seminole Electric Cooperative
+SOCO   Southern Company Services, Inc. - Trans
+SPA    Southwestern Power Administration
+SRP    Salt River Project
+SWPP   Southwest Power Pool
+SWPW   Southwest Power Pool West
+TAL    City of Tallahassee
+TEC    Tampa Electric Company
+TEPC   Tucson Electric Power Company
+TIDC   Turlock Irrigation District
+TPWR   City of Tacoma, Department of Public Utilities, Light Divisi
+TVA    Tennessee Valley Authority
+WACM   Western Area Power Administration - Rocky Mountain Region
+WALC   Western Area Power Administration - Desert Southwest Region
+WAUW   Western Area Power Administration UGP West
+
+# --- 68 ZONE IDS (Site.zone / Site.pjm_zone; ba is the part before the slash) ---
+CISO/PGAE
+CISO/SCE
+CISO/SDGE
+ERCO/COAS
+ERCO/EAST
+ERCO/FWES
+ERCO/NCEN
+ERCO/NRTH
+ERCO/SCEN
+ERCO/SOUT
+ERCO/WEST
+ISNE/4001
+ISNE/4002
+ISNE/4003
+ISNE/4004
+ISNE/4005
+ISNE/4006
+ISNE/4007
+ISNE/4008
+MISO/0001
+MISO/0004
+MISO/0006
+MISO/0027
+MISO/0035
+MISO/8910
+NYIS/ZONA
+NYIS/ZONB
+NYIS/ZONC
+NYIS/ZOND
+NYIS/ZONE
+NYIS/ZONF
+NYIS/ZONG
+NYIS/ZONI
+NYIS/ZONJ
+NYIS/ZONK
+PJM/AE
+PJM/AEP
+PJM/AP
+PJM/ATSI
+PJM/BC
+PJM/CE
+PJM/DAY
+PJM/DEOK
+PJM/DOM
+PJM/DPL
+PJM/DUQ
+PJM/EKPC
+PJM/JC
+PJM/ME
+PJM/PE
+PJM/PEP
+PJM/PL
+PJM/PN
+PJM/PS
+PNM/PNM
+SWPP/CSWS
+SWPP/EDE
+SWPP/GRDA
+SWPP/KCPL
+SWPP/MPS
+SWPP/NPPD
+SWPP/OKGE
+SWPP/OPPD
+SWPP/SECI
+SWPP/SPS
+SWPP/WAUE
+SWPP/WFEC
+SWPP/WR
