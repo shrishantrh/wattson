@@ -125,6 +125,13 @@ export async function loadSite(request) {
   return normalizeSite({ request: req, candidates: cands, method: norm.method, unmapped_metros: unmapped, caveats: norm.caveats, _provisional: true, _computed_client_side: true }, req)
 }
 
+// ---------- companies (watchlist summary) ----------
+export async function loadCompanies() {
+  const raw = await tryEach([...(api ? [() => getJSON(`${api}/api/companies`)] : []), () => staticExport('companies'), () => fixture('companies')])
+  const list = Array.isArray(raw) ? raw : raw.companies || []
+  return { companies: list, is_mock: raw.is_mock ?? list.every(c => c.is_mock), notes: raw.notes || [], _provisional: raw._provisional }
+}
+
 export async function loadAlerts() {
   return tryEach([...(api ? [() => getJSON(`${api}/api/alerts`)] : []), () => staticExport('alerts'), () => fixture('alerts')])
 }

@@ -21,6 +21,9 @@ export const href = {
   region: id => `#/region/${encodeURIComponent(id)}`,
   method: () => '#/method',
   screen: by => (by ? `#/screen?by=${by}` : '#/screen'),
+  alerts: () => '#/alerts',
+  companies: () => '#/companies',
+  explore: (params) => { const q = new URLSearchParams(params || {}).toString(); return q ? `#/explore?${q}` : '#/explore' },
 }
 
 export function useHash() {
