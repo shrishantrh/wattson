@@ -19,14 +19,18 @@ for (const [id, r] of Object.entries(byId)) {
   const night = YEARS.map(y => (y === 2019 && corr?.corrected?.overnight != null ? corr.corrected.overnight : cf[String(y)]?.overnight ?? null)).map(r3)
   const day = YEARS.map(y => (y === 2019 && corr?.corrected?.daytime != null ? corr.corrected.daytime : cf[String(y)]?.daytime ?? null)).map(r3)
   const demand_night_mw = YEARS.map(y => r.demand?.[String(y)]?.overnight_avg_mw ?? null).map(v => (v == null ? null : Math.round(v)))
-  out.regions[id] = { night, day, demand_night_mw, corrected: !!corr, flagged: (r.data_flags || []).some(x => /WACM|footprint|reporting change/i.test(String(x))) || id === 'WACM' }
+  const steps = night.slice(1).map((v, i) => (v != null && night[i] != null ? Math.abs(v - night[i]) : 0))
+  const step_change = Math.max(...steps, 0) > 0.4   // a jump of 40+ points in one year is a reporting change, not a trend
+  out.regions[id] = { night, day, demand_night_mw, zone: r.type === 'zone' || id.includes('/'), inherits_from: r.type === 'zone' ? r.ba : null, corrected: !!corr, step_change, flagged: (r.data_flags || []).some(x => /WACM|footprint|reporting change/i.test(String(x))) || id === 'WACM' }
 }
-const scored = Object.entries(out.regions).filter(([, v]) => v.night[0] != null && v.night[6] != null && !v.corrected && !v.flagged)
+// Grids only: zones report demand and carry their grid's generation shares, so a zone cannot have its own change.
+const scored = Object.entries(out.regions).filter(([, v]) => !v.zone && v.night[0] != null && v.night[6] != null && !v.corrected && !v.flagged && !v.step_change)
 const med = arr => { const s = [...arr].sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null }
 out.summary = {
-  by_year: YEARS.map((y, i) => ({ year: y, median_night: r3(med(Object.values(out.regions).map(v => v.night[i]).filter(v => v != null))), n: Object.values(out.regions).filter(v => v.night[i] != null).length })),
+  by_year: YEARS.map((y, i) => ({ year: y, median_night: r3(med(Object.values(out.regions).filter(v => !v.zone).map(v => v.night[i]).filter(v => v != null))), n: Object.values(out.regions).filter(v => !v.zone && v.night[i] != null).length })),
+  excluded_step_changes: Object.entries(out.regions).filter(([, v]) => v.step_change && !v.zone).map(([id]) => id),
   biggest_drop: scored.map(([id, v]) => ({ id, from: v.night[0], to: v.night[6], delta: r3(v.night[6] - v.night[0]) })).sort((a, b) => a.delta - b.delta).slice(0, 5),
   biggest_rise: scored.map(([id, v]) => ({ id, from: v.night[0], to: v.night[6], delta: r3(v.night[6] - v.night[0]) })).sort((a, b) => b.delta - a.delta).slice(0, 5),
 }
 writeFileSync(fileURLToPath(new URL('../src/data/trajectory.json', import.meta.url)), JSON.stringify(out))
-console.log(`trajectory: ${Object.keys(out.regions).length} regions; median night by year ${out.summary.by_year.map(x => x.median_night).join(' ')}; biggest drop ${out.summary.biggest_drop[0]?.id} ${out.summary.biggest_drop[0]?.delta}; biggest rise ${out.summary.biggest_rise[0]?.id} ${out.summary.biggest_rise[0]?.delta}`)
+console.log(`trajectory: ${Object.keys(out.regions).length} regions; median night by year ${out.summary.by_year.map(x => x.median_night).join(' ')}; biggest drop ${out.summary.biggest_drop[0]?.id} ${out.summary.biggest_drop[0]?.delta}; biggest rise ${out.summary.biggest_rise[0]?.id} ${out.summary.biggest_rise[0]?.delta}; step changes excluded: ${out.summary.excluded_step_changes.join(',') || 'none'}`)

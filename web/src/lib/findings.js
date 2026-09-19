@@ -108,7 +108,7 @@ export function checkAnswer(c) {
   const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'Too vague to check.', cannot_verify: "Can't be checked from grid data." }[primary.verdict] || ''
   const lo = primary.physical_min, hi = primary.physical_max
   const range = lo != null && hi != null ? (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`) : null
-  const phys = range ? ` Physically, its ${sites.length === 1 ? 'site runs' : 'sites run'} on ${range} clean power.` : ''
+  const phys = range ? (sites.length === 1 ? ` The grid under its one mapped site generated ${range} clean power.` : ` Physically, its sites run on ${range} clean power.`) : ''
   return {
     sentence: `${c.company} says ${claimed}. ${verdictText}${phys}`,
     verdict: primary.verdict, primary,

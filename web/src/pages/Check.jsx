@@ -118,7 +118,14 @@ export default function Check({ route }) {
         <Card title={<><b>{data.company}</b> · {data.ticker}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
           <h1 className="verdict">{a.sentence}</h1>
           {a.numbers.length > 0 && <div className="nums">{a.numbers.map((n, i) => <Num key={i} {...n} />)}</div>}
-          {a.primary?.magnitude != null && a.primary.unit === 'fraction' && a.primary.physical_mean_unweighted != null && <p className="note" style={{ marginTop: 12 }}>The gap: <b style={{ color: 'var(--ink)' }}>{Math.round((a.primary.magnitude - a.primary.physical_mean_unweighted) * 100)} points</b> between what is claimed on paper and what its grids physically generated, averaged across sites.</p>}
+          {(() => {
+            // A gap is only headlined when it rests on more than one site and no site's grid carries a footprint note.
+            const siteNote = (data.notes || []).find(n => sites.some(st => n.includes(st.ba) || (st.serving_utility && n.includes(st.serving_utility.split(' ')[0])) || n.includes(st.grid_label || '\u0000')))
+            const ok = a.primary?.magnitude != null && a.primary.unit === 'fraction' && a.primary.physical_mean_unweighted != null
+            if (!ok) return null
+            if (sites.length >= 2 && !siteNote) return <p className="note" style={{ marginTop: 12 }}>The gap: <b style={{ color: 'var(--ink)' }}>{Math.round((a.primary.magnitude - a.primary.physical_mean_unweighted) * 100)} points</b> between what is claimed on paper and what its grids physically generated, averaged across {sites.length} sites.</p>
+            return <p className="note" style={{ marginTop: 12 }}>{sites.length === 1 ? 'One mapped site, so this is that grid, not the company: ' : ''}{siteNote || 'the physical figure is the average of its mapped sites\' grids.'} Grid-only, average mix; contracted clean power is not counted.</p>
+          })()}
           <Evidence open={evidence} onToggle={toggle} />
         </Card>
         {evidence && <Workspace id="check" modules={modules} />}
