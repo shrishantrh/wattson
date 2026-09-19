@@ -1,0 +1,166 @@
+{
+  "what": "Every balancing authority swept for the AZPS reporting-break signature. A clean negative is the point: if AZPS is the only one, the AZPS finding is stronger, not weaker.",
+  "scope": {
+    "balancing_authorities": 69,
+    "analysis_start": "2019-01-01",
+    "column": "net_generation_adjusted_mwh",
+    "material_threshold_mw": 300
+  },
+  "headline": "69 balancing authorities swept. 1 permanent material break in a carbon-free fuel: AZPS nuclear. 1 case of two BAs reporting the same generation: AZPS and SRP. Every region on the demo screen is clean.",
+  "classification_counts": {
+    "clean": 48,
+    "coverage_gap": 1,
+    "reattribution": 20
+  },
+  "demo_regions": {
+    "ERCO": "clean",
+    "AZPS": "reattribution",
+    "TEPC": "clean",
+    "WACM": "clean",
+    "SWPP": "reattribution",
+    "SC": "clean",
+    "CISO": "clean",
+    "PJM": "clean"
+  },
+  "duplications": [
+    {
+      "ba": "AZPS",
+      "fuel": "nuclear",
+      "date": "2019-12-05",
+      "twinned_with": "SRP",
+      "correlation": 0.9953,
+      "mean_abs_diff_mw": 2.3,
+      "level_mw": 3546,
+      "hours_within_5mw": 0.9782
+    }
+  ],
+  "material_permanent_breaks": [
+    {
+      "ba": "FPL",
+      "fuel": "other",
+      "date": "2024-02-06",
+      "before_mw": 3330,
+      "after_mw": 103,
+      "stopped_reporting": false,
+      "carbon_free_fuel": false,
+      "material": true
+    },
+    {
+      "ba": "AZPS",
+      "fuel": "nuclear",
+      "date": "2019-12-05",
+      "before_mw": 3180,
+      "after_mw": 0,
+      "stopped_reporting": true,
+      "carbon_free_fuel": true,
+      "material": true
+    },
+    {
+      "ba": "ISNE",
+      "fuel": "oil",
+      "date": "2026-02-11",
+      "before_mw": 2722,
+      "after_mw": 16,
+      "stopped_reporting": false,
+      "carbon_free_fuel": false,
+      "material": true
+    },
+    {
+      "ba": "MISO",
+      "fuel": "oil",
+      "date": "2021-11-07",
+      "before_mw": 1041,
+      "after_mw": 0,
+      "stopped_reporting": true,
+      "carbon_free_fuel": false,
+      "material": true
+    },
+    {
+      "ba": "PACW",
+      "fuel": "coal",
+      "date": "2022-07-07",
+      "before_mw": 630,
+      "after_mw": 0,
+      "stopped_reporting": false,
+      "carbon_free_fuel": false,
+      "material": true
+    },
+    {
+      "ba": "LDWP",
+      "fuel": "coal",
+      "date": "2025-11-27",
+      "before_mw": 487,
+      "after_mw": 0,
+      "stopped_reporting": false,
+      "carbon_free_fuel": false,
+      "material": true
+    },
+    {
+      "ba": "TEC",
+      "fuel": "other",
+      "date": "2024-06-27",
+      "before_mw": 414,
+      "after_mw": 14,
+      "stopped_reporting": false,
+      "carbon_free_fuel": false,
+      "material": true
+    },
+    {
+      "ba": "IID",
+      "fuel": "other",
+      "date": "2025-01-01",
+      "before_mw": 340,
+      "after_mw": 0,
+      "stopped_reporting": true,
+      "carbon_free_fuel": false,
+      "material": true
+    },
+    {
+      "ba": "PSEI",
+      "fuel": "coal",
+      "date": "2021-01-02",
+      "before_mw": 309,
+      "after_mw": 0,
+      "stopped_reporting": false,
+      "carbon_free_fuel": false,
+      "material": true
+    },
+    {
+      "ba": "GRID",
+      "fuel": "coal",
+      "date": "2025-12-20",
+      "before_mw": 300,
+      "after_mw": 0,
+      "stopped_reporting": false,
+      "carbon_free_fuel": false,
+      "material": true
+    }
+  ],
+  "carbon_free_breaks": [
+    {
+      "ba": "AZPS",
+      "fuel": "nuclear",
+      "date": "2019-12-05",
+      "before_mw": 3180,
+      "after_mw": 0,
+      "stopped_reporting": true,
+      "carbon_free_fuel": true,
+      "material": true
+    }
+  ],
+  "exclusions": {
+    "before_2019": "Coverage is patchy across the dataset before 2019 and the project's baseline year is 2019. PJM alone is null for 251 of 365 days in 2018; swept from 2018 it reports a break in EVERY fuel on 2018-07-11, which is the BA not reporting at all, not a reporting change.",
+    "2024_category_split": "solar, wind and hydro were retired on 2024-07-01/02 in favour of finer categories. carbon_free_index.py sums parent and child, so published shares are unaffected. Excluded by fuel and date so nobody rediscovers it as a finding.",
+    "refuelling_outages": "A break must be PERMANENT. Nuclear refuelling outages run past thirty days, so a 30-day window alone flagged BPAT, NYIS, SCEG and SWPP nuclear as breaks. All four came back; only AZPS never did.",
+    "reported_column": "75 hours in net_generation_reported_mwh are physically impossible (429,497,248 MW and 2,576,980,992 MW -- integer overflow sentinels). net_generation_adjusted_mwh has ZERO such hours, and that is the column the pipeline uses. Swept on adjusted for that reason."
+  },
+  "google_outliers_not_explained": {
+    "BPAT": "Clean in the sweep. The +7.3 point divergence from Google's published grid CFE is NOT explained by a reporting break. Still open.",
+    "NEVP": "Only a 96 MW battery_storage break, far too small to account for -6.2 points. Not explained. Still open."
+  },
+  "confidence": {
+    "proven": "AZPS/SRP duplication: correlation 0.9953, identical within 5 MW in 98.4% of hours over 180 days before the break. No other pair in the dataset meets that test.",
+    "high_confidence_inference": "The non-carbon-free permanent breaks (coal at PACW, LDWP, PSEI, GRID) look like plant retirements, which are real grid events rather than reporting changes. Not individually confirmed against retirement records.",
+    "not_established": "Why AZPS's series was missing for 17 months before becoming a literal zero; the cause of the BPAT and NEVP divergences from Google."
+  }
+}

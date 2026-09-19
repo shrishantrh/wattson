@@ -12,6 +12,7 @@ import pandas as pd
 MIN_DROP_FRACTION = 0.80   # the level must essentially disappear
 MIN_STABLE_DAYS = 30       # ...and stay gone, so an outage does not qualify
 MAX_TRANSITION_DAYS = 3    # ...having fallen within a few days, not over months
+RECOVERY_FRACTION = 0.5    # coming back above this much of the old level = an outage
 
 
 def find_step_break(series, min_drop=MIN_DROP_FRACTION,
@@ -48,6 +49,14 @@ def find_step_break(series, min_drop=MIN_DROP_FRACTION,
         # A step falls within a few days; a ramp takes longer to get there.
         window = filled.iloc[max(0, i - transition_days):i].fillna(0)
         if (window > 0.5 * level).sum() < 1:
+            continue
+
+        # Permanence. A nuclear refuelling outage lasts longer than the
+        # stable window, so "gone for 30 days" flags outages as reporting
+        # changes -- BPAT, NYIS and SCEG all came back, and only AZPS never
+        # did. The level must stay down for the rest of the series.
+        rest = filled.iloc[i:].fillna(0)
+        if (rest > RECOVERY_FRACTION * level).any():
             continue
 
         return {"date": filled.index[i],
