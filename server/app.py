@@ -59,7 +59,11 @@ def get_regions():
                  "detector_method": m["detector"]["method"],
                  "validation_named_in_advance": m["detector"]["validation_named_in_advance"],
                  "pattern_labels": m["pattern_labels"],
-                 "data_flags": m["data_flags"]},
+                 "data_flags": m["data_flags"],
+                 # National day-vs-night series, passed through from the frozen export.
+                 # Requested by the UI for the opening sweep. Zero compute: this is
+                 # meta.national verbatim, cf_share and cf_avg_mw by year.
+                 "national": m["national"]},
         "count": len(scored),
         "regions": [_summary(r) for r in scored],
     }
