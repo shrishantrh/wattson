@@ -143,6 +143,52 @@
   "GOOGL": {
     "findings": [
       {
+        "kind": "annual_claim_vs_disclosed_hourly_cfe",
+        "ticker": "GOOGL",
+        "claim": {
+          "page": 4,
+          "quote": "Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)"
+        },
+        "counterpoint": {
+          "page": 94,
+          "label": "CFE across Google data centers (hourly)",
+          "unit": "%",
+          "years": [
+            2021,
+            2022,
+            2023,
+            2024,
+            2025
+          ],
+          "values": [
+            65,
+            64,
+            64,
+            66,
+            65
+          ],
+          "source_doc": "google-2026-environmental-report.pdf",
+          "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf"
+        },
+        "note": "The report claims, on page 4: \"Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis) 4\". The same report discloses, on page 94, CFE across Google data centers (hourly) of 2021: 65%, 2022: 64%, 2023: 64%, 2024: 66%, 2025: 65%. Annual matching and hourly carbon-free supply are different measurements, and the company publishes both.",
+        "source_doc": "google-2026-environmental-report.pdf",
+        "source_url": "https://sustainability.google/files/google-2026-environmental-report.pdf",
+        "evidence": {
+          "type": "internal_contradiction",
+          "source_doc": "google-2026-environmental-report.pdf",
+          "page": 94,
+          "note": "The report claims, on page 4: \"Despite this, we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis) 4\". The same report discloses, on page 94, CFE across Google data centers (hourly) of 2021: 65%, 2022: 64%, 2023: 64%, 2024: 66%, 2025: 65%. Annual matching and hourly carbon-free supply are different measurements, and the company publishes both."
+        },
+        "verification": {
+          "human_reread_rendered_page": true,
+          "method": "human re-read of the rendered PDF page",
+          "pages_checked": [
+            4,
+            94
+          ]
+        }
+      },
+      {
         "kind": "annual_scope",
         "claim": {
           "page": 4,
