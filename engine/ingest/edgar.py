@@ -73,3 +73,15 @@ def latest_10k(ticker):
             return (f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/"
                     f"{accession}/{doc}", year)
     raise LookupError(f"no 10-K found in recent filings for {ticker}")
+
+
+def filing_text(ticker):
+    """Return (items_1_and_1a_text, document_url, fiscal_year)."""
+    from engine.ingest.htmltext import html_to_text
+    from engine.ingest.sections import slice_items_1_and_1a
+
+    url, year = latest_10k(ticker)
+    text = html_to_text(_throttled_get(url).text)
+    # slice_items_1_and_1a works on (page, text) pairs; HTML is one blob.
+    kept = slice_items_1_and_1a([(1, text)])
+    return ("\n".join(t for _, t in kept), url, year)

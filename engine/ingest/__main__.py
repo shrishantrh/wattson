@@ -9,7 +9,7 @@ import json
 import pathlib
 import sys
 
-from engine.ingest.pipeline import ingest_pdf
+from engine.ingest.pipeline import ingest_10k, ingest_pdf
 from engine.ingest.writer import write_jsonl
 
 RAW = pathlib.Path("claims/raw")
@@ -54,13 +54,30 @@ def main(argv=None):
     ap.add_argument("--all", action="store_true", help="every ticker")
     ap.add_argument("--target-tokens", type=int, default=2000)
     ap.add_argument("--overlap-tokens", type=int, default=200)
+    ap.add_argument("--tenk", action="store_true",
+                    help="fetch the latest 10-K from SEC EDGAR instead of the "
+                         "ESG PDF (needs EDGAR_UA_EMAIL)")
     args = ap.parse_args(argv)
 
     if not args.ticker and not args.all:
         ap.error("pass --ticker TICKER or --all")
 
-    manifest = load_manifest()
     targets = TICKERS if args.all else [args.ticker.upper()]
+
+    if args.tenk:
+        total = 0
+        for t in targets:
+            records, url, year = ingest_10k(t)
+            out = RAW / f"{t}_10k.jsonl"
+            n = write_jsonl(out, records)
+            items = sorted({r["locator"]["item"] for r in records})
+            print(f"{t:6} {n:5} chunks  FY{year}  items {','.join(items) or '-'}  -> {out}")
+            print(f"       {url}")
+            total += n
+        print(f"total {total} chunks")
+        return
+
+    manifest = load_manifest()
     total = sum(ingest_ticker(t, manifest, args.target_tokens,
                               args.overlap_tokens) for t in targets)
     print(f"total {total} chunks")

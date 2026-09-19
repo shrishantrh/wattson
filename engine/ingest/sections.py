@@ -8,8 +8,21 @@ real Item 1 is followed by pages of prose.
 
 import re
 
-START = re.compile(r"item\s*1\s*[.\-–:]?\s*(business\b|\n)", re.I)
-END = re.compile(r"item\s*(1b|2)\s*[.\-–:]?", re.I)
+# A real heading starts a line AND carries its title. Both halves matter:
+#   - Microsoft repeats a bare "Item 1A" as a running page header on every page
+#     of the risk factors, so the title is what separates heading from header.
+#   - Google writes "...described in Item 1 Business and Note 15..." mid
+#     paragraph, so the line start is what separates heading from cross
+#     reference. Starting there ran the slice to the signature page.
+#   - Amazon's forward-looking paragraph mentions a later Item inline, which
+#     truncated Items 1 and 1A to 367 words of a 42,000-word filing.
+# Contents pages list the items with their titles on the following line, so
+# they fail the same-line test; where they do not, the longest-span rule below
+# still prefers the body over the few words of a contents entry.
+START = re.compile(r"^[ \t]*item\s*1\s*[.\-–:]?\s*business\b", re.I | re.M)
+END = re.compile(
+    r"^[ \t]*item\s*(?:1b|2)\s*[.\-–:]?\s*(?:unresolved|properties)\b",
+    re.I | re.M)
 
 
 def _flatten(pages):
@@ -46,3 +59,28 @@ def slice_items_1_and_1a(pages):
         if segment:
             kept.append((page_no, segment))
     return kept
+
+
+ITEM_1A = re.compile(r"^[ \t]*item\s*1a\s*[.\-–:]?\s*risk\s*factors\b",
+                     re.I | re.M)
+
+
+def split_items(text):
+    """Split an Items 1--1A span into [("1", text), ("1A", text)].
+
+    Uses the titled heading, not a running page header: Microsoft repeats a
+    bare "Item 1A" atop every page of its risk factors, and taking the last
+    such marker left Item 1A with 759 words instead of eleven thousand.
+    Whichever part is absent is simply omitted rather than guessed at.
+    """
+    m = ITEM_1A.search(text)
+    if m is None:
+        return [("1", text.strip())] if text.strip() else []
+
+    first, second = text[:m.start()].strip(), text[m.start():].strip()
+    out = []
+    if first:
+        out.append(("1", first))
+    if second:
+        out.append(("1A", second))
+    return out
