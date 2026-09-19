@@ -1,0 +1,23 @@
+# Free-tier shaped: one shared CPU, 256 MB, scaled to zero when idle.
+# A cold start costs a few seconds on the first question and nothing after. The site
+# itself never waits on this -- askAvailable() fails closed and the palette stays in
+# navigation mode, so a sleeping or dead API degrades to exactly today's behaviour.
+app = "wattson-api"
+primary_region = "iad"          # same coast as the judges and near PJM, for what it's worth
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
+
+[env]
+  WATTSON_ASK_MODEL = "gpt-5"
