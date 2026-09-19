@@ -1,0 +1,26 @@
+real	0m3.713s
+user	0m0.797s
+sys	0m0.347s
+FETCH END 2026-09-19T19:28:28Z
+359M	data/pudl
+=== PIPELINE ===
+PIPELINE START 2026-09-19T19:33:17Z
+=== build_wide ===
+13.67 s  17256732 KB peak
+=== carbon_free_index ===
+12.34 s  3433300 KB peak
+=== overnight_profile ===
+3.27 s  2463064 KB peak
+=== l2_temporal ===
+9.53 s  5402120 KB peak
+=== l2_interchange ===
+6.78 s  6599316 KB peak
+=== l3_detector ===
+17.44 s  4857108 KB peak
+=== l4_supply ===
+29.06 s  4090316 KB peak
+=== export_json ===
+8.77 s  2016556 KB peak
+=== alerts ===
+14.11 s  4876592 KB peak
+PIPELINE END 2026-09-19T19:35:12Z

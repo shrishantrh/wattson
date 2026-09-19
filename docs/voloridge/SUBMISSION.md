@@ -19,7 +19,9 @@ not increased since 2019. Every added gigawatt of overnight generation was fossi
 | Total generation | — | **+8.7 GW** |
 | Net exports | 3,814 MW | 2,489 MW |
 
-Clean generation flat within 100 MW while total grew 8.7 GW. Exports *fell* 1.3 GW, so that growth
+2025 clean generation is within 100 MW of 2019 (81 MW apart) while total grew 8.7 GW. The path
+between them is not flat: the series runs 34,316-36,299 MW and 2020 sits 1,384 MW below 2019. The
+claim is about the endpoints, seven years apart, and we state it that way. Exports *fell* 1.3 GW, so that growth
 served PJM's own load rather than leaving the footprint. The gap is fossil.
 
 Why it has gone unnoticed: the environmental story of AI is told in annual totals, and totals hide
@@ -27,8 +29,10 @@ it. Solar cleaned up the middle of the day and did nothing for the middle of the
 draws the same power at 3am in January as at noon in June, so roughly half of AI's demand lands in
 hours that have not improved in seven years.
 
-Nationally the same split: overnight clean output rose 14 GW but overnight *total* rose 45 GW, so
-overnight share slipped 0.405 → 0.397. Daytime share went 0.372 → 0.465.
+Nationally the same split: overnight clean output rose from 159.0 to 173.4 GW — up 14.3 GW — but
+overnight *total* rose faster, so overnight share slipped 0.405 → 0.397. Daytime share went
+0.372 → 0.465. The share fall must never be shown without the absolute rise beside it: clean
+generation grew, it just grew slower than demand.
 
 This is not an accusation against any company. Annual renewable matching is a legitimate accounting
 method under the GHG Protocol. It describes contracts. We measured physics.
@@ -131,7 +135,8 @@ A monitoring tool that opens on results, not a prompt.
 - **Siting score** — the actionable output. Overnight clean share today, its 2019–2025 slope, and
   overnight clean MW relative to overnight demand. Ask it where to put 300 MW of flat load across
   Phoenix, Northern Virginia and Omaha and it answers Omaha 0.737 (wind filled +4.16 GW), Northern
-  Virginia 0.436 (gas filled +10.74 GW), Phoenix 0.173.
+  Virginia 0.436, Phoenix 0.449. Phoenix's published score of 0.173 is corrected: it rests on the
+  AZPS figures fixed below, and the API applies the correction and returns both values.
 - **Claim verification** — company statements checked against the grid their sites physically draw
   from. Verdicts are `true_on_paper | contradicted | unfalsifiable | cannot_verify`, never "they
   lied," and `cannot_verify` carries an enumerated reason and a visible count.
@@ -157,7 +162,11 @@ lookup, where it produces confidently wrong balancing-authority mappings, and ou
 - Generation within a footprint, not consumption. Interchange is not allocated.
 - Average grid mix, not marginal emissions.
 - Regions are coarse; PJM spans Chicago to New Jersey.
-- Zones inherit the parent BA's generation figures; zones report demand only.
+- Zones inherit the parent BA's generation figures; zones report demand only. This is a trap we
+  walked into ourselves: PJM/DOM's `fuel_delta_overnight_gw.gas` reads 10.74 GW, but that is PJM's
+  figure, byte-identical across every PJM zone. Dominion's OWN overnight demand grew 3,973 MW,
+  roughly half of PJM's 8.7 GW overnight growth. Say PJM-wide gas rose 10.74 GW and Dominion's own
+  overnight demand rose about 4 GW. Never attribute the 10.74 to Dominion.
 - The detector cannot distinguish a datacenter from a crypto mine.
 - Facility and operator mapping is hand-curated. Operator tickers are unverified.
 - Hourly data updated with each release. PUDL is a snapshot ending 2026-09-05, not a live feed.
@@ -264,6 +273,8 @@ Re-ran the full pipeline end to end on a Voloridge-provided `i7i.12xlarge`
 | `export_json` | 5.7 s |
 | **Total** | **under 2 minutes** |
 
+Raw timings: `docs/voloridge/artifacts/ec2_run.log`.
+
 The 3.7-second fetch is the in-region advantage: same AWS region as the PUDL bucket.
 
 **The results are identical across a Python and pandas major version boundary.** The
@@ -274,7 +285,7 @@ pandas 2.3.3. Every headline figure reproduced exactly:
 |---|---|---|
 | Regions / detector-scored | 124 / 111 | 124 / 111 |
 | Dominion rank, score | 6, 7.71 | 6, 7.71 |
-| Dominion overnight gas 2019→2025 | +10.74 GW | +10.74 GW |
+| PJM overnight gas 2019→2025 | +10.74 GW | +10.74 GW |
 | PJM overnight clean generation | 35,700 → 35,619 MW | 35,700 → 35,619 MW |
 | National overnight CF share | 0.405 → 0.397 | 0.405 → 0.397 |
 
