@@ -1,0 +1,49 @@
+/* Command palette (components/CommandPalette.jsx). Dialog overlay + panel, and the inline
+   variant for the landing page which reuses the list styles without the overlay.
+   Colors come from tokens.css; the rgba fallbacks match tokens.css exactly. */
+
+.pal-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, 0.55); display: flex; justify-content: center; align-items: flex-start; padding: 18vh 16px 16px; animation: pal-fade 120ms ease-out; }
+.pal-panel { width: 560px; max-width: 100%; max-height: min(64vh, 620px); display: flex; flex-direction: column; background: rgba(17, 20, 19, 0.98); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-card, 14px); overflow: hidden; animation: pal-rise 120ms ease-out; }
+.pal-panel > .pal { display: flex; flex-direction: column; min-height: 0; }
+
+/* cmdk root */
+.pal { display: flex; flex-direction: column; min-height: 0; outline: none; }
+.pal-input { width: 100%; background: transparent; border: 0; outline: none; font-size: 16px; color: var(--ink); padding: 14px 18px; border-bottom: 1px solid var(--line-soft, rgba(255, 255, 255, 0.06)); font-family: var(--font-ui); }
+.pal-input::placeholder { color: var(--muted); }
+
+.pal-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 6px; scrollbar-width: thin; }
+.pal-group + .pal-group { margin-top: 4px; }
+.pal-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 10px 4px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.pal-count { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0; text-transform: none; color: var(--muted); }
+
+.pal-item { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: var(--radius-sm, 8px); font-size: 13px; color: var(--ink-2); cursor: pointer; user-select: none; transition: background-color 120ms var(--ease, ease), color 120ms var(--ease, ease); }
+.pal-item[data-selected="true"] { background: rgba(255, 255, 255, 0.06); color: var(--ink); }
+.pal-item[data-selected="true"] .pal-hint { color: var(--ink-2); }
+.pal-item[aria-disabled="true"] { cursor: default; color: var(--ink-2); }
+.pal-item.ask .pal-label::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 1px; }
+.pal-item.unknown .pal-hint { color: var(--accent); white-space: normal; text-align: right; max-width: 55%; }
+.pal-label { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pal-hint { flex: none; font-size: 12px; color: var(--muted); white-space: nowrap; max-width: 50%; overflow: hidden; text-overflow: ellipsis; transition: color 120ms var(--ease, ease); }
+.pal-hint.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 11px; }
+
+.pal-empty { padding: 14px 10px; font-size: 13px; color: var(--muted); }
+.pal-empty.small { padding: 6px 10px 8px; font-size: 11px; }
+
+.pal-foot { display: flex; gap: 16px; padding: 8px 14px; border-top: 1px solid var(--line-soft, rgba(255, 255, 255, 0.06)); font-size: 11px; color: var(--muted); font-family: var(--font-mono); }
+.pal-foot span { display: inline-flex; align-items: center; gap: 4px; }
+.pal-foot kbd { font: inherit; color: var(--ink-2); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px; padding: 0 4px; line-height: 16px; margin-right: 2px; }
+
+/* inline variant (landing): same list, no overlay; matches the landing searchbox */
+.pal-inline { width: min(640px, 100%); background: var(--surface-a, rgba(17, 20, 19, 0.94)); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-card, 14px); overflow: hidden; box-shadow: var(--shadow, 0 12px 40px rgba(0, 0, 0, 0.45)); transition: border-color 120ms var(--ease, ease); }
+.pal-inline:focus-within { border-color: var(--line-focus, rgba(255, 255, 255, 0.24)); }
+.pal-inline .pal-input { font-size: 17px; padding: 16px 18px; border-bottom: 0; }
+.pal-inline .pal-list { max-height: 340px; border-top: 1px solid var(--line-soft, rgba(255, 255, 255, 0.06)); }
+
+/* top-bar trigger (QuickSearch): base.css draws .quick as a flex box; this makes it a button */
+button.quick { justify-content: space-between; text-align: left; cursor: pointer; color: var(--muted); transition: color 120ms var(--ease, ease), border-color 120ms var(--ease, ease); }
+button.quick:hover, button.quick:focus-visible { color: var(--ink-2); border-color: var(--line-strong, rgba(255, 255, 255, 0.14)); outline: none; }
+
+@keyframes pal-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pal-rise { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .pal-overlay, .pal-panel { animation: none; } .pal-item, .pal-hint, .pal-inline, button.quick { transition: none; } }
+@media (max-width: 640px) { .pal-overlay { padding-top: 10vh; } .pal-panel { max-height: 72vh; } .pal-hint { max-width: 40%; } }

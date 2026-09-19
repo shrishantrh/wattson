@@ -1,0 +1,478 @@
+{
+ "_note": "HAND-MAPPED metro -> serving region, September 2026. Built from the serving utility outward, never from the state. Aliases are for input matching only.",
+ "metros": [
+  {
+   "metro": "Northern Virginia",
+   "region_id": "PJM/DOM",
+   "ba": "PJM",
+   "zone": "DOM",
+   "lat": 39.04,
+   "lng": -77.49,
+   "serving_utility": "Dominion Energy Virginia",
+   "aliases": [
+    "ashburn",
+    "loudoun",
+    "n. virginia",
+    "northern va",
+    "northern virginia",
+    "nova",
+    "nvirginia",
+    "virginia"
+   ]
+  },
+  {
+   "metro": "Richmond, VA",
+   "region_id": "PJM/DOM",
+   "ba": "PJM",
+   "zone": "DOM",
+   "lat": 37.54,
+   "lng": -77.44,
+   "serving_utility": "Dominion Energy Virginia",
+   "aliases": [
+    "richmond",
+    "richmond, va"
+   ]
+  },
+  {
+   "metro": "Columbus, OH",
+   "region_id": "PJM/AEP",
+   "ba": "PJM",
+   "zone": "AEP",
+   "lat": 39.96,
+   "lng": -83.0,
+   "serving_utility": "AEP Ohio",
+   "aliases": [
+    "central ohio",
+    "columbus",
+    "columbus, oh",
+    "new albany"
+   ]
+  },
+  {
+   "metro": "Chicago, IL",
+   "region_id": "PJM/CE",
+   "ba": "PJM",
+   "zone": "CE",
+   "lat": 41.88,
+   "lng": -87.63,
+   "serving_utility": "ComEd (Exelon)",
+   "aliases": [
+    "chicago",
+    "chicago, il",
+    "elk grove"
+   ]
+  },
+  {
+   "metro": "Dallas, TX",
+   "region_id": "ERCO/NCEN",
+   "ba": "ERCO",
+   "zone": "NCEN",
+   "lat": 32.78,
+   "lng": -96.8,
+   "serving_utility": "Oncor Electric Delivery",
+   "aliases": [
+    "dallas",
+    "dallas, tx",
+    "dfw",
+    "fort worth",
+    "plano"
+   ]
+  },
+  {
+   "metro": "Midland/Odessa (Permian), TX",
+   "region_id": "ERCO/FWES",
+   "ba": "ERCO",
+   "zone": "FWES",
+   "lat": 31.99,
+   "lng": -102.08,
+   "serving_utility": "Oncor Electric Delivery / TNMP",
+   "aliases": [
+    "midland/odessa (permian)",
+    "midland/odessa (permian), tx"
+   ]
+  },
+  {
+   "metro": "Abilene, TX",
+   "region_id": "ERCO/NRTH",
+   "ba": "ERCO",
+   "zone": "NRTH",
+   "lat": 32.45,
+   "lng": -99.73,
+   "serving_utility": "AEP Texas North / Oncor",
+   "aliases": [
+    "abilene",
+    "abilene, tx"
+   ]
+  },
+  {
+   "metro": "San Antonio, TX",
+   "region_id": "ERCO/SCEN",
+   "ba": "ERCO",
+   "zone": "SCEN",
+   "lat": 29.42,
+   "lng": -98.49,
+   "serving_utility": "CPS Energy",
+   "aliases": [
+    "san antonio",
+    "san antonio, tx"
+   ]
+  },
+  {
+   "metro": "Austin, TX",
+   "region_id": "ERCO/SCEN",
+   "ba": "ERCO",
+   "zone": "SCEN",
+   "lat": 30.27,
+   "lng": -97.74,
+   "serving_utility": "Austin Energy",
+   "aliases": [
+    "austin",
+    "austin, tx"
+   ]
+  },
+  {
+   "metro": "Houston, TX",
+   "region_id": "ERCO/COAS",
+   "ba": "ERCO",
+   "zone": "COAS",
+   "lat": 29.76,
+   "lng": -95.37,
+   "serving_utility": "CenterPoint Energy Houston Electric",
+   "aliases": [
+    "houston",
+    "houston, tx"
+   ]
+  },
+  {
+   "metro": "Omaha, NE",
+   "region_id": "SWPP/OPPD",
+   "ba": "SWPP",
+   "zone": "OPPD",
+   "lat": 41.26,
+   "lng": -95.94,
+   "serving_utility": "Omaha Public Power District",
+   "aliases": [
+    "council bluffs",
+    "omaha",
+    "omaha, ne",
+    "papillion"
+   ]
+  },
+  {
+   "metro": "Kansas City, MO",
+   "region_id": "SWPP/KCPL",
+   "ba": "SWPP",
+   "zone": "KCPL",
+   "lat": 39.1,
+   "lng": -94.58,
+   "serving_utility": "Evergy",
+   "aliases": [
+    "kansas city",
+    "kansas city, mo"
+   ]
+  },
+  {
+   "metro": "Phoenix, AZ",
+   "region_id": "AZPS",
+   "ba": "AZPS",
+   "zone": null,
+   "lat": 33.45,
+   "lng": -112.07,
+   "serving_utility": "Arizona Public Service",
+   "aliases": [
+    "chandler",
+    "goodyear",
+    "mesa",
+    "phoenix",
+    "phoenix, az"
+   ]
+  },
+  {
+   "metro": "Tucson, AZ",
+   "region_id": "TEPC",
+   "ba": "TEPC",
+   "zone": null,
+   "lat": 32.22,
+   "lng": -110.97,
+   "serving_utility": "Tucson Electric Power",
+   "aliases": [
+    "tucson",
+    "tucson, az"
+   ]
+  },
+  {
+   "metro": "Las Vegas, NV",
+   "region_id": "NEVP",
+   "ba": "NEVP",
+   "zone": null,
+   "lat": 36.17,
+   "lng": -115.14,
+   "serving_utility": "NV Energy",
+   "aliases": [
+    "las vegas",
+    "las vegas, nv",
+    "reno",
+    "vegas"
+   ]
+  },
+  {
+   "metro": "Salt Lake City, UT",
+   "region_id": "PACE",
+   "ba": "PACE",
+   "zone": null,
+   "lat": 40.76,
+   "lng": -111.89,
+   "serving_utility": "Rocky Mountain Power (PacifiCorp)",
+   "aliases": [
+    "salt lake",
+    "salt lake city",
+    "salt lake city, ut",
+    "slc",
+    "utah"
+   ]
+  },
+  {
+   "metro": "Denver, CO",
+   "region_id": "PSCO",
+   "ba": "PSCO",
+   "zone": null,
+   "lat": 39.74,
+   "lng": -104.99,
+   "serving_utility": "Xcel Energy Colorado",
+   "aliases": [
+    "denver",
+    "denver, co"
+   ]
+  },
+  {
+   "metro": "Cheyenne, WY",
+   "region_id": "WACM",
+   "ba": "WACM",
+   "zone": null,
+   "lat": 41.14,
+   "lng": -104.82,
+   "serving_utility": "Black Hills Energy (Cheyenne Light)",
+   "aliases": [
+    "cheyenne",
+    "cheyenne, wy"
+   ]
+  },
+  {
+   "metro": "Hillsboro, OR",
+   "region_id": "PGE",
+   "ba": "PGE",
+   "zone": null,
+   "lat": 45.52,
+   "lng": -122.99,
+   "serving_utility": "Portland General Electric",
+   "aliases": [
+    "hillsboro",
+    "hillsboro, or",
+    "portland"
+   ]
+  },
+  {
+   "metro": "Prineville, OR",
+   "region_id": "PACW",
+   "ba": "PACW",
+   "zone": null,
+   "lat": 44.3,
+   "lng": -120.83,
+   "serving_utility": "Pacific Power (PacifiCorp)",
+   "aliases": [
+    "prineville",
+    "prineville, or"
+   ]
+  },
+  {
+   "metro": "Los Angeles, CA",
+   "region_id": "LDWP",
+   "ba": "LDWP",
+   "zone": null,
+   "lat": 34.05,
+   "lng": -118.24,
+   "serving_utility": "LADWP",
+   "aliases": [
+    "los angeles",
+    "los angeles, ca"
+   ]
+  },
+  {
+   "metro": "Santa Clara, CA",
+   "region_id": "CISO/PGAE",
+   "ba": "CISO",
+   "zone": "PGAE",
+   "lat": 37.35,
+   "lng": -121.95,
+   "serving_utility": "Silicon Valley Power (inside PG&E TAC area)",
+   "aliases": [
+    "santa clara",
+    "santa clara, ca"
+   ]
+  },
+  {
+   "metro": "Minneapolis, MN",
+   "region_id": "MISO/0001",
+   "ba": "MISO",
+   "zone": "0001",
+   "lat": 44.98,
+   "lng": -93.27,
+   "serving_utility": "Xcel Energy",
+   "aliases": [
+    "minneapolis",
+    "minneapolis, mn",
+    "twin cities"
+   ]
+  },
+  {
+   "metro": "Des Moines / Altoona, IA",
+   "region_id": "MISO/0035",
+   "ba": "MISO",
+   "zone": "0035",
+   "lat": 41.59,
+   "lng": -93.62,
+   "serving_utility": "MidAmerican Energy",
+   "aliases": [
+    "altoona",
+    "des moines / altoona",
+    "des moines / altoona, ia"
+   ]
+  },
+  {
+   "metro": "Atlanta, GA",
+   "region_id": "SOCO",
+   "ba": "SOCO",
+   "zone": null,
+   "lat": 33.75,
+   "lng": -84.39,
+   "serving_utility": "Georgia Power",
+   "aliases": [
+    "atlanta",
+    "atlanta, ga",
+    "douglas county"
+   ]
+  },
+  {
+   "metro": "Newton County, GA",
+   "region_id": "SOCO",
+   "ba": "SOCO",
+   "zone": null,
+   "lat": 33.55,
+   "lng": -83.86,
+   "serving_utility": "Georgia Power / Walton EMC",
+   "aliases": [
+    "newton county",
+    "newton county, ga"
+   ]
+  },
+  {
+   "metro": "Nashville, TN",
+   "region_id": "TVA",
+   "ba": "TVA",
+   "zone": null,
+   "lat": 36.16,
+   "lng": -86.78,
+   "serving_utility": "Nashville Electric Service (TVA)",
+   "aliases": [
+    "clarksville",
+    "nashville",
+    "nashville, tn"
+   ]
+  },
+  {
+   "metro": "Gallatin, TN",
+   "region_id": "TVA",
+   "ba": "TVA",
+   "zone": null,
+   "lat": 36.39,
+   "lng": -86.45,
+   "serving_utility": "Gallatin Dept. of Electricity (TVA)",
+   "aliases": [
+    "gallatin",
+    "gallatin, tn"
+   ]
+  },
+  {
+   "metro": "Memphis, TN",
+   "region_id": "TVA",
+   "ba": "TVA",
+   "zone": null,
+   "lat": 35.15,
+   "lng": -90.05,
+   "serving_utility": "MLGW (TVA)",
+   "aliases": [
+    "memphis",
+    "memphis, tn"
+   ]
+  },
+  {
+   "metro": "Charlotte, NC",
+   "region_id": "DUK",
+   "ba": "DUK",
+   "zone": null,
+   "lat": 35.23,
+   "lng": -80.84,
+   "serving_utility": "Duke Energy Carolinas",
+   "aliases": [
+    "charlotte",
+    "charlotte, nc"
+   ]
+  },
+  {
+   "metro": "Raleigh, NC",
+   "region_id": "CPLE",
+   "ba": "CPLE",
+   "zone": null,
+   "lat": 35.78,
+   "lng": -78.64,
+   "serving_utility": "Duke Energy Progress",
+   "aliases": [
+    "durham",
+    "raleigh",
+    "raleigh, nc"
+   ]
+  },
+  {
+   "metro": "Berkeley County (Santee Cooper), SC",
+   "region_id": "SC",
+   "ba": "SC",
+   "zone": null,
+   "lat": 33.19,
+   "lng": -80.01,
+   "serving_utility": "Santee Cooper",
+   "aliases": [
+    "berkeley county (santee cooper)",
+    "berkeley county (santee cooper), sc"
+   ]
+  },
+  {
+   "metro": "New York City, NY",
+   "region_id": "NYIS/ZONJ",
+   "ba": "NYIS",
+   "zone": "ZONJ",
+   "lat": 40.71,
+   "lng": -74.01,
+   "serving_utility": "Con Edison",
+   "aliases": [
+    "manhattan",
+    "new york",
+    "new york city",
+    "new york city, ny",
+    "nyc"
+   ]
+  },
+  {
+   "metro": "Boston, MA",
+   "region_id": "ISNE/4008",
+   "ba": "ISNE",
+   "zone": "4008",
+   "lat": 42.36,
+   "lng": -71.06,
+   "serving_utility": "Eversource",
+   "aliases": [
+    "boston",
+    "boston, ma"
+   ]
+  }
+ ]
+}

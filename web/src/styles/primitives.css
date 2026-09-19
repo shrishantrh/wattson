@@ -1,0 +1,40 @@
+/* Small UI primitives: key caps, the shortcuts sheet, toasts, the copy button.
+   Components: Shortcuts.jsx, Toast.jsx, CopyButton.jsx. Colors come from tokens.css; the
+   rgba fallbacks match it. Self-contained: nothing here depends on base.css. */
+
+/* key cap */
+.kbd { display: inline-flex; align-items: center; justify-content: center; height: auto; min-width: 20px; padding: 2px 6px; font-family: var(--font-mono, ui-monospace, Menlo, monospace); font-size: 11px; font-weight: 500; line-height: 1.2; letter-spacing: 0; font-feature-settings: normal; color: var(--muted, #676d69); background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 5px; box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06); vertical-align: middle; white-space: nowrap; }
+
+/* shortcuts sheet */
+.sheet-overlay { position: fixed; inset: 0; z-index: 70; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, 0.55); animation: prim-fade 150ms var(--ease-out, ease-out) both; }
+.sheet { width: 420px; max-width: 100%; max-height: min(82vh, 680px); overflow: auto; scrollbar-width: thin; outline: none; background: var(--surface, #111413); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 14px; padding: 18px 22px 16px; box-shadow: var(--shadow, 0 12px 40px rgba(0, 0, 0, 0.45)); color: var(--ink, #e9ece9); animation: prim-rise 150ms var(--ease-out, ease-out) both; }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.sheet h2 { margin: 0; font-family: var(--font-display, inherit); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
+.sheet-close { display: grid; place-items: center; width: 28px; height: 28px; margin-right: -6px; border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--muted, #676d69); cursor: pointer; transition: color 150ms var(--ease, ease), border-color 150ms var(--ease, ease); }
+.sheet-close:hover { color: var(--ink, #e9ece9); border-color: rgba(255, 255, 255, 0.14); }
+.sheet-close:focus-visible { outline: none; box-shadow: var(--ring, 0 0 0 2px rgba(255, 255, 255, 0.18)); }
+.sheet .grp { margin-top: 14px; }
+.sheet .grp h3 { margin: 0 0 2px; font-family: var(--font-ui, inherit); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted, #676d69); }
+.sheet .grp ul { margin: 0; padding: 0; list-style: none; }
+.sheet .grp li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; font-size: 13px; color: var(--ink-2, #a2a8a4); border-top: 1px solid rgba(255, 255, 255, 0.06); }
+.sheet .grp li:first-child { border-top: 0; }
+.sheet .keys { display: inline-flex; align-items: center; gap: 4px; flex: none; }
+.sheet .keys .sep { font-size: 11px; color: var(--muted, #676d69); padding: 0 2px; }
+.sheet-foot { margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.06); font-size: 12px; color: var(--muted, #676d69); display: flex; align-items: center; gap: 6px; }
+
+/* toasts: bottom-centre, newest at the bottom */
+.toast-host { position: fixed; left: 50%; bottom: 24px; z-index: 80; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; width: max-content; max-width: calc(100vw - 32px); pointer-events: none; }
+.toast { pointer-events: auto; max-width: 420px; padding: 9px 14px; font-size: 13px; line-height: 1.4; color: var(--ink, #e9ece9); background: var(--surface-2, #171b19); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 12px; box-shadow: var(--shadow-sm, 0 4px 16px rgba(0, 0, 0, 0.4)); animation: prim-rise 150ms var(--ease-out, ease-out) both; transition: opacity 150ms var(--ease, ease), transform 150ms var(--ease, ease); }
+.toast.leaving { opacity: 0; transform: translateY(4px); }
+
+/* copy button */
+.copy-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 28px; padding: 0 10px; font: inherit; font-size: 12px; font-weight: 500; white-space: nowrap; color: var(--ink-2, #a2a8a4); background: transparent; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px; cursor: pointer; user-select: none; transition: color 150ms var(--ease, ease), border-color 150ms var(--ease, ease), transform 150ms var(--ease, ease); }
+.copy-btn:hover { color: var(--ink, #e9ece9); border-color: rgba(255, 255, 255, 0.28); }
+.copy-btn:active { transform: scale(0.98); }
+.copy-btn:focus-visible { outline: none; box-shadow: var(--ring, 0 0 0 2px rgba(255, 255, 255, 0.18)); }
+.copy-btn.copied { color: var(--ink, #e9ece9); }
+.copy-btn svg { flex: none; }
+
+@keyframes prim-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes prim-rise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .sheet-overlay, .sheet, .toast { animation: none; } .toast { transition: none; } }

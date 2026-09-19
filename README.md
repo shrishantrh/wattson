@@ -38,8 +38,9 @@ overnight generation is serving PJM's own load, not its neighbors. This is consi
 with datacenter load being served by gas; part of the gas rise is coal-to-gas switching.
 
 **The load growth sits in one zone.** Dominion Virginia's PJM zone grew average demand
-32% (11.7 GW to 15.4 GW) and overnight demand 39%. The next fastest PJM zone, AEP, grew
-9%; 17 of 20 zones were flat or shrinking. Dominion's roughly +4 GW overnight is about
+32% (11.7 GW to 15.4 GW) and overnight demand 39%. The next fastest PJM zones, EKPC
+(eastern Kentucky) and AEP (central Ohio), grew 11% and 9%; the other 16 of 19 scored zones grew
+under 3%. Dominion's roughly +4 GW overnight is about
 half of PJM's overnight growth. +32% in six years far exceeds plausible demographic
 growth, and overnight growing faster than average is the discriminator: residential and
 EV load is peakier, not flatter.
