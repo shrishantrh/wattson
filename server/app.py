@@ -11,6 +11,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from server import data
+from server import search as corpus_search
 
 app = FastAPI(title="Wattson API", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
@@ -209,6 +210,26 @@ def get_company(ticker: str):
             out["is_mock"] = bool(c.get("_mock") or data.companies_doc()["is_mock"])
             return out
     raise HTTPException(404, f"unknown ticker: {ticker}")
+
+
+@app.get("/api/search")
+def get_search(q: str, ticker: str | None = None, doc_type: str | None = None,
+               quality_flag: str | None = None, limit: int = corpus_search.DEFAULT_LIMIT):
+    """Search verified ESG and 10-K passages, returning every stored citation field."""
+    try:
+        return corpus_search.search(q, ticker=ticker, doc_type=doc_type,
+                                    quality_flag=quality_flag, limit=limit)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except corpus_search.SearchUnavailable as exc:
+        # Retrieval is optional to the grid demo; an offline cloud must not crash it.
+        raise HTTPException(503, str(exc)) from exc
+
+
+@app.get("/api/search/status")
+def get_search_status():
+    """Index/corpus counts used to verify retrieval coverage during the demo."""
+    return corpus_search.status()
 
 
 def _csv(rows, cols):
