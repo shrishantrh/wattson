@@ -58,3 +58,10 @@
   .sbs-col + .sbs-col { border-left: 0; padding-left: 0; border-top: 1px solid var(--line-strong); padding-top: 14px; }
   .sbs-crops { grid-template-columns: 1fr; }
 }
+
+.sbs-pair.sbs-pair-one { grid-template-columns: 1fr; }
+.sbs-pair.sbs-pair-one .sbs-col { border: 0; padding-right: 0; }
+
+/* a lone page image gets the full card width: it is the evidence, not a thumbnail */
+.sbs-crops:has(> :only-child) { grid-template-columns: 1fr; }
+.sbs-crops:has(> :only-child) .sbs-page img { width: 100%; }

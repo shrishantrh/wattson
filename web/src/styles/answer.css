@@ -5,6 +5,21 @@
    fact, neither good nor bad), --clean / --fossil for what a grid physically ran on,
    --warn only for the honesty note. One accent, no gradients, no glow. */
 
+/* ---------- zones ----------
+   The column reads top to bottom as ANSWER, EVIDENCE, SOURCES AND CAVEATS. Each zone is
+   introduced by one small label: an icon for the kind, a word for the name. */
+.ans-sec { display: flex; align-items: center; gap: 6px; padding: 0 2px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.ans-sec > svg { color: var(--muted); flex: none; }
+.ans-sec-r { margin-left: auto; text-transform: none; letter-spacing: 0; }
+.ans-sec-r .chip.sm { display: inline-flex; align-items: center; gap: 4px; }
+.ans-chip svg { flex: none; }
+
+/* a module header: kind icon, then the title */
+.ans-mtitle { display: inline-flex; align-items: center; gap: 7px; min-width: 0; }
+.ans-mtitle > svg { color: var(--muted); flex: none; }
+.ans-micon { color: var(--muted); vertical-align: -2px; margin-right: 6px; }
+.ans-count { font-family: var(--font-mono); font-style: normal; font-size: 10px; font-variant-numeric: tabular-nums; color: var(--muted); border: 1px solid var(--line-soft); border-radius: 999px; padding: 1px 6px; }
+
 /* ---------- the sticky mini-header ----------
    It sits in the flow directly above the answer card and is pulled under it by a
    negative margin (its own height + the column's 10px gap), so while the answer is
@@ -14,7 +29,7 @@
 .ans-sticky {
   --ans-sticky-h: 40px;
   position: sticky;
-  top: 0;
+  top: 44px;   /* under the sticky <Breadcrumbs /> row, which owns the first 44px */
   z-index: 1;
   display: flex;
   align-items: center;
@@ -30,7 +45,8 @@
   margin-bottom: calc(-1 * (var(--ans-sticky-h) + 10px));
   overflow: hidden;
 }
-.ans-sticky-name { font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ans-sticky-name { display: inline-flex; align-items: center; gap: 7px; min-width: 0; font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ans-sticky-name > svg { color: var(--muted); flex: none; }
 .ans-sticky-v { font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
 .ans-sticky-v b { color: var(--ink); font-weight: 500; }
 .ans-sticky-v .clean { color: var(--clean); }
@@ -45,7 +61,8 @@
   padding: 22px 22px 18px;
   box-shadow: inset 0 2px 0 var(--clean-line), inset 0 0 0 100vmax var(--surface-a), var(--shadow-sm);
 }
-.ans-card .verdict { font-size: 22px; line-height: 1.28; }
+.ans-card .verdict { font-size: 22px; line-height: 1.28; margin: 0; }
+.ans-rest { margin: 9px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
 .ans-card .card-head { margin-bottom: 12px; }
 
 /* ---------- claimed vs measured: one comparison, one scale ----------
@@ -77,9 +94,11 @@
 .ans-gap-say { margin: 2px 0 0; padding-left: 10px; border-left: 2px solid var(--fossil-line); font-size: 12px; line-height: 1.45; color: var(--muted); }
 .ans-gap-say b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
 
-/* the figures that are not part of the comparison sit under it, quieter */
-.nums.ans-meta { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line-soft); gap: 14px; }
-.nums.ans-meta .num .v { font-size: 17px; }
+/* the figures that are not part of the comparison sit under it, on one quiet line */
+.nums.ans-meta { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-soft); gap: 18px; justify-content: start; }
+.nums.ans-meta .num { display: flex; align-items: baseline; gap: 7px; }
+.nums.ans-meta .num .v { font-size: 16px; }
+.nums.ans-meta .num .l { margin-top: 0; font-size: 12px; }
 
 /* ---------- the honesty note ----------
    Never hidden, never the heaviest thing on the card: a compact disclosure with a
@@ -101,6 +120,22 @@
 .ans-why > summary:hover { color: var(--ink); }
 .ans-why > summary:focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--radius-sm); }
 .ans-why .note { margin: 6px 0 0; }
+.ans-why.is-method { border-left-color: var(--line-strong); }
+
+/* term / value pairs: the replacement for a paragraph of caveat */
+.ans-dl { margin: 8px 0 0; display: grid; gap: 8px; }
+.ans-dl > div { display: grid; gap: 2px; padding-top: 8px; border-top: 1px solid var(--line-soft); }
+.ans-dl > div:first-child { padding-top: 0; border-top: none; }
+.ans-dl dt { font-size: 11px; color: var(--muted); }
+.ans-dl dd { margin: 0; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+
+/* the tail zone: sources and caveats, one line of summary then short items */
+.card.ans-tail { padding: 14px 16px; }
+.ans-tail-sum { margin: 0 0 8px; font-size: 13px; color: var(--ink); }
+.ans-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.ans-list li { font-size: 12px; line-height: 1.5; color: var(--muted); padding: 8px 0; border-top: 1px solid var(--line-soft); }
+.ans-list li:first-child { padding-top: 0; border-top: none; }
+.ans-list li:last-child { padding-bottom: 0; }
 
 /* ---------- Compare: one control group ---------- */
 .ans-controls {
@@ -116,7 +151,8 @@
 .ans-controls-sub { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line-soft); }
 .ans-controls-k { display: block; font-size: 11px; color: var(--muted); margin-bottom: 6px; }
 .ans-controls-sub .shape-picker { transform-origin: left center; }
-.ans-controls-sub .seg button { font-size: 11px; }
+.ans-controls-sub .shape-picker .seg button { font-size: 11px; height: 24px; padding: 0 9px; }
+.ans-controls-sub .shape-picker .chip.sm { font-size: 11px; }
 .ans-controls-sub .note { margin-top: 6px; }
 
 /* ---------- Compare: the ranking ---------- */
@@ -150,3 +186,8 @@
   .ans-gap-v.long { font-size: 18px; }
   .ans-rank li.is-best .ans-rank-v { font-size: 26px; }
 }
+
+/* four load shapes in a 2x2 grid: wrapping a segmented control into a ragged second row
+   reads as a layout bug, a grid reads as a choice */
+.ans-controls .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 100%; }
+.ans-controls .seg button { width: 100%; text-align: center; }

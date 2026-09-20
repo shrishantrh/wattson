@@ -7,8 +7,10 @@ import { loadCompanies, loadFacilities, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { pct0 } from '../lib/findings.js'
 import { Loading, ErrorState } from '../components/States.jsx'
-import { href } from '../router.js'
+import { href, useHash } from '../router.js'
 import '../styles/companies.css'
+import '../styles/pages.css'
+import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 const to100 = v => (v == null ? null : Number(v) * 100)
 const plural = (n, one, many = `${one}s`) => (n == null ? `— ${many}` : `${n} ${n === 1 ? one : many}`)
@@ -25,10 +27,12 @@ export default function Companies() {
   const sites = { data: facilities || [] }
   const pts = useMemo(() => (facilities || []).filter(s => s.lat != null), [facilities])
   const globe = useMemo(() => ({ view: fitView(pts), points: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, r: 0.18, color: tk.ink2 })), markers: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, label: `${s.ticker} · ${(s.metro || s.name || '').split(',')[0]}`, tip: `${s.serving_utility || s.utility || ''} · ${s.grid_label}${s.cf_share_2025 != null ? ` · ${Math.round(s.cf_share_2025 * 100)}% clean` : ''}${s.ticker_utility ? ` · ${s.ticker_utility}` : ' · no listed equity'}`, href: href.region(s.region_id), color: tk.ink2 })) }), [pts, tk])
+  const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
   let column
-  if (loading) column = <Card title={<b>Companies</b>} onClose={back}><Loading what="the watchlist" /></Card>
-  else if (error) column = <Card title={<b>Companies</b>} onClose={back}><ErrorState error={error} onRetry={reload} /></Card>
+  const crumb = <Breadcrumbs trail={crumbs} onBack={back} />
+  if (loading) column = <>{crumb}<Card title={<b>Companies</b>} onClose={back}><Loading what="the watchlist" /></Card></>
+  else if (error) column = <>{crumb}<Card title={<b>Companies</b>} onClose={back}><ErrorState error={error} onRetry={reload} /></Card></>
   else {
     const withWalk = list.filter(c => c.walk_score != null)
     const best = [...withWalk].sort((a, b) => b.walk_score - a.walk_score)[0], worst = [...withWalk].sort((a, b) => a.walk_score - b.walk_score)[0]
@@ -41,6 +45,7 @@ export default function Companies() {
     const noEquity = fac.data?.no_listed_equity_count
     column = (
       <>
+        {crumb}
         <Card title={<><b>Companies</b> · talk vs walk{data.is_mock && <> · <span className="accent">mock</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
           <h1 className="verdict">{sentence}</h1>
           <div className="nums"><Num value={String(list.length)} label="companies read" /><Num value={String(n)} label="claims extracted" sub={`${cv} can't be verified`} /><Num value={String(pts.length)} label="sites mapped" sub={noEquity != null ? `${noEquity} on public power or co-ops, no listed equity` : 'hand-curated, utility outward'} /></div>
@@ -59,7 +64,7 @@ export default function Companies() {
           {fac.loading && <Loading what="the sites" />}
           {!fac.loading && !siteRows.length && <p className="note">No mapped sites in this data source.</p>}
           {siteRows.length > 0 && (
-            <div className="rows">
+            <div className="rows co-rows">
               {siteRows.map(s => (
                 <a className="row co-site" key={`${s.ticker}-${s.metro}-${s.serving_utility}`} href={href.region(s.region_id)}>
                   <div>

@@ -58,8 +58,17 @@ export function Ticks({ value, max = 100, n = 20, accent = false, mark = null, t
   )
 }
 
+// rows: [label, value] or [label, value, { wide }]. `wide` puts the value on its own line, for
+// values that are a sentence rather than a figure.
 export function KV({ rows }) {
-  return <ul className="kvrows">{rows.filter(Boolean).map(([k, v]) => <li key={String(k)}><span>{k}</span><span>{v}</span></li>)}</ul>
+  return (
+    <ul className="kvrows">
+      {rows.filter(Boolean).map(([k, v, opt]) => {
+        const long = opt?.wide ?? (typeof v === 'string' && v.length > 28)
+        return <li key={String(k)} className={long ? 'wide' : ''}><span>{k}</span><span>{v}</span></li>
+      })}
+    </ul>
+  )
 }
 
 const hours24 = values => (Array.isArray(values)
