@@ -146,42 +146,38 @@ keeping those aligned so a night in one region is comparable to a night in anoth
 
 ## Accomplishments that we're proud of
 
-**We committed to the method before seeing the answer**, named four test regions in
-advance, and published the one we got wrong.
+**We committed to the method before seeing the answer.** Weights fixed, four test regions
+named in advance, in the same commit as the code that produced the ranking. Three landed in
+the top twenty. Dallas came 91st and we published it rather than retuning until it went away.
 
-**It held up on data that did not exist when we locked it.** Re-run on 2026 data, three of
-those four regions scored better, not worse. Northern Virginia went from 6th to 3rd.
+**It held on data that did not exist when we locked it.** Re-run against 2026, three of
+those four scored better, not worse. Northern Virginia went 6th to 3rd.
 
-**Every gap is written down.** 48 of our 52 companies have no documents read yet, and each
-says so. Seven more we could not honestly place are listed with what we searched.
+**Every gap is written down.** 48 of our 52 companies have no documents read yet and each
+one says so. Seven more we could not place honestly are listed with what we searched for.
 
-**It is not just an accusation.** One site we checked, in Quincy, Washington, runs on a
-grid that is 100% carbon-free at 3am. The method distinguishes; it does not just indict.
-
----
+**It distinguishes rather than just indicts.** One site we checked, in Quincy, Washington,
+runs on a grid that is 100% carbon-free at 3am.
 
 ## What we learned
 
 **Time resolution was the whole argument.** The same data says nothing yearly and something
-new hourly. We did not find new data, we just refused to average away the hours that matter.
+new hourly. We did not find new data, we refused to average away the hours that matter.
 
-**A percentage falling is not the same as an amount shrinking**, and confusing the two is
-the easiest way to say something false using true numbers.
+**A percentage falling is not an amount shrinking.** Confusing the two is the easiest way
+to say something false using entirely true numbers.
 
-**The dangerous bugs look correct.** A crash is easy. A parser writing believable fake
-quotes, a blank rendering as a zero, a ranking feeding on itself: all three produced screens
-that looked completely fine.
-
----
+**The dangerous bugs look correct.** A crash is easy to find. A parser writing believable
+fake quotes, a blank rendering as a zero, a ranking quietly feeding on its own output: all
+three produced screens that looked completely fine.
 
 ## What's next
 
-**Measure the marginal plant, not the average.** What actually matters is which generator
-fires up when your datacenter switches on, and that is usually dirtier than the average.
+**Measure the marginal plant, not the average.** What matters is which generator fires up
+when a datacenter switches on, and that is usually dirtier than the average.
 
 **See behind the meter.** Eleven sites we mapped make their own power, so government data
-cannot see them at all. The biggest new campuses are exactly the ones most likely to be
-invisible.
+cannot see them at all, and those are exactly the biggest new campuses.
 
-**Run it forward.** Everything here looks backwards. Run monthly against fresh data, the
-same detector becomes an early warning system for where the next buildout lands.
+**Run it forward.** Everything here looks backwards. Run monthly against fresh data and the
+same detector becomes an early warning for where the next buildout lands.
