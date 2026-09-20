@@ -25,7 +25,7 @@ jobs:
           # Inlined at BUILD time, not read at runtime. A URL, not a credential -- the
           # OpenAI key lives only in Fly's secret store. If this host is asleep or gone,
           # askAvailable() fails closed and the palette stays exactly as it is today.
-          VITE_API_BASE: https://wattson-api-v2.fly.dev
+          VITE_API_BASE: https://wattson-api-3.fly.dev
       # The app silently falls back to contract fixtures if the export is missing; fail loudly instead.
       - run: grep -q "static export synced" web/build.log
       - run: test -f web/dist/api/regions.json && test -f web/dist/api/facilities.json && test -f web/dist/api/company/GOOGL.json
