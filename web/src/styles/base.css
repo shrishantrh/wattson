@@ -167,10 +167,14 @@ a.card:hover, .card.link:hover { border-color: var(--line-focus); }
 .claim .m { font-size: 12px; color: var(--muted); margin-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .claim .why { font-size: 12px; color: var(--ink-2); margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--fossil); }
 .claim.clean .why { border-left-color: var(--clean); }
-.kvrows li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line-soft); font-size: 13px; }
+.kvrows li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, auto); gap: 6px 14px; align-items: baseline; padding: 7px 0; border-top: 1px solid var(--line-soft); font-size: 13px; }
+/* a value too long to sit beside its label takes its own line rather than crowding it */
+.kvrows li.wide, .kvrows li:has(> span:last-child:not(:first-child)[data-wide]) { grid-template-columns: 1fr; }
 .kvrows li:first-child { border-top: 0; }
 .kvrows li > span { min-width: 0; overflow-wrap: anywhere; }
-.kvrows li span:first-child { color: var(--muted); }
+.kvrows li span:first-child { color: var(--muted); line-height: 1.35; }
+.kvrows li span:last-child { text-align: right; line-height: 1.35; }
+.kvrows li.wide span:last-child { text-align: left; }
 .kvrows li span:last-child { color: var(--ink); font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; text-align: right; }
 .note { font-size: 12px; color: var(--muted); line-height: 1.5; overflow-wrap: break-word; }
 .note b { color: var(--ink-2); font-weight: 500; }

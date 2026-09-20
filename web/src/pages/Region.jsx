@@ -11,7 +11,9 @@ import { readTokens } from '../lib/tokens.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { regionTitle, pts1, n0 } from '../lib/findings.js'
 import { summarize, orderEvidence } from '../lib/regionSummary.js'
-import { href } from '../router.js'
+import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
+import { Bolt, Layers, Info } from '../components/Icons.jsx'
+import { href, useHash } from '../router.js'
 
 // The dossier for one place: one sentence, four numbers, one line on what 300 MW here would run on,
 // then the evidence in order of importance. Nothing shows that the source does not have.
@@ -31,8 +33,14 @@ function NotFoundState({ label, error }) {
   )
 }
 
+// ANSWER first, then EVIDENCE: the column's information architecture, labelled.
+function SectionLabel({ icon: Icon, children, count }) {
+  return <div className="bc-sect"><Icon size={13} />{children}{count != null && <span className="bc-count">{count} {count === 1 ? 'module' : 'modules'}</span>}</div>
+}
+
 export default function Region({ route }) {
   const id = route.id
+  const crumbs = useCrumbs(useHash())
   const { loading, error, data, reload } = useAsync(() => loadRegion(id), [id])
   const regs = useAsync(loadRegions, [])
   const tk = useMemo(() => readTokens(), [])
@@ -59,7 +67,8 @@ export default function Region({ route }) {
 
   if (loading || error) {
     const title = <><b>{c?.place || label}</b>{c ? ` · ${id.split('/')[0]} grid` : ''}</>
-    return <Shell page="region" globe={globe} column={<Card title={title} onClose={back}>{loading ? <Loading what={label} /> : error.name === 'NotFound' ? <NotFoundState label={label} error={error} /> : <ErrorState error={error} onRetry={reload} />}</Card>} columnWidth={COLUMN} />
+    const col = <><Breadcrumbs trail={crumbs} onBack={back} /><Card title={title}>{loading ? <Loading what={label} /> : error.name === 'NotFound' ? <NotFoundState label={label} error={error} /> : <ErrorState error={error} onRetry={reload} />}</Card></>
+    return <Shell page="region" globe={globe} column={col} columnWidth={COLUMN} />
   }
 
   const t = regionTitle(data, label)
@@ -71,8 +80,9 @@ export default function Region({ route }) {
   const eyebrow = <><b>{s.place || s.label}</b>{s.grid ? ` · ${s.grid} grid` : ''}</>
   const column = (
     <>
-      <Card title={eyebrow} onClose={back}>
-        {facts.length > 0 && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>{facts.map(f => <Chip key={f.key} small dim>{f.text}</Chip>)}</div>}
+      <Breadcrumbs trail={crumbs} onBack={back} />
+      <SectionLabel icon={Bolt}>Answer</SectionLabel>
+      <Card title={eyebrow}>
         <h1 className="verdict">{t.title}</h1>
         <div className="nums" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
           <Num num={s.night2025 != null ? s.night2025 * 100 : undefined} value="—" format={pctFmt} label="clean at night, 2025" accent />
@@ -81,12 +91,21 @@ export default function Region({ route }) {
           <Num num={s.demandNight2025 ?? undefined} value="—" format={mwFmt} label="MW at night, 2025" sub={s.demandNight2019 != null ? `${n0(s.demandNight2019)} in 2019` : null} />
         </div>
         {s.runsOn && <p className="note" style={{ marginTop: 14, color: 'var(--ink-2)' }}><b style={{ color: 'var(--ink)' }}>What {LOAD_MW} MW here would run on:</b> {s.runsOn}</p>}
-        {s.caveat && <div className="banner banner-error" style={{ marginTop: 12, marginBottom: 0 }}>{s.caveat}</div>}
+        {(facts.length > 0 || s.caveat) && (
+          <div className="bc-note">
+            <Info size={14} />
+            <div>
+              {facts.length > 0 && <p>{facts.map(f => f.text).join(' · ')}</p>}
+              {s.caveat && <p>{s.caveat}</p>}
+            </div>
+          </div>
+        )}
         <div style={{ marginTop: 14, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
           <Chip href={href.compare({ mw: LOAD_MW, metros: [id] })}>Compare {LOAD_MW} MW here</Chip>
           <CopyButton text={() => window.location.href} label="Copy link" />
         </div>
       </Card>
+      <SectionLabel icon={Layers} count={modules.length}>Evidence</SectionLabel>
       <Workspace id="region" modules={modules} />
     </>
   )

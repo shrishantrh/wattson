@@ -7,9 +7,10 @@ import { readTokens } from '../lib/tokens.js'
 import { METRICS, PRESETS, DEFAULT_PRESET, metric, tickFormat, pearson, linfit, quantiles, outliers, sectorOf, GENERATION_SIDE } from '../lib/metrics.js'
 import { signed } from '../lib/format.js'
 import { Loading, ErrorState } from '../components/States.jsx'
-import { href } from '../router.js'
+import { href, useHash } from '../router.js'
 import '../styles/explore.css'
 import '../styles/pages.css'
+import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 // Explore: any two metrics across the scored regions as a scatter, with the correlation, the
 // fit and the outliers. The flat-load detector's own view is the first preset (growth vs
@@ -56,6 +57,7 @@ export default function Explore({ route }) {
   const sel = params.sel || null
 
   const go = useCallback(patch => { window.location.hash = exploreHref({ x: xKey, y: yKey, sel, sector, ...patch }) }, [xKey, yKey, sel, sector])
+  const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
 
   const all = useMemo(() => {
@@ -104,6 +106,7 @@ export default function Explore({ route }) {
 
   const column = (
     <>
+      <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<><b>Explore</b> · {data ? `${all.length} regions` : 'regions'} · any two metrics</>} onClose={back}>
         {loading ? <Loading what="the regions" /> : error ? <ErrorState error={error} onRetry={reload} /> : (
           <>

@@ -15,6 +15,26 @@ export const SURFACE_DEFAULTS = {
   rim: 0.06, // white added at the very edge (alpha, effectively)
   rimWidth: 9, // falloff exponent: higher is a thinner rim line
   dotLimb: 0.42, // dot brightness at the horizon, relative to its own colour
+  // The land is quiet when the camera is far out (on the landing the globe sits behind the
+  // headline and the search box) and comes up as it moves in, where the map is the subject.
+  farTone: 0.36, // dot brightness at `farAlt` and beyond
+  farContrast: 0.6, // ... and how much of the coast-to-interior contrast survives there
+  farAlt: 1.9, // camera altitude at which the land is fully quiet
+  nearAlt: 0.75, // ... and at which it is fully up
+}
+
+/**
+ * The land's brightness and contrast for a camera altitude: 1 and 1 close in, falling to
+ * `farTone`/`farContrast` as the camera pulls back.
+ * @param {number} altitude
+ * @returns {{ tone: number, contrast: number }}
+ */
+export function toneForAltitude(altitude) {
+  const { farAlt, nearAlt, farTone, farContrast } = SURFACE_DEFAULTS
+  const x = (farAlt - (altitude ?? farAlt)) / (farAlt - nearAlt)
+  const t = Math.max(0, Math.min(1, x))
+  const e = t * t * (3 - 2 * t) // smoothstep
+  return { tone: farTone + (1 - farTone) * e, contrast: farContrast + (1 - farContrast) * e }
 }
 
 const VERT = /* glsl */ `
@@ -79,8 +99,11 @@ export function setSphereColor(material, hex) {
  * @param {number} [limb] dot brightness at the horizon
  */
 export function patchDotFalloff(material, limb = SURFACE_DEFAULTS.dotLimb) {
+  // Held on the material so the camera can drive them after the shader has compiled.
+  const uniforms = { uDotLimb: { value: limb }, uTone: { value: 1 }, uContrast: { value: 1 } }
+  material.userData.uniforms = uniforms
   material.onBeforeCompile = (shader) => {
-    shader.uniforms.uDotLimb = { value: limb }
+    Object.assign(shader.uniforms, uniforms)
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', '#include <common>\nvarying float vFres;')
       .replace(
@@ -96,12 +119,32 @@ export function patchDotFalloff(material, limb = SURFACE_DEFAULTS.dotLimb) {
         vFres = clamp(dot(nFres, normalize(-wFres.xyz)), 0.0, 1.0);`,
       )
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', '#include <common>\nuniform float uDotLimb;\nvarying float vFres;')
+      .replace(
+        '#include <common>',
+        '#include <common>\nuniform float uDotLimb;\nuniform float uTone;\nuniform float uContrast;\nvarying float vFres;',
+      )
       .replace(
         '#include <colorspace_fragment>',
-        'gl_FragColor.rgb *= mix(uDotLimb, 1.0, smoothstep(0.0, 1.0, vFres));\n#include <colorspace_fragment>',
+        `float mAvg = dot(gl_FragColor.rgb, vec3(0.3333));
+        gl_FragColor.rgb = mix(vec3(mAvg), gl_FragColor.rgb, uContrast) * uTone;
+        gl_FragColor.rgb *= mix(uDotLimb, 1.0, smoothstep(0.0, 1.0, vFres));
+        #include <colorspace_fragment>`,
       )
   }
   material.customProgramCacheKey = () => `wattson-dot-falloff-${limb}`
   return material
+}
+
+/**
+ * Drive a patched dot material from the camera altitude. Cheap enough for every camera frame:
+ * two uniform writes, no repaint of the 15k instance colours.
+ * @param {THREE.Material} material
+ * @param {number} altitude
+ */
+export function setDotTone(material, altitude) {
+  const u = material && material.userData && material.userData.uniforms
+  if (!u) return
+  const { tone, contrast } = toneForAltitude(altitude)
+  u.uTone.value = tone
+  u.uContrast.value = contrast
 }

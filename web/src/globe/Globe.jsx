@@ -2,12 +2,12 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import GlobeGL from 'react-globe.gl'
 import * as THREE from 'three'
 import { tweenPov, rampAutoRotate, easeOutCubic } from './camera.js'
-import { cssVar, dimHex, toThreeColor, withAlpha } from './color.js'
+import { cssVar, dimHex, parseCss, toThreeColor, withAlpha } from './color.js'
 import { loadDayNightTextures, makeDayNightMaterial, makeNightMaterial, setDayNightUniforms } from './dayNight.js'
 import { buildDotMesh, disposeDotMesh, paintDotMesh } from './dots.js'
 import { loadDotField, loadStateMesh } from './land.js'
 import { subsolarPoint } from './sun.js'
-import { makeSphereMaterial, setSphereColor } from './surface.js'
+import { makeSphereMaterial, setDotTone, setSphereColor } from './surface.js'
 import '../styles/globe.css'
 
 const DEG = Math.PI / 180
@@ -26,6 +26,20 @@ const DEFAULT_LAND = {
   neighbors: 'rgba(233,236,233,0.30)',
   other: 'rgba(233,236,233,0.14)',
   states: 'rgba(233,236,233,0.22)',
+}
+// The defaults above are the fallback; the live values come from the page's own tokens, so a
+// change to --surface or --ink moves the globe with the rest of the UI. Read once per mount
+// (the theme is fixed at runtime), and only for the surfaces the caller does not colour itself.
+function tokenLand() {
+  const ink = parseCss(cssVar('--ink', '#e9ece9')) || { r: 233, g: 236, b: 233 }
+  const rgba = (a) => `rgba(${ink.r},${ink.g},${ink.b},${a})`
+  return {
+    sphere: cssVar('--surface', DEFAULT_LAND.sphere),
+    us: rgba(0.62),
+    neighbors: rgba(0.3),
+    other: rgba(0.14),
+    states: rgba(0.22),
+  }
 }
 const LAND_ALT = 0.002 // dot matrix, globe-radius units above the surface
 const STATES_ALT = 0.003 // state border lines, above the dots
@@ -214,8 +228,9 @@ function markerVisibility(el, isVisible) {
  *   page background, the centre lifts, a thin white rim marks the horizon) and land drawn as an
  *   instanced dot field: one dot per H3 cell, resolution 4 over the US and 3 elsewhere, each dot
  *   sized by its cell's true area, brighter on coastlines and borders, dimmer inland, with a
- *   small deterministic per-dot jitter so the pattern has texture. Thin US state border lines
- *   sit on top. The TopoJSON (about 220 KB raw) is loaded lazily and the field is built once per
+ *   small deterministic per-dot jitter so the pattern has texture, and the whole field dimming
+ *   and losing contrast as the camera pulls back (quiet behind a landing headline at altitude
+ *   1.75, fully up by altitude 0.75). Thin US state border lines sit on top. The TopoJSON (about 220 KB raw) is loaded lazily and the field is built once per
  *   page, chunked across frames.
  * - `'night'`: the NASA night-lights texture with the day/night terminator shader.
  *
@@ -283,17 +298,22 @@ export default function Globe({
   const [land, setLand] = useState(null) // dots style: { field, states } once the TopoJSON is in
   const [readyTick, setReadyTick] = useState(0)
   const [dotTick, setDotTick] = useState(0) // bumped when the dot mesh is (re)attached
+  // The state border lines follow the dots: quiet when the camera is far out. Bucketed with
+  // hysteresis, because a colour change rebuilds the 302 line objects and must not happen per
+  // frame the way the dots' two uniform writes can.
+  const [farLines, setFarLines] = useState(true)
   // Stabilised so an inline `heat={[...]}` does not repaint 15k instance colours every render.
   const stableHeat = useStableList(heat)
 
   const q = QUALITY[quality] || QUALITY.auto
   const isDots = style !== 'night'
-  const lc = landColors || DEFAULT_LAND
-  const sphereColor = lc.sphere || DEFAULT_LAND.sphere
-  const usColor = lc.us || DEFAULT_LAND.us
-  const neighborColor = lc.neighbors || DEFAULT_LAND.neighbors
-  const otherColor = lc.other || DEFAULT_LAND.other
-  const statesColor = lc.states || DEFAULT_LAND.states
+  const tokens = useMemo(() => tokenLand(), [])
+  const lc = landColors || tokens
+  const sphereColor = lc.sphere || tokens.sphere
+  const usColor = lc.us || tokens.us
+  const neighborColor = lc.neighbors || tokens.neighbors
+  const otherColor = lc.other || tokens.other
+  const statesColor = lc.states || tokens.states
   const cleanColor = lc.clean
   const fossilColor = lc.fossil
   // The terminator only exists in night style; in dots style there is no texture to shade.
@@ -345,7 +365,7 @@ export default function Globe({
   useEffect(() => {
     let alive = true
     const load = isDots
-      ? Promise.resolve({ material: makeSphereMaterial(toThreeColor(DEFAULT_LAND.sphere).hex), textures: [], kind: 'dots' })
+      ? Promise.resolve({ material: makeSphereMaterial(toThreeColor(tokenLand().sphere).hex), textures: [], kind: 'dots' })
       : loadDayNightTextures(terminatorEnabled).then(({ day, night }) => {
           let material
           if (terminatorEnabled) {
@@ -556,6 +576,7 @@ export default function Globe({
         return
       }
       mesh = buildDotMesh(land.field, g.getGlobeRadius(), LAND_ALT)
+      setDotTone(mesh.material, stemAltRef.current ?? (g.pointOfView ? g.pointOfView().altitude : null))
       globeObj.add(mesh)
       dotMeshRef.current = mesh
       setDotTick((t) => t + 1) // the colours are written by the effect below
@@ -583,7 +604,7 @@ export default function Globe({
         us: usColor,
         neighbors: neighborColor,
         other: otherColor,
-        clean: cleanColor || cssVar('--clean', '#5fd3c2'),
+        clean: cleanColor || cssVar('--clean', '#4fd4d0'),
         fossil: fossilColor || cssVar('--fossil', cssVar('--accent', '#ff7a4a')),
       },
       stableHeat.length ? stableHeat : null,
@@ -651,6 +672,10 @@ export default function Globe({
   const handleZoom = useCallback(
     (pov) => {
       setDayNightUniforms(matRef.current, { globeLat: pov.lat, globeLng: pov.lng })
+      // The land quietens as the camera pulls back: two uniform writes, every camera frame.
+      if (dotMeshRef.current) setDotTone(dotMeshRef.current.material, pov.altitude)
+      if (pov.altitude > 1.3) setFarLines(true)
+      else if (pov.altitude < 1.1) setFarLines(false)
       const prev = stemAltRef.current
       if (prev == null || Math.abs(prev - pov.altitude) > 0.02) {
         stemAltRef.current = pov.altitude
@@ -676,13 +701,14 @@ export default function Globe({
     [q.antialias],
   )
 
-  const pathColor = useCallback(() => statesColor, [statesColor])
+  const lineColor = farLines ? withAlpha(statesColor, 0.45) : statesColor
+  const pathColor = useCallback(() => lineColor, [lineColor])
   const stateLines = isDots && land ? land.states : EMPTY
 
   // Atmosphere: the default depends on the style; an explicit prop (or null) wins.
   const atmo = atmosphere === undefined ? (isDots ? DEFAULT_ATMOSPHERE_DOTS : DEFAULT_ATMOSPHERE) : atmosphere
   const atmoDefaults = isDots ? DEFAULT_ATMOSPHERE_DOTS : DEFAULT_ATMOSPHERE
-  const atmoColor = dimHex((atmo && atmo.color) || atmoDefaults.color, atmo && atmo.opacity != null ? atmo.opacity : atmoDefaults.opacity)
+  const atmoColor = dimHex((atmo && atmo.color) || cssVar('--ink', atmoDefaults.color), atmo && atmo.opacity != null ? atmo.opacity : atmoDefaults.opacity)
   const atmoAltitude = atmo && atmo.altitude != null ? atmo.altitude : atmoDefaults.altitude
 
   // Dots style also waits for the land data so the sphere and its dots appear together.

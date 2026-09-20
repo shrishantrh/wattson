@@ -6,8 +6,9 @@ import { loadRegions, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { pct1, pts1 } from '../lib/findings.js'
 import { Loading, ErrorState } from '../components/States.jsx'
-import { href } from '../router.js'
+import { href, useHash } from '../router.js'
 import '../styles/pages.css'
+import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 // The screener: every scored region as a sortable table. The quant view.
 const PRESETS = [
@@ -44,16 +45,18 @@ export default function Screener({ route }) {
   const globe = useMemo(() => ({ view: { lat: 38.5, lng: -97, altitude: 1.5 }, interactive: true,
     points: rows.filter(r => r.lat != null).map(r => ({ id: r.id, lat: r.lat, lng: r.lng, r: 0.12, color: tk.muted })),
     markers: visible.filter(r => r.lat != null).map((r, i) => ({ id: r.id, lat: r.lat, lng: r.lng, label: `${i + 1}  ${r.place} · ${sortKey === 'night' || sortKey === 'slope' ? pct1(r.night) : `#${r.rank}`}`, href: href.region(r.id), color: i === 0 ? tk.accent : tk.ink2, lead: i === 0, hollow: !!r.flagged })) }), [rows, visible, sortKey, tk])
+  const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
   const column = (
     <>
+      <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<><b>Screener</b> · {rows.length} regions · hourly grid data</>} onClose={back}>
         <div className="pg-chips">{PRESETS.map(p => <Chip key={p[0]} small active={p[0] === preset[0] && !sort} href={href.screen(p[0])}>{p[1]}</Chip>)}</div>
         <p className="pg-lede">Clean share of what each grid generated at night in 2025, how it moved since 2019, its yearly trend, clean power relative to night demand, and the flat-load detector's rank. Zones inherit their grid's generation figures. Top 12 of the current sort are pinned on the globe.</p>
       </Card>
       {loading ? <Card><Loading what="the screener" /></Card> : error ? <Card><ErrorState error={error} onRetry={reload} /></Card> : (
         <Card>
-          <Table columns={columns} rows={rows} sortKey={sortKey} sortDir={sortDir} onSort={(key, dir) => setSort({ key, dir })} rowHref={r => href.region(r.id)} filter csvName="wattson-screener" dense maxHeight="min(66vh, 720px)" />
+          <Table columns={columns} rows={rows} sortKey={sortKey} sortDir={sortDir} onSortChange={n => setSort(n)} rowHref={r => href.region(r.id)} filter csvName="wattson-screener" dense maxHeight="min(66vh, 720px)" />
         </Card>
       )}
     </>
