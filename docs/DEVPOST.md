@@ -72,33 +72,32 @@ reality."* Two of a company's own numbers side by side are not arguable.
 
 ## How we built it
 
-**The hard part was the text, not the map.** A sustainability report does not contain a
-checkable claim. It contains a sentence like "we match 100% of our annual global
-electricity consumption with renewable energy purchases," where almost every word is
-load-bearing. We built a pipeline that reads 354 documents, 309 sustainability reports and
-45 SEC filings, and turns each claim into a record: the number, how precisely it is stated,
-how heavily it is qualified, and the page it came from.
+We read 354 documents, 309 sustainability reports and 45 SEC filings. For each claim we
+store the number, how precisely it is stated, how heavily it is qualified, and the page it
+appeared on.
 
-**The hedging is where the meaning hides.** "100% renewable" and "100% of annual
-consumption matched with market-based certificates" are the same number and completely
-different claims. Each qualifier costs the claim scope, and "annual" is the expensive one,
-because averaging over a year is exactly what hides the night. That produces a talk score.
-The grid produces a walk score. The gap between them is the finding.
+Qualifiers change what a claim means. "100% renewable" and "100% of annual consumption
+matched with market-based certificates" are the same number but different claims. We score
+each qualifier down, and "annual" costs the most, because averaging over a year hides what
+happens at night. That gives a talk score for each company.
 
-**Getting an LLM to do this without inventing things was most of the work.** Every claim
-carries a verbatim quote and a page number you can open. The ask layer answers through ten
-typed tools, and before anything renders we check each figure against what those tools
-actually returned; anything that does not match is dropped. The model cannot put a number
-on screen that the data did not produce.
+The grid data gives a walk score: how clean the power actually was on the grids that
+company's datacenters sit on. We compare the two.
 
-**No AI in the measurement, deliberately.** Every grid figure is plain arithmetic over
-government data, which is why it reproduces exactly on a fresh machine. AI reads documents
-and answers questions. It never produces a number.
+Every claim stores a verbatim quote and a page number, so anything the model extracted can
+be checked against the original document.
 
-**Which grid a site sits on is the quiet trap.** IREN's site in the Texas Panhandle looks
-like it belongs to the regional grid covering most of those counties. It wires directly
-into ERCOT instead. One wrong row flips a verdict, so all 134 are hand-checked against a
-cited source.
+The ask layer answers questions by calling ten tools that query the data. Before an answer
+renders, we check every number in it against what those tools returned and drop anything
+that does not match.
+
+The grid figures themselves are arithmetic over government data. No model touches them,
+which is why the whole pipeline reproduces exactly on a fresh machine.
+
+Working out which grid each site connects to took the most manual work. IREN's site in the
+Texas Panhandle sits in a county served by one regional grid but wires directly into ERCOT.
+One wrong row changes a verdict, so all 134 sites are checked by hand against a source we
+cite.
 
 ## Individual contributions
 
