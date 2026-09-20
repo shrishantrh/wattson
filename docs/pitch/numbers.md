@@ -235,3 +235,31 @@ one end of a range, not the company's figure.
 91.3%. That is the strongest evidence the method distinguishes rather than prosecutes, and it kills
 the objection that the finding rested on a single place. `physical_min` and `physical_max` are the
 fields.
+
+---
+
+## Correction, 2026-09-20: the Palo Verde capacity figures
+
+**Superseded.** Earlier passes quote "a combined 7,087 MW against a 3,937 MW nameplate". That
+mislabels net summer capacity as nameplate, and a judge who knows the plant will catch it.
+
+From `web/public/api/region/AZPS.json` -> `region.corrections.corrections[]`, after the EIA-860
+pass:
+
+| figure | value |
+|---|---|
+| Nameplate capacity | **4,209.6 MW** |
+| Net summer capacity | 3,937 MW |
+| Combined reported output, average | 7,087 MW |
+| Combined reported output, peak hour | **8,041 MW** |
+| Peak as a multiple of nameplate | **1.91x** |
+
+**Say it this way:** at its peak hour the two operators between them reported 8,041 MW from a plant
+whose nameplate is 4,209.6 MW, which is 1.91 times what it can physically produce. That is the
+cleanest form of the impossibility argument and it uses the right capacity term.
+
+The other two confirmations are unchanged and both are strong: the two reports correlate at 0.9948
+across 7,976 hours and are identical within 5 MW in 98.8% of them, ending in a step on 2019-12-04;
+and Arizona's fossil generation stayed flat at about 2,040 MW while its CO2 fell 17.5%, so no fossil
+fleet fired up to replace the clean generation that supposedly vanished. A clean fleet cannot
+disappear without carbon appearing.
