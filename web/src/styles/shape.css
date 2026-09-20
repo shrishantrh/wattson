@@ -37,4 +37,4 @@
 .shape-years .from { color: var(--muted); }
 .shape-years.accent { color: var(--accent); }
 .shape-years.accent .from { color: var(--muted); }
-.shape-years-l { color: var(--muted); font-family: var(--font-ui); font-size: 11px; margin-left: 6px; letter-spacing: 0; }
+.shape-years-l { color: var(--muted); font-family: var(--font-ui); font-size: 11px; margin-left: 6px; letter-spacing: 0; white-space: normal; }

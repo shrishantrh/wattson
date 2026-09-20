@@ -6,8 +6,15 @@
 
 ## 1. What this is
 
-**Wattson audits the clean-energy claims of the companies building AI datacenters, against
-the electricity their sites physically ran on.**
+> **Wattson is a greenwashing investigation of datacenter operators — settled against
+> 4.45 million hours of federal meter data.**
+
+Every AI datacenter operator says it runs clean. Nobody checked against the meter, because
+the claim is a sentence in a PDF and the answer is 4.45 million hourly rows across all 70
+US balancing authorities. **We joined them.**
+
+The signal was in the data the whole time, in the hours nobody looked at. **At annual
+resolution this finding does not exist** — it only appears once you separate the hours.
 
 ### Why nobody had done it
 

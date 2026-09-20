@@ -126,7 +126,7 @@ export default function Check({ route }) {
                 <div className="n" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>{series && <Sparkline values={series} width={64} height={18} accentLast baseline title="clean at night, 2019 to 2025" />}<span>{e?.cf_share != null ? pct0(e.cf_share) : '—'}{(e?.overnight_cf_share ?? series?.[6]) != null && <small> · {pct0(e?.overnight_cf_share ?? series[6])} at night, when the servers still run</small>}</span></div>
               </a>) })}
           </div>
-          <p className="note" style={{ marginTop: 10 }}>Each row is one building and the grid under it: the share of that grid's 2025 power that was carbon-free, then the same figure at night, then night-time clean power year by year from 2019. A flat line is a grid that never got cleaner after dark. Sites are traced from the serving utility, never guessed from the state.</p>
+          <p className="note" style={{ marginTop: 10 }}>Each row is one building and the grid under it: the share of that grid's 2025 power that was carbon-free, then the same figure at night, then that night-time share year by year from 2019. A flat line is a grid that never got cleaner after dark. Sites are traced from the serving utility, never guessed from the state.</p>
         </>
       ) },
       { id: 'claims', title: mtitle(CompanyIcon, 'What it claims, and the verdict'), render: () => (
@@ -140,7 +140,7 @@ export default function Check({ route }) {
                   : <div className="q" style={{ fontStyle: 'normal', opacity: 0.85 }}>No quotable claim found in this company's documents.</div>}
                 <div className="m"><span>{k.source_doc || 'no source document'}{k.page ? `, p. ${k.page}` : (k.locator?.item ? `, Item ${k.locator.item}` : '')}{k.year ? ` · ${k.year}` : ''}</span><Chip small accent={k.verdict === 'contradicted'}>{VERDICT[k.verdict] || k.verdict}</Chip>{k.cannot_verify_reason && <span>{REASON[k.cannot_verify_reason] || k.cannot_verify_reason.replace(/_/g, ' ')}</span>}{(k.greenwash_patterns || []).map(p => PATTERN[p]).filter(Boolean).map(t => <span key={t}>{t}</span>)}</div>
                 <GapBar claim={k} />
-                {k.falsifiability != null && <div className="m" style={{ alignItems: 'center' }}><span style={{ width: 84 }}>checkable</span><span style={{ width: 90 }}><Ticks value={k.falsifiability * 100} max={100} n={10} /></span><span>{Math.round(k.falsifiability * 100)}% of it is specific enough to test{k.scope === 'market_based' ? ' · counted by certificates bought, not power generated' : k.scope ? ` · ${k.scope.replace(/_/g, ' ')}` : ''}</span></div>}
+                {k.falsifiability != null && <div className="m" style={{ alignItems: 'center' }}><span style={{ width: 84 }}>checkable</span><span style={{ width: 90 }}><Ticks value={k.falsifiability * 100} max={100} n={10} /></span><span>{Math.round(k.falsifiability * 100)}% checkable{k.magnitude != null ? ', because it names a figure' : ', it names no figure'}{k.scope === 'market_based' ? ' · counted by certificates bought, not power generated' : k.scope ? ` · ${k.scope.replace(/_/g, ' ')}` : ''}</span></div>}
                 {contra && <div className="why">Contradicted in {contra.source_doc}{contra.page ? `, p. ${contra.page}` : ''}: {contra.note}</div>}
                 {!contra && reason && <div className="why">{reason.note.replace(/^cannot_verify:\s*/, '')}</div>}
                 {!contra && !reason && k.note && <div className="why">{k.note}</div>}
@@ -151,7 +151,7 @@ export default function Check({ route }) {
       ) },
       { id: 'talkwalk', title: mtitle(Bolt, 'What it says against what its grids generate'), render: () => (
         <>
-          <div className="nums" style={{ marginTop: 0 }}>{data.talk_score == null ? <Num num={null} format={() => '—'} label="talk" sub="nothing specific enough to score" accent /> : <Num num={data.talk_score * 100} format={pctFmt} label="talk" sub="how big and unhedged the claim is" accent />}{data.walk_score == null ? <Num num={null} format={() => '—'} label="walk" sub="no mapped site with grid data" /> : <Num num={data.walk_score * 100} format={pctFmt} label="walk" sub="what its grids actually generated, 2025" />}{data.coverage == null ? <Num num={null} format={() => '—'} label="coverage" sub="not computed" /> : <Num num={data.coverage * 100} format={pctFmt} label="coverage" sub="of its claims that grid data can settle" />}</div>
+          <div className="nums" style={{ marginTop: 0 }}>{data.talk_score == null ? <Num num={null} format={() => '—'} label="talk" sub="nothing specific enough to score" accent /> : <Num num={data.talk_score * 100} format={pctFmt} label="talk" sub="how big and unhedged the claim is" accent />}{data.walk_score == null ? <Num num={null} format={() => '—'} label="walk" sub="no mapped site with grid data" /> : <Num num={data.walk_score * 100} format={pctFmt} label="walk" sub="what its grids actually generated, 2025" />}{data.coverage == null ? <Num num={null} format={() => '—'} label="coverage" sub="not computed" /> : <Num num={data.coverage * 100} format={pctFmt} label="coverage" sub="of its mapped sites that have grid data" />}</div>
           <KV rows={[['talk', 'How big the number is, how precisely it is stated, and how little it is hedged. "Annual" and "market-based" are hedges, and they lower it.'], ['walk', 'The carbon-free share of what its grids generated in 2025, averaged across its sites without weighting them — a small site counts as much as a large one, because we do not know how much power each draws.']]} />
           <p className="note" style={{ marginTop: 10 }}>An annual "100% renewable" claim can be true on paper while the site physically runs on much less: we count only what the grid generated, never the clean power the company contracts for elsewhere (PPAs, RECs).</p>
         </>
@@ -196,7 +196,7 @@ export default function Check({ route }) {
                 {...track}
                 claimText={claimText}
                 measuredText={measuredText}
-                note={headlineGap ? <p className="ans-gap-say"><b>{gapPts} points</b> of that claim is bought elsewhere, not generated where the servers are — the grids under its {sites.length} sites physically produced that much less clean power. True under annual accounting; still not the same electricity.</p> : null}
+                note={headlineGap ? <p className="ans-gap-say"><b>{gapPts} points</b> of that claim are bought elsewhere, not generated where the servers are — the grids under its {sites.length} sites physically produced that much less clean power. True under annual accounting; still not the same electricity.</p> : null}
               />
               {a.numbers.length > 2 && <div className="nums ans-meta" style={{ gridTemplateColumns: `repeat(${a.numbers.length - 2}, auto)` }}>{a.numbers.slice(2).map((n, i) => <Num key={i} {...n} />)}</div>}
             </>

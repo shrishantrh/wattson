@@ -16,7 +16,7 @@ const byDistance = (a, b) => (a.miles ?? Infinity) - (b.miles ?? Infinity)
 function Row({ c, mark, dim }) {
   return (
     <a className={`nb-row${dim ? ' nb-flagged' : ''}`} href={href.region(c.id)} title={`${c.label}: ${pct0(c.share)} clean at night, ${n0(c.miles)} miles away${mark ? ` (${mark})` : ''}`}>
-      <div className="nb-cell"><div className="nb-t">{c.label}{mark && <span className="nb-mark">{mark}</span>}</div><div className="nb-d">{c.place || c.id} · {pts1(c.change_since_2019)} since 2019{c.rank ? ` · flat-load rank #${c.rank}` : ''}</div></div>
+      <div className="nb-cell"><div className="nb-t">{c.label}{mark && <span className="nb-mark">{mark}</span>}</div><div className="nb-d">{c.place || c.id} · {pts1(c.change_since_2019)} of night clean share since 2019{c.rank ? ` · ranks #${c.rank} for round-the-clock load growth` : ''}</div></div>
       <span className="nb-n">{n0(c.miles)}<small> mi</small></span>
       <span className="mod-tk nb-tk"><Ticks value={c.share == null ? 0 : c.share} max={1} n={10} tone={dim ? 'neutral' : 'clean'} label={`${pct0(c.share)} clean at night`} /></span>
       <span className="nb-n">{pct0(c.share)}</span>

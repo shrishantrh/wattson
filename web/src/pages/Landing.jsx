@@ -55,6 +55,7 @@ export default function Landing() {
   const overlay = (
     <div className="landing">
       <h1 className="hero-q">What&apos;s really powering it?</h1>
+      <p className="hero-kicker">A greenwashing investigation of datacenter operators</p>
       <p className="hero-sub">Every AI datacenter operator says it runs clean. Nobody checked against the meter. We did &mdash; hour by hour, for every grid in the country.</p>
 
       <div className="lx-box">

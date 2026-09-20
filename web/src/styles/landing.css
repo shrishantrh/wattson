@@ -50,3 +50,5 @@
 .lx-link2:hover { color: var(--ink); }
 @media (max-width: 720px) { .lx-links .lx-found, .lx-link2 { margin-top: 18px; } }
 .lx-live-so { color: var(--ink); font-weight: 500; }
+.hero-kicker { font-size: 11px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--accent); margin: 0 0 10px; font-weight: 600; }

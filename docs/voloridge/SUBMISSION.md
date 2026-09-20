@@ -1,10 +1,32 @@
 # Wattson — Voloridge submission
 
-**Where the AI buildout is landing, and what is burning to serve it.**
+> **A greenwashing investigation of datacenter operators — settled against 4.45 million
+> hours of federal meter data.**
 
-Dataset: Public Utility Data Liberation Project (PUDL), EIA-930 hourly.
-Fetched with Voloridge's own `src/pudl/fetch.py`, used unmodified (byte-identical to the copy in
-`scripts/vendor/pudl_fetch.py`).
+Dataset: Public Utility Data Liberation Project (PUDL), EIA-930 hourly. Fetched with
+Voloridge's own `src/pudl/fetch.py`, used unmodified — byte-identical to the copy in
+`scripts/vendor/pudl_fetch.py`. Reproduced end to end on a Voloridge EC2 instance.
+
+---
+
+## Signal in the noise, literally
+
+Every AI datacenter operator says it runs clean. Nobody had checked against the meter,
+because the claim is a sentence in a PDF and the answer is 4.45 million hourly rows across
+70 balancing authorities. We joined them.
+
+**The signal is invisible at the resolution everyone reports at.** Annual totals say US
+grids got cleaner — and they did. Separate the hours and the story inverts: the day gained
+9.3 points since 2019 while the night lost 0.8. A datacenter draws the same power at 3am
+as at noon, so roughly half of AI's electricity lands in the half of the day that never
+improved.
+
+**At annual resolution this finding does not exist.** That is the whole result.
+
+What it cost to see it: **ten data traps** that each produce a clean-looking wrong number
+rather than an error, **one of our own published figures wrong in direction**, a **69-BA
+sweep** and a **4,430-pair duplicate search** to establish that error was unique, and an
+independent cross-check against figures Google computes separately.
 
 ---
 

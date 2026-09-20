@@ -86,11 +86,11 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
         <span role="listitem" className={`shape-chip${flexible && shape.id === 'flat' ? ' on' : ''}`}>{FLEX_LABEL} <b>{pct(cmp.flexible20.share)}</b></span>
       </div>
       <p className="shape-best">
-        The cleanest six hours are <b>{hourSpanWords(six.hours)}</b>, {pct(six.mean)} clean on average; the dirtiest six ({hourSpanWords(bad.hours)}) run {pct(bad.mean)}.
+        The cleanest six hours are <b>{hourSpanWords(six.hours)}</b>, {pct(six.mean)} clean on average; the dirtiest six ({hourSpanWords(bad.hours)}) run {pct(bad.mean)}. That {((six.mean - bad.mean) * 100).toFixed(1)}-point gap is the most that moving your hours can buy you here.
         {fx && fx.to.length > 0 && ` The flexible fifth moves from ${hourSpanWords(fx.from)} into ${hourSpanWords(fx.to)}.`}
       </p>
       {s19 != null && s25 != null && (
-        <p className={`shape-years${s25 < s19 ? ' accent' : ''}`}><span className="from">2019 {pct(s19)}</span> → 2025 {pct(s25)}<span className="shape-years-l">for a {shapeWords} load</span></p>
+        <p className={`shape-years${s25 < s19 ? ' accent' : ''}`}><span className="from">2019 {pct(s19)}</span> → 2025 {pct(s25)}<span className="shape-years-l">for a {shapeWords} load — six years of buildout, {s25 >= s19 ? '+' : '−'}{Math.abs((s25 - s19) * 100).toFixed(1)} pts</span></p>
       )}
     </Mod>
   )

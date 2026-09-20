@@ -51,10 +51,10 @@ export default function AlertsView({ region_id, alerts, detail: region }) {
             <div key={`${a.region}-${a.rule}-${i}`} className="mod-alert">
               <div className="mod-cell">
                 <div className="mod-t">{a.description || a.rule}</div>
-                <div className="mod-d">{s != null && <>severity {s.toFixed(2)}{a.tier ? ` · ${a.tier}` : ''}{detail(a, parentLevel, ba) ? ' · ' : ''}</>}{detail(a, parentLevel, ba)}</div>
+                <div className="mod-d">{s != null && a.tier ? `${a.tier} · ` : ''}{detail(a, parentLevel, ba)}</div>
               </div>
               <span className="mod-tk" title={s != null ? `severity ${s.toFixed(2)} of 1` : 'no severity'}><Ticks value={s ?? 0} max={1} n={8} accent label={s != null ? `severity ${s.toFixed(2)} of 1` : 'no severity given'} /></span>
-              <span className="mod-n">{value(a.current_value, a.unit)}{a.baseline_2019 != null && <small> vs {value(a.baseline_2019, a.unit)}</small>}</span>
+              <span className="mod-n">{value(a.current_value, a.unit)}{a.baseline_2019 != null && <small> vs {value(a.baseline_2019, a.unit)} in 2019</small>}</span>
             </div>
           )
         })}

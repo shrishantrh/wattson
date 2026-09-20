@@ -16,7 +16,7 @@ export default function DetectorView({ detection: d }) {
   if (!d) return <Empty>Not scored: regions under 500 MW of average demand are left out.</Empty>
   const n = num(d.n_scored) ?? 111
   const ex = num(d.overnight_excess), nd = num(d.neighbor_divergence), lf = num(d.load_factor_delta), g = num(d.growth_pct)
-  const rank = num(d.rank), score = num(d.score)
+  const rank = num(d.rank)
   const rows = [
     ex != null && { key: 'excess', t: `Night demand grew ${ex >= 0 ? 'faster' : 'slower'} than average demand`, d: 'overnight excess, percentage points', n: `${sgn(ex, 1)} pts`, v: Math.abs(ex), max: SCALE.excess, accent: ex >= 0 },
     nd != null && { key: 'neighbours', t: `Grew ${nd >= 0 ? 'faster' : 'slower'} than its neighbours`, d: 'neighbour divergence, percentage points', n: `${sgn(nd, 1)} pts`, v: Math.abs(nd), max: SCALE.neighbours, accent: nd >= 0 },

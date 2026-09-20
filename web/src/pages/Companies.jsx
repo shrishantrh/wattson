@@ -26,7 +26,7 @@ export default function Companies() {
   const facilities = fac.data?.facilities
   const sites = { data: facilities || [] }
   const pts = useMemo(() => (facilities || []).filter(s => s.lat != null), [facilities])
-  const globe = useMemo(() => ({ view: fitView(pts), points: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, r: 0.18, color: tk.ink2 })), markers: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, label: `${s.ticker} · ${(s.metro || s.name || '').split(',')[0]}`, tip: `${s.serving_utility || s.utility || ''} · ${s.grid_label}${s.cf_share_2025 != null ? ` · ${Math.round(s.cf_share_2025 * 100)}% clean` : ''}${s.ticker_utility ? ` · ${s.ticker_utility}` : ' · no listed equity'}`, href: href.region(s.region_id), color: tk.ink2 })) }), [pts, tk])
+  const globe = useMemo(() => ({ view: fitView(pts), points: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, r: 0.18, color: tk.ink2 })), markers: pts.map(s => ({ id: `${s.ticker}-${s.metro}`, lat: s.lat, lng: s.lng, label: `${s.ticker} · ${(s.metro || s.name || '').split(',')[0]}`, tip: `${s.serving_utility || s.utility || ''} · ${s.grid_label}${s.cf_share_2025 != null ? ` · ${Math.round(s.cf_share_2025 * 100)}% of its 2025 power clean` : ''}${s.ticker_utility ? ` · ${s.ticker_utility}` : ' · no stock to trade'}`, href: href.region(s.region_id), color: tk.ink2 })) }), [pts, tk])
   const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
   let column
@@ -36,7 +36,7 @@ export default function Companies() {
   else {
     const withWalk = list.filter(c => c.walk_score != null)
     const best = [...withWalk].sort((a, b) => b.walk_score - a.walk_score)[0], worst = [...withWalk].sort((a, b) => a.walk_score - b.walk_score)[0]
-    const sentence = best && worst && best !== worst ? `Clean-power claims look alike on paper; the grids underneath them are ${Math.round((best.walk_score - worst.walk_score) * 100)} points apart. ${best.company}'s sites draw power that was ${pct0(best.walk_score)} carbon-free in 2025, ${worst.company}'s ${pct0(worst.walk_score)}${worst.n_sites === 1 ? ' at its one mapped site' : ''}. An annual certificate shows none of that.` : `${list.length} companies, checked against the grids their sites actually draw from.`
+    const sentence = best && worst && best !== worst ? `Clean-power claims look alike on paper; the grids underneath them are ${Math.round((best.walk_score - worst.walk_score) * 100)} points apart. The grids under ${best.company}'s sites generated ${pct0(best.walk_score)} carbon-free power in 2025, those under ${worst.company}'s ${pct0(worst.walk_score)}${worst.n_sites === 1 ? ' at its one mapped site' : ''}. An annual certificate shows none of that.` : `${list.length} companies, checked against the grids their sites actually draw from.`
     const cv = list.reduce((a, c) => a + (c.cannot_verify_count || 0), 0), n = list.reduce((a, c) => a + (c.n_claims || 0), 0)
     const ordered = [...list].sort((a, b) => gapOf(b) - gapOf(a))
     const rows = ordered.map(c => ({ id: c.ticker, label: c.company, a: to100(c.talk_score), b: to100(c.walk_score), href: href.check(c.ticker) }))
@@ -55,12 +55,12 @@ export default function Companies() {
           <Dumbbell rows={rows} aLabel="talk" bLabel="walk" />
           <ul className="co-lines">
             {ordered.map(c => (
-              <li key={c.ticker}><a href={href.check(c.ticker)}><b>{c.ticker}</b></a> {plural(c.n_claims, 'claim')} read across {plural(c.n_sites, 'site')} · grid data settles {pct0(c.coverage)} of them{c.cannot_verify_count ? `, ${c.cannot_verify_count} it cannot` : ''}</li>
+              <li key={c.ticker}><a href={href.check(c.ticker)}><b>{c.ticker}</b></a> {plural(c.n_claims, 'claim')} read across {plural(c.n_sites, 'site')} · grid data for {pct0(c.coverage)} of those sites{c.cannot_verify_count ? `, ${plural(c.cannot_verify_count, 'claim')} we could not check` : ''}</li>
             ))}
           </ul>
           <p className="note" style={{ marginTop: 12 }}>A wide line means the company bought clean power in one place and runs its servers somewhere else. That is legal and true under annual market-based accounting, but it is not the same electricity. The line turns ember past a 20-point gap.</p>
         </Card>
-        <Card title={<><b>Sites</b> · {sites.data.length} buildings on {new Set(siteRows.map(s => s.region_id)).size} grids, each traced to the utility that actually serves it</>}>
+        <Card title={<><b>Sites</b> · {sites.data.length} buildings on {new Set(siteRows.map(s => s.region_id)).size} grids · {siteRows.filter(s => s.serving_utility).length} traced to the utility that serves them</>}>
           {fac.loading && <Loading what="the sites" />}
           {!fac.loading && !siteRows.length && <p className="note">No mapped sites in this data source.</p>}
           {siteRows.length > 0 && (
@@ -69,7 +69,7 @@ export default function Companies() {
                 <a className="row co-site" key={`${s.ticker}-${s.metro}-${s.serving_utility}`} href={href.region(s.region_id)}>
                   <div>
                     <div className="t">{s.metro || s.name}{s.state ? `, ${s.state}` : ''} <span className="muted">{s.ticker}</span></div>
-                    <div className="d">{s.serving_utility || 'utility unknown'} · {s.utility_parent || '—'} · {s.ticker_utility || 'publicly owned, no stock to trade'}{s.growth_pct != null ? ` · demand ${s.growth_pct >= 0 ? 'up' : 'down'} ${Math.abs(Math.round(s.growth_pct))}% since 2019` : ''}</div>
+                    <div className="d">{s.serving_utility || 'utility unknown'} · {s.utility_parent || '—'} · {s.ticker_utility || 'no stock to trade'}{s.growth_pct != null ? ` · demand ${s.growth_pct >= 0 ? 'up' : 'down'} ${Math.abs(Math.round(s.growth_pct))}% since 2019` : ''}</div>
                   </div>
                   <div className="n">{pct0(s.cf_share_2025)} <small>of this grid's 2025 power</small></div>
                 </a>
