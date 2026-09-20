@@ -14,6 +14,7 @@ give the citation.
 | "Did you tune the method after seeing results?" | [06-detector-and-tuning.md](06-detector-and-tuning.md) |
 | "How is a walk score calculated?" | [07-google-sites.md](07-google-sites.md) |
 | "What are the limits?" | [08-limits.md](08-limits.md) |
+| *(pointing at the Data tab live)* | [09-columns-to-point-at.md](09-columns-to-point-at.md) |
 
 ## The three that matter most
 
