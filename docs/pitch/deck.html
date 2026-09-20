@@ -228,21 +228,25 @@ body.show-notes #notes { display: flex; }
 <!-- SLIDES:BEGIN -->
   <!-- 01-problem.html#1 -->
   <section class="slide" data-title="No watchdog"
-    data-notes="SPOKEN: &quot;Fast fashion has watchdogs. Airlines have watchdogs. Datacenters have none - and every forecast says they&#39;re growing fastest.&quot;
+    data-notes="SPOKEN, taken word for word from docs/DEMO.md section 1 so the slide and the demo cannot drift: &quot;There is a greenwashing watchdog for fast fashion. For airlines. For oil majors. There isn&#39;t one for datacenters, the fastest growing user of electricity in America. So we built one.&quot;
   
-  HANDS OFF THE LAPTOP. The list does the work. By the third tick the judge has accepted that auditing an industry&#39;s environmental promises is a normal, mature thing that obviously exists. The empty box then lands as an oversight, not as a pitch. The absence is the picture, and the next slide says why the absence survived.
+  ONE CAUTION ON THAT SENTENCE. &#39;The fastest growing user of electricity in America&#39; is a superlative that is in neither numbers file. If a judge challenges it, do not defend it - say &quot;every forecast says they&#39;re growing fastest&quot; and move on. Nothing else in the talk rests on it.
   
-  WORD CHOICE, deliberate. Say &quot;every forecast says they&#39;re growing fastest&quot;, not &quot;the fastest-growing industrial load in America&quot;. The superlative is in neither numbers file; attributing it costs two words and cannot be attacked.
+  HANDS OFF THE LAPTOP. The list does the work. By the third tick the judge has accepted that auditing an industry&#39;s environmental promises is a normal, mature thing that obviously exists. The empty box lands as an oversight, not as a pitch. Then &#39;So we built one&#39; turns it in four words, which is why those words are now ON the slide rather than only in your mouth.
+  
+  THE SECOND HALF OF THE OPENING, still on this slide, still hands off the laptop (DEMO.md section 1): &quot;And these companies are careful. They don&#39;t say they run on clean power. Google says it MATCHED 100% of its consumption with renewable PURCHASES, on an ANNUAL basis. That&#39;s an accounting statement, and it&#39;s true. Nobody has checked the physical one.&quot; Never paraphrase that quote as &#39;100% renewable&#39; (DEMO.md, &#39;Have these four cold&#39;, item 1).
   
   WHAT IS AND ISN&#39;T CLAIMED: every operator building AI datacenters publishes a clean-power promise. We are not saying any of them lied. A promise that matches a year of clean power against a year of use is genuinely true under the accounting standard (the GHG Protocol market-based method - say &quot;the accounting standard&quot; out loud, name the standard only if a judge asks). We are saying nobody has ever settled those promises against what the grid physically generated, hour by hour.
   
-  SCALE WE HOLD, if asked: 52 operators and 134 mapped buildings; documents read for 4 of them (META, MSFT, GOOGL, AMZN), 48 buildings-only, and every buildings-only row prints its own reason (claims_absent_reason: no_documents_ingested). Source: api/companies.json count=52, count_with_claims=4, count_sites_only=48; api/facilities.json count=134. numbers-v2.md 2.5. Do NOT say twelve operators, that was a stale string (numbers-v2.md X1).
+  SCALE WE HOLD, if asked: 52 operators and 134 mapped buildings; documents read for 4 of them (META, MSFT, GOOGL, AMZN), 48 buildings-only, and every buildings-only row prints its own reason (claims_absent_reason: no_documents_ingested). Source: api/companies.json count=52, count_with_claims=4, count_sites_only=48; api/facilities.json count=134. numbers-v2.md 2.5. Do NOT say twelve operators, that was a stale string (numbers-v2.md X1). The demo shows this live on the NBIS lookup (DEMO.md section 5) and says it in the right words: &quot;a statement about OUR coverage, not a finding about them&quot;.
   
   Evidence base: 4.45M hourly rows (4,451,763), 70 grid regions, 2018-07-01 to 2026-09-05. numbers.md 2.4. Say &quot;grid region&quot;; the term of art is &quot;balancing authority&quot; and it is worth naming once, to a technical judge, right after the plain word - never instead of it.
   
-  The three ticked industries are context, not our measurements. Do not put a number on them.">
+  The three ticked industries are context, not our measurements. Do not put a number on them.
+  
+  VISIBLE WORDS: 15. Greenwashing watchdogs (2) + Fast fashion Airlines Oil majors Datacenters (6) + None for datacenters. So we built one. (7).">
     <p class="eyebrow">Greenwashing watchdogs</p>
-    <svg viewBox="0 0 1000 430" role="img" aria-label="Fast fashion, airlines and oil majors are ticked. Datacenters is an empty box.">
+    <svg viewBox="0 0 1000 380" role="img" aria-label="Fast fashion, airlines and oil majors are ticked. Datacenters is an empty box.">
       <!-- ticked rows -->
       <g>
         <rect x="40" y="20" width="56" height="56" rx="10" fill="none" stroke="var(--line)" stroke-width="3"/>
@@ -260,69 +264,23 @@ body.show-notes #notes { display: flex; }
         <text x="132" y="243" style="fill:var(--muted)" font-size="38">Oil majors</text>
       </g>
       <!-- the absence -->
-      <line x1="40" y1="300" x2="960" y2="300" stroke="var(--line)" stroke-width="2"/>
+      <line x1="40" y1="272" x2="960" y2="272" stroke="var(--line)" stroke-width="2"/>
       <g>
-        <rect x="38" y="330" width="76" height="76" rx="12" fill="none" stroke="var(--accent)" stroke-width="6"/>
-        <text x="150" y="391" style="fill:var(--ink)" font-size="62" font-weight="600">Datacenters</text>
+        <rect x="38" y="294" width="76" height="76" rx="12" fill="none" stroke="var(--accent)" stroke-width="6"/>
+        <text x="150" y="355" style="fill:var(--ink)" font-size="62" font-weight="600">Datacenters</text>
       </g>
     </svg>
-    <p class="headline">Nobody has ever checked datacenters.</p>
+    <p class="headline">None for datacenters. So we built one.</p>
     <span class="rule"></span>
   </section>
   
   <!-- 01-problem.html#2 -->
-  <section class="slide" data-title="Annual vs hourly"
-    data-notes="SPOKEN: &quot;Nobody has checked, because of how the promise is written: a year of clean power bought against a year of use. It balances.&quot;
-  
-  THE ONE GLOSS THAT MUST BE SPOKEN HERE, because &quot;true on paper&quot; is used for the rest of the talk and this is where it is earned: a company buys certificates for a year&#39;s worth of clean power to match a year&#39;s worth of use. Add the year up and the two sides cancel. That is a real accounting standard - the GHG Protocol market-based method - and the claim is genuinely true under it. At yearly resolution there is nothing to see. You have to separate the hours.
-  
-  THE PICTURE: left is the year as the promise reports it, one block, fully matched. Right is the same year split into hours. The megawatt-hours are identical. Only the resolution changed, and a gap appears.
-  
-  NEVER say a company lied. The verdict language is: true on paper, X percent physically. We are measuring the gap between a contract and a meter, not accusing anyone of fraud. CLAUDE.md honesty rules.
-  
-  CAVEAT to have ready: we measure power generated inside a grid region, not power consumed at a building. Imports and exports are not traced through. It is the average mix of the region, not the specific plant that fires up when a datacenter switches on - which, if anything, understates us. EIA-930 gives fuel and interchange, not dispatch order. numbers.md T6, T17.
-  
-  The hourly bars here are illustrative of the mechanism, not a plot of a specific region. The real hourly series is on the following slides and in the product. Do not read a number off this one.
-  
-  Worked example available if pressed: Alphabet claims 100% (report p.4, annual, market-based); across the ten mapped Google buildings the grids physically generated 46% clean in 2025. A 54-point gap, and the verdict field still reads true_on_paper, so the phrasing does not change. Source: api/company/GOOGL.json claims[0].physical_mean_unweighted = 0.464, walk_score 0.464, verdict true_on_paper. Traced in numbers.md, Correction 2026-09-20: the Google headline pair.
-  
-  CARRY THE RANGE, NOT ONE BUILDING: physical_min 0.056, physical_max 0.913. One Google building sits on a grid that was 5.6% clean and another on one that was 91.3%. That is the answer to the objection that this rests on a single place, and it is direct evidence the method distinguishes rather than prosecutes. Never quote 5.6% alone as Google&#39;s figure, it is one end of a range; the 100 against 5.6 pair (94 points, one building) is SUPERSEDED and must not be spoken. Google&#39;s own report puts hourly clean supply at 65% on p.94.">
-    <p class="eyebrow">True on paper</p>
-    <svg viewBox="0 0 1000 400" role="img" aria-label="The same year shown as one fully matched annual block, then split into hours where the night hours are fossil.">
-      <!-- annual -->
-      <rect x="40" y="60" width="300" height="200" rx="8" fill="var(--clean)"/>
-      <text x="40" y="318" style="fill:var(--ink)" font-size="40" font-weight="600">Annual</text>
-  
-      <!-- equals bridge -->
-      <line x1="385" y1="148" x2="455" y2="148" stroke="var(--line)" stroke-width="6"/>
-      <line x1="385" y1="178" x2="455" y2="178" stroke="var(--line)" stroke-width="6"/>
-  
-      <!-- hourly: 24 columns, night hours fossil -->
-      <g>
-        <rect x="500" y="122" width="24" height="138" rx="3" fill="var(--fossil)"/>
-        <rect x="532" y="130" width="24" height="130" rx="3" fill="var(--fossil)"/>
-        <rect x="564" y="126" width="24" height="134" rx="3" fill="var(--fossil)"/>
-        <rect x="596" y="134" width="24" height="126" rx="3" fill="var(--fossil)"/>
-        <rect x="628" y="128" width="24" height="132" rx="3" fill="var(--fossil)"/>
-        <rect x="660" y="118" width="24" height="142" rx="3" fill="var(--fossil)"/>
-        <rect x="692" y="96" width="24" height="164" rx="3" fill="var(--clean)"/>
-        <rect x="724" y="74" width="24" height="186" rx="3" fill="var(--clean)"/>
-        <rect x="756" y="58" width="24" height="202" rx="3" fill="var(--clean)"/>
-        <rect x="788" y="52" width="24" height="208" rx="3" fill="var(--clean)"/>
-        <rect x="820" y="62" width="24" height="198" rx="3" fill="var(--clean)"/>
-        <rect x="852" y="84" width="24" height="176" rx="3" fill="var(--clean)"/>
-        <rect x="884" y="112" width="24" height="148" rx="3" fill="var(--fossil)"/>
-        <rect x="916" y="124" width="24" height="136" rx="3" fill="var(--fossil)"/>
-      </g>
-      <text x="500" y="318" style="fill:var(--ink)" font-size="40" font-weight="600">Hourly</text>
-    </svg>
-    <p class="headline">The claim is annual. The problem is hourly.</p>
-    <span class="rule"></span>
-  </section>
-  
-  <!-- 01-problem.html#3 -->
   <section class="slide" data-title="Added since 2019"
-    data-notes="SPOKEN: &quot;Nobody looks inside the hours. Since 2019 America added sixty-five reactors&#39; worth of clean power to its midday hours - eighteen reactors&#39; worth to its three-a.m. hours.&quot; Then, without clicking: &quot;Solar fixed the daytime. A datacenter draws the same power at three in the morning as at noon - hours that never improved.&quot;
+    data-notes="SPOKEN: &quot;Since 2019 America added sixty-five reactors&#39; worth of clean power to its midday hours - eighteen reactors&#39; worth to its three-a.m. hours.&quot; Then, without clicking: &quot;Solar fixed the daytime. A datacenter draws the same power at three in the morning as at noon - hours that never improved.&quot; Then go to the site.
+  
+  THIS IS THE ONE PICTURE THE LIVE DEMO CANNOT DRAW, which is why it survived the cut. Everything after it happens on the screen.
+  
+  THE SAME FACT AT ONE GRID, and it is the better sentence - take it from docs/DEMO.md section 2 and say it on the site, with the Night and Day columns next to each other: &quot;This is Las Vegas. Fifty-six percent of its power is carbon-free at midday. ONE POINT EIGHT PERCENT at three in the morning. Same grid, same year, ten hours apart.&quot; Then: &quot;A datacenter buys both, equally, because it never stops.&quot; Figures: NEVP 2025, daytime cf_share 0.558, overnight cf_share 0.018, from web/public/api/region/NEVP.json (checked live 2026-09-20). NOTE FOR THE RECORD: this pair is not yet written into numbers.md or numbers-v2.md - it is read from the API, which numbers.md&#39;s own rule makes the authority. Do not put it on a slide until it is traced there.
   
   WHY REACTORS AND NOT GIGAWATTS. A large nuclear reactor is about one gigawatt, so +64.7 GW and +17.7 GW are about sixty-five and eighteen reactors&#39; worth. Same fact, and it lands on a judge who has no feel for a gigawatt. UNDERSTAND.md section 3, step 2. The slide still prints the gigawatts, so nothing is hidden.
   
@@ -330,13 +288,15 @@ body.show-notes #notes { display: flex; }
   
   FIGURES AND SOURCE: numbers-v2.md, Addendum: the corrected-baseline headline pair. That addendum is the traceable source for both bars and records the arithmetic field by field. Corrected pair, the one to use: +64,738 MW midday, +17,687 MW overnight, ratio 3.66x. Published-baseline pair, do not use: +61,404 / +14,349, 4.28x. Underlying fields: api/regions.json meta.national.cf_avg_mw (2019 midday 178,129, overnight 159,031; 2025 midday 239,533, overnight 173,380), an absolute megawatt average per hour-class, national sum, generation not demand; minus the Arizona phantom from api/region/AZPS.json region.corrections.corrections[] at path cf_avg_mw.2019 (3,334 MW midday, 3,338 MW overnight), giving a corrected 2019 baseline of 174.8 GW midday and 155.7 GW overnight. Baseline year 2019, latest complete year 2025. Windows are 10:00-15:59 and 00:00-05:59 local time where the power is: 3am in Texas is not 3am in Maine.
   
-  WHY THE CORRECTED BASELINE: the published 2019 figures count one power plant twice, and we found it in the federal record. Palo Verde was reported in full by two owners at once until 2019-12-04. Removing that phantom lowers the 2019 starting point and widens both gaps. numbers.md D1, confidence tier proven. Say &quot;a double count we caught&quot;, never &quot;it collapsed&quot;. The slide two from the end is where you tell that story.
+  WHY THE CORRECTED BASELINE: the published 2019 figures count one power plant twice, and we found it in the federal record. Palo Verde was reported in full by two owners at once until 2019-12-04. Removing that phantom lowers the 2019 starting point and widens both gaps. numbers.md D1, confidence tier proven. Say &quot;a double count we caught&quot;, never &quot;it collapsed&quot;. The demo closes on that story (DEMO.md section 13): combined they reported 1.91 times what the plant can physically produce.
   
-  THE SHARE DID NOT FALL. This is the house trap and the one way to say something false out of true numbers. Overnight clean share was 39.7% in 2019 and 39.7% in 2025 - flat. Clean megawatts at night ROSE, by 17.7 GW; demand simply rose faster. Never state a share without the absolute in the same breath, and never say clean power at night shrank. UNDERSTAND.md section 4; numbers.md T8; numbers-v2.md N1 and N2.
+  THE SHARE DID NOT FALL. This is the house trap and the one way to say something false out of true numbers. Overnight clean share was 39.7% in 2019 and 39.7% in 2025 - flat. Clean megawatts at night ROSE, by 17.7 GW; demand simply rose faster. Never state a share without the absolute in the same breath. The demo has the sharpest version of this rule, on the PJM/DOM page with CLEAN MW toggled on (DEMO.md section 4): &quot;The share fell, but clean output barely moved, 35,700 to 35,619 megawatts. No clean power was lost. The share fell because everything else in those hours grew around it. If you only quote the share, you say something false using true numbers.&quot; UNDERSTAND.md section 4; numbers.md T8; numbers-v2.md N1 and N2.
   
   THE FLAT LINE is the datacenter load, drawn at one height across both bars. It is the picture of a building that draws the same power at 3am as at noon. Illustrative, not a measured series.
   
-  WHERE IT GOES NEXT, the question they should now want answered: which grid is a given company&#39;s building actually on at 3am. PJM, the grid serving the largest datacenter cluster on earth, generates 8.7 GW more power at night than it did in 2019, and not one net megawatt of that increase is clean - clean generation fell 81 MW while gas supplied 10.74 GW. api/region/PJM.json total_avg_mw, cf_avg_mw, fuel_delta_overnight_gw.gas. numbers.md 2.1.">
+  WHERE IT GOES NEXT: press on to the holding slide and open the site. The first screen is Data → Regions, with Night and Day adjacent, and NEVP is the row you want.
+  
+  VISIBLE WORDS: 15. Clean power added since 2019 (5) + +64.7 GW Midday hour (4) + +17.7 GW 3am hour (4) + Datacenter load (2).">
     <p class="headline">Clean power added since 2019</p>
     <svg viewBox="0 0 1000 400" role="img" aria-label="Clean power added to the average midday hour since 2019 is 64.7 gigawatts. To the average 3am hour, 17.7 gigawatts. A flat datacenter load sits at the same height across both.">
       <!-- baseline -->
@@ -360,321 +320,99 @@ body.show-notes #notes { display: flex; }
     <span class="rule"></span>
   </section>
   
-  <!-- 02-solution.html -->
-  <section class="slide" data-title="What we built"
-    data-notes="SAY: &quot;So we built the watchdog. It takes the claim, finds the buildings, finds the grid under each, and reads what that grid generated, hour by hour.&quot; If you have a spare beat, the picture in one line: &quot;Google&#39;s report, page four: a hundred percent. The ten buildings we mapped sit on grids that generated forty-six percent clean power last year.&quot;
-    || THE PICTURE, left to right, IS the product: a document, ten buildings, a ruler of hours, a measured bar. The ten identical building marks are the ten mapped Google buildings; the twenty-four identical ticks are the hours in a day. Both are deliberately UNIFORM so neither can be misread as a data series - nothing in the middle of this slide is a measurement, it is the mechanism.
-    || THE NAME OF THE NUMBER, used the same way everywhere from here on: CLEAN SHARE - of all the electricity generated in one region in one hour, the fraction from sources that burn nothing (nuclear, hydro, wind, solar, geothermal). Spoken, it is &quot;how much of the power was clean&quot;. In the JSON it is carbon-free share, cf_share, walk_score; on stage it is one phrase, because three names for one number is its own kind of dishonesty.
-    || FIGURES, all from web/public/api/company/GOOGL.json, which is what the live site serves. Claimed 100%: claims[0].magnitude = 1.0, page 4, timeframe annual, scope market_based, verdict true_on_paper. Measured 46%: claims[0].physical_mean_unweighted = 0.464. Ten buildings: sites array length 10. The on-screen gap of 54 points is 100 minus 46.4, and it is rendered in the product&#39;s own gap block (docs/narration-annex.md shot 6 &#39;grids&#39;).
-    || SUPERSEDED - DO NOT USE THE OLD PAIR. docs/pitch/numbers.md section 2.6 still shows Google as 5.6% across 1 building, a 94-point gap. That was one building on Santee Cooper and it was superseded by the merge. The live file now carries 10 buildings and 0.464. If a judge quotes 5.6%, that is Moncks Corner alone (claims[0].physical_min 0.056); the range across the ten is 6-91% (physical_max 0.913, The Dalles).
-    || WALK SCORE, said plainly if asked how 46% is built: it is the plain average of how clean every grid those ten buildings sit on actually was, in calendar 2025, all hours. No contracts, no certificates, and no weighting by building size - we do not know each building&#39;s load, so we do not pretend to, and one very large building could move it. UNDERSTAND.md section 4 prints the ten values in full. TALK SCORE, the other axis: how bold the claim is - how big the number, how precisely stated, how little hedged. Google&#39;s is 0.405; &#39;100% renewable&#39; scores high on size and precision and then loses ground because the claim is annual, and averaging over a year is exactly what hides the night.
-    || THE CAVEATS, in the order they will be asked for. (1) It is GRID-ONLY: it leaves out power purchase agreements and certificates, which is exactly the accounting the 100% is built on. (2) It is what was GENERATED INSIDE A REGION, not what a building consumed; imports are not traced through. (3) Average mix, not the specific plant that fires up - which if anything understates us.
-    || NEVER SAY GOOGLE LIED. The claim is true under the accounting standard and the product renders the verdict as true_on_paper. The sentence is &#39;true on paper, forty-six percent physically&#39;. The point is not deceit, it is that a contract and a grid are two different things and only one of them was being measured. The sharpest honest line is Google&#39;s own: the same report discloses 65% clean power hour by hour on page 94, ninety pages after the 100% on page 4 (claims[0].evidence, type internal_contradiction, values [65,64,64,66,65] for 2021-2025).
-    || DATASET, for the public-data track: EIA-930 hourly grid data, obtained through PUDL (Public Utility Data Liberation), 4,451,763 hourly rows across 70 grid regions, July 2018 to 2026-09-05. &#39;Grid region&#39; is the plain word; &#39;balancing authority&#39; is the term of art and the unit the raw table is keyed on - name it once to a technical judge, after the plain word. Slide 03 draws the pipeline.">
-  
-    <div class="headline">The claim, checked against the grid that runs the buildings.</div>
-    <div class="rule"></div>
-  
-    <svg viewBox="0 0 1392 400" role="img" style="width:100%;height:auto;display:block"
-         aria-label="A company report claiming 100 percent, its ten mapped buildings, the hours of a day, and the measured clean share of the grids serving them: 46 percent.">
-  
-      <!-- ============ LEFT: the claim, as published ============ -->
-      <!-- document glyph: a page with lines, one of them the claim -->
-      <rect x="0" y="62" width="146" height="186" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <rect x="22" y="90"  width="86"  height="7" rx="3.5" fill="var(--muted)" opacity="0.45"/>
-      <rect x="22" y="110" width="102" height="7" rx="3.5" fill="var(--muted)" opacity="0.45"/>
-      <rect x="22" y="136" width="102" height="10" rx="5" fill="var(--ink)"/>
-      <rect x="22" y="156" width="62"  height="10" rx="5" fill="var(--ink)"/>
-      <rect x="22" y="184" width="94"  height="7" rx="3.5" fill="var(--muted)" opacity="0.45"/>
-      <rect x="22" y="204" width="74"  height="7" rx="3.5" fill="var(--muted)" opacity="0.45"/>
-  
-      <text x="188" y="112" font-size="36" fill="var(--muted)" letter-spacing="3"
-            font-family="ui-monospace,Menlo,monospace">GOOGLE SAYS</text>
-      <text x="188" y="216" font-size="96" fill="var(--ink)" font-weight="600" letter-spacing="-3">100%</text>
-      <!-- the claim bar is neutral ink: a claim is not generation. Same 392 width as the
-           measured bar on the right, so the two are read against each other. -->
-      <rect x="188" y="244" width="392" height="26" rx="4" fill="var(--ink)" opacity="0.5"/>
-  
-      <!-- ============ MIDDLE: the mechanism, wordless ============ -->
-      <!-- ten identical building marks = the ten mapped sites. Identical on purpose. -->
-      <g fill="var(--muted)" opacity="0.8">
-        <rect x="624" y="150" width="17" height="34" rx="2"/><rect x="624" y="140" width="17" height="6" rx="2"/>
-        <rect x="651" y="150" width="17" height="34" rx="2"/><rect x="651" y="140" width="17" height="6" rx="2"/>
-        <rect x="678" y="150" width="17" height="34" rx="2"/><rect x="678" y="140" width="17" height="6" rx="2"/>
-        <rect x="705" y="150" width="17" height="34" rx="2"/><rect x="705" y="140" width="17" height="6" rx="2"/>
-        <rect x="732" y="150" width="17" height="34" rx="2"/><rect x="732" y="140" width="17" height="6" rx="2"/>
-        <rect x="624" y="204" width="17" height="34" rx="2"/><rect x="624" y="194" width="17" height="6" rx="2"/>
-        <rect x="651" y="204" width="17" height="34" rx="2"/><rect x="651" y="194" width="17" height="6" rx="2"/>
-        <rect x="678" y="204" width="17" height="34" rx="2"/><rect x="678" y="194" width="17" height="6" rx="2"/>
-        <rect x="705" y="204" width="17" height="34" rx="2"/><rect x="705" y="194" width="17" height="6" rx="2"/>
-        <rect x="732" y="204" width="17" height="34" rx="2"/><rect x="732" y="194" width="17" height="6" rx="2"/>
-      </g>
-  
-      <!-- twenty-four identical ticks = the hours of a day. Uniform: not a series. -->
-      <g stroke="var(--muted)" stroke-width="3" opacity="0.7">
-        <line x1="782" y1="166" x2="782" y2="222"/><line x1="789" y1="166" x2="789" y2="222"/>
-        <line x1="796" y1="166" x2="796" y2="222"/><line x1="803" y1="166" x2="803" y2="222"/>
-        <line x1="810" y1="166" x2="810" y2="222"/><line x1="817" y1="166" x2="817" y2="222"/>
-        <line x1="824" y1="166" x2="824" y2="222"/><line x1="831" y1="166" x2="831" y2="222"/>
-        <line x1="838" y1="166" x2="838" y2="222"/><line x1="845" y1="166" x2="845" y2="222"/>
-        <line x1="852" y1="166" x2="852" y2="222"/><line x1="859" y1="166" x2="859" y2="222"/>
-        <line x1="866" y1="166" x2="866" y2="222"/><line x1="873" y1="166" x2="873" y2="222"/>
-        <line x1="880" y1="166" x2="880" y2="222"/><line x1="887" y1="166" x2="887" y2="222"/>
-        <line x1="894" y1="166" x2="894" y2="222"/><line x1="901" y1="166" x2="901" y2="222"/>
-        <line x1="908" y1="166" x2="908" y2="222"/><line x1="915" y1="166" x2="915" y2="222"/>
-        <line x1="922" y1="166" x2="922" y2="222"/><line x1="929" y1="166" x2="929" y2="222"/>
-        <line x1="936" y1="166" x2="936" y2="222"/><line x1="943" y1="166" x2="943" y2="222"/>
-      </g>
-  
-      <!-- the connector: claim -> buildings -> hours -> measurement -->
-      <line x1="592" y1="194" x2="614" y2="194" stroke="var(--line)" stroke-width="2"/>
-      <line x1="757" y1="194" x2="772" y2="194" stroke="var(--line)" stroke-width="2"/>
-      <line x1="953" y1="194" x2="988" y2="194" stroke="var(--line)" stroke-width="2"/>
-      <path d="M992 194 L980 187 L980 201 Z" fill="var(--line)"/>
-  
-      <!-- ============ RIGHT: the measurement ============ -->
-      <text x="1000" y="112" font-size="36" fill="var(--muted)" letter-spacing="3"
-            font-family="ui-monospace,Menlo,monospace">MEASURED</text>
-      <text x="1000" y="216" font-size="96" fill="var(--clean)" font-weight="600" letter-spacing="-3">46%</text>
-      <!-- the measured bar IS generation, so it carries the signal hues: clean, then fossil -->
-      <rect x="1000" y="244" width="392" height="26" rx="4" fill="var(--fossil)"/>
-      <rect x="1000" y="244" width="182" height="26" rx="4" fill="var(--clean)"/>
-      <rect x="1000" y="244" width="392" height="26" rx="4" fill="none" stroke="var(--line)" stroke-width="1"/>
-  
-    </svg>
-  </section>
-  
-  <!-- 03-howitworks.html#1 -->
-  <section class="slide" data-title="How it works"
-    data-notes="SAY: &quot;Under it all, one number for every hour of every grid region: how much of the power was clean.&quot; Point at the middle box on &#39;one number&#39;, the left box on the row count, the fan on the last word. IN POCKET if a judge wants the shape: &quot;Four and a half million hours of federal generation data, seventy grid regions. From it we compute that one number. Three things stand on it: a detector that scores a hundred and eleven regions for where round-the-clock load is landing, using demand data alone; a siting score for where new load would run cleanest; and the claims check you just saw.&quot;
-    || THE SHAPE IS THE POINT: one data source, one number, three products. A judge should get that in two seconds without reading a label. The left box is the input, the middle box is the thing we built that did not exist, and the fan is what it pays for.
-    || WHAT &#39;CLEAN SHARE&#39; MEANS, in the words to use out loud: of all the electricity generated in one region in one hour, how much came from sources that burn nothing - nuclear, hydro, wind, solar, geothermal. Other and unknown sit in the denominator only; storage is excluded. Overnight is 00:00-05:59 and midday 10:00-15:59, LOCAL time where the power is, because 3am in Texas is not 3am in Maine. Baseline year 2019. It is an average mix inside a region, not the specific plant that fires up and not what any building consumed: EIA-930 gives fuel and interchange, not dispatch order, and imports are not traced through.
-    || DATASET, named here for the public-dataset track. EIA-930 hourly electric grid monitor data, obtained through PUDL, the Public Utility Data Liberation project, using Voloridge&#39;s own fetch script (scripts/vendor/pudl_fetch.py). Tables: core_eia930__hourly_net_generation_by_energy_source, core_eia930__hourly_interchange, out_eia930__hourly_operations, out_eia930__hourly_subregion_demand, plus the two code tables. The slide says GRID REGIONS because that is the plain word; the unit of record is the BALANCING AUTHORITY, and the raw index is keyed on it. Say &#39;balancing authority&#39; once to a technical judge, straight after the plain word - it is the term that proves you know the dataset.
-    || THE THREE COUNTS ARE DIFFERENT AND ALL THREE ARE RIGHT. 70 grid regions in the raw hourly index. 124 published regions (56 parents + 68 zones). 111 regions scored by the detector (43 parents + 68 zones). numbers.md 2.4 and trap T16. Never say &#39;70 regions&#39; and &#39;111 regions&#39; as if they were the same population; the slide keeps them in different boxes for exactly this reason.
-    || FIGURES. 4,451,763 hourly rows and 70 grid regions: recomputed from data/processed/hourly_cf_index.parquet, len() and ba.nunique(); numbers.md 2.4, which also carries the caveat that these two live in a gitignored local parquet, not in any committed JSON - the published JSON carries the 124 regions built from the rows, not the rows. Date range 2018-07-01 to 2026-09-05. 111 regions scored: api/regions.json meta.n_scored, ranks 1..111 contiguous.
-    || THE DETECTOR, and why it is the slide&#39;s strongest box. It looks for one signature: demand that stopped rising and falling with the day. Three ingredients, and each has a plain sentence. OVERNIGHT EXCESS: how much faster demand grew at night than on average - homes and EVs are peaky, datacenters are not. NEIGHBOUR DIVERGENCE: how much faster than its neighbours on the same grid, which controls for a whole region simply booming. LOAD FACTOR CHANGE, at half weight: how much the daily demand curve flattened. Written down: score = z(overnight_excess) + z(neighbor_divergence) + 0.5*z(load_factor_delta), robust z on median/MAD - median rather than mean so that two Texas zones growing 95% and 116% cannot set the scale for all 111. Regions under 500 MW average demand excluded, peak taken at the 99.5th percentile hour. DEMAND DATA ONLY - it never reads a press release and never sees a list of datacenters. The scoring rule and the four test regions were written down before any ranking existed (api/regions.json meta.detector_method, meta.validation_named_in_advance = PJM/DOM, PJM/AEP, SWPP/OPPD, ERCO/NCEN). Northern Virginia landed 6th, Omaha 7th, the AEP zone 19th - three of the four in the top twenty - and Dallas 91st, which we publish rather than retuning. Report the miss; it is the reason to believe the hits.
-    || THE SITING SCORE, plainly: where would new round-the-clock load run cleanest. Four ingredients - how clean the region&#39;s overnight power is now (2025), how much that changed since 2019, overnight clean MW against overnight demand, and the per-year slope of that ratio from 2019 to 2025. 52 regions ranked (siting.n_ranked). Slope only - no &#39;years remaining&#39;, no nameplate headroom.
-    || THE CLAIMS BRANCH is slide 02, and it is the only branch that touches a document. Zones report demand only and inherit their parent&#39;s generation figures (cf_inherited_from_ba), which is why PJM&#39;s +10.74 GW of overnight gas is never Dominion&#39;s.
-    || WHAT THIS PIPELINE BUYS: nobody publishes the night series. Since 2019 the country added 64.7 GW of clean generation to the average midday hour and 17.7 GW to the average overnight hour - about sixty-five and eighteen large reactors&#39; worth, 3.7 times more to the hours a round-the-clock load does not use. Those are the AZPS-corrected figures (README, &#39;What the data says&#39;); the uncorrected pair is 61.4 / 14.3 and includes a double-counted nuclear plant we caught in the federal data.">
-  
-    <svg viewBox="0 0 1392 470" role="img" style="width:100%;height:auto;display:block"
-         aria-label="Pipeline: federal hourly generation data feeds one clean-share index, which feeds three products: a detector for round-the-clock load over 111 regions, a siting score, and the claims check.">
-  
-      <!-- ===== A · the input ===== -->
-      <rect x="1" y="142" width="346" height="186" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <text x="28" y="212" font-size="58" fill="var(--ink)" font-weight="600" letter-spacing="-2">4,451,763</text>
-      <text x="28" y="258" font-size="36" fill="var(--muted)">hourly rows</text>
-      <line x1="28" y1="280" x2="320" y2="280" stroke="var(--line)" stroke-width="1"/>
-      <text x="28" y="316" font-size="36" fill="var(--ink)">70 grid regions</text>
-  
-      <line x1="347" y1="235" x2="396" y2="235" stroke="var(--line)" stroke-width="2"/>
-      <path d="M402 235 L388 227 L388 243 Z" fill="var(--line)"/>
-  
-      <!-- ===== B · the index ===== -->
-      <rect x="404" y="142" width="314" height="186" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <text x="432" y="210" font-size="44" fill="var(--ink)" font-weight="600" letter-spacing="-1">clean</text>
-      <text x="432" y="264" font-size="44" fill="var(--ink)" font-weight="600" letter-spacing="-1">share</text>
-      <!-- hour marks, part clean: the index is a share per hour -->
-      <g>
-        <rect x="432" y="288" width="8" height="22" fill="var(--clean)"/>
-        <rect x="444" y="288" width="8" height="22" fill="var(--clean)"/>
-        <rect x="456" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
-        <rect x="468" y="288" width="8" height="22" fill="var(--clean)"/>
-        <rect x="480" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
-        <rect x="492" y="288" width="8" height="22" fill="var(--clean)"/>
-        <rect x="504" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
-        <rect x="516" y="288" width="8" height="22" fill="var(--clean)"/>
-        <rect x="528" y="288" width="8" height="22" fill="var(--clean)"/>
-        <rect x="540" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
-        <rect x="552" y="288" width="8" height="22" fill="var(--clean)"/>
-        <rect x="564" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
-      </g>
-  
-      <!-- fan out -->
-      <path d="M718 235 H762 V79 H800" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <path d="M762 235 H800" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <path d="M762 235 V391 H800" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <path d="M806 79  L792 71  L792 87  Z" fill="var(--line)"/>
-      <path d="M806 235 L792 227 L792 243 Z" fill="var(--line)"/>
-      <path d="M806 391 L792 383 L792 399 Z" fill="var(--line)"/>
-  
-      <!-- ===== C1 · the detector ===== -->
-      <rect x="808" y="16" width="582" height="126" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <text x="836" y="70" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">round-the-clock load</text>
-      <text x="836" y="116" font-size="34" fill="var(--muted)">111 regions</text>
-      <!-- a flat line, and the peaky one it is not: the signature it looks for -->
-      <path d="M1244 100 H1364" fill="none" stroke="var(--muted)" stroke-width="3"/>
-      <path d="M1244 60 H1276 L1292 42 L1316 42 L1332 60 H1364" fill="none" stroke="var(--muted)" stroke-width="3" opacity="0.3"/>
-  
-      <!-- ===== C2 · the siting score ===== -->
-      <rect x="808" y="172" width="582" height="126" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <text x="836" y="248" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">siting score</text>
-      <rect x="1244" y="216" width="120" height="24" rx="4" fill="var(--fossil)"/>
-      <rect x="1244" y="216" width="74" height="24" rx="4" fill="var(--clean)"/>
-      <path d="M1244 268 L1364 256" fill="none" stroke="var(--clean)" stroke-width="3"/>
-  
-      <!-- ===== C3 · the claims check ===== -->
-      <rect x="808" y="328" width="582" height="126" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <text x="836" y="404" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">claims</text>
-      <rect x="1216" y="356" width="60" height="70" rx="6" fill="none" stroke="var(--muted)" stroke-width="3"/>
-      <rect x="1230" y="374" width="34" height="7" rx="3.5" fill="var(--muted)"/>
-      <rect x="1230" y="392" width="22" height="7" rx="3.5" fill="var(--muted)"/>
-      <line x1="1292" y1="391" x2="1320" y2="391" stroke="var(--line)" stroke-width="2"/>
-      <rect x="1332" y="378" width="32" height="26" rx="4" fill="var(--fossil)"/>
-      <rect x="1332" y="378" width="15" height="26" rx="4" fill="var(--clean)"/>
-  
-    </svg>
-  </section>
-  
-  <!-- 03-howitworks.html#2 -->
-  <section class="slide" data-title="Ask it in English"
-    data-notes="SAY: &quot;And you can just ask it, in English.&quot; Then, once the answer lands: &quot;Real tool calls against real data. Every row says where it came from. It can&#39;t invent a number.&quot;
-    || IN POCKET, the mechanism in one sentence if a judge asks how: &quot;It is OpenAI&#39;s tool-calling API over eleven typed tools - every one of them reads the same published numbers, so what comes back is a table with its sources on it, not a paragraph. One of the tools searches the documents themselves: three hundred and fifty-four passages out of these companies&#39; own reports and filings, indexed in Elasticsearch, every hit carrying its page number.&quot;
-    || THE SHAPE: a question goes to a model that may only call typed tools; the tools read the same published numbers the rest of the product reads, plus the document corpus; the answer comes back as a view with its provenance. The model is never handed free text to compute over, and the render step is explicitly told it has no tools and may not invent a cell. That is the whole anti-hallucination design and it is worth saying out loud.
-    || ELEVEN TOOLS, and the discrepancy you must know before a judge finds it. The LIVE service at /api/ask/status reports ELEVEN: alerts, companies, company, compare_companies, compare_regions, facilities, irradiance, national, rank_regions, region, search_corpus. The copy of server/ai.py in this repo is STALE AT TEN - it is missing compare_companies. The demo runs against the live service, so eleven is what a judge would see. If you are reading from the repo and want a sentence that cannot be made wrong by the next deploy, say &#39;over ten typed tools&#39; and name search_corpus. Source: docs/narration-annex.md, shot 14 &#39;askhow&#39;. Model is gpt-4.1.
-    || 354 PASSAGES, NOT 354 FILINGS. /api/search/status reports indexed = 354 in index wattson-corpus-v1, of which 309 are sustainability-report passages and 45 are from SEC 10-Ks. They are extracted passages from EIGHT source documents across FOUR companies, counted line by line in claims/raw/*.jsonl: Google 118+9, Meta 74+19, Microsoft 66+11, Amazon 51+6. Saying &#39;354 filings&#39; overstates the document count more than fortyfold and is exactly the class of error this project exists to catch. Quality flags: 341 ok, 7 tabular, 6 suspect, and the suspect ones stay visible.
-    || ELASTICSEARCH: server/search.py, wired into the ask layer as the search_corpus tool. Every hit carries a page number or an Item locator, which is what makes a claim citable back to the page it came from. The retrieval layer was implemented with Codex; that is the only Codex claim in the film. NOTE: README&#39;s track table still says no cluster is provisioned - that is stale; /api/search/status is live and reports 354. Check the endpoint before you say it on stage.
-    || COVERAGE, said out loud because it is a gap and not a finding: we hold 52 operators and 134 mapped buildings (api/companies.json count = 52, api/facilities.json count = 134), and we have read documents for FOUR of them. The other 48 are buildings-only, each carrying its own printed reason (claims_absent_reason = no_documents_ingested). Do not round 48 down.
-    || THE SITE IS A FOLDER OF FILES. Every endpoint is baked to JSON (python -m server --static-export), so the demo needs no server and no network. If the ask layer is down, the command palette falls back to a fixed list of prepared searches. Say so rather than clicking into a spinner.">
-  
-    <div class="headline">Ask it in English.</div>
-    <div class="rule"></div>
-  
-    <svg viewBox="0 0 1392 380" role="img" style="width:100%;height:auto;display:block"
-         aria-label="A question goes to an OpenAI tool-calling loop over eleven typed tools, which read the same clean-share numbers and an Elasticsearch corpus of 354 passages, and return a cited answer.">
-  
-      <!-- ===== the question, wordless ===== -->
-      <rect x="1" y="142" width="178" height="96" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <rect x="24" y="186" width="106" height="8" rx="4" fill="var(--muted)" opacity="0.6"/>
-      <rect x="140" y="176" width="5" height="28" fill="var(--accent)"/>
-  
-      <line x1="179" y1="190" x2="222" y2="190" stroke="var(--line)" stroke-width="2"/>
-      <path d="M228 190 L214 182 L214 198 Z" fill="var(--line)"/>
-  
-      <!-- ===== the tool-calling loop ===== -->
-      <rect x="230" y="112" width="356" height="156" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <text x="256" y="164" font-size="34" fill="var(--muted)">OpenAI</text>
-      <text x="256" y="216" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">11 typed tools</text>
-      <g fill="var(--muted)" opacity="0.75">
-        <rect x="256" y="236" width="20" height="10" rx="5"/><rect x="282" y="236" width="20" height="10" rx="5"/>
-        <rect x="308" y="236" width="20" height="10" rx="5"/><rect x="334" y="236" width="20" height="10" rx="5"/>
-        <rect x="360" y="236" width="20" height="10" rx="5"/><rect x="386" y="236" width="20" height="10" rx="5"/>
-        <rect x="412" y="236" width="20" height="10" rx="5"/><rect x="438" y="236" width="20" height="10" rx="5"/>
-        <rect x="464" y="236" width="20" height="10" rx="5"/><rect x="490" y="236" width="20" height="10" rx="5"/>
-        <rect x="516" y="236" width="20" height="10" rx="5"/>
-      </g>
-  
-      <!-- ===== the two things the tools read ===== -->
-      <path d="M586 190 H616 V78 H658" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <path d="M616 190 V300 H658" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <path d="M664 78  L650 70  L650 86  Z" fill="var(--line)"/>
-      <path d="M664 300 L650 292 L650 308 Z" fill="var(--line)"/>
-  
-      <rect x="666" y="24" width="364" height="108" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <text x="692" y="92" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">clean share</text>
-      <g fill="var(--clean)">
-        <rect x="930" y="62" width="8" height="30"/><rect x="942" y="62" width="8" height="30" opacity="0.4"/>
-        <rect x="954" y="62" width="8" height="30"/><rect x="966" y="62" width="8" height="30" opacity="0.4"/>
-        <rect x="978" y="62" width="8" height="30"/><rect x="990" y="62" width="8" height="30" opacity="0.4"/>
-        <rect x="1002" y="62" width="8" height="30"/><rect x="1014" y="62" width="8" height="30" opacity="0.4"/>
-      </g>
-  
-      <rect x="666" y="246" width="364" height="108" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <text x="692" y="294" font-size="38" fill="var(--ink)" font-weight="600" letter-spacing="-1">Elasticsearch</text>
-      <text x="692" y="336" font-size="34" fill="var(--muted)">354 passages</text>
-      <g stroke="var(--muted)" stroke-width="3" opacity="0.7" fill="none">
-        <rect x="954" y="268" width="60" height="70" rx="5"/>
-        <path d="M968 290 H1000 M968 306 H992 M968 322 H1004"/>
-      </g>
-  
-      <!-- ===== the answer ===== -->
-      <path d="M1030 78  H1062 V190" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <path d="M1030 300 H1062 V190" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <path d="M1062 190 H1100" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <path d="M1106 190 L1092 182 L1092 198 Z" fill="var(--line)"/>
-  
-      <rect x="1108" y="112" width="282" height="156" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-      <text x="1134" y="178" font-size="38" fill="var(--ink)" font-weight="600" letter-spacing="-1">cited answer</text>
-      <g opacity="0.75">
-        <rect x="1134" y="204" width="230" height="7" rx="3.5" fill="var(--muted)"/>
-        <rect x="1134" y="222" width="230" height="7" rx="3.5" fill="var(--muted)" opacity="0.6"/>
-        <rect x="1134" y="240" width="230" height="7" rx="3.5" fill="var(--muted)" opacity="0.6"/>
-        <line x1="1212" y1="198" x2="1212" y2="252" stroke="var(--line)" stroke-width="2"/>
-        <line x1="1288" y1="198" x2="1288" y2="252" stroke="var(--line)" stroke-width="2"/>
-      </g>
-  
-    </svg>
-  </section>
-  
   <!-- 04-demo.html -->
-  <section class="slide" data-title="Live demo" data-notes="HOLDING SLIDE. Roughly 70 seconds. Nothing on this wall competes with the screen being driven. No chart, no figure in the headline: the only numbers are the quiet provenance strip, which is here because it is up longer than any other slide and a judge scoring public-dataset use will read it.
+  <section class="slide" data-title="Live demo" data-notes="HOLDING SLIDE. Up for four to six minutes. THE PITCH IS THE DEMO - drive it from docs/DEMO.md, which is click by click and was checked against the live site. Three-minute cut: sections 2, 6, 10 (the table, the company, the freeze). Five minutes: add 3, 7, 9. Full: all of it, about seven minutes.
   
-  BEATS, in order, with the spoken words in script.md:
-  1. Check a company. ⌘K, openai. Six buildings, each matched to the grid serving it, 37% of that power clean (walk score 0.369, calendar 2025, all hours, grid-only, not weighted by building size - we do not know each one&#39;s load). Then the sentence that must not be rushed: we never say anyone lied; on paper the claim is true; we print it as true on paper, this much physically. Say out loud that we measure what a grid GENERATED inside its own region, not what a meter consumed, and that imports are not traced through (numbers.md T17, T4). Do NOT say &#39;OpenAI, Abilene&#39;: Abilene Stargate is filed under Oracle because Oracle holds the lease (numbers-v2.md X3). The six are Shackelford County TX, Santa Teresa NM, Milam County TX, Lordstown OH, Port Washington WI, Pike County OH.
-  2. One building, one grid. Santa Teresa NM, on El Paso Electric: about a third of the power clean at midday, and at three in the morning one megawatt out of six hundred and fifty-five (numbers-v2.md 2.2: 0.341 day, 0.001 night, 1 MW of 655). Say &#39;one megawatt of six hundred and fifty-five&#39;, never &#39;one tenth of one percent&#39; - half a room hears that as ten percent.
-  3. ADD IF AHEAD: the blind spot. El Paso Matters reports a 700-900 MW gas plant at that campus that does not connect to El Paso Electric, so that load would never appear in the federal data. Say &#39;a reporter says&#39;, keep the conditional, and point at the note on screen: we read it, we did not measure it (numbers-v2.md section 3, N10). About a dozen of the 134 buildings are like that; ten site notes use the words &#39;behind the meter&#39; and fifteen describe on-site generation of some kind, so say &#39;about a dozen&#39; and never &#39;eleven&#39;, which is not reproducible from any field (numbers-v2.md X4, N9).
-  4. The detector, demand data only. 111 regions ranked on one signature: demand that stopped rising and falling with the day. No company list is an input. Show the 6th (PJM/DOM, Data Center Alley) AND the 91st (ERCO/NCEN, Dallas) - the miss is the reason to believe the hits (numbers.md T15).
-  5. The ask layer. One real question, then the coverage gap said out loud: 52 operators and 134 buildings held, documents read for FOUR, 48 buildings-only, each carrying its own printed reason (numbers-v2.md 2.5, N8). Do not say &#39;twelve&#39; - that is a stale string on the Alpha page (numbers-v2.md X1).
+  THE URL IS ON THE SLIDE so a judge can open it on their own laptop while you talk: shrishantrh.github.io/wattson . Open the site before you start and leave it on the landing page. If the first Command-K question is slow, that is the API waking up and it takes about three seconds once - do not apologise.
   
-  PROVENANCE STRIP - every figure traced:
-  - &#39;EIA-930 / PUDL&#39; - dataset name; L0 acquisition, scripts/vendor/pudl_fetch.py (CLAUDE.md).
-  - &#39;4,451,763 hourly rows&#39; - numbers.md 2.4, recomputed row count of data/processed/hourly_cf_index.parquet. Caveat if asked: it lives in a gitignored local parquet; the published JSON carries the 124 regions built from it, not the raw rows.
-  - &#39;70 grid operators&#39; - numbers.md 2.4, ba.nunique() on the same file. The term of art is BALANCING AUTHORITY; the strip says grid operators because that is the plain word, and the count is of balancing authorities. Keep the three counts apart: 70 in the index, 124 published, 111 scored (numbers.md T16).
-  - &#39;52 operators, 134 sites&#39; - numbers-v2.md 2.5; api/companies.json count = 52, api/facilities.json count = 134.
-  Date range if asked: 2018-07-01 to 2026-09-05 (numbers.md 2.4).
+  THE FOUR LINES TO HAVE COLD (DEMO.md, &#39;Have these four cold&#39;):
+  1. The claim quote: &quot;Matched 100% of our electricity consumption with renewable energy purchases, on a global and annual basis.&quot; NEVER paraphrase it as &#39;100% renewable&#39;.
+  2. NEVP: 1.8% clean at night, 55.8% by day, 2025. Two columns, one row, no method required. api/region/NEVP.json cf_share.2025 overnight 0.018 / daytime 0.558.
+  3. Dallas came 91st. Volunteer it before anyone asks.
+  4. 1.91 times the nameplate - the federal data error, confirmed three ways.
   
-  VISIBLE WORD COUNT: 14. WATTSON (1) + LIVE (1) + EIA-930 / PUDL (2) + 4,451,763 hourly rows (3) + 70 grid operators (3) + 52 operators, 134 sites (4).">
+  THE ONE DISCREPANCY TO CARRY, not to adopt silently: DEMO.md section 7 says eleven of our sites make their own power and never touch the grid. Our fact-check could only reproduce ten site notes saying so. SAY &#39;ABOUT A DOZEN&#39;. The point is undamaged either way, and it is the strongest limit we volunteer: a demand-only detector cannot see a datacenter that brought its own power plant.
+  
+  WHAT THE STRIP ON THE SLIDE IS FOR: a judge scoring public-dataset use will read it, and this slide is up longer than any other. EIA-930, the federal hourly grid data, pulled through PUDL - the Public Utility Data Liberation project. 4,451,763 hourly rows, 70 grid regions (the term of art is balancing authority; say it once, after the plain word), 2018-07-01 to 2026-09-05. numbers.md 2.4. 52 operators and 134 mapped sites: api/companies.json count=52, api/facilities.json count=134, numbers-v2.md 2.5.
+  
+  IF THE SITE IS DOWN: press B. Two backup slides carry the PJM finding and the prediction, and they are the pitch that night. The offline path is in docs/DEMO_RUNBOOK.md and, in one line, `cd web &amp;&amp; npm run build &amp;&amp; cd dist &amp;&amp; python3 -m http.server 8099`. Every screen but Command-K still works offline, because the whole site is a baked export.
+  
+  IF A FIGURE IS CHALLENGED: docs/evidence/, nine files, one per likely challenge, each with the quote and the citation. Have it open in a second window or on your phone.
+  
+  VISIBLE WORDS: 15. Live demo (2) + Wattson (1) + shrishantrh.github.io/wattson (1) + EIA-930 PUDL (2) + 4,451,763 rows (2) + 70 grid regions (3) + 52 operators, 134 sites (4).">
   
     <div class="cola">
-      <p class="eyebrow">Live</p>
+      <p class="eyebrow">Live demo</p>
       <h2 class="headline">Wattson</h2>
       <div class="rule"></div>
+      <p class="sub">shrishantrh.github.io/wattson</p>
     </div>
   
     <div class="rowa">
       <p class="note">EIA-930 / PUDL</p>
-      <p class="note">4,451,763 hourly rows</p>
-      <p class="note">70 grid operators</p>
+      <p class="note">4,451,763 rows</p>
+      <p class="note">70 grid regions</p>
       <p class="note">52 operators, 134 sites</p>
     </div>
   
   </section>
   
-  <!-- 05-results.html#1 -->
-  <section class="slide" data-title="PJM at night" data-notes="SPOKEN: &quot;Here&#39;s what it finds. PJM - Chicago to New Jersey - generates eight point seven gigawatts more at night than in 2019. (breath) Not one net megawatt of it is clean.&quot; Then, over the next slides: &quot;A separate instrument agrees: EPA&#39;s smokestack monitors measured PJM&#39;s night-time carbon dioxide up four million tons.&quot;
+  <!-- 08-close.html -->
+  <section class="slide" data-title="Close" data-notes="SPOKEN, and it is the demo&#39;s close taken word for word so the two cannot drift (docs/DEMO.md section 13): &quot;We never say a company lied. Their claim is true under the standard. We measure the gap between a contract and a meter.&quot;
   
-  THE HEADLINE FINDING, and the sentence to use is the one above: PJM generates 8,701 MW more power at night than it did in 2019, and not one net megawatt of that increase is clean - clean generation actually fell 81 MW. Gloss PJM the first time: the grid from Chicago to New Jersey, which serves the largest concentration of datacenters on earth.
+  Then: &quot;And we found an error in the federal data doing it. A nuclear plant reported twice by two grid operators, totalling 1.91 times what it can physically produce. We confirmed it three ways and we show the corrected number next to the published one.&quot;
   
-  THE DRAWING IS AT TRUE SCALE: one megawatt is the same height in all three bars. The dashed rule across the chart sits at +8,701 MW, the total overnight growth named in the headline; the gas column stands ABOVE it. That is the whole picture - gas supplied more than the growth itself, because it also replaced retiring coal. The clean bar is 1.3 px tall and on the wrong side of zero. Its near-invisibility is the finding, not a rendering fault.
+  Then, on this slide, and nothing after it: &quot;Wattson. It follows the power, not the press release.&quot; Stop. Hands off the laptop. AND DO NOT PRESS RIGHT AGAIN - the two fallback slides sit directly behind this one and the arrow key walks into them. This slide is the end.
   
-  WHY GAS EXCEEDS THE TOTAL, before anyone subtracts: coal fell 2,518 MW and nuclear 950 MW. Gas replaced those AND supplied the growth. It is coal-to-gas switching plus new load. UNDERSTAND.md section 3, step 3.
+  WHY THERE IS NO THIRD LINE ON THE WALL. The old close carried &#39;Always a named utility&#39; under the tagline, which meant nothing to anyone who had not heard the talk. What it was trying to say is better said on the screen a minute earlier, on the Facilities table and the alpha page: every flagged region resolves to the utility, the parent and the ticker, and a third of the load we found sits on public power and cooperatives with no listed equity at all - that number is on the screen. DEMO.md sections 3 and 12. It is an input to a trade, not a trade; no backtest, and we do not claim one.
+  
+  THE FEDERAL-DATA ERROR, in full, if a judge picks it up: Palo Verde is the only nuclear station in Arizona and is jointly owned - Arizona Public Service 29.1%, Salt River Project 17.5%. Both reported the WHOLE plant rather than their share, until 2019-12-04. Three confirmations: the two reports match hour for hour (r = 0.9948 across 7,976 hours, identical within 5 MW in 98.8% of them, then a step); at its peak hour the two together reported 8,041 MW from a plant whose nameplate is 4,209.6 MW, 1.91 times what it can physically produce; and the smokestacks agree - Arizona&#39;s fossil generation stayed flat at about 2,040 MW and its CO2 fell 17.5%, and a clean fleet that size cannot vanish without carbon appearing. Corrected like for like, Phoenix ROSE from 2% to 10%: the published figure was wrong in DIRECTION, not only in size. Never say &#39;it collapsed&#39;; say &#39;a double count we caught&#39;. We use the corrected number even though it makes our own headline smaller. numbers.md D1, D2, T2 and the Palo Verde capacity correction of 2026-09-20; UNDERSTAND.md section 6.
+  
+  THE OTHER THING WE REFUSE TO SAY, if there is a beat for it: 48 of our 52 operators have no documents read, and every one of those records prints its own reason rather than a blank. That is our coverage gap, not a finding about them. The demo shows it live on NBIS (DEMO.md section 5). numbers-v2.md 2.5, X1.
+  
+  VISIBLE WORDS: 12. Wattson (1) + It follows the power, not the press release. (8) + shrishantrh.github.io/wattson (1) + Yash Shri (2).">
+    <div class="eyebrow">Wattson</div>
+    <h2 class="headline hero">It follows the power, not the press release.</h2>
+    <div class="rule"></div>
+    <p class="note">shrishantrh.github.io/wattson</p>
+    <p class="note muted">Yash &middot; Shri</p>
+  </section>
+  
+  <!-- 09-backup.html#1 -->
+  <section class="slide" data-backup="1" data-title="Fallback: PJM at night" data-notes="FALLBACK ONLY. Do not open this slide if the site is up: docs/DEMO.md section 4 shows the same finding on the PJM/DOM page, with the hour scrubber dragged to 03:00 and the CLEAN SHARE / CLEAN MW toggle, and a screen that exists beats a drawing of one.
+  
+  SPOKEN, if you are on this slide: &quot;PJM - the grid from Chicago to New Jersey, which serves the largest concentration of datacenters on earth - generates eight point seven gigawatts more power at night than it did in 2019. (breath) Not one net megawatt of that increase is clean.&quot;
+  
+  THE HONEST MOMENT, and say it in the demo&#39;s words because they are better than anything that fits on a slide (DEMO.md section 4): &quot;The share fell, but clean output barely moved, 35,700 to 35,619 megawatts. NO CLEAN POWER WAS LOST. The share fell because everything else in those hours grew around it. If you only quote the share, you say something false using true numbers.&quot; That is why the clean bar on this slide is drawn at true scale as a 1.3-pixel sliver below zero rather than as a share: the near-invisibility is the finding, and it is an ABSOLUTE.
+  
+  THE DRAWING IS AT TRUE SCALE: one megawatt is the same height in all three bars. The dashed rule sits at +8,701 MW, the total overnight growth, and the gas column stands ABOVE it. Gas supplied more than the growth itself because it also replaced retiring coal - coal fell 2,518 MW and nuclear 950 MW. Coal-to-gas switching plus new load. UNDERSTAND.md section 3, step 3.
   
   FIGURES, all from api/region/PJM.json, overnight = 00:00-05:59 local, 2019 vs 2025:
-  - 8,701 MW: total_avg_mw overnight 82,539 -> 91,240. numbers.md 2.1; numbers-v2.md 2.7.
+  - 8,701 MW growth: total_avg_mw overnight 82,539 -&gt; 91,240. numbers.md 2.1; numbers-v2.md 2.7.
   - gas +10,740 MW: fuel_delta_overnight_gw.gas = +10.74. numbers.md 2.1; numbers-v2.md 2.7.
   - coal -2,520 MW: fuel_delta_overnight_gw.coal = -2.52. numbers.md 2.1.
-  - clean -81 MW: cf_avg_mw overnight 35,700 -> 35,619. Clean = nuclear + hydro + wind + solar + geothermal. numbers.md 2.1: flat within 100 MW, -0.23% of the 2019 level.
+  - clean -81 MW: cf_avg_mw overnight 35,700 -&gt; 35,619. Clean = nuclear + hydro + wind + solar + geothermal. numbers.md 2.1: flat within 100 MW, -0.23% of the 2019 level.
   - Full fuel closure if challenged: nuclear -0.95, hydro -0.22, wind +1.07, solar +0.01, gas +10.74, coal -2.52, oil +0.15, other +0.41; sum +8.69 GW against total +8.70. numbers.md 2.1.
-  - Net exports fell, so the new power stayed inside PJM: overnight net export 3,814 MW (2019) -> 2,489 MW (2025), EIA-adjusted operations table, positive = export. numbers.md 2.1. Do NOT use the 2026 value (partial year).
+  - Net exports fell, so the new power stayed inside PJM: overnight net export 3,814 MW (2019) -&gt; 2,489 MW (2025), EIA-adjusted operations table, positive = export. numbers.md 2.1. Do NOT use the 2026 value (partial year).
   
-  THE INDEPENDENT CHECK, and it is the strongest thing on this slide after the bars: EPA&#39;s continuous emissions monitors sit on the smokestacks and measure carbon dioxide directly. They are a different instrument, on different hardware, with no connection to our pipeline. They measured PJM&#39;s overnight CO2 rising 3,957,992 short tons a year between 2019 and 2025, +5.9%, while overnight carbon intensity went 0.369 -> 0.353 short tons per MWh. Say &#39;up four million tons&#39;. Source: docs/EMISSIONS.md, the PJM overnight table. Across 49 regions our clean share and the measured intensity move together at Spearman -0.868 (Pearson -0.834), which is what it means to say the two instruments agree.
-  WHERE THAT PROXY FAILS, volunteer it if pressed: the share cannot see whether the fossil half is gas or coal. PACE has a 0.255 clean share and emits 0.715 short tons per MWh; FPL has 0.263 - the same share - and emits 0.268. A 2.7-fold difference at the same share. docs/EMISSIONS.md.
+  THE INDEPENDENT CHECK, the strongest thing here after the bars: EPA&#39;s continuous emissions monitors sit on the smokestacks and measure carbon dioxide directly - a different instrument, on different hardware, with no connection to our pipeline. They measured PJM&#39;s overnight CO2 rising 3,957,992 short tons a year between 2019 and 2025, +5.9%, while overnight carbon intensity went 0.369 -&gt; 0.353 short tons per MWh. Say &#39;up four million tons&#39;. docs/EMISSIONS.md. Across 49 regions our clean share and the measured intensity move together at Spearman -0.868 (Pearson -0.834), which is what it means to say the two instruments agree. Where the proxy fails, volunteer it: the share cannot see whether the fossil half is gas or coal - PACE at 0.255 clean share emits 0.715 short tons per MWh, FPL at 0.263 emits 0.268, a 2.7-fold difference at the same share.
   
   SAY / DO NOT SAY:
   - Consistent with datacenter load being served by gas. Never caused by. (CLAUDE.md)
-  - This is an average mix, not the specific plant that fires up. EIA-930 gives fuel and interchange, not dispatch order (numbers.md T6). Say the caveat before anyone asks; it understates us if anything.
+  - Average mix, not the specific plant that fires up. EIA-930 gives fuel and interchange, not dispatch order (numbers.md T6). Say it before anyone asks; it understates us if anything.
   - We measure what a region generated, not what a building consumed. Imports are not traced through.
   - PJM is coarse: Chicago to New Jersey. If asked where it lands: Dominion is +3,973 MW overnight demand = 45.7% of PJM&#39;s overnight GENERATION growth, 60.6% of its overnight DEMAND growth. Say which denominator (numbers.md D7). About half is true only against generation.
+  - The headline on the slide says the EXTRA power at night is fossil. It does not say PJM has no clean power at night - PJM generated 35,619 MW of it. Never let that slide.
   
-  VISIBLE WORDS: 14. PJM (1) + 8,701 MW more at night. None clean. (7) + +10,740 gas (2) + -2,520 coal (2) + -81 clean (2).">
+  VISIBLE WORDS: 15. Chicago to New Jersey (4) + Extra power at night: fossil. (5) + +10,740 gas (2) + -2,520 coal (2) + -81 clean (2).">
   
     <div class="cola">
-      <p class="eyebrow">PJM</p>
-      <h2 class="headline">8,701 MW more at night. None clean.</h2>
+      <p class="eyebrow">Chicago to New Jersey</p>
+      <h2 class="headline">Extra power at night: fossil.</h2>
       <div class="rule"></div>
     </div>
   
-    <svg viewBox="0 0 1100 330" role="img">
+    <svg viewBox="0 0 1100 330" role="img" aria-label="Change in average overnight generation since 2019: gas up 10,740 megawatts, coal down 2,520, clean down 81. Drawn at one scale.">
       <!-- reference: +8,701 MW, the total overnight generation growth -->
       <line x1="60" y1="58" x2="1040" y2="58" style="stroke:var(--muted)" stroke-width="2" stroke-dasharray="8 8" opacity="0.65"/>
       <!-- zero -->
@@ -698,323 +436,76 @@ body.show-notes #notes { display: flex; }
   
   </section>
   
-  <!-- 05-results.html#2 -->
-  <section class="slide" data-title="One claim, ten grids" data-notes="THE COMPANY FINDING. Takeaway, in one sentence: one company, one annual claim, ten mapped buildings - and the grids under them ran from 5.6% to 91.3% clean. A sixteen-fold spread behind a single sentence in a report. Which grid a building sits on decides the answer, and the claim is true on paper the whole way across.
+  <!-- 09-backup.html#2 -->
+  <section class="slide" data-backup="1" data-title="Fallback: the prediction" data-notes="FALLBACK ONLY. If the site is up, do this on the method page instead (docs/DEMO.md section 10) - and follow it with the three destruction tests and the model, which no slide carries.
   
-  SPOKEN: this slide is flipped past in the run (the PJM line covers it). If you stop on it, the line is: &quot;One claim, ten buildings, and the grids under them run from six percent clean to ninety-one. A sixteen-fold spread.&quot;
+  SPOKEN, taken from DEMO.md section 10 so the slide and the demo cannot drift: &quot;We fixed the weights and named four test regions BEFORE we looked at any ranking, in the same commit as the code. Three landed in the top twenty. DALLAS CAME 91st. We published the miss.&quot;
   
-  WHY THIS SLIDE AND NOT 100-VERSUS-46: the solution slide already lands 100% claimed against 46% measured for this same company. This slide keeps 100 and 46 ON the scale as reference marks and leads on what the solution slide cannot say: the spread. The mean of 46% is the headline; the range is the evidence that the method DISTINGUISHES rather than prosecutes. A tool that just wanted a scandal would not put a 91.3% dot on the wall.
+  WHAT THE PICTURE IS, because it is the one thing a viewer cannot guess. The top row is what we WROTE DOWN: four places, named before anything was run. The rail below is what the detector then produced on its own, 111 regions ranked on demand data alone, with no company list and no list of buildings as an input. The lines are the only claim on the slide: this is where each named place actually came out. It could have failed in public, and one of the four did.
   
-  FIGURES, all from api/company/GOOGL.json (read live, 2026-09-20). Alphabet (Google), 10 mapped buildings, coverage 1.0:
-  - Claimed 100%: page 4 of the sustainability report, annual, market-based accounting. A real and standard method - which is exactly why the verdict is true_on_paper.
-  - average 46%: physical_mean_unweighted = 0.464, identical to walk_score 0.464. Gap 53.6 points, say 54. It is the PLAIN AVERAGE of how clean each of the ten grids was in calendar 2025, all hours, grid-only. UNWEIGHTED - we do not know each building&#39;s load, and one very large building could move it, which we say. GRID-ONLY - it leaves out purchase agreements and certificates.
-  - 5.6% = physical_min. Moncks Corner, Berkeley County SC.
-  - 91.3% = physical_max. The Dalles, Oregon - Columbia River hydro.
-  - 91.3 / 5.6 = 16.3, hence &#39;a sixteen-fold spread&#39; (UNDERSTAND.md section 3, step 5).
-  - The ten, in full: Moncks Corner SC 0.056; Council Bluffs IA 0.349; Pine Island MN 0.349; Fort Wayne IN 0.393; Pryor OK 0.456; Midlothian TX 0.461; Bridgeport AL 0.487; Lenoir NC 0.575; Mesa AZ 0.599; The Dalles OR 0.913. Two pairs sit on top of each other on the axis - the two at 0.349, and 0.456 next to 0.461 - so each pair is drawn stacked. The vertical offset is only to make all ten countable; it carries no meaning. Ten dots, ten buildings.
-  - Verdict unchanged: every one of the five extracted claims reads true_on_paper. Nobody is called a liar. The product prints true on paper, X physically.
+  WHY THE NAMES ARE THESE NAMES. PJM/DOM is Data Center Alley, Northern Virginia - the label reads Virginia. SWPP/OPPD is Omaha. PJM/AEP is the AEP zone: call it THE AEP ZONE out loud, not Central Ohio, because it spans Ohio, Indiana, West Virginia, Virginia and Kentucky (numbers.md T9) - the label on the slide is the map coordinate label, Columbus. ERCO/NCEN is Dallas-Fort Worth.
   
-  THE CAVEAT THAT MUST TRAVEL WITH THE 5.6% END (numbers.md T4): that is what the region generated, not what the building consumed - and the Santee Cooper share of the V.C. Summer nuclear station reports under a different authority, at 42.1%. So the low end understates what is available to that building. Say it before a judge asks. The same caveat runs the other way at The Dalles.
+  THE RESULT: Northern Virginia 6th of 111 (score 7.71), Omaha 7th (6.82), the AEP zone 19th (2.29), Dallas 91st (-1.32). api/regions.json meta.validation_named_in_advance; docs/spec.md, &#39;Validation, pre-registered&#39;; numbers.md 2.3 and trap T15.
   
-  IN POCKET:
-  - Their own report says 65% clean power hour by hour on page 94, ninety pages after the 100% on page 4. Five years: 65, 64, 64, 66, 65 (2021-2025). Their number, not ours. numbers.md 2.6.
-  - Across the four companies whose documents we read: 9 true_on_paper, 1 cannot_verify (Amazon - no falsifiable sentence extracted, talk_score null; never render null as 0). numbers.md 2.6, T14.
-  - Coverage gap, out loud: 52 operators and 134 buildings held, documents read for four. numbers-v2.md 2.5, N8.
+  THE MISS, and volunteer it before anyone asks. One of the three things we score is how far a region diverges from its NEIGHBOURS on the same grid. Every region in Texas is booming, so a booming Dallas looks ordinary next to them. Drop that one term and Dallas moves from 91st to 48th. We published the 91st because the weights were fixed before we saw where anything would land. It is not a bug; it is the property that keeps a whole booming region from scoring as a datacenter corridor. UNDERSTAND.md section 4.
   
-  STALE SOURCE WARNING: numbers.md section 2.6 still records Alphabet as 5.6% with 1 building and a 94.4-point gap. That was true when only Moncks Corner was mapped. The live record now has 10, mean 0.464, gap 53.6 points. api/ is the authority (numbers.md own rule), so 46 wins and the prose is the error.
+  NO THRESHOLD WAS EVER DECLARED. We named four regions, not four ranks. If a judge presses on whether 19th counts: &quot;We named the places, not the ranks. Three of the four came back in the top twenty out of a hundred and eleven, and the fourth came back 91st - we show all four.&quot;
   
-  VISIBLE WORDS: 15. Google (1) + True on paper. Ten grids, a sixteen-fold spread. (8) + claimed 100% (2) + average 46% (2) + 5.6% (1) + 91.3% (1).">
+  WHAT THE SCORE IS, in plain words: how much faster demand grew at night than on average; how much faster than its neighbours on the same grid; and how much the daily curve flattened, at half weight. Written down: score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z on median and median absolute deviation so two Texas zones growing 95% and 116% cannot set the scale for all 111. Regions under 500 MW average demand excluded (13 unranked; largest excluded IID at 434 MW, smallest ranked TPWR at 518 MW); peak at the 99.5th percentile hour. api/regions.json meta.detector_method.
   
-    <div class="cola">
-      <p class="eyebrow">Google</p>
-      <h2 class="headline">True on paper. Ten grids, a sixteen-fold spread.</h2>
-      <div class="rule"></div>
-    </div>
+  IF THE SITE IS DOWN, THIS IS WHERE THE REST OF THE RIGOR GOES - say it over this slide, because nothing else carries it (DEMO.md sections 10 and 11, code verified):
+  - &quot;Then we spent last night trying to destroy our own result.&quot;
+  - Randomness: a permutation test on the four named regions gives p = 0.049. Marginal, and say marginal.
+  - Resampling: the ranking rebuilt ten thousand times on resampled hours holds Dominion between 3rd and 7th.
+  - Out of sample: the frozen method re-run on 2026 data that did not exist when we locked it holds at Spearman 0.877, eight of the top ten unchanged.
+  - THE ONE THAT MATTERS MOST: the same frozen method ending in 2021, 22, 23, 24 produces NOTHING statistically significant before 2025. The signal is dated to the buildout. A method that manufactures signal would manufacture it every year.
+  - THE MODEL THAT SAYS THE FORMULA WAS OPTIONAL: a gradient boosted model on seventeen features of raw demand shape - flatness, summer versus winter, the size of the day-night swing - never shown the detector&#39;s output, labelled from the 134 datacenters we mapped by hand from utility filings. It found the same regions. AUC 0.727, and zero of a thousand shuffled-label runs beat it. &quot;We wrote the formula from a hypothesis. The model found it without the formula.&quot;
+  - THE CONCESSION, unprompted: region SIZE alone predicts our labels better than shape does, 0.749. Bigger regions have more mapped sites because we mapped more of them. The honest claim is that shape adds information beyond size, not that it beats size.
+  - Weather, if asked: hourly temperature from 138 stations explains 7.8% of overnight demand growth nationally, and Northern Virginia was COLDER overnight in 2025 than 2019 while its overnight demand rose 3,973 MW. docs/WEATHER.md.
+  NOTE: the permutation, resampling, pre-2025 and gradient-boosted figures live in docs/STATS.md and docs/DEMO.md, not yet in numbers.md or numbers-v2.md. They are spoken, not printed on a slide, which is why that is acceptable here - do not put them on a slide until they are traced.
   
-    <svg viewBox="0 0 1100 260" role="img">
-      <!-- one scale: 0% carbon-free at x=60, 100% at x=1000 -->
-      <line x1="60" y1="150" x2="1000" y2="150" style="stroke:var(--line)" stroke-width="2"/>
+  LIMITS TO VOLUNTEER: below the top ten this is not an ordering - the median rank interval is 29 places wide, so treat the top ten as a set. It finds round-the-clock load in general, not datacenters: crypto and oilfield electrification look identical, and rank 2 is probably the Permian oilfield. And about a dozen of our sites run on their own generation and never touch the grid, so a demand-only detector cannot see them at all.
   
-      <!-- the claim, at the top of the same scale -->
-      <line x1="1000" y1="62" x2="1000" y2="190" style="stroke:var(--ink)" stroke-width="3"/>
-      <text x="1000" y="46" text-anchor="end" style="fill:var(--ink);font-size:var(--t-body)">claimed 100%</text>
+  VISIBLE WORDS: 15. We named four. Then ranked 111 regions. (7) + Virginia 6th (2) + Omaha 7th (2) + Columbus 19th (2) + Dallas 91st (2).">
   
-      <!-- mean of the ten, 0.464 -->
-      <line x1="496" y1="110" x2="496" y2="190" style="stroke:var(--ink)" stroke-width="3" opacity="0.75"/>
-      <text x="496" y="226" text-anchor="middle" style="fill:var(--muted);font-size:var(--t-body)">average 46%</text>
+    <h2 class="headline">We named four. Then ranked 111 regions.</h2>
+    <div class="rule"></div>
   
-      <!-- ten mapped buildings, the clean share of the grid under each, 2025 -->
-      <g style="fill:var(--clean)">
-        <circle cx="112.6" cy="150" r="13"/>
-        <circle cx="388.1" cy="134" r="13"/>
-        <circle cx="388.1" cy="166" r="13"/>
-        <circle cx="429.4" cy="150" r="13"/>
-        <circle cx="488.6" cy="134" r="13"/>
-        <circle cx="493.3" cy="166" r="13"/>
-        <circle cx="517.8" cy="150" r="13"/>
-        <circle cx="600.5" cy="150" r="13"/>
-        <circle cx="623.1" cy="150" r="13"/>
-        <circle cx="918.2" cy="150" r="13"/>
+    <svg viewBox="0 0 1200 400" role="img" aria-label="Four regions named before the ranking was run - Virginia, Omaha, Columbus and Dallas - each joined by a line to where the detector then placed it on a rank line of 111 regions: 6th, 7th, 19th and 91st.">
+  
+      <!-- ===== step one: what we wrote down, before anything ran ===== -->
+      <g text-anchor="middle">
+        <text x="180"  y="72" font-size="40" fill="var(--ink)">Virginia</text>
+        <text x="180"  y="118" font-size="40" fill="var(--accent)" font-weight="600">6th</text>
+  
+        <text x="460"  y="72" font-size="40" fill="var(--ink)">Omaha</text>
+        <text x="460"  y="118" font-size="40" fill="var(--accent)" font-weight="600">7th</text>
+  
+        <text x="740"  y="72" font-size="40" fill="var(--ink)">Columbus</text>
+        <text x="740"  y="118" font-size="40" fill="var(--accent)" font-weight="600">19th</text>
+  
+        <text x="1020" y="72" font-size="40" fill="var(--muted)">Dallas</text>
+        <text x="1020" y="118" font-size="40" fill="var(--muted)" font-weight="600">91st</text>
       </g>
   
-      <text x="112.6" y="112" text-anchor="middle" style="fill:var(--clean);font-size:var(--t-body)">5.6%</text>
-      <text x="918.2" y="112" text-anchor="middle" style="fill:var(--clean);font-size:var(--t-body)">91.3%</text>
-    </svg>
-  
-  </section>
-  
-  <!-- 05-results.html#3 -->
-  <section class="slide" data-title="The detector" data-notes="THE THIRD FINDING. Takeaway: the detector ranks 111 regions on one signature - demand that stopped rising and falling with the day - using demand data alone, with no company list as an input. It lands on the known datacenter corridors, and on the same strip you can see where it missed.
-  
-  SPOKEN, if you stop here: &quot;We also find these places with no list of them - a hundred and eleven regions ranked on demand that stopped following the day.&quot;
-  
-  Each tick is one scored region, rank 1 at the left, rank 111 at the right. Two ticks are raised: 6th and 91st. Putting the miss on the same axis as the hit is the credibility beat (numbers.md T15).
-  
-  WHAT THE SCORE IS, in plain words. Three ingredients. How much faster demand grew at night than on average (homes and EVs are peaky; a datacenter is not). How much faster than its neighbours on the same grid, which controls for a whole region simply booming. And how much the daily demand curve flattened, at half weight. Written down: score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z on median and median absolute deviation rather than mean and standard deviation, so that two Texas zones growing 95% and 116% cannot set the scale for all 111. Regions under 500 MW average demand excluded; peak taken at the 99.5th percentile hour. meta.detector_method.
-  
-  FIGURES, from api/regions.json and the region files, via numbers.md 2.3:
-  - 111 regions scored; ranks 1..111 contiguous; composition 68 zones + 43 parents. meta.n_scored.
-  - Four test regions named IN ADVANCE: PJM/DOM, PJM/AEP, SWPP/OPPD, ERCO/NCEN. meta.validation_named_in_advance.
-  - 6th = PJM/DOM, Data Center Alley / Northern Virginia. Score 7.71, growth +31.8%, overnight excess 7.7 pts. Zone overnight demand 10,060 -> 14,033 MW, +39.5%.
-  - 7th = SWPP/OPPD, Omaha. Score 6.82, growth +39.4%.
-  - 19th = the AEP zone, score 2.29. Call it the AEP zone, not Central Ohio: it spans Ohio, Indiana, West Virginia, Virginia and Kentucky (numbers.md T9).
-  - 91st = ERCO/NCEN, Dallas-Fort Worth. Score -1.32, growth +14.2%. THE MISS, and volunteer it: the neighbour term compares a zone with its neighbours, and every zone in Texas is booming, so a booming Dallas looks ordinary. Drop that one term and Dallas is 48th. We published the 91st because the weights were fixed before we saw where anything would land. UNDERSTAND.md section 4.
-  - The 500 MW cut holds: 13 regions unranked, largest excluded IID at 434 MW, smallest ranked TPWR at 518 MW.
-  - WACM ranks 5th and is flagged and excluded from alerts: demand +1.5 GW in 2022 with flat generation and exports falling to zero, unexplained. It stays in the ranking. Do not present it as a clean win (numbers.md T12).
-  - Zones carry demand only and inherit the parent&#39;s generation figures (cf_inherited_from_ba).
-  
-  LIMITS TO VOLUNTEER RATHER THAN BE ASKED:
-  - It finds round-the-clock load in general, not datacenters specifically. Crypto mining and oilfield electrification look identical; our rank 2, ERCOT Far West, is probably the Permian oilfield.
-  - Below the top ten the ranking is not an ordering. The median rank interval is 29 places wide, so treat the top ten as a set, not a league table.
-  - Region size predicts our labels better than load shape does, and we report that rather than bury it.
-  
-  THE FINDING HELD BACK - the correction, if there is time or a data-quality question. The published record says AZPS overnight clean share fell from 62% to 10%. The 62% was never real: one nuclear plant was reported in full by two owners at once until 2019-12-04. Corrected like-for-like, Phoenix ROSE from 1.7% to 10.4%: the published figure was wrong in direction, not only in size. Say &#39;a double count we caught&#39;, never &#39;it collapsed&#39;. The 2025 level of 10.4% is sound, and the demand-side rank (3rd) was never affected. numbers.md D1, D2, T2.
-  
-  VISIBLE WORDS: 14. DETECTOR (1) + 111 regions scored. No company list. (6) + 6th Data Center Alley (4) + 91st Dallas, missed (3).">
-  
-    <div class="cola">
-      <p class="eyebrow">Detector</p>
-      <h2 class="headline">111 regions scored. No company list.</h2>
-      <div class="rule"></div>
-    </div>
-  
-    <svg viewBox="0 0 1000 230" role="img">
-      <!-- 109 plain ticks; ranks 6 and 91 are raised below. 111 total. -->
-      <g style="stroke:var(--line)" stroke-width="3">
-        <line x1="60" y1="100" x2="60" y2="140"/><line x1="68" y1="100" x2="68" y2="140"/><line x1="76" y1="100" x2="76" y2="140"/><line x1="84" y1="100" x2="84" y2="140"/><line x1="92" y1="100" x2="92" y2="140"/>
-        <line x1="108" y1="100" x2="108" y2="140"/><line x1="116" y1="100" x2="116" y2="140"/><line x1="124" y1="100" x2="124" y2="140"/><line x1="132" y1="100" x2="132" y2="140"/><line x1="140" y1="100" x2="140" y2="140"/>
-        <line x1="148" y1="100" x2="148" y2="140"/><line x1="156" y1="100" x2="156" y2="140"/><line x1="164" y1="100" x2="164" y2="140"/><line x1="172" y1="100" x2="172" y2="140"/><line x1="180" y1="100" x2="180" y2="140"/>
-        <line x1="188" y1="100" x2="188" y2="140"/><line x1="196" y1="100" x2="196" y2="140"/><line x1="204" y1="100" x2="204" y2="140"/><line x1="212" y1="100" x2="212" y2="140"/><line x1="220" y1="100" x2="220" y2="140"/>
-        <line x1="228" y1="100" x2="228" y2="140"/><line x1="236" y1="100" x2="236" y2="140"/><line x1="244" y1="100" x2="244" y2="140"/><line x1="252" y1="100" x2="252" y2="140"/><line x1="260" y1="100" x2="260" y2="140"/>
-        <line x1="268" y1="100" x2="268" y2="140"/><line x1="276" y1="100" x2="276" y2="140"/><line x1="284" y1="100" x2="284" y2="140"/><line x1="292" y1="100" x2="292" y2="140"/><line x1="300" y1="100" x2="300" y2="140"/>
-        <line x1="308" y1="100" x2="308" y2="140"/><line x1="316" y1="100" x2="316" y2="140"/><line x1="324" y1="100" x2="324" y2="140"/><line x1="332" y1="100" x2="332" y2="140"/><line x1="340" y1="100" x2="340" y2="140"/>
-        <line x1="348" y1="100" x2="348" y2="140"/><line x1="356" y1="100" x2="356" y2="140"/><line x1="364" y1="100" x2="364" y2="140"/><line x1="372" y1="100" x2="372" y2="140"/><line x1="380" y1="100" x2="380" y2="140"/>
-        <line x1="388" y1="100" x2="388" y2="140"/><line x1="396" y1="100" x2="396" y2="140"/><line x1="404" y1="100" x2="404" y2="140"/><line x1="412" y1="100" x2="412" y2="140"/><line x1="420" y1="100" x2="420" y2="140"/>
-        <line x1="428" y1="100" x2="428" y2="140"/><line x1="436" y1="100" x2="436" y2="140"/><line x1="444" y1="100" x2="444" y2="140"/><line x1="452" y1="100" x2="452" y2="140"/><line x1="460" y1="100" x2="460" y2="140"/>
-        <line x1="468" y1="100" x2="468" y2="140"/><line x1="476" y1="100" x2="476" y2="140"/><line x1="484" y1="100" x2="484" y2="140"/><line x1="492" y1="100" x2="492" y2="140"/><line x1="500" y1="100" x2="500" y2="140"/>
-        <line x1="508" y1="100" x2="508" y2="140"/><line x1="516" y1="100" x2="516" y2="140"/><line x1="524" y1="100" x2="524" y2="140"/><line x1="532" y1="100" x2="532" y2="140"/><line x1="540" y1="100" x2="540" y2="140"/>
-        <line x1="548" y1="100" x2="548" y2="140"/><line x1="556" y1="100" x2="556" y2="140"/><line x1="564" y1="100" x2="564" y2="140"/><line x1="572" y1="100" x2="572" y2="140"/><line x1="580" y1="100" x2="580" y2="140"/>
-        <line x1="588" y1="100" x2="588" y2="140"/><line x1="596" y1="100" x2="596" y2="140"/><line x1="604" y1="100" x2="604" y2="140"/><line x1="612" y1="100" x2="612" y2="140"/><line x1="620" y1="100" x2="620" y2="140"/>
-        <line x1="628" y1="100" x2="628" y2="140"/><line x1="636" y1="100" x2="636" y2="140"/><line x1="644" y1="100" x2="644" y2="140"/><line x1="652" y1="100" x2="652" y2="140"/><line x1="660" y1="100" x2="660" y2="140"/>
-        <line x1="668" y1="100" x2="668" y2="140"/><line x1="676" y1="100" x2="676" y2="140"/><line x1="684" y1="100" x2="684" y2="140"/><line x1="692" y1="100" x2="692" y2="140"/><line x1="700" y1="100" x2="700" y2="140"/>
-        <line x1="708" y1="100" x2="708" y2="140"/><line x1="716" y1="100" x2="716" y2="140"/><line x1="724" y1="100" x2="724" y2="140"/><line x1="732" y1="100" x2="732" y2="140"/><line x1="740" y1="100" x2="740" y2="140"/>
-        <line x1="748" y1="100" x2="748" y2="140"/><line x1="756" y1="100" x2="756" y2="140"/><line x1="764" y1="100" x2="764" y2="140"/><line x1="772" y1="100" x2="772" y2="140"/>
-        <line x1="788" y1="100" x2="788" y2="140"/><line x1="796" y1="100" x2="796" y2="140"/><line x1="804" y1="100" x2="804" y2="140"/><line x1="812" y1="100" x2="812" y2="140"/><line x1="820" y1="100" x2="820" y2="140"/>
-        <line x1="828" y1="100" x2="828" y2="140"/><line x1="836" y1="100" x2="836" y2="140"/><line x1="844" y1="100" x2="844" y2="140"/><line x1="852" y1="100" x2="852" y2="140"/><line x1="860" y1="100" x2="860" y2="140"/>
-        <line x1="868" y1="100" x2="868" y2="140"/><line x1="876" y1="100" x2="876" y2="140"/><line x1="884" y1="100" x2="884" y2="140"/><line x1="892" y1="100" x2="892" y2="140"/><line x1="900" y1="100" x2="900" y2="140"/>
-        <line x1="908" y1="100" x2="908" y2="140"/><line x1="916" y1="100" x2="916" y2="140"/><line x1="924" y1="100" x2="924" y2="140"/><line x1="932" y1="100" x2="932" y2="140"/><line x1="940" y1="100" x2="940" y2="140"/>
+      <!-- ===== step two: where the detector put each one ===== -->
+      <g fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.7">
+        <path d="M180 140 L180 200 L118 260 L118 288"/>
+        <path d="M460 140 L460 200 L128 260 L128 288"/>
+        <path d="M740 140 L740 200 L243 260 L243 288"/>
       </g>
+      <path d="M1020 140 L1020 200 L937 260 L937 288" fill="none" stroke="var(--muted)" stroke-width="2" opacity="0.7"/>
   
-      <!-- rank 6 -->
-      <line x1="100" y1="70" x2="100" y2="170" style="stroke:var(--ink)" stroke-width="6"/>
-      <text x="100" y="52" style="fill:var(--ink);font-size:var(--t-body)">6th Data Center Alley</text>
+      <!-- the rank line: 1st at the left edge, 111th at the right -->
+      <line x1="70" y1="300" x2="1130" y2="300" stroke="var(--line)" stroke-width="3"/>
+      <line x1="70" y1="286" x2="70" y2="314" stroke="var(--line)" stroke-width="3"/>
+      <line x1="1130" y1="286" x2="1130" y2="314" stroke="var(--line)" stroke-width="3"/>
   
-      <!-- rank 91 -->
-      <line x1="780" y1="70" x2="780" y2="170" style="stroke:var(--ink)" stroke-width="6"/>
-      <text x="780" y="202" text-anchor="middle" style="fill:var(--muted);font-size:var(--t-body)">91st Dallas, missed</text>
+      <circle cx="118" cy="300" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+      <circle cx="128" cy="300" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+      <circle cx="243" cy="300" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+      <circle cx="937" cy="300" r="13" fill="none" stroke="var(--muted)" stroke-width="3"/>
     </svg>
-  
-  </section>
-  
-  <!-- 06-rigor.html#1 -->
-  <section class="slide" data-title="Called in advance" data-notes="SPOKEN: &quot;We called it in advance: four regions named before we ran the ranking. Three landed in the top twenty. Dallas came ninety-first, and we published it.&quot;
-  
-  WHAT &#39;CALLED IT IN ADVANCE&#39; MEANS, in plain words, and this is the sentence that replaces the words &#39;frozen&#39; and &#39;pre-registered&#39; everywhere on stage: we decided how the detector would score a region, wrote it down, and named the four places we expected it to find - all before we ran it on anything. So it could have failed in public. A judge who hears &#39;the method was frozen&#39; learns nothing; a judge who hears &#39;we named four regions before we ran it&#39; knows exactly what was at stake.
-  
-  WHAT WAS FIXED FIRST: the three terms and their weights, the 500 MW exclusion, and the peak definition (the 99.5th percentile hour, because one PJM/DOM hour in 2019 is corrupt). Then the four regions: PJM/DOM, SWPP/OPPD, PJM/AEP and ERCO/NCEN (api/regions.json meta.validation_named_in_advance; docs/spec.md, &#39;Validation, pre-registered&#39;; numbers.md 2.3).
-  
-  THE RESULT, three of four in the top twenty: Northern Virginia 6th of 111 (score 7.71), Omaha 7th (6.82), the AEP zone 19th (2.29). And Dallas 91st, score -1.32. Call the third one THE AEP ZONE, not Central Ohio: it spans Ohio, Indiana, West Virginia, Virginia and Kentucky (numbers.md T9); the label on the slide is the map coordinate label, Columbus.
-  
-  THE MISS, and volunteer it before anyone asks. One of the three things we score is how far a region diverges from its neighbours on the same grid. Every region in Texas is booming, so a booming Dallas looks ordinary next to them. Drop that one term and Dallas moves from 91st to 48th. We published the 91st because the weights were fixed before we saw where anything would land (UNDERSTAND.md section 4). Do not describe this as a bug; it is a property of the method, and the property is what keeps a whole booming region from scoring as a datacenter corridor.
-  
-  NO THRESHOLD WAS EVER DECLARED. We named four regions, not four ranks. Both records of the prediction annotate only Dallas as a miss. If a judge presses on whether 19th counts, the honest answer is: &quot;We named the places, not the ranks. Three of the four came back in the top twenty out of a hundred and eleven, and the fourth came back 91st - we show all four.&quot;
-  
-  DEMAND DATA ONLY. No generation, no company data, no list of buildings went into this ranking. Robust z means median and median absolute deviation rather than mean and standard deviation, so that two Texas zones growing 95% and 116% cannot set the scale for all 111 regions. The 500 MW cut holds in the output: 13 regions unranked, the largest excluded is IID at 434 MW and the smallest ranked is TPWR at 518 MW. Method string, unchanged: score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z, 500 MW cut, p99.5 peak (api/regions.json meta.detector_method).
-  
-  THE THREE OTHER CHECKS, all in docs/STATS.md, and the backup slide carries the first: re-ranked on 2026 data the method never saw, the two rankings agree at Spearman 0.877 with eight of the top ten the same regions. A permutation test on the four named regions gives p = 0.049 - marginal, and we say marginal. And each region&#39;s own temperature response explains only 7.8% of overnight demand growth nationally, with nights still growing faster than days in 96 of 111 regions once weather is removed; cooling peaks in the afternoon, so if this were air conditioning the days would have grown more (docs/WEATHER.md).
-  
-  LIMITS TO VOLUNTEER: below the top ten this is not an ordering - the median rank interval is 29 places wide, so treat the top ten as a set. And it finds round-the-clock load in general, not datacenters: crypto and oilfield electrification look identical, and rank 2 is probably the Permian oilfield.
-  
-  Figures: numbers.md 2.3 (111 regions, ranks 6/7/19/91, scores, the 500 MW cut) and trap T15; docs/STATS.md tests 1b and 4.">
-    <div class="eyebrow">Predicted</div>
-    <h2 class="headline">Three landed. Dallas didn't.</h2>
-    <div class="rule"></div>
-    <svg viewBox="0 0 1200 330" role="img" aria-label="A rank line from 1st to 111th. Northern Virginia 6th, Omaha 7th and Columbus 19th are marked as landed; Dallas 91st is marked as the miss.">
-      <line x1="70" y1="200" x2="1130" y2="200" stroke="var(--line)" stroke-width="3"/>
-      <line x1="1130" y1="186" x2="1130" y2="214" stroke="var(--line)" stroke-width="3"/>
-      <text x="1130" y="252" text-anchor="end" font-size="26" fill="var(--muted)">111th</text>
-  
-      <line x1="243" y1="200" x2="243" y2="118" stroke="var(--accent)" stroke-width="2"/>
-      <text x="243" y="100" font-size="32" fill="var(--ink)">Columbus 19th</text>
-      <circle cx="243" cy="200" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
-  
-      <line x1="118" y1="200" x2="118" y2="168" stroke="var(--accent)" stroke-width="2"/>
-      <text x="118" y="152" font-size="32" fill="var(--ink)">N. Virginia 6th</text>
-      <circle cx="118" cy="200" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
-  
-      <line x1="128" y1="200" x2="128" y2="236" stroke="var(--accent)" stroke-width="2"/>
-      <text x="128" y="268" font-size="32" fill="var(--ink)">Omaha 7th</text>
-      <circle cx="128" cy="200" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
-  
-      <line x1="937" y1="200" x2="937" y2="236" stroke="var(--line)" stroke-width="2"/>
-      <text x="937" y="268" text-anchor="middle" font-size="32" fill="var(--muted)">Dallas 91st</text>
-      <circle cx="937" cy="200" r="13" fill="none" stroke="var(--muted)" stroke-width="3"/>
-    </svg>
-  </section>
-  
-  <!-- 06-rigor.html#2 -->
-  <section class="slide" data-title="What we print" data-notes="SPOKEN: &quot;One region looked like its clean power collapsed. It hadn&#39;t - a plant counted twice in the federal data. (breath) We use the corrected number, and it shrinks our headline.&quot;
-  
-  THE STORY IN PLAIN WORDS, and it is the easiest one in the project to tell. Arizona&#39;s clean power appeared to fall off a cliff: 62% of overnight generation in 2019 down to 10% in 2025. It never happened. Palo Verde is the only nuclear station in Arizona and it is jointly owned - Arizona Public Service holds 29.1%, Salt River Project 17.5%, five others hold the rest. Both of those two reported the plant to the federal government, and EACH REPORTED THE WHOLE PLANT rather than its share. For eighteen months the same electricity was counted twice. We found it in our own output, we show the published and the corrected number side by side, and we use the corrected one even though it makes our own headline smaller.
-  
-  THREE INDEPENDENT CONFIRMATIONS. Lead with the third if you only have time for one; it is a physical argument a non-specialist can follow.
-  1. The two reports match hour for hour: correlation 0.9948 across 7,976 hours, identical within 5 MW in 98.8% of them - then it stops dead on one day, 2019-12-04, in a step.
-  2. The total is physically impossible. At its peak hour the two operators between them reported 8,041 MW from a plant whose NAMEPLATE is 4,209.6 MW - 1.91 times what it can physically produce. (Use nameplate, 4,209.6 MW. The older line &#39;7,087 MW against a 3,937 MW nameplate&#39; is SUPERSEDED: 7,087 MW is the average of the combined reports and 3,937 MW is net summer capacity, not nameplate. numbers.md, &#39;Correction, 2026-09-20: the Palo Verde capacity figures&#39;.)
-  3. THE SMOKESTACKS AGREE. If a clean fleet that size had really vanished, fossil plants would have fired up to replace it and carbon would have appeared. Measured: Arizona&#39;s fossil generation stayed flat at about 2,040 MW and its carbon dioxide fell 17.5%. A clean fleet cannot disappear without carbon appearing.
-  
-  WHAT IT MEANS FOR THE STORY: Phoenix did not collapse from 62% to 10%. Like for like, Phoenix ROSE from 2% to 10%. Its level is still low, but the direction in the federal file was wrong, not merely the size. The correction is applied at serve time and both numbers are on the page (siting score 0.173 published, 0.449 corrected; rank 49 to about 32, plus or minus 2). Never say &#39;it collapsed&#39;; say &#39;a double count we caught&#39;. The plant identification is a high-confidence inference from the hourly record, and why the step falls on that date is not established - say so if asked.
-  
-  THE OTHER HALF OF THIS SLIDE: what the product refuses to say. We hold 52 operators and 134 buildings, and we have read documents for four of them. The other 48 are matched to grids with nothing of their own held against them, and every one of those records carries its own printed reason (claims_absent_reason &#39;no_documents_ingested&#39;). That is our coverage gap, not a finding about those companies. Same rule inside the four we did read: 10 claims, 9 true on paper, 1 cannot_verify - Amazon&#39;s report has no falsifiable sentence we could extract, so its talk score is null, rendered as a phrase and never as a zero, and the cannot-verify count is on screen.
-  
-  Figures: numbers.md D1 and trap T2 (0.620 published, 0.017 corrected, 0.104 in 2025, r = 0.9948, 7,976 hours), the Palo Verde capacity correction of 2026-09-20 (nameplate 4,209.6 MW, net summer 3,937 MW, combined average 7,087 MW, peak 8,041 MW, 1.91x), D2 (siting 0.173 to 0.449), 2.6 (10 claims, 9 true on paper, 1 cannot_verify); numbers-v2.md X1 and 2.5 (52 operators, 134 buildings, 4 with claims read, 48 with a printed reason); UNDERSTAND.md section 6.">
-    <h2 class="headline">We print what we got wrong</h2>
-    <div class="rule"></div>
-    <div class="rowa">
-      <div class="cola">
-        <div class="big">62%</div>
-        <div class="label">published</div>
-      </div>
-      <div class="cola">
-        <div class="big" style="color:var(--warn)">2%</div>
-        <div class="label">corrected</div>
-      </div>
-      <div class="cola">
-        <div class="big">48/52</div>
-        <div class="label">documents unread</div>
-      </div>
-    </div>
-    <p class="sub muted">Arizona, 2019</p>
-  </section>
-  
-  <!-- 07-stack.html -->
-  <section class="slide" data-title="Built on" data-notes="NOT SPOKEN. Let this slide pass under the closing line; the shapes say it. If a judge stops you on it, the stack is one pipe, left to right.
-  
-  FEDERAL DATA IN. EIA-930, the hourly grid monitor the US government publishes, pulled through PUDL with Voloridge&#39;s own fetch script: 4.45 million hourly rows across 70 grid regions, 2018-07-01 to the 2026-09-05 snapshot (numbers.md 2.4: 4,451,763 rows recounted from data/processed/hourly_cf_index.parquet; 70 from ba.nunique(); that parquet is gitignored, so the honest answer if a judge asks for the field is &#39;it is the row count of the hourly index; the published JSON carries the 124 regions built from it&#39;). &#39;Grid region&#39; is the plain word; the unit of record is the balancing authority.
-  
-  PYTHON. Turns those rows into one number per hour per region - how much of the power generated was clean - ranks 111 regions with the detector, and bakes every endpoint to JSON (numbers.md 2.3: 111 regions, ranks 1..111 contiguous, 43 parents plus 68 zones).
-  
-  REPRODUCIBILITY, worth one sentence if anyone doubts the headline: docs/headline_from_raw.py rebuilds the PJM result straight from the raw federal table in about fifteen lines and prints 2019 overnight clean 35,744 MW of 82,506, 2025 clean 35,573 MW of 90,265 - within 0.4% of our published figures, the gap being that the quick script uses a fixed five-hour offset while the pipeline handles daylight saving and drops partial months. If a judge asks whether you can reproduce your own result, run it.
-  
-  REACT. The map is a globe drawn as an instanced dot field, one instance per point, so the whole US region set animates without redrawing geometry.
-  
-  OPENAI. A tool-calling layer over typed tools rather than retrieval over a blob, so every number in an answer is traceable to a call. ELEVEN tools on gpt-4.1: alerts, companies, company, compare_companies, compare_regions, facilities, irradiance, national, rank_regions, region, search_corpus. SOURCE, AND DO NOT RE-LITIGATE IT: the deployed API&#39;s status endpoint, queried live on 2026-09-20, returns those eleven names. The repo copy of server/ai.py lists only ten (missing compare_companies) and the README also says ten; both are stale, and the demo runs against the live service, so eleven is what a judge would see.
-  
-  ELASTIC. Retrieval behind search_corpus, and it is LIVE: the search status endpoint reports index wattson-corpus-v1 holding 354 documents, 309 from four sustainability reports and 45 from four 10-Ks, quality split 341 clean, 7 tabular, 6 suspect; a real query against Microsoft&#39;s report returns real passages with page or Item locators. The 354 reconciles with the corpus on disk: wc -l over claims/raw/*.jsonl gives 6+51+9+118+19+74+11+66 = 354 across 8 files. Passages, NOT filings - there are eight filings, and saying &#39;354 filings&#39; is exactly the class of error this project exists to catch. The README&#39;s &#39;no cluster provisioned&#39; line is out of date; do not disclaim Elastic on stage, it is a sponsor track.
-  
-  FOR THE OPENAI TRACK, the strongest single line: the Elasticsearch retrieval layer was written by Codex - that is the concrete way Codex improved the process.
-  
-  NO SERVER, which is what the headline means: server/__main__.py --static-export bakes every endpoint to files, so web/dist needs no server, no Python and no network. It is also the demo&#39;s failure plan.">
-    <h2 class="headline">No server</h2>
-    <div class="rule"></div>
-    <svg viewBox="0 0 1200 250" role="img">
-      <line x1="215" y1="105" x2="265" y2="105" stroke="var(--line)" stroke-width="3"/>
-      <line x1="455" y1="105" x2="505" y2="105" stroke="var(--line)" stroke-width="3"/>
-      <line x1="695" y1="105" x2="745" y2="105" stroke="var(--line)" stroke-width="3"/>
-      <line x1="935" y1="105" x2="985" y2="105" stroke="var(--line)" stroke-width="3"/>
-  
-      <rect x="25" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <text x="120" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">PUDL</text>
-      <text x="120" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">4.45M rows</text>
-  
-      <rect x="265" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <text x="360" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">Python</text>
-      <text x="360" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">111 regions</text>
-  
-      <rect x="505" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--accent)" stroke-width="2"/>
-      <text x="600" y="78" text-anchor="middle" font-size="32" fill="var(--ink)">React</text>
-      <g fill="var(--accent)">
-        <circle cx="600" cy="132" r="3"/><circle cx="582" cy="132" r="3"/><circle cx="618" cy="132" r="3"/>
-        <circle cx="591" cy="118" r="3"/><circle cx="609" cy="118" r="3"/><circle cx="573" cy="120" r="2.4"/>
-        <circle cx="627" cy="120" r="2.4"/><circle cx="591" cy="146" r="3"/><circle cx="609" cy="146" r="3"/>
-        <circle cx="573" cy="144" r="2.4"/><circle cx="627" cy="144" r="2.4"/><circle cx="600" cy="108" r="2.4"/>
-        <circle cx="600" cy="156" r="2.4"/>
-      </g>
-      <circle cx="600" cy="132" r="32" fill="none" stroke="var(--line)" stroke-width="1.5"/>
-  
-      <rect x="745" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <text x="840" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">OpenAI</text>
-      <text x="840" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">11 tools</text>
-  
-      <rect x="985" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
-      <text x="1080" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">Elastic</text>
-      <text x="1080" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">354 passages</text>
-    </svg>
-  </section>
-  
-  <!-- 08-close.html -->
-  <section class="slide" data-title="Close" data-notes="SPOKEN, over the slide before this one: &quot;Every answer ends at a named utility, in a named place, at a named hour.&quot; Then, on this slide, and nothing after it: &quot;Wattson. It follows the power, not the press release.&quot; Stop. Hands off the laptop.
-  
-  WHY THAT LAST CLAIM MATTERS past a hackathon: every verdict ends somewhere a person can act. Google&#39;s Moncks Corner building sits on a grid that generated 5.6% clean power in 2025 against a 100% annual claim. OpenAI&#39;s Santa Teresa campus sits on El Paso Electric: about a third clean at midday and one megawatt out of 655 at night. Vantage&#39;s Quincy building sits on Grant County PUD, which ran fully clean overnight - all Columbia River hydro. The chain is always the same: claim, building, serving utility, grid region, hour. That is a journalist&#39;s lead, a regulator&#39;s docket and an asset manager&#39;s screen, because rising load hits a regulated utility long before it shows up in a filing.
-  
-  COVERAGE: 107 of our 134 buildings have a serving utility we could establish; 42 of those 107 are public power, co-ops or state authorities with no listed equity, and the 27 unresolved are counted separately so they cannot inflate the number. Which grid a building draws from is NOT a map lookup, and the example to give is IREN&#39;s datacenter in Childress, Texas: the counties around it are served by the SPP grid, and it wires straight into ERCOT instead. Naive geography gets it wrong and one wrong row flips a verdict.
-  
-  NEVER SAY A COMPANY LIED. A claim that matches a year of clean power against a year of use is true under the accounting standard, and the verdict we print is &#39;true on paper, X physically&#39;. We measure what a region generated, not what a building consumed, and imports are not traced through.
-  
-  THE LIMITS, volunteered rather than extracted. Average mix, not the specific plant that fires up - which is usually dirtier, so we likely understate. Regions are coarse: PJM is one number from Chicago to New Jersey. Round-the-clock load is not only datacenters; crypto and oilfield electrification look identical, and our rank 2 is probably the Permian oilfield. About a dozen buildings make their own power behind the meter and the federal data cannot see them (ten site notes use those words, fifteen describe on-site generation of some kind - say &#39;about a dozen&#39;, never &#39;eleven&#39;, which is not reproducible from any field; numbers-v2.md X4). Below the top ten the ranking is not an ordering - the median rank interval is 29 places wide, so treat the top ten as a set. And region size predicts our labels better than load shape does, which we report rather than bury.
-  
-  WHO BUILT WHAT: Shri built the grid engine and the interface - the pipeline, the hourly clean-share index, the detector, the siting score, the fuel decomposition, the export and alerts, and the front end. Yash built the investigation layer - the claims pipeline, document ingestion and extraction, the company verdict schema, the building-to-utility lookup, the API, the ask layer and the reproducibility run. The company-card JSON schema was agreed before either side built against it, which is what let the halves join.
-  
-  Figures: numbers.md 2.6 (Google 100% claimed, 5.6% at Moncks Corner, with the caveat that must travel with it), numbers-v2.md 2.2 (El Paso Electric 0.341 day, 0.001 night, 1 MW of 655), 2.3 and 2.6 (Grant County 1.000, Vantage Quincy), 2.5 (134 buildings, 107 resolved, 42 no listed equity, 27 unresolved), X4 (behind-the-meter count); UNDERSTAND.md sections 3 and 8; README, Who built what.">
-    <div class="eyebrow">Wattson</div>
-    <h2 class="headline">It follows the power, not the press release.</h2>
-    <div class="rule"></div>
-    <p class="sub">Always a named utility.</p>
-    <p class="note muted">Yash &middot; Shri</p>
-  </section>
-  
-  <!-- 09-backup.html -->
-  <section class="slide" data-backup="1" data-title="Out of sample" data-notes="BACKUP. Press B. The answer to &quot;how do I know you didn&#39;t tune this until it agreed with you?&quot; when naming four regions in advance is not enough for the judge in front of you.
-  
-  WHAT THIS IS, in plain words: we ranked 111 regions using data through 2025. Then we ran the same unchanged method over 2026 data it had never seen, and compared the two rankings. Spearman is just a number for how alike two orderings are: 1.0 is identical, 0 is random. We got 0.877. And eight of the ten regions in the top ten are the same regions in both.
-  
-  FIGURES, docs/STATS.md test 4: rho = 0.877, 95% interval [0.795, 0.929], Kendall tau-b 0.718 [0.634, 0.788], n = 110 (one region does not report through the 2026 window). Top-10 overlap 8 of 10, p = 4.8e-9; chance would put 0.91 of them there.
-  
-  THE OTHER TESTS, in pocket. Permutation on the four named regions: p = 0.049, and the family-restricted version that accounts for zones nesting inside their parents gives 0.0491 - MARGINAL, and say marginal, because the headline rests on four observations and dropping Northern Virginia alone moves it. Weather: each region&#39;s own temperature response explains 7.8% of the 71,861 MW of overnight demand growth across the 111 regions, and the temperature model itself fits well (median R-squared 0.733), so that is a real answer rather than a weak control failing to find an effect; with each region&#39;s weather response removed, nights still grew faster than days in 96 of 111. Cooling peaks in the afternoon, so if this were air conditioning the days would have grown more (docs/WEATHER.md).
-  
-  WHAT FAILED, and we publish it: the coverage of our 95% rank intervals against the holdout is 0.718 against a nominal 0.95, so the intervals are too narrow. Below the top ten the ranking is not an ordering - the median interval is 29 places wide. Treat the top ten as a set.">
-    <div class="eyebrow">Out of sample</div>
-    <h2 class="headline">Re-ranked on 2026. Same answer.</h2>
-    <div class="rule"></div>
-    <div class="rowa">
-      <div class="cola">
-        <div class="big">0.877</div>
-        <div class="label">rank agreement</div>
-      </div>
-      <div class="cola">
-        <div class="big">8/10</div>
-        <div class="label">top ten same</div>
-      </div>
-    </div>
   </section>
   <!-- SLIDES:END -->
 </div></div>

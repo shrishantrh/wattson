@@ -55,7 +55,14 @@ a <style>, <script> or inline handler, an external URL, a duplicate data-title, 
 without class="slide" or data-title, or a fragment with no <section> at all.
 
 ## Running order (one file each, assembled in filename order)
-01-problem · 02-solution · 03-howitworks · 04-demo · 05-results · 06-rigor · 07-stack · 08-close
+01-problem · 04-demo · 08-close
+
+Cut to three files on 2026-09-20. The pitch is the live demo in `docs/DEMO.md`; the deck is
+a cold open spoken before any screen is touched, a holding slide while the site is driven,
+and a close. `02-solution`, `03-howitworks`, `05-results`, `06-rigor` and `07-stack` were
+retired to `slides/retired/` because the demo shows all five live, and a second telling on a
+slide is how the two drift apart. The running order lives in `build-deck.mjs`; a file left
+in `slides/` but absent from it is appended at the end, not dropped, so retire by moving.
 
 A missing file does not break the build: the assembler emits a loud amber placeholder
 slide in its place. Numbered files outside this list (09+, 90+) are appended at the end.

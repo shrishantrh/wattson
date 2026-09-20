@@ -27,14 +27,16 @@ const END = '<!-- SLIDES:END -->';
 const MAX_WORDS = 15;
 
 // The running order. Every one of these must exist or a placeholder stands in for it.
+//
+// Cut down on 2026-09-20. The pitch is now the live demo in docs/DEMO.md; the deck is a
+// cold open before any screen is touched, a holding slide while the site is driven, and a
+// close. Everything the demo shows live was retired to slides/retired/ rather than kept
+// in a second deck that could drift from the demo's wording — 02-solution, 03-howitworks,
+// 05-results, 06-rigor, 07-stack. The PJM finding and the prediction survive as backup
+// slides in 09-backup.html, for the night the site is down.
 const RUNNING_ORDER = [
   ['01', 'problem'],
-  ['02', 'solution'],
-  ['03', 'howitworks'],
   ['04', 'demo'],
-  ['05', 'results'],
-  ['06', 'rigor'],
-  ['07', 'stack'],
   ['08', 'close'],
 ];
 

@@ -1,31 +1,38 @@
-<section class="slide" data-title="Live demo" data-notes="HOLDING SLIDE. Roughly 70 seconds. Nothing on this wall competes with the screen being driven. No chart, no figure in the headline: the only numbers are the quiet provenance strip, which is here because it is up longer than any other slide and a judge scoring public-dataset use will read it.
+<!-- 04-demo.html. THE HOLDING SLIDE. This is now the hinge of the whole pitch: everything
+     after the cold open happens on the live site, driven click by click from docs/DEMO.md.
+     Nothing on this wall competes with the screen being driven. Visible words: 15. -->
 
-BEATS, in order, with the spoken words in script.md:
-1. Check a company. ⌘K, openai. Six buildings, each matched to the grid serving it, 37% of that power clean (walk score 0.369, calendar 2025, all hours, grid-only, not weighted by building size - we do not know each one&#39;s load). Then the sentence that must not be rushed: we never say anyone lied; on paper the claim is true; we print it as true on paper, this much physically. Say out loud that we measure what a grid GENERATED inside its own region, not what a meter consumed, and that imports are not traced through (numbers.md T17, T4). Do NOT say &#39;OpenAI, Abilene&#39;: Abilene Stargate is filed under Oracle because Oracle holds the lease (numbers-v2.md X3). The six are Shackelford County TX, Santa Teresa NM, Milam County TX, Lordstown OH, Port Washington WI, Pike County OH.
-2. One building, one grid. Santa Teresa NM, on El Paso Electric: about a third of the power clean at midday, and at three in the morning one megawatt out of six hundred and fifty-five (numbers-v2.md 2.2: 0.341 day, 0.001 night, 1 MW of 655). Say &#39;one megawatt of six hundred and fifty-five&#39;, never &#39;one tenth of one percent&#39; - half a room hears that as ten percent.
-3. ADD IF AHEAD: the blind spot. El Paso Matters reports a 700-900 MW gas plant at that campus that does not connect to El Paso Electric, so that load would never appear in the federal data. Say &#39;a reporter says&#39;, keep the conditional, and point at the note on screen: we read it, we did not measure it (numbers-v2.md section 3, N10). About a dozen of the 134 buildings are like that; ten site notes use the words &#39;behind the meter&#39; and fifteen describe on-site generation of some kind, so say &#39;about a dozen&#39; and never &#39;eleven&#39;, which is not reproducible from any field (numbers-v2.md X4, N9).
-4. The detector, demand data only. 111 regions ranked on one signature: demand that stopped rising and falling with the day. No company list is an input. Show the 6th (PJM/DOM, Data Center Alley) AND the 91st (ERCO/NCEN, Dallas) - the miss is the reason to believe the hits (numbers.md T15).
-5. The ask layer. One real question, then the coverage gap said out loud: 52 operators and 134 buildings held, documents read for FOUR, 48 buildings-only, each carrying its own printed reason (numbers-v2.md 2.5, N8). Do not say &#39;twelve&#39; - that is a stale string on the Alpha page (numbers-v2.md X1).
+<section class="slide" data-title="Live demo" data-notes="HOLDING SLIDE. Up for four to six minutes. THE PITCH IS THE DEMO - drive it from docs/DEMO.md, which is click by click and was checked against the live site. Three-minute cut: sections 2, 6, 10 (the table, the company, the freeze). Five minutes: add 3, 7, 9. Full: all of it, about seven minutes.
 
-PROVENANCE STRIP - every figure traced:
-- &#39;EIA-930 / PUDL&#39; - dataset name; L0 acquisition, scripts/vendor/pudl_fetch.py (CLAUDE.md).
-- &#39;4,451,763 hourly rows&#39; - numbers.md 2.4, recomputed row count of data/processed/hourly_cf_index.parquet. Caveat if asked: it lives in a gitignored local parquet; the published JSON carries the 124 regions built from it, not the raw rows.
-- &#39;70 grid operators&#39; - numbers.md 2.4, ba.nunique() on the same file. The term of art is BALANCING AUTHORITY; the strip says grid operators because that is the plain word, and the count is of balancing authorities. Keep the three counts apart: 70 in the index, 124 published, 111 scored (numbers.md T16).
-- &#39;52 operators, 134 sites&#39; - numbers-v2.md 2.5; api/companies.json count = 52, api/facilities.json count = 134.
-Date range if asked: 2018-07-01 to 2026-09-05 (numbers.md 2.4).
+THE URL IS ON THE SLIDE so a judge can open it on their own laptop while you talk: shrishantrh.github.io/wattson . Open the site before you start and leave it on the landing page. If the first Command-K question is slow, that is the API waking up and it takes about three seconds once - do not apologise.
 
-VISIBLE WORD COUNT: 14. WATTSON (1) + LIVE (1) + EIA-930 / PUDL (2) + 4,451,763 hourly rows (3) + 70 grid operators (3) + 52 operators, 134 sites (4).">
+THE FOUR LINES TO HAVE COLD (DEMO.md, &#39;Have these four cold&#39;):
+1. The claim quote: &quot;Matched 100% of our electricity consumption with renewable energy purchases, on a global and annual basis.&quot; NEVER paraphrase it as &#39;100% renewable&#39;.
+2. NEVP: 1.8% clean at night, 55.8% by day, 2025. Two columns, one row, no method required. api/region/NEVP.json cf_share.2025 overnight 0.018 / daytime 0.558.
+3. Dallas came 91st. Volunteer it before anyone asks.
+4. 1.91 times the nameplate - the federal data error, confirmed three ways.
+
+THE ONE DISCREPANCY TO CARRY, not to adopt silently: DEMO.md section 7 says eleven of our sites make their own power and never touch the grid. Our fact-check could only reproduce ten site notes saying so. SAY &#39;ABOUT A DOZEN&#39;. The point is undamaged either way, and it is the strongest limit we volunteer: a demand-only detector cannot see a datacenter that brought its own power plant.
+
+WHAT THE STRIP ON THE SLIDE IS FOR: a judge scoring public-dataset use will read it, and this slide is up longer than any other. EIA-930, the federal hourly grid data, pulled through PUDL - the Public Utility Data Liberation project. 4,451,763 hourly rows, 70 grid regions (the term of art is balancing authority; say it once, after the plain word), 2018-07-01 to 2026-09-05. numbers.md 2.4. 52 operators and 134 mapped sites: api/companies.json count=52, api/facilities.json count=134, numbers-v2.md 2.5.
+
+IF THE SITE IS DOWN: press B. Two backup slides carry the PJM finding and the prediction, and they are the pitch that night. The offline path is in docs/DEMO_RUNBOOK.md and, in one line, `cd web &amp;&amp; npm run build &amp;&amp; cd dist &amp;&amp; python3 -m http.server 8099`. Every screen but Command-K still works offline, because the whole site is a baked export.
+
+IF A FIGURE IS CHALLENGED: docs/evidence/, nine files, one per likely challenge, each with the quote and the citation. Have it open in a second window or on your phone.
+
+VISIBLE WORDS: 15. Live demo (2) + Wattson (1) + shrishantrh.github.io/wattson (1) + EIA-930 PUDL (2) + 4,451,763 rows (2) + 70 grid regions (3) + 52 operators, 134 sites (4).">
 
   <div class="cola">
-    <p class="eyebrow">Live</p>
+    <p class="eyebrow">Live demo</p>
     <h2 class="headline">Wattson</h2>
     <div class="rule"></div>
+    <p class="sub">shrishantrh.github.io/wattson</p>
   </div>
 
   <div class="rowa">
     <p class="note">EIA-930 / PUDL</p>
-    <p class="note">4,451,763 hourly rows</p>
-    <p class="note">70 grid operators</p>
+    <p class="note">4,451,763 rows</p>
+    <p class="note">70 grid regions</p>
     <p class="note">52 operators, 134 sites</p>
   </div>
 
