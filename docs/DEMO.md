@@ -73,6 +73,71 @@ makes people brace.
 
 ---
 
+# 3b. THE THREE HARD ONES
+
+Never introduce these as features. Each one answers a doubt they already have.
+**One sentence to open, one to land. Only go deeper if they lean in.**
+
+---
+
+## THE SCORE · answers *"how did you find them?"*
+
+**Open:**
+> **"We had to find datacenters without a list of datacenters."**
+
+**Land:**
+> **"So we scored every grid on three things you'd only see if a customer moved in that
+> never turns off. Are the nights growing as fast as the days. Is it growing faster than its
+> neighbours on the same grid. And is the daily demand curve flattening out."**
+>
+> **"Only an always-on customer does all three. It never reads a press release."**
+
+**If they lean in:** the formula's on the Method tab. `z(overnight excess) + z(neighbour
+divergence) + 0.5 × z(load factor change)`. The z puts three different units on one scale.
+Half weight on the third because it hangs on a single peak hour.
+
+---
+
+## THE AI · answers *"how do you know what they claimed?"*
+
+**Open:**
+> **"We had to read 354 company reports, so we had AI do it."**
+
+**Land:**
+> **"It pulls every clean-energy claim out with a verbatim quote and the page number, so
+> nothing on screen is our paraphrase. Then it scores how hedged each claim is — because
+> '100% renewable' and '100% of annual consumption matched with certificates' are the same
+> number and completely different claims."**
+
+**The line that matters:**
+> **"And the AI never computes a number. It reads text and answers questions. Every grid
+> figure is plain arithmetic, which is why the whole thing reproduces exactly."**
+
+---
+
+## THE ML · answers *"how do I know you didn't make this up?"*
+
+**Open:**
+> **"Once we had a ranking, we spent the night trying to break it."**
+
+**Land — say two, not four:**
+> **"We re-ran the frozen method on 2026 data that didn't exist when we locked it. It held:
+> eight of the top ten regions unchanged."**
+>
+> **"And we ran the same frozen method ending in 2021, 22, 23, 24. **Nothing before 2025
+> shows a signal at all.** A method that manufactures signal would manufacture it every
+> year. Ours only fires when the datacenters actually arrived."**
+
+**If they want more, the other four:** all 5,989,005 possible four-region combinations
+scored, 10,000 bootstrap rebuilds for rank stability, a model trained on raw demand shape
+that never saw our formula and found the same regions, and 138 weather stations to rule out
+hot summers.
+
+**All the numbers are on the Method tab.** Point, don't recite.
+
+
+---
+
 # 4. THE THREE FLEXES
 
 Drop these anywhere. They are strengths.
