@@ -341,13 +341,68 @@ def t_national():
                          "quote a share without the absolute beside it.")}
 
 
+def _find_company(key: str):
+    """Match on ticker OR id. A private operator (xAI, OpenAI, Vantage) has ticker None and
+    is addressed by its id, so matching only on ticker loses a third of the book."""
+    k = (key or "").strip().upper()
+    for c in data.company_list():
+        if (c.get("ticker") or "").upper() == k or (c.get("id") or "").upper() == k:
+            return c
+    for c in data.company_list():          # then by name, so "coreweave" and "nebius" work
+        if k and k in (c.get("company") or "").upper():
+            return c
+    return None
+
+
+def _company_keys():
+    return [c.get("ticker") or c.get("id") for c in data.company_list()]
+
+
 def t_company(ticker: str):
     """A company's claims, verdicts, evidence and mapped sites."""
-    for c in data.company_list():
-        if (c.get("ticker") or "").upper() == ticker.upper():
-            return c
-    return {"error": f"no company {ticker}",
-            "available": [c.get("ticker") for c in data.company_list()]}
+    c = _find_company(ticker)
+    if c is not None:
+        return c
+    return {"error": f"no operator {ticker}", "available": _company_keys()}
+
+
+MAX_COMPANY_COMPARE = 8
+
+
+def t_compare_companies(tickers: list, ):
+    """Line up named operators side by side: talk, walk, sites, grids, coverage."""
+    keys = [t for t in (tickers or []) if t][:MAX_COMPANY_COMPARE]
+    if len(keys) < 2:
+        return {"error": "give at least two operators", "available": _company_keys()}
+    rows, missing = [], []
+    for k in keys:
+        c = _find_company(k)
+        if c is None:
+            missing.append(k)
+            continue
+        sites = c.get("sites") or []
+        shares = [x.get("cf_share_2025") for x in sites if x.get("cf_share_2025") is not None]
+        rows.append({
+            "key": c.get("ticker") or c.get("id"),
+            "company": c.get("company"),
+            "listed_equity": c.get("listed_equity"),
+            "talk_score": c.get("talk_score"),
+            "walk_score": c.get("walk_score"),
+            "n_sites": len(sites),
+            "n_claims": len(c.get("claims") or []),
+            "coverage_status": c.get("coverage_status"),
+            "site_share_min": min(shares) if shares else None,
+            "site_share_max": max(shares) if shares else None,
+            "grids": sorted({x.get("region_id") for x in sites if x.get("region_id")}),
+            "utilities": sorted({x.get("serving_utility") for x in sites if x.get("serving_utility")}),
+            "utility_tickers": sorted({x.get("utility_ticker") for x in sites if x.get("utility_ticker")}),
+        })
+    return {"companies": rows, "not_found": missing,
+            "note": ("talk_score is null wherever we have read no document from that operator; "
+                     "report it as 'no claim read', never as zero. walk_score is the mean "
+                     "carbon-free share across that operator's mapped grids, 2025, all hours. "
+                     "Where site_share_min and site_share_max differ a lot, say the RANGE: one "
+                     "annual claim can cover a site on 6% carbon-free power and one on 91%.")}
 
 
 def t_companies():
@@ -371,7 +426,21 @@ def t_facilities(company: str = None, state: str = None):
     """Datacenter sites joined to the grid they draw from."""
     rows = data.facilities()
     if company:
-        rows = [r for r in rows if company.lower() in (r.get("company") or "").lower()]
+        # Match the ticker as well as the name. The model reaches for "MSFT" at least as
+        # often as "Microsoft", and matching only the name returned zero rows for a company
+        # with seven mapped sites, which the model then reported as having no data.
+        q = company.strip().lower()
+        rows = [r for r in rows
+                if q in (r.get("company") or "").lower()
+                or q == (r.get("ticker") or "").lower()]
+        if not rows:
+            known = sorted({(r.get("company") or "") for r in data.facilities()})
+            return {"count": 0, "facilities": [],
+                    "no_match_for": company,
+                    "known_companies": known,
+                    "note": ("No site matched that name or ticker. Pick the closest from "
+                             "known_companies and call this tool again before telling the "
+                             "user we have nothing.")}
     if state:
         rows = [r for r in rows if (r.get("state") or "").upper() == state.upper()]
     return {"count": len(rows), "facilities": [
@@ -401,6 +470,7 @@ def t_search_corpus(q: str, ticker: str = None, doc_type: str = None, limit: int
 TOOLS = {
     "rank_regions": t_rank_regions, "region": t_region, "compare_regions": t_compare_regions,
     "national": t_national, "company": t_company, "companies": t_companies,
+    "compare_companies": t_compare_companies,
     "alerts": t_alerts, "facilities": t_facilities, "irradiance": t_irradiance,
     "search_corpus": t_search_corpus,
 }
@@ -418,7 +488,7 @@ SCHEMAS = [
         "description": "Everything about one region: clean share by year, demand, fuel change, siting, operators, and any corrections to published values. Region ids look like PJM, ERCO, AZPS, or PJM/DOM for a zone.",
         "parameters": {"type": "object", "properties": {"region_id": {"type": "string"}}, "required": ["region_id"]}}},
     {"type": "function", "function": {"name": "compare_regions",
-        "description": "Line up to 8 named regions on one metric across years. Use for a comparison between regions the user named. For 'which regions are the worst/best at X' across the whole set, call rank_regions instead -- it is one call and it sorts all 111.",
+        "description": "Line up to 8 named GRID REGIONS (balancing authorities and their zones: PJM, ERCO, CISO, PJM/DOM, SWPP/OPPD ...) on one metric across years. If the names the user gave are company tickers or operator names, call compare_companies instead. For 'which regions are the worst/best at X' across the whole set, call rank_regions instead -- it is one call and it sorts all 111.",
         "parameters": {"type": "object", "properties": {
             "region_ids": {"type": "array", "items": {"type": "string"}},
             "metric": {"type": "string", "enum": ["cf_share_overnight", "cf_share_daytime", "cf_share_all", "clean_mw_overnight", "total_mw_overnight", "demand_avg_mw", "demand_overnight_mw"]},
@@ -427,8 +497,12 @@ SCHEMAS = [
         "description": "National day-vs-night clean share and absolute MW by year. The headline context.",
         "parameters": {"type": "object", "properties": {}}}},
     {"type": "function", "function": {"name": "company",
-        "description": "One company's claims, verdicts, evidence and mapped sites. Tickers: META, MSFT, GOOGL, AMZN.",
+        "description": "One operator's claims, verdicts, evidence and mapped sites. Accepts a ticker (META, GOOGL, MSFT, AMZN, IREN, WULF, RIOT, CIFR, APLD, CRWV, NBIS, ORCL, DLR, EQIX, AAPL, TSLA, HUT, CORZ, MARA, QTS, SWITCH ...) or an id for a private operator (XAI, OPENAI, CRUSOE, VANTAGE, LAMBDA, FLUIDSTACK, ALIGNED, STACK ...), or a plain name. 52 operators are held.",
         "parameters": {"type": "object", "properties": {"ticker": {"type": "string"}}, "required": ["ticker"]}}},
+    {"type": "function", "function": {"name": "compare_companies",
+        "description": "Compare two or more OPERATORS side by side: talk vs walk, sites, the grids they sit on and their serving utilities. USE THIS, NOT compare_regions, whenever the things being compared are companies or datacenter operators. NBIS, CRWV, IREN, WULF, CIFR, APLD, ORCL, XAI, OPENAI and the rest are OPERATORS, not regions.",
+        "parameters": {"type": "object", "properties": {
+            "tickers": {"type": "array", "items": {"type": "string"}}}, "required": ["tickers"]}}},
     {"type": "function", "function": {"name": "companies",
         "description": "All companies with talk and walk scores.",
         "parameters": {"type": "object", "properties": {}}}},

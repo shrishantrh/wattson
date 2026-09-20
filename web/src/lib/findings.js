@@ -1,11 +1,11 @@
 // Every screen title is a plain-English sentence generated from the numbers on that screen.
 // Nothing here is hand-written per region or company: change the data and the sentence changes.
-export const n0 = x => (x == null || Number.isNaN(Number(x)) ? ', ' : Math.round(Number(x)).toLocaleString('en-US'))
-export const pct0 = x => (x == null ? ', ' : `${Math.round(x * 100)}%`)
-export const pct1 = x => (x == null ? ', ' : `${(x * 100).toFixed(1)}%`)
-export const pts1 = x => (x == null ? ', ' : `${x > 0 ? '+' : x < 0 ? '−' : ''}${Math.abs(x * 100).toFixed(1)} pts`)
-export const gw1 = mw => (mw == null ? ', ' : `${(Math.abs(mw) / 1000).toFixed(1)} GW`)
-export const signedGw = gw => (gw == null ? ', ' : `${gw > 0 ? '+' : gw < 0 ? '−' : ''}${Math.abs(gw).toFixed(1)} GW`)
+export const n0 = x => (x == null || Number.isNaN(Number(x)) ? '—' : Math.round(Number(x)).toLocaleString('en-US'))
+export const pct0 = x => (x == null ? '—' : `${Math.round(x * 100)}%`)
+export const pct1 = x => (x == null ? '—' : `${(x * 100).toFixed(1)}%`)
+export const pts1 = x => (x == null ? '—' : `${x > 0 ? '+' : x < 0 ? '−' : ''}${Math.abs(x * 100).toFixed(1)} pts`)
+export const gw1 = mw => (mw == null ? '—' : `${(Math.abs(mw) / 1000).toFixed(1)} GW`)
+export const signedGw = gw => (gw == null ? '—' : `${gw > 0 ? '+' : gw < 0 ? '−' : ''}${Math.abs(gw).toFixed(1)} GW`)
 const y = (o, k) => (o && o[k] != null ? Number(o[k]) : null)
 
 // Opening: the PJM finding.
@@ -135,7 +135,7 @@ export function checkAnswer(c) {
       sentence: `${where} ${sites.length === 1 ? 'generated' : 'generated'} ${range} carbon-free power in 2025. Every one of those sites was located through the utility that actually serves it, never guessed from the state.`,
       verdict: null, primary: null, coverage_status: 'sites_only', claims_absent_reason: c?.claims_absent_reason || 'no_documents_ingested',
       numbers: [
-        { value: c?.walk_score != null ? pct0(c.walk_score) : range || ', ', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: 'carbon-free share of 2025 generation, all hours', accent: true },
+        { value: c?.walk_score != null ? pct0(c.walk_score) : range || '—', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: 'carbon-free share of 2025 generation, all hours', accent: true },
         // Only say 'traced from the serving utility' about sites where we actually named one.
         // Cipher's Wink and the Ellendale campus have no established serving utility: their BA is
         // the operator's own attribution, and the stat must not launder that into a trace.
@@ -159,7 +159,7 @@ export function checkAnswer(c) {
       // of the claim it sits beside.
       range
         ? { value: range, label: sites.length === 1 ? 'actually clean at the site' : 'actually clean, by site', sub: 'grid average, all hours', accent: true }
-        : { value: c.walk_score != null ? pct0(c.walk_score) : ', ', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: c.walk_score != null ? 'grid average, all hours \u2014 not a check of this claim' : 'no mapped site with grid data', accent: true },
+        : { value: c.walk_score != null ? pct0(c.walk_score) : '—', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: c.walk_score != null ? 'grid average, all hours \u2014 not a check of this claim' : 'no mapped site with grid data', accent: true },
       { value: String(sites.length), label: sites.length === 1 ? 'site checked' : 'sites checked', sub: cv ? `${cv} claim${cv === 1 ? '' : 's'} can't be verified` : null },
     ],
   }

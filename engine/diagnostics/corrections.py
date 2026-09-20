@@ -35,14 +35,37 @@ AZ_UTC_OFFSET = -7          # Arizona does not observe DST
 PROVEN = (
     "AZPS and SRP reported the same generation hour by hour through 2019: "
     "correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of "
-    "them, combined 7,087 MW against a 3,937 MW plant nameplate. The series "
-    "ends in a step on a single date, 2019-12-04, not a decline."
+    "them, combined 7,087 MW against a 4,209.6 MW nameplate (3,937 MW net "
+    "summer capacity), and a peak combined hour of 8,041 MW, which is 1.91 "
+    "times the nameplate. A plant cannot produce 1.91 times its nameplate. "
+    "The series ends in a step on a single date, 2019-12-04, not a decline."
 )
-INFERRED = (
-    "High-confidence inference, not proof: the plant is Palo Verde (the only "
-    "nuclear station in Arizona, magnitude matches its nameplate, profile flat "
-    "across all hours), and EIA corrected the attribution so it counts once, "
-    "under SRP. Not confirmed against plant-level EIA-860 data."
+CONFIRMED_860 = (
+    "Confirmed against plant-level EIA-860 (PUDL, plant 6008). Palo Verde is the "
+    "only nuclear station in Arizona and the only nuclear plant anywhere recorded "
+    "under SRP; no nuclear plant in any year sits under AZPS. It is jointly owned, "
+    "Arizona Public Service 29.10% and Salt River Project 17.49% among seven "
+    "owners summing to 1.0, which is why both had a claim to report it. Each "
+    "reported the WHOLE plant rather than its share: APS's share is 1,225 MW and "
+    "SRP's is 736 MW, yet each reported about 3,620 MW."
+)
+UNCONFIRMED_DATE = (
+    "Not reachable from EIA-860, which is annual: it records Palo Verde under SRP "
+    "for every year from 2013 through 2026 and shows no change around 2019-12-04. "
+    "The attribution never moved. What was corrected on that date was EIA-930, "
+    "which had carried the AZPS duplicate from the first hour AZPS reported a fuel "
+    "breakdown at all, 2018-07-01. That date rests on EIA-930 alone."
+)
+# One correction still carries this label and it must keep a definition: the corrected
+# siting RANK is recomputed from rounded published components, so it reproduces 41 of 52
+# published ranks exactly and is good to about +/- 2. That is an inference about the rank,
+# nothing to do with the plant attribution, which EIA-860 now confirms outright.
+RANK_INFERENCE = (
+    "High-confidence inference about the RANK only. The corrected siting rank is "
+    "recomputed over the same 52 ranked balancing authorities from components the "
+    "published file stores rounded, while the pipeline ranked on full precision. The "
+    "method reproduces 41 of 52 published ranks exactly, so treat a corrected rank as "
+    "plus or minus 2. The corrected VALUES it is derived from are proven."
 )
 UNKNOWN = (
     "Not established: why the correction happened on that date, and why the "
@@ -281,9 +304,13 @@ def main():
             "2025 as 0.104 / 240 MW (published 0.104 / 240). The method was "
             "checked against the published pipeline before anything was "
             "corrected.",
-        "confidence_tiers": {"proven": PROVEN,
-                             "high_confidence_inference": INFERRED,
-                             "not_established": UNKNOWN},
+        "confidence_tiers": {
+            "proven": PROVEN,
+            "confirmed_against_eia860": CONFIRMED_860,
+            "correction_date_not_in_eia860": UNCONFIRMED_DATE,
+            "high_confidence_inference": RANK_INFERENCE,
+            "not_established": UNKNOWN,
+        },
         "regions": {
             "AZPS": {
                 "summary": "Published overnight carbon-free share falls 0.620 "

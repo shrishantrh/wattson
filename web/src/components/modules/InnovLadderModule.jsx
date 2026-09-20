@@ -15,7 +15,7 @@ import { Mod, Say, Empty, Fold } from './Shell.jsx'
 // One rung is two text lines and then its own full-width bar underneath, so no label can ever
 // sit on a mark however long the words or the card get.
 const W = 360, ROW = 52, BAR_Y = 35, BAR_H = 9, VAL_X = W, TOP = 2
-const VALUE_WORD = { cannot_verify: "can't verify", unreadable: 'not readable', loading: '…', missing: ', ' }
+const VALUE_WORD = { cannot_verify: "can't verify", unreadable: 'not readable', loading: '…', missing: '—' }
 // Rung labels as they are drawn: the lib's wording, shortened to fit one line beside its figure.
 const SHORT = { increment: 'added at night since 2019' }
 // What changes between two adjacent rungs, for the "biggest step" line.
@@ -36,7 +36,7 @@ function LadderSvg({ rungs, label }) {
       {rungs.map((r, i) => {
         const y = TOP + i * ROW, has = r.share != null
         const paper = r.status === 'paper' || r.status === 'disclosed'
-        const value = has ? fmtRange(r.lo, r.hi) : VALUE_WORD[r.status] || ', '
+        const value = has ? fmtRange(r.lo, r.hi) : VALUE_WORD[r.status] || '—'
         return (
           <g key={r.id}>
             <title>{`${r.label}: ${value} · ${r.basis} · ${r.source}`}</title>

@@ -7,7 +7,7 @@ import { Mod, Lead, Empty } from './Shell.jsx'
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const asList = a => (Array.isArray(a) ? a : Array.isArray(a?.alerts) ? a.alerts : [])
 const month = m => { if (typeof m !== 'string') return null; const [y, mo] = m.split('-'); return MONTHS[Number(mo) - 1] ? `${MONTHS[Number(mo) - 1]} ${y}` : m }
-const value = (v, unit) => (v == null || Number.isNaN(Number(v)) ? ', ' : unit === 'share' ? pct(v, 1) : unit === 'MW' ? `${fmt(v)} MW` : unit === 'rank' ? `#${fmt(v)}` : fmt(v, 1))
+const value = (v, unit) => (v == null || Number.isNaN(Number(v)) ? '—' : unit === 'share' ? pct(v, 1) : unit === 'MW' ? `${fmt(v)} MW` : unit === 'rank' ? `#${fmt(v)}` : fmt(v, 1))
 const detail = (a, parentLevel, ba) => {
   const parts = []
   if (a.first_crossed) parts.push(`since ${month(a.first_crossed)}${a.months_active_streak ? `, ${fmt(a.months_active_streak)} ${Number(a.months_active_streak) === 1 ? 'month' : 'months'}` : ''}`)

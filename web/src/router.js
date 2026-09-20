@@ -16,7 +16,9 @@ export function parseHash(hash = window.location.hash) {
 export const href = {
   landing: () => '#/',
   check: (t, evidence) => `#/check/${encodeURIComponent(t)}${evidence ? '?evidence=1' : ''}`,
-  compare: ({ mw = 300, metros = [], evidence }) => `#/compare?mw=${mw}&metros=${encodeURIComponent(metros.join('|'))}${evidence ? '&evidence=1' : ''}`,
+  // `vs` opens the side-by-side screen over this page: vs=<mode>:<left>,<right>, as in
+  // vs=company:META,GOOGL. No id in the data holds a comma or a colon, so the link stays readable.
+  compare: ({ mw = 300, metros = [], evidence, vs }) => `#/compare?mw=${mw}&metros=${encodeURIComponent(metros.join('|'))}${evidence ? '&evidence=1' : ''}${vs ? `&vs=${encodeURIComponent(vs)}` : ''}`,
   found: s => (s ? `#/found?s=${s}` : '#/found'),
   region: id => `#/region/${encodeURIComponent(id)}`,
   method: () => '#/method',

@@ -1,0 +1,192 @@
+{
+  "source_tables": {
+    "cems_hourly": "core_epacems__hourly_emissions",
+    "plant_to_ba": "out_eia__yearly_plants (EIA-860)",
+    "ba_timezone": "core_eia__codes_balancing_authorities",
+    "generation": "core_eia930__hourly_net_generation_by_energy_source"
+  },
+  "cems_fetch": {
+    "source_table": "core_epacems__hourly_emissions",
+    "source_uri": "s3://pudl.catalyst.coop/stable/core_epacems__hourly_emissions.parquet",
+    "release": "stable",
+    "file_rows_total": 1017999168,
+    "file_row_groups_total": 10180,
+    "columns_read": [
+      "plant_id_eia",
+      "plant_id_epa",
+      "emissions_unit_id_epa",
+      "state",
+      "operating_datetime_utc",
+      "co2_mass_tons",
+      "co2_mass_measurement_code",
+      "gross_load_mw",
+      "heat_content_mmbtu",
+      "operating_time_hours",
+      "year"
+    ],
+    "years": [
+      2019,
+      2025
+    ],
+    "row_groups_read": {
+      "2019": 364,
+      "2025": 340
+    },
+    "rows_read": {
+      "2019": 36301368,
+      "2025": 33988776
+    },
+    "per_year": {
+      "2019": {
+        "rows": 36301368,
+        "rows_missing_plant_id_eia": 0,
+        "co2_short_tons_missing_plant_id_eia": 0.0,
+        "rows_missing_co2": 24885914,
+        "datetime_utc_min": "2019-01-01 04:00:00",
+        "datetime_utc_max": "2020-01-01 08:00:00"
+      },
+      "2025": {
+        "rows": 33988776,
+        "rows_missing_plant_id_eia": 0,
+        "co2_short_tons_missing_plant_id_eia": 0.0,
+        "rows_missing_co2": 22500141,
+        "datetime_utc_min": "2025-01-01 04:00:00",
+        "datetime_utc_max": "2026-01-01 08:00:00"
+      }
+    },
+    "co2_mass_measurement_code_counts": {
+      "2019": {
+        "None": 0,
+        "Measured": 10966290,
+        "Measured and Substitute": 216792,
+        "Substitute": 4385,
+        "Other": 54387,
+        "LME": 173600
+      },
+      "2025": {
+        "None": 0,
+        "Measured": 11122795,
+        "Measured and Substitute": 153483,
+        "Other": 33914,
+        "LME": 172189,
+        "Substitute": 6254
+      }
+    },
+    "plant_hour_rows": 23504424,
+    "unit_year_rows": 8308,
+    "code_plant_year_rows": 6829,
+    "elapsed_s": 169.8
+  },
+  "plant_attribution": {
+    "2019": {
+      "plants_in_eia860": 11866,
+      "ba_from_same_year": 11537,
+      "ba_from_nearest_other_year": 9,
+      "still_without_ba": 320
+    },
+    "2025": {
+      "plants_in_eia860": 16983,
+      "ba_from_same_year": 16656,
+      "ba_from_nearest_other_year": 11,
+      "still_without_ba": 316
+    }
+  },
+  "units": {
+    "gas": {
+      "plants": 1225,
+      "median_reported_tons_per_mmbtu": 0.059429,
+      "p10": 0.059423,
+      "p90": 0.059573,
+      "epa_part98_kg_co2_per_mmbtu": 53.06,
+      "implied_kg_per_reported_ton_vs_part98": 892.8,
+      "kg_co2_per_mmbtu_if_short_tons": 53.91,
+      "kg_co2_per_mmbtu_if_metric_tonnes": 59.43
+    },
+    "coal": {
+      "plants": 316,
+      "median_reported_tons_per_mmbtu": 0.104836,
+      "p10": 0.102561,
+      "p90": 0.108575,
+      "epa_part98_kg_co2_per_mmbtu": 93.28,
+      "implied_kg_per_reported_ton_vs_part98": 889.8,
+      "kg_co2_per_mmbtu_if_short_tons": 95.11,
+      "kg_co2_per_mmbtu_if_metric_tonnes": 104.84
+    },
+    "gas_part75_appendix_g_kg_per_mmbtu": 53.97,
+    "short_ton_kg": 907.18474,
+    "metric_tonne_kg": 1000.0,
+    "verdict": "co2_mass_tons is short tons"
+  },
+  "thresholds": {
+    "coverage_min": 0.7,
+    "coverage_max": 1.4,
+    "fossil_floor_avg_mw": 100.0
+  },
+  "tz_sensitivity": {
+    "cells": 204,
+    "median_abs_rel_diff": 0.0,
+    "p95_abs_rel_diff": 0.00993,
+    "worst": [
+      {
+        "ba": "PNM",
+        "year": 2025,
+        "window": "daytime",
+        "rel_diff": 0.0865
+      },
+      {
+        "ba": "EPE",
+        "year": 2019,
+        "window": "daytime",
+        "rel_diff": 0.0334
+      },
+      {
+        "ba": "EPE",
+        "year": 2025,
+        "window": "daytime",
+        "rel_diff": 0.0289
+      },
+      {
+        "ba": "LDWP",
+        "year": 2019,
+        "window": "daytime",
+        "rel_diff": 0.0261
+      },
+      {
+        "ba": "PNM",
+        "year": 2025,
+        "window": "overnight",
+        "rel_diff": 0.0214
+      }
+    ],
+    "pjm": [
+      {
+        "year": 2019,
+        "window": "daytime",
+        "co2_ba_tz": 86364195.899,
+        "co2_plant_tz": 86570355.989,
+        "rel_diff": 0.0024
+      },
+      {
+        "year": 2019,
+        "window": "overnight",
+        "co2_ba_tz": 66643206.808,
+        "co2_plant_tz": 66613286.721,
+        "rel_diff": 0.0004
+      },
+      {
+        "year": 2025,
+        "window": "daytime",
+        "co2_ba_tz": 79038584.923,
+        "co2_plant_tz": 79193977.968,
+        "rel_diff": 0.002
+      },
+      {
+        "year": 2025,
+        "window": "overnight",
+        "co2_ba_tz": 70601198.617,
+        "co2_plant_tz": 70513888.309,
+        "rel_diff": 0.0012
+      }
+    ]
+  }
+}

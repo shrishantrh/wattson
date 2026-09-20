@@ -19,11 +19,11 @@ const VERDICT_LABEL = {
 const CALLOUT_ID = 'ERCO/NRTH'
 
 function ptsLabel(v) {
-  return v == null ? ', ' : `${signed(v, 1)} pts`
+  return v == null ? '—' : `${signed(v, 1)} pts`
 }
 
 function sharePct(v) {
-  return v == null ? ', ' : pct(v, 1)
+  return v == null ? '—' : pct(v, 1)
 }
 
 function KVFlat({ rows }) {

@@ -154,7 +154,15 @@
 .ans-figs > div:first-child { padding-top: 0; border-top: none; }
 .ans-figs dt { min-width: 0; font-size: var(--t-small); color: var(--ink-2); }
 .ans-figs dt small { display: block; font-size: var(--t-micro); color: var(--muted); }
-.ans-figs dd { margin: 0; max-width: 70%; font-size: var(--t-body); line-height: 1.3; text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: break-word; }
+/* The value and its unit are one thing and never come apart: "35%" must not set as "35" over
+   "%", and a range must not break after its dash. The old rule capped the cell at 70% and let
+   it break mid-word; because the cell sits in an `auto` track already sized to its own content,
+   that 70% was 70% of the value's own width, so every value of three characters or more was
+   forced to wrap. The cap is gone and the value is nowrap. A value made of words (a claim with
+   no measurable magnitude) is marked .words by the page and wraps between them, never inside
+   one. */
+.ans-figs dd { margin: 0; min-width: 0; font-size: var(--t-body); line-height: 1.3; text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ans-figs dd.words { white-space: normal; overflow-wrap: normal; text-wrap: balance; }
 .ans-figs dd.accent { color: var(--fossil); }
 
 /* ---------- the one thing to do next ----------

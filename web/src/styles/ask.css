@@ -22,7 +22,28 @@
 .ask-open { margin: 10px 0 0; font-size: 13px; }
 .ask-caveats { margin-top: 14px; }
 .nums.ask-stats { margin-top: 14px; }
+
+/* ---------- the table: two to five columns that fit the card they are in ----------
+   The wide data screens (Screener, Data, Companies) size their table to its contents and
+   scroll it sideways inside the card. An answer table is a handful of model-written columns
+   in one column of the console, so it does the opposite: it fits. Headers wrap instead of
+   forcing the table wider than the card, and a grid name too long for its cell ellipses with
+   the whole name on hover (Table.jsx puts it in the cell's title). */
 .tbl.ask-tbl { margin-top: 14px; }
+.tbl.tbl.ask-tbl table { width: 100%; min-width: 0; table-layout: fixed; }
+.tbl.ask-tbl colgroup col:first-child { width: 34%; }
+/* `anywhere`, not `break-word`: only `anywhere` shrinks the header's min-content width, and
+   without that a word wider than its column overflows to the LEFT, under the sticky name
+   column, which is how "CLEAN AT NIGHT, 2019" came out reading "IGHT,". */
+.tbl.tbl.ask-tbl th { white-space: normal; overflow-wrap: anywhere; }
+.tbl.tbl.ask-tbl th > button, .tbl.tbl.ask-tbl th > .tbl-th { min-width: 0; overflow-wrap: anywhere; }
+.tbl.tbl.ask-tbl th > button { gap: 2px; }
+.tbl.tbl.ask-tbl th > button, .tbl.tbl.ask-tbl th > .tbl-th { padding-left: 8px; padding-right: 8px; letter-spacing: 0.03em; }
+.tbl.tbl.ask-tbl td { padding-left: 8px; padding-right: 8px; }
+.tbl.tbl.ask-tbl th:first-child > button, .tbl.tbl.ask-tbl th:first-child > .tbl-th, .tbl.tbl.ask-tbl td:first-child { padding-left: 2px; }
+.tbl.tbl.ask-tbl th:last-child > button, .tbl.tbl.ask-tbl th:last-child > .tbl-th, .tbl.tbl.ask-tbl td:last-child { padding-right: 2px; }
+/* Nothing runs off the side any more, so the sideways-scroll edge has nothing to mark. */
+.tbl.tbl.ask-tbl .tbl-wrap.more-r { box-shadow: none; }
 
 /* ---------- bars: one value across the rows ----------
    Horizontal, because the labels are place names and a place name never fits under a
@@ -30,25 +51,54 @@
    rather than as a missing one. */
 .ask-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .ask-bars li { display: grid; grid-template-columns: minmax(84px, 26%) minmax(40px, 1fr) auto; gap: 10px; align-items: center; }
-.ask-bar-k { font-size: 12px; color: var(--muted); line-height: 1.25; overflow-wrap: anywhere; }
+/* Three lines of a grid name, then an ellipsis; the full name is the span's title. */
+.ask-bar-k { font-size: 12px; color: var(--muted); line-height: 1.25; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
 .ask-bar-t { position: relative; height: 10px; border-radius: 3px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
 .ask-bar-t i { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--clean); transition: width var(--dur) var(--ease); }
 .ask-bar-t i.neg { background: var(--fossil); }
 .ask-bar-v { font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
 
-/* ---------- lines: a value over years ---------- */
+/* ---------- lines: a value over years ----------
+   Nothing is drawn outside the viewBox, so the SVG keeps its own clip: text that would have
+   hung off the right edge is in the key below instead, where it can wrap. */
 .ask-chart { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line-soft); }
-.ask-lines { display: block; width: 100%; height: auto; overflow: visible; }
+.ask-lines { display: block; width: 100%; height: auto; overflow: hidden; }
 .ask-grid { stroke: var(--line-soft); stroke-width: 1; }
 .ask-axis { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
 .ask-line { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .ask-dot { fill: currentColor; }
-.ask-slabel { fill: currentColor; font-size: 11px; }
+/* which line is which */
+.ask-key { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+/* The li carries the series colour (.ask-s0..4) so the swatch can take it from currentColor;
+   the name itself stays on the reading colour, because four coloured names is a ransom note. */
+.ask-key li { display: flex; align-items: baseline; gap: 6px; min-width: 0; max-width: 100%; font-size: 12px; line-height: 1.35; }
+.ask-key i { flex: none; width: 9px; height: 2px; border-radius: 1px; background: currentColor; transform: translateY(-3px); }
+.ask-key span { min-width: 0; color: var(--ink-2); overflow-wrap: anywhere; }
 .ask-s0 { color: var(--clean); }
 .ask-s1 { color: var(--fossil); }
 .ask-s2 { color: var(--ink); }
 .ask-s3 { color: var(--ink-2); }
 .ask-s4 { color: var(--muted); }
+
+/* At 380px the card has to give the figures room; the name column ellipses either way and the
+   whole name is still on hover. Past three columns even that is not enough: "DETECTOR RANK"
+   in a 51px column breaks to "DETE / CTOR", so those tables keep the sideways scroll every
+   wide table on the site uses instead. The name column stays put, the header stays a word,
+   and the toolbar counts what is off to the right. */
+@media (max-width: 1100px) {
+  .tbl.ask-tbl colgroup col:first-child { width: 30%; }
+  .tbl.tbl.ask-tbl:has(thead th:nth-child(4)) table { width: max-content; min-width: 100%; }
+  .tbl.tbl.ask-tbl:has(thead th:nth-child(4)) th { white-space: nowrap; }
+  .tbl.tbl.ask-tbl:has(thead th:nth-child(4)) .tbl-wrap.more-r { box-shadow: inset -1px 0 0 var(--line-strong); }
+  /* A table sized to its contents runs on auto layout, which ignores a <col> width and a
+     percentage alike, so the cap goes on the block that holds the text. Without it the name
+     column grew to "American Electric Power, inside PJM (PJM/AEP)" and pushed every figure
+     off the card. */
+  .tbl.tbl.ask-tbl:has(thead th:nth-child(4)) th:first-child > button,
+  .tbl.tbl.ask-tbl:has(thead th:nth-child(4)) th:first-child > .tbl-th,
+  .tbl.tbl.ask-tbl:has(thead th:nth-child(4)) td:first-child > .tbl-cell,
+  .tbl.tbl.ask-tbl:has(thead th:nth-child(4)) td:first-child > .tbl-link { max-width: 150px; }
+}
 
 @media (max-width: 900px) {
   .ask-headline { font-size: 18px; }

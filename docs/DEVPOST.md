@@ -1,270 +1,172 @@
-# Wattson — Devpost answers
+# Wattson, Devpost answers
 
-*Draft. Every number here is traceable to `server/static_export/` or `claims/companies.json`.
-Edit the voice freely; do not edit the figures without re-checking them.*
+*Every figure traces to `server/static_export/` or `claims/companies.json`.*
 
 ---
 
 ## Project description
 
-**Wattson is a greenwashing investigation of datacenter operators — we settle every
-"100% renewable" claim against 4.45 million hours of federal meter data, and hand asset
-managers the named utility on the other side of the gap.**
+**Wattson is a greenwashing investigation of datacenter operators. We check every
+"100% renewable" claim against 4.45 million hours of federal power-plant data, and name
+the utility on the other side of the gap.**
 
-Greenwashing analysis is a mature field for fast fashion, airlines and oil majors. It does
-not exist for datacenters, which are now the fastest-growing industrial electricity load in
-the United States. Wattson takes a company's published claim with a page cite, resolves
-which grid each of its datacenters physically draws from, and puts its own words next to
-what the meter recorded.
+Watchdogs exist for fast fashion, airlines and oil majors. None exist for datacenters,
+now the fastest-growing user of electricity in the country. We take a company's published
+claim, work out which grid each of its datacenters actually plugs into, and put its own
+words next to what that grid burned.
 
 ---
 
 ## Inspiration
 
-Every company building AI datacenters says it runs on clean power. Nobody had checked,
-and we wanted to know why not.
+We wanted to build a quantitative model on something real, and we started where everyone
+starts: ordinary companies. Greenwashing in consumer brands is well covered, and it is
+mostly a reading problem. Deciding whether you believe a sustainability report is not a
+measurement.
 
-The answer turned out to be a format problem, not an interest problem. The claim is a
-sentence in a sustainability PDF. The evidence is nine years of hourly generation data
-across all seventy US balancing authorities. Nobody was joining them, so the claim went
-unchecked — not because it was hard to doubt, but because it was hard to *check*.
+Then we looked at datacenters, and two things landed at once. **Nobody is watching them**,
+even though they are the fastest-growing electricity load in the US. **And their claim is
+physically checkable**, because a datacenter is a fixed address plugged into one specific
+grid, and the government publishes what that grid burned every hour for the last nine
+years.
 
-What made us think there was something real there was a hunch about **hours**. Solar
-transformed the middle of the day over the last decade. It did nothing at all for the
-middle of the night. And a datacenter is the one load that does not care what time it is —
-it draws the same power at 3am in January as at noon in June. If that hunch held, then an
-annual "100% renewable" claim could be completely true on paper and still describe a
-facility that ran on gas every single night for seven years.
+That turned it from an essay into arithmetic. The claim is a sentence in a PDF; the answer
+is 4.45 million rows of meter data. Nobody had joined them, so we did.
 
-It held, and the size of it surprised us. Since 2019 the US added **64.7 GW** of clean power to the average daytime hour and **17.7 GW** to the average overnight hour — 3.7x as much to the hours a datacenter does not care about. The overnight *share* did not fall; it held flat at 39.7% while demand grew underneath it.
+The hunch that made it worth doing was about time of day. Solar transformed the middle of
+the day and did nothing for the middle of the night, and a datacenter is the one customer
+that does not care what time it is. If that held, a company could be telling the truth on
+paper and still run on gas every night for seven years.
 
-These are the **corrected** 2019 figures. The published national 2019 baseline includes AZPS's 3,373 MW overnight phantom — Palo Verde nuclear counted twice, once under Arizona and once under SRP — which our own corrections file proves. Published 2019 overnight clean reads 159.0 GW; corrected it is 155.7 GW. Quote the corrected number and say that you corrected it; that exchange is worth more than the number.
+It held. Since 2019 the US added **64.7 GW** of clean power to the average midday hour and
+**17.7 GW** to the average 3am hour.
 
 ---
 
 ## What it does
 
-Wattson computes the hourly carbon-free share of generation for every US balancing
-authority from EIA-930, then uses it four ways:
+**Check a company.** Type a ticker. You get its claim word-for-word with a page number,
+how clean the grids under its datacenters actually were, and a verdict. **52 operators,
+134 sites**, from Google and Microsoft to CoreWeave, Nebius, IREN and OpenAI's Stargate.
 
-**1. It checks a company's claim against its own grids.** Type a ticker. You get the claim
-verbatim with a page citation, the grid share the company's mapped sites actually ran on,
-a verdict, and the contradiction where there is one. We hold **52 operators across 134
-sites** — hyperscalers, the bitcoin-to-AI converts (IREN, TeraWulf, Riot, Cipher, Applied
-Digital, Hut 8, Core Scientific, MARA), neoclouds (CoreWeave, Nebius, Lambda, Crusoe,
-Fluidstack), and the colocation REITs (Equinix, Digital Realty, Vantage, QTS, Switch,
-CyrusOne, STACK, Aligned). Every site carries a source URL and a confidence grade.
+**Find datacenters without a list of datacenters.** Our detector scores 111 US grid
+regions purely on how demand behaves: nights growing faster than days, growth outpacing
+neighbors, the daily curve flattening. It never reads a press release. Northern Virginia
+ranks 6th, Omaha 7th.
 
-**2. It finds datacenters without a list of datacenters.** A demand-only detector scores
-111 regions on the *signature* of flat 24/7 load: overnight demand growing faster than
-average, divergence from neighbors, and the load factor flattening. It never looks at a
-press release. ERCOT North ranks 1st at +94.6% growth; Fort West 2nd at +116.1%; Northern
-Virginia 6th; Omaha 7th.
+**Say where the next one should go.** We rank regions by clean power available at 3am,
+which decides whether new demand is met by existing clean plants or by building more gas.
 
-**3. It says where the next gigawatt should go.** A siting score ranks regions on clean
-power available *at 3am* — level, direction, and headroom — because that is the hour that
-decides whether new load is served by existing clean capacity or by new gas.
+**Ask it anything.** ⌘K takes a plain English question and answers with a table you can
+click into. It can only show numbers the data produced.
 
-**4. It answers questions in plain English.** ⌘K takes any typed question, runs it through
-ten typed tools against the real data, and returns a table, a chart and links — not a
-paragraph of prose. Every figure it shows has to trace back to a tool result; the model is
-structurally unable to introduce a number the data did not produce.
+**The finding:** in PJM, the grid serving the world's biggest datacenter cluster, clean
+power at night has not grown since 2019. Night-time generation rose 8.7 GW. Gas supplied
+10.7 of it. Look at yearly averages and this disappears entirely.
 
-**The finding:** nationally, clean power was added to the day and not the night — 64.7 GW
-to the average daytime hour since 2019 against 17.7 GW to the average overnight hour, on a
-2019 baseline corrected for a double-count we found ourselves. And in PJM — the grid serving the largest datacenter cluster on earth —
-overnight clean generation has not increased since 2019. Overnight generation rose 8.7 GW.
-Gas supplied 10.7 GW of it. Net exports to neighbors fell from 3,814 MW to 2,489 MW, so
-the extra power stayed inside PJM. **At annual resolution this finding does not exist.**
-
-**What we never say:** that a company lied. Annual matched claims are genuinely true under
-the GHG Protocol market-based method — a legitimate accounting standard, not a loophole.
-Our verdict is *"true on paper, X% physically."* We are not measuring honesty. We are
-measuring the gap between a contract and a meter. A greenwashing accusation is arguable;
-two of a company's own published numbers side by side are not.
+**We never say a company lied.** Annual "100% renewable" claims are legitimately true
+under the accounting standard everyone uses. Our verdict is *"true on paper, X% in
+reality."* Two of a company's own numbers side by side are not arguable.
 
 ---
 
 ## How we built it
 
-**The data.** EIA-930 via PUDL — 4.45 million hourly rows across 70 balancing authorities,
-July 2018 to September 2026. Carbon-free is defined as nuclear + hydro + wind + solar +
-geothermal; storage is excluded because it is not generation; other/unknown stays in the
-denominator so we never flatter a grid by dropping what we cannot classify.
+We read 354 documents, 309 sustainability reports and 45 SEC filings. For each claim we
+store the number, how precisely it is stated, how heavily it is qualified, and the page it
+appeared on.
 
-**The detector.** Robust z-scores (median/MAD, not mean/σ, because this distribution has
-real outliers we do not want to let set the scale) over three signals: overnight excess,
-neighbor divergence, and load-factor change at half weight. Regions under 500 MW average
-demand are excluded. **Weights and cutoffs were frozen before we looked at the ranking,
-and four validation regions were named in advance.** Three landed (Northern Virginia 6th,
-Omaha 7th, AEP 19th). One missed: Dallas came 91st, because neighbor divergence compares a
-zone against its neighbors and *every* ERCOT zone is booming, so a booming Dallas looks
-unremarkable. We report the miss rather than re-tuning until it disappeared.
+Qualifiers change what a claim means. "100% renewable" and "100% of annual consumption
+matched with market-based certificates" are the same number but different claims. We score
+each qualifier down, and "annual" costs the most, because averaging over a year hides what
+happens at night. That gives a talk score for each company.
 
-**The claims layer.** PDFs and SEC filings in, structured claims out — each with magnitude,
-specificity, scope and a page cite. Verdicts are one of four: `true_on_paper`,
-`contradicted`, `unfalsifiable`, or `cannot_verify` with an enumerated reason. The
-`cannot_verify` count is displayed on screen rather than hidden, because a verification
-tool that never says "I don't know" is not a verification tool.
+The grid data gives a walk score: how clean the power actually was on the grids that
+company's datacenters sit on. We compare the two.
 
-**The facility lookup is the part that decides everything,** and it is hand-curated on
-purpose. Which grid a datacenter draws from is not a geography problem. IREN's Childress
-site sits in the Texas Panhandle, where most counties are SPP — naive geography maps it to
-SPP and gets the wrong grid. It interconnects directly to ERCOT. One wrong row flips a
-verdict, so every row carries a source URL and a confidence grade.
+Every claim stores a verbatim quote and a page number, so anything the model extracted can
+be checked against the original document.
 
-**The stack.** Python + pandas/pyarrow for the engine, FastAPI for the API, React + Vite
-for the front end, deployed as a static export so the whole thing runs with no server if
-the network dies during judging. The ask layer is an OpenAI tool-calling loop over ten
-typed tools.
+The ask layer answers questions by calling ten tools that query the data. Before an answer
+renders, we check every number in it against what those tools returned and drop anything
+that does not match.
 
-**How we worked.** We ran a fleet of parallel coding agents against isolated git worktrees,
-with one session acting as merge gatekeeper — nothing reached the main branch without a
-clean-clone build and an adversarial review pass whose only job was to find what was wrong
-with the work, not to agree with it. That review caught several things listed below.
+The grid figures themselves are arithmetic over government data. No model touches them,
+which is why the whole pipeline reproduces exactly on a fresh machine.
 
----
+Working out which grid each site connects to took the most manual work. IREN's site in the
+Texas Panhandle sits in a county served by one regional grid but wires directly into ERCOT.
+One wrong row changes a verdict, so all 134 sites are checked by hand against a source we
+cite.
 
 ## Individual contributions
 
-**Yash** owned the investigation layer: the claims pipeline (`claims/`), document ingestion
-and extraction, the company verdict schema and `companies.json`, the facility-to-utility
-lookup, the API and ask layer, and the Voloridge reproducibility run on EC2.
+**Yash** built the investigation side: reading company documents, extracting claims,
+mapping every datacenter to the utility that serves it, and the API and ask layer.
 
-**Shri** owned the grid engine and the interface: the L0–L4 data pipeline (`scripts/`),
-the carbon-free index, the flat-load detector, the siting score, the fuel decomposition,
-the export/alerts layer, and the front end.
+**Shri** built the grid engine and the interface: the hourly clean-power index, the
+detector, the siting score, and the whole front end.
 
-**Shared:** the JSON schema for a company card was agreed between us before either side
-built against it, which is what let the two halves develop in parallel and still join.
-Both write-ups and the honesty rules were argued out jointly — most of the rules in the
-spec exist because one of us tried to make a claim the other could not verify.
+We agreed the data format between the two halves before either of us started, which is why
+they actually joined at the end.
 
 ---
 
 ## Challenges we ran into
 
-**Our own published number was wrong, in direction.** Arizona's overnight clean share reads
-0.62 in 2019 and 0.15 in 2025 — an apparent collapse. It is an artifact: a reporting change
-double-counts part of the footprint. The real trend is the opposite. We caught it in our own
-diagnostics, and rather than silently patching the export we built a correction overlay that
-shows **both** the published and the corrected value. Then we swept all 69 other BAs and all
-4,430 BA pairs to prove Arizona was the only one.
+**We published a number that was wrong.** Arizona's clean power looked like it collapsed
+since 2019. It had not: one nuclear plant was reported twice, once by each of two
+neighboring grid operators, inflating the baseline. Corrected, Arizona's clean share rose.
+We found it in our own checks, and the site now shows the published and corrected figures
+side by side instead of quietly swapping them.
 
-**A PDF parser that fabricated quotes.** `pdfplumber` reads two-column sustainability
-reports straight across the page, splicing the left column into the right and producing
-sentences that read fluently and do not exist in the document. We had already repeated one
-of those fabricated quotes out loud before we caught it. Fixed by switching to PyMuPDF with
-column-aware extraction. This was the most frightening bug of the weekend: it does not look
-like a bug, it looks like a finding.
+**Our PDF parser made up quotes.** It read two-column reports straight across the page
+instead of down each column, stitching the end of one sentence onto the start of another.
+The results read perfectly and were not in the document. We had already repeated one before
+catching it. We switched parsers, and every claim now carries a page number to check.
 
-**A ranking that was secretly a tautology.** Our first alert-prioritization pass scored
-missing values as passes, so regions with incomplete data swept the top eight slots and the
-"prioritized" screen turned out to be the detector ranking wearing a different label.
+**Missing data displayed as zero**, so a company we had read nothing for showed a score of
+0% rather than a blank, making it look like we had measured something and found nothing.
 
-**A null that rendered as a zero.** Amazon's talk score is legitimately `null` — we could
-not verify its claim. `(talk_score ?? 0)` drew that as a 0% bar, and a screen that says
-"Amazon talks at zero" is a lie assembled from correct JSON. Null handling is now a rule:
-an absent value renders as an em-dash or a sentence, never a number.
-
-**Five agents, one checkout.** We ran parallel agents against what we thought were isolated
-worktrees and discovered they shared a checkout, so they were overwriting each other. Also
-a deploy race where two branches' pushes were cancelling each other's builds.
-
-**Claiming a build passed that hadn't.** A `git add -A` ran before an edit was finished, so
-the commit captured a stale index and the tree that built locally was not the tree that got
-committed. The rule now is that verification means a fresh `git clone` and `npm ci`, not a
-green build in the directory you were just editing.
-
----
+**The pipeline is hourly and almost nothing else is.** Reports are annual, grid regions are
+drawn for markets rather than geography, and time zones mean "overnight" is a different set
+of hours in Texas than in New England. Most of the engineering went into keeping those
+aligned.
 
 ## Accomplishments that we're proud of
 
-**We froze the method before we saw the answer.** Weights, cutoffs and four named
-validation regions were committed in advance. Three hit, one missed, and we published the
-miss with the reason. That is the difference between a finding and a story.
+**We committed to the method before seeing the answer.** Weights fixed, four test regions
+named in advance, in the same commit as the code that produced the ranking. Three landed in
+the top twenty. Dallas came 91st and we published it rather than retuning until it went away.
 
-**We found our own worst bug and shipped the correction as a feature.** The Arizona overlay
-shows the published number and the corrected number side by side, with the method note. Most
-projects would have quietly fixed the export.
+**It held on data that did not exist when we locked it.** Re-run against 2026, three of
+those four scored better, not worse. Northern Virginia went 6th to 3rd.
 
-**The honesty rules held under pressure.** We never say a company lied, we never say
-"caused by" when we mean "consistent with", and `cannot_verify` is counted on screen. We
-had every incentive to write a punchier claim and did not.
+**Every gap is written down.** 48 of our 52 companies have no documents read yet and each
+one says so. Seven more we could not place honestly are listed with what we searched for.
 
-**Every gap is a recorded decision, not a 404.** 48 of our 52 operators have sites mapped
-but no documents read, and each says `no_documents_ingested` in words: *a gap in our
-coverage, not a finding about them*. Seven operators we searched for and could not honestly
-place — IBM, Salesforce, Nvidia, Together AI, Anthropic among them — are written down with
-what we looked for and why we stopped. Anthropic is the instructive one: its $50bn
-Fluidstack deal names only "Texas and New York," and no source we opened puts Anthropic at
-either placeable Fluidstack site, so both sites are filed under **Fluidstack**, not
-Anthropic. Guessing there would have been the exact error this project exists to expose.
-
-**The counterexample.** Vantage's Quincy, Washington site runs on Grant County PUD — 100%
-carbon-free at 3am, all year, Columbia River hydro. The method isn't "everyone is dirty."
-It distinguishes.
-
-**It reproduces.** The full pipeline was re-run end to end on a clean EC2 box across a
-pandas major version, and produced identical output.
-
----
+**It distinguishes rather than just indicts.** One site we checked, in Quincy, Washington,
+runs on a grid that is 100% carbon-free at 3am.
 
 ## What we learned
 
-**Resolution is the whole argument.** The same dataset at annual resolution says nothing
-and at hourly resolution says something nobody had said. We did not find new data; we
-refused to average over the hours that mattered.
+**Time resolution was the whole argument.** The same data says nothing yearly and something
+new hourly. We did not find new data, we refused to average away the hours that matter.
 
-**A share falling is not the same as a quantity shrinking,** and conflating them is the
-easiest way to write something false out of true numbers. National overnight clean share
-held flat at 0.397 — while overnight clean output *rose* from 155.7 GW to 173.4 GW.
-Demand simply grew faster. Every screen that shows a share now has the absolute beside it.
+**A percentage falling is not an amount shrinking.** Confusing the two is the easiest way
+to say something false using entirely true numbers.
 
-**Organizational boundaries are not geographic ones.** Balancing authority zones nest
-inside parents and report demand only, inheriting the parent's generation. PJM's +10.74 GW
-of gas is never Dominion's gas. Getting this wrong would have produced a headline we could
-not defend.
-
-**The most dangerous bugs produce plausible output.** A crash is free to find. A PDF parser
-that splices columns into fluent fake quotes, a null that draws as a zero, a ranking that
-is secretly its own input — all three produced screens that looked right. We now verify
-from a clean clone and have an agent whose only job is to attack the result.
-
-**Say what you cannot verify.** The `cannot_verify` counter, the coverage-gap records and
-the Dallas miss all make the project *more* credible, not less. Judges and quants both
-probe for what you are hiding; the fastest way through is to have hidden nothing.
-
----
+**The dangerous bugs look correct.** A crash is easy to find. A parser writing believable
+fake quotes, a blank rendering as a zero, a ranking quietly feeding on its own output: all
+three produced screens that looked completely fine.
 
 ## What's next
 
-**See behind the meter.** Eleven of our mapped sites are behind-the-meter — powered by
-generation that never touches the grid — so EIA-930 cannot see their load at all, and for
-two of them the operator's own fact sheet says so in writing. That is a structural blind
-spot in a demand-only detector: the largest, newest, most vertically integrated campuses
-are precisely the ones most likely to be invisible to it. We state it rather than wait to
-be caught by it, but closing it needs interconnection and permit data, not EIA-930.
+**Measure the marginal plant, not the average.** What matters is which generator fires up
+when a datacenter switches on, and that is usually dirtier than the average.
 
-**Marginal emissions, not average.** We report the average grid mix. The question a siting
-decision actually turns on is what the *marginal* generator is when your load arrives —
-which is almost always dirtier than the average. That needs dispatch-level modeling.
+**See behind the meter.** Eleven sites we mapped make their own power, so government data
+cannot see them at all, and those are exactly the biggest new campuses.
 
-**Allocate interchange.** We measure generation inside a footprint, not consumption. A
-region importing clean power gets no credit and a region exporting fossil power takes no
-blame. Allocating flows across ties would close the largest single gap in the method.
-
-**Finer geography.** PJM spans Chicago to New Jersey as one number. Nodal LMP data would
-let us resolve to the substation a datacenter actually connects at, instead of a region
-the size of six states.
-
-**Automate the facility lookup — carefully.** It is hand-curated because it is the row that
-flips verdicts. Interconnection queues, FERC filings and utility IRPs could do it at scale,
-but only with a confidence grade attached to every row and a human on anything low.
-
-**Scale the claims corpus.** Four operators have documents read; forty-eight have sites
-mapped and nothing ingested. The pipeline is built and the bottleneck is now just documents through it.
-
-**Track it forward.** Everything here is retrospective. The same detector run monthly
-against fresh EIA-930 becomes an early-warning system — flat load showing up on a utility's
-system eighteen months before it shows up in a rate case.
+**Run it forward.** Everything here looks backwards. Run monthly against fresh data and the
+same detector becomes an early warning for where the next buildout lands.

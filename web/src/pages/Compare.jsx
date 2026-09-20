@@ -11,14 +11,16 @@ import { compareAnswer, caveatFor, pct0, pct1, gw1, n0, signedGw } from '../lib/
 import { resolvePlace, DEMO_COMPARE } from '../lib/query.js'
 import { SHAPES, FLEX_FRACTION, cleanShareFor, shiftable, profileOf } from '../lib/shape.js'
 import ShapePicker from '../components/ShapePicker.jsx'
-import WxHeadToHead from '../components/WxHeadToHead.jsx'
+import CmpOverlay from '../components/CmpOverlay.jsx'
+import { buildVs, MODES, parseVs } from '../lib/cmpData.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import { Bolt, Layers, Info, Place, Pin, Night, ChevronDown, ChevronUp } from '../components/Icons.jsx'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 import '../styles/answer.css'
+import '../styles/compare.css'
 
-const trend = s => (s == null ? ', ' : `${s > 0 ? '+' : ''}${(s * 100).toFixed(1)} pts / yr`)
+const trend = s => (s == null ? '—' : `${s > 0 ? '+' : ''}${(s * 100).toFixed(1)} pts / yr`)
 const pctFmt = n => `${Math.round(n)}%`
 
 // Zone label: what kind of thing the next block is.
@@ -58,6 +60,13 @@ export default function Compare({ route }) {
   const [add, setAdd] = useState('')
   const [shape, setShape] = useState('flat')
   const [flexible, setFlexible] = useState(false)
+  // The side-by-side screen. It rides in the URL so a comparison can be sent to someone, and it
+  // opens on its own when you arrive at Compare with nothing named yet: two things side by side
+  // is what you came for, and an empty ranking is not an answer to anything.
+  const vs = useMemo(() => parseVs(route.params?.vs), [route.params?.vs])
+  const [dismissed, setDismissed] = useState(false)
+  const overlayOpen = !!vs || (!route.metros.length && !dismissed)
+  const openVs = (mode, a = '', b = '') => { window.location.hash = href.compare({ ...request, evidence, vs: buildVs({ mode, a, b }) }) }
   const baseCands = data?.candidates || []
   const details = useRegionDetails(baseCands.map(c => c.region_id))
   // What-if layer: any shape other than flat 24/7 (or the flexible toggle) re-ranks the candidates on the
@@ -71,6 +80,10 @@ export default function Compare({ route }) {
   }, [baseCands, details, whatIf, shapeDef, flexible])
   const shapeLabel = whatIf ? `${shapeDef.label}${flexible ? ', flexible 20%' : ''}` : null
   const answer = data ? compareAnswer({ ...data, candidates: cands }, { shapeLabel }) : null
+  // The grids already on this page open the side-by-side screen, so it starts on the comparison
+  // the reader was halfway through rather than on a default pair.
+  const seedKey = cands.map(c => c.region_id).join('|')
+  const seedRegions = useMemo(() => seedKey.split('|').filter(Boolean), [seedKey])
   const globe = useMemo(() => {
     const pts = cands.filter(c => c.lat != null)
     return { view: fitView(pts), points: pts.map(c => ({ id: c.region_id, lat: c.lat, lng: c.lng, r: 0.2, color: c === answer?.best ? tk.accent : tk.ink2 })), rings: pts.filter(c => c === answer?.best).map(c => ({ id: c.region_id, lat: c.lat, lng: c.lng, color: tk.accent, maxR: 3, speed: 0.8, period: 1600 })),
@@ -116,14 +129,14 @@ export default function Compare({ route }) {
           <>
             <div className="instrument"><Ring value={cf} /><div className="num"><div className="v" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{pct1(cf)}{series && <Sparkline values={series} width={72} height={20} accentLast baseline title="clean at night, 2019 to 2025" />}</div><div className="l">{whatIf ? `clean power in the hours a ${shapeLabel} load runs` : 'clean power at night'}, 2025 · {trend(c.siting?.ratio_slope_per_year)}</div></div></div>
             <KV rows={[
-              ['since 2019', c.siting?.change_since_2019 != null ? `${c.siting.change_since_2019 > 0 ? '+' : ''}${(c.siting.change_since_2019 * 100).toFixed(1)} pts` : ', '],
-              ['clean power vs night demand', c.siting?.overnight_clean_mw_over_demand != null ? `${c.siting.overnight_clean_mw_over_demand.toFixed(2)}×` : ', '],
+              ['since 2019', c.siting?.change_since_2019 != null ? `${c.siting.change_since_2019 > 0 ? '+' : ''}${(c.siting.change_since_2019 * 100).toFixed(1)} pts` : '—'],
+              ['clean power vs night demand', c.siting?.overnight_clean_mw_over_demand != null ? `${c.siting.overnight_clean_mw_over_demand.toFixed(2)}×` : '—'],
               c.filled_by && ['last growth filled by', <span key="f" className={c.filled_by.fuel === 'gas' ? 'accent' : ''}>{c.filled_by.fuel} {signedGw(c.filled_by.gw)}</span>],
-              ['served by', c.operator ? `${c.operator.utility}${c.operator.ticker ? ` · ${c.operator.ticker}` : ''}` : c.serving_utility || ', '],
+              ['served by', c.operator ? `${c.operator.utility}${c.operator.ticker ? ` · ${c.operator.ticker}` : ''}` : c.serving_utility || '—'],
               dem && ['your load', `${(load / dem * 100).toFixed(1)}% of night demand`],
               cf != null && ['fossil at the 2025 mix', `${n0(load * (1 - cf))} of ${n0(load)} MW`],
               c.detector?.rank && ['flat-load rank', `#${c.detector.rank} of ${c.detector.n_scored || 111} · ${c.detector.growth_pct > 0 ? '+' : ''}${Math.round(c.detector.growth_pct)}% since 2019`],
-              ['siting rank', c.siting?.siting_rank ? `${c.siting.siting_rank} of ${c.siting.n_ranked}, 1 is best` : ', '],
+              ['siting rank', c.siting?.siting_rank ? `${c.siting.siting_rank} of ${c.siting.n_ranked}, 1 is best` : '—'],
             ]} />
             {prof && <div style={{ marginTop: 12 }}><HourBars values={prof} caption="Clean share by hour, 2025 (night hours marked)" /></div>}
             {cav && <div className="banner banner-error" style={{ marginTop: 10 }}>{cav}</div>}
@@ -195,10 +208,16 @@ export default function Compare({ route }) {
           </details>
         </Card>
         <Zone icon={Place}>Head to head</Zone>
-        <Card className="ans-card" title={<><b>Any two regions</b> · the difference, at {n0(Number(mw) || load)} MW</>}>
-          {regs.data
-            ? <WxHeadToHead regions={regs.data.regions} mw={Number(mw) || load} initial={[cands[0]?.region_id, cands[1]?.region_id].filter(Boolean)} />
-            : <p className="note">Loading the region list.</p>}
+        <Card className="ans-card" title={<><b>Any two, side by side</b> · the difference, at {n0(Number(mw) || load)} MW</>}>
+          <p className="note">Opens over this page. Two grids, two operators, or two individual datacenters, with the megawatts behind every share and the difference worked out in the third column.</p>
+          <div className="cmp-launch">
+            {MODES.map(m => (
+              <button key={m.id} type="button" className="cmp-launch-b" onClick={() => (m.id === 'region' ? openVs('region', cands[0]?.region_id || '', cands[1]?.region_id || '') : openVs(m.id))}>
+                <span className="t">{m.label}</span>
+                <span className="d">{m.blurb}</span>
+              </button>
+            ))}
+          </div>
         </Card>
         {evidence && (
           <>
@@ -213,5 +232,22 @@ export default function Compare({ route }) {
       </>
     )
   }
-  return <Shell page="compare" globe={globe} column={column} />
+  return (
+    <>
+      <Shell page="compare" globe={globe} column={column} />
+      {/* Keyed on the link itself: the screen owns its selection once it is open and writes the
+          link back in place, so only a real navigation (a shared link, a launcher button, the
+          back button) starts it over from the URL. */}
+      <CmpOverlay
+        key={route.params?.vs || 'auto'}
+        open={overlayOpen}
+        mode={vs?.mode}
+        a={vs?.a}
+        b={vs?.b}
+        mw={Number(mw) || request.mw}
+        seedRegions={seedRegions}
+        onClose={() => setDismissed(true)}
+      />
+    </>
+  )
 }

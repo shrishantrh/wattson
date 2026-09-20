@@ -9,7 +9,7 @@ import '../styles/wx.css'
 // value reaches the screen, and a null becomes an em dash. A null must never render as 0,
 // "null", "NaN", "undefined" or an empty string, a null drawn as a 0% bar is a lie.
 
-export const DASH = ', '
+export const DASH = '—'
 export const isNum = v => typeof v === 'number' && Number.isFinite(v)
 // nn(value, format) -> formatted text, or an em dash when the value is absent.
 export const nn = (v, format = String) => (v == null || (typeof v === 'number' && !Number.isFinite(v)) ? DASH : format(v))

@@ -4,7 +4,7 @@ import { href, useHash, parseHash } from '../router.js'
 import QuickSearch from '../components/QuickSearch.jsx'
 import { useColumnWidth, ResizeHandle } from '../components/ColumnResize.jsx'
 import Insight from '../components/Insight.jsx'
-import { ZoomIn, ZoomOut, Night, Table as TableIcon, Layers, Globe as GlobeIcon } from '../components/Icons.jsx'
+import { Table as TableIcon, Layers, Globe as GlobeIcon } from '../components/Icons.jsx'
 import '../styles/console.css'
 
 // The shell: ONE persistent night globe (mounted once, in StageProvider at the app root) with,
@@ -53,7 +53,10 @@ export function StageProvider({ children }) {
     <StageCtx.Provider value={ctx}>
       <div className="app" style={{ '--col-w': `${colWidth || colW}px` }}>
         <div className="stage" aria-hidden="true">
-          <div className={`globe-host ${flat ? 'flat' : ''} ${spec.column ? 'with-column' : ''} ${navAck ? 'mo-nav' : ''}`} style={spec.column ? { left: colWidth + (flat ? 60 : 0) } : undefined}>
+          {/* Where the globe's area starts is base.css's --stage-l: the column's own left gutter,
+              plus its live width, plus the gutter between the two. Set inline from the width
+              alone it landed one gutter INSIDE the column and the cards ran over it. */}
+          <div className={`globe-host ${flat ? 'flat' : ''} ${spec.column ? 'with-column' : ''} ${navAck ? 'mo-nav' : ''}`}>
             <GlobeC view={view} points={g.points || NONE} rings={g.rings || NONE} labels={NONE} markers={g.markers || NONE} terminator={terminator} interactive={g.interactive ?? !!spec.column} autoRotate={g.autoRotate ?? 0} atmosphere={style === 'night' ? { color: '#ffffff', altitude: 0.1 } : { color: '#ffffff', altitude: 0.08 }} quality="auto" style={style} landColors={g.landColors} />
           </div>
         </div>
@@ -71,19 +74,9 @@ export function StageProvider({ children }) {
             <a href={href.method()} className={spec.page === 'method' ? 'on' : ''} aria-current={spec.page === 'method' ? 'page' : undefined}><Layers size={13} />Method</a>
           </nav>
         </header>
-        {/* The globe's own controls, docked to the top-left corner of the globe's area rather than
-            floating against the window edge, and named on their faces. The group says what it
-            operates and that the globe answers the pointer at all. */}
-        <div className="stage-ctl" style={{ left: colWidth }} role="group" aria-label="Globe controls">
-          <span className="stage-ctl-title"><GlobeIcon size={13} />Globe<span className="stage-ctl-hint">drag to spin</span></span>
-          <span className="stage-ctl-zoom">
-            <button type="button" onClick={() => setZoom(z => Math.max(-4, z - 1))} aria-label="Zoom out"><ZoomOut size={15} /></button>
-            <span className="stage-ctl-k">Zoom</span>
-            <button type="button" onClick={() => setZoom(z => Math.min(6, z + 1))} aria-label="Zoom in"><ZoomIn size={15} /></button>
-          </span>
-          <button type="button" className={`stage-ctl-night ${style === 'night' ? 'on' : ''}`} aria-pressed={style === 'night'} onClick={() => setStyle(v => (v === 'night' ? 'dots' : 'night'))}><Night size={15} />Night lights</button>
-        </div>
-        {spec.column && <div className="column-wrap" style={{ width: colWidth }}><div className="column stagger mo-col" key={routeKey} data-route={routeKey}>{spec.column}</div>{!spec.columnWidth && <ResizeHandle {...handleProps} />}</div>}
+        {/* The globe carries no control bar: dragging spins it, the wheel zooms, and a
+            labelled pill floating over the map was clutter in front of the answer. */}
+        {spec.column && <div className="column-wrap"><div className="column stagger mo-col" key={routeKey} data-route={routeKey}>{spec.column}</div>{!spec.columnWidth && <ResizeHandle {...handleProps} />}</div>}
         {spec.overlay && <div className="overlay">{spec.overlay}</div>}
         {spec.foot && <div className="foot">{spec.foot}</div>}
         {children}
