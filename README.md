@@ -18,8 +18,18 @@ data across seventy balancing authorities. **Wattson is the join.**
 
 ## Tracks we are entered in, and what backs each one
 
-| Track | Prize | What we put in front of it | State |
-|---|---|---|---|
+| Track | What we built for it |
+|---|---|
+| **Voloridge, "Signal in the Noise"** (primary) | The flat-load detector. 111 regions scored from demand data alone (L3), the siting score (L4), and the correction overlay. Built on PUDL EIA-930, Voloridge dataset #6, fetched with their own script. Reproducibility run on EC2. |
+| **Arrowstreet, "Best Textual Analysis Hack"** | The claims layer. 354 documents ingested, claims extracted with page cites, scored for magnitude / specificity / hedging (L5), then verified against the grid each site draws from (L6). |
+| **Elastic, "Find the Signal"** | `server/search.py`. 354 documents indexed (309 ESG, 45 10-K), exposed to the ask layer as `search_corpus`. Returns passage, ticker, page number and source URL. Live. |
+| **OpenAI** | The ask layer, `server/ai.py`. Tool-calling loop over 10 typed tools, returns structured views. Live. |
+| **Kalshi** | `engine/alpha/kalshi.py`. Contracts with strike, bid, ask and close on the Generating Alpha screen. |
+| **xAI** | Grok narration on the irradiance screen. Live. |
+
+Write-ups: `docs/voloridge/SUBMISSION.md`, `docs/arrowstreet/SUBMISSION.md`.
+
+---|---|---|---|
 | **Voloridge, "Signal in the Noise"** (primary) | $5k + interview fast-track | The flat-load detector: 111 regions scored on demand data alone, method frozen before the ranking, one pre-registered miss published. Plus the AZPS correction we found in our own output. Built on PUDL EIA-930, Voloridge dataset #6, fetched with their own script. | **Ready.** Write-up in `docs/voloridge/SUBMISSION.md`, reproducibility run in `docs/ec2_repro.md` |
 | **Arrowstreet, "Best Textual Analysis Hack"** (secondary) | $1k + research interview | Claims pulled from company PDFs and SEC filings with page cites, scored for magnitude, specificity and hedging, then held against the physical grid. Four verdict classes with an explicit reason on every unsettled one. | **Ready.** Write-up in `docs/arrowstreet/SUBMISSION.md` |
 | **OpenAI** | demo piece | The ask layer is an OpenAI tool-calling loop over ten typed tools. The demo points it at OpenAI's own buildout: six Stargate sites, mapped. | **Live** |
@@ -27,9 +37,77 @@ data across seventy balancing authorities. **Wattson is the join.**
 | **Kalshi** | optional | `engine/alpha/kalshi.py` pulls contracts onto the Generating Alpha screen with strike, bid, ask and close. | **Live** |
 | xAI | optional | Grok narration on the irradiance screen. | **Live** |
 
-**Rule we hold to on every track: never claim something is verified that is not.** The
-`cannot_verify` count, the coverage gaps and the one pre-registered miss are all on screen.
-Judges probe for what you are hiding; the fastest way through is to hide nothing.
+---
+
+## Architecture
+
+```mermaid
+flowchart TD
+  subgraph GRID["Grid side (Shri)"]
+    L0["L0 · acquire<br/>PUDL EIA-930 via pudl_fetch.py<br/>375 MB parquet"]
+    L1["L1 · grid index<br/>build_wide.py, carbon_free_index.py<br/>4.45M hourly rows, 70 BAs"]
+    L2["L2 · temporal split<br/>overnight_profile.py, l2_temporal.py, l2_interchange.py<br/>night vs day, trailing-12, interchange"]
+    L3["L3 · flat-load detector<br/>l3_detector.py · FROZEN<br/>111 regions scored"]
+    L4["L4 · fuel + siting<br/>l4_supply.py<br/>overnight fuel mix, siting score"]
+    L0 --> L1 --> L2 --> L3 --> L4
+  end
+
+  subgraph CLAIMS["Claims side (Yash)"]
+    L5["L5 · extract<br/>claims/ · 354 docs, PyMuPDF + EDGAR<br/>claim, magnitude, specificity, page cite"]
+    L6["L6 · verify<br/>engine/verify<br/>talk vs walk, 4 verdict classes"]
+    LOOK["facility lookup<br/>claims/lookup/facilities.csv<br/>134 sites, serving utility outward"]
+    L5 --> L6
+    LOOK --> L6
+  end
+
+  DIAG["engine/diagnostics<br/>corrections overlay<br/>AZPS double-count"]
+  ALPHA["engine/alpha<br/>utility to ticker, Kalshi"]
+  IRR["engine/irradiance<br/>NASA POWER cross-check"]
+
+  L4 --> L6
+  L4 --> DIAG
+  L4 --> ALPHA
+  L4 --> IRR
+
+  API["server/ · FastAPI<br/>18 endpoints<br/>ai.py: 10 typed tools<br/>search.py: Elastic corpus"]
+  L6 --> API
+  DIAG --> API
+  ALPHA --> API
+  IRR --> API
+
+  EXPORT["--static-export<br/>187 JSON files"]
+  API --> EXPORT
+
+  WEB["web/ · Vite + React<br/>14 screens + Cmd-K"]
+  EXPORT --> WEB
+  API -.->|"VITE_API_BASE, optional"| WEB
+```
+
+### Layers
+
+| Layer | What it produces | Where |
+|---|---|---|
+| **L0** acquire | EIA-930 parquet from PUDL S3 | `scripts/vendor/pudl_fetch.py` |
+| **L1** grid index | Hourly carbon-free share, 70 BAs, 4.45M rows | `scripts/build_wide.py`, `carbon_free_index.py` |
+| **L2** temporal | Night vs day split, trailing-12, PJM interchange | `scripts/overnight_profile.py`, `l2_temporal.py`, `l2_interchange.py` |
+| **L3** detector | 111 regions scored for flat 24/7 load, demand only. **Frozen, do not re-tune** | `scripts/l3_detector.py` |
+| **L4** supply | Overnight fuel decomposition, siting score | `scripts/l4_supply.py` |
+| **L5** extract | Claims with magnitude, specificity, hedging, page cite | `claims/`, `server/search.py` |
+| **L6** verify | Talk vs walk, verdict per claim → `claims/companies.json` | `engine/verify` |
+| **L7** interface | 14 screens, Cmd-K ask layer | `web/` |
+| side | Corrections overlay, alpha chain, irradiance cross-check, alerts | `engine/diagnostics`, `engine/alpha`, `engine/irradiance`, `scripts/alerts.py` |
+
+### How a verdict is made
+
+1. A claim is pulled from a company PDF or filing, with its page number.
+2. The facility lookup names the **serving utility** for each of that company's sites, then the balancing authority that utility sits in. Never inferred from the state.
+3. L1 gives that BA's hourly carbon-free share; L2 splits it into overnight and daytime.
+4. Walk = mean physical share across the mapped sites. Talk = magnitude × specificity × scope breadth.
+5. The verdict is one of `true_on_paper`, `contradicted`, `unfalsifiable`, `cannot_verify`.
+
+### Data flow at serve time
+
+`server/` reads `claims/companies.json`, `dashboard/public/data/*` and the corrections overlay, and answers 18 endpoints. `--static-export` writes every endpoint response to `server/static_export/`, which `web/` bakes into `dist/api/`. The front end resolves data in order: `VITE_API_BASE` if set, then the baked export, then contract fixtures. **The demo runs entirely from the baked export: no server, no Python, no network.**
 
 ---
 
@@ -136,23 +214,19 @@ Overnight is 00:00-05:59 local; daytime 10:00-15:59. Baseline 2019. Snapshot end
 
 ---
 
-## Honesty rules, condensed
+## Language rules
 
-These are not decoration. Every one exists because breaking it produced something false out
-of correct numbers.
+Enforced in the code and in the copy.
 
-1. **Never say "caused by."** Say *consistent with*. The detector flags flat load, which is
-   datacenters, crypto, and oilfield electrification.
-2. **Never say a company lied.** Annual matched claims are true under the GHG Protocol
-   market-based method. The verdict is *"true on paper, X physically."*
-3. **Never state a share falling as clean generation shrinking.** Give the absolute in the
-   same breath. This is the single easiest way to write something false here.
-4. **Zones report demand only** and inherit the parent BA's generation. PJM's +10.74 GW of
-   gas is never Dominion's.
-5. **Nulls render as a phrase, never a zero.** `(talk_score ?? 0)` once drew Amazon's null
-   as a 0% bar, a screen that said "Amazon talks at zero" built from correct JSON.
-6. We measure generation within a footprint, not consumption. Interchange is not allocated.
-   Average grid mix, not marginal emissions. Regions are coarse.
+| Rule | Instead |
+|---|---|
+| Never "caused by" | "consistent with" — the detector flags flat load: datacenters, crypto, oilfield electrification |
+| Never "they lied" | "true on paper, X physically" — annual matched claims are valid under the GHG Protocol market-based method |
+| Never a share alone | Give the absolute MW beside it |
+| Never a zone's generation | Zones report demand only and inherit the parent BA's generation. PJM's +10.74 GW of gas is not Dominion's |
+| Never a null as zero | Render an absent value as a phrase |
+
+Scope: generation within a footprint, not consumption. Interchange is not allocated. Average grid mix, not marginal emissions.
 
 ---
 
