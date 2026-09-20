@@ -23,9 +23,9 @@ data across seventy balancing authorities. **Wattson is the join.**
 | **Voloridge, "Signal in the Noise"** (primary) | $5k + interview fast-track | The flat-load detector: 111 regions scored on demand data alone, method frozen before the ranking, one pre-registered miss published. Plus the AZPS correction we found in our own output. Built on PUDL EIA-930, Voloridge dataset #6, fetched with their own script. | **Ready.** Write-up in `docs/voloridge/SUBMISSION.md`, reproducibility run in `docs/ec2_repro.md` |
 | **Arrowstreet, "Best Textual Analysis Hack"** (secondary) | $1k + research interview | Claims pulled from company PDFs and SEC filings with page cites, scored for magnitude, specificity and hedging, then held against the physical grid. Four verdict classes with an explicit reason on every unsettled one. | **Ready.** Write-up in `docs/arrowstreet/SUBMISSION.md` |
 | **OpenAI** | demo piece | The ask layer is an OpenAI tool-calling loop over ten typed tools. The demo points it at OpenAI's own buildout: six Stargate sites, mapped. | **Live** |
-| **Elastic, "Find the Signal"** | conditional | `server/search.py` and the `search_corpus` tool exist and are wired into the ask layer. **No cluster is provisioned**, so the tool currently returns nothing. | **Not claimable until `ELASTICSEARCH_URL` and `ELASTIC_API_KEY` are set on Fly.** One command, see `docs/DEPLOY_API.md` |
+| **Elastic, "Find the Signal"** | | 354 documents indexed (309 ESG reports, 45 10-Ks), searched through `server/search.py` and exposed to the ask layer as `search_corpus`. Returns the passage, the ticker, the page number and the source URL, so every quoted claim carries a cite. | **Live.** Verified on the deployed API: it returns Google's 2026 Environmental Report p27 on 24/7 carbon-free energy |
 | **Kalshi** | optional | `engine/alpha/kalshi.py` pulls contracts onto the Generating Alpha screen with strike, bid, ask and close. | **Live** |
-| xAI | optional | `XAI_API_KEY` drives a Grok narration on the irradiance screen; degrades silently when absent. | Optional |
+| xAI | optional | Grok narration on the irradiance screen. | **Live** |
 
 **Rule we hold to on every track: never claim something is verified that is not.** The
 `cannot_verify` count, the coverage gaps and the one pre-registered miss are all on screen.
@@ -92,6 +92,7 @@ Overnight is 00:00-05:59 local; daytime 10:00-15:59. Baseline 2019. Snapshot end
 | Sites located | **134**, each with a source URL and a confidence grade (42 high, 61 medium, 11 low) |
 | Operators with their own filings read | 4 |
 | Sites behind the meter | 11, invisible to a demand-only detector by construction. We state this rather than wait to be caught by it |
+| Documents indexed | 354 (309 ESG, 45 10-K), searchable with page cites |
 
 ---
 

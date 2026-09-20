@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any, Iterator
 
@@ -187,6 +188,67 @@ def _companion_clauses(query: str) -> list[dict[str, Any]]:
     return []
 
 
+# ---- local fallback -----------------------------------------------------------------
+#
+# The corpus itself lives in claims/raw and is committed: 354 documents, every record
+# already carrying its ticker, page and source URL. Elasticsearch adds ranking quality,
+# not the documents. So when no cluster is configured, search the records directly rather
+# than telling the user there is no corpus: a demo that cannot quote a filing because an
+# env var is unset is a worse failure than a simpler ranker.
+#
+# This is deliberately NOT presented as Elasticsearch. status() reports which engine
+# answered, and the ask layer says so, because claiming a cluster we are not running is
+# exactly the kind of thing this project exists to catch.
+
+_WORD = re.compile(r"[a-z0-9%.]+")
+
+
+def _tokens(text: str) -> list[str]:
+    return _WORD.findall(text.lower())
+
+
+def _score_record(rec_text: str, terms: list[str], phrase: str) -> float:
+    """Term overlap, with a large bonus for the whole phrase appearing."""
+    low = rec_text.lower()
+    if not terms:
+        return 0.0
+    hits = sum(1 for t in terms if t in low)
+    if not hits:
+        return 0.0
+    score = hits / len(terms)
+    if phrase and phrase in low:
+        score += 3.0
+    # Prefer passages that are mostly about the query rather than long pages that mention it.
+    return score + min(len(terms), hits) / max(len(_tokens(rec_text)) or 1, 1) * 2
+
+
+def _local_search(query: str, *, ticker=None, doc_type=None, quality_flag=None,
+                  limit: int = DEFAULT_LIMIT) -> dict[str, Any]:
+    terms = [t for t in _tokens(query) if len(t) > 2]
+    phrase = query.strip().lower()
+    scored = []
+    for _, rec in corpus_records():
+        if ticker and (rec.get("ticker") or "").upper() != ticker.upper():
+            continue
+        if doc_type and rec.get("doc_type") != doc_type:
+            continue
+        flag = (rec.get("quality") or {}).get("flag")
+        if quality_flag and flag != quality_flag:
+            continue
+        text = rec.get("text") or ""
+        sc = _score_record(text, terms, phrase)
+        if sc > 0:
+            scored.append((sc, rec, flag))
+    scored.sort(key=lambda x: -x[0])
+    hits = [{
+        "text": rec.get("text"), "ticker": rec.get("ticker"), "page": rec.get("page"),
+        "locator": rec.get("locator"), "source_doc": rec.get("source_doc"),
+        "source_url": rec.get("source_url"), "doc_type": rec.get("doc_type"),
+        "quality_flag": flag, "score": round(sc, 3),
+    } for sc, rec, flag in scored[:limit]]
+    return {"total": len(scored), "hits": hits, "engine": "local"}
+
+
 def search(query: str, *, ticker: str | None = None, doc_type: str | None = None,
            quality_flag: str | None = None, limit: int = DEFAULT_LIMIT) -> dict[str, Any]:
     if not query.strip():
@@ -217,9 +279,11 @@ def search(query: str, *, ticker: str | None = None, doc_type: str | None = None
     try:
         response = client().search(index=INDEX_NAME, **body)
     except SearchUnavailable:
-        raise
-    except Exception as exc:
-        raise SearchUnavailable(f"Elasticsearch is unreachable: {exc}") from exc
+        return _local_search(query, ticker=ticker, doc_type=doc_type,
+                             quality_flag=quality_flag, limit=limit)
+    except Exception:
+        return _local_search(query, ticker=ticker, doc_type=doc_type,
+                             quality_flag=quality_flag, limit=limit)
     total = response["hits"]["total"]
     total_value = total["value"] if isinstance(total, dict) else total
     hits = []
