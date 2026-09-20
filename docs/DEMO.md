@@ -197,28 +197,69 @@ Drop these anywhere. They are strengths.
 
 ---
 
-# 5. THE OPENAI BEAT
+# 5. THE OPENAI BEAT AND CMD-K
+
+## OpenAI, with the substance
 
 Type **`openai`**.
 
 > **"We built the question box on OpenAI's models. So let's point it at OpenAI."**
 
-Six Stargate sites. Open **New Mexico**:
+**What's on screen, and it's more than people expect:**
+
+> **"Six Stargate sites, and we traced each one to the utility that actually delivers its
+> power. Abilene and Milam County in Texas. Lordstown and Pike County in Ohio — that one's
+> AEP Ohio. Port Washington, Wisconsin, served by We Energies. And Santa Teresa, New
+> Mexico."**
+
+> **"Across those, 36.9% clean. Nobody published that. There is no OpenAI sustainability
+> report to read. We got it from the meter."**
+
+**Then open Santa Teresa:**
 
 > **"El Paso Electric. 34% clean at midday, one tenth of one percent at 3am."**
->
-> **"And this one we can't see at all — it runs on its own gas plant that never touches the
-> grid. We'd rather tell you than have you find it."**
 
-## Cmd-K, three prompts that work
+> **"And this one we can't see at all — it runs on its own 700 to 900 megawatt gas plant
+> that never touches the grid. We'd rather tell you than have you find it."**
 
-| prompt | shows |
+**Why this beat is strong:** OpenAI publishes nothing, so there's no claim to check. The
+grid data works anyway. That's the argument for the whole method, in one company.
+
+---
+
+## The Cmd-K queries. All tested, all return real tables.
+
+**Company comparisons — the crowd-pleaser:**
+
+| type this | you get |
 |---|---|
-| "Which five regions have the most clean power at 3am, and which utility serves each?" | 7 tool calls, table with links |
-| "What did Google say about 24/7 carbon free energy?" | the passage **and its page number**, out of 354 documents |
-| "Compare NBIS and CRWV" | two neoclouds, ~3 seconds |
+| **"Compare OpenAI and CoreWeave"** | CoreWeave **40.1%**, OpenAI **36.9%**, with the grids behind each |
+| **"Compare NBIS and CRWV"** | two neoclouds, ~3 seconds |
+| **"Compare Google and Microsoft"** | both land near 46% |
 
-> **"It structurally can't show you a number the tools didn't return."**
+**The ones that surprise people:**
+
+| type this | you get |
+|---|---|
+| **"Who has the cleanest datacenters?"** | WhiteFiber and Vantage — **not** the names they expect |
+| **"Which operators sit on the dirtiest grids at night?"** | Microsoft and Vantage in Phoenix, on Arizona Public Service |
+| **"Which companies run on the most gas at night?"** | ranked, with the grids |
+
+**The two that show the machinery:**
+
+| type this | you get |
+|---|---|
+| **"Which five regions have the most clean power at 3am, and which utility serves each?"** | **7 tool calls**, table with links |
+| **"What did Google say about 24/7 carbon free energy?"** | the passage **and its page number**, out of 354 documents |
+
+**The line to say while it runs:**
+> **"It's running ten typed tools against the real data. And it structurally can't show you
+> a number the tools didn't return — we check every figure against what the tools returned
+> and drop anything that doesn't match."**
+
+**Best pair if you only get two:** `Compare OpenAI and CoreWeave`, then
+`Who has the cleanest datacenters?` — the second one always gets a reaction, because the
+answer is never who they guess.
 
 ---
 
