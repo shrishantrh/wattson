@@ -1,0 +1,37 @@
+<section class="slide" data-title="Built on" data-notes="The stack, left to right, and it is one pipe. Federal hourly data: EIA-930 pulled through PUDL with Voloridge's own fetch script, 4.45 million hourly rows across 70 balancing authorities, 2018-07-01 to the 2026-09-05 snapshot (numbers.md 2.4: 4,451,763 rows recounted from data/processed/hourly_cf_index.parquet; 70 from ba.nunique(); that parquet is gitignored, so the honest answer if a judge asks for the field is 'it is the row count of the L1 index; the published JSON carries the 124 regions built from it'). A Python engine turns those rows into an hourly carbon-free index and scores 111 regions with the frozen detector, then bakes every API endpoint to JSON (numbers.md 2.3: 111 regions, ranks 1..111 contiguous, 43 BAs plus 68 zones). A React front end: the map is a globe drawn as an instanced dot field, one instance per point, so the whole US region set animates without redrawing geometry. An OpenAI tool-calling layer sits over typed tools rather than RAG over a blob, so every number the answer prints is traceable to a call. ELEVEN tools, on gpt-4.1: alerts, companies, company, compare_companies, compare_regions, facilities, irradiance, national, rank_regions, region, search_corpus. SOURCE, AND DO NOT RE-LITIGATE IT: the deployed API's status endpoint, queried live on 2026-09-20, which returns those eleven names. The repo copy of server/ai.py lists only ten (it is missing compare_companies) and the README also says ten; both are stale, and the demo runs against the live service, so eleven is what a judge would see. Elasticsearch retrieval backs search_corpus and it is LIVE: the search status endpoint reports index wattson-corpus-v1 holding 354 documents, 309 from the four sustainability reports and 45 from the four 10-Ks, quality split 341 clean, 7 tabular, 6 suspect; a real query against Microsoft's report returns real passages with page or Item locators. The README's 'no cluster provisioned' line is out of date; do not disclaim Elastic on stage, it is a sponsor track. The 354 also reconciles with the corpus on disk: wc -l over claims/raw/*.jsonl gives 6+51+9+118+19+74+11+66 = 354 across 8 files, four ESG reports and four annual filings (numbers-v2.md records the same breakdown; numbers.md 3 had listed '354 chunks' as unchecked prose, and it is now checked twice, on disk and in the index). FOR THE OPENAI TRACK, the strongest single line: the Elasticsearch retrieval layer was written by Codex - that is the concrete way Codex improved the process. And the whole site is a static export: server/__main__.py --static-export bakes every endpoint, web/dist needs no server, no Python and no network, which is also the demo's failure plan.">
+  <h2 class="headline">No server</h2>
+  <div class="rule"></div>
+  <svg viewBox="0 0 1200 250" role="img">
+    <line x1="215" y1="105" x2="265" y2="105" stroke="var(--line)" stroke-width="3"/>
+    <line x1="455" y1="105" x2="505" y2="105" stroke="var(--line)" stroke-width="3"/>
+    <line x1="695" y1="105" x2="745" y2="105" stroke="var(--line)" stroke-width="3"/>
+    <line x1="935" y1="105" x2="985" y2="105" stroke="var(--line)" stroke-width="3"/>
+
+    <rect x="25" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <text x="120" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">PUDL</text>
+    <text x="120" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">4.45M rows</text>
+
+    <rect x="265" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <text x="360" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">Python</text>
+    <text x="360" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">111 regions</text>
+
+    <rect x="505" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <text x="600" y="78" text-anchor="middle" font-size="32" fill="var(--ink)">React</text>
+    <g fill="var(--accent)">
+      <circle cx="600" cy="132" r="3"/><circle cx="582" cy="132" r="3"/><circle cx="618" cy="132" r="3"/>
+      <circle cx="591" cy="118" r="3"/><circle cx="609" cy="118" r="3"/><circle cx="573" cy="120" r="2.4"/>
+      <circle cx="627" cy="120" r="2.4"/><circle cx="591" cy="146" r="3"/><circle cx="609" cy="146" r="3"/>
+      <circle cx="573" cy="144" r="2.4"/><circle cx="627" cy="144" r="2.4"/><circle cx="600" cy="108" r="2.4"/>
+      <circle cx="600" cy="156" r="2.4"/>
+    </g>
+    <circle cx="600" cy="132" r="32" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+
+    <rect x="745" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <text x="840" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">OpenAI</text>
+    <text x="840" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">11 tools</text>
+
+    <rect x="985" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <text x="1080" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">Elastic</text>
+    <text x="1080" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">354 passages</text>
+  </svg>
+</section>

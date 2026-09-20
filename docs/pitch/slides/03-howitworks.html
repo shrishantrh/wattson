@@ -1,0 +1,165 @@
+<!-- 03 · HOW IT WORKS · two sections, both systems diagrams.
+     3a: the spine. Federal hourly data -> one index -> three things built on it.
+     3b: the question-answering layer that sits over all of it.
+     Visible words: 3a = 15, 3b = 15. Everything else is in data-notes.
+     Colour discipline: --clean appears only where the mark means carbon-free generation
+     (the index glyph, the siting chip). Boxes, arrows and counts are neutral ink. -->
+
+<section class="slide" data-title="How it works"
+  data-notes="SAY: &quot;Four and a half million hours of federal generation data, seventy grid operators. From it we compute one number for every hour of every region: the carbon-free share of what was actually generated. Three things stand on that index. A detector that scores a hundred and eleven regions for where flat, round-the-clock load is landing, using demand data alone. A siting score for where new load would run cleanest. And the claims layer you just saw.&quot;
+  || THE SHAPE IS THE POINT: one data source, one index, three products. A judge should get that in two seconds without reading a label. The left box is the input, the middle box is the thing we built that did not exist, and the fan is what it pays for.
+  || DATASET, named here for the public-dataset track. EIA-930 hourly electric grid monitor data, obtained through PUDL, the Public Utility Data Liberation project, using Voloridge's own fetch script (scripts/vendor/pudl_fetch.py). Tables: core_eia930__hourly_net_generation_by_energy_source, core_eia930__hourly_interchange, out_eia930__hourly_operations, out_eia930__hourly_subregion_demand, plus the two code tables. The slide says GRID REGIONS because that is the plain-English word; the unit of record is the BALANCING AUTHORITY, and the raw index is keyed on it. Say 'balancing authority' out loud if a judge is technical - it is the term that proves you know the dataset.
+  || THE THREE COUNTS ARE DIFFERENT AND ALL THREE ARE RIGHT. 70 balancing authorities in the raw hourly index. 124 published regions (56 BAs + 68 zones). 111 regions scored by the detector (43 BAs + 68 zones). docs/pitch/numbers.md section 2.4 and trap T16. Never say '70 grid regions' and '111 regions' as if they were the same population; the slide keeps them in different boxes for exactly this reason.
+  || FIGURES. 4,451,763 hourly rows and 70 balancing authorities: recomputed from data/processed/hourly_cf_index.parquet, len() and ba.nunique(); docs/pitch/numbers.md section 2.4, which also carries the caveat that these two live in a gitignored local parquet, not in any committed JSON - the published JSON carries the 124 regions built from the rows, not the rows. Date range 2018-07-01 to 2026-09-05 (same file, and api/index.json generated_from.data_snapshot_end). 111 regions scored: api/regions.json meta.n_scored, ranks 1..111 contiguous.
+  || THE INDEX. Carbon-free = nuclear + hydro + wind + solar + geothermal, over total generation, per hour, per region. Other and unknown sit in the denominator only; storage is excluded. Overnight is 00:00-05:59 local, daytime 10:00-15:59, baseline year 2019. This is an AVERAGE MIX inside a footprint, not marginal emissions and not consumption - EIA-930 gives fuel and interchange, not dispatch order, and interchange is not allocated.
+  || THE DETECTOR, and why it is the slide's strongest box. score = z(overnight_excess) + z(neighbor_divergence) + 0.5*z(load_factor_delta), robust z on median/MAD, regions under 500 MW average demand excluded, peak taken at the 99.5th percentile hour. DEMAND DATA ONLY - it never sees a list of datacenters. The method and the four validation regions were frozen before the ranking was seen (api/regions.json meta.detector_method, meta.validation_named_in_advance = PJM/DOM, PJM/AEP, SWPP/OPPD, ERCO/NCEN). Northern Virginia landed 6th and Omaha 7th; the AEP zone landed 19th and Dallas 91st, and the Dallas miss is published on screen because the whole of ERCOT is booming so Dallas does not diverge from its neighbours. Report the miss - it is the reason to believe the hits.
+  || THE SITING SCORE: overnight carbon-free share in 2025, the change since 2019, overnight clean MW over overnight demand, and the 2019-2025 per-year slope of that ratio. 52 balancing authorities ranked (siting.n_ranked). Slope only - no 'years remaining', no nameplate headroom.
+  || THE CLAIMS BRANCH is slide 02, and it is the only branch that touches a document. Zones report demand only and inherit their parent BA's generation figures (cf_inherited_from_ba), which is why PJM's +10.74 GW of overnight gas is never Dominion's.
+  || WHAT THIS PIPELINE BUYS: nobody publishes the night series. Since 2019 the country added 64.7 GW of clean generation to the average daytime hour and 17.7 GW to the average overnight hour - 3.7 times more to the hours a flat load does not use. Those are the AZPS-corrected figures (README, 'What the data says'); the uncorrected pair is 61.4 / 14.3 and includes a double-counted nuclear plant we caught in the federal data.">
+
+  <svg viewBox="0 0 1392 470" role="img" style="width:100%;height:auto;display:block"
+       aria-label="Pipeline: federal hourly generation data feeds one clean-share index, which feeds three products: a flat-load detector over 111 regions, a siting score, and the claims check.">
+
+    <!-- ===== A · the input ===== -->
+    <rect x="1" y="142" width="346" height="186" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <text x="28" y="212" font-size="58" fill="var(--ink)" font-weight="600" letter-spacing="-2">4,451,763</text>
+    <text x="28" y="258" font-size="36" fill="var(--muted)">hourly rows</text>
+    <line x1="28" y1="280" x2="320" y2="280" stroke="var(--line)" stroke-width="1"/>
+    <text x="28" y="316" font-size="36" fill="var(--ink)">70 grid regions</text>
+
+    <line x1="347" y1="235" x2="396" y2="235" stroke="var(--line)" stroke-width="2"/>
+    <path d="M402 235 L388 227 L388 243 Z" fill="var(--line)"/>
+
+    <!-- ===== B · the index ===== -->
+    <rect x="404" y="142" width="314" height="186" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <text x="432" y="210" font-size="44" fill="var(--ink)" font-weight="600" letter-spacing="-1">clean-share</text>
+    <text x="432" y="264" font-size="44" fill="var(--ink)" font-weight="600" letter-spacing="-1">index</text>
+    <!-- hour marks, part clean: the index is a share per hour -->
+    <g>
+      <rect x="432" y="288" width="8" height="22" fill="var(--clean)"/>
+      <rect x="444" y="288" width="8" height="22" fill="var(--clean)"/>
+      <rect x="456" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
+      <rect x="468" y="288" width="8" height="22" fill="var(--clean)"/>
+      <rect x="480" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
+      <rect x="492" y="288" width="8" height="22" fill="var(--clean)"/>
+      <rect x="504" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
+      <rect x="516" y="288" width="8" height="22" fill="var(--clean)"/>
+      <rect x="528" y="288" width="8" height="22" fill="var(--clean)"/>
+      <rect x="540" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
+      <rect x="552" y="288" width="8" height="22" fill="var(--clean)"/>
+      <rect x="564" y="288" width="8" height="22" fill="var(--clean)" opacity="0.4"/>
+    </g>
+
+    <!-- fan out -->
+    <path d="M718 235 H762 V79 H800" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <path d="M762 235 H800" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <path d="M762 235 V391 H800" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <path d="M806 79  L792 71  L792 87  Z" fill="var(--line)"/>
+    <path d="M806 235 L792 227 L792 243 Z" fill="var(--line)"/>
+    <path d="M806 391 L792 383 L792 399 Z" fill="var(--line)"/>
+
+    <!-- ===== C1 · the detector ===== -->
+    <rect x="808" y="16" width="582" height="126" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <text x="836" y="70" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">flat-load detector</text>
+    <text x="836" y="116" font-size="34" fill="var(--muted)">111 regions</text>
+    <!-- a flat line, and the peaky one it is not: the signature it looks for -->
+    <path d="M1244 100 H1364" fill="none" stroke="var(--muted)" stroke-width="3"/>
+    <path d="M1244 60 H1276 L1292 42 L1316 42 L1332 60 H1364" fill="none" stroke="var(--muted)" stroke-width="3" opacity="0.3"/>
+
+    <!-- ===== C2 · the siting score ===== -->
+    <rect x="808" y="172" width="582" height="126" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <text x="836" y="248" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">siting score</text>
+    <rect x="1244" y="216" width="120" height="24" rx="4" fill="var(--fossil)"/>
+    <rect x="1244" y="216" width="74" height="24" rx="4" fill="var(--clean)"/>
+    <path d="M1244 268 L1364 256" fill="none" stroke="var(--clean)" stroke-width="3"/>
+
+    <!-- ===== C3 · the claims check ===== -->
+    <rect x="808" y="328" width="582" height="126" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <text x="836" y="404" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">claims</text>
+    <rect x="1216" y="356" width="60" height="70" rx="6" fill="none" stroke="var(--muted)" stroke-width="3"/>
+    <rect x="1230" y="374" width="34" height="7" rx="3.5" fill="var(--muted)"/>
+    <rect x="1230" y="392" width="22" height="7" rx="3.5" fill="var(--muted)"/>
+    <line x1="1292" y1="391" x2="1320" y2="391" stroke="var(--line)" stroke-width="2"/>
+    <rect x="1332" y="378" width="32" height="26" rx="4" fill="var(--fossil)"/>
+    <rect x="1332" y="378" width="15" height="26" rx="4" fill="var(--clean)"/>
+
+  </svg>
+</section>
+
+<section class="slide" data-title="Ask it in English"
+  data-notes="SAY: &quot;And you can just ask it. That is OpenAI's tool-calling API over eleven typed tools - every one of them reads the same index, so the answer is a table with its sources on it, not a paragraph. One of the tools is retrieval: three hundred and fifty-four passages from these companies' own reports and filings, indexed in Elasticsearch, every hit carrying its page number.&quot;
+  || THE SHAPE: a question goes to a model that may only call typed tools; the tools read the same published index the rest of the product reads, plus the document corpus; the answer comes back as a view with provenance. The model is never handed free text to compute over, and the render step is explicitly told it has no tools and may not invent a cell. That is the whole anti-hallucination design and it is worth saying out loud.
+  || ELEVEN TOOLS, and the discrepancy you must know before a judge finds it. The LIVE service at /api/ask/status reports ELEVEN: alerts, companies, company, compare_companies, compare_regions, facilities, irradiance, national, rank_regions, region, search_corpus. The copy of server/ai.py in this repo is STALE AT TEN - it is missing compare_companies. The demo runs against the live service, so eleven is what a judge would see. If you are reading from the repo and want a sentence that cannot be made wrong by the next deploy, say 'over ten typed tools' and name search_corpus. Source: docs/narration-annex.md, shot 14 'askhow'. Model is gpt-4.1.
+  || 354 PASSAGES, NOT 354 FILINGS. /api/search/status reports indexed = 354 in index wattson-corpus-v1, of which 309 are sustainability-report passages and 45 are from SEC 10-Ks. They are extracted passages from EIGHT source documents across FOUR companies, counted line by line in claims/raw/*.jsonl: Google 118+9, Meta 74+19, Microsoft 66+11, Amazon 51+6. Saying '354 filings' overstates the document count more than fortyfold and is exactly the class of error this project exists to catch. Quality flags: 341 ok, 7 tabular, 6 suspect, and the suspect ones stay visible.
+  || ELASTICSEARCH: server/search.py, wired into the ask layer as the search_corpus tool. Every hit carries a page number or an Item locator, which is what makes a claim citable back to the page it came from. The retrieval layer was implemented with Codex; that is the only Codex claim in the film. NOTE: README's track table still says no cluster is provisioned - that is stale; /api/search/status is live and reports 354. Check the endpoint before you say it on stage.
+  || COVERAGE, said out loud because it is a gap and not a finding: we hold 52 operators and 134 mapped sites (api/companies.json count = 52, api/facilities.json count = 134), and we have read documents for FOUR of them. The other 48 are sites-only, each carrying its own printed reason (claims_absent_reason = no_documents_ingested). Do not round 48 down.
+  || THE SITE IS A STATIC EXPORT. Every endpoint is baked to JSON (python -m server --static-export), so the demo needs no server and no network. If the ask layer is down, the command palette degrades to a deterministic set of prepared queries. Say so rather than clicking into a spinner.">
+
+  <div class="headline">Ask it in English.</div>
+  <div class="rule"></div>
+
+  <svg viewBox="0 0 1392 380" role="img" style="width:100%;height:auto;display:block"
+       aria-label="A question goes to an OpenAI tool-calling loop over eleven typed tools, which read the same clean-share index and an Elasticsearch corpus of 354 passages, and return a cited answer.">
+
+    <!-- ===== the question, wordless ===== -->
+    <rect x="1" y="142" width="178" height="96" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <rect x="24" y="186" width="106" height="8" rx="4" fill="var(--muted)" opacity="0.6"/>
+    <rect x="140" y="176" width="5" height="28" fill="var(--accent)"/>
+
+    <line x1="179" y1="190" x2="222" y2="190" stroke="var(--line)" stroke-width="2"/>
+    <path d="M228 190 L214 182 L214 198 Z" fill="var(--line)"/>
+
+    <!-- ===== the tool-calling loop ===== -->
+    <rect x="230" y="112" width="356" height="156" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <text x="256" y="164" font-size="34" fill="var(--muted)">OpenAI</text>
+    <text x="256" y="216" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">11 typed tools</text>
+    <g fill="var(--muted)" opacity="0.75">
+      <rect x="256" y="236" width="20" height="10" rx="5"/><rect x="282" y="236" width="20" height="10" rx="5"/>
+      <rect x="308" y="236" width="20" height="10" rx="5"/><rect x="334" y="236" width="20" height="10" rx="5"/>
+      <rect x="360" y="236" width="20" height="10" rx="5"/><rect x="386" y="236" width="20" height="10" rx="5"/>
+      <rect x="412" y="236" width="20" height="10" rx="5"/><rect x="438" y="236" width="20" height="10" rx="5"/>
+      <rect x="464" y="236" width="20" height="10" rx="5"/><rect x="490" y="236" width="20" height="10" rx="5"/>
+      <rect x="516" y="236" width="20" height="10" rx="5"/>
+    </g>
+
+    <!-- ===== the two things the tools read ===== -->
+    <path d="M586 190 H616 V78 H658" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <path d="M616 190 V300 H658" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <path d="M664 78  L650 70  L650 86  Z" fill="var(--line)"/>
+    <path d="M664 300 L650 292 L650 308 Z" fill="var(--line)"/>
+
+    <rect x="666" y="24" width="364" height="108" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <text x="692" y="92" font-size="42" fill="var(--ink)" font-weight="600" letter-spacing="-1">the index</text>
+    <g fill="var(--clean)">
+      <rect x="930" y="62" width="8" height="30"/><rect x="942" y="62" width="8" height="30" opacity="0.4"/>
+      <rect x="954" y="62" width="8" height="30"/><rect x="966" y="62" width="8" height="30" opacity="0.4"/>
+      <rect x="978" y="62" width="8" height="30"/><rect x="990" y="62" width="8" height="30" opacity="0.4"/>
+      <rect x="1002" y="62" width="8" height="30"/><rect x="1014" y="62" width="8" height="30" opacity="0.4"/>
+    </g>
+
+    <rect x="666" y="246" width="364" height="108" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <text x="692" y="294" font-size="38" fill="var(--ink)" font-weight="600" letter-spacing="-1">Elasticsearch</text>
+    <text x="692" y="336" font-size="34" fill="var(--muted)">354 passages</text>
+    <g stroke="var(--muted)" stroke-width="3" opacity="0.7" fill="none">
+      <rect x="954" y="268" width="60" height="70" rx="5"/>
+      <path d="M968 290 H1000 M968 306 H992 M968 322 H1004"/>
+    </g>
+
+    <!-- ===== the answer ===== -->
+    <path d="M1030 78  H1062 V190" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <path d="M1030 300 H1062 V190" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <path d="M1062 190 H1100" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <path d="M1106 190 L1092 182 L1092 198 Z" fill="var(--line)"/>
+
+    <rect x="1108" y="112" width="282" height="156" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <text x="1134" y="178" font-size="38" fill="var(--ink)" font-weight="600" letter-spacing="-1">cited answer</text>
+    <g opacity="0.75">
+      <rect x="1134" y="204" width="230" height="7" rx="3.5" fill="var(--muted)"/>
+      <rect x="1134" y="222" width="230" height="7" rx="3.5" fill="var(--muted)" opacity="0.6"/>
+      <rect x="1134" y="240" width="230" height="7" rx="3.5" fill="var(--muted)" opacity="0.6"/>
+      <line x1="1212" y1="198" x2="1212" y2="252" stroke="var(--line)" stroke-width="2"/>
+      <line x1="1288" y1="198" x2="1288" y2="252" stroke="var(--line)" stroke-width="2"/>
+    </g>
+
+  </svg>
+</section>

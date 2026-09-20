@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1280px;height:720px;overflow:hidden;background:#070908}
+.w{position:relative;width:1280px;height:720px;font-family:Inter,-apple-system,system-ui,sans-serif}
+svg{position:absolute;inset:0}
+.v{position:absolute;inset:0;background:
+ radial-gradient(58% 54% at 50% 47%, rgba(7,9,8,.40) 0%, rgba(7,9,8,.60) 62%, rgba(7,9,8,.82) 100%),
+ linear-gradient(180deg, rgba(7,9,8,.55) 0%, rgba(7,9,8,0) 34%, rgba(7,9,8,.88) 100%)}
+.c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 64px}
+.eyebrow{font-size:19px;font-weight:600;letter-spacing:.20em;text-transform:uppercase;color:#ff7a4a;margin-bottom:24px}
+h1{font-size:136px;line-height:.9;font-weight:800;letter-spacing:-.038em;color:#eef0ee;text-shadow:0 8px 52px rgba(0,0,0,.95)}
+.sub{margin-top:24px;font-size:42px;line-height:1.2;font-weight:600;letter-spacing:-.014em;color:#eef0ee;text-shadow:0 4px 30px rgba(0,0,0,.98)}
+.sub b{color:#5ad1b4;font-weight:800}
+.rule{margin-top:32px;width:128px;height:3px;background:#ff7a4a;border-radius:2px}
+.foot{position:absolute;left:0;right:0;bottom:42px;display:flex;justify-content:center;gap:15px;align-items:center;
+ font-size:21px;letter-spacing:.05em;color:rgba(238,240,238,.78);text-shadow:0 2px 18px rgba(0,0,0,.98)}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(238,240,238,.40)}
+</style></head><body><div class="w">
+<svg id="g" viewBox="0 0 1280 720"></svg>
+<div class="v"></div>
+<div class="c">
+ <div class="eyebrow">A greenwashing investigation of datacenter operators</div>
+ <h1>Wattson</h1>
+ <div class="sub">What&rsquo;s really powering <b>their datacenters</b>?</div>
+ <div class="rule"></div>
+</div>
+<div class="foot"><span>Every US grid</span><span class="dot"></span><span>every hour</span><span class="dot"></span><span>since 2019</span></div>
+</div>
+<script>
+// Orthographic dot sphere, rotated so North America faces the viewer. Dots brighten toward the
+// centre of the disc and the US band is warmer, matching the product's own land rendering.
+const NS='http://www.w3.org/2000/svg', svg=document.getElementById('g');
+const cx=640, cy=352, R=430, lon0=-96*Math.PI/180, tilt=20*Math.PI/180;
+function add(el,a){const n=document.createElementNS(NS,el);for(const k in a)n.setAttribute(k,a[k]);svg.appendChild(n);return n}
+add('circle',{cx,cy,r:R,fill:'#111815'});
+const rings=90;
+for(let i=0;i<=rings;i++){
+  const lat=(-90+180*i/rings)*Math.PI/180;
+  const circ=Math.max(1,Math.round(Math.cos(lat)*190));
+  for(let j=0;j<circ;j++){
+    const lon=(-Math.PI+2*Math.PI*j/circ);
+    const x3=Math.cos(lat)*Math.cos(lon-lon0), y3=Math.sin(lat), z3=Math.cos(lat)*Math.sin(lon-lon0);
+    const yr=y3*Math.cos(tilt)-x3*Math.sin(tilt), xr=y3*Math.sin(tilt)+x3*Math.cos(tilt);
+    if(xr<=0.02) continue;                                  // back of the sphere
+    const px=cx+R*z3, py=cy-R*yr;
+    const depth=Math.pow(xr,0.85);
+    const latd=lat*180/Math.PI, lond=lon*180/Math.PI;
+    const us = latd>24&&latd<50&&lond>-126&&lond<-66;
+    const o=(us?1.0:0.52)*depth;
+    if(o<0.05) continue;
+    add('circle',{cx:px.toFixed(1),cy:py.toFixed(1),r:(us?2.15:1.7).toFixed(2),
+      fill:us?'#cfe3da':'#93a49c','fill-opacity':o.toFixed(3)});
+  }
+}
+add('circle',{cx,cy,r:R,fill:'none',stroke:'#5b6f66','stroke-width':1.4,'stroke-opacity':0.75});
+</script></body></html>

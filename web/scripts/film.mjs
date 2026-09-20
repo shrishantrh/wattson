@@ -127,6 +127,15 @@ async function main() {
   }
   await new Promise(r => setTimeout(r, 400))
   await cdp.send('Page.stopScreencast').catch(() => {})
+  // The bundle paces from the timing file compiled into it; we mix the clips on disk. If narration
+  // was regenerated after the build, every clip overruns its shot and bleeds into the next section.
+  // That is inaudible in the frames and obvious to a viewer, so refuse the take.
+  const built = await page.evaluate(() => (window.__film ? window.__film.narration : null)).catch(() => null)
+  if (timing && built && built.shots) {
+    const bad = Object.entries(timing.shots || {}).filter(([id, v]) => { const a = v?.durationMs || 0, b = built.shots[id] || 0; return a && Math.abs(a - b) > 250 })
+    if (bad.length) { await browser.close(); die(`the served build was compiled with different narration timings than the clips being mixed (${bad.length} shot(s) differ by >0.25 s, e.g. ${bad[0][0]}: clips ${(bad[0][1].durationMs / 1000).toFixed(1)} s vs build ${(built.shots[bad[0][0]] / 1000).toFixed(1)} s).\n        The voice will run past its shot and overlap the next section. Run narrate.mjs FIRST, then rebuild, then record.`) }
+    if (built.backend && timing.backend && built.backend !== timing.backend) log(`warning: build carries narration from ${built.backend}, clips are ${timing.backend}`)
+  }
   const { marks, checks, alive } = await page.evaluate(() => ({ marks: window.__film?.marks || [], checks: window.__film?.checks || [], alive: window.__filmSentinel })).catch(() => ({ marks: [], checks: [], alive: null }))
   await new Promise(r => setTimeout(r, 200))
   const wall = (Date.now() - t0) / 1000

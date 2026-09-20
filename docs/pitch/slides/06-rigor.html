@@ -1,0 +1,46 @@
+<section class="slide" data-title="Pre-registered" data-notes="How do you know we didn't tune this until it agreed with us? Because we wrote the method down first and named the test regions out loud. The detector's weights, the 500 MW exclusion and the peak definition (99.5th percentile hour) were all fixed before any ranking was seen, and four regions were named in advance so the method could fail in public: PJM/DOM, SWPP/OPPD, PJM/AEP and ERCO/NCEN (api/regions.json meta.validation_named_in_advance, numbers.md §2.3). Two landed where we said: Northern Virginia 6th of 111 (score 7.71) and Omaha 7th (6.82). Two did not: the AEP zone came 19th (2.29) and Dallas came 91st, with a negative score of -1.32 — because the whole of ERCOT is booming, so Dallas does not diverge from its neighbours. Both misses are on the screen next to the hits; we say two and two. Method string, frozen: score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z, 500 MW cut, p99.5 peak (api/regions.json meta.detector_method). Robust z means median and median absolute deviation rather than mean and standard deviation, so a handful of very large regions cannot drag the score around. The 500 MW cut holds in the output: 13 regions unranked, the largest excluded is IID at 434 MW and the smallest ranked is TPWR at 518 MW. Demand data only — no generation, no company data, no site list went into this ranking. Figures: numbers.md §2.3 (111 regions, ranks 6/7/19/91, scores, the 500 MW cut) and trap T15.">
+  <div class="eyebrow">Pre-registered</div>
+  <h2 class="headline">Two hits, two misses</h2>
+  <div class="rule"></div>
+  <svg viewBox="0 0 1200 330" role="img">
+    <line x1="70" y1="200" x2="1130" y2="200" stroke="var(--line)" stroke-width="3"/>
+    <line x1="1130" y1="186" x2="1130" y2="214" stroke="var(--line)" stroke-width="3"/>
+    <text x="1130" y="252" text-anchor="end" font-size="26" fill="var(--muted)">111th</text>
+
+    <line x1="243" y1="200" x2="243" y2="118" stroke="var(--line)" stroke-width="2"/>
+    <text x="243" y="100" font-size="32" fill="var(--muted)">Columbus 19th</text>
+    <circle cx="243" cy="200" r="13" fill="none" stroke="var(--muted)" stroke-width="3"/>
+
+    <line x1="118" y1="200" x2="118" y2="168" stroke="var(--accent)" stroke-width="2"/>
+    <text x="118" y="152" font-size="32" fill="var(--ink)">N. Virginia 6th</text>
+    <circle cx="118" cy="200" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+
+    <line x1="128" y1="200" x2="128" y2="236" stroke="var(--accent)" stroke-width="2"/>
+    <text x="128" y="268" font-size="32" fill="var(--ink)">Omaha 7th</text>
+    <circle cx="128" cy="200" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+
+    <line x1="937" y1="200" x2="937" y2="236" stroke="var(--line)" stroke-width="2"/>
+    <text x="937" y="268" text-anchor="middle" font-size="32" fill="var(--muted)">Dallas 91st</text>
+    <circle cx="937" cy="200" r="13" fill="none" stroke="var(--muted)" stroke-width="3"/>
+  </svg>
+</section>
+
+<section class="slide" data-title="What we print" data-notes="Two more things that make the result credible. First: we found an error in the federal record and we show it rather than quietly fixing it. Arizona Public Service's published 2019 overnight carbon-free share is 0.620; corrected it is 0.017. Palo Verde, the only nuclear station in Arizona, was reported by AZPS and SRP at the same time until a step on 2019-12-04 — correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, and 7,087 MW combined against a 3,937 MW nameplate. Confidence tier: proven. What that means for the story: Phoenix did not collapse from 62% to 10%. Like-for-like, Phoenix rose from 2% to 10%. Its level is still low, its direction was wrong in the federal file, and the product shows published and corrected side by side with the correction applied at serve time (siting score 0.173 published, 0.449 corrected; rank 49 to about 32, plus or minus 2). Never say 'it collapsed'; say 'a double count we caught'. Second: what the product refuses to say. We hold 52 operators and 134 sites, and we have read documents for four of them. The other 48 are mapped to grids with nothing of their own held against them, and every one of those records carries its own printed reason, claims_absent_reason 'no_documents_ingested'. That is our coverage gap, not a finding about those companies. Same rule inside the four we did read: 10 claims, 9 true on paper, 1 cannot_verify — Amazon's report has no falsifiable sentence we could extract, so talk_score is null, rendered as a phrase and never as a zero, and the cannot-verify count is on screen. Figures: numbers.md D1 and trap T2 (0.620 published, 0.017 corrected, 0.104 in 2025, r = 0.9948, 7,976 hours, 7,087 vs 3,937 MW), D2 (siting 0.173 to 0.449), §2.6 (10 claims, 9 true on paper, 1 cannot_verify, talk_score null); numbers-v2.md X1 and §2.5 (52 operators, 134 sites, 4 with claims read, 48 sites-only with a printed reason).">
+  <h2 class="headline">We print what we got wrong</h2>
+  <div class="rule"></div>
+  <div class="rowa">
+    <div class="cola">
+      <div class="big">62%</div>
+      <div class="label">published</div>
+    </div>
+    <div class="cola">
+      <div class="big" style="color:var(--warn)">2%</div>
+      <div class="label">corrected</div>
+    </div>
+    <div class="cola">
+      <div class="big">48/52</div>
+      <div class="label">documents unread</div>
+    </div>
+  </div>
+  <p class="sub muted">Arizona, 2019</p>
+</section>

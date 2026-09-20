@@ -1,0 +1,31 @@
+<section class="slide" data-title="Live demo" data-notes="HOLDING SLIDE. Roughly 100 seconds. Nothing on this wall competes with the screen being driven. No chart, no figure in the headline: the only numbers are the quiet provenance strip, which is here because it is up longer than any other slide and a judge scoring public-dataset use will read it.
+
+BEATS, in order:
+1. Check a company. Open the watchlist, pick the one claiming 100% renewable, show the verdict the product prints: 'true on paper, X physically'. Say out loud that we measure what the grid inside a footprint GENERATED, not what a meter consumed, and that interchange is not allocated (numbers.md T17, T4). Never 'they lied'.
+2. The detector. 111 regions scored from demand data alone, no company list as input. Show the 6th (PJM/DOM, Data Center Alley) AND the 91st (ERCO/NCEN, Dallas) - the miss is the reason to believe the hits, and it is on screen (numbers.md T15). Method was frozen and four validation regions named in advance.
+3. OpenAI's own sites. Six mapped sites, walk score 0.369 = 37% carbon-free, calendar 2025, all hours, grid-only, UNWEIGHTED by site size - we do not know each site's load (numbers-v2.md 2.4, N7). Do NOT say 'OpenAI, Abilene': Abilene Stargate is filed under Oracle because Oracle holds the lease (numbers-v2.md X3). The six are Shackelford County TX, Santa Teresa NM, Milam County TX, Lordstown OH, Port Washington WI, Pike County OH. If Santa Teresa comes up: El Paso Matters reports a 700-900 MW gas microgrid there that does not connect to El Paso Electric, so that load would never appear in the federal data - attribute it on screen, we read it, we did not measure it (numbers-v2.md section 3, N10).
+4. The ask layer. What we would ask an operator, and the coverage gap said out loud: 52 operators and 134 sites held, documents read for FOUR of them, 48 sites-only, each carrying its own printed reason (numbers-v2.md 2.5, N8). Do not say 'twelve' - that is a stale string on the Alpha page (numbers-v2.md X1 and the bonus defect).
+
+PROVENANCE STRIP - every figure traced:
+- 'EIA-930 / PUDL' - dataset name; L0 acquisition, scripts/vendor/pudl_fetch.py (CLAUDE.md).
+- '4,451,763 hourly rows' - numbers.md 2.4, recomputed row count of data/processed/hourly_cf_index.parquet. Caveat if asked: it lives in a gitignored local parquet; the published JSON carries the 124 regions built from it, not the raw rows.
+- '70 balancing authorities' - numbers.md 2.4, ba.nunique() on the same file. Say 'balancing authorities', never 'grid regions': 70 BAs in the index, 124 published regions, 111 scored (numbers.md T16).
+- '52 operators, 134 sites' - numbers-v2.md 2.5; api/companies.json count = 52, api/facilities.json count = 134.
+Date range if asked: 2018-07-01 to 2026-09-05 (numbers.md 2.4).
+
+VISIBLE WORD COUNT: 14. WATTSON (1) + LIVE (1) + EIA-930 / PUDL (2) + 4,451,763 hourly rows (3) + 70 balancing authorities (3) + 52 operators, 134 sites (4).">
+
+  <div class="cola">
+    <p class="eyebrow">Live</p>
+    <h2 class="headline">Wattson</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="rowa">
+    <p class="note">EIA-930 / PUDL</p>
+    <p class="note">4,451,763 hourly rows</p>
+    <p class="note">70 balancing authorities</p>
+    <p class="note">52 operators, 134 sites</p>
+  </div>
+
+</section>

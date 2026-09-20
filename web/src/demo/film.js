@@ -30,8 +30,10 @@
 // holdMs is a floor only; cut words, never raise holdMs.
 //
 // Every number here is one the screen renders itself, or one verified in docs/pitch/numbers-v2.md
-// (the 52-operator merge) or docs/pitch/numbers.md (everything older). docs/narration.md is the
-// readable copy, with a source for every figure spoken.
+// (the 52-operator merge) or docs/pitch/numbers.md (everything older). docs/narration-annex.md is
+// the canonical record: a file and a field for every figure spoken, plus the correction notes and
+// the recording conditions. docs/narration.md is only the reading copy and is REGENERATED from this
+// file by web/scripts/narrate.mjs, so never put sourcing there.
 //
 // Every selector and every expect string below was read off the running app at 1440x900 on
 // 2026-09-20, AFTER the 52-operator data merge. RECORD AT 1440x900: several of these elements sit
@@ -82,25 +84,81 @@ export const DETECTOR = {
 export const SOURCES = ['52 operators · 134 sites', '111 regions scored', 'p. 4 · matched 100%', 'p. 94 · 65% hourly CFE', 'EIA-930 hourly, via PUDL', 'through 2026-09-05']
 
 export const FILM = [
-  // PROBLEM — the watchdog that does not exist, and the hours nobody separated.
-  { id: 'open', section: 'problem', slide: 'flat', holdMs: 8000, title: 'Nobody audits the datacenters.',
-    say: 'There’s a greenwashing watchdog for fast fashion. For airlines. For oil majors. There isn’t one for datacenters.',
+  // ---- WHAT IT IS ------------------------------------------------------------------------------
+  { id: 'open', section: 'what', slide: 'flat', holdMs: 6000, title: 'Nobody audits the datacenters.',
+    say: 'Fast fashion has a greenwashing watchdog. Airlines have one. Datacenters don’t.',
     expect: { selector: '.film-slide.show', text: '3am' } },
 
-  { id: 'night', section: 'problem', slide: 'night', holdMs: 9000, title: 'The night never got cleaner.',
-    say: 'Since twenty nineteen America added sixty-five gigawatts of clean power to the average daytime hour, eighteen overnight. Nearly four times more.',
+  // The spine of the whole film: the four steps, once, in the order the software does them. Every
+  // later screen is then an instance of a process the viewer already has in their head.
+  { id: 'what', section: 'what', route: '#/', holdMs: 8000, title: 'How it works',
+    sub: 'A claim. The buildings behind it. The grid under each one. The hours it actually generated.',
+    say: 'Here’s how it works. A company publishes a claim. We find the buildings it operates. Each sits on a grid we can name. We read what that grid generated hour by hour. Then we compare.',
+    waitFor: '.hero-q', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.hero-sub' }],
+    expect: { selector: '.hero-q', text: "What's really powering it?" } },
+
+  { id: 'why', section: 'what', slide: 'night', holdMs: 8000, title: 'Why the hour matters',
+    say: 'Why hours? Since twenty nineteen America added sixty-five gigawatts of clean power to the average daytime hour. Overnight it added eighteen. Datacenters run on both.',
     expect: { selector: '.film-slide.show', text: ['46.5%', '39.7%'] } },
 
-  // EVIDENCE — PJM, the grid under Data Center Alley.
-  { id: 'pjm', section: 'evidence', route: '#/found', holdMs: 6000, title: 'Flat since 2019',
+  // ---- WALK IT: the four steps, on one company -------------------------------------------------
+  { id: 'type', section: 'walk', route: '#/', holdMs: 400, title: null, sub: null, say: null,
+    waitFor: '.pal-inline input', actions: [
+      { type: 'click', selector: '.pal-inline input' },
+      { type: 'type', selector: '.pal-inline input', text: 'Google', fallback: 'a.chip[href="#/check/GOOGL"]' },
+    ],
+    expect: { selector: '.ans-sticky', text: 'Alphabet (Google)' } },
+
+  { id: 'google', section: 'walk', route: '#/check/GOOGL', holdMs: 6000, title: 'Step one and two',
+    sub: 'The claim it publishes, and the ten buildings we have mapped to a serving utility.',
+    say: 'Start with Google. First the claim. Google says a hundred percent renewable. Then the buildings. We’ve mapped ten.',
+    waitFor: '.ans-rest', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.ans-rest' }],
+    expect: { selector: '.ans-rest', text: 'True on paper' } },
+
+  { id: 'grids', section: 'walk', route: '#/check/GOOGL', holdMs: 8000, title: 'Step three and four',
+    sub: 'The grid under each building, and what it generated in 2025.',
+    say: 'Now the grids. They ran six to ninety-one percent clean last year. The claim is true on paper under the GHG Protocol. Not a lie. A contract against a meter.',
+    waitFor: '.ans-gap', actions: [{ type: 'wait', ms: 300 }, { type: 'move', selector: '.ans-gap' }],
+    expect: { selector: '.ans-gap', text: ['100%', '6–91%', '54 points apart, across 10 sites.'] } },
+
+  { id: 'claims', section: 'walk', route: '#/check/GOOGL', holdMs: 7000, title: 'Where the claim came from',
+    sub: 'Page 4 makes the claim. Page 94 of the same report discloses the hourly figure.',
+    say: 'Here’s the claim we read. Page four of their own report. Their page ninety-four discloses the hourly figure. Sixty-five percent.',
+    // The drawer animates open, and until it has finished the column is not yet taller than its
+    // own viewport — so scrollParent() finds nothing and the scroll silently does nothing. Wait for
+    // the drawer, then scroll twice: the second pass re-lands it after any late reflow.
+    waitFor: '.ans-next', actions: [
+      { type: 'click', selector: '.ans-next' },
+      { type: 'wait', ms: 2000 },
+      { type: 'scroll', selector: '[data-module="sbs"]' },
+      { type: 'wait', ms: 500 },
+      { type: 'scroll', selector: '[data-module="sbs"]' },
+    ],
+    expect: { selector: '[data-module="sbs"]', text: ['p. 4', 'p. 94', '65%'] } },
+
+  // ---- WALK IT: the same reading with no company list ------------------------------------------
+  { id: 'detector', section: 'walk', route: '#/found?s=detector', holdMs: 8000,
+    title: 'The same reading, no list', sub: 'Demand data only. It never reads a press release.',
+    say: 'That works when we know the company. This answers a harder question. Where is new round-the-clock load landing when nobody tells us? It reads demand alone. No company list.',
+    waitFor: '.fd-say', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.fd-say' }],
+    expect: { selector: '.fd-say', text: '111 regions' } },
+
+  { id: 'method', section: 'walk', route: '#/found?s=detector', holdMs: 9000,
+    title: 'Frozen before we looked', sub: 'Robust z on median and MAD, a 500 MW cut, four test regions named in advance.',
+    say: 'A hundred and eleven regions get a score. The scoring uses medians instead of means. One big region can’t swamp it. It was frozen before we looked. Dallas came ninety-first. We print the miss.',
+    waitFor: '.ys-play', actions: [{ type: 'wait', ms: 300 }, { type: 'click', selector: '.ys-play' }],
+    expect: { selector: '.fd-scene .note', text: ['Northern Virginia 6th', 'Dallas 91st'] } },
+
+  // ---- ONE FINDING -----------------------------------------------------------------------------
+  { id: 'pjm', section: 'finding', route: '#/found', holdMs: 6000, title: 'Flat since 2019',
     sub: 'PJM clean generation between midnight and 6am: 35,700 MW then, 35,619 MW now.',
-    say: 'In PJM — the grid operator for the largest datacenter cluster on earth — clean night generation hasn’t moved since twenty nineteen.',
+    say: 'Now run that reading on PJM. That’s the grid operator for the biggest datacenter cluster on earth. Clean power at night hasn’t moved since twenty nineteen.',
     waitFor: '.wx-stepfig', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.wx-stepfig' }],
     expect: { selector: '.wx-stepfig', text: '35,700 → 35,619' } },
 
-  { id: 'gas', section: 'evidence', route: '#/found', holdMs: 6000, title: '8.7 GW more at night',
+  { id: 'gas', section: 'finding', route: '#/found', holdMs: 6000, title: '8.7 GW more at night',
     sub: '10.7 GW of it gas, while exports to neighbours fell.',
-    say: 'Overnight generation rose eight point seven gigawatts, ten point seven gas. Consistent with round-the-clock load served by gas, not caused by it.',
+    say: 'The night got eight point seven gigawatts bigger. Gas supplied ten point seven. Consistent with round-the-clock load served by gas. Not caused by it.',
     waitFor: '.wx-step .btn', actions: [
       { type: 'click', selector: '.wx-step .btn', text: 'Next' },
       { type: 'wait', ms: 700 },
@@ -109,90 +167,35 @@ export const FILM = [
     ],
     expect: { selector: '.wx-stepbody', text: ['+10.7 GW', 'Consistent with'] } },
 
-  // PRODUCT 1 — the company check, and the page it came off.
-  { id: 'type', section: 'product', route: '#/', holdMs: 400, title: null, sub: null, say: null,
-    waitFor: '.pal-inline input', actions: [
-      { type: 'click', selector: '.pal-inline input' },
-      { type: 'type', selector: '.pal-inline input', text: 'Google', fallback: 'a.chip[href="#/check/GOOGL"]' },
-    ],
-    expect: { selector: '.ans-sticky', text: 'Alphabet (Google)' } },
-
-  { id: 'google', section: 'product', route: '#/check/GOOGL', holdMs: 8000, title: 'True on paper. 6–91% physically.',
-    sub: 'Says 100%. Its ten mapped sites sit on grids that generated 6–91% clean power in 2025.',
-    say: 'True on paper — genuinely true under the GHG Protocol’s market-based method. Physically its ten sites run six to ninety-one percent.',
-    waitFor: '.ans-gap', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.ans-gap' }],
-    expect: { selector: '.ans-gap', text: ['100%', '6–91%', '54 points apart, across 10 sites.'] } },
-
-  { id: 'claims', section: 'product', route: '#/check/GOOGL', holdMs: 9000, title: 'Page 4 vs page 94',
-    sub: 'Their own report, both numbers, one document, each quoted with its page.',
-    say: 'Every claim is quoted from their own PDF with its page: page four, a hundred percent matched; page ninety-four, sixty-five percent.',
+  // ---- WHAT THE METHOD CANNOT SEE, AND THE ASK LAYER -------------------------------------------
+  // One shot, not three: the cursor walks the six mapped sites while the narration names them, then
+  // opens the caveat on the one site the method is blind to.
+  { id: 'stargate', section: 'walk', route: '#/check/OPENAI', holdMs: 10000,
+    title: 'Six sites, one we can’t see', sub: 'Three sites trace to a named utility, three do not, and one runs on its own gas plant.',
+    say: 'We built the ask layer on OpenAI’s models. So point it at OpenAI. Six Stargate sites. Each mapped to a grid. Only three to a named utility. One we can’t see at all. Reporting says it runs on its own gas plant.',
+    // Same drawer-animation trap as `claims`: scroll too early and scrollParent() finds nothing.
     waitFor: '.ans-next', actions: [
       { type: 'click', selector: '.ans-next' },
-      { type: 'wait', ms: 900 },
-      { type: 'scroll', selector: '[data-module="sbs"]' },
-    ],
-    expect: { selector: '[data-module="sbs"]', text: ['p. 4', 'p. 94', '65%'] } },
-
-  // PRODUCT 2 — the detector: the signal pulled out of demand data alone.
-  { id: 'detector', section: 'product', route: '#/found?s=detector', holdMs: 10000,
-    title: '111 regions, demand only', sub: 'Method frozen and four regions named before any ranking was seen.',
-    say: 'Signal out of noise: one hundred eleven regions from demand alone, frozen before we looked. We print the Dallas miss, and the error that corrected our own headline.',
-    waitFor: '.ys-play', actions: [{ type: 'wait', ms: 300 }, { type: 'click', selector: '.ys-play' }],
-    expect: { selector: '.fd-scene .note', text: ['Northern Virginia 6th', 'Dallas 91st'] } },
-
-  // The one methods line. Everything in it is in regions.json meta.detector_method, on the Method
-  // page and in CLAUDE.md's frozen decisions. No model is claimed, because none is in the repo.
-  { id: 'method', section: 'product', route: '#/found?s=detector', holdMs: 7000,
-    title: 'Frozen before we looked', sub: 'Robust z on median and MAD, a 500 MW cut, peak at the 99.5th percentile hour.',
-    say: 'Robust statistics throughout — median and absolute deviation, not mean and standard deviation, so a few huge regions cannot swamp the score.',
-    waitFor: '.fd-say', actions: [{ type: 'move', selector: '.fd-say' }],
-    expect: { selector: '.fd-say', text: '111 regions' } },
-
-  // PRODUCT 3 — OpenAI: six Stargate sites, then the one nobody can meter.
-  { id: 'openai', section: 'product', route: '#/check/OPENAI', holdMs: 7000, title: 'Six Stargate sites',
-    sub: 'No document of theirs read, so no claim to check — only the grids under the buildings.',
-    say: 'We built the ask layer on OpenAI’s models, so let’s point it at OpenAI. Six Stargate sites, thirty-seven percent clean.',
-    waitFor: '.ans-sticky', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.ans-sticky' }],
-    expect: { selector: '.ans-sticky', text: ['OpenAI', '37% on its grids'] } },
-
-  { id: 'sites', section: 'product', route: '#/check/OPENAI', holdMs: 7000, title: 'Every site, its own grid',
-    sub: 'Shackelford, Santa Teresa, Milam, Lordstown, Port Washington, Pike — mapped from the serving utility.',
-    say: 'Six sites, six grids. Three traced to a named utility; three not, and the row says so.',
-    waitFor: '.ans-next', actions: [
-      { type: 'click', selector: '.ans-next' },
-      { type: 'wait', ms: 900 },
-      { type: 'scroll', selector: '[data-module="sites"] .rows' },
-    ],
-    expect: { selector: '[data-module="sites"] .rows', text: ['Shackelford County', 'AEP Ohio', 'utility unknown'] } },
-
-  { id: 'epe', section: 'product', route: '#/check/OPENAI?evidence=1', holdMs: 8000,
-    title: 'The argument in one utility', sub: 'El Paso Electric: 34.1% carbon-free by day, 1 MW of 655 at night.',
-    say: 'El Paso Electric: thirty-four percent carbon-free at midday, one clean megawatt of six hundred fifty-five at night.',
-    waitFor: '[data-module="sites"] .site-note', actions: [
+      { type: 'wait', ms: 2000 },
       { type: 'scroll', selector: '[data-module="sites"] .site-note' },
-    ],
-    expect: { selector: '[data-module="sites"] .site-note', text: 'material caveat' } },
-
-  { id: 'jupiter', section: 'product', route: '#/check/OPENAI?evidence=1', holdMs: 11000,
-    title: 'And this one we cannot see.', sub: 'Reported, not measured: a gas microgrid that never touches the utility.',
-    say: 'And this one we cannot see. Reporting says a gas microgrid that never connects to El Paso Electric, so that load never reaches federal data. Ten sites are behind the meter.',
-    waitFor: '[data-module="sites"] .site-note summary', actions: [
       { type: 'click', selector: '[data-module="sites"] .site-note summary' },
-      { type: 'wait', ms: 600 },
+      { type: 'wait', ms: 700 },
+      // Opening the disclosure pushes its body below the fold, and the expect needs it in view.
+      { type: 'scroll', selector: '[data-module="sites"] .site-note .note' },
+      { type: 'wait', ms: 500 },
+      { type: 'scroll', selector: '[data-module="sites"] .site-note .note' },
     ],
-    expect: { selector: '[data-module="sites"] .site-note .note', text: ['700-900 MW gas microgrid', 'does NOT connect', 'will not appear in EPE demand'] } },
+    expect: { selector: '[data-module="sites"] .site-note .note', text: ['700-900 MW gas microgrid', 'does NOT connect'] } },
 
-  // PRODUCT 4 — the ask layer, run as a real question. Two shots: the answer, then what it stands on.
-  { id: 'ask', section: 'product', route: ASK_ROUTE, holdMs: 12000, title: 'Just ask it.',
+  { id: 'ask', section: 'walk', route: ASK_ROUTE, holdMs: 9000, title: 'Or just ask it',
     sub: 'Typed in plain English, answered off the published index.',
-    say: 'Ask which hundred-percent-renewable claimant sits on the dirtiest grid at night. Google: Moncks Corner, Santee Cooper, zero point seven percent clean overnight.',
-    // The answer is a live model call: allow for the round trip before the headline exists.
+    say: 'You can also just ask it. Which claimant sits on the dirtiest grid at night? It answers Google. Moncks Corner. Zero point seven percent clean overnight.',
     waitFor: '.ask-headline', actions: [{ type: 'wait', ms: 800 }, { type: 'move', selector: '.ask-headline' }],
     expect: { selector: '.ask-headline', text: 'Google' } },
 
-  { id: 'askhow', section: 'product', route: ASK_ROUTE, holdMs: 10000, title: 'It shows its working.',
-    sub: '354 passages from 8 documents, 4 companies. Every figure checked against what the tools returned.',
-    say: 'An OpenAI tool-calling loop over eleven typed tools, including Elasticsearch retrieval across three hundred fifty-four passages from their own reports and filings — the layer Codex wrote. It flags its own caveat.',
+  { id: 'askhow', section: 'walk', route: ASK_ROUTE, holdMs: 9000, title: 'It shows its working.',
+    sub: 'Eleven typed tools. Every figure named against the tool that returned it.',
+    say: 'That’s an OpenAI tool-calling loop over eleven typed tools. One searches three hundred fifty-four passages in Elasticsearch. They come from the companies’ own reports and filings. Codex wrote that retrieval layer.',
     waitFor: '.ask-prov', actions: [
       { type: 'scroll', selector: '.ask-caveats' },
       { type: 'wait', ms: 500 },
@@ -200,24 +203,32 @@ export const FILM = [
     ],
     expect: { selector: '.ask-prov', text: 'over the published EIA-930 index' } },
 
-  // REFUSALS — what it will not say, and the grid it clears.
-  { id: 'refuse', section: 'refusals', route: '#/check/CRUSOE', holdMs: 11000,
+  // ---- ONE REFUSAL -----------------------------------------------------------------------------
+  { id: 'refuse', section: 'refusal', route: '#/check/CRUSOE', holdMs: 8000,
     title: 'What it refuses to say', sub: 'No serving utility established, and the record says that instead of a guess.',
-    say: 'We’re proudest of what it refuses to say. Crusoe: no site tied to a named utility. Forty-eight of fifty-two have no documents read.',
+    say: 'Last thing. Watch what it won’t say. We couldn’t tie a single Crusoe building to a named utility. So the record says that.',
     waitFor: '.ans-figs', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.ans-figs' }],
     expect: { selector: '.ans-figs', text: 'no serving utility established' } },
 
-  { id: 'clean', section: 'refusals', route: '#/check/VANTAGE?evidence=1', holdMs: 7000,
+  // The counterweight. Without a place that comes out well on screen, the film reads as an
+  // accusation rather than an instrument: a grid that is carbon-free at 3am is as much a finding
+  // as one that is not.
+  { id: 'clean', section: 'refusal', route: '#/check/VANTAGE?evidence=1', holdMs: 7000,
     title: '100% carbon-free at 3am', sub: 'Quincy, Washington, on Grant County PUD. Columbia River hydro.',
     say: 'Vantage’s Quincy, Washington site sits on a grid a hundred percent carbon-free at 3am. Columbia River hydro. The method distinguishes.',
+    // The night-time sparkline and its "100% at night" caption render a few seconds after the
+    // module mounts, once the per-region series loads. Wait for it rather than race it.
     waitFor: '[data-module="sites"] .rows', actions: [
+      { type: 'wait', ms: 2200 },
+      { type: 'scroll', selector: '[data-module="sites"] .rows' },
       { type: 'wait', ms: 600 },
+      // The sparkline caption arrives late and grows the column; scroll again once it has.
       { type: 'scroll', selector: '[data-module="sites"] .rows' },
     ],
     expect: { selector: '[data-module="sites"] .rows', text: ['Quincy', 'Grant County PUD', '100% at night'] } },
 
-  // CLOSE
+  // ---- CLOSE: the four steps again, as a list --------------------------------------------------
   { id: 'end', section: 'close', slide: 'end', holdMs: 8000, title: 'Wattson',
-    say: 'A claim, the grid under the site, and the hour that decides it. It follows the power, not the press release.',
+    say: 'A claim. The buildings behind it. The grid under each one. The hour that decides it. It follows the power, not the press release.',
     expect: { selector: '.film-slide.show', text: 'HackMIT 2026' } },
 ]

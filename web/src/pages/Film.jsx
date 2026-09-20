@@ -46,6 +46,11 @@ const stripFilm = h => h.replace(/([?&])film=1(&|$)/, (m, a, b) => (b ? a : ''))
 const withFilm = h => (FLAG.test(h) ? h : h.includes('?') ? `${h}&film=1` : `${h}?film=1`)
 const sameRoute = (a, b) => stripFilm(a || '#/') === stripFilm(b || '#/')
 const narrationMs = id => timing?.shots?.[id]?.durationMs || 0
+// The recorder mixes audio from the CLIPS ON DISK while this bundle paces from the timing file
+// COMPILED INTO IT. Rebuild after regenerating narration and the two disagree: every clip runs past
+// the shot it belongs to and the voice bleeds into the next section. Expose what we compiled so
+// scripts/film.mjs can refuse a take where they differ.
+const NARRATION_BUILD = { backend: timing?.backend || timing?.voice || null, shots: Object.fromEntries(Object.entries(timing?.shots || {}).map(([k, v]) => [k, v?.durationMs || 0])) }
 
 function find(selector, text) {
   if (!selector) return null
@@ -90,7 +95,7 @@ const BLANK = { shot: -1, slide: null, slideOn: false, title: null, sub: null, s
 const run = { started: false, go: false, subs: new Set(), state: { ...BLANK } }
 const subscribe = f => { run.subs.add(f); return () => run.subs.delete(f) }
 const emit = patch => { run.state = { ...run.state, ...patch }; for (const f of run.subs) f() }
-window.__film = { done: false, shot: -1, total: FILM.length, marks: [], checks: [], errors: [], start: () => { run.go = true } }
+window.__film = { done: false, shot: -1, total: FILM.length, marks: [], checks: [], errors: [], narration: NARRATION_BUILD, start: () => { run.go = true } }
 
 // ---- the cursor -------------------------------------------------------------------------------
 // Travel time scales with distance (a nudge is quick, a cross-screen move is not), on a decelerating

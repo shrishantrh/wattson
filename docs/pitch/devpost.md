@@ -30,7 +30,8 @@ carbon-free share of generation for every hour since 2019, and uses that index t
 
 **Check a company.** Type a company name. Wattson maps its data center sites to the grids that
 actually serve them and reports what those grids generated, beside what the company claims. Google
-states 100% renewable; the grid at the site we could map generated 5.6% carbon-free power in 2025.
+states 100% renewable; across its ten mapped sites those grids generated 46% carbon-free power,
+a 54-point gap. The range is the point: one of its sites sits on a grid at 5.6% and another at 91.3%.
 The verdict is phrased "true on paper, X physically", never as an accusation, and the company's own
 report page is shown alongside with the claimed sentence highlighted where it was printed.
 
@@ -129,66 +130,78 @@ are counted rather than hidden, and no company is called a liar anywhere in the 
 
 ## What we learned
 
-**A CSS transform silently captures `position: fixed`.** Our full-page image viewer kept opening at
-346px wide, clipped inside its card. We spent hours treating it as a layout overflow. The real cause:
-the drag-and-drop library puts a `transform` on every sortable card, and a transformed ancestor
-becomes the containing block for `fixed` descendants, so the overlay was anchored to the card instead
-of the viewport. `transform`, `filter`, `perspective`, `will-change` and `contain` all do this. The
-fix is to portal the overlay to `document.body`. If something `fixed` is behaving as though it is
-`absolute`, walk up the tree looking for those properties rather than debugging the overlay.
+**How the federal grid record is actually assembled, and where it bends.** EIA-930 is not one
+table. There is a raw feed, an adjusted feed, an imputed feed, and a partner-level interchange table
+that disagrees with the operations table. We learned to use the adjusted operations figures for net
+flows because the partner table has sign flips before 2020, and to treat interchange as unallocated
+rather than pretend we know where power went. Every region reports in its own local time, so
+"overnight" is only meaningful after converting 4.45 million rows to 70 different local clocks
+first. And the same generator can be reported by two operators at once, which is how a nuclear
+plant ended up counted twice.
 
-**A collapsed `<details>` still has geometry.** We wrote an automated audit that walks the DOM and
-flags any text box intersecting a chart box. It reported a collision 2,350px from anything painted.
-Chrome still returns `getBoundingClientRect()` for children of a closed `<details>`, and they project
-wherever the layout would have put them. Visually hidden is not geometrically absent. We replaced the
-folds with a component that mounts its body only while open, which fixed the audit and removed the
-dead nodes. Any geometry-based test needs conditional mounting, not `display: none` thinking.
+**How to draw a hundred thousand points at 60 frames per second.** The globe is land rendered as a
+hexagonal dot field, indexed with H3 at resolution 4 over the US and 3 elsewhere. The naive version,
+one mesh per dot, dies instantly. The working version is a single instanced mesh where every dot is
+one instance sharing one geometry and one material, so the whole planet is one draw call and
+brightness is driven by a shader uniform rather than by touching objects. We also learned that
+geometry libraries throw on malformed input: one country outline whose ring collapsed to four
+identical vertices raised an exception that escaped the loop and silently prevented every country
+after it from drawing.
 
-**Content-hashed chunks make every deploy a breaking change for open tabs.** A deploy renames every
-JavaScript chunk. A tab loaded before it still holds the old entry bundle, so the first navigation to
-a lazily imported route requests a filename that no longer exists and dies with "Failed to fetch
-dynamically imported module". The site is fine; the tab is stale. We now catch that specific rejection
-in the lazy loader and reload once, guarded by a `sessionStorage` flag so a genuinely missing chunk
-cannot loop, and skipped where that storage throws. Any app doing route-level code splitting behind a
-CDN has this bug and usually does not know it.
+**How a language model is stopped from inventing numbers.** The ask layer is an OpenAI
+tool-calling loop over eleven typed tools. The model never sees a database and cannot write a query;
+it can only call named functions with typed arguments, and every figure in an answer comes back from
+one of them. The tools it used are printed under the answer, which is how we noticed that one answer
+we liked was standing on three tools and not on retrieval, so we stopped claiming otherwise. The
+lesson generalises: constrain the model's surface area and provenance becomes a property of the
+system rather than a promise.
 
-**Our worst failure mode was a fallback that worked.** The front end resolves data from a live API,
-then a static export, then bundled fixtures, which is what lets the whole thing run offline. That also
-means a broken data export produces a site that looks completely normal and is quietly serving
-placeholder numbers. Green build, green tests, wrong product. We made it a hard failure instead: the
-deploy greps the build log for the line that proves the export synced, asserts specific files exist in
-the output, and runs 77 data-shape checks. A graceful degradation you cannot see is worse than a crash.
+**Why retrieval has to be chunked at the passage, not the document.** We indexed our corpus in
+Elasticsearch as 354 passages drawn from 8 documents rather than 8 documents. A sustainability report
+is a hundred pages; retrieving the document tells you nothing and blows the context window. Passage
+chunking is also what makes page citation possible at all, because the page number travels with the
+chunk. Codex wrote that retrieval layer, which is the most concrete thing it did for us.
 
-**Automate the verification, not just the action.** Our demo video is a real screen recording driven
-by a headless browser clicking real elements. The first version silently recorded nothing being typed,
-and looked plausible. Now every shot declares what must be on screen at that moment, the recorder
-prints a pass/fail table, tiles one frame per shot into a contact sheet, and refuses to write a file
-it cannot vouch for: it fingerprints the shot list into the narration so stale audio cannot be muxed
-against renamed shots, detects hot-module reloads that splice two takes together, and probes the
-output with ffmpeg for a real, non-silent audio track. It has already aborted on a take that would
-have looked fine.
+**That a CSS transform silently captures `position: fixed`.** Our full-page image viewer kept
+opening at 346 pixels, clipped inside its card, and we spent hours treating it as an overflow bug.
+The drag-and-drop library puts a `transform` on every sortable card, and a transformed ancestor
+becomes the containing block for `fixed` descendants. `filter`, `perspective`, `will-change` and
+`contain` all do the same. Portal the overlay to the body and it works.
 
-**Bundle budgets have to be measured, not assumed.** Our entry chunk started at roughly 5 MB, mostly
-because a 3D globe and a plotting library were reachable from the first import. Splitting the globe,
-React, the UI and the charts into separate chunks and importing the charts dynamically brought the
-entry to 178 kB. Switching from the full plotting distribution to its Cartesian-only build cut that
-dependency from 4.6 MB to 1.4 MB. None of this was visible from the source; it took reading the
-build's chunk table.
+**That a collapsed `<details>` still has geometry.** Chrome returns bounding rectangles for children
+of a closed disclosure, projected where layout would have put them. Our automated overlap audit
+reported a text block colliding with a chart 2,350 pixels from anything painted. Visually hidden is
+not geometrically absent, so we replaced the folds with a component that mounts its body only when
+open.
 
-**One malformed polygon can take out every polygon after it.** Rendering land as a hexagonal dot
-field threw about 90 errors per page load. The cause was a single country outline in the source
-topology whose ring collapsed to four identical vertices; the indexing library threw on it, and
-because the throw escaped the loop, every country after it in iteration order was never drawn. Guard
-per feature, not per batch, and validate geometry before handing it to a library that throws.
+**That content-hashed chunks make every deploy a breaking change for open tabs.** A deploy renames
+every JavaScript file. A tab loaded before it still holds the old entry bundle, so the first
+navigation to a lazily imported route requests a filename that no longer exists and dies with
+"Failed to fetch dynamically imported module". We now catch that specific rejection and reload once,
+guarded so a genuinely missing chunk cannot loop. Every app doing route-level code splitting behind
+a CDN has this and mostly does not know.
 
-**Robust statistics matter more than the model.** The detector uses median and median-absolute-
-deviation rather than mean and standard deviation, because a handful of very large regions otherwise
-dominate the normalization. Peak demand is the 99.5th percentile hour rather than the maximum, because
-one corrupt hour in 2019 would otherwise define a region's entire load factor. Both choices were made
-before we saw any ranking, along with the weights and a 500 MW exclusion, and we named four test
-regions in advance. Two landed where we predicted and two did not, and the miss taught us a real
-limitation: our neighbour-divergence term penalizes a zone inside a region that is booming overall,
-because it has no quiet neighbours to stand out against.
+**That bundle budgets have to be measured.** Our entry chunk started near 5 MB because a 3D globe
+and a plotting library were reachable from the first import. Splitting the globe, React, the UI and
+the charts into separate chunks and importing the charts dynamically brought the entry to 178 kB,
+and switching from the full plotting distribution to its Cartesian-only build cut that dependency
+from 4.6 MB to 1.4 MB. None of it was visible from the source, only from the build's chunk table.
+
+**How screen recording actually works, and how it lies.** The demo film is driven over the Chrome
+DevTools Protocol, which emits a frame only when something changes, so a long gap between frames
+means the capture went quiet, not the page. We also lost two takes at exactly 180.6 seconds to
+Puppeteer's default 180-second protocol timeout, which presents as the film hanging rather than as a
+timeout. And synthesised narration must have its numerals expanded before synthesis or "8.7 GW"
+comes out mangled; "eight point seven gigawatts" is the fix.
+
+**That robust statistics matter more than the model.** The detector normalises with the median and
+median absolute deviation rather than mean and standard deviation, so a handful of very large regions
+cannot dominate. Peak demand is the 99.5th percentile hour rather than the maximum, because one
+corrupt hour in 2019 would otherwise define a region's whole load factor. Both were fixed before we
+saw any ranking, along with the weights and a 500 MW cut, and four test regions were named in advance
+so the method could fail in public. Two landed where we predicted, two did not, and the miss taught
+us a real limitation: our neighbour-divergence term penalises a zone inside a region that is booming
+overall, because it has no quiet neighbours to stand out against.
 
 ## What's next for our project
 

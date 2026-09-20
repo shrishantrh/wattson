@@ -210,3 +210,37 @@ point of the beat is that this is the load we *cannot* see.
 
 Everything in §2.7 (PJM 8.7 GW / 10.74 GW gas / 3,814 → 2,489) is unchanged and still the
 headline of the whole film; this batch supports it, it does not replace it.
+
+
+---
+
+## Addendum: the corrected-baseline headline pair (added after the first pass)
+
+The deck, the spoken script and the video all quote clean megawatts ADDED to the average hour since
+2019. Two versions of that pair exist and they differ only in whether the 2019 baseline still
+contains the Arizona double count. **Use the corrected pair.** Both are recorded here so nobody has
+to re-derive them.
+
+| | daytime | overnight | ratio |
+|---|---|---|---|
+| Published baseline (as served) | +61,404 MW | +14,349 MW | 4.28x |
+| **Corrected baseline (use this)** | **+64,738 MW** | **+17,687 MW** | **3.66x** |
+
+Arithmetic, re-derivable from two files:
+
+- `web/public/api/regions.json` -> `meta.national.cf_avg_mw`: 2019 daytime 178,129, overnight
+  159,031; 2025 daytime 239,533, overnight 173,380.
+- `web/public/api/region/AZPS.json` -> `region.corrections.corrections[]` where `path ==
+  "cf_avg_mw.2019"`: published 3,736.0 daytime / 3,373.0 overnight against corrected
+  402.2 / 34.7. The phantom is therefore 3,334 MW daytime and 3,338 MW overnight.
+- Subtract the phantom from the 2019 national figures, then subtract from 2025.
+
+**Why the corrected pair.** The published 2019 baseline contains generation that was reported twice,
+which the project itself diagnosed and publishes. Quoting the uncorrected figure would be quoting a
+number we have already shown to be wrong, and it happens to be +17% more flattering on the
+ratio. Saying so out loud is a strength: we corrected our own headline.
+
+**Say it as megawatts added.** Both numbers are positive and both are changes, not levels. The
+levels are 239.5 GW daytime and 173.4 GW overnight, a ratio of 1.38x, so a slide or sentence that
+lets these be read as levels is misleading. The overnight *share* moves the other way, and per the
+share-versus-level rule it is never stated as falling without the absolute in the same breath.
