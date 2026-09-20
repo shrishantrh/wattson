@@ -423,69 +423,165 @@ so this is not a weak control failing to find an effect.
 
 ---
 
-## 5. The demo, click by click
+## 5. The product IS the argument: how to navigate it
 
-### Open on the landing page
+You should never need a slide. Each screen answers one question and raises the next one,
+and the handoff is the script. Follow the arrows.
 
-On screen: the globe, and the line about clean power added to midday versus 3am.
+```
+  #/                    "Is there a problem?"
+     |  the national gap: 64.7 GW to midday, 17.7 to 3am
+     v
+  #/data                "Prove it, don't tell me"
+     |  NEVP: 1.8% at night, 55.8% by day. Two columns, one row
+     v
+  #/found               "Where does it actually bite?"
+     |  PJM: clean flat since 2019, +8.7 GW total, gas +10.7
+     v
+  #/check/GOOGL         "So is anyone claiming otherwise?"
+     |  matched 100% annually. Physically 5.6% to 91.3%
+     v
+  #/check/OPENAI        "Does this apply to the new buildout?"
+     |  six Stargate sites, and one we cannot see at all
+     v
+  #/compare             "Fine, so what should they do?"
+     |  any two grids or operators, side by side, at 300 MW
+     v
+  #/method              "Why should I believe your ranking?"
+     |  frozen before results, three hits, one published miss
+     v
+  #/alpha               "Who is exposed to this?"
+     |  region -> utility -> parent -> ticker, and what is not buyable
+     v
+  Cmd-K                 "Can I ask my own question?"
+        anything, against the real data, as a table
+```
 
-Say: *"Every company building AI datacenters says it runs on clean power. Nobody checked
-against the meter, because the claim is a sentence in a PDF and the answer is nine years of
-hourly federal data. We joined them."*
+### Screen 1 · `#/` — set the question
 
-### Click 1 — a company. Type `GOOGL`.
+The globe, and the national line. **Say the gap, not the share.**
 
-On screen: Google's claim with a page citation, the verdict, 10 sites with their utilities.
+> "Since 2019 America added 64.7 gigawatts of clean power to the average midday hour, and
+> 17.7 to the average hour at 3am. A datacenter buys both, equally, because it never stops."
 
-Say: *"Google says it matched 100% of its electricity consumption with renewable energy
-purchases, on a global and annual basis. That is true, and it is careful. What it does not
-say is what came out of the wire. Its ten datacenters sit on grids that ran from six
-percent to ninety-one percent carbon-free. One annual claim, ten different physical
-realities."*
+**Handoff:** *"That's a national average, which is easy to assert. Let me show you the
+underlying table."*
 
-**Do not paraphrase this as "Google says 100% renewable."** The quote is on page 4 and a
-judge can pull it up. Quote it, do not summarise it.
+### Screen 2 · `#/data` — the evidence, unmediated
 
-If asked how: *"Plain average of the ten grids. No weighting, no contracts."*
+Regions sheet. **Night** and **Day** are adjacent columns. Find **NEVP**.
 
-### Click 2 — type `openai`.
+> "Las Vegas. Fifty-six percent carbon-free at midday, one point eight percent at 3am. Same
+> grid, same year, ten hours apart."
 
-On screen: six Stargate sites.
+Then **GCPD**, 100% both:
 
-Say: *"We built the question layer on OpenAI's models, so let's point it at OpenAI. Six
-Stargate sites, each mapped to the utility that serves it."*
+> "Same table. So this measures, it doesn't just indict. Where you build decides what gets
+> burned for you."
 
-Open the New Mexico one: *"El Paso Electric is 34% carbon-free at midday and one tenth of
-one percent at night. One megawatt of clean generation out of 655."*
+**Handoff:** *"That's one region. The question is where it matters most."*
 
-Then the confession, and do not skip it: *"And this campus we cannot see at all. It runs on
-a 700 to 900 megawatt gas microgrid that never touches the grid, so federal demand data is
-blind to it. Eleven of our sites are like that. A demand-only detector cannot see a
-datacenter that brought its own power plant."*
+### Screen 3 · `#/found` — the finding, stepped
 
-### Click 3 — ⌘K, and type a real question.
+Four steps, arrow keys. PJM: clean flat → +8.7 GW total → gas +10.7 → exports fell.
 
-Type: **"Which five regions have the most clean power at 3am relative to their demand, and
-which utility serves each?"**
+> "PJM serves the largest datacenter cluster on earth. Its clean power at night has not
+> grown since 2019. Thirty-five thousand seven hundred megawatts then, thirty-five six
+> nineteen now. Everything they added at night, they added by burning gas."
 
-On screen: a table with links, built from seven tool calls.
+> "At annual resolution this disappears completely."
 
-Say: *"That is running against the real data. It cannot show you a number the tools did not
-return."*
+**Handoff:** *"So what are the companies sitting on that grid saying?"*
 
-Good backups: `compare NBIS and CRWV`, `what did Google say about 24/7 carbon free energy`
-(that one pulls the quote with its page number out of 354 documents).
+### Screen 4 · `#/check/GOOGL` — the accusation, carefully
 
-### Click 4 — Method.
+The claim verbatim with its page, then the ten sites.
 
-Say: *"Four regions named before we saw any ranking, in the same commit as the code. Three
-landed in the top twenty. Dallas came 91st and here is exactly why, and we published it
-rather than retuning until it went away."*
+> "Google's own words, page four: matched one hundred percent of our electricity
+> consumption with renewable energy purchases, on a global and annual basis. True under the
+> standard. We say true on paper."
 
-### Close
+> "Physically, those ten datacenters sit on grids from five point six to ninety-one percent
+> carbon-free."
 
-Say: *"We never say a company lied. Their claim is true under the standard. We measure the
-gap between a contract and a meter, and we publish what we got wrong alongside it."*
+**Handoff:** *"That's the established players. The interesting question is the buildout
+happening right now."*
+
+### Screen 5 · `#/check/OPENAI` — the new build, and our blind spot
+
+> "We built the ask layer on OpenAI's models, so let's point it at OpenAI. Six Stargate
+> sites, each traced to the utility that serves it."
+
+Santa Teresa: El Paso Electric, 34% at midday, 0.1% at night. Then:
+
+> "And this one we can't see at all. A 700 to 900 megawatt gas microgrid that never touches
+> the grid. Eleven of our sites are like that. A demand-only detector cannot see a
+> datacenter that brought its own power plant."
+
+**Handoff:** *"So if you're siting the next one, where should it go?"*
+
+### Screen 6 · `#/compare` — the actionable turn
+
+**This is where it stops being an exposé.** Open the overlay, pick two grids, or two
+operators.
+
+> "Any two of the 111 grids, any two of the 52 operators, any two of the 134 sites. Here's
+> what 300 megawatts of round-the-clock load actually draws from fossil generation in each,
+> at 3am."
+
+> "That's the decision a developer is actually making, and it's the hour that decides it."
+
+**Handoff:** *"All of that rests on our ranking being real, so let me show you why it is."*
+
+### Screen 7 · `#/method` — earn the trust
+
+> "The detector scores 111 regions from demand alone. It never reads a press release."
+
+> "We fixed the weights and named four test regions before we looked at any ranking, in the
+> same commit as the code. Three landed in the top twenty. **Dallas came 91st**, and we
+> published the miss."
+
+> "Then we re-ran the frozen method on 2026 data that didn't exist when we locked it. The
+> ranking held at 0.877, eight of the top ten unchanged."
+
+**Handoff:** *"So who's on the other side of this financially?"*
+
+### Screen 8 · `#/alpha` — the exposure chain
+
+> "Every flagged region resolves to the utility that serves it, its parent, and a ticker.
+> ERCOT North, our rank one, ninety-five percent demand growth. Served by AEP Texas. Parent
+> American Electric Power."
+
+Then the limit, unprompted:
+
+> "And a third of the load we found sits on public power and cooperatives with no listed
+> equity at all. That number is on the screen. This is an input to a trade, not a trade.
+> No backtest, and we don't claim one."
+
+**Handoff:** *"And you don't have to take my route through this."*
+
+### Screen 9 · ⌘K — hand them the wheel
+
+> "Ask it anything."
+
+Let a judge type it if they will. Otherwise:
+**"Which five regions have the most clean power at 3am relative to their demand, and which
+utility serves each?"**
+
+> "Seven tool calls against the real data, and it structurally cannot show you a number the
+> tools didn't return."
+
+### If you get three minutes
+
+Screens **2, 4, 7**. The table, the company, the freeze. That is the whole argument: here is
+the evidence, here is the claim it contradicts, here is why you can trust the method.
+
+### If a judge takes over
+
+Let them. Good places to land: `#/check/NBIS` (a neocloud with sites and no documents read,
+which shows the coverage honesty), `#/region/PJM/DOM`, or any ⌘K question. The one screen
+to steer away from is deep in `#/explore` — it is exploratory, not narrative.
+
 
 ---
 
