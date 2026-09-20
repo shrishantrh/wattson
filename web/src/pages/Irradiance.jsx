@@ -101,8 +101,8 @@ export default function Irradiance() {
         </p>
         {n19 && n25 && (
           <div className="nums" style={{ marginTop: 14 }}>
-            <Num num={n25.daytime} format={v => sharePct(v)} label="Clean by day — the half that improved" sub={`up from ${sharePct(n19.daytime)} in 2019 · ${ptsLabel(dayDelta)}`} accent />
-            <Num num={n25.overnight} format={v => sharePct(v)} label="Clean at night — the half that went backwards" sub={`down from ${sharePct(n19.overnight)} in 2019 · ${ptsLabel(nightDelta)}${mw19 && mw25 ? ` · clean output still rose ${gw(mw19.overnight)}→${gw(mw25.overnight)}; the rest of the night grew faster` : ''}`} />
+            <Num num={n25.daytime} format={v => sharePct(v)} label="Clean 10am–4pm — the window that improved" sub={`up from ${sharePct(n19.daytime)} in 2019 · ${ptsLabel(dayDelta)}`} accent />
+            <Num num={n25.overnight} format={v => sharePct(v)} label="Clean midnight–6am — the window that did not" sub={`down from ${sharePct(n19.overnight)} in 2019 · ${ptsLabel(nightDelta)}${mw19 && mw25 ? ` · clean output still rose ${gw(mw19.overnight)}→${gw(mw25.overnight)}; the rest of the night grew faster` : ''}`} />
             <Num value="flat" label="The sun, 2019 to 2025" sub="unchanged at all 5 points — so it explains none of the daytime gain" />
           </div>
         )}
