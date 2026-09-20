@@ -111,20 +111,29 @@ export function nearbyCleaner(regions, fromId, { radiusKm = 500, k = 3, loadMW =
 }
 
 // One plain-English sentence for a nearbyCleaner() result. Miles, whole numbers, no jargon.
+//
+// It is read directly above the radius control and the candidate rows, which already print every grid's
+// name, distance, clean share and fossil MW, and beside the two figures for the load here and at the best
+// grid. So the sentence repeats none of that. It carries the two things the rows cannot: how many grids in
+// range beat this one (the rows are ordered nearest first, not cleanest first, so the cleanest is not the
+// top row), and this place's own share, which appears nowhere else on the card. "In range" rather than a
+// mileage, because the radius is a control the reader is looking at. Flagged grids are marked in the rows;
+// the sentence still says in words that a flagged grid is not a recommendation.
 export function describeNearby(result) {
   const from = result?.from
   if (!from) return 'That place is not in the scored regions, so there is nothing to compare.'
-  const R = n0(result.radiusMiles), load = n0(result.loadMW)
   if (!from.hasCoords) return `${from.label} has no load-centre coordinates in the data, so nearby grids cannot be measured.`
   if (from.share == null) return `${from.label} has no overnight clean share in the data, so there is nothing to compare.`
   const best = result.candidates?.[0]
   if (best) {
     const [here, there] = sharePair(from.share, best.share)
-    const more = result.n_cleaner > 1 ? ` ${n0(result.n_cleaner)} grids in range are cleaner than ${from.label}${result.n_cleaner > result.candidates.length ? `; the ${n0(result.candidates.length)} cleanest are listed` : ''}.` : ''
-    return `Within ${R} miles of ${from.label}, the cleanest grid at night is ${best.label}, ${n0(best.miles)} miles away at ${there} clean against ${here} here; moving a ${load} MW load there would cut its fossil MW from ${n0(from.fossilMW)} to ${n0(best.fossilMW)}.${more}`
+    const truncated = result.n_cleaner > result.candidates.length ? `, and the ${n0(result.candidates.length)} cleanest are listed` : ''
+    if (result.n_cleaner > 1) return `${n0(result.n_cleaner)} grids in range run cleaner at night than ${from.label}'s ${here}; the cleanest is ${best.label} at ${there}${truncated}.`
+    return `One grid in range runs cleaner at night than ${from.label}'s ${here}: ${best.label} at ${there}.`
   }
   const ex = result.excluded?.[0], out = result.nearest_outside
-  const flaggedNote = ex ? ` ${ex.label} (${pct0(ex.share)}, ${n0(ex.miles)} miles) reads cleaner, but its data is flagged, so it is not recommended.` : ''
-  if (out) return `No grid within ${R} miles of ${from.label} is cleaner at night than its ${pct0(from.share)}; the nearest that is, ${out.label} at ${pct0(out.share)}, is ${n0(out.miles)} miles away.${flaggedNote}`
-  return `No grid within ${R} miles of ${from.label} is cleaner at night than its ${pct0(from.share)}.${flaggedNote}`
+  const flaggedNote = ex ? ` ${ex.label} reads cleaner, but its data is flagged, so it is not recommended.` : ''
+  const none = `No grid in range is cleaner at night than ${from.label}'s ${pct0(from.share)}`
+  if (out) return `${none}; the nearest that is lies ${n0(out.miles)} miles away.${flaggedNote}`
+  return `${none}.${flaggedNote}`
 }

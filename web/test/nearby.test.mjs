@@ -128,28 +128,57 @@ test('input shapes: the { meta, regions } wrapper works and meta.data_flags mark
   assert.equal(res.excluded[0].flagged, true)
 })
 
-test('describeNearby: miles, the best grid, both shares and both fossil figures; sensible empty states', () => {
+// The sentence is the card's lead, read above the radius control and the candidate rows. The rows already
+// print each grid's name, distance, clean share and fossil MW, and two figures beside them give the fossil
+// MW here and at the best grid, so the sentence must NOT repeat those: what it owes the reader is the count
+// of cleaner grids in range, which of them is cleanest (the rows are ordered nearest first), this place's
+// own share, and, in words, that a flagged grid is not a recommendation.
+test('describeNearby: how many are cleaner, which is cleanest, and this place’s own share', () => {
   const s = describeNearby(nearbyCleaner(FIX, 'A', { radiusKm: milesToKm(500), k: 3, loadMW: 300 }))
-  assert.equal(s, 'Within 500 miles of Pittsburgh, the cleanest grid at night is Nashville, 428 miles away at 70% clean against 40% here; moving a 300 MW load there would cut its fossil MW from 180 to 90. 2 grids in range are cleaner than Pittsburgh.')
+  assert.equal(s, "2 grids in range run cleaner at night than Pittsburgh's 40%; the cleanest is Nashville at 70%.")
+  assert.ok(s.includes('40%') && s.includes('70%'), 'both shares are figures, not adjectives')
+  // Never the figures the rows and the two Num tiles already carry.
+  for (const dup of ['180', '90', '428 miles', '300 MW']) assert.ok(!s.includes(dup), `${dup} is already on the card`)
+  // k truncates the list, so the sentence has to say the count is larger than what is shown.
   const listed = describeNearby(nearbyCleaner([...FIX, row('B2', 44, -84, 0.60)], 'A', { radiusKm: milesToKm(500), k: 2 }))
-  assert.ok(listed.endsWith('3 grids in range are cleaner than Pittsburgh; the 2 cleanest are listed.'), listed)
+  assert.ok(listed.startsWith('3 grids in range run cleaner'), listed)
+  assert.ok(listed.endsWith('and the 2 cleanest are listed.'), listed)
+  // Exactly one: singular, and no count that would read as a list.
   const one = describeNearby(nearbyCleaner(FIX, 'A', { radiusKm: 200, k: 3 }))
-  assert.ok(one.includes('Cleveland') && !one.includes('grids in range'), one)
+  assert.equal(one, "One grid in range runs cleaner at night than Pittsburgh's 40%: Cleveland at 60%.")
+  // Nothing in range: the distance to the nearest one that is, which no row can state until it is drawn.
   const none = describeNearby(nearbyCleaner(FIX, 'A', { radiusKm: 50, k: 3 }))
-  assert.equal(none, 'No grid within 31 miles of Pittsburgh is cleaner at night than its 40%; the nearest that is, Cleveland at 60%, is 87 miles away.')
-  // Flagged and in range but nothing else: named, marked, not recommended.
+  assert.equal(none, "No grid in range is cleaner at night than Pittsburgh's 40%; the nearest that is lies 87 miles away.")
+  // Flagged and in range but nothing else: named, and said in words not to be a recommendation.
   const onlyFlagged = describeNearby(nearbyCleaner([A, E, G], 'A', { radiusKm: 1000, k: 3 }))
-  assert.ok(onlyFlagged.startsWith('No grid within 621 miles of Pittsburgh is cleaner at night than its 40%; the nearest that is, Los Angeles at 90%, is'), onlyFlagged)
-  assert.ok(onlyFlagged.endsWith('Detroit (65%, 209 miles) reads cleaner, but its data is flagged, so it is not recommended.'), onlyFlagged)
+  assert.ok(onlyFlagged.startsWith("No grid in range is cleaner at night than Pittsburgh's 40%; the nearest that is lies 2,121 miles away."), onlyFlagged)
+  assert.ok(onlyFlagged.endsWith('Detroit reads cleaner, but its data is flagged, so it is not recommended.'), onlyFlagged)
   // Nothing cleaner anywhere.
-  assert.equal(describeNearby(nearbyCleaner([A, D], 'A', { radiusKm: 1000 })), 'No grid within 621 miles of Pittsburgh is cleaner at night than its 40%.')
-  // Shares that round to the same whole percent get a decimal.
+  assert.equal(describeNearby(nearbyCleaner([A, D], 'A', { radiusKm: 1000 })), "No grid in range is cleaner at night than Pittsburgh's 40%.")
+  // Shares that round to the same whole percent get a decimal, so the two figures cannot read identically.
   const closeCall = describeNearby(nearbyCleaner([A, row('K', 40.2, -80.2, 0.404, { label: 'Close' })], 'A', { radiusKm: 1000 }))
-  assert.ok(closeCall.includes('40.4% clean against 40.0% here'), closeCall)
+  assert.ok(closeCall.includes("Pittsburgh's 40.0%") && closeCall.includes('Close at 40.4%'), closeCall)
   // Unknown id and a region without coordinates.
   assert.equal(describeNearby(nearbyCleaner(FIX, 'nope')), 'That place is not in the scored regions, so there is nothing to compare.')
   assert.ok(describeNearby(nearbyCleaner(FIX, 'N')).includes('no load-centre coordinates'))
   assert.ok(describeNearby(null).includes('not in the scored regions'))
+})
+
+test('describeNearby stays one short sentence in every branch', () => {
+  const cases = [
+    nearbyCleaner(FIX, 'A', { radiusKm: milesToKm(500), k: 3 }),
+    nearbyCleaner([...FIX, row('B2', 44, -84, 0.60)], 'A', { radiusKm: milesToKm(500), k: 2 }),
+    nearbyCleaner(FIX, 'A', { radiusKm: 200, k: 3 }),
+    nearbyCleaner(FIX, 'A', { radiusKm: 50, k: 3 }),
+    nearbyCleaner([A, E, G], 'A', { radiusKm: 1000, k: 3 }),
+    nearbyCleaner([A, D], 'A', { radiusKm: 1000 }),
+  ]
+  for (const res of cases) {
+    const s = describeNearby(res)
+    assert.ok(s.length <= 180, `${s.length} chars: ${s}`)
+    // At most two: the finding, and at most one caveat about flagged data.
+    assert.ok(s.split('. ').length <= 2, s)
+  }
 })
 
 test('defaults: 500 km, k 3, 300 MW; bad options fall back', () => {
