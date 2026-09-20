@@ -6,7 +6,7 @@ import { irradianceDayNight } from '../charts/builders.js'
 import { loadIrradiance, loadRegions, useAsync } from '../lib/data.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { readTokens } from '../lib/tokens.js'
-import { pct, signed } from '../lib/format.js'
+import { gw, pct, signed } from '../lib/format.js'
 import { href } from '../router.js'
 
 const VERDICT_LABEL = {
@@ -46,7 +46,9 @@ export default function Irradiance() {
   const ercot = regions.find(r => r.region === CALLOUT_ID)
   const conclusion = data?.irr?.conclusion
   const nat = data?.meta?.national?.cf_share || data?.irr?.national_reference
+  const natMw = data?.meta?.national?.cf_avg_mw
   const n19 = nat?.['2019'], n25 = nat?.['2025']
+  const mw19 = natMw?.['2019'], mw25 = natMw?.['2025']
 
   const globe = useMemo(() => {
     if (!regions.length) return { view: { lat: 38.5, lng: -97, altitude: 1.6 }, interactive: false }
@@ -89,24 +91,26 @@ export default function Irradiance() {
   const column = (
     <>
       <Card title={<b>Why the day got clean and the night didn&apos;t</b>} onClose={back}>
-        <h1 className="verdict" style={{ fontSize: 24, lineHeight: 1.2 }}>Same sun. Different grids.</h1>
+        <h1 className="verdict" style={{ fontSize: 24, lineHeight: 1.2 }}>The sun never changed. We built panels. Panels don&apos;t work at night.</h1>
         <p className="note" style={{ marginTop: 10 }}>
-          NASA POWER satellite irradiance is flat at every point we checked — year-to-year variation
+          Sunlight is the control variable here, and it did not move: satellite irradiance varies only
           {' '}{Math.min(...regions.map(r => r.irradiance.year_to_year_variation_pct)).toFixed(2)}–
-          {Math.max(...regions.map(r => r.irradiance.year_to_year_variation_pct)).toFixed(2)}%.
-          The daytime resource did not change. Installed solar did. Overnight never had that resource.
+          {Math.max(...regions.map(r => r.irradiance.year_to_year_variation_pct)).toFixed(2)}% a year at all five points.
+          So the daytime gain below is panels we built, not a sunnier decade — and panels make nothing at 3am,
+          which is the hour a datacenter pulls exactly as hard as at noon.
         </p>
         {n19 && n25 && (
           <div className="nums" style={{ marginTop: 14 }}>
-            <Num num={n25.daytime} format={v => sharePct(v)} label="National daytime 2025" sub={`was ${sharePct(n19.daytime)} in 2019 · ${ptsLabel(dayDelta)}`} accent />
-            <Num num={n25.overnight} format={v => sharePct(v)} label="National overnight 2025" sub={`was ${sharePct(n19.overnight)} in 2019 · ${ptsLabel(nightDelta)}`} />
-            <Num value="flat" label="Satellite irradiance" sub="5 points · no trend · NASA POWER" />
+            <Num num={n25.daytime} format={v => sharePct(v)} label="Clean by day — the half that improved" sub={`up from ${sharePct(n19.daytime)} in 2019 · ${ptsLabel(dayDelta)}`} accent />
+            <Num num={n25.overnight} format={v => sharePct(v)} label="Clean at night — the half that went backwards" sub={`down from ${sharePct(n19.overnight)} in 2019 · ${ptsLabel(nightDelta)}${mw19 && mw25 ? ` · clean output still rose ${gw(mw19.overnight)}→${gw(mw25.overnight)}; the rest of the night grew faster` : ''}`} />
+            <Num value="flat" label="The sun, 2019 to 2025" sub="unchanged at all 5 points — so it explains none of the daytime gain" />
           </div>
         )}
         <p className="note" style={{ marginTop: 12 }}>
-          Clean separation in {(conclusion?.supporting_regions || []).length} of {regions.length} regions
-          ({(conclusion?.supporting_regions || []).join(', ')}).
-          Kept on screen, not dropped: {(conclusion?.non_supporting_regions || []).join(', ')}.
+          Day and night pull apart in {(conclusion?.supporting_regions || []).length} of {regions.length} regions
+          ({(conclusion?.supporting_regions || []).join(', ')}). In the other {(conclusion?.non_supporting_regions || []).length} they move together —
+          wind grids and one broken feed — and we left them on screen rather than dropping them:
+          {' '}{(conclusion?.non_supporting_regions || []).join(', ')}.
         </p>
       </Card>
 
@@ -123,21 +127,18 @@ export default function Irradiance() {
           right={<Chip small accent onClick={() => setFocus(CALLOUT_ID)}>{VERDICT_LABEL[ercot.verdict]}</Chip>}
         >
           <p className="note" style={{ marginBottom: 12 }}>
-            Dallas irradiance point. Carbon-free share is ERCOT&apos;s (zone inherits the BA).
-            {ercotRatio != null && <> Daytime moved ~{ercotRatio.toFixed(0)}× as far as overnight, in percentage points — same years, flat sun.</>}
+            {ercotRatio != null && <>The cleanest split in the data: ERCOT&apos;s daytime clean share moved ~{ercotRatio.toFixed(0)}× as far as its overnight share over the same years, under sun that did not change — consistent with solar, which only works in daylight. </>}
+            The share is all of ERCOT; the irradiance point is Dallas.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 12 }}>
-            <Num num={ercot.cf_share.daytime_change_pts} format={v => ptsLabel(v)} label="Daytime clean share" sub={`${sharePct(ercot.cf_share['2019'].daytime)} → ${sharePct(ercot.cf_share['2025'].daytime)}`} accent />
-            <Num num={ercot.irradiance.change_pct_2019_2025} format={v => `${signed(v, 1)}%`} label="Irradiance endpoint" sub={`flatness band ${ercot.irradiance.year_to_year_variation_pct.toFixed(2)}% · different stat`} />
-            <Num num={ercot.cf_share.overnight_change_pts} format={v => ptsLabel(v)} label="Overnight clean share" sub={`${sharePct(ercot.cf_share['2019'].overnight)} → ${sharePct(ercot.cf_share['2025'].overnight)}`} />
+            <Num num={ercot.cf_share.daytime_change_pts} format={v => ptsLabel(v)} label="Day: solar showed up" sub={`${sharePct(ercot.cf_share['2019'].daytime)} → ${sharePct(ercot.cf_share['2025'].daytime)}`} accent />
+            <Num num={ercot.irradiance.change_pct_2019_2025} format={v => `${signed(v, 1)}%`} label="Sun: no trend" sub={`no bigger than its ordinary ${ercot.irradiance.year_to_year_variation_pct.toFixed(2)}% yearly wobble`} />
+            <Num num={ercot.cf_share.overnight_change_pts} format={v => ptsLabel(v)} label="Night: barely moved" sub={`${sharePct(ercot.cf_share['2019'].overnight)} → ${sharePct(ercot.cf_share['2025'].overnight)}`} />
           </div>
           <KVFlat rows={[
-            ['Year-to-year variation (flatness band)', `${ercot.irradiance.year_to_year_variation_pct.toFixed(2)}%`],
-            ['2019→2025 irradiance endpoint change', `${signed(ercot.irradiance.change_pct_2019_2025, 2)}%`],
-            ['Irradiance mean (Dallas)', `${ercot.irradiance.mean.toFixed(2)} ${ercot.irradiance.units}`],
-            ['Share actually describes', ercot.cf_share_actually_describes],
+            ['Sun over Dallas, every year since 2019', `${ercot.irradiance.mean.toFixed(2)} ${ercot.irradiance.units}, moving ${ercot.irradiance.year_to_year_variation_pct.toFixed(2)}% a year`],
+            ['The share above is', `all of ${ercot.cf_share_actually_describes} — the zone reports demand only, so it inherits its grid's mix`],
           ]} />
-          {ercot.scale_mismatch_note && <p className="note" style={{ marginTop: 10 }}>{ercot.scale_mismatch_note}</p>}
         </Section>
       )}
 
@@ -170,15 +171,13 @@ export default function Irradiance() {
                     {' · '}night {sharePct(r.cf_share['2019'].overnight)}→{sharePct(r.cf_share['2025'].overnight)} ({ptsLabel(r.cf_share.overnight_change_pts)})
                   </div>
                   <div className="d">
-                    Irradiance: year-to-year variation {r.irradiance.year_to_year_variation_pct.toFixed(2)}%
-                    {' · '}endpoint {signed(r.irradiance.change_pct_2019_2025, 2)}%
-                    {' · '}mean {r.irradiance.mean.toFixed(2)} {r.irradiance.units}
+                    Sun here: {r.irradiance.is_flat ? 'flat' : 'moving'} — ±{r.irradiance.year_to_year_variation_pct.toFixed(2)}% a year, {signed(r.irradiance.change_pct_2019_2025, 2)}% end to end
                   </div>
-                  {r.scale_mismatch_note && <p className="note" style={{ marginTop: 6 }}>{r.scale_mismatch_note}</p>}
-                  {r.data_caveat && <p className="note" style={{ marginTop: 6 }}>{r.data_caveat}</p>}
+                  {r.cf_inherited_from_ba && <p className="note" style={{ marginTop: 6 }}>Share is all of {r.cf_share_actually_describes}, not just {r.point?.place} — the zone reports demand only.</p>}
+                  {r.data_caveat && <p className="note" style={{ marginTop: 6 }}><b>Not a real collapse — a reporting break.</b> {r.data_caveat}</p>}
                   {r.why_it_does_not_support?.reading && (
                     <p className="note" style={{ marginTop: 6 }}>
-                      {r.why_it_does_not_support.post_hoc ? 'Post-hoc: ' : ''}{r.why_it_does_not_support.reading}
+                      {r.why_it_does_not_support.post_hoc ? 'Why it misses, worked out after we saw it: ' : 'Why it misses: '}{r.why_it_does_not_support.reading}
                     </p>
                   )}
                 </div>
@@ -188,8 +187,11 @@ export default function Irradiance() {
         </ul>
       </Section>
 
-      <Section title="Caveats">
-        <ul className="rows">{(data.irr.caveats || []).map((c, i) => <li className="row" key={i}><div className="t" style={{ fontSize: 13 }}>{c}</div></li>)}</ul>
+      <Section title="What this page cannot tell you">
+        <details>
+          <summary className="note" style={{ cursor: 'pointer' }}>{(data.irr.caveats || []).length} limits — chiefly that one hand-picked point is not a grid. Open them.</summary>
+          <ul className="rows" style={{ marginTop: 8 }}>{(data.irr.caveats || []).map((c, i) => <li className="row" key={i}><div className="t" style={{ fontSize: 13 }}>{c}</div></li>)}</ul>
+        </details>
       </Section>
     </>
   )

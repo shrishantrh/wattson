@@ -4,17 +4,61 @@
 
 ---
 
-## 1. The one-paragraph version
+## 1. What this is
 
-Every company building AI datacenters says it runs on clean energy. We checked, against
-federal metered data, hour by hour, for every grid in the United States. **Solar cleaned
-up the middle of the day. It did nothing for the middle of the night.** A datacenter
-draws the same power at 3am in January as at noon in June, so roughly half of AI's
-electricity lands in the hours that never improved. In PJM — the grid serving the largest
-datacenter cluster on earth — **overnight clean generation has not increased since 2019.
-Every added gigawatt of overnight generation was fossil.**
+**Wattson audits the clean-energy claims of the companies building AI datacenters, against
+the electricity their sites physically ran on.**
 
----
+### Why nobody had done it
+
+Greenwashing analysis is a mature field — for consumer brands. Fast fashion, airlines,
+oil majors, packaged goods: all have watchdogs, ratings, journalists, and standardised
+frameworks pulling their claims apart. **Datacenters have none of that**, and they are now
+the fastest-growing industrial electricity load in the United States.
+
+The reason is not that nobody cared. It is that the claim and the evidence live in
+different formats. A company says *"100% renewable"* in a PDF. The truth lives in nine
+years of hourly federal generation data across seventy balancing authorities, which nobody
+was joining to the PDF. So the claim went unchecked — not because it was hard to doubt,
+but because it was hard to *check*.
+
+**Wattson is the join.** We take the claim, resolve which grid each datacenter physically
+draws from, and put the company's own words next to what the meter recorded.
+
+### What it does
+
+| Question | Screen | What it returns |
+|---|---|---|
+| *"This company says it's clean. What actually powers its sites?"* | **Check** | The claim verbatim with a page cite, the grid share its mapped sites ran on, a verdict, and the contradiction if there is one |
+| *"Where should this load go?"* | **Compare** | 300 MW across three metros, ranked, with what fuel filled the last growth in each |
+| *"Where is this load landing, and on whose grid?"* | **What we found** | 111 regions scored on flat-load signature, with the serving utility and its ticker |
+| *"Who is exposed to this?"* | **Generating Alpha** | The chain from a metered measurement to an instrument, and where it stops |
+
+### The finding that makes the audit bite
+
+Once you have hourly data rather than annual totals, one fact does most of the work:
+
+**Solar cleaned up the middle of the day. It did nothing for the middle of the night.**
+
+That matters here and almost nowhere else, because **a datacenter draws the same power at
+3am in January as at noon in June.** Roughly half of AI's electricity lands in the hours
+that never improved. An annual "100% renewable" claim can be entirely true on paper and
+still describe a facility that ran on gas every night for seven years.
+
+In PJM — the grid serving the largest datacenter cluster on earth — **overnight clean
+generation has not increased since 2019. Every added gigawatt of overnight generation was
+fossil.**
+
+### What we do not say
+
+**We never say a company lied.** Annual matched claims are **true** under the GHG Protocol
+market-based method — that is a legitimate accounting standard, not a loophole someone
+invented. The verdict is *"true on paper, X physically."* We are not measuring honesty. We
+are measuring the gap between a contract and a meter, and reporting that the gap exists
+and how big it is.
+
+That distinction is the whole reason the analysis holds up. A greenwashing accusation is
+arguable. **Two of a company's own published numbers, side by side, are not.**
 
 ## 2. What we actually measure, precisely
 

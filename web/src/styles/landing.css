@@ -49,3 +49,4 @@
 .lx-link2 { margin-top: 26px; font-size: var(--t-small, 13px); color: var(--ink-2); text-decoration: none; white-space: nowrap; text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9); }
 .lx-link2:hover { color: var(--ink); }
 @media (max-width: 720px) { .lx-links .lx-found, .lx-link2 { margin-top: 18px; } }
+.lx-live-so { color: var(--ink); font-weight: 500; }

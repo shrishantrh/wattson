@@ -27,7 +27,7 @@ export default function DetectorView({ detection: d }) {
     <Mod
       className="mod-detector"
       caption={d.pattern ? `Pattern: ${d.pattern}. A label, never part of the score.` : 'A demand-only score: no generation figure goes into it.'}
-      lead={<Lead value={rank != null ? `#${fmt(rank)}` : '—'} label={`of ${fmt(n)} regions scored for flat-load growth${score != null ? ` · score ${fmt(score, 2).replace(/^-/, '−')}` : ''}`} />}
+      lead={<Lead value={rank != null ? `#${fmt(rank)}` : '—'} label={`of ${fmt(n)} regions scored on demand alone${rank != null ? ` — ${rank <= 1 ? 'nowhere in the country shows' : rank === 2 ? 'one other region shows' : `${fmt(rank - 1)} regions show`} this pattern more strongly` : ''}`} />}
       foot="Score = z(night excess) + z(neighbour divergence) + 0.5 z(load factor change), robust z, frozen before the ranking was seen. Bars are drawn on a fixed scale (±20 pts, ±40 pts, ±0.10, ±60%); the figures beside them are exact."
     >
       <div className="mod-ticks">

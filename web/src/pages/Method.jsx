@@ -28,18 +28,18 @@ export default function Method() {
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<b>Method</b>} onClose={back}>
-        <h1 className="verdict">We measure what each grid physically generated, hour by hour.</h1>
-        <p className="pg-lede">Every US balancing authority, from EIA-930 via PUDL. Clean = nuclear, hydro, wind, solar, geothermal. Night is {data.overnight_hours_local || '00:00–05:59'} local, day is {data.daytime_hours_local || '10:00–15:59'}. Baseline {data.baseline_year || 2019}; data through {data.data_snapshot_end || '2026-09-05'}.</p>
+        <h1 className="verdict">We measure what each grid physically generated, hour by hour — not what was bought on paper.</h1>
+        <p className="pg-lede">Every US balancing authority, from EIA-930 via PUDL. Clean = nuclear, hydro, wind, solar, geothermal. Night is {data.overnight_hours_local || '00:00–05:59'} local — no solar, and a datacenter still at full draw; day is {data.daytime_hours_local || '10:00–15:59'}, when solar does the work. Baseline {data.baseline_year || 2019}, before the buildout; data through {data.data_snapshot_end || '2026-09-05'}.</p>
       </Card>
-      <Section title="The flat-load detector (frozen before results)">
+      <Section title="The flat-load detector — weights set before we saw the ranking">
         <code className="mt-formula">{det.method}</code>
-        <div className="section-title"><span>Named in advance</span><span className="mono muted">rank of {det.n_scored}</span></div>
+        <div className="section-title"><span>Known datacenter clusters, named before the run — three land in the top twenty, Dallas does not, and we report the miss instead of re-tuning</span><span className="mono muted" style={{ whiteSpace: 'nowrap', marginLeft: 12, alignSelf: 'flex-start' }}>rank of {det.n_scored}</span></div>
         <KV rows={val.map(r => [r.known_cluster_label || r.id, `${ordinal(r.rank)} of ${det.n_scored}`])} />
       </Section>
-      <Section title="What we hold to"><Defs rows={(data.caveats || []).map(splitTerm)} /></Section>
-      <Section title="Pattern labels (descriptive only)"><Defs className="mt-keys" rows={Object.entries(data.pattern_labels || {})} /></Section>
-      <Section title="Data flags"><Defs className="mt-flags" rows={Object.entries(data.data_flags || {})} /></Section>
-      <Section title="Company verdicts"><p className="note">"True on paper, X physically": grid-only, average mix, contracted clean power excluded. cannot_verify is explicit, with a reason. The site lookup is hand-curated from the serving utility outward. Until the extraction lands, Meta runs on mock claims with real grid numbers.</p></Section>
+      <Section title="Where this can be wrong"><Defs rows={(data.caveats || []).map(splitTerm)} /></Section>
+      <Section title="Pattern labels — a read of the shape, never part of the score"><Defs className="mt-keys" rows={Object.entries(data.pattern_labels || {})} /></Section>
+      <Section title="Where we suspect the data, not the grid"><Defs className="mt-flags" rows={Object.entries(data.data_flags || {})} /></Section>
+      <Section title="Company verdicts"><p className="note">"True on paper, X physically" is not an accusation: an annual clean-energy claim can be true under the accounting rules while the grid under the site still burns gas at 3am. We report only the second — grid-only, average mix, contracted clean power excluded. cannot_verify is explicit, with a reason; the site lookup is hand-curated from the serving utility outward. Until the extraction lands, Meta runs on mock claims with real grid numbers.</p></Section>
     </>
   )
   return <Shell page="method" globe={{ view: { lat: 30, lng: -96, altitude: 2.2 }, interactive: false }} column={column} />

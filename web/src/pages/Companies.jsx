@@ -36,7 +36,7 @@ export default function Companies() {
   else {
     const withWalk = list.filter(c => c.walk_score != null)
     const best = [...withWalk].sort((a, b) => b.walk_score - a.walk_score)[0], worst = [...withWalk].sort((a, b) => a.walk_score - b.walk_score)[0]
-    const sentence = best && worst && best !== worst ? `${best.company} walks the most: ${pct0(best.walk_score)} clean across its mapped sites. ${worst.company} walks the least at ${pct0(worst.walk_score)}${worst.talk_score != null ? `, while talking at ${pct0(worst.talk_score)}` : ''}.` : 'Four companies, grid-only, hourly data.'
+    const sentence = best && worst && best !== worst ? `Clean-power claims look alike on paper; the grids underneath them are ${Math.round((best.walk_score - worst.walk_score) * 100)} points apart. ${best.company}'s sites draw power that was ${pct0(best.walk_score)} carbon-free in 2025, ${worst.company}'s ${pct0(worst.walk_score)}${worst.n_sites === 1 ? ' at its one mapped site' : ''}. An annual certificate shows none of that.` : `${list.length} companies, checked against the grids their sites actually draw from.`
     const cv = list.reduce((a, c) => a + (c.cannot_verify_count || 0), 0), n = list.reduce((a, c) => a + (c.n_claims || 0), 0)
     const ordered = [...list].sort((a, b) => gapOf(b) - gapOf(a))
     const rows = ordered.map(c => ({ id: c.ticker, label: c.company, a: to100(c.talk_score), b: to100(c.walk_score), href: href.check(c.ticker) }))
@@ -46,21 +46,21 @@ export default function Companies() {
     column = (
       <>
         {crumb}
-        <Card title={<><b>Companies</b> · talk vs walk{data.is_mock && <> · <span className="accent">mock</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
+        <Card title={<><b>Companies</b> · what they claim against what their grids generate{data.is_mock && <> · <span className="accent">mock</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
           <h1 className="verdict">{sentence}</h1>
-          <div className="nums"><Num value={String(list.length)} label="companies read" /><Num value={String(n)} label="claims extracted" sub={`${cv} can't be verified`} /><Num value={String(pts.length)} label="sites mapped" sub={noEquity != null ? `${noEquity} on public power or co-ops, no listed equity` : 'hand-curated, utility outward'} /></div>
-          <p className="note" style={{ marginTop: 12 }}>Talk = how bold and specific the claims are, 0–1. Walk = the clean share of generation on the grids its mapped sites use, averaged, grid-only, contracted power excluded.</p>
+          <div className="nums"><Num value={String(list.length)} label="companies with claims read" sub="checked against the grid, not their paperwork" /><Num value={String(n)} label="claims pulled from filings" sub={`${cv} that grid data cannot settle either way`} /><Num value={String(pts.length)} label="sites located" sub={noEquity != null ? `${noEquity} sit on public power — no stock to trade` : 'found from the serving utility, never the state'} /></div>
+          <p className="note" style={{ marginTop: 12 }}>Talk is how big and unhedged the claim is. Walk is what the grids under its sites actually generated — no contracts, no certificates, just the power on the wire. When walk sits below talk, the difference was bought somewhere else, not generated where the servers are.</p>
         </Card>
-        <Card title={<><b>Talk</b> against <b>walk</b>, per company</>}>
+        <Card title={<>What each company <b>claims</b>, against what its grids <b>generate</b></>}>
           <Dumbbell rows={rows} aLabel="talk" bLabel="walk" />
           <ul className="co-lines">
             {ordered.map(c => (
-              <li key={c.ticker}><a href={href.check(c.ticker)}><b>{c.ticker}</b></a> {plural(c.n_claims, 'claim')} · {plural(c.n_sites, 'site')} · {c.cannot_verify_count ?? 0} can't verify · coverage {pct0(c.coverage)}</li>
+              <li key={c.ticker}><a href={href.check(c.ticker)}><b>{c.ticker}</b></a> {plural(c.n_claims, 'claim')} read across {plural(c.n_sites, 'site')} · grid data settles {pct0(c.coverage)} of them{c.cannot_verify_count ? `, ${c.cannot_verify_count} it cannot` : ''}</li>
             ))}
           </ul>
-          <p className="note" style={{ marginTop: 12 }}>The gap between talk and walk is the story, not a verdict on honesty: annual matching is true under the market-based method. The line turns ember when walk trails talk by more than 20 points.</p>
+          <p className="note" style={{ marginTop: 12 }}>A wide line means the company bought clean power in one place and runs its servers somewhere else. That is legal and true under annual market-based accounting, but it is not the same electricity. The line turns ember past a 20-point gap.</p>
         </Card>
-        <Card title={<><b>Sites</b> · {sites.data.length} mapped, from the serving utility outward</>}>
+        <Card title={<><b>Sites</b> · {sites.data.length} buildings on {new Set(siteRows.map(s => s.region_id)).size} grids, each traced to the utility that actually serves it</>}>
           {fac.loading && <Loading what="the sites" />}
           {!fac.loading && !siteRows.length && <p className="note">No mapped sites in this data source.</p>}
           {siteRows.length > 0 && (
@@ -69,14 +69,14 @@ export default function Companies() {
                 <a className="row co-site" key={`${s.ticker}-${s.metro}-${s.serving_utility}`} href={href.region(s.region_id)}>
                   <div>
                     <div className="t">{s.metro || s.name}{s.state ? `, ${s.state}` : ''} <span className="muted">{s.ticker}</span></div>
-                    <div className="d">{s.serving_utility || 'utility unknown'} · {s.utility_parent || '—'} · {s.ticker_utility || 'no listed equity'}{s.detector_rank != null ? ` · detector rank ${s.detector_rank}` : ''}</div>
+                    <div className="d">{s.serving_utility || 'utility unknown'} · {s.utility_parent || '—'} · {s.ticker_utility || 'publicly owned, no stock to trade'}{s.growth_pct != null ? ` · demand ${s.growth_pct >= 0 ? 'up' : 'down'} ${Math.abs(Math.round(s.growth_pct))}% since 2019` : ''}</div>
                   </div>
-                  <div className="n">{pct0(s.cf_share_2025)} <small>clean 2025</small></div>
+                  <div className="n">{pct0(s.cf_share_2025)} <small>of this grid's 2025 power</small></div>
                 </a>
               ))}
             </div>
           )}
-          <p className="note" style={{ marginTop: 10 }}>Parent and ticker describe the serving utility's owner, not the operator. Clean 2025 is the share of generation on that grid, all hours, grid-only. Sites are on the globe; click one for its grid.</p>
+          <p className="note" style={{ marginTop: 10 }}>The ticker is the utility selling the power, not the company running the servers. "Clean" is the share of electricity generated on that grid in 2025, all hours — contracted power excluded, which is why these sit below the figures the companies report. Click a site for its grid.</p>
         </Card>
       </>
     )

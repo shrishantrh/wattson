@@ -353,7 +353,7 @@ function _irradianceDayNight(meta, irradianceDoc) {
       rows: ys.map(y => ({ year: y, daytime: num(nat[y]?.daytime), overnight: num(nat[y]?.overnight), irradiance: meanIrr(y) })),
     },
     title,
-    note: 'Left axis: national carbon-free share. Right axis: mean NASA POWER surface irradiance across the five points. Irradiance is flat — the sun did not change.',
+    note: 'The dotted line is the sun. It never moves. The two solid lines are the same country over the same years: one climbs, one does not.',
   }
 }
 export const irradianceDayNight = safe(_irradianceDayNight, 'Why the day got clean and the night didn\'t')

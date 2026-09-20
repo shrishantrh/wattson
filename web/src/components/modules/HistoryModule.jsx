@@ -34,12 +34,14 @@ export default function HistoryView({ cf_share, demand, grid, inherited }) {
   const dem = demand ? series(demand, 'overnight_avg_mw') : null
   if (!night.some(x => x.v != null) && !day.some(x => x.v != null)) return <Empty>No yearly clean-share series for this grid.</Empty>
   const [n19, n25] = ends(night)
+  const [d19, d25] = ends(day)
   const fell = down(night)
-  const direction = n19 == null || n25 == null ? 'clean at night, 2019 to 2025' : fell ? 'less clean at night in 2025 than in 2019' : n25 > n19 ? 'cleaner at night in 2025 than in 2019' : 'no cleaner at night in 2025 than in 2019'
+  const dayWords = d19 == null || d25 == null ? '' : `, while the day went ${pct(d19, 1)} to ${pct(d25, 1)}`
+  const direction = n19 == null || n25 == null ? 'clean at night, 2019 to 2025' : fell ? `less clean at night than in 2019${dayWords}` : n25 > n19 ? `cleaner at night than in 2019${dayWords}` : `no cleaner at night than in 2019${dayWords}`
   return (
     <Mod
       className="mod-history"
-      caption="The carbon-free share of generation, one point per year."
+      caption="Night and day read separately — an annual average hides the gap between them."
       lead={<Lead value={<><span className="from">{pct(n19, 1)}</span><span className="arrow"> → </span>{pct(n25, 1)}</>} t={fell ? 'fossil' : 'clean'} label={direction} />}
       foot={`EIA-930 hourly via PUDL. Night is 00:00–05:59 local, day 10:00–15:59; 2026 is partial and left out.${inherited && grid ? ` Shares are the whole ${grid} grid's; demand is this region's own.` : ''}`}
     >

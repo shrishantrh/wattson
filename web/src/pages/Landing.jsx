@@ -27,7 +27,10 @@ function useNational() {
       const years = Object.keys(cf).filter(y => cf[y]?.daytime != null && cf[y]?.overnight != null).sort()
       const year = years.includes('2025') ? '2025' : years[years.length - 1]   // 2026 is a partial year
       if (!year) return
-      setN({ year, day: cf[year].daytime, night: cf[year].overnight })
+      const base = years.includes('2019') ? '2019' : years[0]
+      setN({ year, base,
+             day: cf[year].daytime, night: cf[year].overnight,
+             dayWas: cf[base]?.daytime, nightWas: cf[base]?.overnight })
     }, () => { /* no number rather than a wrong one */ })
     return () => { alive = false }
   }, [])
@@ -37,9 +40,13 @@ function useNational() {
 function LiveShare() {
   const n = useNational()
   if (!n) return null
+  const dayPts = n.dayWas != null ? Math.round((n.day - n.dayWas) * 1000) / 10 : null
+  const nightPts = n.nightWas != null ? Math.round((n.night - n.nightWas) * 1000) / 10 : null
   return (
     <p className="lx-live">
-      US grids ran <b className="lx-v clean">{pct(n.day)}</b> clean by day and <b className="lx-v fossil">{pct(n.night)}</b> at night in {n.year}
+      Since {n.base} US grids gained <b className="lx-v clean">{dayPts != null ? `${dayPts > 0 ? '+' : ''}${dayPts} pts` : pct(n.day)}</b> of clean power by day
+      and <b className="lx-v fossil">{nightPts != null ? `${nightPts > 0 ? '+' : ''}${nightPts} pts` : pct(n.night)}</b> at night.
+      <span className="lx-live-so"> A datacenter runs both.</span>
     </p>
   )
 }
@@ -48,7 +55,7 @@ export default function Landing() {
   const overlay = (
     <div className="landing">
       <h1 className="hero-q">What&apos;s really powering it?</h1>
-      <p className="hero-sub">Check a company&apos;s clean-energy claim against the grid its sites actually use.</p>
+      <p className="hero-sub">Every AI datacenter operator says it runs clean. Nobody checked against the meter. We did &mdash; hour by hour, for every grid in the country.</p>
 
       <div className="lx-box">
         <CommandInline autoFocus limit={5} placeholder="Try: Google  ·  or  300 MW: Phoenix vs Omaha" />
