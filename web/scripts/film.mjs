@@ -8,11 +8,19 @@
 //
 //   node web/scripts/film.mjs [--url http://localhost:5174/#/?film=1] [--out docs/wattson-demo.mp4]
 //                             [--chrome <path>] [--ffmpeg <path>] [--silent] [--inject] [--keep-frames]
+//                             [--no-gif] [--no-sheet]
 //
+// It refuses to record (exit 2) rather than produce a take that is subtly wrong: a stale or missing
+// film.timing.json, a page reload or Vite hot update during the take, missing frames, an output with
+// no audio track or an audio track that is silence, or an implausibly short file. Exit 1 means the
+// take is sound but some shot's `expect` check failed; exit 0 means every shot passed.
+//
+// --no-gif / --no-sheet skip the slow extras while iterating.
 // --silent skips the narration (no film.timing.json clips needed). --inject mounts src/pages/Film.jsx
 // onto the page itself through the Vite dev server (for testing before App.jsx gates <Film /> on
 // ?film=1; dev server only).
 import { execFileSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { existsSync, mkdtempSync, readFileSync, writeFileSync, statSync, rmSync, mkdirSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
@@ -39,18 +47,48 @@ const mb = p => (statSync(p).size / 1048576).toFixed(2) + ' MB'
 const durationOf = f => parseFloat(execFileSync(ffprobe, ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString().trim())
 const ff = a => execFileSync(ffmpeg, ['-y', '-loglevel', 'error', ...a], { stdio: 'inherit' })
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;')
+// A take that is subtly wrong is worse than no take, so every integrity problem stops the run loudly.
+const die = m => { console.error(`\n[film] ABORT: ${m}\n`); process.exit(2) }
+// mean/max volume of a file's audio, for proving the narration is really there.
+function loudness(f) {
+  let out = ''
+  try { out = execFileSync('sh', ['-c', `${JSON.stringify(ffmpeg)} -hide_banner -nostats -i ${JSON.stringify(f)} -af volumedetect -f null - 2>&1`]).toString() } catch (e) { out = (e.stdout || '').toString() + (e.stderr || '').toString() }
+  const mean = out.match(/mean_volume:\s*(-?[\d.]+) dB/), max = out.match(/max_volume:\s*(-?[\d.]+) dB/)
+  return { mean: mean ? parseFloat(mean[1]) : NaN, max: max ? parseFloat(max[1]) : NaN }
+}
+const hasAudio = f => execFileSync(ffprobe, ['-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=codec_name', '-of', 'csv=p=0', f]).toString().trim().length > 0
 
 async function main() {
   const { FILM } = await import(pathToFileURL(join(here, '..', 'src', 'demo', 'film.js')).href)
   const timing = !args.silent && existsSync(timingFile) ? JSON.parse(readFileSync(timingFile, 'utf8')) : null
-  if (!args.silent && !timing) log('no src/demo/film.timing.json; run scripts/narrate.mjs first, or pass --silent')
+  if (!args.silent && !timing) die('no src/demo/film.timing.json; run scripts/narrate.mjs first, or pass --silent')
+
+  // A timing file generated for a different shot list is the one way narration lands on the wrong
+  // scene while the video still looks fine, so refuse it rather than record a subtly wrong take.
+  if (timing) {
+    const fp = createHash('sha256').update(JSON.stringify(FILM.map(s => [s.id, s.say || '', s.holdMs || 0]))).digest('hex').slice(0, 16)
+    if (!timing.fingerprint) die(`src/demo/film.timing.json has no fingerprint (it predates this check). Re-run: node web/scripts/narrate.mjs`)
+    if (timing.fingerprint !== fp) die(`src/demo/film.timing.json is STALE: it was generated for a different shot list (${timing.fingerprint} vs ${fp}).\n        The narration would be muxed against shots it was not written for.\n        Re-run: node web/scripts/narrate.mjs`)
+    const missing = FILM.filter(s => s.say && !timing.shots?.[s.id]?.clip).map(s => s.id)
+    if (missing.length) die(`no narration clip for ${missing.join(', ')}; re-run node web/scripts/narrate.mjs`)
+    const gone = FILM.filter(s => s.say && timing.shots?.[s.id]?.clip && !existsSync(timing.shots[s.id].clip)).map(s => s.id)
+    if (gone.length) die(`narration clips missing from disk for ${gone.join(', ')} (tmp was cleared); re-run node web/scripts/narrate.mjs`)
+    log(`narration ${timing.backend}, ${FILM.filter(s => s.say).length} clips, fingerprint ${fp} OK`)
+  }
   log('chrome:', chrome)
   const browser = await puppeteer.launch({
     executablePath: chrome, headless: false, defaultViewport: null,
     args: [`--window-size=${W},${H + 87}`, '--start-fullscreen', '--hide-scrollbars', '--autoplay-policy=no-user-gesture-required', '--no-first-run', '--no-default-browser-check', '--disable-infobars', '--disable-session-crashed-bubble', '--hide-crash-restore-bubble'],
   })
   const [page] = await browser.pages()
-  page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') log('page', m.type(), m.text()) })
+  // A Vite hot update mid-take restarts or remounts the film and the recording silently becomes a
+  // splice of two runs, so count them and fail at the end rather than ship that.
+  let hmr = 0
+  page.on('console', m => {
+    const t = m.text()
+    if (/\[vite\]\s*(hot updated|hmr update|page reload)/i.test(t)) { hmr++; log('page', t) }
+    else if (m.type() === 'error' || m.type() === 'warning') log('page', m.type(), t)
+  })
   page.on('pageerror', e => log('page error', e.message))
 
   log('open', url)
@@ -70,6 +108,9 @@ async function main() {
   })
   await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 90, maxWidth: W, maxHeight: H, everyNthFrame: 1 })
   await new Promise(r => setTimeout(r, 300))
+  // A full page reload (Vite restart, crash) clears globals; a hash change does not. Checked at the end.
+  const sentinel = Math.random().toString(36).slice(2)
+  await page.evaluate(s => { window.__filmSentinel = s }, sentinel)
   await page.evaluate(() => { if (window.__film) window.__film.start() })
   const t0 = Date.now()
   log('recording; waiting for window.__film.done')
@@ -81,18 +122,26 @@ async function main() {
   }
   await new Promise(r => setTimeout(r, 400))
   await cdp.send('Page.stopScreencast').catch(() => {})
-  const { marks, checks } = await page.evaluate(() => ({ marks: window.__film?.marks || [], checks: window.__film?.checks || [] })).catch(() => ({ marks: [], checks: [] }))
+  const { marks, checks, alive } = await page.evaluate(() => ({ marks: window.__film?.marks || [], checks: window.__film?.checks || [], alive: window.__filmSentinel })).catch(() => ({ marks: [], checks: [], alive: null }))
   await new Promise(r => setTimeout(r, 200))
   const wall = (Date.now() - t0) / 1000
   log(`captured ${frames.length} frames in ${wall.toFixed(1)} s, viewport ${size}`)
-  if (frames.length < 2) { log('no frames captured'); await browser.close(); process.exit(1) }
+  if (frames.length < 2) { await browser.close(); die('no frames captured') }
+  if (alive !== sentinel) { await browser.close(); die('the page reloaded during the take (Vite restarted, or the app crashed and remounted).\n        The recording is a splice of two runs. Stop editing web/ and record again.') }
+  if (hmr && !args['allow-hmr']) { await browser.close(); die(`${hmr} Vite hot update(s) arrived during the take, so the film restarted or remounted mid-recording.\n        Stop editing web/src while recording, or record against the built site (see docs/video.md).\n        Pass --allow-hmr to downgrade this to a warning if you know the edit was harmless.`) }
+  if (hmr) log(`warning: ${hmr} Vite hot update(s) during the take (--allow-hmr); check the contact sheet for a restart`)
+  // Long stalls mean dropped frames: the screencast only emits on change, but a multi-second gap
+  // during an animated film means the capture, not the page, went quiet.
+  const gaps = frames.slice(1).map((f, i) => f.t - frames[i].t)
+  const worst = Math.max(0, ...gaps)
+  if (worst > 3) log(`warning: longest gap between frames is ${worst.toFixed(1)} s; the video will freeze there`)
   if (size !== `${W}x${H}`) log(`warning: frames are ${size}, not ${W}x${H}; the video is padded, not stretched`)
   const frameAt = t => { let f = frames[0]; for (const x of frames) { if (x.t <= t) f = x; else break } return f }
 
   // Contact sheet: one frame per expect check (the frame just before the check), 3 wide, with the
   // shot's title and narration under each; rendered in the same Chrome and screenshotted.
   const cells = checks.map(c => { const s = FILM[c.shot] || {}; const f = frameAt(c.t / 1000); return { ...c, title: s.title || (s.route ? `${s.id} · ${s.route}` : s.id), say: s.say || '', section: s.section, img: readFileSync(f.file).toString('base64'), at: Math.max(0, f.t - frames[0].t) } })
-  if (cells.length) {
+  if (cells.length && !args['no-sheet']) {
     log('rendering the contact sheet')
     const html = `<!doctype html><meta charset="utf-8"><style>
       body{margin:0;background:#0a0c0b;color:#e9ece9;font-family:-apple-system,Inter,system-ui,sans-serif;padding:28px}
@@ -134,15 +183,18 @@ async function main() {
     const inputs = ['-i', silent, '-f', 'lavfi', '-t', videoDur.toFixed(3), '-i', 'anullsrc=r=48000:cl=stereo']
     clips.forEach(c => inputs.push('-i', c.clip))
     const delayed = clips.map((c, i) => `[${i + 2}:a]adelay=${Math.round(c.at * 1000)}|${Math.round(c.at * 1000)}[a${i}]`).join(';')
-    const mix = `[1:a]${clips.map((c, i) => `[a${i}]`).join('')}amix=inputs=${clips.length + 1}:normalize=0:duration=first[a]`
+    // normalize=0 keeps each clip at its own level; the limiter only catches the peaks, so a loud
+    // clip cannot clip the AAC encoder (takes have come back peaking at -0.6 dBFS).
+    const mix = `[1:a]${clips.map((c, i) => `[a${i}]`).join('')}amix=inputs=${clips.length + 1}:normalize=0:duration=first,alimiter=limit=0.89:attack=5:release=50[a]`
     ff([...inputs, '-filter_complex', `${delayed};${mix}`, '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '160k', '-ar', '48000', '-movflags', '+faststart', out])
   } else {
     if (timing) log('no narration marks found on the page; writing the silent video')
     ff(['-i', silent, '-c', 'copy', out])
   }
 
-  // GIF: 12 fps, 960 wide, under 15 MB; step down colours and fps until it fits.
-  const tries = [[12, 960, 160], [12, 960, 96], [10, 880, 96], [10, 800, 64], [8, 720, 64]]
+  // GIF: 12 fps, 960 wide, under 15 MB; step down colours and fps until it fits. --no-gif skips it
+  // (it is several passes and the slowest part of the run) when iterating on the shot list.
+  const tries = args['no-gif'] ? [] : [[12, 960, 160], [12, 960, 96], [10, 880, 96], [10, 800, 64], [8, 720, 64]]
   for (const [fps, w, colors] of tries) {
     log(`encoding gif ${w}w ${fps}fps ${colors} colours`)
     ff(['-i', silent, '-vf', `fps=${fps},scale=${w}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=${colors}:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle`, '-loop', '0', gifOut])
@@ -158,8 +210,24 @@ async function main() {
     writeFileSync(narrationMd, rows.replace(/^(\| # \| shot .*)$/m, '$1'))
   }
 
-  // The table.
+  // Verify the file we are about to trust, with ffmpeg, rather than trusting the pipeline that
+  // wrote it: the dangerous outcome is a take that looks fine and has no voice on it.
   const total = durationOf(out)
+  if (!(total > 5)) die(`the finished video is ${total.toFixed(1)} s, which is implausibly short; something dropped the frames`)
+  if (Math.abs(total - videoDur) > 1.5) log(`warning: muxed length ${total.toFixed(1)} s differs from the silent video's ${videoDur.toFixed(1)} s`)
+  if (clips.length) {
+    if (!hasAudio(out)) die('narration clips were muxed but the finished file has NO audio stream')
+    const { mean, max } = loudness(out)
+    log(`audio check: mean ${Number.isFinite(mean) ? mean.toFixed(1) + ' dB' : '?'}, peak ${Number.isFinite(max) ? max.toFixed(1) + ' dB' : '?'}`)
+    if (Number.isFinite(max) && max < -50) die(`the audio track is silence (peak ${max.toFixed(1)} dB). The narration did not make it into the file.`)
+    if (Number.isFinite(mean) && mean < -60) die(`the audio track is near-silent (mean ${mean.toFixed(1)} dB)`)
+    // Every shot with a `say` line should have contributed a clip; a missing one is a silent scene.
+    const said = FILM.filter(s => s.say).map(s => s.id), got = new Set(clips.map(c => c.id))
+    const silentShots = said.filter(id => !got.has(id))
+    if (silentShots.length) die(`${silentShots.length} shot(s) with narration got no clip in the film: ${silentShots.join(', ')}`)
+  } else if (!args.silent) {
+    die('narration was requested but no clips were muxed, so the film is silent. Re-run node web/scripts/narrate.mjs')
+  }
   log('')
   log('shot        section   at      result')
   let failed = 0
@@ -172,8 +240,8 @@ async function main() {
   if (missing > 0) { failed += missing; log(`${missing} shot(s) never reached their check`) }
   log('')
   log(`mp4    ${out}  ${mb(out)}  ${total.toFixed(1)} s${clips.length ? `  (${clips.length} narration clips, ${timing?.backend || ''})` : '  (silent)'}`)
-  log(`gif    ${gifOut}  ${mb(gifOut)}`)
-  if (cells.length) log(`sheet  ${sheetOut}  ${mb(sheetOut)}`)
+  if (existsSync(gifOut)) log(`gif    ${gifOut}  ${mb(gifOut)}`)
+  if (existsSync(sheetOut)) log(`sheet  ${sheetOut}  ${mb(sheetOut)}`)
   log(failed ? `${failed} FAIL` : `all ${checks.length} shots PASS`)
   if (total > 135) log(`warning: ${total.toFixed(1)} s is over the 2:15 limit`)
   process.exit(failed ? 1 : 0)
