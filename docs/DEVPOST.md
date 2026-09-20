@@ -205,6 +205,13 @@ Anthropic. Guessing there would have been the exact error this project exists to
 carbon-free at 3am, all year, Columbia River hydro. The method isn't "everyone is dirty."
 It distinguishes.
 
+**It held up out of sample, on data that did not exist when we froze it.** The same
+commit that fixed the weights also asked for a second window: 2019 against 2026 January to
+August. Same code, same cuts, eight months of different weather and different load. Three
+of the four pre-registered regions improved: Northern Virginia 6th to 3rd, Omaha 7th to
+6th, Central Ohio 19th to 12th. Dallas stayed a miss at 81st. We did not tune anything to
+make that happen; the second window was written into the script before any of it ran.
+
 **It reproduces.** The full pipeline was re-run end to end on a clean EC2 box across a
 pandas major version, and produced identical output.
 

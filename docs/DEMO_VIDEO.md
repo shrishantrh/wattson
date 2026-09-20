@@ -97,7 +97,8 @@ Land on the verdict.
 > flattening. It never reads a press release."**
 >
 > **"Method frozen before we saw the ranking, four validation regions named in advance.
-> Three hit. One missed, and it's on screen, Dallas came 91st, because every ERCOT zone is
+> Three hit. And when the same frozen code ran on 2026 data that didn't exist yet, all
+> three moved UP: Northern Virginia sixth to third. One missed, and it's on screen, Dallas came 91st, because every ERCOT zone is
 > booming, so a booming Dallas looks unremarkable."**
 
 Say the miss out loud. It buys more credibility than the three hits.

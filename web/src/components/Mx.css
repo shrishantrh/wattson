@@ -1,0 +1,105 @@
+/* Method screen. Everything here is prefixed mx- and lives only on #/method, so the left
+   column's shared stylesheets are untouched. Tokens only: no literal colour, no size that is
+   not a step on the type scale. */
+
+/* ---- the validation table: four regions, two windows, one status ------------------------ */
+.mx-val { margin-top: var(--s3); }
+.mx-val-head,
+.mx-val-row { display: grid; grid-template-columns: 1fr 3em 4.2em; column-gap: var(--s3); row-gap: var(--s1); align-items: baseline; padding: var(--s2) 0; border-top: 1px solid var(--line-soft); }
+.mx-val-head { padding-top: 0; border-top: 0; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: var(--ls-caps); text-transform: uppercase; color: var(--muted); }
+.mx-val-head span:not(:first-child),
+.mx-val-row .mx-rk { text-align: right; font-variant-numeric: var(--fv-num); }
+.mx-val-row { color: var(--ink-2); font-size: var(--t-small); text-decoration: none; }
+a.mx-val-row:hover .mx-name { color: var(--ink); }
+.mx-val-row .mx-name { color: var(--ink); font-weight: 500; }
+.mx-val-row .mx-meta { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: var(--s2); min-width: 0; }
+.mx-val-row .mx-sub { color: var(--muted); font-size: var(--t-micro); font-family: var(--font-mono); letter-spacing: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mx-val-row .mx-rk { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink); letter-spacing: 0; }
+.mx-val-row .mx-rk.dim { color: var(--muted); }
+.mx-tag { flex: none; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: var(--ls-caps); text-transform: uppercase; padding: 2px var(--s2); border-radius: var(--radius-sm); border: 1px solid var(--line-soft); white-space: nowrap; }
+.mx-tag.in { color: var(--clean-ink); border-color: var(--clean-line); background: var(--clean-soft); }
+.mx-tag.out { color: var(--fossil-ink); border-color: var(--fossil-line); background: var(--fossil-soft); }
+
+/* ---- the region that came back 91st ----------------------------------------------------- */
+.mx-miss { margin-top: var(--s4); padding: var(--s3) var(--s4); border: 1px solid var(--fossil-line); border-left-width: 3px; border-radius: var(--radius-sm); background: var(--fossil-soft); }
+.mx-miss h3 { margin: 0; font-size: var(--t-lead); font-weight: 600; letter-spacing: var(--ls-title); line-height: var(--lh-lead); color: var(--ink); text-wrap: pretty; }
+.mx-miss p { margin: var(--s2) 0 0; font-size: var(--t-small); line-height: var(--lh-body); color: var(--ink-2); }
+.mx-miss p b { color: var(--ink); font-weight: 500; }
+.mx-figs { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s5); margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--fossil-line); }
+.mx-figs > div { min-width: 0; }
+.mx-figs .v { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink); font-variant-numeric: var(--fv-num); letter-spacing: 0; }
+.mx-figs .v.neg { color: var(--fossil-ink); }
+.mx-figs .l { font-size: var(--t-micro); color: var(--muted); margin-top: var(--s0); line-height: var(--lh-micro); }
+
+/* ---- the commit record ------------------------------------------------------------------ */
+.mx-git { margin: var(--s3) 0 0; display: flex; flex-direction: column; }
+.mx-git li { display: grid; grid-template-columns: 6.6em 1fr; column-gap: var(--s3); padding: var(--s3) 0; border-top: 1px solid var(--line-soft); }
+.mx-git li:first-child { border-top: 0; padding-top: 0; }
+.mx-git .sha { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink); letter-spacing: 0; }
+.mx-git .when { display: block; font-family: var(--font-mono); font-size: var(--t-micro); color: var(--muted); margin-top: var(--s0); letter-spacing: 0; }
+.mx-git .what { display: block; font-size: var(--t-small); color: var(--ink); font-weight: 500; line-height: var(--lh-small); }
+.mx-git .why { display: block; font-size: var(--t-small); color: var(--muted); line-height: var(--lh-body); margin-top: var(--s2); }
+.mx-git .why b { color: var(--ink-2); font-weight: 500; }
+.mx-diffstat { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0; color: var(--muted); white-space: nowrap; }
+.mx-diffstat .add { color: var(--clean-ink); }
+
+.mx-code { display: block; margin: var(--s3) 0 0; padding: var(--s3); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.03); font-family: var(--font-mono); font-size: var(--t-micro); line-height: 1.7; color: var(--ink-2); overflow-x: auto; white-space: pre; letter-spacing: 0; font-feature-settings: normal; }
+.mx-code b { color: var(--ink); font-weight: 400; }
+.mx-code i { color: var(--muted); font-style: normal; }
+.mx-cap { margin-top: var(--s2); font-size: var(--t-micro); color: var(--muted); line-height: var(--lh-body); }
+
+/* ---- the robustness panel --------------------------------------------------------------- */
+.mx-chips { display: flex; flex-wrap: wrap; gap: var(--s2); margin: var(--s3) 0 0; }
+.mx-chip { height: var(--h-ctl-sm); padding: 0 var(--s3); border-radius: var(--radius-ctl); border: 1px solid var(--line-strong); background: transparent; color: var(--muted); font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0; cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
+.mx-chip:hover { color: var(--ink); border-color: var(--line-focus); }
+.mx-chip[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: var(--bg); font-weight: 500; }
+.mx-chip:focus-visible { outline: none; box-shadow: var(--ring); }
+
+.mx-rho { display: flex; align-items: baseline; gap: var(--s3); margin-top: var(--s4); }
+.mx-rho .v { font-family: var(--font-display); font-weight: var(--w-num); font-size: var(--t-num); line-height: var(--lh-num); letter-spacing: var(--ls-display); font-variant-numeric: var(--fv-num); font-feature-settings: var(--ff-num); color: var(--ink); }
+.mx-rho .l { font-size: var(--t-small); color: var(--muted); line-height: var(--lh-small); }
+
+.mx-moves { margin: var(--s3) 0 0; display: flex; flex-direction: column; }
+.mx-moves li { display: grid; grid-template-columns: 1fr auto; column-gap: var(--s3); align-items: center; padding: var(--s2) 0; border-top: 1px solid var(--line-soft); font-size: var(--t-small); }
+.mx-moves li:first-child { border-top: 0; }
+.mx-moves .who { color: var(--ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; }
+.mx-moves .who:hover { color: var(--clean-ink); }
+.mx-moves .who i { display: block; font-style: normal; font-family: var(--font-mono); font-size: var(--t-micro); color: var(--muted); letter-spacing: 0; }
+.mx-moves .nums { display: flex; align-items: baseline; gap: var(--s1); flex: none; }
+.mx-moves .a, .mx-moves .b, .mx-moves .d { font-family: var(--font-mono); font-size: var(--t-small); text-align: right; font-variant-numeric: var(--fv-num); letter-spacing: 0; }
+.mx-moves .a { color: var(--muted); width: 2.2em; }
+.mx-moves .b { color: var(--ink); width: 2.2em; }
+.mx-moves .arrow { text-align: center; color: var(--muted); font-family: var(--font-mono); font-size: var(--t-micro); width: 1.4em; }
+.mx-moves .d { color: var(--muted); width: 3.2em; }
+.mx-moves .d.big { color: var(--fossil-ink); }
+.mx-moves .d.held { color: var(--clean-ink); }
+
+/* ---- term table and small fact blocks ---------------------------------------------------- */
+.mx-terms { margin: var(--s3) 0 0; display: flex; flex-direction: column; }
+.mx-terms li { padding: var(--s3) 0; border-top: 1px solid var(--line-soft); }
+.mx-terms li:first-child { border-top: 0; padding-top: 0; }
+.mx-terms .k { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2); }
+.mx-terms .k code { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink); letter-spacing: 0; }
+.mx-terms .w { font-family: var(--font-mono); font-size: var(--t-micro); color: var(--muted); letter-spacing: 0; }
+.mx-terms .d { font-size: var(--t-small); color: var(--muted); line-height: var(--lh-body); margin-top: var(--s1); }
+.mx-terms .s { margin-top: var(--s2); font-family: var(--font-mono); font-size: var(--t-micro); color: var(--ink-2); letter-spacing: 0; font-variant-numeric: var(--fv-num); }
+.mx-terms .s em { font-style: normal; color: var(--muted); }
+
+.mx-facts { margin: var(--s3) 0 0; display: flex; flex-direction: column; gap: var(--s4); }
+.mx-fact h4 { margin: 0; font-size: var(--t-small); font-weight: 600; color: var(--ink); line-height: var(--lh-small); }
+.mx-fact p { margin: var(--s1) 0 0; font-size: var(--t-small); color: var(--muted); line-height: var(--lh-body); }
+.mx-fact p b { color: var(--ink-2); font-weight: 500; }
+.mx-bars { margin: var(--s3) 0 0; display: flex; flex-direction: column; gap: var(--s2); }
+.mx-bar { display: grid; grid-template-columns: 7.4em 1fr 5.4em; column-gap: var(--s3); align-items: center; }
+.mx-bar .n { font-size: var(--t-small); color: var(--ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mx-bar .t { height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+.mx-bar .t i { display: block; height: 100%; border-radius: 3px; background: var(--fossil); }
+.mx-bar .v { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink); text-align: right; font-variant-numeric: var(--fv-num); letter-spacing: 0; }
+
+/* The left column is a fraction of the viewport, so it can be near 330px wide on a laptop and
+   twice that on a large screen. Every row above sizes its fixed cells in em and lets one cell
+   flex, which holds at both ends without a breakpoint. This is the floor. */
+@media (max-width: 420px) {
+  .mx-bar { grid-template-columns: 5.4em 1fr 4.4em; }
+  .mx-figs { gap: var(--s1) var(--s4); }
+}

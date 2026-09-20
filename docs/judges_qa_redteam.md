@@ -161,7 +161,7 @@ There isn't one, and I will not pretend otherwise. Two commits, 13:12:39 and 13:
 > ```
 >
 > All four validation regions are named in the script that computes the ranking, not added
-> afterwards. And `git diff 7dc87a0 c421061 -- scripts/l3_detector.py` is 24 lines, none of
+> afterwards. And `git diff 7dc87a0 c421061 -- scripts/l3_detector.py` is 22 lines, none of
 > which touch the score: it adds a docstring and a descriptive pattern label whose own
 > comment says *"does not affect the score or rank."*
 >
