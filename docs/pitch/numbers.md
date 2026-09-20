@@ -110,6 +110,16 @@ scored" is all three, correctly.
 
 ### 2.6 Companies — every displayed figure
 
+> **STALE IN TWO PLACES — read this first.** The Alphabet row below records 100% against **5.6%**
+> across **1 site**, a 94.4-point gap. That is superseded: the live record has **10 sites**, mean
+> **0.464**, a **53.6-point** gap, range 0.056 to 0.913. See "Correction, 2026-09-20: the Google
+> headline pair" at the end of this file. The `talk_score` and the page-94 series in that row are
+> unaffected.
+>
+> The totals line ("4 companies, 7 facilities, 10 claims") predates the operator merge. The current
+> figures are **52 operators, 134 sites, 4 with documents read, 48 sites-only** — see numbers-v2.md
+> §2.5. Use those. This file's own rule applies: where prose and `api/` disagree, `api/` wins.
+
 Totals: **4 companies · 7 facilities · 10 claims · 9 true_on_paper · 1 cannot_verify · is_mock false.**
 Verified by counting `api/company/*.json` claims and against `api/companies.json` and
 `api/facilities.json` (count 7).
