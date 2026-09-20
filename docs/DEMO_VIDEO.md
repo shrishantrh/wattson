@@ -1,19 +1,19 @@
-# Wattson — demo video script
+# Wattson, demo video script
 
 **Target: 2:30.** Read the bold lines as written; they are timed. Everything else is
-direction. Every figure below is checked against the data — do not round them "nicer."
+direction. Every figure below is checked against the data, do not round them "nicer."
 
 ---
 
 ## The opening line
 
 > ## **"There's a greenwashing watchdog for fast fashion. For airlines. For oil majors.**
-> ## **There isn't one for datacenters — the fastest-growing industrial power load in**
+> ## **There isn't one for datacenters, the fastest-growing industrial power load in**
 > ## **America. So we built it."**
 
 Say the three "for" clauses at pace, then break before "There isn't one." The list does the
 work: by the third item the audience has accepted that this is a normal, mature thing that
-obviously should exist — so the absence lands as an oversight rather than as a pitch.
+obviously should exist, so the absence lands as an oversight rather than as a pitch.
 
 **Do not open on solar.** Solar is the *evidence*, not the thesis. The thesis is that an
 entire industry's environmental claims have never been audited. Lead with the audit; the
@@ -21,7 +21,7 @@ night is how you win the argument thirty seconds later.
 
 **Alternates:**
 
-- *"This is a greenwashing investigation of datacenter operators. It's the first one that exists — and it's settled against 4.45 million hours of federal meter data, not a press release."*
+- *"This is a greenwashing investigation of datacenter operators. It's the first one that exists, and it's settled against 4.45 million hours of federal meter data, not a press release."*
 - *"Every company building AI says it runs on clean power. Not one of those claims has ever been checked against the meter. We checked all of them."*
 - *"Fast fashion has watchdogs. Airlines have watchdogs. The industry burning the most new electricity in America has nobody. That's the whole gap."*
 
@@ -32,13 +32,13 @@ night is how you win the argument thirty seconds later.
 **SCREEN:** black, then the globe, slow.
 
 > **"There's a greenwashing watchdog for fast fashion. For airlines. For oil majors. There
-> isn't one for datacenters — the fastest-growing industrial power load in America. So we
+> isn't one for datacenters, the fastest-growing industrial power load in America. So we
 > built it."**
 >
 > *(beat)*
 >
 > **"Wattson is a greenwashing investigation of datacenter operators. Every one of them
-> says it runs clean. Nobody had ever checked — because the claim is one sentence in a
+> says it runs clean. Nobody had ever checked, because the claim is one sentence in a
 > sustainability PDF, and the evidence is 4.45 million hours of federal meter data across
 > all seventy US grids. Wattson is that join."**
 >
@@ -46,7 +46,7 @@ night is how you win the argument thirty seconds later.
 > exposé. An asset manager can act on it."**
 
 That last sentence is the one that separates this from a class project. Do not cut it for
-time — cut something in the middle instead.
+time, cut something in the middle instead.
 
 ---
 
@@ -58,17 +58,17 @@ time — cut something in the middle instead.
 > separate the hours."**
 >
 > **"Since 2019, the United States added sixty-five gigawatts of clean power to the average
-> daytime hour — and eighteen to the average overnight hour. Nearly four times more to the
+> daytime hour, and eighteen to the average overnight hour. Nearly four times more to the
 > hours a datacenter doesn't care about."**
 >
-> **"Solar cleaned up the middle of the day. It did nothing for the middle of the night —
+> **"Solar cleaned up the middle of the day. It did nothing for the middle of the night , 
 > and a datacenter draws the same power at 3am in January as at noon in June. So an annual
 > '100% renewable' claim can be completely true on paper and still describe a facility that
 > ran on gas every night for seven years."**
 
 **SCREEN:** PJM.
 
-> **"In PJM — the grid serving the largest datacenter cluster on earth — overnight clean
+> **"In PJM, the grid serving the largest datacenter cluster on earth, overnight clean
 > generation has not increased since 2019. Overnight generation rose 8.7 gigawatts. Gas
 > supplied 10.7 of it."**
 >
@@ -80,42 +80,42 @@ time — cut something in the middle instead.
 
 Do not narrate the UI. Ask it things.
 
-**(a) The check — 15s.** Type a ticker.
+**(a) The check, 15s.** Type a ticker.
 
 > **"So: a company says it's clean. What actually powers its sites?"**
 
 Land on the verdict.
 
-> **"True on paper. Six percent physically. We never say they lied — an annual matched
+> **"True on paper. Six to ninety-one percent physically. We never say they lied, an annual matched
 > claim is genuinely true under the GHG Protocol. We're measuring the gap between a
 > contract and a meter."**
 
-**(b) The detector — 15s.**
+**(b) The detector, 15s.**
 
 > **"We also find the datacenters without a list of datacenters. This scores 111 regions on
-> the signature of flat 24/7 load — nights growing faster than days, the load curve
+> the signature of flat 24/7 load, nights growing faster than days, the load curve
 > flattening. It never reads a press release."**
 >
 > **"Method frozen before we saw the ranking, four validation regions named in advance.
-> Three hit. One missed, and it's on screen — Dallas came 91st, because every ERCOT zone is
+> Three hit. One missed, and it's on screen, Dallas came 91st, because every ERCOT zone is
 > booming, so a booming Dallas looks unremarkable."**
 
 Say the miss out loud. It buys more credibility than the three hits.
 
-**(b2) OpenAI — 20s. Use this. It is the best beat in the demo.**
+**(b2) OpenAI, 20s. Use this. It is the best beat in the demo.**
 
 Type `openai`. Six Stargate sites come up, every one mapped to a grid.
 
 > **"We built the ask layer on OpenAI's models. So let's point it at OpenAI."**
 >
 > **"Six Stargate sites. Abilene, Milam County, Lordstown, Pike County, Port Washington,
-> Santa Teresa. Thirty-seven percent carbon-free across them — and the two we're most
+> Santa Teresa. Thirty-seven percent carbon-free across them, and the two we're most
 > confident about are the two where the utility is named in the press release: AEP Ohio
 > and We Energies."**
 
 Then open the New Mexico site. **This is the line.**
 
-Before the microgrid point, land the grid it sits in — it is the thesis in one region:
+Before the microgrid point, land the grid it sits in, it is the thesis in one region:
 
 > **"Look at the grid that campus sits on. El Paso Electric runs thirty-four percent
 > carbon-free in the middle of the day, and one tenth of one percent at night. One
@@ -125,7 +125,7 @@ Before the microgrid point, land the grid it sits in — it is the thesis in one
 
 > **"And this one we cannot see at all. Project Jupiter is a 700-to-900 megawatt gas
 > microgrid that explicitly does not connect to El Paso Electric. So that load never
-> appears in federal demand data — including ours."**
+> appears in federal demand data, including ours."**
 >
 > **"That's not a gap we found in someone else's work. That's our own blind spot, on our
 > own screen, in writing. Eleven of our mapped sites are behind the meter. A demand-only
@@ -133,11 +133,11 @@ Before the microgrid point, land the grid it sits in — it is the thesis in one
 
 Why this beat works: it is a sponsor demo, a finding, and a confession in one move, and
 the confession is what makes the other two credible. Do not skip the last paragraph to
-save time — it is the most persuasive thing you will say.
+save time, it is the most persuasive thing you will say.
 
 ---
 
-**(c) ⌘K — 20s. This is the moment.** Open it. Start typing; let the grey completion appear
+**(c) ⌘K, 20s. This is the moment.** Open it. Start typing; let the grey completion appear
 and hit Tab.
 
 > **"And you can just ask it."**
@@ -146,7 +146,7 @@ Run: **"Which five regions have the most clean power available at 3am relative t
 overnight demand, and which listed utility serves each?"**
 
 > **"That's seven tool calls against the real data. It comes back as a table with links,
-> not a paragraph — and it structurally cannot show you a number the data didn't produce."**
+> not a paragraph, and it structurally cannot show you a number the data didn't produce."**
 
 ---
 
@@ -156,11 +156,11 @@ overnight demand, and which listed utility serves each?"**
 
 > **"The thing we're proudest of is what it refuses to say."**
 >
-> **"Nebius — we couldn't tie a single site to a named serving utility. So its record says
+> **"Nebius, we couldn't tie a single site to a named serving utility. So its record says
 > that, instead of guessing a grid. Twelve operators have sites mapped and no documents
 > read, and each one says so: that's a gap in our coverage, not a finding about them."**
 >
-> **"And Arizona's clean share looked like it collapsed. It's an artifact — a reporting
+> **"And Arizona's clean share looked like it collapsed. It's an artifact, a reporting
 > change. We found it in our own diagnostics, and rather than quietly patching the export,
 > we ship both numbers side by side."**
 >
@@ -177,7 +177,7 @@ an instrument.
 
 **SCREEN:** back to the globe, or the regional ranking.
 
-> **"Greenwashing analysis is a mature field — for fast fashion, for airlines, for oil
+> **"Greenwashing analysis is a mature field, for fast fashion, for airlines, for oil
 > majors. It does not exist for datacenters, which are now the fastest-growing industrial
 > electricity load in the country."**
 >
@@ -185,7 +185,7 @@ an instrument.
 > decides it."**
 >
 > **"And because every verdict ends at a named utility in a named region, it isn't only an
-> exposé — an asset manager can act on it. Load growth hits a regulated utility's rate base
+> exposé, an asset manager can act on it. Load growth hits a regulated utility's rate base
 > long before it hits its filings."**
 >
 > *(beat)*
@@ -201,13 +201,13 @@ an instrument.
 - **Never say a company lied.** The verdict is *"true on paper, X physically."*
 - **Never state a share falling as clean power shrinking.** If you say a share fell, say the
   absolute in the same breath.
-- Say **"balancing authority,"** then immediately "— the grid operator for an area." Don't
+- Say **"balancing authority,"** then immediately ",  the grid operator for an area." Don't
   assume the term.
 - If a number on screen disagrees with this script, **the screen is right.** Read the screen.
 
 ## If something breaks
 
-The whole site is a static export — it runs with no server. If the ask layer is down, ⌘K
+The whole site is a static export, it runs with no server. If the ask layer is down, ⌘K
 degrades to the deterministic command palette and every other screen is unaffected. Don't
 apologize for it on camera; just move to the next screen.
 

@@ -16,7 +16,7 @@ data across seventy balancing authorities. **Wattson is the join.**
 
 ---
 
-## Tracks we are entered in, and what backs each one
+## Tracks
 
 | Track | What we built for it |
 |---|---|
@@ -28,14 +28,6 @@ data across seventy balancing authorities. **Wattson is the join.**
 | **xAI** | Grok narration on the irradiance screen. Live. |
 
 Write-ups: `docs/voloridge/SUBMISSION.md`, `docs/arrowstreet/SUBMISSION.md`.
-
----|---|---|---|
-| **Voloridge, "Signal in the Noise"** (primary) | $5k + interview fast-track | The flat-load detector: 111 regions scored on demand data alone, method frozen before the ranking, one pre-registered miss published. Plus the AZPS correction we found in our own output. Built on PUDL EIA-930, Voloridge dataset #6, fetched with their own script. | **Ready.** Write-up in `docs/voloridge/SUBMISSION.md`, reproducibility run in `docs/ec2_repro.md` |
-| **Arrowstreet, "Best Textual Analysis Hack"** (secondary) | $1k + research interview | Claims pulled from company PDFs and SEC filings with page cites, scored for magnitude, specificity and hedging, then held against the physical grid. Four verdict classes with an explicit reason on every unsettled one. | **Ready.** Write-up in `docs/arrowstreet/SUBMISSION.md` |
-| **OpenAI** | demo piece | The ask layer is an OpenAI tool-calling loop over ten typed tools. The demo points it at OpenAI's own buildout: six Stargate sites, mapped. | **Live** |
-| **Elastic, "Find the Signal"** | | 354 documents indexed (309 ESG reports, 45 10-Ks), searched through `server/search.py` and exposed to the ask layer as `search_corpus`. Returns the passage, the ticker, the page number and the source URL, so every quoted claim carries a cite. | **Live.** Verified on the deployed API: it returns Google's 2026 Environmental Report p27 on 24/7 carbon-free energy |
-| **Kalshi** | optional | `engine/alpha/kalshi.py` pulls contracts onto the Generating Alpha screen with strike, bid, ask and close. | **Live** |
-| xAI | optional | Grok narration on the irradiance screen. | **Live** |
 
 ---
 
@@ -220,8 +212,8 @@ Enforced in the code and in the copy.
 
 | Rule | Instead |
 |---|---|
-| Never "caused by" | "consistent with" — the detector flags flat load: datacenters, crypto, oilfield electrification |
-| Never "they lied" | "true on paper, X physically" — annual matched claims are valid under the GHG Protocol market-based method |
+| Never "caused by" | "consistent with", the detector flags flat load: datacenters, crypto, oilfield electrification |
+| Never "they lied" | "true on paper, X physically", annual matched claims are valid under the GHG Protocol market-based method |
 | Never a share alone | Give the absolute MW beside it |
 | Never a zone's generation | Zones report demand only and inherit the parent BA's generation. PJM's +10.74 GW of gas is not Dominion's |
 | Never a null as zero | Render an absent value as a phrase |

@@ -51,8 +51,8 @@ it. Solar cleaned up the middle of the day and did nothing for the middle of the
 draws the same power at 3am in January as at noon in June, so roughly half of AI's demand lands in
 hours that have not improved in seven years.
 
-Nationally the same split: overnight clean output rose from 159.0 to 173.4 GW — up 14.3 GW — but
-overnight *total* rose faster, so overnight share slipped 0.405 → 0.397. Daytime share went
+Nationally the same split: overnight clean output rose from 155.7 to 173.4 GW — up 17.7 GW — but
+overnight *total* rose faster, so overnight share slipped 0.397, flat. Daytime share went
 0.372 → 0.465. The share fall must never be shown without the absolute rise beside it: clean
 generation grew, it just grew slower than demand.
 
@@ -409,7 +409,7 @@ pandas 2.3.3. Every headline figure reproduced exactly:
 | Dominion rank, score | 6, 7.71 | 6, 7.71 |
 | PJM overnight gas 2019→2025 | +10.74 GW | +10.74 GW |
 | PJM overnight clean generation | 35,700 → 35,619 MW | 35,700 → 35,619 MW |
-| National overnight CF share | 0.405 → 0.397 | 0.405 → 0.397 |
+| National overnight CF share | 0.397, flat | 0.397, flat |
 
 **Two portability issues, reported rather than smoothed over.**
 
