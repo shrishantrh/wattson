@@ -176,20 +176,29 @@ button.quick:hover, button.quick:focus-visible { color: var(--ink-2); border-col
   .pal-inline .pal-tab { right: 14px; }
 }
 
-/* The ask layer's face, sitting in the bar you type into. Fixed box so a change of expression
-   cannot nudge the caret, and the figure never takes a click. */
+/* The ask layer's face, in the bar you type into.
+ *
+ * The circle is ours: blobatar's own backdrop is a light plate that reads as a sticker on a dark
+ * bar, so the figure is drawn bare and we ring it here. Fixed box so an expression change cannot
+ * nudge the caret, and --mo-track-travel arms the gaze layer that makes the eyes follow the
+ * pointer. It takes no pointer events itself. */
 .pal-face {
+  --mo-track-travel: 3;
   flex: none;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   display: grid;
   place-items: center;
   margin-right: 10px;
+  border-radius: 50%;
+  background: var(--surface-3, rgba(255, 255, 255, 0.06));
+  box-shadow: inset 0 0 0 1px var(--line, rgba(238, 240, 238, 0.14));
+  overflow: hidden;
   pointer-events: none;
   transition: opacity var(--dur-ui, 160ms) var(--ease-out, cubic-bezier(0.22, 0.61, 0.36, 1));
 }
-.pal-face[data-state="unavailable"] { opacity: 0.42; }
-.pal-face[data-state="thinking"]    { opacity: 1; }
+.pal-face svg { display: block; width: 100%; height: 100%; }
+.pal-face[data-state="unavailable"] { opacity: 0.45; }
 .pal-inputwrap { display: flex; align-items: center; }
 /* The ghost completion is absolutely placed against the wrap, so the face must not offset it. */
-.pal-inputwrap .pal-ghost { left: 36px; }
+.pal-inputwrap .pal-ghost { left: 40px; }
