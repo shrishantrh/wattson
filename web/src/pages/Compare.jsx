@@ -7,10 +7,11 @@ import { CopyButton } from '../components/CopyButton.jsx'
 import { loadSite, loadOpening, loadRegions, useAsync, useRegionDetails, hourProfile, nightSeries } from '../lib/data.js'
 import { nearbyModule } from '../components/modules/NearbyModule.jsx'
 import { readTokens } from '../lib/tokens.js'
-import { compareAnswer, caveatFor, pct0, pct1, n0, signedGw } from '../lib/findings.js'
+import { compareAnswer, caveatFor, pct0, pct1, gw1, n0, signedGw } from '../lib/findings.js'
 import { resolvePlace, DEMO_COMPARE } from '../lib/query.js'
 import { SHAPES, FLEX_FRACTION, cleanShareFor, shiftable, profileOf } from '../lib/shape.js'
 import ShapePicker from '../components/ShapePicker.jsx'
+import WxHeadToHead from '../components/WxHeadToHead.jsx'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import { Bolt, Layers, Info, Place, Pin, Night, ChevronDown, ChevronUp } from '../components/Icons.jsx'
@@ -78,7 +79,7 @@ export default function Compare({ route }) {
   const go = (m = request.metros, load = mw) => { window.location.hash = href.compare({ mw: Number(load) || 300, metros: m, evidence }) }
   const addMetro = e => { e.preventDefault(); const m = resolvePlace(add); if (m && !request.metros.some(x => resolvePlace(x)?.region_id === m.region_id)) go([...request.metros, m.metro]); setAdd('') }
   const toggle = () => { window.location.hash = href.compare({ ...request, evidence: !evidence }) }
-  const nat = found.data?.national?.cf_share, top = (found.data?.detector?.regions || []).filter(r => r.rank <= 5)
+  const nat = found.data?.national?.cf_share, natMw = found.data?.national?.cf_avg_mw, top = (found.data?.detector?.regions || []).filter(r => r.rank <= 5)
 
   const form = (
     <form className="formline" onSubmit={e => { e.preventDefault(); go() }}>
@@ -113,7 +114,7 @@ export default function Compare({ route }) {
         const cf = c.siting?.overnight_cf_share_2025, dem = c.demand?.overnight_avg_mw, cav = caveatFor(c.region_id), d = details[c.region_id], series = nightSeries(d), prof = hourProfile(d)
         return { id: `cand-${c.region_id}`, title: <><Place size={13} className="ans-micon" /><span style={{ color: c === answer.best ? 'var(--accent)' : 'var(--ink)' }}>{c.rank}. {c.metro}</span> · {c.grid_label} · <a href={href.region(c.region_id)} className="ink2">detail →</a></>, render: () => (
           <>
-            <div className="instrument"><Ring value={cf} /><div className="num"><div className="v" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{pct1(cf)}{series && <Sparkline values={series} width={72} height={20} accentLast baseline title="clean at night, 2019 to 2025" />}</div><div className="l">clean power at night, 2025 · {trend(c.siting?.ratio_slope_per_year)}</div></div></div>
+            <div className="instrument"><Ring value={cf} /><div className="num"><div className="v" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{pct1(cf)}{series && <Sparkline values={series} width={72} height={20} accentLast baseline title="clean at night, 2019 to 2025" />}</div><div className="l">{whatIf ? `clean power in the hours a ${shapeLabel} load runs` : 'clean power at night'}, 2025 · {trend(c.siting?.ratio_slope_per_year)}</div></div></div>
             <KV rows={[
               ['since 2019', c.siting?.change_since_2019 != null ? `${c.siting.change_since_2019 > 0 ? '+' : ''}${(c.siting.change_since_2019 * 100).toFixed(1)} pts` : '—'],
               ['clean power vs night demand', c.siting?.overnight_clean_mw_over_demand != null ? `${c.siting.overnight_clean_mw_over_demand.toFixed(2)}×` : '—'],
@@ -122,9 +123,9 @@ export default function Compare({ route }) {
               dem && ['your load', `${(load / dem * 100).toFixed(1)}% of night demand`],
               cf != null && ['fossil at the 2025 mix', `${n0(load * (1 - cf))} of ${n0(load)} MW`],
               c.detector?.rank && ['flat-load rank', `#${c.detector.rank} of ${c.detector.n_scored || 111} · ${c.detector.growth_pct > 0 ? '+' : ''}${Math.round(c.detector.growth_pct)}% since 2019`],
-              ['siting rank', c.siting?.siting_rank ? `${c.siting.siting_rank} of ${c.siting.n_ranked}` : '—'],
+              ['siting rank', c.siting?.siting_rank ? `${c.siting.siting_rank} of ${c.siting.n_ranked}, 1 is best` : '—'],
             ]} />
-            {prof && <div style={{ marginTop: 12 }}><HourBars values={prof} caption="Clean share by hour, 2025" /></div>}
+            {prof && <div style={{ marginTop: 12 }}><HourBars values={prof} caption="Clean share by hour, 2025 (night hours marked)" /></div>}
             {cav && <div className="banner banner-error" style={{ marginTop: 10 }}>{cav}</div>}
             {c.cf_inherited_from_ba && <p className="note" style={{ marginTop: 8 }}>Generation is for the whole grid; demand is local. Operator hand-mapped.</p>}
           </>
@@ -134,10 +135,10 @@ export default function Compare({ route }) {
       { id: 'night', title: mtitle(Night, 'Why night matters'), render: () => (
         <>
           {nat ? <div className="nums" style={{ marginTop: 0 }}><Num num={(nat['2025']?.daytime ?? 0) * 100} format={pctFmt} label="clean during the day, 2025" sub={`${pct1(nat['2019']?.daytime)} in 2019`} /><Num num={(nat['2025']?.overnight ?? 0) * 100} format={pctFmt} label="clean at night, 2025" sub={`${pct1(nat['2019']?.overnight)} in 2019`} accent /><Num value="½" label="of a flat load runs at night" /></div> : <p className="note">National series not available from this data source.</p>}
-          <p className="note" style={{ marginTop: 10 }}>Solar cleaned up midday and did nothing for the middle of the night, which is where flat load puts half of itself. <a href={href.found('sweep')} className="ink2">See it →</a></p>
+          <p className="note" style={{ marginTop: 10 }}>Solar cleaned up midday and did nothing for the middle of the night, which is where flat load puts half of itself.{natMw ? ` Clean output at night did grow, ${gw1(natMw['2019']?.overnight)} to ${gw1(natMw['2025']?.overnight)}; total night generation grew faster, so the share slipped.` : ''} <a href={href.found('sweep')} className="ink2">See it →</a></p>
         </>
       ) },
-      { id: 'landing', title: mtitle(Bolt, 'Where flat load is landing'), render: () => <div className="rows">{top.map(r => <a className="row" key={r.id} href={href.region(r.id)}><div><div className="t">{r.known_cluster_label || r.name}</div><div className="d">{r.pattern}{r.data_flagged ? ' · data flagged' : ''}</div></div><div className="n">#{r.rank} <small>+{Math.round(r.growth_pct)}%</small></div></a>)}<a className="note" href={href.found('detector')} style={{ display: 'block', marginTop: 8 }}>All 111 →</a></div> },
+      { id: 'landing', title: mtitle(Bolt, 'Where flat load is landing'), render: () => <div className="rows">{top.map(r => <a className="row" key={r.id} href={href.region(r.id)}><div><div className="t">{r.known_cluster_label || r.name}</div><div className="d">{r.pattern}{r.data_flagged ? ' · data flagged' : ''}</div></div><div className="n">#{r.rank} <small>demand +{Math.round(r.growth_pct)}%</small></div></a>)}<a className="note" href={href.found('detector')} style={{ display: 'block', marginTop: 8 }}>All 111 grids →</a></div> },
     ]
     const bestShare = answer.best?.siting?.overnight_cf_share_2025
     const bestTone = bestShare != null && bestShare >= 0.5 ? 'clean' : 'fossil'
@@ -154,7 +155,7 @@ export default function Compare({ route }) {
           <span className="ans-sticky-name"><Place size={13} />{n0(data.request.mw)} MW · {cands.length} place{cands.length === 1 ? '' : 's'}</span>
           {answer.best && <span className="ans-sticky-v"><b>{answer.best.metro}</b> · <b className={bestTone}>{pct0(bestShare)}</b> clean</span>}
         </div>
-        <Card className="ans-card" title={<><b>Compare</b> · {n0(data.request.mw)} MW of flat load{data._computed_client_side && ' · ranked here'}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />}>
+        <Card className="ans-card" title={<><b>Compare</b> · {n0(data.request.mw)} MW of flat load{data._computed_client_side && ' · ranked in your browser'}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />}>
           {data.unmapped.length > 0 && <div className="banner">No data for {data.unmapped.join(', ')}. Try a nearby city or a grid name.</div>}
           <h1 className="verdict ans-lead">{cmpLead}</h1>
           {cmpRest && !disagree && <p className="ans-rest">{cmpRest}</p>}
@@ -182,23 +183,29 @@ export default function Compare({ route }) {
             </>
           )}
           {cands.length > 1 && <div className="sharebar" aria-hidden="true">{cands.map(c => { const v = c.siting?.overnight_cf_share_2025 ?? 0; return <span key={c.region_id} className={c === answer.best ? 'best' : ''} style={{ width: `${Math.max(2, v * 100) / cands.length}%` }} title={`${c.metro} ${pct0(v)}`} /> })}</div>}
-          {bestShare != null && <p className="note live" style={{ marginTop: 12 }}>At <b>{n0(Number(mw) || load)} MW</b>, {answer.best.metro} would draw about <b>{n0((Number(mw) || load) * (1 - bestShare))} MW</b> of fossil {whatIf ? 'over those hours' : 'at night'} on the 2025 mix{cands[1]?.siting?.overnight_cf_share_2025 != null ? <>, versus <b>{n0((Number(mw) || load) * (1 - cands[1].siting.overnight_cf_share_2025))} MW</b> in {cands[1].metro}</> : null}.</p>}
+          {bestShare != null && <p className="note live" style={{ marginTop: 12 }}>At <b>{n0(Number(mw) || load)} MW</b>, {answer.best.metro} would draw about <b>{n0((Number(mw) || load) * (1 - bestShare))} MW</b> of fossil {whatIf ? 'over those hours' : 'at night'} on the 2025 mix{cands[1]?.siting?.overnight_cf_share_2025 != null ? <>, versus <b>{n0((Number(mw) || load) * (1 - cands[1].siting.overnight_cf_share_2025))} MW</b> in {cands[1].metro}</> : null}. Average mix, not marginal.</p>}
           <NextAction open={evidence} onToggle={toggle} label="See the evidence" sub={`opens below · ${modules.length} cards`} />
           {controls}
           <details className="ans-why is-method">
             <Disc>How this ranking is made</Disc>
             <dl className="ans-dl">
               <div><dt>score</dt><dd>Clean power at night, its trend, and clean power against demand. Equal weight, frozen before any result was seen.</dd></div>
-              {whatIf && <div><dt>what-if</dt><dd>Re-ranked on the clean share over the hours this shape uses; the frozen score is the flat case.</dd></div>}
+              {whatIf && <div><dt>what-if</dt><dd>Re-ranked on the clean share over the hours this shape uses; the frozen score is the flat case, and the evidence below is still measured over the night hours.</dd></div>}
             </dl>
           </details>
+        </Card>
+        <Zone icon={Place}>Head to head</Zone>
+        <Card className="ans-card" title={<><b>Any two regions</b> · the difference, at {n0(Number(mw) || load)} MW</>}>
+          {regs.data
+            ? <WxHeadToHead regions={regs.data.regions} mw={Number(mw) || load} initial={[cands[0]?.region_id, cands[1]?.region_id].filter(Boolean)} />
+            : <p className="note">Loading the region list.</p>}
         </Card>
         {evidence && (
           <>
             <Workspace id="compare" modules={modules} title={<span className="ans-mtitle"><Layers size={13} />Evidence<em className="ans-count">{modules.length}</em></span>} />
             <Zone icon={Info}>Caveats</Zone>
             <section className="card ans-tail">
-              <p className="ans-tail-sum">What this does not mean.</p>
+              <p className="ans-tail-sum">The ranking rule, and what it does not mean.</p>
               <ul className="ans-list"><li>{data.method}</li><li>Average mix inside each grid's footprint, not marginal emissions and not consumption: imports are not allocated.</li></ul>
             </section>
           </>

@@ -1,0 +1,1038 @@
+{
+ "_note": "GENERATED from claims/companies.json by web/scripts/companies_index.mjs. Do not hand-edit. This is the list the command palette and the not-found screen search; it must equal what the API serves.",
+ "generated": "2026-09-20",
+ "counts": {
+  "total": 52,
+  "sites_and_claims": 4,
+  "sites_only": 48,
+  "no_site_resolved": 0
+ },
+ "companies": [
+  {
+   "key": "META",
+   "ticker": "META",
+   "name": "Meta Platforms",
+   "listed_equity": true,
+   "coverage_status": "sites_and_claims",
+   "claims_absent_reason": null,
+   "n_sites": 10,
+   "n_claims": 1,
+   "walk_score": 0.463,
+   "grids": [
+    "PACW",
+    "SWPP/OPPD",
+    "PJM/AEP",
+    "PJM/DOM",
+    "PJM/CE",
+    "SOCO",
+    "PNM/PNM",
+    "MISO/8910",
+    "PACE",
+    "TVA"
+   ],
+   "aliases": [
+    "facebook",
+    "fb",
+    "meta",
+    "meta platforms"
+   ]
+  },
+  {
+   "key": "MSFT",
+   "ticker": "MSFT",
+   "name": "Microsoft",
+   "listed_equity": true,
+   "coverage_status": "sites_and_claims",
+   "claims_absent_reason": null,
+   "n_sites": 7,
+   "n_claims": 3,
+   "walk_score": 0.458,
+   "grids": [
+    "GCPD",
+    "AZPS",
+    "ERCO/SCEN",
+    "MISO/0027",
+    "PJM/DOM",
+    "PJM/AEP",
+    "SOCO"
+   ],
+   "aliases": [
+    "azure",
+    "microsoft",
+    "msft"
+   ]
+  },
+  {
+   "key": "GOOGL",
+   "ticker": "GOOGL",
+   "name": "Alphabet (Google)",
+   "listed_equity": true,
+   "coverage_status": "sites_and_claims",
+   "claims_absent_reason": null,
+   "n_sites": 10,
+   "n_claims": 5,
+   "walk_score": 0.464,
+   "grids": [
+    "SC",
+    "MISO",
+    "BPAT",
+    "SWPP/GRDA",
+    "DUK",
+    "TVA",
+    "PJM/AEP",
+    "SRP",
+    "ERCO/NCEN",
+    "MISO/0001"
+   ],
+   "aliases": [
+    "alphabet",
+    "alphabet (google)",
+    "goog",
+    "googl",
+    "google"
+   ]
+  },
+  {
+   "key": "AMZN",
+   "ticker": "AMZN",
+   "name": "Amazon",
+   "listed_equity": true,
+   "coverage_status": "sites_and_claims",
+   "claims_absent_reason": null,
+   "n_sites": 7,
+   "n_claims": 1,
+   "walk_score": 0.461,
+   "grids": [
+    "PJM/DOM",
+    "PJM/AEP",
+    "MISO/8910",
+    "BPAT",
+    "PJM/PL",
+    "PJM/PE"
+   ],
+   "aliases": [
+    "amazon",
+    "amzn",
+    "aws"
+   ]
+  },
+  {
+   "key": "IREN",
+   "ticker": "IREN",
+   "name": "IREN",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.461,
+   "grids": [
+    "ERCO",
+    "ERCO/WEST"
+   ],
+   "aliases": [
+    "childress",
+    "iren",
+    "iris energy"
+   ]
+  },
+  {
+   "key": "WULF",
+   "ticker": "WULF",
+   "name": "TeraWulf",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 3,
+   "n_claims": 0,
+   "walk_score": 0.449,
+   "grids": [
+    "SWPP",
+    "NYIS",
+    "NYIS/ZONC"
+   ],
+   "aliases": [
+    "lake mariner",
+    "tera wulf",
+    "terawulf",
+    "wulf"
+   ]
+  },
+  {
+   "key": "RIOT",
+   "ticker": "RIOT",
+   "name": "Riot Platforms",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.461,
+   "grids": [
+    "ERCO"
+   ],
+   "aliases": [
+    "corsicana",
+    "riot",
+    "riot platforms",
+    "rockdale"
+   ]
+  },
+  {
+   "key": "CIFR",
+   "ticker": "CIFR",
+   "name": "Cipher Digital (Cipher Mining)",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.461,
+   "grids": [
+    "ERCO",
+    "ERCO/FWES"
+   ],
+   "aliases": [
+    "black pearl",
+    "cifr",
+    "cipher",
+    "cipher digital",
+    "cipher digital (cipher mining)",
+    "cipher mining"
+   ]
+  },
+  {
+   "key": "APLD",
+   "ticker": "APLD",
+   "name": "Applied Digital",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.349,
+   "grids": [
+    "MISO"
+   ],
+   "aliases": [
+    "apld",
+    "applied digital",
+    "ellendale",
+    "polaris forge"
+   ]
+  },
+  {
+   "key": "CRWV",
+   "ticker": "CRWV",
+   "name": "CoreWeave",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 3,
+   "n_claims": 0,
+   "walk_score": 0.401,
+   "grids": [
+    "MISO",
+    "ERCO/NCEN",
+    "PJM/PS"
+   ],
+   "aliases": [
+    "core weave",
+    "coreweave",
+    "crwv"
+   ]
+  },
+  {
+   "key": "XAI",
+   "ticker": null,
+   "name": "xAI",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.418,
+   "grids": [
+    "TVA",
+    "MISO/8910"
+   ],
+   "aliases": [
+    "colossus",
+    "grok",
+    "x ai",
+    "xai"
+   ]
+  },
+  {
+   "key": "ORCL",
+   "ticker": "ORCL",
+   "name": "Oracle",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 4,
+   "n_claims": 0,
+   "walk_score": 0.368,
+   "grids": [
+    "ERCO",
+    "EPE",
+    "PJM/DOM"
+   ],
+   "aliases": [
+    "abilene",
+    "oracle",
+    "orcl",
+    "stargate"
+   ]
+  },
+  {
+   "key": "DLR",
+   "ticker": "DLR",
+   "name": "Digital Realty",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 3,
+   "n_claims": 0,
+   "walk_score": 0.408,
+   "grids": [
+    "PJM/DOM",
+    "SRP",
+    "PGE"
+   ],
+   "aliases": [
+    "digital realty",
+    "digital realty trust",
+    "dlr"
+   ]
+  },
+  {
+   "key": "EQIX",
+   "ticker": "EQIX",
+   "name": "Equinix",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 6,
+   "n_claims": 0,
+   "walk_score": 0.419,
+   "grids": [
+    "PJM/DOM",
+    "SOCO",
+    "PJM/CE",
+    "ERCO/NCEN",
+    "CISO/PGAE",
+    "PJM/PS"
+   ],
+   "aliases": [
+    "eqix",
+    "equinix"
+   ]
+  },
+  {
+   "key": "VANTAGE",
+   "ticker": null,
+   "name": "Vantage Data Centers",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 4,
+   "n_claims": 0,
+   "walk_score": 0.556,
+   "grids": [
+    "GCPD",
+    "AZPS",
+    "CISO",
+    "PJM/AEP"
+   ],
+   "aliases": [
+    "vantage",
+    "vantage data centers"
+   ]
+  },
+  {
+   "key": "AAPL",
+   "ticker": "AAPL",
+   "name": "Apple",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 3,
+   "n_claims": 0,
+   "walk_score": 0.394,
+   "grids": [
+    "DUK",
+    "NEVP",
+    "MISO"
+   ],
+   "aliases": [
+    "aapl",
+    "apple"
+   ]
+  },
+  {
+   "key": "TSLA",
+   "ticker": "TSLA",
+   "name": "Tesla",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.461,
+   "grids": [
+    "ERCO/SCEN"
+   ],
+   "aliases": [
+    "tesla",
+    "tsla"
+   ]
+  },
+  {
+   "key": "NBIS",
+   "ticker": "NBIS",
+   "name": "Nebius",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.424,
+   "grids": [
+    "PJM/AE",
+    "SWPP"
+   ],
+   "aliases": [
+    "nbis",
+    "nebius",
+    "nebius group"
+   ]
+  },
+  {
+   "key": "LAMBDA",
+   "ticker": null,
+   "name": "Lambda",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.456,
+   "grids": [
+    "SWPP"
+   ],
+   "aliases": [
+    "lambda"
+   ]
+  },
+  {
+   "key": "CRUSOE",
+   "ticker": null,
+   "name": "Crusoe Energy",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.4,
+   "grids": [
+    "WACM",
+    "ERCO"
+   ],
+   "aliases": [
+    "crusoe",
+    "crusoe energy"
+   ]
+  },
+  {
+   "key": "OPENAI",
+   "ticker": null,
+   "name": "OpenAI",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 6,
+   "n_claims": 0,
+   "walk_score": 0.369,
+   "grids": [
+    "ERCO",
+    "EPE",
+    "PJM/ATSI",
+    "MISO/0027",
+    "PJM/AEP"
+   ],
+   "aliases": [
+    "openai"
+   ]
+  },
+  {
+   "key": "FLUIDSTACK",
+   "ticker": null,
+   "name": "Fluidstack",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.454,
+   "grids": [
+    "ERCO/SOUT",
+    "NYIS/ZONA"
+   ],
+   "aliases": [
+    "fluidstack"
+   ]
+  },
+  {
+   "key": "POOLSIDE",
+   "ticker": null,
+   "name": "Poolside",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.461,
+   "grids": [
+    "ERCO/FWES"
+   ],
+   "aliases": [
+    "poolside"
+   ]
+  },
+  {
+   "key": "FRMI",
+   "ticker": "FRMI",
+   "name": "Fermi America",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.456,
+   "grids": [
+    "SWPP/SPS"
+   ],
+   "aliases": [
+    "fermi america",
+    "frmi"
+   ]
+  },
+  {
+   "key": "CORZ",
+   "ticker": "CORZ",
+   "name": "Core Scientific",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 8,
+   "n_claims": 0,
+   "walk_score": 0.45,
+   "grids": [
+    "ERCO/NCEN",
+    "ERCO/FWES",
+    "SOCO",
+    "TVA",
+    "SWPP/OKGE",
+    "DUK",
+    "MISO"
+   ],
+   "aliases": [
+    "core scientific",
+    "corz"
+   ]
+  },
+  {
+   "key": "HUT",
+   "ticker": "HUT",
+   "name": "Hut 8",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 3,
+   "n_claims": 0,
+   "walk_score": 0.456,
+   "grids": [
+    "ERCO",
+    "ERCO/FWES",
+    "NYIS/ZONA"
+   ],
+   "aliases": [
+    "hut",
+    "hut 8"
+   ]
+  },
+  {
+   "key": "GLXY",
+   "ticker": "GLXY",
+   "name": "Galaxy Digital",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.461,
+   "grids": [
+    "ERCO"
+   ],
+   "aliases": [
+    "galaxy digital",
+    "glxy"
+   ]
+  },
+  {
+   "key": "KEEL",
+   "ticker": "KEEL",
+   "name": "Stronghold Digital (acquired by Bitfarms/Keel)",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.393,
+   "grids": [
+    "PJM/PL",
+    "PJM/PN"
+   ],
+   "aliases": [
+    "keel",
+    "stronghold digital (acquired by bitfarms",
+    "stronghold digital (acquired by bitfarms/keel)"
+   ]
+  },
+  {
+   "key": "MARA",
+   "ticker": "MARA",
+   "name": "MARA",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.459,
+   "grids": [
+    "ERCO/NCEN",
+    "SWPP/NPPD"
+   ],
+   "aliases": [
+    "mara"
+   ]
+  },
+  {
+   "key": "VIP",
+   "ticker": "VIP",
+   "name": "Vulcan Infrastructure and Power (formerly Greenidge)",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.446,
+   "grids": [
+    "NYIS/ZONC"
+   ],
+   "aliases": [
+    "vip",
+    "vulcan infrastructure and power",
+    "vulcan infrastructure and power (formerly greenidge)"
+   ]
+  },
+  {
+   "key": "BTDR",
+   "ticker": "BTDR",
+   "name": "Bitdeer",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 3,
+   "n_claims": 0,
+   "walk_score": 0.447,
+   "grids": [
+    "ERCO",
+    "TVA",
+    "PJM"
+   ],
+   "aliases": [
+    "bitdeer",
+    "btdr"
+   ]
+  },
+  {
+   "key": "SLNH",
+   "ticker": "SLNH",
+   "name": "Soluna",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.461,
+   "grids": [
+    "ERCO"
+   ],
+   "aliases": [
+    "slnh",
+    "soluna"
+   ]
+  },
+  {
+   "key": "WYFI",
+   "ticker": "WYFI",
+   "name": "WhiteFiber (Bit Digital)",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.575,
+   "grids": [
+    "DUK"
+   ],
+   "aliases": [
+    "whitefiber",
+    "whitefiber (bit digital)",
+    "wyfi"
+   ]
+  },
+  {
+   "key": "CYRUSONE",
+   "ticker": null,
+   "name": "CyrusOne",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.427,
+   "grids": [
+    "ERCO/SCEN",
+    "PJM/DEOK"
+   ],
+   "aliases": [
+    "cyrusone"
+   ]
+  },
+  {
+   "key": "QTS",
+   "ticker": null,
+   "name": "QTS",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.371,
+   "grids": [
+    "PJM/DOM",
+    "MISO"
+   ],
+   "aliases": [
+    "qts"
+   ]
+  },
+  {
+   "key": "ALIGNED",
+   "ticker": null,
+   "name": "Aligned Data Centers",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.363,
+   "grids": [
+    "PACE"
+   ],
+   "aliases": [
+    "aligned",
+    "aligned data centers"
+   ]
+  },
+  {
+   "key": "SWITCH",
+   "ticker": null,
+   "name": "Switch",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 3,
+   "n_claims": 0,
+   "walk_score": 0.288,
+   "grids": [
+    "NEVP",
+    "MISO"
+   ],
+   "aliases": [
+    "switch"
+   ]
+  },
+  {
+   "key": "STACK",
+   "ticker": null,
+   "name": "STACK Infrastructure",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.393,
+   "grids": [
+    "PJM/AEP"
+   ],
+   "aliases": [
+    "stack",
+    "stack infrastructure"
+   ]
+  },
+  {
+   "key": "EDGECONNEX",
+   "ticker": null,
+   "name": "EdgeConneX",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.599,
+   "grids": [
+    "SRP"
+   ],
+   "aliases": [
+    "edgeconnex"
+   ]
+  },
+  {
+   "key": "DATABANK",
+   "ticker": null,
+   "name": "DataBank",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.356,
+   "grids": [
+    "PACE",
+    "MISO/0001"
+   ],
+   "aliases": [
+    "databank"
+   ]
+  },
+  {
+   "key": "FLEXENTIAL",
+   "ticker": null,
+   "name": "Flexential",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.487,
+   "grids": [
+    "TVA"
+   ],
+   "aliases": [
+    "flexential"
+   ]
+  },
+  {
+   "key": "IRM",
+   "ticker": "IRM",
+   "name": "Iron Mountain Data Centers",
+   "listed_equity": true,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.393,
+   "grids": [
+    "PJM/PS"
+   ],
+   "aliases": [
+    "irm",
+    "iron mountain data centers"
+   ]
+  },
+  {
+   "key": "COMPASS",
+   "ticker": null,
+   "name": "Compass Datacenters",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.285,
+   "grids": [
+    "AZPS"
+   ],
+   "aliases": [
+    "compass",
+    "compass datacenters"
+   ]
+  },
+  {
+   "key": "NTT",
+   "ticker": null,
+   "name": "NTT Global Data Centers Americas",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.232,
+   "grids": [
+    "PGE"
+   ],
+   "aliases": [
+    "ntt",
+    "ntt global data centers americas"
+   ]
+  },
+  {
+   "key": "PRIME",
+   "ticker": null,
+   "name": "Prime Data Centers",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.393,
+   "grids": [
+    "PJM/CE"
+   ],
+   "aliases": [
+    "prime",
+    "prime data centers"
+   ]
+  },
+  {
+   "key": "NOVVA",
+   "ticker": null,
+   "name": "Novva Data Centers",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.351,
+   "grids": [
+    "WACM",
+    "PACE"
+   ],
+   "aliases": [
+    "novva",
+    "novva data centers"
+   ]
+  },
+  {
+   "key": "YONDR",
+   "ticker": null,
+   "name": "Yondr",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.393,
+   "grids": [
+    "PJM/DOM"
+   ],
+   "aliases": [
+    "yondr"
+   ]
+  },
+  {
+   "key": "SABEY",
+   "ticker": null,
+   "name": "Sabey Data Centers",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 2,
+   "n_claims": 0,
+   "walk_score": 0.723,
+   "grids": [
+    "GCPD",
+    "NYIS/ZONJ"
+   ],
+   "aliases": [
+    "sabey",
+    "sabey data centers"
+   ]
+  },
+  {
+   "key": "TIERPOINT",
+   "ticker": null,
+   "name": "TierPoint",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.456,
+   "grids": [
+    "SWPP/OPPD"
+   ],
+   "aliases": [
+    "tierpoint"
+   ]
+  },
+  {
+   "key": "T5",
+   "ticker": null,
+   "name": "T5 Data Centers",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.325,
+   "grids": [
+    "SOCO"
+   ],
+   "aliases": [
+    "t5",
+    "t5 data centers"
+   ]
+  },
+  {
+   "key": "POWERHOUSE",
+   "ticker": null,
+   "name": "PowerHouse / Provident",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.461,
+   "grids": [
+    "ERCO/NCEN"
+   ],
+   "aliases": [
+    "powerhouse",
+    "powerhouse / provident"
+   ]
+  },
+  {
+   "key": "EDGED",
+   "ticker": null,
+   "name": "Edged Energy",
+   "listed_equity": false,
+   "coverage_status": "sites_only",
+   "claims_absent_reason": "no_documents_ingested",
+   "n_sites": 1,
+   "n_claims": 0,
+   "walk_score": 0.325,
+   "grids": [
+    "SOCO"
+   ],
+   "aliases": [
+    "edged",
+    "edged energy"
+   ]
+  }
+ ]
+}

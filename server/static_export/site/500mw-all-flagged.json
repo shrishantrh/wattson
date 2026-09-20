@@ -177,31 +177,31 @@
    "siting_rank": 32,
    "corrections_applied": {
     "change_since_2019": {
-     "published": -0.517,
+     "published": 0.087,
      "corrected": 0.087,
      "confidence": "proven",
      "evidence": "Published value has the wrong SIGN: it reports a 0.517 fall where the like-for-like change is an increase. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
     },
     "ratio_slope_per_year": {
-     "published": -0.1105,
+     "published": 0.011,
      "corrected": 0.011,
      "confidence": "proven",
      "evidence": "Wrong sign, driven entirely by the inflated 2019 point. Recomputed over 2019-2025 with nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
     },
     "ratio_2019": {
-     "published": 1.145,
+     "published": 0.0118,
      "corrected": 0.0118,
      "confidence": "proven",
      "evidence": "Overnight clean MW over overnight demand, nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
     },
     "siting_score": {
-     "published": 0.173,
+     "published": 0.449,
      "corrected": 0.449,
      "confidence": "proven",
      "evidence": "Recomputed with the corrected change_since_2019. siting_score is a mean of cross-sectional percentile ranks, so one region's correction moves the table."
     },
     "siting_rank": {
-     "published": 49,
+     "published": 32,
      "corrected": 32,
      "confidence": "high_confidence_inference",
      "evidence": "Recomputed over the same 52 ranked BAs. The published file stores rounded components while the pipeline ranked on full precision, so this method reproduces 41 of 52 published ranks exactly. Treat the corrected rank as +/- 2."
@@ -228,7 +228,7 @@
     "gw": 0.31
    },
    "fuel_delta_overnight_gw": {
-    "nuclear": -3.61,
+    "nuclear": 0.0,
     "hydro": 0.0,
     "wind": 0.21,
     "solar": -0.01,

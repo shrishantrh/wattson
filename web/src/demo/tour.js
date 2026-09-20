@@ -15,7 +15,7 @@ export const TOUR = [
 
   { sceneId: 'check',
     caption: "Google's 2026 environmental report says it matched 100% of its electricity with renewable purchases, annual and market-based (p. 4); that is true on paper, and its one mapped site, Moncks Corner SC, sits on a grid that generated 6% clean power in 2025.",
-    say: 'True on paper, six percent physically. Read the caveat with it: that co-op’s nuclear reports under the neighbouring SCEG grid at 42%, so the footprint understates what the site can draw.',
+    say: 'True on paper, six percent physically. Read the caveat with it: that co-op’s nuclear reports under the neighboring SCEG grid at 42%, so the footprint understates what the site can draw.',
     focus: '.column .verdict' },
 
   { sceneId: 'check-evidence',
@@ -69,7 +69,7 @@ export const TOUR = [
     focus: '.pair' },
 
   { sceneId: 'found-detector',
-    caption: '111 regions scored from demand alone with the method frozen before results, robust z of overnight excess plus neighbour divergence plus half the load-factor change; dots take the colour of clean share at night in the slider’s year, hollow when the data is flagged or corrected.',
+    caption: '111 regions scored from demand alone with the method frozen before results, robust z of overnight excess plus neighbor divergence plus half the load-factor change; dots take the colour of clean share at night in the slider’s year, hollow when the data is flagged or corrected.',
     say: 'Validation was named in advance and reported as is, including the miss in Dallas. The pins in ember are flagged places that are not known datacenter clusters.',
     focus: '.ys' },
 

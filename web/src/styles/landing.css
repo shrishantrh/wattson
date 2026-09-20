@@ -40,3 +40,15 @@
   .lx-found { margin-top: 18px; }
   .pal-inline .pal-list { max-height: 34vh; }
 }
+
+/* The findings link plus the two deeper screens. The landing was cut to six elements, which
+   left Generating Alpha and Day vs night with no entry point anywhere; this is the quietest
+   way to keep them reachable without reopening the three-section block. */
+.lx-links { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 6px 18px; }
+.lx-links .lx-found { margin-top: 26px; }
+.lx-link2 { margin-top: 26px; font-size: var(--t-small, 13px); color: var(--ink-2); text-decoration: none; white-space: nowrap; text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9); }
+.lx-link2:hover { color: var(--ink); }
+@media (max-width: 720px) { .lx-links .lx-found, .lx-link2 { margin-top: 18px; } }
+.lx-live-so { color: var(--ink); font-weight: 500; }
+.hero-kicker { font-size: 11px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--accent); margin: 0 0 10px; font-weight: 600; }

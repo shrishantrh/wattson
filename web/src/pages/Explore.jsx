@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
 import { Card, Chip } from '../console/widgets.jsx'
 import Scatter from '../components/Scatter.jsx'
+import { WxSeg, WxRange, WxReadout, useKeyList } from '../components/WxControls.jsx'
 import { loadRegions, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { METRICS, PRESETS, DEFAULT_PRESET, metric, tickFormat, pearson, linfit, quantiles, outliers, sectorOf, GENERATION_SIDE } from '../lib/metrics.js'
@@ -10,6 +11,7 @@ import { Loading, ErrorState } from '../components/States.jsx'
 import { href, useHash } from '../router.js'
 import '../styles/explore.css'
 import '../styles/pages.css'
+import '../styles/wx.css'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 // Explore: any two metrics across the scored regions as a scatter, with the correlation, the
@@ -21,6 +23,7 @@ const SECTORS = ['All', 'Eastern', 'Texas', 'Western']
 const NAMED_FALLBACK = ['PJM/DOM', 'PJM/AEP', 'SWPP/OPPD', 'ERCO/NCEN']
 const exploreHref = ({ x, y, sel, sector }) => href.explore({ x, y, ...(sel ? { sel } : {}), ...(sector && sector !== 'All' ? { sector } : {}) })
 const axisLabel = m => (['%', '×', 'rank'].includes(m.unit) ? m.label : `${m.label} (${m.unit})`)   // tick labels already carry %, × and #
+const medianOf = xs => { const v = xs.filter(Number.isFinite).sort((a, b) => a - b); return v.length ? v[Math.floor((v.length - 1) / 2)] : null }
 
 // "Across 111 regions, demand growth and overnight excess correlate r = 0.61: places that grew
 // fast also grew faster at night." Generated from the numbers; presets supply the reading.
@@ -85,6 +88,22 @@ export default function Explore({ route }) {
   }, [basis])
   const selected = visible.find(p => p.id === sel) || null
   const inSector = (s, id) => !id || s === 'All' || all.some(p => p.id === id && p.sector === s)
+
+  // A threshold the reader sets on the y metric. The domain and the step are read off the
+  // plotted points, so the handle always spans real values and never lands outside them.
+  const dom = useMemo(() => {
+    const ys = visible.map(p => p.y).filter(Number.isFinite)
+    if (!ys.length) return { lo: 0, hi: 1, step: 0.1 }
+    const lo = Math.min(...ys), hi = Math.max(...ys)
+    const step = Number(((hi - lo || 1) / 100).toPrecision(1))
+    return { lo: Math.floor(lo / step) * step, hi: Math.ceil(hi / step) * step, step }
+  }, [visible])
+  const [dir, setDir] = useState('gte')
+  const [cut, setCut] = useState(null)
+  useEffect(() => { setCut(null) }, [yKey, sector])
+  const cutAt = cut == null ? (dir === 'gte' ? dom.lo : dom.hi) : Math.min(dom.hi, Math.max(dom.lo, cut))
+  const passing = useMemo(() => visible.filter(p => (dir === 'gte' ? p.y >= cutAt : p.y <= cutAt)).sort((a, b) => (dir === 'gte' ? b.y - a.y : a.y - b.y)), [visible, dir, cutAt])
+  const cutNav = useKeyList(passing.length, { onOpen: i => passing[i] && go({ sel: passing[i].id }), onEscape: () => go({ sel: null }) })
 
   useEffect(() => {
     if (!sel) return
@@ -170,7 +189,44 @@ export default function Explore({ route }) {
               ))}
             </div>
           ) : <p className="note">No fit: the x axis has no spread.</p>}
-          <p className="note pg-fine">Generation is measured within a footprint, not consumption, and zones inherit their grid's generation figures. Correlation across regions is not causation; the detector reads demand only.</p>
+          <p className="note pg-fine">Generation is measured within a footprint, not consumption, and a zone's generation figures are its parent grid's — a zone reports demand only. A correlation across regions is not a cause: the detector reads demand and nothing else, so a tight fit here says two measurements move together, not that one produced the other.</p>
+        </Card>
+      )}
+      {data && (
+        <Card title={<><b>Cut the field</b> · a threshold on {my.short}</>}>
+          <p className="note">Drag the line and the list below is whatever survives it. Click a region to pin it on the chart and the globe.</p>
+          <div className="wx-bar">
+            <WxSeg label="keep regions where" value={dir} onChange={d => { setDir(d); setCut(null) }} options={[['gte', `${my.short} ≥`], ['lte', `${my.short} ≤`]]} />
+            <WxRange label="the line" value={cutAt} min={dom.lo} max={dom.hi} step={dom.step} onChange={setCut} format={v => my.format(v)} />
+          </div>
+          <WxReadout items={[
+            { value: String(passing.length), label: `of ${visible.length} plotted regions survive`, tone: passing.length ? '' : 'warn' },
+            { value: my.format(medianOf(passing.map(p => p.y))), label: `median ${my.short} among them`, tone: 'clean' },
+            { value: mx.format(medianOf(passing.map(p => p.x))), label: `median ${mx.short} among them` },
+            { value: mx.format(medianOf(visible.filter(p => !passing.includes(p)).map(p => p.x))), label: `median ${mx.short} among the rest` },
+          ]} />
+          {passing.length === 0
+            ? <p className="wx-none">Nothing is {dir === 'gte' ? 'at or above' : 'at or below'} <b>{my.format(cutAt)}</b>. Drag the line back the other way.</p>
+            : (
+              <>
+                <div {...cutNav.listProps} className="wx-list" role="list" aria-label={`Regions ${dir === 'gte' ? 'above' : 'below'} the line`} style={{ maxHeight: 260, overflowY: 'auto' }}>
+                  {passing.slice(0, 40).map((p, i) => (
+                    <div
+                      key={p.id}
+                      data-wx-item
+                      className={`wx-li${i === cutNav.index ? ' on' : ''}${p.id === sel ? ' sel' : ''}`}
+                      role="listitem"
+                      onClick={() => go({ sel: p.id === sel ? null : p.id })}
+                    >
+                      <span className="rk">{i + 1}</span>
+                      <span><span className="t">{p.label}</span><span className="d">{mx.short} {mx.format(p.x)}{p.flagged ? ' · data-flagged or corrected' : ''}{p.named ? ' · named in advance' : ''} · <a href={href.region(p.id)} onClick={e => e.stopPropagation()}>open</a></span></span>
+                      <span className="n">{my.format(p.y)}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="wx-hint" style={{ marginTop: 8 }}>{passing.length > 40 ? `First 40 of ${passing.length}. ` : ''}Click the list, then <span className="wx-kbd">&uarr;</span> <span className="wx-kbd">&darr;</span> to walk it and <span className="wx-kbd">&crarr;</span> to pin. <span className="wx-kbd">Esc</span> unpins.</p>
+              </>
+            )}
         </Card>
       )}
     </>

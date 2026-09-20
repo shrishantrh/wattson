@@ -1,0 +1,4 @@
+fastapi>=0.110,<1
+uvicorn[standard]>=0.27,<1
+elasticsearch>=8.12,<10
+openai>=1.40,<3

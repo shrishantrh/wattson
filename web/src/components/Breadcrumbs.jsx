@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Place, Layers, Company, Table, Bolt, Info, Globe as GlobeIcon, Sort, Filter, ArrowLeft, Pin } from './Icons.jsx'
 import coords from '../data/region_coords.json'
-import { COMPANIES } from '../lib/query.js'
+import { companyByKey } from '../lib/query.js'
 import { href, parseHash, useHash } from '../router.js'
 import '../styles/breadcrumbs.css'
 
@@ -15,7 +15,7 @@ const SHEETS = { regions: 'Regions (111)', alerts: 'Alerts', companies: 'Compani
 const PRESETS = { rising: 'New flat load rising', cleanest: 'Cleanest at night', dirtiest: 'Dirtiest at night', worsening: 'Getting worse fastest', improving: 'Improving fastest' }
 
 const HOME = { label: 'Home', href: '#/', icon: GlobeIcon }
-const companyName = t => COMPANIES.find(c => c.ticker === t)?.name || t
+const companyName = t => companyByKey(t)?.name || t
 
 function regionTrail(id) {
   const c = coords.regions[id]
@@ -59,6 +59,11 @@ function trailFor(hash) {
     case 'data': {
       const sheet = SHEETS[p.t]
       return [{ ...HOME }, { label: 'Data', href: href.data(), icon: Table }, sheet && { label: sheet, icon: Table }].filter(Boolean)
+    }
+    case 'ask': {
+      const q = (p.q || '').trim()
+      return [{ ...HOME }, { label: 'Ask', href: href.ask(), icon: Bolt },
+        q && { label: q.length > 48 ? `${q.slice(0, 47)}…` : q, icon: Info }].filter(Boolean)
     }
     case 'explore':
       return [{ ...HOME }, { label: 'Explore', icon: Filter }]

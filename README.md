@@ -213,6 +213,35 @@ local time. `alerts.json` lists threshold rules with the month each was first cr
 the dashboard loads `claims/companies.mock.json` behind a visible MOCK DATA banner. The
 mock file's claim text is illustrative; its grid evidence numbers are real L1 outputs.
 
+## Document retrieval (Elastic Cloud)
+
+The verified corpus is indexed as-is; retrieval never re-extracts a PDF. Configure one
+of these credential pairs locally (they are intentionally not committed):
+
+```bash
+# ~/.wattson.env
+ELASTIC_CLOUD_ID=...              # preferred Elastic Cloud connection form
+ELASTIC_API_KEY=...
+# Or, when the project setup supplies an endpoint instead:
+# ELASTICSEARCH_URL=https://...elastic-cloud.com
+# ELASTIC_API_KEY=...
+```
+
+```bash
+pip install -r requirements.txt
+python3 -m engine.retrieval --dry-run  # validates: 354 passages, 309 ESG + 45 10-K
+python3 -m engine.retrieval            # create/index wattson-corpus-v1
+python3 -m server
+curl 'localhost:8000/api/search/status'
+curl 'localhost:8000/api/search?q=100%25+renewable'
+curl 'localhost:8000/api/search?q=100%25+renewable&ticker=MSFT&doc_type=10k'
+```
+
+`/api/search/status` reports corpus counts and the live `indexed` count; `/api/search`
+reports `total`, score, exact source URL, and either a PDF page or an EDGAR HTML locator
+for each result. `quality_flag=suspect` remains searchable for completeness but must
+never be presented as a quote; `tabular` hits are numerical evidence only.
+
 ## Dashboard (L7)
 
 `dashboard/` is a static Vite + React + Plotly site reading the JSON above. Screens:

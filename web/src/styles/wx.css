@@ -1,0 +1,153 @@
+/* Interaction furniture for the secondary screens (Screener, Explore, Compare, Region,
+   Alerts, Data, Method, Found). Every class is prefixed wx- so nothing here can collide
+   with the shared stylesheets. Colour comes from tokens.css only: clean power is --clean,
+   fossil is --fossil, flagged or corrected is --warn, everything else is the neutral ramp.
+   Controls reuse the app's control heights (--h-ctl, --h-ctl-sm) so a Wx control sitting
+   beside a .chip or .btn lines up with it. */
+
+/* ── a group of controls above a table or list ─────────────────────────── */
+.wx-bar { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: flex-end; margin-top: 12px; }
+.wx-bar + .wx-bar { margin-top: 10px; }
+.wx-group { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.wx-group > .wx-k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 8px; align-items: baseline; }
+.wx-group > .wx-k b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.wx-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.wx-spacer { flex: 1 1 auto; }
+
+/* ── slider ────────────────────────────────────────────────────────────── */
+.wx-range { flex: 1 1 150px; min-width: 120px; }
+.wx-range input[type='range'] { -webkit-appearance: none; appearance: none; width: 100%; height: 2px; margin: 10px 0 2px; border-radius: 1px; outline: none; cursor: pointer;
+  background: linear-gradient(to right, var(--ink-2) 0, var(--ink-2) var(--wx-fill, 0%), rgba(255, 255, 255, 0.12) var(--wx-fill, 0%), rgba(255, 255, 255, 0.12) 100%); }
+.wx-range input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); border: 0; cursor: pointer; }
+.wx-range input[type='range']::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); border: 0; cursor: pointer; }
+.wx-range input[type='range']:focus-visible { box-shadow: var(--ring); border-radius: 4px; }
+.wx-ends { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--muted); font-feature-settings: normal; letter-spacing: 0; }
+
+/* ── segmented control (extends nothing; self-contained) ───────────────── */
+.wx-seg { display: inline-flex; gap: 2px; padding: 2px; border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.04); }
+.wx-seg button { height: 20px; padding: 0 9px; border: 0; border-radius: 5px; background: transparent; color: var(--muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
+.wx-seg button:hover { color: var(--ink-2); }
+.wx-seg button[aria-pressed='true'] { background: rgba(255, 255, 255, 0.1); color: var(--ink); }
+.wx-seg button:focus-visible { outline: none; box-shadow: var(--ring); }
+
+/* ── live readout: figures that change as controls move ────────────────── */
+.wx-readout { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-soft); }
+.wx-readout > div { min-width: 0; }
+.wx-readout .v { font-family: var(--font-display); font-weight: var(--w-num); font-size: 19px; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; font-feature-settings: var(--ff-num); white-space: nowrap; }
+.wx-readout .v.clean { color: var(--clean); }
+.wx-readout .v.fossil { color: var(--fossil); }
+.wx-readout .v.warn { color: var(--warn); }
+.wx-readout .l { font-size: 10px; color: var(--muted); margin-top: 3px; line-height: 1.35; }
+
+/* ── a keyboard-navigable list ─────────────────────────────────────────── */
+.wx-list { margin-top: 10px; outline: none; }
+.wx-list:focus-visible { box-shadow: var(--ring); border-radius: var(--radius-sm); }
+.wx-li { display: grid; grid-template-columns: 2.2em 1fr auto; column-gap: 12px; align-items: center; padding: 7px 6px 7px 0; border-top: 1px solid var(--line-soft); cursor: pointer; color: inherit; text-decoration: none; }
+.wx-li:first-child { border-top: 0; }
+.wx-li .rk { font-family: var(--font-mono); font-size: 11px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+.wx-li .t { display: block; font-size: 13px; font-weight: 500; color: var(--ink); overflow-wrap: anywhere; }
+.wx-li .d { display: block; font-size: 11px; color: var(--muted); margin-top: 1px; overflow-wrap: anywhere; }
+.wx-li .d a { color: var(--ink-2); }
+.wx-li .d a:hover { color: var(--ink); }
+.wx-li .n { font-family: var(--font-mono); font-size: 12px; color: var(--ink); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
+.wx-li:hover { background: rgba(255, 255, 255, 0.035); }
+.wx-li.on { background: rgba(255, 255, 255, 0.07); box-shadow: inset 2px 0 0 var(--ink); }
+.wx-li.on .t { color: var(--ink); }
+.wx-li.sel { box-shadow: inset 2px 0 0 var(--fossil); }
+.wx-li.sel .t { color: var(--fossil); }
+.wx-hint { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em; }
+.wx-kbd { display: inline-block; min-width: 15px; padding: 0 4px; border: 1px solid var(--line-strong); border-radius: 4px; font-family: var(--font-mono); font-size: 9px; line-height: 14px; text-align: center; color: var(--muted); }
+
+/* ── empty state inside a control block ────────────────────────────────── */
+.wx-none { margin-top: 12px; padding: 14px 2px; font-size: 12px; color: var(--muted); }
+.wx-none b { color: var(--ink-2); font-weight: 500; }
+
+/* ── hour scrubber (Region) ────────────────────────────────────────────── */
+.wx-hours { margin-top: 4px; }
+.wx-hplot { position: relative; display: flex; align-items: flex-end; gap: 1px; height: 72px; margin-top: 10px; }
+.wx-hbar { flex: 1 1 0; min-width: 0; position: relative; display: flex; align-items: flex-end; height: 100%; background: none; border: 0; padding: 0; cursor: pointer; }
+.wx-hbar i { display: block; width: 100%; border-radius: 1px 1px 0 0; background: var(--wx-c, var(--muted)); transition: opacity var(--dur-fast) var(--ease); }
+.wx-hbar:hover i { opacity: 0.75; }
+.wx-hbar.on::after { content: ''; position: absolute; inset: 0 -1px; border: 1px solid var(--ink); border-radius: 2px; pointer-events: none; }
+.wx-hbar:focus-visible { outline: none; box-shadow: var(--ring); border-radius: 2px; }
+.wx-hbar .cmp { position: absolute; left: 0; right: 0; height: 0; border-top: 1px dashed var(--warn); pointer-events: none; }
+.wx-hnight { position: absolute; left: 0; bottom: -5px; height: 2px; background: var(--line-focus); border-radius: 1px; pointer-events: none; }
+.wx-haxis { display: flex; justify-content: space-between; margin-top: 10px; font-family: var(--font-mono); font-size: 10px; color: var(--muted); font-feature-settings: normal; letter-spacing: 0; }
+.wx-hread { margin-top: 12px; padding: 10px 12px; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.03); }
+.wx-hread .hh { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+.wx-hread .line { margin-top: 6px; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+.wx-hread .line b { color: var(--ink); font-weight: 500; }
+.wx-hread .line b.clean { color: var(--clean); }
+.wx-hread .line b.fossil { color: var(--fossil); }
+
+/* ── year series, share vs absolute (Region) ───────────────────────────── */
+.wx-years { display: flex; align-items: flex-end; gap: 4px; height: 84px; margin-top: 12px; }
+.wx-ycol { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; height: 100%; }
+.wx-ycol i { display: block; width: 100%; border-radius: 2px 2px 0 0; background: var(--wx-c, var(--ink-2)); }
+.wx-ycol .yv { font-family: var(--font-mono); font-size: 9px; color: var(--ink-2); font-feature-settings: normal; letter-spacing: 0; white-space: nowrap; }
+.wx-ycol.dim i { opacity: 0.45; }
+.wx-ylabels { display: flex; gap: 4px; margin-top: 6px; }
+.wx-ylabels span { flex: 1 1 0; text-align: center; font-family: var(--font-mono); font-size: 10px; color: var(--muted); font-feature-settings: normal; letter-spacing: 0; }
+.wx-ylabels span.corr { color: var(--warn); }
+
+/* ── head to head (Compare) ────────────────────────────────────────────── */
+.wx-h2h { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: end; margin-top: 12px; }
+.wx-h2h select.field { width: 100%; max-width: none; font-family: var(--font-ui); cursor: pointer; }
+.wx-h2h .wx-swap { height: var(--h-ctl); width: 32px; padding: 0; font-family: var(--font-mono); }
+.wx-delta { width: 100%; border-collapse: collapse; margin-top: 14px; }
+.wx-delta th, .wx-delta td { padding: 7px 6px; border-top: 1px solid var(--line-soft); text-align: right; font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; white-space: nowrap; }
+.wx-delta th { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); border-top: 0; }
+.wx-delta th:first-child, .wx-delta td:first-child { text-align: left; white-space: normal; font-family: var(--font-ui); font-size: 12px; color: var(--ink-2); }
+.wx-delta td.a, .wx-delta td.b { color: var(--ink); }
+.wx-delta td.warn { color: var(--warn); }
+.wx-delta td.d { color: var(--muted); }
+.wx-delta td.d.pos { color: var(--clean); }
+.wx-delta td.d.neg { color: var(--fossil); }
+.wx-delta tr.hero td { font-size: 13px; }
+
+/* ── provenance (Data) ─────────────────────────────────────────────────── */
+.wx-prov { margin-top: 12px; padding: 12px 14px; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.03); }
+.wx-prov .path { font-family: var(--font-mono); font-size: 11px; color: var(--ink); overflow-wrap: anywhere; font-feature-settings: normal; letter-spacing: 0; }
+.wx-prov dl { margin: 10px 0 0; display: grid; grid-template-columns: minmax(84px, auto) 1fr; gap: 5px 14px; }
+.wx-prov dt { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.wx-prov dd { margin: 0; font-size: 12px; color: var(--ink-2); line-height: 1.5; overflow-wrap: anywhere; }
+.wx-prov dd .mono { font-size: 11px; }
+
+/* ── stepper (Found) ───────────────────────────────────────────────────── */
+.wx-step { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+.wx-step .wx-dots { display: flex; gap: 6px; flex: 1 1 auto; }
+.wx-dot { width: 100%; height: 3px; border: 0; padding: 0; border-radius: 2px; background: rgba(255, 255, 255, 0.14); cursor: pointer; transition: background var(--dur-fast) var(--ease); }
+.wx-dot:hover { background: var(--line-focus); }
+.wx-dot.on { background: var(--ink); }
+.wx-dot.done { background: var(--ink-2); }
+.wx-dot:focus-visible { outline: none; box-shadow: var(--ring); }
+.wx-step .wx-n { font-family: var(--font-mono); font-size: 10px; color: var(--muted); white-space: nowrap; font-feature-settings: normal; letter-spacing: 0; }
+.wx-step .btn { height: var(--h-ctl-sm); padding: 0 10px; font-size: 12px; }
+.wx-stepbody { margin-top: 14px; }
+.wx-stepfig { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.wx-stepfig .v { font-family: var(--font-display); font-weight: var(--w-num); font-size: clamp(26px, 3vw, 38px); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; font-feature-settings: var(--ff-num); white-space: nowrap; }
+.wx-stepfig .v.fossil { color: var(--fossil); }
+.wx-stepfig .v.clean { color: var(--clean); }
+.wx-stepfig .u { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.wx-stepbody .say { margin-top: 10px; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.wx-stepbody .say b { color: var(--ink); font-weight: 500; }
+.wx-priors { margin-top: 12px; display: flex; flex-direction: column; gap: 0; }
+.wx-prior { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-top: 1px solid var(--line-soft); font-size: 12px; color: var(--muted); }
+.wx-prior .pv { font-family: var(--font-mono); color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
+
+/* ── method inspector ──────────────────────────────────────────────────── */
+.wx-test { margin-top: 12px; }
+.wx-test li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line-soft); font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+.wx-test li:first-child { border-top: 0; }
+.wx-test .mk { font-family: var(--font-mono); font-size: 11px; text-align: center; }
+.wx-test .mk.yes { color: var(--clean); }
+.wx-test .mk.no { color: var(--muted); }
+.wx-verdict { margin-top: 12px; padding: 10px 12px; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.03); font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+.wx-verdict b { color: var(--ink); font-weight: 500; }
+.wx-verdict.agree { border-color: var(--clean-line); background: var(--clean-soft); }
+
+@media (max-width: 900px) {
+  .wx-h2h { grid-template-columns: 1fr; }
+  .wx-h2h .wx-swap { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .wx-hbar i, .wx-dot { transition: none; } }

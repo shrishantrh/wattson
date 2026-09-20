@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predev": "node sync-fixtures.mjs",
+    "predev": "node scripts/companies_index.mjs && node sync-fixtures.mjs",
     "dev": "vite",
-    "prebuild": "node sync-fixtures.mjs",
+    "prebuild": "node scripts/companies_index.mjs && node sync-fixtures.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "oxlint",

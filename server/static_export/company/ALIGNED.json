@@ -1,0 +1,48 @@
+{
+ "company": "Aligned Data Centers",
+ "ticker": null,
+ "id": "ALIGNED",
+ "listed_equity": false,
+ "coverage_status": "sites_only",
+ "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+ "claims_absent_reason": "no_documents_ingested",
+ "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+ "sites": [
+  {
+   "metro": "Salt Lake City (West Jordan)",
+   "state": "UT",
+   "ba": "PACE",
+   "zone": null,
+   "pjm_zone": null,
+   "region_id": "PACE",
+   "serving_utility": "Rocky Mountain Power",
+   "utility_parent": "PacifiCorp (Berkshire Hathaway Energy)",
+   "utility_ticker": null,
+   "source_type": "company_disclosure",
+   "source_url": "https://www.aligneddc.com/data-centers/salt-lake-city-data-centers/",
+   "note": "confidence=medium. Aligned's own page gives 3333 W 9000 S West Jordan UT plus a West Valley City site. Wasatch Front retail service is Rocky Mountain Power = PacifiCorp East; inferred. WHOLESALE COLO: load is TENANTS'. Aligned is private so no ticker.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.363,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 85,
+   "detector_score": -0.74,
+   "detector_pattern": "mixed"
+  }
+ ],
+ "claims": [],
+ "talk_score": null,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.363,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 0,
+ "notes": [
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+ ],
+ "is_mock": false
+}

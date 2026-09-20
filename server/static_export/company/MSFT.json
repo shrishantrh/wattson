@@ -1,6 +1,12 @@
 {
  "company": "Microsoft",
  "ticker": "MSFT",
+ "id": "MSFT",
+ "listed_equity": true,
+ "coverage_status": "sites_and_claims",
+ "coverage_status_note": "Sites mapped to grids, and claims read from its own documents.",
+ "claims_absent_reason": null,
+ "claims_absent_note": null,
  "sites": [
   {
    "metro": "Quincy",
@@ -8,11 +14,20 @@
    "ba": "GCPD",
    "zone": null,
    "pjm_zone": null,
+   "region_id": "GCPD",
    "serving_utility": "Grant County PUD",
+   "utility_parent": "Grant County PUD (public power district)",
+   "utility_ticker": null,
    "source_type": "press",
    "source_url": "https://www.datacenterknowledge.com/hyperscalers/microsoft-s-energy-practices-in-quincy-under-fire",
    "note": "TRAP, OPPOSITE DIRECTION: naive geography gives BPAT (0.913 in 2025). Actual is Grant County PUD (GCPD), which reads 1.00 -- essentially all Columbia River hydro. The naive mapping makes this site look DIRTIER than it is. Magnitude is small in 2025 (~9 points) because BPAT is also very clean.",
-   "cf_share_2025": 1.0
+   "lat": 47.2343,
+   "lng": -119.8523,
+   "cf_share_2025": 1.0,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 27,
+   "detector_score": 1.7,
+   "detector_pattern": "mixed"
   },
   {
    "metro": "Goodyear / El Mirage",
@@ -20,11 +35,125 @@
    "ba": "AZPS",
    "zone": null,
    "pjm_zone": null,
+   "region_id": "AZPS",
    "serving_utility": "Arizona Public Service",
+   "utility_parent": "Pinnacle West Capital",
+   "utility_ticker": "PNW",
    "source_type": "press",
    "source_url": "https://www.goodyearaz.gov/Home/Components/News/News/9849",
    "note": "Detector rank 3. APS named as Microsoft's partner for the Goodyear/El Mirage campuses. CAUTION: AZPS generation-side figures are under investigation for a reporting artefact; demand-side rank is sound.",
-   "cf_share_2025": 0.285
+   "lat": 33.4353,
+   "lng": -112.3576,
+   "cf_share_2025": 0.285,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 3,
+   "detector_score": 9.01,
+   "detector_pattern": "flat-load growth"
+  },
+  {
+   "metro": "San Antonio",
+   "state": "TX",
+   "ba": "ERCO",
+   "zone": "ERCO/SCEN",
+   "pjm_zone": "ERCO/SCEN",
+   "region_id": "ERCO/SCEN",
+   "serving_utility": "CPS Energy",
+   "utility_parent": "City of San Antonio (municipal)",
+   "utility_ticker": null,
+   "source_type": "press",
+   "source_url": "https://sanantonioreport.org/cps-energy-moves-ahead-on-2-renewable-energy-initiatives/",
+   "note": "confidence=medium. Microsoft's director of energy markets testified at a CPS Energy board meeting about using its green tariff for Microsoft's San Antonio data center; CPS Energy is the municipal utility for San Antonio.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.461,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 16,
+   "detector_score": 2.88,
+   "detector_pattern": "flat-load growth"
+  },
+  {
+   "metro": "Mount Pleasant (Racine County)",
+   "state": "WI",
+   "ba": "MISO",
+   "zone": "MISO/0027",
+   "pjm_zone": "MISO/0027",
+   "region_id": "MISO/0027",
+   "serving_utility": "We Energies",
+   "utility_parent": "WEC Energy Group",
+   "utility_ticker": "WEC",
+   "source_type": "company_disclosure",
+   "source_url": "https://blogs.microsoft.com/on-the-issues/2025/09/18/made-in-wisconsin-the-worlds-most-powerful-ai-datacenter/",
+   "note": "confidence=high. Microsoft's own post names the Fairwater datacenter in Mount Pleasant WI and names We Energies as its utility partner.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.349,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 96,
+   "detector_score": -1.96,
+   "detector_pattern": "mixed"
+  },
+  {
+   "metro": "Boydton (Mecklenburg County)",
+   "state": "VA",
+   "ba": "PJM",
+   "zone": "PJM/DOM",
+   "pjm_zone": "PJM/DOM",
+   "region_id": "PJM/DOM",
+   "serving_utility": "Dominion Energy Virginia",
+   "utility_parent": "Dominion Energy",
+   "utility_ticker": "D",
+   "source_type": "press",
+   "source_url": "https://www.sovanow.com/articles/data-center-debates/",
+   "note": "confidence=medium. Local paper confirms Microsoft's Boydton data center and states Dominion Energy supplies power across Mecklenburg County. Virginia Economic Development Partnership pages that would have made this high returned HTTP 403.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.393,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 6,
+   "detector_score": 7.71,
+   "detector_pattern": "flat-load growth"
+  },
+  {
+   "metro": "Licking County (Heath/Hebron/New Albany)",
+   "state": "OH",
+   "ba": "PJM",
+   "zone": "PJM/AEP",
+   "pjm_zone": "PJM/AEP",
+   "region_id": "PJM/AEP",
+   "serving_utility": "AEP Ohio",
+   "utility_parent": "American Electric Power",
+   "utility_ticker": "AEP",
+   "source_type": "press",
+   "source_url": "https://www.enr.com/articles/59633-microsoft-announces-1b-ohio-data-center-spend-despite-utility-tariffs",
+   "note": "confidence=medium. ENR names Microsoft campuses in New Albany Hebron and Heath and states the projects fall within AEP Ohio's service area.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.393,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 19,
+   "detector_score": 2.29,
+   "detector_pattern": "mixed"
+  },
+  {
+   "metro": "Fayetteville (Fayette County)",
+   "state": "GA",
+   "ba": "SOCO",
+   "zone": null,
+   "pjm_zone": null,
+   "region_id": "SOCO",
+   "serving_utility": "Georgia Power",
+   "utility_parent": "Southern Company",
+   "utility_ticker": "SO",
+   "source_type": "press",
+   "source_url": "https://www.ajc.com/business/2025/11/microsofts-newest-ai-superfactory-opens-at-sprawling-fayetteville-campus/",
+   "note": "confidence=medium. AJC confirms Microsoft's Fairwater datacenter opened at the QTS Fayetteville campus. Georgia Power is the utility serving that campus; all of Georgia Power is inside SOCO.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.325,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 93,
+   "detector_score": -1.57,
+   "detector_pattern": "mixed"
   }
  ],
  "claims": [
@@ -49,7 +178,7 @@
    "cannot_verify_reason": null,
    "physical_min": 0.285,
    "physical_max": 1.0,
-   "physical_mean_unweighted": 0.642,
+   "physical_mean_unweighted": 0.458,
    "confidence": "high",
    "verification": {
     "human_reread_rendered_page": true,
@@ -70,6 +199,36 @@
      "ba": "AZPS",
      "year": 2025,
      "cf_share": 0.285
+    },
+    {
+     "type": "grid",
+     "ba": "ERCO",
+     "year": 2025,
+     "cf_share": 0.461
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "SOCO",
+     "year": 2025,
+     "cf_share": 0.325
     },
     {
      "type": "internal_contradiction",
@@ -98,7 +257,7 @@
    "cannot_verify_reason": null,
    "physical_min": 0.285,
    "physical_max": 1.0,
-   "physical_mean_unweighted": 0.642,
+   "physical_mean_unweighted": 0.458,
    "confidence": "high",
    "verification": {
     "human_reread_rendered_page": true,
@@ -119,6 +278,36 @@
      "ba": "AZPS",
      "year": 2025,
      "cf_share": 0.285
+    },
+    {
+     "type": "grid",
+     "ba": "ERCO",
+     "year": 2025,
+     "cf_share": 0.461
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "SOCO",
+     "year": 2025,
+     "cf_share": 0.325
     },
     {
      "type": "internal_contradiction",
@@ -156,7 +345,7 @@
    "cannot_verify_reason": null,
    "physical_min": 0.285,
    "physical_max": 1.0,
-   "physical_mean_unweighted": 0.642,
+   "physical_mean_unweighted": 0.458,
    "confidence": "high",
    "verification": {
     "human_reread_rendered_page": true,
@@ -180,6 +369,36 @@
      "cf_share": 0.285
     },
     {
+     "type": "grid",
+     "ba": "ERCO",
+     "year": 2025,
+     "cf_share": 0.461
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "SOCO",
+     "year": 2025,
+     "cf_share": 0.325
+    },
+    {
      "type": "internal_contradiction",
      "source_doc": "msft-20260630.htm",
      "page": null,
@@ -199,7 +418,7 @@
  ],
  "talk_score": 0.55,
  "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
- "walk_score": 0.642,
+ "walk_score": 0.458,
  "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
  "coverage": 1.0,
  "cannot_verify_count": 0,

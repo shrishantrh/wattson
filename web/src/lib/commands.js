@@ -15,6 +15,8 @@ export const GROUP = { company: 'Check a company', compare: 'Compare places', pl
 // Scenes of the evidence page (Found.jsx) and the screener presets (Screener.jsx). Kept here so
 // the palette does not import page modules.
 export const SCENES = [['headline', 'The finding'], ['night', 'At night'], ['sweep', 'Day vs night'], ['detector', 'Where load is landing']]
+// Satellite irradiance overlay: why the day cleaned up and the night did not.
+export const IRRADIANCE = ['irradiance', 'Why the day got clean and the night did not']
 export const SCREENS = [['rising', 'New flat load rising'], ['cleanest', 'Cleanest at night'], ['dirtiest', 'Dirtiest at night'], ['worsening', 'Getting worse fastest'], ['improving', 'Improving fastest']]
 
 // View toggles. The shell (console/Console.jsx) and demo mode (demo/DemoMode.jsx) listen for
@@ -40,9 +42,21 @@ export function buildCommands({ regions = [] } = {}) {
   const ranked = regions.filter(r => r && r.id).slice().sort((a, b) => rankOf(a) - rankOf(b))
   const groups = []
 
-  groups.push({ id: 'company', label: GROUP.company, items: COMPANIES.map(c => ({
-    id: `check:${c.ticker}`, group: GROUP.company, label: c.name, hint: c.ticker, mono: true,
-    keywords: [...c.aliases, c.ticker, 'company', 'claims', 'clean', '100%'], href: href.check(c.ticker),
+  // Every operator the engine holds, the four with documents first. The hint says what we
+  // have on each one, so an operator with sites and no claims is visibly different from a
+  // verified one before you open it -- and from one we could not map at all.
+  const RANK = { sites_and_claims: 0, sites_only: 1, no_site_resolved: 2 }
+  const coverageHint = c => (c.coverage_status === 'sites_and_claims'
+    ? `${c.ticker} · ${c.n_claims} claim${c.n_claims === 1 ? '' : 's'} checked`
+    : c.coverage_status === 'no_site_resolved'
+      ? `${c.ticker || 'private'} · no site we could map`
+      : `${c.ticker || 'no listed equity'} · ${c.n_sites} site${c.n_sites === 1 ? '' : 's'}, no documents read`)
+  const companies = [...COMPANIES].sort((a, b) => (RANK[a.coverage_status] ?? 3) - (RANK[b.coverage_status] ?? 3))
+  groups.push({ id: 'company', label: GROUP.company, items: companies.map(c => ({
+    id: `check:${c.key}`, group: GROUP.company, label: c.name, hint: coverageHint(c), mono: true,
+    keywords: [...c.aliases, c.key, c.ticker, ...(c.grids || []), 'company', 'operator', 'claims', 'clean', '100%',
+      ...(c.coverage_status === 'sites_and_claims' ? ['verified'] : ['unverified', 'neocloud'])].filter(Boolean),
+    href: href.check(c.key),
   })) })
 
   const preset = (mw, metros, label, hint, extra = []) => ({
@@ -83,6 +97,9 @@ export function buildCommands({ regions = [] } = {}) {
   groups.push({ id: 'found', label: GROUP.found, items: [
     ...SCENES.map(([s, label], i) => ({ id: `found:${s}`, group: GROUP.found, label, hint: String(i + 1), mono: true, keywords: [s, 'found', 'evidence', 'finding', 'pjm', 'dominion'], href: href.found(s) })),
     { id: 'method', group: GROUP.found, label: 'Method', hint: 'how the numbers are made', mono: false, keywords: ['method', 'methodology', 'caveats', 'honesty', 'how', 'eia', 'pudl', 'detector'], href: href.method() },
+    // The free-text ask is offered the moment you type. This is the door for someone who has
+    // typed nothing yet and does not know the box answers questions with a table.
+    { id: 'ask:page', group: GROUP.found, label: 'Ask anything', hint: 'type a question, get the numbers', mono: false, keywords: ['ask', 'question', 'compare', 'rank', 'custom', 'chat'], href: href.ask() },
   ] })
 
   if (typeof href.screen === 'function') groups.push({ id: 'screen', label: GROUP.screen, items: SCREENS.map(([by, label]) => ({
@@ -103,7 +120,12 @@ export function askItem(query) {
   const r = parseQuery(q)
   if (r.kind === 'unknown') return { id: 'ask', group: GROUP.ask, label: `Ask: ${q}`, hint: r.hint, mono: false, unknown: true, keywords: [], composed: looksComposed(q) }
   const hint = r.kind === 'check' ? `check ${r.name || r.ticker}` : `compare ${r.mw} MW: ${r.metros.join(' vs ')}${r.unknown?.length ? ` (skipping ${r.unknown.join(', ')})` : ''}`
-  return { id: 'ask', group: GROUP.ask, label: `Ask: ${q}`, hint, mono: false, keywords: [], href: queryHref(r), composed: looksComposed(q) }
+  // "compare ERCOT, PJM and CAISO on clean power at night" parses as a siting comparison of
+  // PJM alone, with the question itself in the skipped pile. A parse that threw away a phrase
+  // is not a parse: those go to the ask layer, which can answer the whole sentence. A single
+  // skipped word (a typo, a place we never mapped) still takes the deterministic route.
+  const partial = r.kind === 'compare' && (r.unknown || []).some(u => /\s/.test(u))
+  return { id: 'ask', group: GROUP.ask, label: `Ask: ${q}`, hint, mono: false, keywords: [], href: queryHref(r), composed: looksComposed(q), partial }
 }
 // A query with a MW figure or a "vs" list is a composed request; fuzzy hits on presets would
 // be misleading there, so the Ask item is offered first even when something else matches.

@@ -304,3 +304,57 @@ export function regionCharts(region, hm) {
     heatmap: hm ? heatmap(hm) : null,
   }
 }
+
+// -- national day/night CF share + mean satellite irradiance (dual axis) ------------
+function _irradianceDayNight(meta, irradianceDoc) {
+  const t = tokens(), nat = meta?.national?.cf_share, regions = irradianceDoc?.regions || []
+  const title = 'Why the day got clean and the night didn\'t'
+  if (!isObj(nat) || !regions.length) return EMPTY(t, title)
+  // Prefer the national series years that also appear in the irradiance annual means.
+  const irrYears = regions[0]?.irradiance?.years || []
+  const ys = (irrYears.length ? irrYears : YEARS).filter(y => isObj(nat[y]))
+  if (!ys.length) return EMPTY(t, title)
+  const meanIrr = y => {
+    const vals = regions.map(r => num(r.irradiance?.annual_mean?.[y])).filter(v => v != null)
+    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null
+  }
+  const c = seriesColors(t)
+  const irrColor = mix(t.ink2, t.muted, 0.4)
+  const data = [
+    line('daytime clean share', ys, ys.map(y => num(nat[y]?.daytime)), c.daytime, {}, t),
+    line('overnight clean share', ys, ys.map(y => num(nat[y]?.overnight)), c.overnight, {}, t),
+    line('mean satellite irradiance', ys, ys.map(meanIrr), irrColor, { yaxis: 'y2', line: { color: irrColor, width: 2, dash: 'dot' }, marker: { color: irrColor, size: 7, line: { color: t.surface, width: 2 } } }, t),
+  ]
+  const irrVals = ys.map(meanIrr).filter(v => v != null)
+  const irrMin = irrVals.length ? Math.min(...irrVals) : 0
+  const irrMax = irrVals.length ? Math.max(...irrVals) : 1
+  const pad = Math.max(0.15, (irrMax - irrMin) * 2) || 0.5
+  return {
+    data,
+    layout: layout({
+      yaxis: { ...shareAxis, title: { text: 'carbon-free share' } },
+      yaxis2: {
+        title: { text: irradianceDoc.units || 'kWh/m²/day' },
+        overlaying: 'y', side: 'right', showgrid: false,
+        tickfont: { family: t.fontMono, color: t.muted, size: 11 },
+        titlefont: { family: t.fontUI, color: t.muted, size: 11 },
+        range: [irrMin - pad, irrMax + pad],
+      },
+      xaxis: yearAxis,
+      margin: { t: 28, r: 56, l: 56, b: 40 },
+    }, t),
+    table: {
+      columns: [
+        col('year', 'Year', x => x, false),
+        col('daytime', 'Daytime share', pct),
+        col('overnight', 'Overnight share', pct),
+        col('irradiance', 'Mean irradiance', v => (v == null ? '—' : Number(v).toFixed(3))),
+      ],
+      rows: ys.map(y => ({ year: y, daytime: num(nat[y]?.daytime), overnight: num(nat[y]?.overnight), irradiance: meanIrr(y) })),
+    },
+    title,
+    note: 'The dotted line is the sun. It never moves. The two solid lines are the same country over the same years: one climbs, one does not.',
+  }
+}
+export const irradianceDayNight = safe(_irradianceDayNight, 'Why the day got clean and the night didn\'t')
+

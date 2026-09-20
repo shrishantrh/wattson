@@ -1,0 +1,11 @@
+web/
+docs/
+data/
+scripts/
+engine/
+tests/
+dashboard/public/data/heatmaps/
+.git/
+**/__pycache__/
+*.pyc
+.env

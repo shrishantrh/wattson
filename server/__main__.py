@@ -32,16 +32,27 @@ def static_export(out_dir: Path) -> int:
     w("alerts.json", A.get_alerts())
     w("companies.json", A.get_companies())
     w("facilities.json", A.get_facilities())
+    try:
+        w("alpha.json", A.get_alpha())
+    except Exception as e:  # noqa: BLE001 — the rest of the demo must still export
+        print(f"skip alpha export: {e}", file=sys.stderr)
+
+    try:
+        w("irradiance.json", A.get_irradiance())
+    except Exception as e:  # noqa: BLE001 — static export should still finish if overlay missing
+        print(f"skip irradiance export: {e}", file=sys.stderr)
 
     # Every region the detail endpoint accepts, not just the 111 ranked ones.
     # Files are named with the id URL-encoded so PJM/DOM -> region/PJM%2FDOM.json
     for rid in data.regions_by_id():
         w(f"region/{quote(rid, safe='')}.json", A.get_region(rid))
 
+    # Every operator, keyed on the route key -- an operator with no listed equity has a
+    # null ticker and would silently drop out of the export if we keyed on the symbol.
     for c in data.company_list():
-        t = c.get("ticker")
-        if t:
-            w(f"company/{t.upper()}.json", A.get_company(t))
+        k = data.company_key(c)
+        if k:
+            w(f"company/{k}.json", A.get_company(k))
 
     # Precomputed answers for the demo path, so SITE works with no server at all.
     class _Req:
@@ -71,6 +82,7 @@ def static_export(out_dir: Path) -> int:
             "facilities": "facilities.json",
             "company": "company/{TICKER}.json",
             "site": "site/{preset}.json",
+            "irradiance": "irradiance.json",
         },
         "site_presets": list(presets),
         "files": written + 1,

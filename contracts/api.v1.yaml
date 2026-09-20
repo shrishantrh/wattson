@@ -98,6 +98,80 @@ paths:
       responses:
         "200":
           content: {application/json: {schema: {$ref: '#/components/schemas/AlertsResponse'}}}
+  /api/search:
+    get:
+      summary: Search verified ESG reports and SEC 10-K passages
+      description: >
+        Full-text search across the citable corpus. Every hit preserves its source URL and
+        either the verified PDF page or the EDGAR HTML locator. quality_flag=tabular is
+        numeric/table evidence only; quality_flag=suspect must never be quoted as prose.
+      parameters:
+        - {name: q, in: query, required: true, schema: {type: string, minLength: 1}}
+        - {name: ticker, in: query, schema: {type: string, enum: [META, MSFT, GOOGL, AMZN]}}
+        - {name: doc_type, in: query, schema: {type: string, enum: [esg, 10k]}}
+        - {name: quality_flag, in: query, schema: {type: string, enum: [ok, tabular, suspect]}}
+        - {name: limit, in: query, schema: {type: integer, minimum: 1, maximum: 50, default: 12}}
+      responses:
+        "200":
+          content: {application/json: {schema: {$ref: '#/components/schemas/SearchResponse'}}}
+        "422": {description: Invalid search parameters}
+        "503": {description: Elasticsearch is unavailable or not configured}
+  /api/search/status:
+    get:
+      summary: Retrieval corpus and Elastic index counts
+      responses:
+        "200":
+          content: {application/json: {schema: {$ref: '#/components/schemas/SearchStatus'}}}
+  /api/alpha:
+    get:
+      summary: Grid measurement to tradable instrument, with the limits attached
+      description: >
+        For each featured detector region: the fuel that filled its overnight growth,
+        the serving utilities we have verified, their parents and tickers, and the
+        commodity and event markets where that region's tightness is priced.
+        An INPUT to a trade, not a trade. No forecast, no backtest, no recommendation;
+        we have no validation that this signal predicts any price. Every instrument row
+        carries a one-sentence reason citing a number from our own data. The Kalshi
+        event-market snapshot is cached at build time and never fetched at render time.
+      responses:
+        "200":
+          description: Chains, instruments and the stated limits
+  /api/irradiance:
+    get:
+      summary: NASA POWER irradiance overlay on daytime vs overnight clean share
+      description: >
+        Precomputed illustration from claims/derived/irradiance.json. Surface irradiance is
+        flat at every point; that is the finding. Only 2 of 5 regions separate cleanly.
+        No causal coefficients. Clients MUST render scale_mismatch_note and the verdict
+        field, including does_not_separate, contradicts, and unusable.
+      responses:
+        "200":
+          description: Irradiance overlay document
+          content: {application/json: {schema: {type: object}}}
+        "404": {description: Overlay file missing}
+  /api/irradiance/narrate:
+    post:
+      summary: Grok Voice narration for one irradiance region
+      description: >
+        Builds a spoken script from the region's fields (no hardcoded numbers) and returns
+        MP3 audio via xAI TTS. Requires XAI_API_KEY. Script must not claim the sun got
+        brighter or attribute share changes to irradiance.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [region]
+              properties:
+                region: {type: string, example: ERCO/NRTH}
+                voice_id: {type: string, default: eve}
+      responses:
+        "200":
+          description: MP3 audio
+          content: {audio/mpeg: {schema: {type: string, format: binary}}}
+        "404": {description: Unknown region or missing overlay}
+        "503": {description: TTS unavailable (missing key or upstream error)}
   /api/export/{kind}.csv:
     get:
       summary: CSV of the underlying series
@@ -363,3 +437,32 @@ components:
         count_before_ranking: {type: integer}
         excluded_regions: {type: array, items: {type: string}, example: ["WACM"]}
         alerts: {type: array, items: {$ref: '#/components/schemas/Alert'}}
+    SearchHit:
+      type: object
+      required: [text, ticker, source_doc, source_url, doc_type, quality_flag, score]
+      properties:
+        text: {type: string}
+        ticker: {type: string}
+        page: {type: integer, nullable: true}
+        locator: {type: object, nullable: true, additionalProperties: true}
+        source_doc: {type: string}
+        source_url: {type: string, format: uri}
+        doc_type: {type: string, enum: [esg, 10k]}
+        quality_flag: {type: string, enum: [ok, tabular, suspect]}
+        score: {type: number, nullable: true}
+    SearchResponse:
+      type: object
+      required: [total, hits]
+      properties:
+        total: {type: integer}
+        hits: {type: array, items: {$ref: '#/components/schemas/SearchHit'}}
+    SearchStatus:
+      type: object
+      required: [available, index, corpus, quality]
+      properties:
+        available: {type: boolean}
+        index: {type: string}
+        indexed: {type: integer}
+        error: {type: string}
+        corpus: {type: object, additionalProperties: {type: integer}}
+        quality: {type: object, additionalProperties: {type: integer}}

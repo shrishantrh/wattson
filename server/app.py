@@ -11,6 +11,9 @@ from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from server import data
+from server import search as corpus_search
+from server import ai as ask_layer
+from server import irradiance_narrate as narrate
 
 app = FastAPI(title="Wattson API", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
@@ -86,7 +89,23 @@ def get_region(region_id: str):
     out["heatmap_available"] = data.heatmap_available(r.get("heatmap_uri"))
     # Known-wrong published values, with corrections and evidence. Served alongside the
     # published numbers, never silently substituted for them.
-    out["corrections"] = data.corrections_for(region_id)
+    corr = data.corrections_for(region_id)
+    out["corrections"] = corr
+    # Apply corrections in place on nested series too. The published values are still
+    # served under `corrections`, so nothing is lost -- but a consumer reading
+    # region.profile_24h["2019"] directly must not get a figure we have already shown,
+    # on the same screen, to be wrong. AZPS was rendering its corrected 2019 share in
+    # the header and its published one in the load-shape module.
+    applied = []
+    for c in ((corr or {}).get("corrections") or []):
+        path, val = c.get("path", ""), c.get("corrected")
+        if "." not in path or val is None:
+            continue
+        field, key = path.split(".", 1)
+        if field in out and isinstance(out[field], dict) and key in out[field]:
+            out[field][key] = val
+            applied.append(path)
+    out["corrections_applied_paths"] = applied or None
     return {"meta": data.public_meta(), "region": out}
 
 
@@ -187,6 +206,14 @@ def get_companies():
     for c in data.company_list():
         claims = c.get("claims") or []
         rows.append({"company": c.get("company"), "ticker": c.get("ticker"),
+                     "id": data.company_key(c),
+                     "listed_equity": c.get("listed_equity", bool(c.get("ticker"))),
+                     # Three values, never inferred from an empty array by the client:
+                     # sites_and_claims / sites_only / no_site_resolved.
+                     "coverage_status": c.get("coverage_status"),
+                     "coverage_status_note": c.get("coverage_status_note"),
+                     "claims_absent_reason": c.get("claims_absent_reason"),
+                     "claims_absent_note": c.get("claims_absent_note"),
                      "talk_score": c.get("talk_score"), "walk_score": c.get("walk_score"),
                      "coverage": c.get("coverage"),
                      "unverifiable_share": c.get("unverifiable_share"),
@@ -194,21 +221,54 @@ def get_companies():
                                                 if x.get("verdict") == "cannot_verify"),
                      "n_sites": len(c.get("sites") or []), "n_claims": len(claims),
                      "is_mock": bool(c.get("_mock") or d["is_mock"])})
+    with_claims = [r for r in rows if r["n_claims"]]
     return {"is_mock": d["is_mock"], "count": len(rows),
+            "count_with_claims": len(with_claims),
+            "count_sites_only": sum(1 for r in rows
+                                    if r["coverage_status"] == "sites_only"),
+            "count_no_site_resolved": sum(1 for r in rows
+                                          if r["coverage_status"] == "no_site_resolved"),
             "cannot_verify_total": sum(r["cannot_verify_count"] for r in rows),
             "companies": rows,
             "notes": ["grid-only, excludes PPAs", "unweighted across sites",
-                      "site mapping hand-curated"]}
+                      "site mapping hand-curated",
+                      "an operator with no claims is a gap in OUR document coverage, "
+                      "stated with a reason, not a finding about that operator"]}
 
 
 @app.get("/api/company/{ticker}")
 def get_company(ticker: str):
+    """Look up by route key or ticker. An operator with no listed equity has a null
+    ticker and routes on its name, so the key -- not the symbol -- is the identifier."""
+    want = ticker.upper()
     for c in data.company_list():
-        if (c.get("ticker") or "").upper() == ticker.upper():
+        if data.company_key(c) == want or (c.get("ticker") or "").upper() == want:
             out = dict(c)
+            out["id"] = data.company_key(c)
             out["is_mock"] = bool(c.get("_mock") or data.companies_doc()["is_mock"])
             return out
-    raise HTTPException(404, f"unknown ticker: {ticker}")
+    known = [data.company_key(c) for c in data.company_list()]
+    raise HTTPException(404, f"unknown company: {ticker}. known: {', '.join(known)}")
+
+
+@app.get("/api/search")
+def get_search(q: str, ticker: str | None = None, doc_type: str | None = None,
+               quality_flag: str | None = None, limit: int = corpus_search.DEFAULT_LIMIT):
+    """Search verified ESG and 10-K passages, returning every stored citation field."""
+    try:
+        return corpus_search.search(q, ticker=ticker, doc_type=doc_type,
+                                    quality_flag=quality_flag, limit=limit)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except corpus_search.SearchUnavailable as exc:
+        # Retrieval is optional to the grid demo; an offline cloud must not crash it.
+        raise HTTPException(503, str(exc)) from exc
+
+
+@app.get("/api/search/status")
+def get_search_status():
+    """Index/corpus counts used to verify retrieval coverage during the demo."""
+    return corpus_search.status()
 
 
 def _csv(rows, cols):
@@ -266,6 +326,63 @@ def health():
             "alerts_are_ranked": data.alerts_doc()["is_ranked"]}
 
 
+@app.get("/api/irradiance")
+def get_irradiance():
+    """NASA POWER surface irradiance overlay on daytime vs overnight clean share.
+
+    Precomputed illustration. Irradiance is flat; that is the finding. See
+    claims/derived/irradiance.json and the honesty caveats in the payload.
+    """
+    try:
+        return data.irradiance_doc()
+    except FileNotFoundError as e:
+        raise HTTPException(404, str(e)) from e
+
+
+class NarrateRequest(BaseModel):
+    region: str = Field(..., description="Region id as in irradiance.json, e.g. ERCO/NRTH")
+    voice_id: str = Field("leo", description="xAI TTS voice id (leo = instructional)")
+
+
+@app.get("/api/irradiance/script/{region_id:path}")
+def get_irradiance_script(region_id: str):
+    """Return the spoken script for one region (no TTS). Useful for transcripts."""
+    try:
+        doc = data.irradiance_doc()
+    except FileNotFoundError as e:
+        raise HTTPException(404, str(e)) from e
+    try:
+        script = narrate.build_script(doc, region_id)
+    except KeyError:
+        raise HTTPException(404, f"unknown irradiance region: {region_id}") from None
+    return {"region": region_id, "script": script, "chars": len(script)}
+
+
+@app.post("/api/irradiance/narrate")
+def post_irradiance_narrate(req: NarrateRequest):
+    """Generate a Grok Voice narration for one irradiance region from the data."""
+    try:
+        doc = data.irradiance_doc()
+    except FileNotFoundError as e:
+        raise HTTPException(404, str(e)) from e
+    try:
+        script = narrate.build_script(doc, req.region)
+    except KeyError:
+        raise HTTPException(404, f"unknown irradiance region: {req.region}") from None
+    try:
+        audio = narrate.synthesize(script, voice_id=req.voice_id)
+    except RuntimeError as e:
+        raise HTTPException(503, str(e)) from e
+    return Response(
+        audio,
+        media_type="audio/mpeg",
+        headers={
+            "Content-Disposition": f'inline; filename="{req.region.replace("/", "_")}.mp3"',
+            "X-Wattson-Script-Chars": str(len(script)),
+        },
+    )
+
+
 @app.get("/api/facilities")
 def get_facilities():
     """Datacenter sites joined to the grid they actually draw from.
@@ -279,7 +396,10 @@ def get_facilities():
         cf = ((r.get("cf_share") or {}).get("2025") or {}).get("all") if r else None
         det = (r.get("detection") or {}) if r else {}
         rows.append({
-            "company": f["company"], "ticker": f["ticker"],
+            "company": f["company"], "ticker": f["ticker"] or None,
+            # The operator's page key. xAI and Vantage have no listed equity, so keying the
+            # site on the ticker alone dropped them out of every per-operator view.
+            "operator_key": data.operator_key(f),
             "metro": f["metro"], "state": f["state"],
             "lat": float(f["lat"]) if f.get("lat") else None,
             "lon": float(f["lon"]) if f.get("lon") else None,
@@ -294,20 +414,113 @@ def get_facilities():
             "source_type": f["source_type"], "source_url": f["source_url"],
             "note": f.get("note") or None,
         })
-    no_equity = [r for r in rows if not r["utility_ticker"]]
+    # Two different things, deliberately not conflated: a site whose serving utility is
+    # KNOWN and has no listed equity (public power, a cooperative, a state authority) is
+    # a finding. A site whose serving utility we could not establish is a coverage gap.
+    # Counting them together would inflate the finding with our own ignorance.
+    resolved = [r for r in rows if r["serving_utility"]]
+    no_equity = [r for r in resolved if not r["utility_ticker"]]
+    unresolved = [r for r in rows if not r["serving_utility"]]
     return {
         "count": len(rows),
         "facilities": rows,
         "no_listed_equity_count": len(no_equity),
+        "resolved_count": len(resolved),
+        "unresolved_utility_count": len(unresolved),
         "notes": [
             "Sites are mapped from the serving utility outward, never inferred from the state.",
             "utility_parent and utility_ticker describe the SERVING UTILITY's owner, not the "
             "datacenter operator.",
-            f"{len(no_equity)} of {len(rows)} sites are served by public power districts or "
-            "member-owned cooperatives with no listed equity. Cheap hydro and wind sit "
+            f"{len(no_equity)} of the {len(resolved)} sites whose serving utility we could "
+            "establish are served by public power districts, member-owned cooperatives or "
+            "state authorities with no listed equity. Cheap hydro and wind sit "
             "disproportionately with public power, so a material share of this buildout lands "
             "where there is no stock to trade.",
+            f"A further {len(unresolved)} sites have no serving utility recorded. That is a "
+            "coverage gap in our research, not a finding about the site, and it is counted "
+            "separately so it cannot inflate the figure above.",
             "Coverage is partial and hand-curated. Absence of a site is not evidence it does "
             "not exist.",
+            "SOME SITES BURN GAS WE CANNOT SEE. xAI's Memphis campus runs dozens of mobile "
+            "turbines on site, reported around 495 MW, and the Abilene Stargate site pairs an "
+            "on-site plant with the grid. On-site generation does not appear in EIA-930 at all, "
+            "so for those sites our figure describes only the share drawn from the grid and "
+            "understates their fossil use. We found this while mapping them; it is a limit on "
+            "the method, not on those two rows.",
         ],
+    }
+
+
+class AskRequest(BaseModel):
+    q: str
+    page: dict | None = Field(default=None, description="What the user is looking at now")
+
+
+@app.post("/api/ask")
+def post_ask(req: AskRequest):
+    """Answer a question using ONLY typed tools over the published datasets.
+
+    Returns {answer, view, tools_used, model}. `answer` is the prose and is always present.
+    `view` is that same answer as something to render -- columns, rows, an optional chart --
+    or null when the question has no table in it, in which case the prose IS the answer. No
+    figure reaches `view` that the tools did not return; see the render step in server/ai.py.
+
+    The model may not state a number a tool did not return. This is the one surface where
+    a model writes prose a reader takes as ours, so the honesty rules -- consistent with
+    rather than caused by, never 'they lied', share alongside absolute, zones inherit
+    their parent's generation -- are enforced in the system prompt and the tools return
+    the same rows the charts draw.
+    """
+    if not (req.q or "").strip():
+        return {"answer": "Ask me something about a grid region, a company claim, or a comparison.",
+                "view": None, "tools_used": []}
+    out = ask_layer.ask(req.q.strip(), page_context=req.page)
+    out.setdefault("view", None)
+    return out
+
+
+@app.post("/api/ask/summarize")
+def post_summarize(req: AskRequest):
+    """Plain-English summary of the screen the user is on."""
+    return ask_layer.summarize(req.page or {"route": req.q})
+
+
+@app.get("/api/ask/status")
+def get_ask_status():
+    """Whether the ask layer is available. The UI hides it rather than failing when not."""
+    return {"available": bool(ask_layer._api_key()),
+            "model": ask_layer.MODEL, "tools": sorted(ask_layer.TOOLS)}
+
+
+@app.get("/api/alpha")
+def get_alpha():
+    """The chain from a metered grid measurement to a tradable instrument.
+
+    region -> fuel that filled its growth -> serving utility -> parent -> ticker
+    -> the markets where that region's tightness is priced.
+
+    An INPUT to a trade, not a trade. No forecast, no backtest, no
+    recommendation: we have no validation that this signal predicts any price.
+    Every instrument row carries a reason citing a number from our own data.
+
+    The Kalshi snapshot is read from a build-time cache, never fetched here.
+    Kalshi's read API needs no auth, so no secret is involved at any layer.
+    """
+    from engine.alpha import build as alpha_build
+    return alpha_build.build()
+
+
+@app.get("/")
+def root():
+    """The API root. The site itself lives elsewhere -- this host only answers questions."""
+    return {
+        "service": "Wattson API",
+        "site": "https://shrishantrh.github.io/wattson/",
+        "what_this_is": ("The ask layer behind Cmd-K on the site, plus corpus search. Every "
+                         "screen renders without it; this only answers questions."),
+        "endpoints": ["/api/health", "/api/ask/status", "/api/ask", "/api/ask/summarize",
+                      "/api/regions", "/api/region/{id}", "/api/site", "/api/alerts",
+                      "/api/companies", "/api/company/{ticker}", "/api/facilities",
+                      "/api/irradiance", "/api/alpha", "/api/search", "/api/export/{kind}.csv"],
+        "docs": "/docs",
     }

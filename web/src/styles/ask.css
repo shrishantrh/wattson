@@ -1,0 +1,56 @@
+/* #/ask — a typed question rendered as a view.
+   Everything here is prefixed .ask- and scoped to that page and its table, so the shared
+   primitives (.card, .nums, .note, .field, .btn, .ans-list, .ans-rest) keep their global
+   meaning. Colour is the same contract as everywhere else: --clean for carbon-free,
+   --fossil for what is being burned, neutral grey for anything that is neither. */
+
+/* ---------- the input: the whole point of the page ---------- */
+.ask-form { display: flex; gap: 8px; margin: 0 0 14px; }
+.ask-input { flex: 1; min-width: 0; font-size: 14px; }
+.ask-form .btn { flex: none; }
+
+.ask-egs { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 2px; }
+.ask-egs li { padding: 9px 0; border-top: 1px solid var(--line-soft); }
+.ask-egs li:first-child { border-top: none; }
+.ask-egs a { font-size: 13px; color: var(--ink-2); text-decoration: none; }
+.ask-egs a:hover { color: var(--ink); }
+
+/* ---------- the answer ---------- */
+.ask-headline { font-size: 21px; line-height: 1.3; margin: 4px 0 0; }
+.ask-prose { font-size: 15px; line-height: 1.55; color: var(--ink-2); margin: 4px 0 0; text-wrap: pretty; }
+.ask-prov { margin-top: 12px; }
+.ask-open { margin: 10px 0 0; font-size: 13px; }
+.ask-caveats { margin-top: 14px; }
+.nums.ask-stats { margin-top: 14px; }
+.tbl.ask-tbl { margin-top: 14px; }
+
+/* ---------- bars: one value across the rows ----------
+   Horizontal, because the labels are place names and a place name never fits under a
+   vertical bar. The track is the full scale, so a short bar reads as a small number
+   rather than as a missing one. */
+.ask-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ask-bars li { display: grid; grid-template-columns: minmax(84px, 26%) minmax(40px, 1fr) auto; gap: 10px; align-items: center; }
+.ask-bar-k { font-size: 12px; color: var(--muted); line-height: 1.25; overflow-wrap: anywhere; }
+.ask-bar-t { position: relative; height: 10px; border-radius: 3px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.ask-bar-t i { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--clean); transition: width var(--dur) var(--ease); }
+.ask-bar-t i.neg { background: var(--fossil); }
+.ask-bar-v { font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+
+/* ---------- lines: a value over years ---------- */
+.ask-chart { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line-soft); }
+.ask-lines { display: block; width: 100%; height: auto; overflow: visible; }
+.ask-grid { stroke: var(--line-soft); stroke-width: 1; }
+.ask-axis { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
+.ask-line { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.ask-dot { fill: currentColor; }
+.ask-slabel { fill: currentColor; font-size: 11px; }
+.ask-s0 { color: var(--clean); }
+.ask-s1 { color: var(--fossil); }
+.ask-s2 { color: var(--ink); }
+.ask-s3 { color: var(--ink-2); }
+.ask-s4 { color: var(--muted); }
+
+@media (max-width: 900px) {
+  .ask-headline { font-size: 18px; }
+  .ask-bars li { grid-template-columns: minmax(70px, 34%) minmax(30px, 1fr) auto; }
+}

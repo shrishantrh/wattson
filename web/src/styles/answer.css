@@ -126,6 +126,19 @@
 .ans-gap-say { margin: 12px 0 0; padding-left: 10px; border-left: 2px solid var(--fossil-line); font-size: var(--t-small); line-height: 1.45; color: var(--muted); }
 .ans-gap-say b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
 
+/* Both row forms of the comparison are styled. The single-line form above (.ans-gap-main) is
+   the one the answer pages render; the stacked form (.ans-gap-row: label, track, value per
+   row) is still emitted where a page lists more than one claim against one scale, so it keeps
+   its own track and its right-aligned figure rather than inheriting the single-line grid. */
+.ans-gap-row { display: grid; grid-template-columns: 64px minmax(40px, 1fr) auto; column-gap: 10px; align-items: center; }
+.ans-gap-row + .ans-gap-row { margin-top: 10px; }
+.ans-gap-row .ans-gap-k { text-transform: none; letter-spacing: 0; white-space: normal; }
+.ans-gap-row .ans-gap-t i { background: var(--ink-2); }
+.ans-gap-row .ans-gap-t i.claim { background: rgba(255, 255, 255, 0.14); }
+.ans-gap-row .ans-gap-t i.clean { background: var(--clean); }
+.ans-gap-row .ans-gap-t i.fossil { background: var(--fossil); }
+.ans-gap-row .ans-gap-v { text-align: right; min-width: 96px; }
+
 /* the figures that are not part of the comparison sit under it, on one quiet line */
 .nums.ans-meta { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line-soft); gap: 18px; justify-content: start; }
 .nums.ans-meta .num { display: flex; align-items: baseline; gap: 7px; }
@@ -177,6 +190,43 @@
 .ans-next.is-open { background: transparent; color: var(--ink-2); border-color: var(--line-strong); }
 .ans-next.is-open:hover { background: transparent; color: var(--ink); border-color: var(--line-focus); }
 .ans-next.is-open .ans-next-d { opacity: 1; color: var(--muted); }
+
+/* ---------- coverage, and the per-site caveats ----------
+   Kept out of the answer itself. Neither of these is a finding about the operator:
+   one says why a column is empty, the other says how a single site's figure has to
+   be read. Both use --line / --warn, never --clean or --fossil. */
+
+/* Coverage, not verdict: why the claims column on this page is empty. Set apart from the
+   answer so it never reads as a finding about the operator. */
+.ans-coverage {
+  margin: 12px 0 0;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2, transparent);
+}
+.ans-coverage b { text-transform: uppercase; letter-spacing: var(--ls-caps); font-size: var(--t-micro); }
+
+/* The site rows put a sentence in the number cell ("46% · 41% at night, when the servers
+   still run"). .row's `auto` track plus nowrap let that sentence take the whole width and
+   squeezed the site name to one letter per line at the column's real width. Cap the number
+   track and let it wrap; the name keeps at least half the row. */
+.row.site-row { grid-template-columns: minmax(0, 1fr) minmax(0, 46%); }
+.row.site-row .n { white-space: normal; }
+
+/* A per-site caveat the lookup flagged in capitals. Collapsed so the row stays quiet, but
+   present, because these change what the number means (on-site gas is outside EIA-930). */
+.site-note { margin: -2px 0 8px; padding-left: 10px; border-left: 2px solid var(--warn-line); }
+.site-note > summary {
+  cursor: pointer; list-style: none; font-size: var(--t-micro); letter-spacing: var(--ls-caps);
+  text-transform: uppercase; color: var(--muted); padding: 4px 0;
+}
+.site-note > summary::-webkit-details-marker { display: none; }
+.site-note > summary::after { content: ' ▾'; font-size: var(--t-micro); }
+.site-note[open] > summary::after { content: ' ▴'; }
+.site-note > summary:hover { color: var(--ink-2); }
+.site-note .note { margin: 2px 0 6px; }
 
 /* ---------- the honesty note ----------
    Never hidden, never the heaviest thing on the card: a compact disclosure with a
@@ -278,6 +328,7 @@
   padding: 8px 0;
   border-top: 1px solid var(--line-soft);
 }
+.ans-rank li:first-child { border-top: none; }
 .ans-rank-n { font-family: var(--font-mono); font-size: var(--t-micro); font-variant-numeric: tabular-nums; color: var(--muted); }
 .ans-rank-name { min-width: 0; font-size: var(--t-small); color: var(--ink-2); overflow-wrap: anywhere; }
 .ans-rank-t { font-size: var(--t-micro); color: var(--muted); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -308,6 +359,7 @@
 @media (max-width: 900px) {
   .ans-gap-v { font-size: var(--t-h2); }
   .ans-gap-v.long { font-size: var(--t-lead); }
+  .ans-gap-row .ans-gap-v { min-width: 84px; }
 }
 
 /* four load shapes in a 2x2 grid: wrapping a segmented control into a ragged second row

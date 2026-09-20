@@ -3,27 +3,36 @@ import { createPortal } from 'react-dom'
 import { Command } from 'cmdk'
 import { askItem, matchGroups, useCommands, openPalette, toggleView, GROUP } from '../lib/commands.js'
 import { parseQuery, resolvePlace, DEMO_COMPARE } from '../lib/query.js'
-import { ask as askServer, askAvailable, summarize } from '../lib/ask.js'
+import { askAvailable, summarize } from '../lib/ask.js'
+import { renderable, runAsk as runAskServer } from '../lib/askStore.js'
 import { pageContext } from '../lib/pageContext.js'
+import { accept, completion, suggestions, SUMMARIZE } from '../lib/suggest.js'
 import { SHORTCUTS, openShortcuts } from './Shortcuts.jsx'
 import { href } from '../router.js'
 import '../styles/palette.css'
 
 // The command palette: the app's front door. <CommandPalette /> is the dialog — ⌘K / Ctrl+K
-// toggles it, "/" opens it when nothing is focused for typing, Esc clears then closes, and window
-// 'wattson:palette' events (openPalette() in lib/commands.js) open it from anywhere. Mount it as
-// many times as is convenient: only the earliest-mounted living instance renders and binds the
-// hotkeys. <CommandInline /> is the same list under a plain input, for the landing page.
+// toggles it, "/" opens it when nothing is focused for typing, Esc dismisses then clears then
+// closes, and window 'wattson:palette' events (openPalette() in lib/commands.js) open it from
+// anywhere. Mount it as many times as is convenient: only the earliest-mounted living instance
+// renders and binds the hotkeys. <CommandInline /> is the same list under a plain input, for the
+// landing page.
 //
 // Everything below the input is shared between the two frames: grouped results with a section
 // label and a count, the best match preselected, the typed substring marked in every row, a
 // footer that names what ↵ will do to the row you are on, a preview of a composed compare query
 // before you run it, and an empty state that offers four ways out instead of "nothing found".
 //
-// THE ASK LAYER (lib/ask.js) is an enhancement layered on top of all of that, never a dependency.
-// askAvailable() resolves false whenever no API base is configured — which is how the static
-// export runs — and in that case every line below behaves exactly as it does without it: no
-// ask bar, no answer panel, no error, and the deterministic empty state owns an unreadable query.
+// THE ASK LAYER (lib/ask.js, lib/askStore.js) is an enhancement layered on top of all of that,
+// never a dependency. askAvailable() resolves false whenever no API base is configured — which is
+// how the static export runs — and in that case every line below behaves exactly as it does
+// without it: no ask bar, no ghost completion, no suggestions, no answer panel, no error, and the
+// deterministic empty state owns an unreadable query.
+//
+// When the ask layer IS up it brings three things: prewritten prompts for this screen (grey ghost
+// tail under the caret, Tab to accept, and the same prompts as real rows in the list), an answer
+// that renders in place when it is a sentence, and a hand-off to #/ask when the answer has a shape
+// — a table, a ranking, places side by side — because a table does not belong in a dropdown.
 
 // oxlint-disable-next-line react/only-export-components
 export { useCommands } from '../lib/commands.js'
@@ -119,6 +128,7 @@ const DOING = [
   [/^method$/, 'open the method'],
   [/^screen:/, 'open the screener'],
   [/^toggle:/, 'toggle it'],
+  [/^sug-/, 'ask the data'],
   [/^ask$/, 'run this query'],
 ]
 const doingOf = it => it?.doing || (it ? (DOING.find(([re]) => re.test(it.id))?.[1] || 'open it') : null)
@@ -208,17 +218,59 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   // leaving a stale answer sitting under a new question.
   useEffect(() => { setAnswer(a => (a && a.asked !== q ? null : a)) }, [q])
 
+  // Two different things share one input. "Summarize this screen" is prose about the screen you
+  // are on, and it stays in the dropdown over that screen. A free-text question can come back
+  // with a shape — places side by side, a ranking, one subject and its figures — and a table does
+  // not belong in a dropdown, so that goes to #/ask, which reads the answer the store is already
+  // holding rather than asking again. An answer that is genuinely a sentence renders here exactly
+  // as it always did.
   const runAsk = async (question, kind = 'ask') => {
     const asked = q
     setAnswer({ state: 'loading', asked, q: question })
     try {
       const ctx = pageContext()
-      const r = kind === 'summary' ? await summarize(ctx) : await askServer(question, ctx)
-      setAnswer({ state: 'done', asked, q: question, text: r.answer || '', tools: r.tools_used || [] })
+      if (kind === 'summary') {
+        const r = await summarize(ctx)
+        setAnswer({ state: 'done', asked, q: question, text: r.answer || '', tools: r.tools_used || [] })
+        return
+      }
+      const r = await runAskServer(question, ctx)
+      if (r.state === 'error') { setAnswer({ state: 'error', asked, q: question, text: r.error }); return }
+      if (renderable(r.view)) {
+        setAnswer(null); setQ('')
+        onDone?.()
+        window.location.assign(href.ask(question))
+        return
+      }
+      setAnswer({ state: 'done', asked, q: question, text: r.answer || '', tools: r.tools || [] })
     } catch (e) {
       setAnswer({ state: 'error', asked, q: question, text: String(e.message || e) })
     }
   }
+
+  // ---- prewritten prompts ------------------------------------------------------------------
+  // Ranked for whatever screen this is, and recomputed on navigation, because the useful question
+  // on a company page is not the useful question on the landing page.
+  const [sugg, setSugg] = useState(() => suggestions(pageContext()))
+  useEffect(() => {
+    const f = () => setSugg(suggestions(pageContext()))
+    window.addEventListener('hashchange', f)
+    return () => window.removeEventListener('hashchange', f)
+  }, [])
+  // The grey tail under the caret. '' whenever more than one prompt still matches, so we never
+  // put a question under the caret that Tab would not actually run.
+  const ghost = useMemo(() => (aiOn ? completion(q, sugg) : ''), [aiOn, q, sugg])
+  // The same prompts ride in the list as a normal group, so the arrow keys and ↵ that already
+  // work for commands work for them too. Capped, and only the ones that still match.
+  const suggGroup = useMemo(() => {
+    if (!aiOn) return null
+    const b = q.trim().toLowerCase()
+    const hits = sugg.filter(t => !b || t.toLowerCase().startsWith(b))
+    if (!hits.length) return null
+    return { id: 'suggest', label: 'Ask the data', total: hits.length,
+             items: hits.slice(0, 4).map((t, i) => ({ id: `sug-${i}`, group: 'Ask the data', label: t, hint: 'ask', doing: 'ask the data',
+               action: () => runAsk(t, t === SUMMARIZE ? 'summary' : 'ask') })) }
+  }, [aiOn, q, sugg]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // The ask layer and the empty state are two answers to the same moment — a query the parser
   // cannot read — so exactly one of them owns it, and which one is decided here.
@@ -230,21 +282,26 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   // The Try group also returns underneath a failed answer, so a dead ask is never a dead end.
   const canAsk = aiOn && hasQuery
 
+  // `partial` items parsed, but only by discarding most of what was typed ("compare ERCOT, PJM and
+  // CAISO on clean power at night" keeps PJM and throws the question away). With the ask layer up
+  // those are questions, not commands; with no ask layer they keep their deterministic route.
   const askRow = useMemo(() => {
     if (!ask) return null
-    if (!ask.unknown || !canAsk) return ask
-    return { ...ask, unknown: false, askable: true, hint: 'answered from the grid data', mono: false, doing: 'ask the data' }
+    if (!canAsk || !(ask.unknown || ask.partial)) return ask
+    return { ...ask, unknown: false, partial: false, askable: true, hint: 'answered from the grid data', mono: false, doing: 'ask the data' }
   }, [ask, canAsk])
 
   const showTry = !shown.length && (!canAsk || answer?.state === 'error')
 
   const list = useMemo(() => {
-    if (!askRow) return shown
+    const base = suggGroup ? [...shown, suggGroup] : shown
+    if (!askRow) return base
     const askGroup = { id: 'ask', label: GROUP.ask, items: [askRow], total: 1 }
-    if (!shown.length) return showTry ? [askGroup, tryGroup] : [askGroup]
-    if (askRow.href && askRow.composed) return [askGroup, ...shown]
-    return shown
-  }, [askRow, shown, showTry])
+    const tail = suggGroup ? [suggGroup] : []
+    if (!shown.length) return showTry ? [askGroup, ...tail, tryGroup] : [askGroup, ...tail]
+    if (askRow.href && askRow.composed) return [askGroup, ...base]
+    return base
+  }, [askRow, shown, showTry, suggGroup])
 
   // The best match is the first row of the first group; keep the selection pinned there whenever
   // the result set changes, so ↵ straight after typing always runs the obvious thing.
@@ -255,12 +312,16 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   const flat = useMemo(() => Object.fromEntries(list.flatMap(g => g.items.map(i => [i.id, i]))), [list])
   const current = flat[value] || null
 
-  // An askable row sends the query to the server and stays put: the answer renders in place, so
-  // the box keeps its text and the dialog does not close under the reader.
+  // A row that is really a question: the free-text Ask row the parser could not route, and a
+  // partial parse while the ask layer is up.
+  const toAsk = it => !!it?.askable || !!it?.unknown || (!!it?.partial && aiOn)
+
+  // An askable row sends the query to the server and stays put: a sentence renders in place, so
+  // the box keeps its text and the dialog does not close under the reader. An answer with a shape
+  // opens at #/ask instead.
   const run = it => {
     if (!it || it.static) return
-    if (it.askable) { runAsk(q); return }
-    if (it.unknown) return
+    if (toAsk(it)) { if (aiOn) runAsk(q); return }
     if (it.action) it.action(); else if (it.href) window.location.assign(it.href)
     setQ('')
     onDone?.()
@@ -284,6 +345,17 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
 
   const onKeyDown = e => {
     if (e.key === 'Tab') {
+      // A ghost tail is showing and the box says "tab": that promise is kept in both frames.
+      // With no ghost, Tab is the dialog's completion key and the inline box's way out, as before.
+      if (!e.shiftKey && ghost) {
+        const full = accept(q, sugg)
+        if (full && full !== q.trim()) {
+          e.preventDefault()
+          setQ(full)
+          requestAnimationFrame(() => inputRef.current?.focus())
+          return
+        }
+      }
       if (!modal) return                                                            // let focus leave the box
       e.preventDefault()
       if (e.shiftKey || !complete()) inputRef.current?.focus()                      // the dialog's one tab stop
@@ -301,12 +373,18 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   const nothing = hasQuery && !shown.length && !canAsk
   return (
     <Command shouldFilter={false} loop label="Wattson commands" className={`pal ${className}`} value={value} onValueChange={setValue} onKeyDown={onKeyDown}>
-      <Command.Input ref={inputRef} className="pal-input" value={q} onValueChange={setQ} placeholder={placeholder} autoFocus={autoFocus} autoComplete="off" spellCheck={false} aria-label={placeholder} />
+      <div className="pal-inputwrap">
+        {/* The completion is drawn behind the input: the typed half is transparent so the
+            grey tail lands exactly under the caret, and the layer never takes a click. */}
+        {!!ghost && <div className="pal-ghost" aria-hidden="true"><span className="pal-ghost-typed">{q}</span><span className="pal-ghost-rest">{ghost}</span></div>}
+        <Command.Input ref={inputRef} className="pal-input" value={q} onValueChange={setQ} placeholder={placeholder} autoFocus={autoFocus} autoComplete="off" spellCheck={false} aria-label={placeholder} />
+        {!!ghost && <span className="pal-tab" aria-hidden="true">tab</span>}
+      </div>
       {/* the ask bar waits for the list, so the landing box keeps its resting shape until you type */}
       {aiOn && showList && (
         <div className="pal-askbar">
-          <button type="button" className="pal-askbtn" onClick={() => runAsk(q || 'this screen', 'summary')}>Summarise this screen</button>
           {canAsk && <button type="button" className="pal-askbtn" onClick={() => runAsk(q)}>Ask: {q.trim()}</button>}
+          <button type="button" className="pal-askbtn" onClick={() => runAsk(SUMMARIZE, 'summary')}>{SUMMARIZE}</button>
         </div>
       )}
       {answer && (
@@ -332,15 +410,17 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
           {list.map(g => (
             <Command.Group key={g.id} className="pal-group" heading={<span className="pal-heading"><span>{headingOf(g)}</span>{g.total > g.items.length && <span className="pal-count">{g.items.length} of {g.total}</span>}</span>}>
               {g.items.map(it => (
-                <Command.Item key={it.id} value={it.id} className={`pal-item${it.unknown ? ' unknown' : ''}${it.static ? ' static' : ''}${it.id === 'ask' ? ' ask' : ''}`} disabled={!!it.unknown || !!it.static} onSelect={() => run(it)}>
+                /* A question the deterministic parser cannot route is still answerable: with the
+                   ask layer up, ↵ sends it to the model. Only with no ask layer is it a dead row. */
+                <Command.Item key={it.id} value={it.id} className={`pal-item${it.unknown ? ' unknown' : ''}${it.static ? ' static' : ''}${it.id === 'ask' ? ' ask' : ''}`} disabled={(!!it.unknown && !aiOn) || !!it.static} onSelect={() => run(it)}>
                   <span className="pal-label">
                     {it.id === 'ask' ? it.label : <Marked text={it.label} query={q} />}
                     {it.sub && <span className="pal-sub">{it.sub}</span>}
                   </span>
                   {it.hint && (it.keys
                     ? <span className="pal-keys">{it.keys.map((k, j) => <span key={j}>{j > 0 && <i className="pal-keysep">{it.sep || ''}</i>}<kbd>{k}</kbd></span>)}</span>
-                    : <span className={`pal-hint${it.mono ? ' mono' : ''}`}><Marked text={it.hint} query={q} /></span>)}
-                  {!it.unknown && !it.static && <span className="pal-go" aria-hidden="true">↵</span>}
+                    : <span className={`pal-hint${it.mono ? ' mono' : ''}`}>{toAsk(it) && aiOn ? 'ask the data' : <Marked text={it.hint} query={q} />}</span>)}
+                  {(!it.unknown || aiOn) && !it.static && <span className="pal-go" aria-hidden="true">↵</span>}
                 </Command.Item>
               ))}
             </Command.Group>
@@ -353,7 +433,7 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
           <span className="pal-foot-do">{current && !current.static ? <><kbd>↵</kbd>{doingOf(current)}</> : <><kbd>↵</kbd>run the highlighted row</>}</span>
           <span className="pal-foot-keys">
             <span><kbd>↑</kbd><kbd>↓</kbd>move</span>
-            {modal && <span><kbd>tab</kbd>complete</span>}
+            {ghost ? <span><kbd>tab</kbd>complete the question</span> : modal && <span><kbd>tab</kbd>complete</span>}
             <span><kbd>esc</kbd>{answer ? 'dismiss' : hasQuery ? 'clear' : emptyLimit > 0 ? 'close' : 'clear'}</span>
           </span>
         </div>
@@ -379,8 +459,9 @@ export function CommandPalette({ open: openProp, onOpenChange, limit = 6, emptyL
     const onKey = e => {
       if ((e.metaKey || e.ctrlKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'k') { e.preventDefault(); setOpen(!openRef.current); return }
       if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !openRef.current && !typing(e)) { e.preventDefault(); setOpen(true); return }
-      // Escape inside the panel is the panel's own: it clears the box first, and closes on the
-      // second press by calling back into setOpen. Escape anywhere else closes straight away.
+      // Escape inside the panel is the panel's own: it dismisses the answer, then clears the box,
+      // and closes on the last press by calling back into setOpen. Escape anywhere else closes
+      // straight away.
       if (e.key === 'Escape' && openRef.current) {
         if (e.target?.closest?.('.pal-panel')) return
         e.preventDefault(); e.stopPropagation(); setOpen(false)

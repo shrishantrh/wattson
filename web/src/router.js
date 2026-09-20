@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-// #/ landing · #/screen?by=preset · #/check/META · #/compare?mw=300&metros=a|b|c · #/found?s=scene · #/region/<id> · #/method
+// #/ landing · #/screen?by=preset · #/check/META · #/compare?mw=300&metros=a|b|c · #/found?s=scene · #/region/<id> · #/method · #/ask?q=anything
 export function parseHash(hash = window.location.hash) {
   const raw = hash.replace(/^#/, '')
   const [pathPart, queryPart = ''] = raw.split('?')
@@ -20,10 +20,13 @@ export const href = {
   found: s => (s ? `#/found?s=${s}` : '#/found'),
   region: id => `#/region/${encodeURIComponent(id)}`,
   method: () => '#/method',
+  irradiance: () => '#/irradiance',
+  alpha: () => '#/alpha',
   screen: by => (by ? `#/screen?by=${by}` : '#/screen'),
   alerts: () => '#/alerts',
   data: t => (t ? `#/data?t=${t}` : '#/data'),
   companies: () => '#/companies',
+  ask: q => (q ? `#/ask?q=${encodeURIComponent(q)}` : '#/ask'),
   explore: (params) => { const q = new URLSearchParams(params || {}).toString(); return q ? `#/explore?${q}` : '#/explore' },
 }
 

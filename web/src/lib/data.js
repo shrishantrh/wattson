@@ -75,9 +75,12 @@ export async function loadRegion(id) {
 // ---------- company ----------
 export function normalizeCompany(raw, ticker) {
   let c = raw
+  // Match on the route key OR the ticker: an operator with no listed equity (xAI, Vantage)
+  // has a null ticker and is addressed by its id.
+  const keyOf = x => String(x?.id || x?.ticker || '').toUpperCase()
   if (raw?.companies && !Array.isArray(raw.companies)) c = raw.companies[ticker]
-  else if (Array.isArray(raw?.companies)) c = raw.companies.find(x => x.ticker === ticker)
-  if (!c || (c.ticker && c.ticker !== ticker)) throw new NotFound(`Company ${ticker}`, raw?.companies ? (Array.isArray(raw.companies) ? raw.companies.map(x => x.ticker) : Object.keys(raw.companies)) : c?.ticker ? [c.ticker] : [])
+  else if (Array.isArray(raw?.companies)) c = raw.companies.find(x => keyOf(x) === ticker || x.ticker === ticker)
+  if (!c || (keyOf(c) && keyOf(c) !== ticker && c.ticker !== ticker)) throw new NotFound(`Company ${ticker}`, raw?.companies ? (Array.isArray(raw.companies) ? raw.companies.map(keyOf) : Object.keys(raw.companies)) : keyOf(c) ? [keyOf(c)] : [])
   const sites = (c.sites || []).map(s => {
     const zone = s.zone ?? s.pjm_zone ?? null, region_id = s.region_id || (zone ? (String(zone).includes('/') ? zone : `${s.ba}/${zone}`) : s.ba)   // a zone may already be a full id
     const m = metroFor(s.metro), rc = coords.regions[region_id] || coords.regions[s.ba]
@@ -143,12 +146,12 @@ export async function loadCompanies() {
 export async function loadFacilities() {
   try {
     const raw = await tryEach([...(api ? [() => getJSON(`${api}/api/facilities`)] : []), () => staticExport('facilities'), () => fixture('facilities')])
-    const list = (raw.facilities || raw.sites || raw || []).map(s => { const region_id = s.region_id || (s.zone ? `${s.ba}/${s.zone}` : s.ba); const rc = coords.regions[region_id] || coords.regions[s.ba]; return { ...s, region_id, lat: s.lat ?? s.latitude ?? rc?.lat, lng: s.lng ?? s.lon ?? s.longitude ?? rc?.lng, grid_label: rc?.label || s.ba, ticker_utility: s.utility_ticker ?? s.ticker_utility ?? null } })
-    return { facilities: list, no_listed_equity_count: raw.no_listed_equity_count ?? list.filter(s => !s.ticker_utility).length, notes: raw.notes || [], source: 'engine' }
+    const list = (raw.facilities || raw.sites || raw || []).map(s => { const region_id = s.region_id || (s.zone ? `${s.ba}/${s.zone}` : s.ba); const rc = coords.regions[region_id] || coords.regions[s.ba]; return { ...s, region_id, operator_key: s.operator_key || s.ticker || null, lat: s.lat ?? s.latitude ?? rc?.lat, lng: s.lng ?? s.lon ?? s.longitude ?? rc?.lng, grid_label: rc?.label || s.ba, ticker_utility: s.utility_ticker ?? s.ticker_utility ?? null } })
+    return { facilities: list, no_listed_equity_count: raw.no_listed_equity_count ?? list.filter(s => s.serving_utility && !s.ticker_utility).length, unresolved_utility_count: raw.unresolved_utility_count ?? list.filter(s => !s.serving_utility).length, notes: raw.notes || [], source: 'engine' }
   } catch (e) {
     if (e.name !== 'NotFound') throw e
     const cos = await loadCompanies(); const out = []
-    await Promise.all(cos.companies.map(async c => { try { const d = await loadCompany(c.ticker); d.sites.forEach(s => out.push({ ...s, ticker: c.ticker, company: c.company })) } catch { /* not exported */ } }))
+    await Promise.all(cos.companies.map(async c => { try { const d = await loadCompany(c.id || c.ticker); d.sites.forEach(s => out.push({ ...s, ticker: c.ticker, operator_key: c.id || c.ticker, company: c.company })) } catch { /* not exported */ } }))
     return { facilities: out, no_listed_equity_count: null, source: 'companies' }
   }
 }
@@ -184,3 +187,14 @@ export function useRegionDetails(ids) {
 // The engine's corrected 2019 figure replaces the published one where a correction exists (AZPS).
 export const nightSeries = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; if (!g?.cf_share) return null; const corr = (detail?.corrections?.corrections || g?.corrections?.corrections || []).find(x => x.path === 'cf_share.2019'); return ['2019', '2020', '2021', '2022', '2023', '2024', '2025'].map(y => (y === '2019' && corr?.corrected?.overnight != null ? corr.corrected.overnight : g.cf_share[y]?.overnight ?? null)) }
 export const hourProfile = detail => { const g = detail && detail.type === 'zone' && detail.parent ? detail.parent : detail; return g?.profile_24h?.['2025'] || g?.profile_24h || null }
+
+// ---------- irradiance (satellite overlay) ----------
+// Same resolution order as everything else: live API, then the static export, then a
+// fixture. The screen must render from the export with no server.
+export async function loadIrradiance() {
+  return tryEach([
+    ...(api ? [() => getJSON(`${api}/api/irradiance`)] : []),
+    () => staticExport('irradiance'),
+    () => fixture('irradiance'),
+  ])
+}

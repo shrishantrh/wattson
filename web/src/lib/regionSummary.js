@@ -22,21 +22,25 @@ const operatorsOf = d => {
   return ops.filter(o => isObj(o) && (o.utility || o.parent || o.ticker)).map(o => ({ utility: o.utility ?? null, parent: o.parent ?? null, ticker: o.ticker ?? null, role: o.role ?? null }))
 }
 
-// "39% clean at night, about 183 MW from fossil at the 2025 mix; on business hours 41%, and with a
-// fifth shifted into 10am to 4pm, 41%." Whole percents. Empty string when nothing can be said.
+// "183 MW of it would not be carbon-free (the mix after midnight is 39% clean); business hours
+// instead would make it 40%, and shifting a fifth into 10am to 4pm, 40%. Moving when it runs is
+// worth about 1 point here." Whole percents. Empty string when nothing can be said.
 export function runsOnLine({ night2025, fossilMW: fossil, profile }) {
   const head = []
-  if (night2025 != null) head.push(`${pct0(night2025)} clean at night`)
-  if (fossil != null) head.push(`about ${n0(fossil)} MW from fossil at the 2025 mix`)
+  if (fossil != null) head.push(`${n0(fossil)} MW of it would not be carbon-free`)
+  if (night2025 != null) head.push(`${head.length ? '(' : ''}the mix after midnight is ${pct0(night2025)} clean${head.length ? ')' : ''}`)
   const tail = []
+  let worth = ''
   if (profile) {
     const cmp = compareShapes(profile)
     const biz = cmp.byId.business?.share, flex = cmp.flexible20?.share
-    if (biz != null) tail.push(`on business hours ${pct0(biz)}`)
-    if (flex != null) { const span = hourSpanWords(bestHours(profile, 6).hours); tail.push(`${tail.length ? 'and ' : ''}with a fifth shifted into ${span || 'the cleanest six hours'}, ${pct0(flex)}`) }
+    if (biz != null) tail.push(`business hours instead would make it ${pct0(biz)}`)
+    if (flex != null) { const span = hourSpanWords(bestHours(profile, 6).hours); tail.push(`${tail.length ? 'and ' : ''}shifting a fifth into ${span || 'the cleanest six hours'}, ${pct0(flex)}`) }
+    const best = Math.max(biz == null ? -1 : biz, flex == null ? -1 : flex)
+    if (night2025 != null && best > -1 && tail.length) { const p = Math.round(Math.abs(best - night2025) * 100); worth = ` Moving when it runs is worth about ${p} point${p === 1 ? '' : 's'} here.` }
   }
   if (!head.length && !tail.length) return ''
-  return `${head.join(', ')}${head.length && tail.length ? '; ' : ''}${tail.join(', ')}.`
+  return `${head.join(' ')}${head.length && tail.length ? '; ' : ''}${tail.join(', ')}.${worth}`
 }
 
 export function summarize(detail, id, { loadMW = 300, coords } = {}) {

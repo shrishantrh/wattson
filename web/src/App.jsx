@@ -36,9 +36,11 @@ try { window.addEventListener('load', () => { try { sessionStorage.removeItem(RE
 
 const lazyPage = name => lazy(() => (pageFiles[`./pages/${name}.jsx`] ? pageFiles[`./pages/${name}.jsx`]().catch(recoverStaleChunk) : Promise.resolve({ default: () => <Missing name={name} /> })))
 const Film = lazyPage('Film')
-const Screener = lazyPage('Screener'), Explore = lazyPage('Explore'), Alerts = lazyPage('Alerts'), Companies = lazyPage('Companies'), Data = lazyPage('Data')
+const Screener = lazyPage('Screener'), Explore = lazyPage('Explore'), Alerts = lazyPage('Alerts'), Companies = lazyPage('Companies'), Data = lazyPage('Data'), Irradiance = lazyPage('Irradiance'), Alpha = lazyPage('Alpha'), Ask = lazyPage('Ask')
 
-const PAGES = { landing: Landing, check: Check, compare: Compare, found: Found, region: Region, method: Method, screen: Screener, screener: Screener, explore: Explore, alerts: Alerts, companies: Companies, data: Data }
+// `screener` is an alias for `screen`: a link written either way lands on the same page rather
+// than silently falling back to the landing screen.
+const PAGES = { landing: Landing, check: Check, compare: Compare, found: Found, region: Region, method: Method, screen: Screener, screener: Screener, explore: Explore, alerts: Alerts, companies: Companies, irradiance: Irradiance, data: Data, alpha: Alpha, ask: Ask }
 
 export default function App() {
   const hash = useHash()

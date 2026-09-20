@@ -66,6 +66,8 @@ export function StageProvider({ children }) {
             <span className="toplinks-label">Sections</span>
             <a href={href.data()} className={spec.page === 'data' ? 'on' : ''} aria-current={spec.page === 'data' ? 'page' : undefined}><TableIcon size={13} />Data</a>
             <a href={href.found()} className={spec.page === 'found' ? 'on' : ''} aria-current={spec.page === 'found' ? 'page' : undefined}><GlobeIcon size={13} />What we found</a>
+            <a href={href.alpha()} className={spec.page === 'alpha' ? 'on' : ''} aria-current={spec.page === 'alpha' ? 'page' : undefined}><TableIcon size={13} />Generating Alpha</a>
+            <a href={href.irradiance()} className={spec.page === 'irradiance' ? 'on' : ''} aria-current={spec.page === 'irradiance' ? 'page' : undefined}><GlobeIcon size={13} />Day vs night</a>
             <a href={href.method()} className={spec.page === 'method' ? 'on' : ''} aria-current={spec.page === 'method' ? 'page' : undefined}><Layers size={13} />Method</a>
           </nav>
         </header>

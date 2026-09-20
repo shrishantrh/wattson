@@ -1,0 +1,15 @@
+{
+  "_note": "Operators we know are part of this buildout and deliberately did NOT map to a grid. A company missing from the product should be a recorded decision, not a 404. Each entry states what we looked for and why we stopped. Never a claim about the company: only a statement about our own coverage.",
+  "generated": "2026-09-20",
+  "companies": [
+    {
+      "key": "NBIS",
+      "company": "Nebius Group",
+      "ticker": "NBIS",
+      "coverage_status": "no_site_resolved",
+      "claims_absent_reason": "no_site_resolved",
+      "note": "US capacity is real and announced, but we could not tie any individual Nebius site to a named serving utility from public sources, and the whole method is built from the serving utility outward. Guessing the balancing authority from the state is exactly the error this project exists to show: Prineville and Quincy both resolve to BPAT from geography and both are wrong, in opposite directions. So Nebius is recorded as an unmapped operator rather than given a grid it might not draw from.",
+      "searched": ["company site list", "press coverage naming a utility or interconnection", "state siting and utility filings"]
+    }
+  ]
+}

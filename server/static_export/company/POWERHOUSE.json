@@ -1,0 +1,48 @@
+{
+ "company": "PowerHouse / Provident",
+ "ticker": null,
+ "id": "POWERHOUSE",
+ "listed_equity": false,
+ "coverage_status": "sites_only",
+ "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+ "claims_absent_reason": "no_documents_ingested",
+ "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+ "sites": [
+  {
+   "metro": "Dallas-Fort Worth (Ellis County)",
+   "state": "TX",
+   "ba": "ERCO",
+   "zone": "ERCO/NCEN",
+   "pjm_zone": "ERCO/NCEN",
+   "region_id": "ERCO/NCEN",
+   "serving_utility": "Oncor Electric Delivery",
+   "utility_parent": "Sempra",
+   "utility_ticker": "SRE",
+   "source_type": "press",
+   "source_url": "https://www.prnewswire.com/news-releases/powerhouse-and-provident-rewrite-the-data-center-playbook-with-new-texas-hyperscale-campus-302384924.html",
+   "note": "confidence=medium. The joint release places the campus in northern Ellis County TX just outside Grand Prairie with a planned switchyard and a first tranche approved through ERCOT; no utility named, Oncor is the TDU for that part of Ellis County, inferred. HYPERSCALE BUILD-TO-SUIT: load belongs to TENANTS.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.461,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 91,
+   "detector_score": -1.32,
+   "detector_pattern": "flat-load growth"
+  }
+ ],
+ "claims": [],
+ "talk_score": null,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.461,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 0,
+ "notes": [
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+ ],
+ "is_mock": false
+}

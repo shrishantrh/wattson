@@ -26,7 +26,7 @@ const isNum = x => x != null && x !== '' && !Number.isNaN(Number(x))
 
 // The grid whose generation serves this region: the parent BA for a zone, the region itself for a BA.
 export const gridOf = detail => (detail && detail.type === 'zone' && isObj(detail.parent) ? detail.parent : detail || null)
-const gridLabel = detail => { const g = gridOf(detail); return g?.id || g?.ba || detail?.ba || null }
+const gridLabel = detail => { const g = gridOf(detail); return (detail?.type === 'zone' || detail?.cf_inherited_from_ba ? detail?.ba || g?.ba : null) || g?.id || g?.ba || detail?.ba || null }
 
 // ---- selectors: null when the module has nothing to show ----
 export const heatmapOf = detail => {

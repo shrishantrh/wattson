@@ -1,0 +1,211 @@
+{
+  "what": "Every demo-facing number audited against the file it comes from. A number that cannot be reproduced from a committed file by a command is marked UNVERIFIABLE, not waved through.",
+  "generated_from": "python3 -m engine.diagnostics.numbers_audit",
+  "counts": {
+    "VERIFIED": 21,
+    "CORRECTED": 3,
+    "UNVERIFIABLE": 1
+  },
+  "checks": [
+    {
+      "item": "PJM overnight clean MW 2019->2025",
+      "claim": "35,700 -> 35,619, flat within 100 MW",
+      "actual": "35,700 -> 35,619, delta -81 MW",
+      "verdict": "VERIFIED",
+      "source": "regions.json PJM.cf_avg_mw.*.overnight",
+      "note": "Endpoints differ by 81 MW, so 'flat within 100 MW since 2019' is literally true as an endpoint statement. It is NOT true of the path: the series ranges 34,316-36,299 MW, a spread of 1,983 MW, with 2020 sitting 1,384 MW below 2019. Say '2025 is within 100 MW of 2019', not 'it never moved more than 100 MW'."
+    },
+    {
+      "item": "PJM overnight total growth",
+      "claim": "+8.7 GW",
+      "actual": "82,539 -> 91,240 MW = +8.70 GW",
+      "verdict": "VERIFIED",
+      "source": "regions.json PJM.total_avg_mw.*.overnight",
+      "note": ""
+    },
+    {
+      "item": "PJM overnight net exports",
+      "claim": "3,814 -> 2,489 MW",
+      "actual": "3,814 -> 2,489 MW",
+      "verdict": "VERIFIED",
+      "source": "regions.json PJM.interchange.*.overnight_net_export_mw",
+      "note": ""
+    },
+    {
+      "item": "National overnight CF share",
+      "claim": "0.405 -> 0.397",
+      "actual": "0.405 -> 0.397",
+      "verdict": "VERIFIED",
+      "source": "regions.json meta.national.cf_share",
+      "note": ""
+    },
+    {
+      "item": "National daytime CF share",
+      "claim": "0.372 -> 0.465",
+      "actual": "0.372 -> 0.465",
+      "verdict": "VERIFIED",
+      "source": "regions.json meta.national.cf_share",
+      "note": ""
+    },
+    {
+      "item": "National overnight clean absolute",
+      "claim": "159.0 -> 173.4 GW",
+      "actual": "159.0 -> 173.4 GW",
+      "verdict": "VERIFIED",
+      "source": "regions.json meta.national.cf_avg_mw",
+      "note": "The share falls 0.8 points while the absolute rises 14.3 GW. Both are true and the share fall is misleading without the absolute."
+    },
+    {
+      "item": "Detector coverage",
+      "claim": "111 scored, 124 served",
+      "actual": "111 scored (111 carry a rank), 124 served",
+      "verdict": "VERIFIED",
+      "source": "regions.json meta.detector.n_scored",
+      "note": ""
+    },
+    {
+      "item": "Detector ranks (10 regions)",
+      "claim": "{'ERCO/NRTH': 1, 'ERCO/FWES': 2, 'AZPS': 3, 'TEPC': 4, 'WACM': 5, 'PJM/DOM': 6, 'SWPP/OPPD': 7, 'SC': 9, 'PJM/AEP': 19, 'ERCO/NCEN': 91}",
+      "actual": "all match",
+      "verdict": "VERIFIED",
+      "source": "regions.json <region>.detection.rank",
+      "note": ""
+    },
+    {
+      "item": "Dominion demand growth",
+      "claim": "+32% average, +39.5% overnight",
+      "actual": "+31.8% average, +39.5% overnight",
+      "verdict": "VERIFIED",
+      "source": "regions.json PJM/DOM.demand",
+      "note": ""
+    },
+    {
+      "item": "Dominion overnight gas +10.74 GW",
+      "claim": "+10.74 GW attributed to Dominion",
+      "actual": "PJM/DOM.fuel_delta_overnight_gw.gas = 10.74 GW, and cf_inherited_from_ba = True; identical to the PJM parent: True",
+      "verdict": "CORRECTED",
+      "source": "regions.json PJM/DOM.fuel_delta_overnight_gw.gas",
+      "note": "This is PJM's WHOLE-FOOTPRINT gas delta, inherited by every PJM zone, not Dominion's. Dominion's own overnight demand grew 3,973 MW, about 46% of PJM's 8.7 GW overnight growth. Say 'PJM-wide overnight gas rose 10.74 GW while Dominion's overnight demand rose ~4 GW'. Attributing the 10.74 GW to Dominion is the exact error CLAUDE.md already warns about: say half, not all."
+    },
+    {
+      "item": "Siting scores for the 300 MW query",
+      "claim": "Omaha 0.737, N. Virginia 0.436, Phoenix 0.173",
+      "actual": "all three match regions.json",
+      "verdict": "CORRECTED",
+      "source": "regions.json <region>.siting.siting_score",
+      "note": "The three figures match the PUBLISHED file. But Phoenix is AZPS, whose generation-side history is the number we corrected: the corrected siting_score is 0.449 (rank 49 -> ~32 of 52). So a SITE demo showing Phoenix at 0.173 is showing the UNCORRECTED value and ranking Phoenix dirtier than the evidence supports. The API serves corrections; the /api/site path must apply the overlay too, or the demo contradicts our own correction on stage."
+    },
+    {
+      "item": "Alerts counts and tiers",
+      "claim": "14 ranked, 162 source, tiers 6/6/2",
+      "actual": "14 ranked, 162 source (105 active), tiers {'primary': 6, 'supporting': 6, 'chronic': 2}",
+      "verdict": "VERIFIED",
+      "source": "claims/derived/alerts_ranked.json",
+      "note": ""
+    },
+    {
+      "item": "Alert gap at rank 6-7",
+      "claim": "78% gap",
+      "actual": "rank 6 severity 0.258, rank 7 0.145: a 44% DROP from rank 6, equivalently rank 6 is 78% ABOVE rank 7",
+      "verdict": "CORRECTED",
+      "source": "claims/derived/alerts_ranked.json alerts[].severity",
+      "note": "Both numbers are arithmetically real; they differ only in denominator. '78% gap' will be heard as 'severity falls 78%', which is wrong -- it falls 44%. Say 'rank 6 scores 78% higher than rank 7' or 'severity drops 44% between them'."
+    },
+    {
+      "item": "WACM absent from ranked alerts",
+      "claim": "absent",
+      "actual": "absent",
+      "verdict": "VERIFIED",
+      "source": "claims/derived/alerts_ranked.json",
+      "note": ""
+    },
+    {
+      "item": "Company talk/walk scores",
+      "claim": "per company; Google walk 0.056",
+      "actual": "{'META': (0.55, 0.603), 'MSFT': (0.55, 0.642), 'GOOGL': (0.394, 0.056), 'AMZN': (None, 0.393)}",
+      "verdict": "VERIFIED",
+      "source": "claims/companies.json talk_score / walk_score",
+      "note": ""
+    },
+    {
+      "item": "cannot_verify count",
+      "claim": "counted on screen",
+      "actual": "1 (AMZN 1, others 0)",
+      "verdict": "VERIFIED",
+      "source": "claims/companies.json cannot_verify_count",
+      "note": ""
+    },
+    {
+      "item": "Google walk 0.056 carries the SCEG caveat",
+      "claim": "caveat present",
+      "actual": "caveat present: True",
+      "verdict": "VERIFIED",
+      "source": "claims/companies.json GOOGL.notes / sites[].note",
+      "note": "0.056 is the SC balancing authority, which is also the single biggest outlier against Google's own published grid CFE (we read 5.6%, Google publishes 25% for the South Carolina regional grid). The caveat is in the file and must be said out loud with the number, not left in a tooltip."
+    },
+    {
+      "item": "Google hourly CFE 65/64/64/66/65",
+      "claim": "65 64 64 66 65 for 2021-2025",
+      "actual": "extracted from GOOGL_esg.pdf p94 and verified against the rendered page; locked by a committed test",
+      "verdict": "VERIFIED",
+      "source": "engine/ingest/tests/test_real_pages.py::test_googl_p94_cfe_table_keeps_its_numbers",
+      "note": "Reproduce: python3 -m pytest engine/ingest/tests/test_real_pages.py (skips unless the gitignored PDFs are present)."
+    },
+    {
+      "item": "Google grid-CFE validation",
+      "claim": "7 of 11 within 2 points, median -0.5 pts",
+      "actual": "7 of 11 within 2 points, median -0.5 pts",
+      "verdict": "VERIFIED",
+      "source": "claims/derived/google_grid_cfe_validation.json",
+      "note": ""
+    },
+    {
+      "item": "Irradiance flat across points",
+      "claim": "1.1-2.6% variation",
+      "actual": "1.06-2.65%",
+      "verdict": "VERIFIED",
+      "source": "claims/derived/irradiance.json regions[].irradiance",
+      "note": ""
+    },
+    {
+      "item": "ERCO/NRTH daytime vs irradiance",
+      "claim": "daytime +28.9 pts vs irradiance +3.4%",
+      "actual": "daytime +28.9 pts, irradiance +3.4%",
+      "verdict": "VERIFIED",
+      "source": "regions.json ERCO.cf_share + irradiance.json",
+      "note": "Two wording risks. The +3.4% endpoint change is LARGER than the 2.65% 'flat' band quoted beside it, because they are different statistics (endpoint change vs year-to-year variation) -- say which. And ERCO/NRTH inherits its carbon-free share from ERCO, so '+28.9 points' describes all of ERCOT, not North zone; the irradiance point is Dallas. The irradiance file says this itself in cf_share_actually_describes."
+    },
+    {
+      "item": "EC2 reproducibility",
+      "claim": "359 MB in 3.7s, full pipeline under 2 minutes, identical across pandas 2 and 3",
+      "actual": "no artifact in the repository: no timing log, no run output, no report file",
+      "verdict": "UNVERIFIABLE",
+      "source": "(none found)",
+      "note": "This exists only in prose. Per the rule that a number which cannot be reproduced from a committed file by a command is asserted rather than verified, it should not be said on stage until someone commits the run output. CLAUDE.md lists the EC2 reproducibility run as an open issue, which is consistent with it never having been recorded."
+    },
+    {
+      "item": "Facilities without listed equity",
+      "claim": "4 of 7",
+      "actual": "4 of 7 have no utility_ticker",
+      "verdict": "VERIFIED",
+      "source": "claims/lookup/facilities.csv utility_ticker",
+      "note": "The four are public power: Grant County PUD, Santee Cooper, OPPD and NOVEC. 'No listed equity' means no tradable parent, not missing data."
+    },
+    {
+      "item": "PACW stale-trap correction",
+      "claim": "0.297 -> 0.75",
+      "actual": "cf_share_2025 = 0.75, and the note records the 2019-era 0.297 explicitly",
+      "verdict": "VERIFIED",
+      "source": "claims/companies.json META.sites[PACW]",
+      "note": "The note is the point: the naive-geography error was ~60 points in 2019 and is ~16 points now. Quoting the 2019 framing as current would itself be a stale number."
+    },
+    {
+      "item": "Quincy GCPD carbon-free share",
+      "claim": "1.0",
+      "actual": "cf_share_2025 = 1.0",
+      "verdict": "VERIFIED",
+      "source": "claims/companies.json MSFT.sites[GCPD]",
+      "note": "Grant County PUD is essentially all hydro, so 1.0 is plausible rather than a placeholder -- but it is an exact 1.0 on a very small BA, so say 'effectively all hydro'."
+    }
+  ]
+}

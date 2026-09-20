@@ -1,6 +1,12 @@
 {
  "company": "Alphabet (Google)",
  "ticker": "GOOGL",
+ "id": "GOOGL",
+ "listed_equity": true,
+ "coverage_status": "sites_and_claims",
+ "coverage_status_note": "Sites mapped to grids, and claims read from its own documents.",
+ "claims_absent_reason": null,
+ "claims_absent_note": null,
  "sites": [
   {
    "metro": "Moncks Corner (Berkeley County)",
@@ -8,11 +14,209 @@
    "ba": "SC",
    "zone": null,
    "pjm_zone": null,
+   "region_id": "SC",
    "serving_utility": "Berkeley Electric Cooperative (power from Santee Cooper)",
+   "utility_parent": "Santee Cooper (South Carolina state-owned)",
+   "utility_ticker": null,
    "source_type": "press",
    "source_url": "https://www.postandcourier.com/business/industry/santee-cooper-google-data-center-sc-electric/article_453dc24b-8d98-42ce-95c0-de176eac45dd.html",
    "note": "COARSE-REGION CAVEAT, IMPORTANT. Served by Berkeley Electric Cooperative, a member of Central Electric, which buys from Santee Cooper. The SC balancing authority reads 0.056 carbon-free in 2025, which is genuinely coal- and gas-heavy -- BUT Santee Cooper's jointly-owned V.C. Summer nuclear reports under the SCEG balancing authority (0.421), not under SC. So the SC footprint understates the carbon-free content of power actually available to this site. Never present 0.056 without this caveat.",
-   "cf_share_2025": 0.056
+   "lat": 33.196,
+   "lng": -80.0106,
+   "cf_share_2025": 0.056,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 9,
+   "detector_score": 5.08,
+   "detector_pattern": "flat-load growth"
+  },
+  {
+   "metro": "Council Bluffs",
+   "state": "IA",
+   "ba": "MISO",
+   "zone": null,
+   "pjm_zone": null,
+   "region_id": "MISO",
+   "serving_utility": "MidAmerican Energy",
+   "utility_parent": "Berkshire Hathaway Energy",
+   "utility_ticker": null,
+   "source_type": "press",
+   "source_url": "https://www.utilitydive.com/news/google-makes-biggest-renewables-buy-yet/255052/",
+   "note": "confidence=high. Google lists Council Bluffs on its own locations page and MidAmerican Energy is the contracted retail supplier (407 MW wind deal). Iowa has no clean EIA MISO sub-zone mapping so this is held at BA level.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.349,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 89,
+   "detector_score": -1.11,
+   "detector_pattern": "mixed"
+  },
+  {
+   "metro": "The Dalles",
+   "state": "OR",
+   "ba": "BPAT",
+   "zone": null,
+   "pjm_zone": null,
+   "region_id": "BPAT",
+   "serving_utility": "Northern Wasco County PUD",
+   "utility_parent": "public power",
+   "utility_ticker": null,
+   "source_type": "press",
+   "source_url": "https://www.publicpower.org/periodical/article/northern-wasco-pud-supply-power-google-data-centers",
+   "note": "confidence=high. APPA states Northern Wasco County PUD delivers power to Google's data centers in The Dalles; the PUD sits inside BPA's balancing authority.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.913,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 50,
+   "detector_score": 0.45,
+   "detector_pattern": "mixed"
+  },
+  {
+   "metro": "Pryor (Mayes County)",
+   "state": "OK",
+   "ba": "SWPP",
+   "zone": "SWPP/GRDA",
+   "pjm_zone": "SWPP/GRDA",
+   "region_id": "SWPP/GRDA",
+   "serving_utility": "Grand River Dam Authority",
+   "utility_parent": "public power",
+   "utility_ticker": null,
+   "source_type": "press",
+   "source_url": "https://www.publicpower.org/periodical/article/grand-river-dam-authority-partners-with-google-solar-projects",
+   "note": "confidence=high. APPA states GRDA supplies Google's Mayes County data center; GRDA is its own SPP sub-region.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.456,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 30,
+   "detector_score": 1.36,
+   "detector_pattern": "mixed"
+  },
+  {
+   "metro": "Lenoir",
+   "state": "NC",
+   "ba": "DUK",
+   "zone": null,
+   "pjm_zone": null,
+   "region_id": "DUK",
+   "serving_utility": "Duke Energy Carolinas",
+   "utility_parent": "Duke Energy",
+   "utility_ticker": "DUK",
+   "source_type": "company_disclosure",
+   "source_url": "https://news.duke-energy.com/releases/duke-energy-google-team-up-on-solar-power-project-in-n-c",
+   "note": "confidence=high. Duke Energy's own release ties Google's Lenoir data center to Duke Energy Carolinas' Green Source Rider and service territory.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.575,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 76,
+   "detector_score": -0.51,
+   "detector_pattern": "mixed"
+  },
+  {
+   "metro": "Bridgeport (Jackson County)",
+   "state": "AL",
+   "ba": "TVA",
+   "zone": null,
+   "pjm_zone": null,
+   "region_id": "TVA",
+   "serving_utility": "Tennessee Valley Authority",
+   "utility_parent": "federal",
+   "utility_ticker": null,
+   "source_type": "press",
+   "source_url": "https://www.waff.com/2025/08/27/tva-buy-power-nuclear-plant-fuel-google-data-center-jackson-county/",
+   "note": "confidence=medium. TVA is the named power supplier to the Google data center near Bridgeport (the former Widows Creek coal site). The local TVA retail distributor was not established; the BA is unambiguous.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.487,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 60,
+   "detector_score": 0.2,
+   "detector_pattern": "mixed"
+  },
+  {
+   "metro": "Fort Wayne",
+   "state": "IN",
+   "ba": "PJM",
+   "zone": "PJM/AEP",
+   "pjm_zone": "PJM/AEP",
+   "region_id": "PJM/AEP",
+   "serving_utility": "Indiana Michigan Power",
+   "utility_parent": "American Electric Power",
+   "utility_ticker": "AEP",
+   "source_type": "company_disclosure",
+   "source_url": "https://www.aep.com/news/stories/view/9883/IM-and-Stakeholders-File-Large-Load-Settlement-to-Advance-Grid-Reliability-and-Support-Economic-Growth-/",
+   "note": "confidence=high. I&M's own large-load settlement release names Google's Fort Wayne data center as an I&M large load; I&M sits in PJM's AEP zone.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.393,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 19,
+   "detector_score": 2.29,
+   "detector_pattern": "mixed"
+  },
+  {
+   "metro": "Mesa",
+   "state": "AZ",
+   "ba": "SRP",
+   "zone": null,
+   "pjm_zone": null,
+   "region_id": "SRP",
+   "serving_utility": "Salt River Project",
+   "utility_parent": "public power",
+   "utility_ticker": null,
+   "source_type": "company_disclosure",
+   "source_url": "https://blog.google/outreach-initiatives/sustainability/google-carbon-free-data-center-arizona-/",
+   "note": "confidence=high. Google's own blog confirms the Mesa data center and describes the supplying resources as sitting on SRP's grid. Mesa is SRP, not APS, which is a different balancing authority in the same metro.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.599,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 13,
+   "detector_score": 3.38,
+   "detector_pattern": "flat-load growth"
+  },
+  {
+   "metro": "Midlothian (Ellis County)",
+   "state": "TX",
+   "ba": "ERCO",
+   "zone": "ERCO/NCEN",
+   "pjm_zone": "ERCO/NCEN",
+   "region_id": "ERCO/NCEN",
+   "serving_utility": null,
+   "utility_parent": null,
+   "utility_ticker": null,
+   "source_type": "company_disclosure",
+   "source_url": "https://datacenters.google/locations/texas/",
+   "note": "confidence=low. Google's own page confirms Midlothian and Red Oak in Ellis County. Serving utility left empty on purpose: Ellis County splits between Oncor and HILCO Electric Cooperative and no source settles which serves the campus. Both are inside ERCOT so the BA is unaffected.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.461,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 91,
+   "detector_score": -1.32,
+   "detector_pattern": "flat-load growth"
+  },
+  {
+   "metro": "Pine Island",
+   "state": "MN",
+   "ba": "MISO",
+   "zone": "MISO/0001",
+   "pjm_zone": "MISO/0001",
+   "region_id": "MISO/0001",
+   "serving_utility": "Northern States Power - Minnesota (Xcel Energy)",
+   "utility_parent": "Xcel Energy",
+   "utility_ticker": "XEL",
+   "source_type": "company_disclosure",
+   "source_url": "https://newsroom.xcelenergy.com/news/xcel-energy-to-power-new-google-data-center-in-minnesota",
+   "note": "confidence=high. Xcel Energy's own newsroom states it signed an agreement to supply power for the Google data center in Pine Island MN.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.349,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 59,
+   "detector_score": 0.22,
+   "detector_pattern": "mixed"
   }
  ],
  "claims": [
@@ -34,8 +238,8 @@
    "verdict": "true_on_paper",
    "cannot_verify_reason": null,
    "physical_min": 0.056,
-   "physical_max": 0.056,
-   "physical_mean_unweighted": 0.056,
+   "physical_max": 0.913,
+   "physical_mean_unweighted": 0.464,
    "confidence": "high",
    "verification": {
     "human_reread_rendered_page": true,
@@ -51,6 +255,60 @@
      "ba": "SC",
      "year": 2025,
      "cf_share": 0.056
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
+    },
+    {
+     "type": "grid",
+     "ba": "BPAT",
+     "year": 2025,
+     "cf_share": 0.913
+    },
+    {
+     "type": "grid",
+     "ba": "SWPP",
+     "year": 2025,
+     "cf_share": 0.456
+    },
+    {
+     "type": "grid",
+     "ba": "DUK",
+     "year": 2025,
+     "cf_share": 0.575
+    },
+    {
+     "type": "grid",
+     "ba": "TVA",
+     "year": 2025,
+     "cf_share": 0.487
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "SRP",
+     "year": 2025,
+     "cf_share": 0.599
+    },
+    {
+     "type": "grid",
+     "ba": "ERCO",
+     "year": 2025,
+     "cf_share": 0.461
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
     },
     {
      "type": "internal_contradiction",
@@ -101,8 +359,8 @@
    "verdict": "true_on_paper",
    "cannot_verify_reason": null,
    "physical_min": 0.056,
-   "physical_max": 0.056,
-   "physical_mean_unweighted": 0.056,
+   "physical_max": 0.913,
+   "physical_mean_unweighted": 0.464,
    "confidence": "high",
    "verification": {
     "human_reread_rendered_page": true,
@@ -117,6 +375,60 @@
      "ba": "SC",
      "year": 2025,
      "cf_share": 0.056
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
+    },
+    {
+     "type": "grid",
+     "ba": "BPAT",
+     "year": 2025,
+     "cf_share": 0.913
+    },
+    {
+     "type": "grid",
+     "ba": "SWPP",
+     "year": 2025,
+     "cf_share": 0.456
+    },
+    {
+     "type": "grid",
+     "ba": "DUK",
+     "year": 2025,
+     "cf_share": 0.575
+    },
+    {
+     "type": "grid",
+     "ba": "TVA",
+     "year": 2025,
+     "cf_share": 0.487
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "SRP",
+     "year": 2025,
+     "cf_share": 0.599
+    },
+    {
+     "type": "grid",
+     "ba": "ERCO",
+     "year": 2025,
+     "cf_share": 0.461
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
     },
     {
      "type": "internal_contradiction",
@@ -144,8 +456,8 @@
    "verdict": "true_on_paper",
    "cannot_verify_reason": null,
    "physical_min": 0.056,
-   "physical_max": 0.056,
-   "physical_mean_unweighted": 0.056,
+   "physical_max": 0.913,
+   "physical_mean_unweighted": 0.464,
    "confidence": "high",
    "verification": {
     "human_reread_rendered_page": true,
@@ -160,6 +472,60 @@
      "ba": "SC",
      "year": 2025,
      "cf_share": 0.056
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
+    },
+    {
+     "type": "grid",
+     "ba": "BPAT",
+     "year": 2025,
+     "cf_share": 0.913
+    },
+    {
+     "type": "grid",
+     "ba": "SWPP",
+     "year": 2025,
+     "cf_share": 0.456
+    },
+    {
+     "type": "grid",
+     "ba": "DUK",
+     "year": 2025,
+     "cf_share": 0.575
+    },
+    {
+     "type": "grid",
+     "ba": "TVA",
+     "year": 2025,
+     "cf_share": 0.487
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "SRP",
+     "year": 2025,
+     "cf_share": 0.599
+    },
+    {
+     "type": "grid",
+     "ba": "ERCO",
+     "year": 2025,
+     "cf_share": 0.461
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
     },
     {
      "type": "internal_contradiction",
@@ -187,8 +553,8 @@
    "verdict": "true_on_paper",
    "cannot_verify_reason": null,
    "physical_min": 0.056,
-   "physical_max": 0.056,
-   "physical_mean_unweighted": 0.056,
+   "physical_max": 0.913,
+   "physical_mean_unweighted": 0.464,
    "confidence": "high",
    "verification": {
     "human_reread_rendered_page": true,
@@ -203,6 +569,60 @@
      "ba": "SC",
      "year": 2025,
      "cf_share": 0.056
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
+    },
+    {
+     "type": "grid",
+     "ba": "BPAT",
+     "year": 2025,
+     "cf_share": 0.913
+    },
+    {
+     "type": "grid",
+     "ba": "SWPP",
+     "year": 2025,
+     "cf_share": 0.456
+    },
+    {
+     "type": "grid",
+     "ba": "DUK",
+     "year": 2025,
+     "cf_share": 0.575
+    },
+    {
+     "type": "grid",
+     "ba": "TVA",
+     "year": 2025,
+     "cf_share": 0.487
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "SRP",
+     "year": 2025,
+     "cf_share": 0.599
+    },
+    {
+     "type": "grid",
+     "ba": "ERCO",
+     "year": 2025,
+     "cf_share": 0.461
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
     },
     {
      "type": "internal_contradiction",
@@ -239,8 +659,8 @@
    "verdict": "true_on_paper",
    "cannot_verify_reason": null,
    "physical_min": 0.056,
-   "physical_max": 0.056,
-   "physical_mean_unweighted": 0.056,
+   "physical_max": 0.913,
+   "physical_mean_unweighted": 0.464,
    "confidence": "high",
    "verification": {
     "human_reread_rendered_page": true,
@@ -256,6 +676,60 @@
      "ba": "SC",
      "year": 2025,
      "cf_share": 0.056
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
+    },
+    {
+     "type": "grid",
+     "ba": "BPAT",
+     "year": 2025,
+     "cf_share": 0.913
+    },
+    {
+     "type": "grid",
+     "ba": "SWPP",
+     "year": 2025,
+     "cf_share": 0.456
+    },
+    {
+     "type": "grid",
+     "ba": "DUK",
+     "year": 2025,
+     "cf_share": 0.575
+    },
+    {
+     "type": "grid",
+     "ba": "TVA",
+     "year": 2025,
+     "cf_share": 0.487
+    },
+    {
+     "type": "grid",
+     "ba": "PJM",
+     "year": 2025,
+     "cf_share": 0.393
+    },
+    {
+     "type": "grid",
+     "ba": "SRP",
+     "year": 2025,
+     "cf_share": 0.599
+    },
+    {
+     "type": "grid",
+     "ba": "ERCO",
+     "year": 2025,
+     "cf_share": 0.461
+    },
+    {
+     "type": "grid",
+     "ba": "MISO",
+     "year": 2025,
+     "cf_share": 0.349
     },
     {
      "type": "internal_contradiction",
@@ -277,7 +751,7 @@
  ],
  "talk_score": 0.405,
  "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
- "walk_score": 0.056,
+ "walk_score": 0.464,
  "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
  "coverage": 1.0,
  "cannot_verify_count": 0,

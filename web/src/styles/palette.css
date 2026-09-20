@@ -144,3 +144,34 @@ button.quick:hover, button.quick:focus-visible { color: var(--ink-2); border-col
 /* phones and portrait tablets: mobile.css re-pads the input row, so the badge stands down */
 @media (max-width: 900px) { .pal-inline-k { display: none; } }
 @media (max-width: 640px) { .pal-overlay { padding-top: 10vh; } .pal-panel { max-height: 72vh; } .pal-hint { max-width: 40%; } .pal-foot-keys span:not(:last-child) { display: none; } .pal-sub { display: none; } }
+
+/* ---- inline completion (lib/suggest.js) ---------------------------------------------
+   The grey tail is a layer UNDER the input, not inside it: the typed half is rendered
+   transparent so the suggested half starts exactly where the caret is. Every metric here
+   has to match .pal-input — font, size, letter-spacing, padding — or the tail drifts off
+   the caret, so the two are always edited together. The sizes are the same tokens the
+   input uses, so a change to the type scale moves both at once. */
+.pal-inputwrap { position: relative; }
+.pal-ghost {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  font-size: var(--t-lead); font-family: var(--font-ui); padding: 16px 18px;
+  white-space: pre; overflow: hidden; line-height: inherit;
+}
+.pal-ghost-typed { color: transparent; }
+.pal-ghost-rest { color: var(--muted); opacity: 0.72; }
+.pal-inputwrap .pal-input { position: relative; z-index: 1; }
+/* the landing input carries its own tracking and gutter; keep the layer on the caret there too */
+.pal-inline .pal-ghost { letter-spacing: -0.01em; padding: 16px 54px 16px 18px; }
+.pal-tab {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%); z-index: 2;
+  font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  border: 1px solid var(--line-soft, rgba(255, 255, 255, 0.14)); border-radius: 4px;
+  padding: 2px 6px; pointer-events: none; opacity: 0.8;
+}
+.pal-inline .pal-tab { right: 54px; }
+/* mobile.css re-sizes the landing input below 900px; the tail follows it, and with the ⌘K
+   badge gone the right gutter is the plain one again */
+@media (max-width: 900px) {
+  .pal-inline .pal-ghost { font-size: 16px; padding: 14px 16px; }
+  .pal-inline .pal-tab { right: 14px; }
+}

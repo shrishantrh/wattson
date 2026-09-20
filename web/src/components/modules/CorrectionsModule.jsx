@@ -53,7 +53,7 @@ export default function CorrectionsModule({ detail }) {
   return (
     <Mod
       className="mod-corr"
-      caption={c.summary || 'What the export says, and what the engine reads instead.'}
+      caption={(typeof c.summary === 'string' ? c.summary.replace(/\b0\.(\d{1,3})\b/g, (_, d) => `${(Number(`0.${d}`) * 100).toFixed(1)}%`) : c.summary) || 'What the export says, and what the engine reads instead.'}
       lead={h
         ? <Lead value={<><s>{h.published}</s><span className="arrow"> → </span>{h.corrected}</>} t="warn" label={`${pretty(h.path)} ${h.key}, corrected`} />
         : <Lead value={String((c.corrections || []).length)} label="figures corrected on this region" t="warn" />}

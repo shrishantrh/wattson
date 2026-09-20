@@ -891,6 +891,7 @@
    "corrections": [],
    "unreliable": true,
    "unreliable_reason": "WACM's demand anomaly remains unexplained. It is not a reporting artefact we can correct, and its existing flag and alert exclusion should stay."
-  }
+  },
+  "corrections_applied_paths": null
  }
 }
