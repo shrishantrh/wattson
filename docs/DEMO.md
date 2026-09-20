@@ -5,6 +5,10 @@ Read top to bottom. **Bold lines are what you say.** Everything else is directio
 Shape: **talk for a minute → show for four → land the payoff in one.**
 
 **Live:** https://shrishantrh.github.io/wattson/
+**API:** https://wattson-api-v2.fly.dev/ (⌘K needs this; everything else works without it)
+
+**Before you walk up:** open the site, press ⌘K once and close it. That wakes the API so
+your first real question is instant instead of taking three seconds.
 
 ---
 
@@ -98,8 +102,14 @@ Point at the three numbers.
 
 **Then the measurement:**
 
-> **"That's the talk. Here's the walk. Its ten datacenters averaged **forty-six percent** clean
-> power, ranging from six percent to ninety-one."**
+> **"That's the talk. Here's the walk. Its ten datacenters averaged forty-six percent clean
+> power, ranging from six to ninety-one."**
+
+**If a judge points at the headline** (it reads "says 100% renewable", which is our
+shorthand, not their words):
+
+> **"That headline is our shorthand. Their exact sentence is on the line below it: matched,
+> purchases, annual. The hedging is the point, and it's why their talk score isn't 100."**
 
 > **"Both things are true at once. The claim is correct under the accounting standard. But one
 > annual number is covering ten completely different physical realities."**
