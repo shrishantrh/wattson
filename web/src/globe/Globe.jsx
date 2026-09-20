@@ -298,6 +298,10 @@ export default function Globe({
   const [land, setLand] = useState(null) // dots style: { field, states } once the TopoJSON is in
   const [readyTick, setReadyTick] = useState(0)
   const [dotTick, setDotTick] = useState(0) // bumped when the dot mesh is (re)attached
+  // The state border lines follow the dots: quiet when the camera is far out. Bucketed with
+  // hysteresis, because a colour change rebuilds the 302 line objects and must not happen per
+  // frame the way the dots' two uniform writes can.
+  const [farLines, setFarLines] = useState(true)
   // Stabilised so an inline `heat={[...]}` does not repaint 15k instance colours every render.
   const stableHeat = useStableList(heat)
 
@@ -670,6 +674,8 @@ export default function Globe({
       setDayNightUniforms(matRef.current, { globeLat: pov.lat, globeLng: pov.lng })
       // The land quietens as the camera pulls back: two uniform writes, every camera frame.
       if (dotMeshRef.current) setDotTone(dotMeshRef.current.material, pov.altitude)
+      if (pov.altitude > 1.3) setFarLines(true)
+      else if (pov.altitude < 1.1) setFarLines(false)
       const prev = stemAltRef.current
       if (prev == null || Math.abs(prev - pov.altitude) > 0.02) {
         stemAltRef.current = pov.altitude
@@ -695,7 +701,8 @@ export default function Globe({
     [q.antialias],
   )
 
-  const pathColor = useCallback(() => statesColor, [statesColor])
+  const lineColor = farLines ? withAlpha(statesColor, 0.45) : statesColor
+  const pathColor = useCallback(() => lineColor, [lineColor])
   const stateLines = isDots && land ? land.states : EMPTY
 
   // Atmosphere: the default depends on the style; an explicit prop (or null) wins.

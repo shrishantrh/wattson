@@ -64,10 +64,10 @@
 .xp-field { position: relative; display: block; min-width: 0; }
 /* a static chevron, not decoration: it is the select's affordance */
 .xp-field::after { content: ''; position: absolute; right: 11px; top: 50%; width: 7px; height: 7px; margin-top: -5px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: rotate(45deg); pointer-events: none; }
-.xp-axes select.field { appearance: none; -webkit-appearance: none; width: 100%; max-width: none; padding: 0 30px 0 11px; font-family: var(--font-ui); font-size: 13px; text-overflow: ellipsis; }
-.xp-axes select.field:hover { border-color: var(--line-focus); }
-.xp-axes select.field:focus-visible { outline: none; box-shadow: var(--ring); }
-.xp-axes select.field option { background: var(--surface-2); color: var(--ink); }
+.xp-axes .xp-pick select.field { appearance: none; -webkit-appearance: none; width: 100%; max-width: none; padding: 0 30px 0 11px; font-family: var(--font-ui); font-size: 13px; text-overflow: ellipsis; }
+.xp-axes .xp-pick select.field:hover { border-color: var(--line-focus); }
+.xp-axes .xp-pick select.field:focus-visible { outline: none; box-shadow: var(--ring); }
+.xp-axes .xp-pick select.field option { background: var(--surface-2); color: var(--ink); }
 .xp-swap { flex: none; align-self: flex-end; }
 .xp-sectors { margin-left: auto; align-self: flex-end; flex-wrap: wrap; }
 

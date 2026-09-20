@@ -17,8 +17,8 @@ export const SURFACE_DEFAULTS = {
   dotLimb: 0.42, // dot brightness at the horizon, relative to its own colour
   // The land is quiet when the camera is far out (on the landing the globe sits behind the
   // headline and the search box) and comes up as it moves in, where the map is the subject.
-  farTone: 0.5, // dot brightness at `farAlt` and beyond
-  farContrast: 0.7, // ... and how much of the coast-to-interior contrast survives there
+  farTone: 0.36, // dot brightness at `farAlt` and beyond
+  farContrast: 0.6, // ... and how much of the coast-to-interior contrast survives there
   farAlt: 1.9, // camera altitude at which the land is fully quiet
   nearAlt: 0.75, // ... and at which it is fully up
 }

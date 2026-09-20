@@ -56,7 +56,7 @@ export default function Screener({ route }) {
       </Card>
       {loading ? <Card><Loading what="the screener" /></Card> : error ? <Card><ErrorState error={error} onRetry={reload} /></Card> : (
         <Card>
-          <Table columns={columns} rows={rows} sortKey={sortKey} sortDir={sortDir} onSort={(key, dir) => setSort({ key, dir })} rowHref={r => href.region(r.id)} filter csvName="wattson-screener" dense maxHeight="min(66vh, 720px)" />
+          <Table columns={columns} rows={rows} sortKey={sortKey} sortDir={sortDir} onSortChange={n => setSort(n)} rowHref={r => href.region(r.id)} filter csvName="wattson-screener" dense maxHeight="min(66vh, 720px)" />
         </Card>
       )}
     </>
