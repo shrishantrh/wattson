@@ -12,7 +12,8 @@
   min-height: 76px;
 }
 
-/* The figure sits in a fixed box so a change of expression cannot shift the layout. */
+/* The figure sits in a fixed box so a change of expression cannot shift the layout. The circle is
+   ours: the library's own backdrop is a near-white plate that reads as a sticker on a dark panel. */
 .askblob-mark {
   position: relative;
   width: 76px;
@@ -20,7 +21,12 @@
   flex: none;
   display: grid;
   place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 141, 82, 0.10);
+  box-shadow: inset 0 0 0 1px rgba(255, 141, 82, 0.28);
+  overflow: hidden;
 }
+.askblob-mark > svg:not(.ab-svg) { display: block; width: 100%; height: 100%; }
 
 .askblob-mark > svg.ab-svg {
   position: absolute;

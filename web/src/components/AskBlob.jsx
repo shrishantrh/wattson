@@ -56,7 +56,10 @@ const names = tools => (tools || []).map(t => (typeof t === 'string' ? t : t?.to
 // One expression per state. Absent means the resting face.
 const FACE = { idle: calm, listening: calm, thinking: unsure, working: unsure, answering: happy, failed: sad, unavailable: sleepy }
 const SEED = 'wattson'
-const HUE = 272          // violet: not the clean teal, not the fossil ember
+// The product's accent orange, stated rather than derived: the library picks a hue from the seed
+// and 'wattson' lands on a periwinkle that matches nothing else on the page. Same values as the
+// face in the command bar, so the two are one character and not two.
+const PALETTE = { head: '#ff8d52', eye: '#20100a' }
 
 export default function AskBlob({ phase = 'idle', tools, beat = 0, className = '' }) {
   const given = PHASES.has(phase) ? phase : 'idle'
@@ -102,8 +105,8 @@ export default function AskBlob({ phase = 'idle', tools, beat = 0, className = '
           key={state}
           name={SEED}
           size={76}
-          hue={HUE}
-          background="circle"
+          palette={PALETTE}
+          background={false}
           animate={state === 'idle' || state === 'listening' ? 'always' : 'hover'}
           expression={FACE[state]}
           title=""
