@@ -9,44 +9,129 @@
 
 /* cmdk root */
 .pal { display: flex; flex-direction: column; min-height: 0; outline: none; }
-.pal-input { width: 100%; background: transparent; border: 0; outline: none; font-size: 16px; color: var(--ink); padding: 15px 18px; border-bottom: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); font-family: var(--font-ui); }
+.pal-input { width: 100%; background: transparent; border: 0; outline: none; font-size: var(--t-lead); color: var(--ink); padding: 16px 18px; border-bottom: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); font-family: var(--font-ui); }
 .pal-input::placeholder { color: var(--muted); }
 
 .pal-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 6px; scrollbar-width: thin; }
 
 /* group labels: a small caption over each block, with a hairline between blocks */
 .pal-group + .pal-group { margin-top: 6px; padding-top: 4px; border-top: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); }
-.pal-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 10px 5px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.pal-count { font-family: var(--font-mono); font-size: 10px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.pal-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 10px 4px; font-size: var(--t-micro); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.pal-count { font-family: var(--font-mono); font-size: var(--t-micro); font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
 
 /* rows: the selected one carries a 2px cursor bar and the ↵ marker, so the keyboard path is visible */
-.pal-item { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: var(--radius-sm, 8px); font-size: 13px; color: var(--ink-2); cursor: pointer; user-select: none; transition: background-color 120ms var(--ease, ease), color 120ms var(--ease, ease); }
+.pal-item { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: var(--radius-sm, 8px); font-size: var(--t-small); color: var(--ink-2); cursor: pointer; user-select: none; transition: background-color 120ms var(--ease, ease), color 120ms var(--ease, ease); }
 .pal-item[data-selected="true"] { background: rgba(255, 255, 255, 0.06); color: var(--ink); box-shadow: inset 2px 0 0 var(--ink-2); }
 .pal-item[data-selected="true"] .pal-hint { color: var(--ink-2); }
 .pal-item[aria-disabled="true"] { cursor: default; color: var(--ink-2); box-shadow: none; }
 .pal-item.ask .pal-label::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 1px; }
 .pal-item.unknown .pal-hint { color: var(--accent); white-space: normal; text-align: right; max-width: 55%; }
 .pal-label { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pal-hint { flex: none; font-size: 12px; color: var(--muted); white-space: nowrap; max-width: 50%; overflow: hidden; text-overflow: ellipsis; transition: color 120ms var(--ease, ease); }
-.pal-hint.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 11px; letter-spacing: 0; }
-.pal-go { flex: none; width: 15px; font-family: var(--font-mono); font-size: 11px; line-height: 1; color: var(--muted); visibility: hidden; text-align: right; }
+
+/* the typed substring, marked in place. A weight and ink change, no highlight block: the row is
+   already a surface, and a second one inside it reads as a defect. */
+.pal-mark { background: none; color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--line-focus); text-underline-offset: 2px; }
+.pal-item[data-selected="true"] .pal-mark { text-decoration-color: var(--ink-2); }
+
+/* a row's second line, inline: where a shortcut works, when it is not global */
+.pal-sub { color: var(--muted); font-size: var(--t-small); margin-left: 8px; }
+
+/* keyboard rows that only describe a key: listed, dimmed, and skipped by the arrow keys */
+.pal-item.static { cursor: default; color: var(--muted); }
+.pal-item.static .pal-label { color: var(--ink-2); }
+.pal-keys { flex: none; display: inline-flex; align-items: center; gap: 4px; }
+.pal-keys > span { display: inline-flex; align-items: center; gap: 4px; }
+.pal-keys kbd { font-family: var(--font-mono); font-size: var(--t-micro); line-height: 16px; padding: 0 4px; color: var(--ink-2); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-strong, rgba(255, 255, 255, 0.14)); border-radius: 4px; }
+.pal-keysep { font-style: normal; font-size: var(--t-micro); color: var(--muted); }
+.pal-hint { flex: none; font-size: var(--t-small); color: var(--muted); white-space: nowrap; max-width: 50%; overflow: hidden; text-overflow: ellipsis; transition: color 120ms var(--ease, ease); }
+.pal-hint.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: var(--t-micro); letter-spacing: 0; }
+.pal-go { flex: none; width: 15px; font-family: var(--font-mono); font-size: var(--t-micro); line-height: 1; color: var(--muted); visibility: hidden; text-align: right; }
 .pal-item[data-selected="true"] .pal-go { visibility: visible; }
 
-.pal-empty { padding: 14px 10px; font-size: 13px; color: var(--muted); }
-.pal-empty.small { padding: 6px 10px 8px; font-size: 11px; }
+/* nothing matched: say so once, say why, and let the Try group below carry the way out */
+.pal-none { padding: 14px 10px 10px; }
+.pal-none-t { margin: 0; font-size: var(--t-small); color: var(--ink); }
+.pal-none-h { margin: 4px 0 0; font-size: var(--t-small); line-height: 1.45; color: var(--muted); text-wrap: pretty; }
+.pal-note { padding: 8px 10px 10px; font-size: var(--t-micro); color: var(--muted); }
+.pal-empty { padding: 14px 10px; font-size: var(--t-small); color: var(--muted); }
 
-.pal-foot { display: flex; gap: 16px; padding: 8px 14px; border-top: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); font-size: 11px; color: var(--muted); font-family: var(--font-mono); letter-spacing: 0; }
+/* the preview: what a composed query resolved to, before ↵ runs it. A labelled strip between
+   the box and the list, so it reads as part of the box rather than as the first result. */
+.pal-preview { display: flex; align-items: flex-start; gap: 12px; padding: 12px 18px 12px; border-bottom: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); background: rgba(255, 255, 255, 0.02); }
+.pal-preview-k { flex: none; margin-top: 2px; font-size: var(--t-micro); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.pal-preview-b { min-width: 0; flex: 1; }
+.pal-preview-t { margin: 0; font-size: var(--t-small); line-height: 1.35; color: var(--ink-2); }
+.pal-preview-t b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.pal-preview-list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.pal-preview-list li { display: inline-flex; align-items: baseline; gap: 6px; padding: 4px 8px; border: 1px solid var(--line-strong, rgba(255, 255, 255, 0.14)); border-radius: var(--radius-sm, 8px); min-width: 0; }
+.pal-preview-n { font-size: var(--t-small); color: var(--ink); white-space: nowrap; }
+.pal-preview-u { font-family: var(--font-mono); font-size: var(--t-micro); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 18ch; }
+.pal-preview-x { margin: 8px 0 0; font-size: var(--t-micro); line-height: 1.4; color: var(--warn); }
+
+/* ---- the ask layer (components/CommandPalette.jsx, lib/ask.js) ----
+   Two more strips in the same column as the preview above: the input's 18px gutter, the same
+   hairline underneath, the same faint lift off the panel. An optional layer should not arrive
+   as a different piece of furniture. None of this renders when no server is configured. */
+
+/* the bar: small controls, the same height and edge as every other control in the app */
+.pal-askbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 18px; border-bottom: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); background: rgba(255, 255, 255, 0.02); }
+.pal-askbtn {
+  flex: 0 1 auto;
+  min-width: 0;
+  height: var(--h-ctl-sm, 24px);
+  padding: 0 8px;
+  border: 1px solid var(--line-strong, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-sm, 8px);
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-ui);
+  font-size: var(--t-small);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.pal-askbtn:hover { color: var(--ink); border-color: var(--line-focus); }
+.pal-askbtn:focus-visible { outline: none; box-shadow: var(--ring); }
+
+/* the answer is prose the reader reads, not a row they pick: a measure and a line-height rather
+   than row density. It scrolls on its own so a long answer cannot push the results out. */
+.pal-answer { padding: 12px 18px; border-bottom: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); max-height: 40vh; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.pal-answer-t { margin: 0; max-width: 62ch; font-size: var(--t-body); line-height: 1.5; color: var(--ink); text-wrap: pretty; }
+.pal-answer-note { margin: 0; font-size: var(--t-small); line-height: 1.45; color: var(--muted); }
+
+/* provenance, clearly subordinate to the answer: the footnote treatment, with the tool names in
+   the mono the rest of the app gives to identifiers */
+.pal-answer-tools { margin: 8px 0 0; font-family: var(--font-mono); font-size: var(--t-micro); line-height: 1.4; letter-spacing: 0; color: var(--muted); }
+
+/* unavailable is a state, not a crash. The amber the app already reserves for data that is
+   flagged or degraded, as a left rule rather than a banner: it says "this part stood down",
+   which is exactly true — everything else on the screen still works. */
+.pal-answer.error { border-left: 2px solid var(--warn); background: var(--warn-soft); padding-left: 16px; }
+
+@media (prefers-reduced-motion: reduce) { .pal-askbtn { transition: none; } }
+
+/* the footer names what ↵ will do to the row you are on, on the left, and the rest of the
+   keyboard on the right. It is the only always-visible hint, so it never wraps or moves. */
+.pal-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 14px; border-top: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); font-size: var(--t-micro); color: var(--muted); font-family: var(--font-mono); letter-spacing: 0; }
 .pal-foot span { display: inline-flex; align-items: center; gap: 4px; }
+.pal-foot-do { min-width: 0; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pal-foot-keys { flex: none; gap: 14px; }
 .pal-foot kbd { font: inherit; color: var(--ink-2); border: 1px solid var(--line-strong, rgba(255, 255, 255, 0.14)); border-radius: 4px; padding: 0 4px; line-height: 16px; margin-right: 2px; }
 
 /* inline variant (landing): the same surface, sitting on the stage instead of over a scrim */
 .pal-inline { position: relative; width: min(640px, 100%); background: var(--surface-a, rgba(20, 25, 23, 0.97)); border: 1px solid var(--line-strong, rgba(255, 255, 255, 0.14)); border-radius: var(--radius-card, 14px); overflow: hidden; box-shadow: var(--shadow, 0 16px 48px rgba(0, 0, 0, 0.6)); transition: border-color var(--dur-fast, 150ms) var(--ease, ease), box-shadow var(--dur-fast, 150ms) var(--ease, ease); }
-.pal-inline:focus-within { border-color: var(--line-focus, rgba(255, 255, 255, 0.26)); box-shadow: var(--shadow, 0 16px 48px rgba(0, 0, 0, 0.6)), 0 0 0 2px rgba(255, 255, 255, 0.14); }
-.pal-inline .pal-input { font-size: 17px; letter-spacing: -0.01em; padding: 17px 54px 17px 18px; border-bottom: 0; }
+/* the focus ring itself is base.css's (.pal-inline:has(input:focus-visible)); this only warms
+   the edge, so a mouse click does not draw a keyboard ring and the two never stack */
+.pal-inline:focus-within { border-color: var(--line-focus, rgba(255, 255, 255, 0.26)); }
+.pal-inline .pal-input { font-size: var(--t-lead); letter-spacing: -0.01em; padding: 16px 54px 16px 18px; border-bottom: 0; }
 .pal-inline .pal-list { max-height: 320px; border-top: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); }
 .pal-inline .pal-foot { background: rgba(255, 255, 255, 0.02); }
 /* the ⌘K badge: the same shortcut the top bar advertises, out of the way once you are typing */
-.pal-inline-k { position: absolute; top: 17px; right: 16px; z-index: 1; display: inline-flex; align-items: center; justify-content: center; height: 19px; padding: 0 6px; font-family: var(--font-mono); font-size: 10px; line-height: 1; letter-spacing: 0; color: var(--muted); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-strong, rgba(255, 255, 255, 0.14)); border-radius: 5px; transition: opacity var(--dur-fast, 150ms) var(--ease, ease); }
+.pal-inline-k { position: absolute; top: 17px; right: 16px; z-index: 1; display: inline-flex; align-items: center; justify-content: center; height: 19px; padding: 0 6px; font-family: var(--font-mono); font-size: var(--t-micro); line-height: 1; letter-spacing: 0; color: var(--muted); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-strong, rgba(255, 255, 255, 0.14)); border-radius: 5px; transition: opacity var(--dur-fast, 150ms) var(--ease, ease); }
 .pal-inline:focus-within .pal-inline-k { opacity: 0; }
 
 /* top-bar trigger (QuickSearch): base.css draws .quick as a flex box; this makes it a button */
@@ -58,4 +143,4 @@ button.quick:hover, button.quick:focus-visible { color: var(--ink-2); border-col
 @media (prefers-reduced-motion: reduce) { .pal-overlay, .pal-panel { animation: none; } .pal-item, .pal-hint, .pal-inline, .pal-inline-k, button.quick { transition: none; } }
 /* phones and portrait tablets: mobile.css re-pads the input row, so the badge stands down */
 @media (max-width: 900px) { .pal-inline-k { display: none; } }
-@media (max-width: 640px) { .pal-overlay { padding-top: 10vh; } .pal-panel { max-height: 72vh; } .pal-hint { max-width: 40%; } }
+@media (max-width: 640px) { .pal-overlay { padding-top: 10vh; } .pal-panel { max-height: 72vh; } .pal-hint { max-width: 40%; } .pal-foot-keys span:not(:last-child) { display: none; } .pal-sub { display: none; } }

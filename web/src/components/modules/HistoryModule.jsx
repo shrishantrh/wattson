@@ -43,7 +43,7 @@ export default function HistoryView({ cf_share, demand, grid, inherited }) {
       className="mod-history"
       caption="Night and day read separately — an annual average hides the gap between them."
       lead={<Lead value={<><span className="from">{pct(n19, 1)}</span><span className="arrow"> → </span>{pct(n25, 1)}</>} t={fell ? 'fossil' : 'clean'} label={direction} />}
-      foot={`EIA-930 hourly via PUDL. Night is 00:00–05:59 local, day 10:00–15:59; 2026 is partial and left out.${inherited && grid ? ` Shares are the whole ${grid} grid's; demand is this region's own.` : ''}`}
+      foot={`EIA-930 via PUDL. Night 00:00–05:59 local, day 10:00–15:59; 2026 left out.${inherited && grid ? ` Shares are the ${grid} grid's.` : ''}`}
     >
       <div className="mod-hist">
         <Row label="Clean at night" sub="00:00–05:59 local" values={night} format={v => pct(v, 1)} accentIfLower />

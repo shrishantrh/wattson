@@ -5,9 +5,11 @@ import { tweenPov, rampAutoRotate, easeOutCubic } from './camera.js'
 import { cssVar, dimHex, parseCss, toThreeColor, withAlpha } from './color.js'
 import { loadDayNightTextures, makeDayNightMaterial, makeNightMaterial, setDayNightUniforms } from './dayNight.js'
 import { buildDotMesh, disposeDotMesh, paintDotMesh } from './dots.js'
+import { hoverCardPosition, placeLabels } from './labels.js'
 import { loadDotField, loadStateMesh } from './land.js'
+import { buildOutlineGroup, disposeOutlineGroup, setOutlineDim } from './outline.js'
 import { subsolarPoint } from './sun.js'
-import { makeSphereMaterial, setDotTone, setSphereColor } from './surface.js'
+import { makeSphereMaterial, setDotDim, setDotTone, setSphereColor, SURFACE_DEFAULTS } from './surface.js'
 import '../styles/globe.css'
 
 const DEG = Math.PI / 180
@@ -63,6 +65,20 @@ const STEM_MIN = 14
 const STEM_MAX = 44
 const STEM_STAGGER = 13
 const STEM_FROM = 6 // start staggering once there are this many pins
+
+// Selection: one place is chosen, everything else steps back. The pins are CSS (globe.css owns
+// the 150 ms transition); the land dots, the point discs and the outlines are three objects, so
+// their step is tweened here over the same 150 ms.
+const SELECT_MS = 150
+const DOT_DIM = SURFACE_DEFAULTS.dimStep // land dots, while something is selected
+const POINT_DIM = 0.4 // ... and the point discs, which are the brightest thing on the map
+const OUTLINE_DIM = 0.45
+const POINT_SELECT_SCALE = 1.35
+
+// Label placement: with a dozen pins on screen the tags collide, so their boxes are measured
+// and placed by priority (selected, then lead, then rank order), trying the pin's preferred
+// side first and hiding the tag only when no side is free.
+const RELAYOUT_MS = 140
 
 // ---------- scene lights ----------
 
@@ -146,14 +162,33 @@ function buildPointLook(d, R) {
   return { geometry, material }
 }
 
-function makePointObject(d, R) {
+/**
+ * Apply the selection step to one point disc: the selected id keeps its full colour and grows,
+ * everything else fades towards POINT_DIM. `sel01` is the tween's progress, 0 (nothing
+ * selected) to 1 (fully stepped back).
+ */
+function applyPointState(mesh, d, sel01, selectedId) {
+  const base = mesh.userData.alpha ?? 1
+  const isSel = selectedId != null && String(d.id) === selectedId
+  const k = isSel ? 1 : 1 - (1 - POINT_DIM) * sel01
+  const opacity = base * k
+  mesh.material.opacity = opacity
+  mesh.material.transparent = opacity < 1
+  mesh.material.depthWrite = opacity >= 1
+  const s = isSel ? 1 + (POINT_SELECT_SCALE - 1) * sel01 : 1
+  mesh.scale.setScalar(s)
+}
+
+function makePointObject(d, R, sel01, selectedId) {
   const { geometry, material } = buildPointLook(d, R)
   const mesh = new THREE.Mesh(geometry, material)
   mesh.userData.sig = pointSignature(d)
+  mesh.userData.alpha = material.opacity
+  applyPointState(mesh, d, sel01, selectedId)
   return mesh
 }
 
-function updatePointObject(obj, d, R) {
+function updatePointObject(obj, d, R, sel01, selectedId) {
   const sig = pointSignature(d)
   if (obj.userData.sig !== sig) {
     obj.geometry.dispose()
@@ -162,7 +197,9 @@ function updatePointObject(obj, d, R) {
     obj.geometry = look.geometry
     obj.material = look.material
     obj.userData.sig = sig
+    obj.userData.alpha = look.material.opacity
   }
+  applyPointState(obj, d, sel01, selectedId)
   obj.position.copy(polarToCartesian(d.lat, d.lng, R, POINT_ALT))
   // Lay the disc flat on the surface: face the globe centre (DoubleSide keeps it visible).
   const centre = obj.parent ? obj.parent.localToWorld(new THREE.Vector3()) : new THREE.Vector3()
@@ -193,7 +230,7 @@ const pointerEventsFilter = (obj) => obj.__globeObjType === 'custom'
 // A square tile on a stem with a label beside it (the reference boards' status pins). Datum:
 // { id, lat, lng, label, tip, rank, color, hollow, muted, lead, side, href }. `.gpin*` is styled
 // in base.css; the stem length and the rank numeral are ours and live in styles/globe.css.
-function makeMarkerElement(d) {
+function makeMarkerElement(d, hooks) {
   const el = document.createElement(d.href ? 'a' : 'div')
   if (d.href) el.href = d.href
   el.className =
@@ -212,11 +249,67 @@ function makeMarkerElement(d) {
   if (d.rank != null) el.querySelector('.gpin-rank').textContent = String(d.rank)
   if (d.label) el.querySelector('.gpin-label').textContent = d.label
   if (d.label && d.tip) el.querySelector('.gpin-label').setAttribute('data-tip', d.tip)
-  el.style.pointerEvents = d.href ? 'auto' : 'none'
+  // A pin with a `hover` payload answers the pointer and the keyboard; one without stays out of
+  // the way so the canvas underneath keeps the drag.
+  if (d.hover && hooks) {
+    el.classList.add('has-hover')
+    if (!d.href) {
+      el.tabIndex = 0
+      el.setAttribute('role', 'button')
+    }
+    if (d.hover.title) el.setAttribute('aria-label', d.hover.title)
+    el.addEventListener('pointerenter', () => hooks.show(d, el))
+    el.addEventListener('pointerleave', () => hooks.hide(d))
+    el.addEventListener('focus', () => hooks.show(d, el))
+    el.addEventListener('blur', () => hooks.hide(d))
+  }
+  el.style.pointerEvents = d.href || d.hover ? 'auto' : 'none'
   return el
 }
 function markerVisibility(el, isVisible) {
   el.style.opacity = isVisible ? '1' : '0'
+}
+
+// ---------- hover card ----------
+
+function makeHoverCard() {
+  const el = document.createElement('div')
+  el.className = 'ghover'
+  el.setAttribute('role', 'tooltip')
+  el.innerHTML = '<div class="ghover-title"></div><div class="ghover-lines"></div>'
+  return el
+}
+
+function fillHoverCard(el, hover) {
+  el.querySelector('.ghover-title').textContent = hover.title || ''
+  const box = el.querySelector('.ghover-lines')
+  box.textContent = ''
+  const lines = Array.isArray(hover.lines) ? hover.lines.filter((t) => t != null && t !== '') : EMPTY
+  lines.forEach((t) => {
+    const row = document.createElement('div')
+    row.className = 'ghover-line'
+    row.textContent = String(t)
+    box.appendChild(row)
+  })
+  box.style.display = lines.length ? '' : 'none'
+}
+
+/**
+ * Put the card beside its pin: to the right when there is room, otherwise to the left, and
+ * above or below when neither side fits. Always inside the canvas, never over the pin.
+ */
+function placeHoverCard(el, anchorEl, wrapEl) {
+  const wrap = wrapEl.getBoundingClientRect()
+  const a = anchorEl.getBoundingClientRect()
+  const { x, y } = hoverCardPosition({
+    ax: a.left + a.width / 2 - wrap.left,
+    ay: a.top + a.height / 2 - wrap.top,
+    cw: el.offsetWidth,
+    ch: el.offsetHeight,
+    width: wrap.width,
+    height: wrap.height,
+  })
+  el.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`
 }
 
 /**
@@ -254,7 +347,9 @@ function markerVisibility(el, isVisible) {
  * @param {() => void} [props.onReady] called once the globe is initialised and the first view is applied
  * @param {(point: object, event: MouseEvent, coords: { lat: number, lng: number, altitude: number }) => void} [props.onPointClick]
  * @param {(point: object|null) => void} [props.onPointHover]
- * @param {Array<{ id: string|number, lat: number, lng: number, label?: string, tip?: string, rank?: number|string, color?: string, hollow?: boolean, muted?: boolean, lead?: boolean, href?: string }>} [props.markers] HTML pin markers (tile + stem + label) anchored to the surface; `rank` draws a small numeral in the dot
+ * @param {Array<{ id: string|number, lat: number, lng: number, label?: string, tip?: string, rank?: number|string, color?: string, hollow?: boolean, muted?: boolean, lead?: boolean, side?: 'left'|'right', href?: string, hover?: { title?: string, lines?: string[] } }>} [props.markers] HTML pin markers (tile + stem + label) anchored to the surface; `rank` draws a small numeral in the dot; `hover` opens a small card beside the pin on pointer hover and on keyboard focus (a pin with `hover` and no `href` becomes focusable), anchored so it never leaves the canvas and never covers its own pin; `side` is the tag's preferred side, which the collision pass keeps when it can
+ * @param {string|number|null} [props.selected] the marker/point id that is chosen: it reads brighter and larger while every other pin, point, outline and land dot steps back, eased over 150 ms
+ * @param {Array<{ id?: string|number, lat: number, lng: number, radiusKm?: number, color?: string }>} [props.outline] soft circular region boundaries drawn on the sphere (one hairline plus a very low-alpha fill). The app has load-centre coordinates rather than shapefiles, so this is a great-circle circle of the stated radius, an approximation the caller is expected to label as one; `radiusKm` defaults to 200
  */
 export default function Globe({
   style = 'dots',
@@ -276,6 +371,8 @@ export default function Globe({
   onPointClick,
   onPointHover,
   markers = EMPTY,
+  selected = null,
+  outline = EMPTY,
 }) {
   const wrapRef = useRef(null)
   const globeRef = useRef(null)
@@ -291,8 +388,18 @@ export default function Globe({
   const takenOverRef = useRef(false) // the pointer touched the globe: stop auto-rotating
   const introRef = useRef(intro) // `intro` applies on first mount only, so it never re-runs
   const dotMeshRef = useRef(null)
-  const pinsRef = useRef([])
+  const pinsRef = useRef([]) // { el, d } per live pin, in data order
   const stemAltRef = useRef(null)
+  const outlineRef = useRef(null)
+  const pointObjsRef = useRef([]) // { mesh, d } per live point disc
+  const selectedRef = useRef(null)
+  const selTweenRef = useRef({ v: 0, from: 0, to: 0, t0: 0, raf: 0 })
+  const hoverElRef = useRef(null)
+  const hoverAnchorRef = useRef(null)
+  const hoverRafRef = useRef(0)
+  const hoverHideRef = useRef(0)
+  const relayoutRef = useRef({ last: 0, timer: 0 })
+  const heatOnRef = useRef(false)
   const [size, setSize] = useState({ w: 0, h: 0 })
   const [mat, setMat] = useState(null)
   const [land, setLand] = useState(null) // dots style: { field, states } once the TopoJSON is in
@@ -304,6 +411,9 @@ export default function Globe({
   const [farLines, setFarLines] = useState(true)
   // Stabilised so an inline `heat={[...]}` does not repaint 15k instance colours every render.
   const stableHeat = useStableList(heat)
+  const stableOutline = useStableList(outline)
+  const selectedId = selected == null || selected === '' ? null : String(selected)
+  const heatOn = stableHeat.length > 0
 
   const q = QUALITY[quality] || QUALITY.auto
   const isDots = style !== 'night'
@@ -334,6 +444,8 @@ export default function Globe({
     onReadyRef.current = onReady
     onClickRef.current = onPointClick
     onHoverRef.current = onPointHover
+    selectedRef.current = selectedId
+    heatOnRef.current = heatOn
   })
 
   // 1. Size: measure the parent, fall back to a square when the parent has no height yet.
@@ -576,7 +688,8 @@ export default function Globe({
         return
       }
       mesh = buildDotMesh(land.field, g.getGlobeRadius(), LAND_ALT)
-      setDotTone(mesh.material, stemAltRef.current ?? (g.pointOfView ? g.pointOfView().altitude : null))
+      setDotTone(mesh.material, stemAltRef.current ?? (g.pointOfView ? g.pointOfView().altitude : null), heatOnRef.current)
+      setDotDim(mesh.material, 1 - (1 - DOT_DIM) * selTweenRef.current.v)
       globeObj.add(mesh)
       dotMeshRef.current = mesh
       setDotTick((t) => t + 1) // the colours are written by the effect below
@@ -611,6 +724,45 @@ export default function Globe({
     )
   }, [land, dotTick, stableHeat, sphereColor, usColor, neighborColor, otherColor, cleanColor, fossilColor])
 
+  // 9c. The heat overlay holds the land brighter at altitude, so the tint still reads where the
+  //     plain dot field is deliberately quiet. Only two uniforms move.
+  useEffect(() => {
+    const mesh = dotMeshRef.current
+    if (!mesh) return
+    const g = globeRef.current
+    setDotTone(mesh.material, stemAltRef.current ?? (g && g.pointOfView ? g.pointOfView().altitude : null), heatOn)
+  }, [dotTick, heatOn])
+
+  // 9e. Outlines: the region's territory as a great-circle circle, in the same group as the dot
+  //     field so it shares the globe's frame of reference. Rebuilt only when the array changes,
+  //     and the previous group's geometries and materials are freed.
+  useEffect(() => {
+    const g = globeRef.current
+    if (!readyTick || !g || !stableOutline.length) return undefined
+    let group = null
+    let timer = 0
+    let tries = 0
+    const attach = () => {
+      const scene = g.scene && g.scene()
+      const globeObj = scene && scene.children.find((o) => typeof o.getGlobeRadius === 'function')
+      if (!globeObj) {
+        if (tries++ < 120) timer = setTimeout(attach, 16)
+        return
+      }
+      group = buildOutlineGroup(stableOutline, g.getGlobeRadius(), cssVar('--ink', '#e9ece9'))
+      setOutlineDim(group, 1 - (1 - OUTLINE_DIM) * selTweenRef.current.v)
+      globeObj.add(group)
+      outlineRef.current = group
+    }
+    attach()
+    return () => {
+      clearTimeout(timer)
+      tries = Infinity
+      outlineRef.current = null
+      disposeOutlineGroup(group)
+    }
+  }, [readyTick, stableOutline])
+
   // 10. Take the state border lines out of the pointer raycast. globe.gl raycasts every scene
   //     object and applies pointerEventsFilter afterwards, so without this each hover would
   //     test the ray against 11k border segments. (The dot mesh opts out in dots.js.)
@@ -642,47 +794,244 @@ export default function Globe({
   // 12. Pin stems follow the camera: long when the globe is far away and the pins crowd
   //     together, short when it is close. Every other pin is raised further so two neighbouring
   //     labels do not sit on the same line.
-  const layoutPins = useCallback((altitude) => {
-    const list = pinsRef.current.filter((el) => el.isConnected)
+  const stemFor = (altitude) => Math.max(STEM_MIN, Math.min(STEM_MAX, 12 + 12 * (altitude ?? 1.6)))
+
+  // 12b. Label collision. Every visible tag's box is computed from one measurement per pin (no
+  //      reflow per attempt), then the tags are placed in priority order — the selected pin
+  //      first, then `lead` pins, then the rest in data order, which the pages already sort by
+  //      rank. Each tag takes the first of its sides that is free and inside the canvas; a tag
+  //      with no free side is hidden rather than allowed to overlap. Reads are batched ahead of
+  //      writes, and the whole pass is throttled to RELAYOUT_MS.
+  const relayoutLabels = useCallback(() => {
+    const wrapEl = wrapRef.current
+    if (!wrapEl) return
+    const list = pinsRef.current.filter((r) => r.el.isConnected)
     pinsRef.current = list
     if (!list.length) return
-    const base = Math.max(STEM_MIN, Math.min(STEM_MAX, 12 + 12 * (altitude ?? 1.6)))
-    const stagger = list.length >= STEM_FROM
-    list.forEach((el, i) => {
-      const h = Math.round(base + (stagger && i % 2 ? STEM_STAGGER : 0))
-      el.style.setProperty('--gstem', `${h}px`)
-    })
+    const sel = selectedRef.current
+    const wrap = wrapEl.getBoundingClientRect()
+    // --- reads ---
+    const items = []
+    for (let i = 0; i < list.length; i++) {
+      const { el, d } = list[i]
+      const label = el.querySelector('.gpin-label')
+      if (!label) continue
+      if (el.style.opacity === '0') continue // behind the globe: three-globe already hid it
+      const a = el.getBoundingClientRect()
+      const ax = a.left + a.width / 2 - wrap.left
+      const ay = a.top + a.height / 2 - wrap.top
+      if (ax < -60 || ax > wrap.width + 60 || ay < -60 || ay > wrap.height + 60) continue
+      const isSel = sel != null && String(d.id) === sel
+      items.push({
+        el,
+        d,
+        ax,
+        ay,
+        w: label.offsetWidth,
+        h: label.offsetHeight,
+        stem: parseFloat(el.style.getPropertyValue('--gstem')) || 24,
+        prio: isSel ? 3 : d.lead ? 2 : 1,
+        order: i,
+      })
+    }
+    // --- placement (pure, no DOM) ---
+    const out = placeLabels(items, wrap.width)
+    // --- writes ---
+    for (const { item, side } of out) {
+      item.el.classList.toggle('left', side === 'left')
+      item.el.classList.toggle('right', side === 'right')
+      item.el.classList.toggle('gpin-nolabel', side === null)
+    }
+  }, [])
+
+  const scheduleRelayout = useCallback(
+    (now = false) => {
+      const r = relayoutRef.current
+      const t = performance.now()
+      if (now || t - r.last > RELAYOUT_MS) {
+        r.last = t
+        relayoutLabels()
+        return
+      }
+      if (!r.timer) {
+        r.timer = setTimeout(() => {
+          r.timer = 0
+          r.last = performance.now()
+          relayoutLabels()
+        }, RELAYOUT_MS)
+      }
+    },
+    [relayoutLabels],
+  )
+
+  const layoutPins = useCallback(
+    (altitude) => {
+      const list = pinsRef.current.filter((r) => r.el.isConnected)
+      pinsRef.current = list
+      if (!list.length) return
+      const base = stemFor(altitude)
+      const stagger = list.length >= STEM_FROM
+      list.forEach(({ el }, i) => {
+        const h = Math.round(base + (stagger && i % 2 ? STEM_STAGGER : 0))
+        el.style.setProperty('--gstem', `${h}px`)
+      })
+      scheduleRelayout()
+    },
+    [scheduleRelayout],
+  )
+
+  // 12c. The hover card: one element for the whole globe, filled and moved rather than rebuilt.
+  //      It follows its pin while the camera moves and disappears as soon as the pin does.
+  const hideHover = useCallback(() => {
+    const el = hoverElRef.current
+    hoverAnchorRef.current = null
+    cancelAnimationFrame(hoverRafRef.current)
+    hoverRafRef.current = 0
+    if (!el) return
+    el.classList.remove('on')
+    clearTimeout(hoverHideRef.current)
+    hoverHideRef.current = setTimeout(() => {
+      if (!hoverAnchorRef.current) el.style.visibility = 'hidden'
+    }, 180)
+  }, [])
+
+  const showHover = useCallback(
+    (d, anchor) => {
+      const el = hoverElRef.current
+      const wrapEl = wrapRef.current
+      if (!el || !wrapEl || !d.hover) return
+      clearTimeout(hoverHideRef.current)
+      hoverAnchorRef.current = anchor
+      fillHoverCard(el, d.hover)
+      el.style.visibility = 'visible'
+      placeHoverCard(el, anchor, wrapEl)
+      el.classList.add('on')
+      if (!hoverRafRef.current) {
+        const follow = () => {
+          const a = hoverAnchorRef.current
+          if (!a || !a.isConnected || a.style.opacity === '0') {
+            hoverRafRef.current = 0
+            hideHover()
+            return
+          }
+          placeHoverCard(el, a, wrapEl)
+          hoverRafRef.current = requestAnimationFrame(follow)
+        }
+        hoverRafRef.current = requestAnimationFrame(follow)
+      }
+    },
+    [hideHover],
+  )
+
+  // `showHover`/`hideHover` are stable, so every pin ever created shares one hooks object and
+  // `makeMarker` never changes identity (which would make react-globe.gl rebuild every pin).
+  const hoverHooks = useMemo(() => ({ show: showHover, hide: hideHover }), [showHover, hideHover])
+
+  // A hidden tab gets no frames, so pins created there are placed against stale positions (and
+  // the camera never moves to trigger a relayout). Re-place them when the tab comes back.
+  useEffect(() => {
+    const on = () => {
+      if (!document.hidden) requestAnimationFrame(() => scheduleRelayout(true))
+    }
+    document.addEventListener('visibilitychange', on)
+    return () => document.removeEventListener('visibilitychange', on)
+  }, [scheduleRelayout])
+
+  useEffect(() => {
+    const wrapEl = wrapRef.current
+    if (!wrapEl) return undefined
+    const el = makeHoverCard()
+    el.style.visibility = 'hidden'
+    wrapEl.appendChild(el)
+    hoverElRef.current = el
+    return () => {
+      cancelAnimationFrame(hoverRafRef.current)
+      clearTimeout(hoverHideRef.current)
+      hoverElRef.current = null
+      hoverAnchorRef.current = null
+      el.remove()
+    }
   }, [])
 
   const makeMarker = useCallback(
     (d) => {
-      const el = makeMarkerElement(d)
-      pinsRef.current.push(el)
+      const el = makeMarkerElement(d, hoverHooks)
+      pinsRef.current.push({ el, d })
       const g = globeRef.current
       const alt = stemAltRef.current ?? (g && g.pointOfView ? g.pointOfView().altitude : null)
-      el.style.setProperty('--gstem', `${Math.round(Math.max(STEM_MIN, Math.min(STEM_MAX, 12 + 12 * (alt ?? 1.6))))}px`)
+      el.style.setProperty('--gstem', `${Math.round(stemFor(alt))}px`)
+      const sel = selectedRef.current
+      if (sel != null) {
+        el.classList.toggle('gsel', String(d.id) === sel)
+        el.classList.toggle('gdim', String(d.id) !== sel)
+      }
       // The new pin joins its neighbours on the next frame, once the whole set is in the DOM.
       requestAnimationFrame(() => layoutPins(stemAltRef.current))
       return el
     },
-    [layoutPins],
+    [layoutPins, hoverHooks],
   )
+
+  // 12d. Selection. One id is chosen: its pin and point come forward, everything else steps back.
+  //     The pins are CSS classes with their own transition; the three objects are eased here by
+  //     one tween over SELECT_MS that writes a single uniform for the 15k land dots, one opacity
+  //     per point disc and one per outline. Nothing runs once the tween has settled.
+  useEffect(() => {
+    const target = selectedId != null ? 1 : 0
+    // Pins keep their elements; only their classes change, so no DOM is rebuilt.
+    pinsRef.current.forEach(({ el, d }) => {
+      const on = selectedId != null && String(d.id) === selectedId
+      el.classList.toggle('gsel', on)
+      el.classList.toggle('gdim', selectedId != null && !on)
+    })
+    scheduleRelayout(true)
+    const t = selTweenRef.current
+    const apply = (v) => {
+      t.v = v
+      if (dotMeshRef.current) setDotDim(dotMeshRef.current.material, 1 - (1 - DOT_DIM) * v)
+      if (outlineRef.current) setOutlineDim(outlineRef.current, 1 - (1 - OUTLINE_DIM) * v)
+      const now = performance.now()
+      const live = pointObjsRef.current.filter((r) => r.mesh.parent || now - r.t < 1000)
+      pointObjsRef.current = live
+      live.forEach((r) => applyPointState(r.mesh, r.d, v, selectedId))
+    }
+    if (t.v === target) {
+      apply(target) // a new selection at the same strength: re-target which object is bright
+      return undefined
+    }
+    cancelAnimationFrame(t.raf)
+    t.from = t.v
+    t.to = target
+    t.t0 = performance.now()
+    const step = () => {
+      const k = Math.min(1, (performance.now() - t.t0) / SELECT_MS)
+      const e = k * k * (3 - 2 * k)
+      apply(t.from + (t.to - t.from) * e)
+      t.raf = k < 1 ? requestAnimationFrame(step) : 0
+    }
+    t.raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(t.raf)
+  }, [selectedId, dotTick, scheduleRelayout])
+
 
   // 13. Camera moves feed the shader (the example's onZoom -> globeRotation wiring) and the pins.
   const handleZoom = useCallback(
     (pov) => {
       setDayNightUniforms(matRef.current, { globeLat: pov.lat, globeLng: pov.lng })
       // The land quietens as the camera pulls back: two uniform writes, every camera frame.
-      if (dotMeshRef.current) setDotTone(dotMeshRef.current.material, pov.altitude)
+      if (dotMeshRef.current) setDotTone(dotMeshRef.current.material, pov.altitude, heatOnRef.current)
       if (pov.altitude > 1.3) setFarLines(true)
       else if (pov.altitude < 1.1) setFarLines(false)
       const prev = stemAltRef.current
       if (prev == null || Math.abs(prev - pov.altitude) > 0.02) {
         stemAltRef.current = pov.altitude
         layoutPins(pov.altitude)
+      } else {
+        // Rotation moves the tags without changing the stems: re-place them, throttled.
+        scheduleRelayout()
       }
     },
-    [layoutPins],
+    [layoutPins, scheduleRelayout],
   )
 
   const handleHover = useCallback((d) => {
@@ -691,6 +1040,33 @@ export default function Globe({
   const handleClick = useCallback((d, event, coords) => {
     if (onClickRef.current) onClickRef.current(d, event, coords)
   }, [])
+
+  // Point discs are created and updated through the component so a disc built while something
+  // is selected is born at the right brightness, and so the live set can be dimmed in place.
+  // A point disc is created before react-globe.gl adds it to the scene, so an entry is only
+  // pruned once it has had a moment to be attached and has then lost its parent.
+  const prunePoints = () => {
+    const now = performance.now()
+    pointObjsRef.current = pointObjsRef.current.filter((r) => r.mesh.parent || now - r.t < 1000)
+  }
+  const makePoint = useCallback((d, R) => {
+    const mesh = makePointObject(d, R, selTweenRef.current.v, selectedRef.current)
+    const reg = pointObjsRef.current
+    reg.push({ mesh, d, t: performance.now() })
+    if (reg.length > 400) prunePoints()
+    return mesh
+  }, [])
+  const updatePoint = useCallback((obj, d, R) => {
+    updatePointObject(obj, d, R, selTweenRef.current.v, selectedRef.current)
+  }, [])
+
+  useEffect(
+    () => () => {
+      clearTimeout(relayoutRef.current.timer)
+      cancelAnimationFrame(selTweenRef.current.raf)
+    },
+    [],
+  )
 
   const stablePoints = useStableList(points)
   const stableRings = useStableList(rings)
@@ -743,8 +1119,8 @@ export default function Globe({
           enablePointerInteraction={!!(onPointClick || onPointHover)}
           pointerEventsFilter={pointerEventsFilter}
           customLayerData={stablePoints}
-          customThreeObject={makePointObject}
-          customThreeObjectUpdate={updatePointObject}
+          customThreeObject={makePoint}
+          customThreeObjectUpdate={updatePoint}
           onCustomLayerClick={handleClick}
           onCustomLayerHover={handleHover}
           ringsData={stableRings}

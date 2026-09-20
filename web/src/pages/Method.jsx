@@ -28,8 +28,17 @@ export default function Method() {
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<b>Method</b>} onClose={back}>
-        <h1 className="verdict">We measure what each grid physically generated, hour by hour — not what was bought on paper.</h1>
-        <p className="pg-lede">Every US balancing authority, from EIA-930 via PUDL. Clean = nuclear, hydro, wind, solar, geothermal. Night is {data.overnight_hours_local || '00:00–05:59'} local — no solar, and a datacenter still at full draw; day is {data.daytime_hours_local || '10:00–15:59'}, when solar does the work. Baseline {data.baseline_year || 2019}, before the buildout; data through {data.data_snapshot_end || '2026-09-05'}.</p>
+        <p className="pg-top">We measure what each grid physically generated, hour by hour — not what was bought on paper.</p>
+        {/* the definitions as a grid, not a paragraph: each one is looked up, not read through */}
+        <dl className="pg-defs">
+          <div><dt>Source</dt><dd>EIA-930 via PUDL</dd></div>
+          <div><dt>Coverage</dt><dd>Every US balancing authority</dd></div>
+          <div><dt>Clean</dt><dd>Nuclear, hydro, wind, solar, geothermal</dd></div>
+          <div><dt>Night</dt><dd>{data.overnight_hours_local || '00:00–05:59'} local — no solar, a datacenter still at full draw</dd></div>
+          <div><dt>Day</dt><dd>{data.daytime_hours_local || '10:00–15:59'} local — when solar does the work</dd></div>
+          <div><dt>Baseline</dt><dd>{data.baseline_year || 2019}, before the buildout</dd></div>
+          <div><dt>Through</dt><dd>{data.data_snapshot_end || '2026-09-05'}</dd></div>
+        </dl>
       </Card>
       <Section title="The flat-load detector — weights set before we saw the ranking">
         <code className="mt-formula">{det.method}</code>

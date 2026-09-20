@@ -6,7 +6,7 @@ import { indexRegions, siteShare, companyPhysical, relocate, bestMoves, regionLa
 import { pct } from '../../lib/format.js'
 import { Chip, Num } from '../../console/widgets.jsx'
 import { href } from '../../router.js'
-import { Mod, Say, Empty } from './Shell.jsx'
+import { Mod, Say, Empty, Fold } from './Shell.jsx'
 
 // Move one of a company's sites to another grid and watch its physical figure (the unweighted
 // mean clean share of the grids under its sites) and range move. The claim does not move: it is
@@ -54,13 +54,13 @@ export default function RelocateModule({ company }) {
   return (
     <Mod
       className="mod-relocate"
-      caption="A what-if on the grid only: the contracts and the claim are left exactly as they are."
+      caption="A what-if on the grid only; the contracts and the claim stay as they are."
       lead={result
         ? <Say>{same
           ? <>{name}'s {shortMetro(site?.metro)} already draws from <a href={href.region(result.moved.toRegionId)}>{result.moved.to}</a>. Pick another grid to see the figure move.</>
-          : <>If {name}'s {shortMetro(site?.metro)} drew from <a href={href.region(result.moved.toRegionId)}>{result.moved.to}</a> instead, its physical figure would be <b>{pct(result.after.mean, 0)}</b> instead of <b>{pct(result.before.mean, 0)}</b>. The claim would not change; the physics would.</>}</Say>
+          : <>If {name}'s {shortMetro(site?.metro)} drew from <a href={href.region(result.moved.toRegionId)}>{result.moved.to}</a> instead, the claim would not change. The physics would.</>}</Say>
         : <Say>Type a place, or pick one of the suggestions, to move {name}'s {shortMetro(site?.metro)} and see the figure change.</Say>}
-      foot="EIA-930 hourly via PUDL, 2025. Physical figure = unweighted mean of the all-hours carbon-free share of generation within each site's grid; a zone inherits its parent grid. Generation within the footprint, not consumption; interchange is not allocated."
+      foot="EIA-930 via PUDL, 2025. Physical figure = mean all-hours clean share of the grids under its sites. Generation, not consumption."
     >
       <div className="rl-row" role="group" aria-label="Which site to move">
         <span className="rl-k">Move</span>
@@ -68,7 +68,7 @@ export default function RelocateModule({ company }) {
       </div>
       <div className="rl-row" role="group" aria-label="Where to move it">
         <span className="rl-k">to</span>
-        <input className="rl-input" type="text" value={text} placeholder="a place or a grid: Omaha, Phoenix, N. Virginia…" aria-label="Destination grid" onChange={e => { setText(e.target.value); setPick(null) }} />
+        <input className="rl-input" type="text" value={text} placeholder="a place or a grid" aria-label="Destination grid" onChange={e => { setText(e.target.value); setPick(null) }} />
         {suggested.map(m => <Chip key={m.toRegionId} small active={dest === m.toRegionId} onClick={() => chooseGrid(m.toRegionId)}><span className="rl-chip">{regionLabel(byId[m.toRegionId], m.toRegionId)} <b>{pct(m.meanAfter)}</b></span></Chip>)}
         {text.trim() && !typed && <span className="rl-hint bad">Not a place the app knows.</span>}
         {text.trim() && typed && !typedKnown && <span className="rl-hint bad">{typed.metro} sits on {typed.region_id}, which is not among the scored grids.</span>}
@@ -78,7 +78,7 @@ export default function RelocateModule({ company }) {
       {result && (
           <div className="rl-nums">
             <div className="rl-pair">
-              <Num value={pct(result.before.mean)} label="physical figure now" sub={`${result.before.n} site${result.before.n === 1 ? '' : 's'}, all hours 2025`} />
+              <Num value={pct(result.before.mean)} label="physical figure now" sub={`${result.before.n} site${result.before.n === 1 ? '' : 's'}, all hours`} />
               <span className="rl-arrow" aria-hidden="true">→</span>
               <Num num={result.after.mean * 100} format={pct1} label={`with ${shortMetro(site?.metro)} on ${result.moved.to}`} accent={!!dirtier} />
             </div>
@@ -91,7 +91,7 @@ export default function RelocateModule({ company }) {
             )}
           </div>
       )}
-      {site?.note && <details className="rl-caveat"><summary>Caveat on this site's grid figure</summary><p>{site.note}</p></details>}
+      {site?.note && <Fold className="rl-caveat" summary="Caveat on this site's grid figure"><p>{site.note}</p></Fold>}
     </Mod>
   )
 }
@@ -100,7 +100,7 @@ export default function RelocateModule({ company }) {
 // company page). ctx = { company } with the normalised company from lib/data.js loadCompany().
 // oxlint-disable-next-line react/only-export-components -- a registry entry, not a component
 export const relocateModule = {
-  id: 'relocate', title: 'Move one site and watch the physics move',
+  id: 'relocate', title: 'Move a site, move the grid',
   applies: ctx => (ctx?.company?.sites || []).length > 0,
   render: ctx => <RelocateModule company={ctx?.company} />,
 }

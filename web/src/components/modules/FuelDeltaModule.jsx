@@ -25,13 +25,13 @@ export default function FuelDeltaView({ delta, grid, inherited }) {
   return (
     <Mod
       className="mod-fuel"
-      caption="The hours after midnight, 2019 against 2025: which fuels grew to meet them, and which shrank."
-      lead={<Lead value={`${biggest.fuel} ${fmtGw(biggest.v)}`} t={kindOf(biggest.fuel)} label={`the fuel that moved most after midnight${biggest.v >= 0 ? ', more of it now' : ', less of it now'} — carbon-free as a whole moved ${fmtGw(clean)}`} />}
-      foot={<>EIA-930 hourly via PUDL, overnight 00:00–05:59 local, 2019 against 2025{inherited && grid ? `, for the whole ${grid} grid` : ''}.</>}
+      caption="Average overnight generation by fuel, 2019 against 2025."
+      lead={<Lead value={`${biggest.fuel} ${fmtGw(biggest.v)}`} t={kindOf(biggest.fuel)} label={`the fuel that moved most at night${biggest.v >= 0 ? ', more of it now' : ', less of it now'}`} />}
+      foot={<>EIA-930 via PUDL, overnight 00:00–05:59 local{inherited && grid ? `, whole ${grid} grid` : ''}.</>}
     >
       <div className="mod-sums">
-        <div className="mod-sum"><span className="mod-sum-v fossil">{fmtGw(fossil)}</span><span className="mod-sum-l">fossil: gas, coal, oil</span></div>
-        <div className="mod-sum"><span className="mod-sum-v clean">{fmtGw(clean)}</span><span className="mod-sum-l">carbon-free: nuclear, hydro, wind, solar, geothermal</span></div>
+        <div className="mod-sum"><span className="mod-sum-v fossil">{fmtGw(fossil)}</span><span className="mod-sum-l">fossil</span></div>
+        <div className="mod-sum"><span className="mod-sum-v clean">{fmtGw(clean)}</span><span className="mod-sum-l">carbon-free</span></div>
       </div>
       <ul className="mod-bars">
         {rows.map(({ fuel, v }) => {

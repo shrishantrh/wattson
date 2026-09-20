@@ -1,6 +1,6 @@
 import { Fragment, useMemo } from 'react'
 import Shell from '../console/Console.jsx'
-import { Card, Num, Ticks } from '../console/widgets.jsx'
+import { Card, Num } from '../console/widgets.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
 import coords from '../data/region_coords.json'
 import { loadAlerts, useAsync } from '../lib/data.js'
@@ -35,19 +35,21 @@ export default function Alerts() {
     <>
       {crumb}
       <Card title={<><b>What changed this month</b> · trailing 12 months to {month(data.latest_month)}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
-        <h1 className="verdict">{sentence}</h1>
-        <div className="nums"><Num value={String(rows.length)} label="places changing at night" sub={data.count_before_ranking && data.count_before_ranking !== rows.length ? `from ${data.count_before_ranking} raw` : null} /><Num value={String(rows.filter(r => r.rule === 'detector_top10').length)} label="look like new 24/7 load" accent /><Num value={String(rows.filter(r => /cf_share_down|clean_mw_below|gas_share/.test(r.rule)).length)} label="nights getting dirtier" /></div>
-        <p className="note" style={{ marginTop: 12 }}>Severity is how far past the threshold, times how many months it has held, times how recent — so a slow drift that has run for years never outranks a change that is big and still moving. Above the divider is where to look first; below it the signal is real but smaller or older. {data.excluded_regions?.length ? `${data.excluded_regions.join(', ')} sit outside these alerts: their reported numbers move in a way the data does not explain.` : ''}</p>
+        <p className="pg-top">{primary.length || rows.length} places are the story this month.</p>
+        <div className="nums"><Num value={String(rows.length)} label="alerts, one per place" sub={data.count_before_ranking && data.count_before_ranking !== rows.length ? `from ${data.count_before_ranking} raw` : null} /><Num value={String(rows.filter(r => r.rule === 'detector_top10').length)} label="look like new 24/7 load" accent /><Num value={String(rows.filter(r => /cf_share_down|clean_mw_below|gas_share/.test(r.rule)).length)} label="nights getting dirtier" /></div>
+        <p className="note pg-fine">{sentence} Severity = how far past the threshold × how many months it has held × how recent; the bar is that severity, and it runs ember while an alert is in the primary tier. {data.excluded_regions?.length ? `Excluded: ${data.excluded_regions.join(', ')} — their reported numbers move in a way the data does not explain.` : ''}</p>
       </Card>
       <Card>
+        <div className="al-head"><span>#</span><span>Place and signal</span><span>Severity</span><span>Score</span></div>
         <div className="rows al-rows">
           {rows.map((r, i) => (
             <Fragment key={r.region + r.rule}>
               {i > 0 && rows[i - 1].tier === 'primary' && r.tier !== 'primary' && <div className="al-tier">supporting and chronic</div>}
-            <a className={`row${r.tier && r.tier !== 'primary' ? ' supporting' : ''}`} href={href.region(r.region)}>
+            <a className={`row${r.tier && r.tier !== 'primary' ? ' supporting' : ''}${i === 0 ? ' lead' : ''}`} href={href.region(r.region)}>
               <span className="rk">{i + 1}</span>
-              <div><div className="t">{r.label} <span className="muted">· {SHORT[r.rule] || r.rule}</span>{r.tier && r.tier !== 'primary' && <span className="chip sm al-chip">{r.tier}</span>}</div><div className="d">{r.first_crossed ? `over the line since ${month(r.first_crossed)}` : 'flagged by demand shape, not a monthly threshold'}{r.months_active_streak ? ` · ${r.months_active_streak} months without a break` : ''}{r.unit === 'MW' && r.current_value != null ? (r.rule === 'clean_mw_below_2019' ? ` · ${n0(r.current_value)} MW of clean power overnight, was ${n0(r.baseline_2019)} MW in 2019` : ` · drawing ${n0(r.current_value)} MW through the night, was ${n0(r.baseline_2019)} MW in 2019`) : r.unit === 'share' && r.current_value != null ? ` · clean covers ${pct1(r.current_value)} of the night, was ${pct1(r.baseline_2019)} in 2019 — a share, not output` : r.unit === 'rank' && r.current_value != null ? ` · #${n0(r.current_value)} of every region scored${r.growth_pct != null ? `, demand up ${r.growth_pct}% since 2019` : ''}` : r.score != null ? ` · score ${r.score.toFixed(1)}` : ''}</div></div>
-              <Ticks value={(r.severity ?? 0) / maxSev * 100} max={100} n={12} accent={i === 0} />
+              <div><div className="t">{r.label} <span className="muted">· {SHORT[r.rule] || r.rule}</span>{r.tier && r.tier !== 'primary' && <span className="chip sm al-chip">{r.tier}</span>}</div><div className="d">{r.first_crossed ? `since ${month(r.first_crossed)}` : 'by demand shape, not a threshold'}{r.months_active_streak ? ` · ${r.months_active_streak} months` : ''}{r.unit === 'MW' && r.current_value != null ? ` · ${n0(r.current_value)} MW vs ${n0(r.baseline_2019)} in 2019` : r.unit === 'share' && r.current_value != null ? ` · ${pct1(r.current_value)} vs ${pct1(r.baseline_2019)} in 2019, a share not output` : r.unit === 'rank' && r.current_value != null ? ` · #${n0(r.current_value)} of every region scored${r.growth_pct != null ? `, demand +${r.growth_pct}%` : ''}` : r.score != null ? ` · score ${r.score.toFixed(1)}` : ''}</div></div>
+              {/* length is severity, ember is the primary tier: readable without a legend */}
+              <span className={`al-meter${!r.tier || r.tier === 'primary' ? ' hot' : ''}`} role="img" aria-label={`severity ${r.severity != null ? r.severity.toFixed(2) : 'unknown'}`}><i style={{ width: `${Math.round(((r.severity ?? 0) / maxSev) * 100)}%` }} /></span>
               <span className="n">{r.severity != null ? r.severity.toFixed(2) : '—'}</span>
             </a>
             </Fragment>

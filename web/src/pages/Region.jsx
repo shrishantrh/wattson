@@ -15,8 +15,8 @@ import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 import { Bolt, Layers, Info } from '../components/Icons.jsx'
 import { href, useHash } from '../router.js'
 
-// The dossier for one place: one sentence, four numbers, one line on what 300 MW here would run on,
-// then the evidence in order of importance. Nothing shows that the source does not have.
+// The dossier for one place: the place and its three defining numbers, any data flag, then the
+// sentence and what 300 MW here would run on, then the evidence in order of importance.
 const LOAD_MW = 300
 const COLUMN = 460
 const pctFmt = n => `${n.toFixed(1)}%`
@@ -72,36 +72,45 @@ export default function Region({ route }) {
   }
 
   const t = regionTitle(data, label)
+  const flag = s.flagged ? 'Data flagged' : s.corrected ? '2019 corrected' : null
+  // when the note is headed "data flagged" or "2019 corrected", the fact would only repeat it
   const facts = [
-    s.inherited && { key: 'inherited', text: `every generation figure below is the whole ${s.grid} grid, not this zone alone` },
-    s.corrected && { key: 'corrected', text: 'the published 2019 baseline was wrong; the change above is measured from our corrected one' },
-    s.flagged && { key: 'flagged', text: 'this grid’s data is flagged, so it raises no alerts' },
+    s.inherited && { key: 'inherited', text: `generation below is the whole ${s.grid} grid, not this zone alone` },
+    !flag && s.corrected && { key: 'corrected', text: '2019 corrected' },
+    !flag && s.flagged && { key: 'flagged', text: 'data flagged' },
   ].filter(Boolean)
-  const eyebrow = <><b>{s.place || s.label}</b>{s.grid ? ` · ${s.grid} grid` : ''}</>
   const column = (
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
       <SectionLabel icon={Bolt}>Answer</SectionLabel>
-      <Card title={eyebrow}>
-        <h1 className="verdict">{t.title}</h1>
-        <div className="nums" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
-          <Num num={s.night2025 != null ? s.night2025 * 100 : undefined} value="—" format={pctFmt} label="clean at night, 2025" sub={s.night2025 != null ? `${Math.round(100 - s.night2025 * 100)}% not carbon-free` : null} accent />
-          <Num value={ptsValue(s.change)} label={`pts since 2019${s.corrected ? ', corrected' : ''}`} sub={s.night2019 != null ? `from ${Math.round(s.night2019 * 100)}%${s.cleanDelta != null ? `; clean output ${s.cleanDelta > 0 ? '+' : s.cleanDelta < 0 ? '−' : ''}${Math.abs(s.cleanDelta).toFixed(1)} GW` : ''}` : null} />
-          <Num value={s.rank != null ? `#${s.rank}` : '—'} label={`of ${s.n_scored ?? 111} for round-the-clock load growth`} sub={s.pattern === 'flat-load growth' ? 'demand up in every hour' : s.pattern} />
-          <Num num={s.demandNight2025 ?? undefined} value="—" format={mwFmt} label="MW at night, 2025" sub={s.demandNight2019 != null && s.demandNight2025 != null ? `${s.demandNight2025 >= s.demandNight2019 ? '+' : '−'}${n0(Math.abs(s.demandNight2025 - s.demandNight2019))} MW since 2019` : null} />
+      <Card>
+        {/* the place first, then the three numbers that define it, then the sentence */}
+        <div className="rg-head">
+          <h1 className="rg-place">{s.place || s.label}</h1>
+          <span className="rg-grid">{s.grid ? `${s.grid} grid` : id}</span>
+          {s.rank != null && <span className="rg-rank">flat load <b>#{s.rank}</b> of {s.n_scored ?? 111}</span>}
         </div>
-        {s.runsOn && <p className="note" style={{ marginTop: 14, color: 'var(--ink-2)' }}><b style={{ color: 'var(--ink)' }}>Run {LOAD_MW} MW here around the clock:</b> {s.runsOn}</p>}
+        <div className="nums rg-nums">
+          <Num num={s.night2025 != null ? s.night2025 * 100 : undefined} value="—" format={pctFmt} label="clean at night, 2025" accent />
+          <Num value={ptsValue(s.change)} label={`pts since 2019${s.corrected ? ', corrected' : ''}`} sub={s.night2019 != null ? `from ${Math.round(s.night2019 * 100)}%${s.cleanDelta != null ? `, clean output ${s.cleanDelta > 0 ? '+' : s.cleanDelta < 0 ? '−' : ''}${Math.abs(s.cleanDelta).toFixed(1)} GW` : ''}` : null} />
+          <Num num={s.demandNight2025 ?? undefined} value="—" format={mwFmt} label="MW at night, 2025" sub={s.demandNight2019 != null ? `${n0(s.demandNight2019)} in 2019` : null} />
+        </div>
+        {/* flagged or corrected data comes before anything a reader could take at face value */}
         {(facts.length > 0 || s.caveat) && (
-          <div className="bc-note">
+          <div className={flag ? 'rg-flag' : 'bc-note'}>
             <Info size={14} />
-            <div>
+            <div className="rg-flag-b">
+              {flag && <div className="rg-flag-t">{flag}</div>}
               {facts.length > 0 && <p>{facts.map(f => f.text).join(' · ')}</p>}
               {s.caveat && <p>{s.caveat}</p>}
             </div>
           </div>
         )}
-        <div style={{ marginTop: 14, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-          <Chip href={href.compare({ mw: LOAD_MW, metros: [id] })}>Where would this {LOAD_MW} MW be cleaner?</Chip>
+        <p className="rg-verdict">{t.title}</p>
+        {s.pattern && <p className="note" style={{ marginTop: 6 }}>Pattern: {s.pattern}</p>}
+        {s.runsOn && <p className="rg-say"><b>What {LOAD_MW} MW here would run on:</b> {s.runsOn}</p>}
+        <div className="rg-acts">
+          <Chip href={href.compare({ mw: LOAD_MW, metros: [id] })}>Compare {LOAD_MW} MW here</Chip>
           <CopyButton text={() => window.location.href} label="Copy link" />
         </div>
       </Card>

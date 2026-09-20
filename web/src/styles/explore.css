@@ -2,24 +2,24 @@
    interconnection, one accent (the selected point). Western is the lighter-weight grey. */
 :root { --xp-east: var(--ink-2); --xp-west: var(--muted); --xp-texas: var(--ink); }
 
-.xp-q { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; text-wrap: pretty; }
-.xp-sub { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
-.xp-strength { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); margin-right: 8px; }
+.xp-q { font-family: var(--font-display); font-size: var(--t-lead); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; text-wrap: pretty; }
+.xp-sub { font-size: var(--t-small); color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.xp-strength { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); margin-right: 8px; }
 .xp-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 .xp-axes { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
-.xp-axes label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.xp-axes label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: var(--t-micro); color: var(--muted); }
 .xp-axes select.field { max-width: 236px; cursor: pointer; }
 .xp-swap { width: 32px; padding: 0; font-family: var(--font-mono); }
 .xp-sectors { display: inline-flex; gap: 6px; margin-left: auto; }
 
 /* chart */
-.xp-chart { display: block; width: 100%; height: auto; margin-top: 6px; font-family: var(--font-mono); font-size: 10px; overflow: visible; }
+.xp-chart { display: block; width: 100%; height: auto; margin-top: 6px; font-family: var(--font-mono); font-size: var(--t-micro); overflow: visible; }
 .xp-axis line { stroke: var(--line-strong); stroke-width: 1; }
-.xp-axis text { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
-.xp-axis .xp-axis-label { fill: var(--muted); font-family: var(--font-ui); font-size: 11px; }
-.xp-empty { fill: var(--muted); font-family: var(--font-ui); font-size: 12px; }
+.xp-axis text { fill: var(--muted); font-family: var(--font-mono); font-size: var(--t-micro); }
+.xp-axis .xp-axis-label { fill: var(--muted); font-family: var(--font-ui); font-size: var(--t-micro); }
+.xp-empty { fill: var(--muted); font-family: var(--font-ui); font-size: var(--t-small); }
 .xp-quad { fill: rgba(255, 255, 255, 0.03); }
-.xp-quad-label { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
+.xp-quad-label { fill: var(--muted); font-family: var(--font-mono); font-size: var(--t-micro); }
 .xp-median { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; opacity: 0.7; }
 .xp-fit { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 5 4; fill: none; }
 
@@ -34,12 +34,12 @@
 .xp-pt.hollow .xp-dot { fill: var(--surface); stroke: var(--xp-c); stroke-width: 1.2; }
 .xp-pt:hover .xp-dot, .xp-pt.hov .xp-dot { r: 4px; }
 .xp-ring { fill: none; stroke: var(--xp-c); stroke-width: 1; opacity: 0.85; transition: stroke var(--dur-fast) var(--ease); }
-.xp-name { fill: var(--ink-2); font-family: var(--font-ui); font-size: 11px; font-weight: 500; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; transition: fill var(--dur-fast) var(--ease); }
+.xp-name { fill: var(--ink-2); font-family: var(--font-ui); font-size: var(--t-micro); font-weight: 500; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; transition: fill var(--dur-fast) var(--ease); }
 .xp-pt.sel .xp-name { fill: var(--ink); }
 .xp-tip { pointer-events: none; }
 .xp-tip rect { fill: var(--surface-2); stroke: var(--line-strong); stroke-width: 1; }
-.xp-tip text { fill: var(--ink); font-family: var(--font-ui); font-size: 11px; font-weight: 500; }
-.xp-tip text.v { fill: var(--ink-2); font-family: var(--font-mono); font-size: 10px; font-weight: 400; }
+.xp-tip text { fill: var(--ink); font-family: var(--font-ui); font-size: var(--t-micro); font-weight: 500; }
+.xp-tip text.v { fill: var(--ink-2); font-family: var(--font-mono); font-size: var(--t-micro); font-weight: 400; }
 
 /* legend below the chart (extends .legend from base.css) */
 .xp-legend { margin-top: 8px; align-items: center; }
@@ -50,9 +50,9 @@
 .xp-legend-hint { margin-left: auto; color: var(--muted); }
 
 /* the selected region, under the fit numbers */
-.xp-sel { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line-soft); font-size: 12px; color: var(--ink-2); }
+.xp-sel { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line-soft); font-size: var(--t-small); color: var(--ink-2); }
 .xp-sel b { color: var(--ink); font-weight: 500; }
-.xp-sel .mono { font-size: 11px; }
+.xp-sel .mono { font-size: var(--t-micro); }
 .xp-sel .xp-open { color: var(--ink); font-weight: 500; margin-left: auto; transition: color var(--dur-fast) var(--ease); }
 .xp-sel .xp-open:hover { color: var(--accent); }
 .xp-sel .close { width: 24px; height: 24px; }

@@ -56,9 +56,115 @@
   color: var(--pin);
 }
 
+/* A tag the collision pass could not place without overlapping a higher-priority one. It keeps
+   its space in the layout (the pin is still there, still hoverable) and only stops being drawn,
+   so a rotation that frees the space brings it straight back. */
+.gpin.gpin-dyn.gpin-nolabel .gpin-label {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Selection: the chosen pin comes forward and everything else steps back. Both sides move over
+   the same 150 ms the globe uses for its land dots and point discs. */
+.gpin .gpin-tile,
+.gpin .gpin-stem {
+  transition: opacity 150ms var(--ease, ease), transform 150ms var(--ease, ease), box-shadow 150ms var(--ease, ease);
+}
+
+.gpin.gsel .gpin-tile {
+  transform: scale(1.5);
+  box-shadow: 0 0 0 2px rgba(8, 10, 9, 0.92), 0 0 10px var(--pin);
+}
+
+.gpin.gsel .gpin-stem {
+  opacity: 1;
+}
+
+.gpin.gsel .gpin-label {
+  border-color: var(--pin);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.gpin.gdim .gpin-tile,
+.gpin.gdim .gpin-stem {
+  opacity: 0.3;
+}
+
+.gpin.gdim .gpin-label {
+  opacity: 0.4;
+}
+
+/* A pin carrying a `hover` payload is a control: it takes the pointer and, when it has no href
+   of its own, the keyboard too. */
+.gpin.has-hover .gpin-tile,
+.gpin.has-hover .gpin-label {
+  cursor: pointer;
+}
+
+.gpin.has-hover:focus {
+  outline: none;
+}
+
+.gpin.has-hover:focus-visible .gpin-tile {
+  box-shadow: 0 0 0 2px rgba(8, 10, 9, 0.92), 0 0 0 4px var(--pin);
+}
+
+/* The hover card: one element for the whole globe, moved and refilled rather than rebuilt. It
+   is placed by Globe.jsx beside the pin (never over it) and clamped inside the canvas. */
+.ghover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Above every pin: three's CSS2DRenderer gives each marker a z-index by depth, so with 111
+     pins they run 1..111. The whole globe sits inside the page's own stacking context, so a
+     large number here still stays under the top bar and the column. */
+  z-index: 2000;
+  max-width: 260px;
+  padding: 8px 11px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  background: var(--surface-3, #16191a);
+  box-shadow: var(--shadow);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms var(--ease, ease);
+  will-change: transform;
+}
+
+.ghover.on {
+  opacity: 1;
+}
+
+.ghover-title {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+.ghover-lines {
+  margin-top: 5px;
+  display: grid;
+  gap: 3px;
+}
+
+.ghover-line {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.35;
+  letter-spacing: 0;
+  color: var(--ink-2, var(--muted));
+  white-space: nowrap;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gpin.gpin-dyn .gpin-stem,
-  .gpin.gpin-dyn .gpin-label {
+  .gpin.gpin-dyn .gpin-label,
+  .gpin .gpin-tile,
+  .ghover {
     transition: none;
   }
 }

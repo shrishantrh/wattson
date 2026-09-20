@@ -45,16 +45,19 @@ export default function Insight() {
 
   if (!open) {
     return (
-      <button type="button" className="insight-fab" onClick={toggle} aria-label="What am I looking at" data-tip="What am I looking at · i" data-tip-side="left">
-        <Info size={16} /><span>What?</span>
+      <button type="button" className="insight-fab" onClick={toggle} aria-expanded={false}>
+        <Info size={16} /><span>Explain this screen</span>
       </button>
     )
   }
   return (
-    <aside className="insight" aria-label="What am I looking at">
+    <aside className="insight" aria-label="Explanation of this screen">
       <div className="insight-head">
-        <h2 className="insight-title">{it.title}</h2>
-        <button type="button" className="insight-x" onClick={toggle} aria-label="Hide this panel"><Close size={14} /></button>
+        <div className="insight-headings">
+          <span className="insight-kicker">What this screen shows</span>
+          <h2 className="insight-title">{it.title}</h2>
+        </div>
+        <button type="button" className="insight-x" onClick={toggle} aria-expanded>Close<Close size={12} /></button>
       </div>
       <ul className="insight-lines">{it.lines.map(l => <li key={l}>{l}</li>)}</ul>
       {it.hint && <p className="insight-hint">{it.hint}</p>}

@@ -1,4 +1,5 @@
 /* oxlint-disable react/only-export-components -- TONES is a plain lookup shared with the views */
+import { useState } from 'react'
 import '../../styles/modules.css'
 
 // The anatomy every evidence module card shares, so the stack reads as one thing:
@@ -63,4 +64,17 @@ export function Empty({ children }) {
 // A small label in the muted 11px voice, for a caption row that carries a chip.
 export function Note({ children }) {
   return <span className="mod-note">{children}</span>
+}
+
+// A fold for the rest of a long list: one quiet line, never a wall. The body is mounted only while
+// the fold is open, so a closed fold has no geometry at all -- a collapsed <details> still reports
+// rectangles for its hidden children, and those rectangles land on whatever card comes next.
+export function Fold({ summary, className = 'mod-more', children }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <details className={className} open={open} onToggle={e => setOpen(e.currentTarget.open)}>
+      <summary>{summary}</summary>
+      {open && children}
+    </details>
+  )
 }

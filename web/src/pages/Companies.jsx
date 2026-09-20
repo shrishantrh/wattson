@@ -3,6 +3,7 @@ import Shell, { fitView } from '../console/Console.jsx'
 import { Card, Num } from '../console/widgets.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
 import Dumbbell from '../components/Dumbbell.jsx'
+import Table from '../components/Table.jsx'
 import { loadCompanies, loadFacilities, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { pct0 } from '../lib/findings.js'
@@ -13,7 +14,6 @@ import '../styles/pages.css'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 const to100 = v => (v == null ? null : Number(v) * 100)
-const plural = (n, one, many = `${one}s`) => (n == null ? `— ${many}` : `${n} ${n === 1 ? one : many}`)
 // Biggest talk-over-walk gap first; a company with no talk score sits last.
 const gapOf = c => (c.talk_score == null || c.walk_score == null ? -Infinity : c.talk_score - c.walk_score)
 
@@ -46,19 +46,30 @@ export default function Companies() {
     column = (
       <>
         {crumb}
-        <Card title={<><b>Companies</b> · what they claim against what their grids generate{data.is_mock && <> · <span className="accent">mock</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
-          <h1 className="verdict">{sentence}</h1>
-          <div className="nums"><Num value={String(list.length)} label="companies with claims read" sub="checked against the grid, not their paperwork" /><Num value={String(n)} label="claims pulled from filings" sub={`${cv} that grid data cannot settle either way`} /><Num value={String(pts.length)} label="sites located" sub={noEquity != null ? `${noEquity} sit on public power — no stock to trade` : 'found from the serving utility, never the state'} /></div>
-          <p className="note" style={{ marginTop: 12 }}>Talk is how big and unhedged the claim is. Walk is what the grids under its sites actually generated — no contracts, no certificates, just the power on the wire. When walk sits below talk, the difference was bought somewhere else, not generated where the servers are.</p>
+        <Card title={<><b>Companies</b> · talk vs walk{data.is_mock && <> · <span className="accent">mock</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
+          <p className="pg-top">What four companies say about clean power, against what their grids actually ran on.</p>
+          <p className="verdict" style={{ marginTop: 14 }}>{sentence}</p>
+          <div className="nums"><Num value={String(list.length)} label="companies read" /><Num value={String(n)} label="claims extracted" sub={`${cv} can't be verified`} /><Num value={String(pts.length)} label="sites mapped" sub={noEquity != null ? `${noEquity} on public power or co-ops, no listed equity` : 'hand-curated, utility outward'} /></div>
+          <p className="note pg-fine">Talk = how bold and specific the claims are, 0–1. Walk = the clean share of generation on the grids its mapped sites use, averaged, grid-only, contracted power excluded.</p>
         </Card>
         <Card title={<>What each company <b>claims</b>, against what its grids <b>generate</b></>}>
           <Dumbbell rows={rows} aLabel="talk" bLabel="walk" />
-          <ul className="co-lines">
-            {ordered.map(c => (
-              <li key={c.ticker}><a href={href.check(c.ticker)}><b>{c.ticker}</b></a> {plural(c.n_claims, 'claim')} read across {plural(c.n_sites, 'site')} · grid data for {pct0(c.coverage)} of those sites{c.cannot_verify_count ? `, ${plural(c.cannot_verify_count, 'claim')} we could not check` : ''}</li>
-            ))}
-          </ul>
-          <p className="note" style={{ marginTop: 12 }}>A wide line means the company bought clean power in one place and runs its servers somewhere else. That is legal and true under annual market-based accounting, but it is not the same electricity. The line turns ember past a 20-point gap.</p>
+          <div className="co-tbl">
+            <Table
+              columns={[
+                { key: 'ticker', label: 'Co', width: 62 },
+                { key: 'n_claims', label: 'Claims', num: true, width: 68 },
+                { key: 'n_sites', label: 'Sites', num: true, width: 62 },
+                { key: 'cannot_verify_count', label: 'No check', num: true, width: 82, format: v => String(v ?? 0), title: 'Claims the grid data cannot speak to' },
+                { key: 'coverage', label: 'Cover', num: true, width: 72, format: v => pct0(v) },
+              ]}
+              rows={ordered}
+              rowKey={c => c.ticker}
+              rowHref={c => href.check(c.ticker)}
+              dense
+            />
+          </div>
+          <p className="note pg-fine">The gap between talk and walk is the story, not a verdict on honesty: annual matching is true under the market-based method. The line turns ember when walk trails talk by more than 20 points.</p>
         </Card>
         <Card title={<><b>Sites</b> · {sites.data.length} buildings on {new Set(siteRows.map(s => s.region_id)).size} grids · {siteRows.filter(s => s.serving_utility).length} traced to the utility that serves them</>}>
           {fac.loading && <Loading what="the sites" />}
@@ -76,7 +87,7 @@ export default function Companies() {
               ))}
             </div>
           )}
-          <p className="note" style={{ marginTop: 10 }}>The ticker is the utility selling the power, not the company running the servers. "Clean" is the share of electricity generated on that grid in 2025, all hours — contracted power excluded, which is why these sit below the figures the companies report. Click a site for its grid.</p>
+          <p className="note pg-fine">Parent and ticker describe the serving utility's owner, not the operator. Clean 2025 is the share of generation on that grid, all hours, grid-only — which is why it sits below the figures the companies report. Sites are on the globe; click one for its grid.</p>
         </Card>
       </>
     )

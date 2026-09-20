@@ -16,11 +16,11 @@ const byDistance = (a, b) => (a.miles ?? Infinity) - (b.miles ?? Infinity)
 function Row({ c, mark, dim }) {
   return (
     <a className={`nb-row${dim ? ' nb-flagged' : ''}`} href={href.region(c.id)} title={`${c.label}: ${pct0(c.share)} clean at night, ${n0(c.miles)} miles away${mark ? ` (${mark})` : ''}`}>
-      <div className="nb-cell"><div className="nb-t">{c.label}{mark && <span className="nb-mark">{mark}</span>}</div><div className="nb-d">{c.place || c.id} · {pts1(c.change_since_2019)} of night clean share since 2019{c.rank ? ` · ranks #${c.rank} for round-the-clock load growth` : ''}</div></div>
-      <span className="nb-n">{n0(c.miles)}<small> mi</small></span>
+      <div className="nb-cell"><div className="nb-t"><span className="nb-name">{c.label}</span>{mark && <span className="nb-mark">{mark}</span>}</div><div className="nb-d">{pts1(c.change_since_2019)} since 2019 · {c.place || c.id}{c.rank ? ` · flat-load rank #${c.rank}` : ''}</div></div>
+      <span className="nb-n">{n0(c.miles)}</span>
       <span className="mod-tk nb-tk"><Ticks value={c.share == null ? 0 : c.share} max={1} n={10} tone={dim ? 'neutral' : 'clean'} label={`${pct0(c.share)} clean at night`} /></span>
       <span className="nb-n">{pct0(c.share)}</span>
-      <span className="nb-n">{n0(c.fossilMW)}<small> MW</small></span>
+      <span className="nb-n">{n0(c.fossilMW)}</span>
     </a>
   )
 }
@@ -45,9 +45,9 @@ export default function NearbyModule({ regions, regionId, loadMW = 300, k = 3 })
   return (
     <Mod
       className="mod-nearby"
-      caption={`Cleaner grids within ${n0(radius)} miles of this load centre, nearest first.`}
+      caption={`Cleaner grids within ${n0(radius)} miles, nearest first.`}
       lead={<Say>{describeNearby(res)}</Say>}
-      foot={`EIA-930 hourly via PUDL, 2025; clean is the carbon-free share of generation 00:00–05:59 local and fossil MW is ${n0(load)} MW × (1 − that share). Distance is between load centres, a proxy for staying in the same market, not a check of transmission or land. Generation within each footprint, not consumption; a zone inherits its whole grid's share, so grids are listed once. Grids whose data is corrected or flagged are marked and not recommended.`}
+      foot="EIA-930 via PUDL, 2025, overnight. Distance is between load centres, not a check of transmission or land. Generation, not consumption."
     >
       <div className="nb">
         <div className="nb-head">
@@ -58,10 +58,10 @@ export default function NearbyModule({ regions, regionId, loadMW = 300, k = 3 })
         </div>
         {caveat && <div className="nb-caveat">{caveat}</div>}
         <div className="nb-nums">
-          <Num num={from.fossilMW != null ? Math.round(from.fossilMW) : undefined} value="—" format={mwFmt} label={`fossil MW of a ${n0(load)} MW load here`} sub={`${pct0(from.share)} clean at night, 2025`} accent />
+          <Num num={from.fossilMW != null ? Math.round(from.fossilMW) : undefined} value="—" format={mwFmt} label={`fossil MW of a ${n0(load)} MW load here`} accent />
           {best
-            ? <Num num={Math.round(best.fossilMW)} format={mwFmt} label={`fossil MW at ${best.label}`} sub={`${pct0(best.share)} clean, ${n0(best.miles)} miles away`} />
-            : <Num value={outside ? `${n0(outside.miles)} mi` : '—'} label={outside ? `to the nearest cleaner grid, ${outside.label}` : 'no cleaner grid in the data'} sub={outside ? `${pct0(outside.share)} clean at night` : null} />}
+            ? <Num num={Math.round(best.fossilMW)} format={mwFmt} label={`fossil MW at ${best.label}`} />
+            : <Num value={outside ? `${n0(outside.miles)} mi` : '—'} label={outside ? `to the nearest cleaner grid, ${outside.label}` : 'no cleaner grid in the data'} />}
         </div>
         {listed.length > 0 || flagged.length > 0 || outside ? (
           <div className="nb-rows">
@@ -81,7 +81,7 @@ export default function NearbyModule({ regions, regionId, loadMW = 300, k = 3 })
 // and region pages). ctx = { regions (from loadRegions), region_id, load_mw? }.
 // oxlint-disable-next-line react/only-export-components -- a registry entry, not a component
 export const nearbyModule = {
-  id: 'nearby', title: 'Is there a cleaner grid nearby?',
+  id: 'nearby', title: 'A cleaner grid nearby?',
   applies: ctx => !!ctx?.regions && !!ctx?.region_id && canAnswer(ctx.regions, ctx.region_id),
   render: ctx => <NearbyModule regions={ctx.regions} regionId={ctx.region_id} loadMW={ctx.load_mw} />,
 }

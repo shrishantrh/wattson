@@ -3,6 +3,7 @@
 // ember, everything else is the neutral ramp. A share in 0..1 is coloured by mixing
 // fossil -> clean in oklab, so the same value always reads the same way on every screen.
 import NumberTicker from '../components/NumberTicker.jsx'
+import { Close, ChevronDown, ChevronUp } from '../components/Icons.jsx'
 import '../styles/dataviz.css'
 
 const clamp01 = v => Math.min(1, Math.max(0, Number(v) || 0))
@@ -12,10 +13,13 @@ const cleanMix = v => `color-mix(in oklab, var(--dv-clean) ${Math.round(clamp01(
 const greyMix = v => `color-mix(in oklab, var(--ink) ${Math.round(clamp01(v) * 80)}%, var(--muted))`
 const pct = v => `${(clamp01(v) * 100).toFixed(1)}%`
 
-export function Card({ title, right, children, className = '', style, onClose }) {
+// `onClose` is accepted and ignored: this card used to carry an × labelled "Back to start", which
+// looked like a dismissal and actually threw away the reader's whole position, 100px from the
+// breadcrumb arrow that goes up one level. The trail is the way out; the card does not need one.
+export function Card({ title, right, children, className = '', style }) {
   return (
     <section className={`card ${className}`} style={style}>
-      {(title || right || onClose) && <header className="card-head"><span className="eyebrow">{title}</span><span style={{ display: 'flex', gap: 8, alignItems: 'center' }}>{right}{onClose && <button type="button" className="close" onClick={onClose} aria-label="Back to start">×</button>}</span></header>}
+      {(title || right) && <header className="card-head"><span className="eyebrow">{title}</span><span style={{ display: 'flex', gap: 8, alignItems: 'center' }}>{right}</span></header>}
       {children}
     </section>
   )
@@ -120,7 +124,7 @@ export function HourBars({ values, night = [0, 5], day = [10, 15], caption, comp
 
 export function Chip({ children, href, onClick, active, dim, small, accent, onRemove }) {
   const cls = `chip ${active ? 'on' : ''} ${dim ? 'dim' : ''} ${small ? 'sm' : ''} ${accent ? 'accent' : ''}`
-  const inner = <>{children}{onRemove && <span className="x" role="button" aria-label="Remove" onClick={e => { e.preventDefault(); e.stopPropagation(); onRemove() }}>×</span>}</>
+  const inner = <>{children}{onRemove && <span className="x" role="button" aria-label="Remove" onClick={e => { e.preventDefault(); e.stopPropagation(); onRemove() }}><Close size={12} /></span>}</>
   return href ? <a className={cls} href={href}>{inner}</a> : <button type="button" className={cls} onClick={onClick}>{inner}</button>
 }
 
@@ -128,7 +132,7 @@ export function Chip({ children, href, onClick, active, dim, small, accent, onRe
 export function Evidence({ open, onToggle, label = 'Show the evidence', children }) {
   return (
     <>
-      <button type="button" className="toggle" onClick={onToggle} aria-expanded={open}><b>{open ? 'Hide' : label}</b><span>{open ? '▴' : '▾'}</span></button>
+      <button type="button" className="toggle" onClick={onToggle} aria-expanded={open}><b>{open ? 'Hide' : label}</b>{open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</button>
       {open && children}
     </>
   )

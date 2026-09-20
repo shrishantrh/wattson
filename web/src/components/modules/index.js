@@ -50,12 +50,12 @@ const demandOf = detail => (isObj(detail?.demand) && Object.values(detail.demand
 
 // ---- the modules ----
 export const HeatmapModule = {
-  id: 'heatmap', title: 'Clean share every hour of 2025',
+  id: 'heatmap', title: 'Clean share, every hour',
   applies: ctx => !!heatmapOf(ctx?.detail),
   render: ctx => createElement(HeatmapView, { hm: heatmapOf(ctx?.detail) }),
 }
 export const FuelDeltaModule = {
-  id: 'fuel-delta', title: 'What changed at night since 2019',
+  id: 'fuel-delta', title: 'What changed at night',
   applies: ctx => !!fuelDeltaOf(ctx?.detail),
   render: ctx => createElement(FuelDeltaView, { delta: fuelDeltaOf(ctx?.detail), grid: gridLabel(ctx?.detail), inherited: !!ctx?.detail?.cf_inherited_from_ba }),
 }
