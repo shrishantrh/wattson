@@ -174,6 +174,108 @@ Backup: `compare NBIS and CRWV`
 
 ---
 
+# HITTING THE JUDGING CRITERIA
+
+**Innovation 30% · Technical Complexity 30% · Impact 30% · Learning 10%.**
+5 to 7 minutes. Here is where each one gets scored, and the sentence that earns it.
+
+## Innovation (30%) — earn it on SCREEN 1 and SCREEN 4
+
+The novel thing is not the data. It is the join, and the detector.
+
+> "Corporate clean-energy claims live in PDFs. What the grid actually burned lives in nine
+> years of hourly federal data. **Nobody had ever joined them**, because the two halves are
+> in different formats and the hard part is knowing which grid each building plugs into."
+
+And the sharper one, on Method:
+
+> "The detector finds datacenters **without a list of datacenters.** It reads electricity
+> demand only. If a region's nights start growing as fast as its days, and faster than its
+> neighbours, and the daily curve flattens, something moved in that never turns off. No
+> press release, no announcement, no company filing."
+
+**Say the words "nobody had done this" and "without a list of datacenters."** Those are the
+two innovation claims.
+
+## Technical Complexity (30%) — earn it on SCREEN 4, fast
+
+Do not list technologies. List what you had to overcome.
+
+> "Four point four five million hourly rows, every grid region in America, nine years."
+
+> "Six federal datasets: hourly generation, hourly demand, plant ownership records, EPA
+> smokestack monitors, a hundred and thirty-eight weather stations, and three hundred and
+> fifty-four company documents."
+
+> "And then we spent last night trying to break our own result. We re-ran the frozen
+> detector on 2026 data that didn't exist when we locked it — it held, eight of the top ten
+> unchanged. We ran it ending in every earlier year — nothing before 2025 shows a signal.
+> And we trained a model on raw demand shape that was never shown our formula, and it found
+> the same regions."
+
+**The single most technically impressive sentence you have:**
+
+> "We found an error in the federal data. Two grid operators were each reporting the same
+> nuclear plant in full instead of their share, totalling **1.91 times what that plant can
+> physically produce.** We proved it three ways, including pulling the plant's ownership
+> records and its smokestack emissions."
+
+## Impact (30%) — earn it on SCREEN 5, and do not skip this screen
+
+Impact is the one most teams fumble. Be concrete about who uses it and for what.
+
+> "Datacenters are the fastest-growing consumer of electricity in the United States, and
+> there is no watchdog for them. There is one for fast fashion, for airlines, for oil
+> majors. Not for this."
+
+Then three users, ten seconds each:
+
+> "**For a journalist or a regulator:** every claim with a page citation, next to what the
+> grid actually generated."
+
+> "**For whoever is building the next one:** we rank every region by how much clean power is
+> actually there at 3am, which is the hour that decides whether you get served by existing
+> clean capacity or by new gas."
+
+> "**For an investor:** a billion-dollar electricity customer switches on and it is in
+> federal data two hours later, resolved to the utility and the ticker, before anyone
+> announces it."
+
+## Learning & Collaboration (10%) — one clean paragraph at the end
+
+> "Two of us. Shri built the grid engine — nine years of hourly data into an index, the
+> detector, the front end. I built the investigation side — reading the documents,
+> extracting claims, mapping every datacenter to the utility that serves it, and the
+> question layer."
+
+> "We agreed the data format between the two halves before either of us wrote anything,
+> which is the only reason they joined at the end."
+
+> "And the biggest thing we learned: **the dangerous bugs look correct.** Our first PDF
+> reader spliced two columns together into quotes that read perfectly and did not exist. We
+> had repeated one out loud before we caught it. Everything we show now carries a page
+> number you can open."
+
+---
+
+# THE 6-MINUTE RUN
+
+| Time | Screen | Criterion it scores |
+|---|---|---|
+| 0:00–1:15 | **1 · Home**, click Google | Innovation, Impact |
+| 1:15–2:00 | **2 · Day vs night** | Innovation |
+| 2:00–2:45 | **3 · What we found** | Impact |
+| 2:45–4:00 | **4 · Method** + the three flexes | **Technical Complexity** |
+| 4:00–4:45 | **5 · Generating Alpha** | **Impact** |
+| 4:45–5:15 | **6 · Data** or **⌘K** | Technical Complexity |
+| 5:15–5:45 | Learning & Collaboration paragraph | Learning |
+| 5:45+ | Questions | |
+
+**If you are running long, cut Screen 6.** Never cut Screen 4 or 5 — they carry 60% of the
+score between them.
+
+---
+
 # THE THREE FLEXES
 
 Drop these in wherever they fit. They are strengths, say them like strengths.
