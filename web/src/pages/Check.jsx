@@ -53,7 +53,7 @@ function GapBar({ claim, walk }) {
       {/* The number beside the bar is the WALK SCORE, the mean across the company's mapped
           grids, because that is the figure we compute and the one the gap is measured from.
           The bar still spans the range, so the spread is visible without replacing the score. */}
-      <div className="gapbar-row"><span className="gapbar-l">its grids</span><span className="gapbar-t"><i style={{ left: `${lo * 100}%`, width: `${Math.max(1.5, (hi - lo) * 100)}%`, background: 'var(--accent)' }} />{w != null && <i style={{ left: `${w * 100}%`, width: '2px', background: 'var(--ink)' }} />}</span><span className="gapbar-v accent">{w != null ? `${Math.round(w * 100)}%` : (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`)}</span></div>
+      <div className="gapbar-row"><span className="gapbar-l">its grids</span><span className="gapbar-t"><i style={{ left: '0%', width: `${Math.max(1.5, (w != null ? w : lo) * 100)}%`, background: 'var(--accent)' }} /></span><span className="gapbar-v accent">{w != null ? `${Math.round(w * 100)}%` : (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`)}</span></div>
     </div>
   )
 }
@@ -73,8 +73,12 @@ const VERDICT_ICON = { true_on_paper: CheckIcon, contradicted: CloseIcon, unfals
 // track between them: a claim is an accounting fact (a dim neutral extent), what the grids
 // physically generated is a solid segment in the clean/fossil pair at its true position on the
 // same 0-100% scale. The distance between the two numbers IS the finding; it is said once, below.
-function AnsGap({ claimed, lo, hi, claimText, measuredText, note }) {
-  const tone = (lo + (hi - lo) / 2) >= 0.5 ? 'clean' : 'fossil'
+function AnsGap({ claimed, lo, hi, claimText, measuredText, note, walk }) {
+  // The bar is a progress bar, not a range. The claim fills to what was claimed, the
+  // measurement fills from zero to the walk score, so the two read as one comparison at a
+  // glance. A range segment floating in the middle made the reader do the arithmetic.
+  const fill = walk != null ? Math.min(1, Math.max(0, walk)) : lo + (hi - lo) / 2
+  const tone = fill >= 0.5 ? 'clean' : 'fossil'
   return (
     <div className="ans-gap">
       <div className="ans-gap-main" aria-label={`says ${claimText}, its grids ${measuredText}`}>
@@ -83,7 +87,7 @@ function AnsGap({ claimed, lo, hi, claimText, measuredText, note }) {
         <span className={`ans-gap-v${claimText.length > 5 ? ' long' : ''}`}>{claimText}</span>
         <span className="ans-gap-t" aria-hidden="true">
           <i className="claim" style={{ width: `${Math.min(1, claimed) * 100}%` }} />
-          <i className={tone} style={{ left: `${lo * 100}%`, width: `${Math.max(2.5, (hi - lo) * 100)}%` }} />
+          <i className={tone} style={{ left: '0%', width: `${Math.max(2.5, fill * 100)}%` }} />
         </span>
         <span className={`ans-gap-v ${tone}${measuredText.length > 5 ? ' long' : ''}`}>{measuredText}</span>
       </div>
@@ -305,7 +309,7 @@ export default function Check({ route }) {
           {noClaim && <p className="note ans-coverage">{data.unmapped_reason || data.claims_absent_note || COVERAGE_LINE[a.coverage_status] || COVERAGE_LINE.sites_only}{(data.unmapped_searched || []).length > 0 && <><br />What we looked for: {data.unmapped_searched.join('; ')}.</>}</p>}
           {track ? (
             <>
-              <AnsGap
+              <AnsGap walk={data.walk_score}
                 {...track}
                 claimText={claimText}
                 measuredText={measuredText}
