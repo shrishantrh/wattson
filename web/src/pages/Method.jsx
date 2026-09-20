@@ -68,23 +68,6 @@ export default function Method() {
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
 
-      <Card title={<b>Method</b>}>
-        <h1 className="verdict">Four regions were named in the same commit as the code that first ranked all {nScored}. Three came back inside the top twenty.</h1>
-        <WxReadout items={[
-          { value: String(val.length), label: 'named before the ranking existed' },
-          { value: String(hits.length), label: `inside the top ${HIT}` },
-          { value: miss ? ordinal(miss.rank) : DASH, label: 'where the fourth landed', tone: 'fossil' },
-          { value: String(nScored), label: 'regions scored, on demand alone' },
-        ]} />
-        <MxValidation
-          rows={val}
-          nScored={nScored}
-          missNoDivRank={miss ? analysis.ranks.no_div?.[miss.id] : null}
-          missGrowthRank={miss ? analysis.ranks.growth?.[miss.id] : null}
-        />
-      </Card>
-
-      {/* Every formula in the project, in one place, so nobody has to remember them. */}
       <Section title="Every formula, in one place">
         <div className="mt-forms">
           <div className="mt-form">
@@ -127,40 +110,6 @@ export default function Method() {
             <p className="note">Where a new 24/7 load would be served cleanly. All three read at 3am, because that is the hour that decides whether new load meets existing clean capacity or new gas.</p>
           </div>
         </div>
-      </Section>
-
-      <MxFreeze />
-
-      {ready
-        ? <MxRobustness analysis={analysis} watch={watch} />
-        : <Section title="Change the score and watch the ranking"><p className="note">The scored set is still loading.</p></Section>}
-
-      {ready
-        ? <MxScore method={det.method} nScored={nScored} analysis={analysis} rows={list} />
-        : <Section title="How the score is built"><code className="mt-formula">{det.method}</code></Section>}
-
-      {ready && <MxSensitivity analysis={analysis} rows={list} />}
-
-      <MxInspector list={list} nScored={nScored} />
-
-      <Section title="What each number is measured on">
-        <p className="pg-lede" style={{ marginTop: 0 }}>We measure what each grid physically generated, hour by hour, not what was bought on paper. Splitting night from day is the rest of it: an annual average hides the fact that the hours a 24/7 load is stuck with are the hours that did not improve.</p>
-        <dl className="pg-defs">
-          <div><dt>Source</dt><dd>EIA-930 via PUDL</dd></div>
-          <div><dt>Coverage</dt><dd>Every US balancing authority</dd></div>
-          <div><dt>Clean</dt><dd>Nuclear, hydro, wind, solar, geothermal. Storage excluded; other and unknown counted in the denominator only</dd></div>
-          <div><dt>Night</dt><dd>{nights} local, when there is no solar and a datacenter is still at full draw</dd></div>
-          <div><dt>Day</dt><dd>{days} local, the window solar output is largest in</dd></div>
-          <div><dt>Baseline</dt><dd>{data.baseline_year || 2019}, before the buildout</dd></div>
-          <div><dt>Through</dt><dd>{data.data_snapshot_end || '2026-09-05'}</dd></div>
-        </dl>
-        <Defs rows={(data.caveats || []).map(splitTerm)} />
-      </Section>
-
-      <Section title="Pattern labels, a read of the shape and never part of the score"><Defs className="mt-keys" rows={Object.entries(data.pattern_labels || {})} /></Section>
-      <Section title="Where we suspect the data rather than the grid"><Defs className="mt-flags" rows={Object.entries(data.data_flags || {})} /></Section>
-      <Section title="Company verdicts">
-        <p className="note">&ldquo;True on paper, X physically&rdquo; is a measurement, not an accusation. An annual clean-energy claim can be true under the accounting rules while the grid under the site still burns gas at 3am, and the second is what we report: grid-only, average mix, contracted clean power held out of it. Every claim that grid data cannot settle is marked cannot_verify with a reason and counted on screen. The site lookup is hand-curated from the serving utility outward. Until the extraction lands, Meta runs on mock claims with real grid numbers.</p>
       </Section>
     </>
   )
