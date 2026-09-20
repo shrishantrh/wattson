@@ -56,7 +56,9 @@ function Bars({ series, unit }) {
     <ul className="ask-bars">
       {pts.map(p => (
         <li key={p.key}>
-          <span className="ask-bar-k">{p.label}</span>
+          {/* A grid name is data: "LG&E and KU Services Company as agent for ..." is a real
+              label. It wraps, and past three lines it ellipses with the whole name on hover. */}
+          <span className="ask-bar-k" title={p.label}>{p.label}</span>
           <span className="ask-bar-t"><i className={p.y < 0 ? 'neg' : ''} style={{ width: `${(Math.abs(p.y) / max) * 100}%` }} /></span>
           <span className="ask-bar-v">{withUnit(p.y, unit)}</span>
         </li>
@@ -65,7 +67,10 @@ function Bars({ series, unit }) {
   )
 }
 
-const W = 700, H = 250, M = { top: 14, right: 96, bottom: 28, left: 54 }
+const W = 700, H = 250, PAD_T = 14, PAD_R = 22, PAD_B = 28
+// One mono glyph at the axis size, near enough to size a gutter with.
+const CH = 6.1
+const X_LABELS = 8
 
 function Lines({ series, unit }) {
   const { cats, lo, hi } = useMemo(() => {
@@ -77,27 +82,36 @@ function Lines({ series, unit }) {
     const hi = max === lo ? lo + 1 : max + (max - lo) * 0.08
     return { cats, lo, hi }
   }, [series])
-  const w = W - M.left - M.right, h = H - M.top - M.bottom
-  const sx = i => M.left + (cats.length < 2 ? w / 2 : (i / (cats.length - 1)) * w)
-  const sy = v => M.top + h - ((v - lo) / (hi - lo)) * h
   const ticks = [0, 0.5, 1].map(f => lo + (hi - lo) * f)
+  const tickText = ticks.map(t => withUnit(t, unit))
+  // The gutter is sized to the labels it has to hold. "45.8%" and "35,619 MW" are not the
+  // same width, and a fixed gutter put the long one outside the viewBox, where it was cropped
+  // by the column rather than shrunk to fit.
+  const left = Math.min(160, Math.max(46, Math.round(Math.max(...tickText.map(s => s.length)) * CH) + 12))
+  const w = W - left - PAD_R, h = H - PAD_T - PAD_B
+  const sx = i => left + (cats.length < 2 ? w / 2 : (i / (cats.length - 1)) * w)
+  const sy = v => PAD_T + h - ((v - lo) / (hi - lo)) * h
+  // Forty months of a trailing-12 series would print on top of each other; label every nth.
+  const every = Math.max(1, Math.ceil(cats.length / X_LABELS))
   return (
     <svg className="ask-lines" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${series.map(s => s.label).join(', ')} over ${cats.join(', ')}`}>
-      {ticks.map(t => (
+      {ticks.map((t, i) => (
         <g key={t}>
-          <line className="ask-grid" x1={M.left} x2={M.left + w} y1={sy(t)} y2={sy(t)} />
-          <text className="ask-axis" x={M.left - 8} y={sy(t) + 3.5} textAnchor="end">{withUnit(t, unit)}</text>
+          <line className="ask-grid" x1={left} x2={left + w} y1={sy(t)} y2={sy(t)} />
+          <text className="ask-axis" x={left - 8} y={sy(t) + 3.5} textAnchor="end">{tickText[i]}</text>
         </g>
       ))}
-      {cats.map((c, i) => <text key={c} className="ask-axis" x={sx(i)} y={H - 9} textAnchor="middle">{c}</text>)}
+      {cats.map((c, i) => (i % every === 0 ? <text key={c} className="ask-axis" x={sx(i)} y={H - 9} textAnchor="middle">{c}</text> : null))}
       {series.map((s, si) => {
         const pts = s.points.map(p => ({ x: sx(cats.indexOf(String(p.x))), y: sy(p.y) })).filter(p => Number.isFinite(p.x))
-        const last = pts[pts.length - 1]
         return (
-          <g key={s.label} className={`ask-s${si % 5}`}>
+          // The series is named in the key below the chart, not beside its last point: a name
+          // like "Electric Reliability Council of Texas, Inc." is 230px of text hanging off
+          // the right edge of a 700-unit viewBox, and two lines ending at the same height
+          // wrote over each other.
+          <g key={`${s.label}-${si}`} className={`ask-s${si % 5}`}>
             {pts.length > 1 && <polyline className="ask-line" points={pts.map(p => `${p.x},${p.y}`).join(' ')} />}
             {pts.map((p, i) => <circle key={i} className="ask-dot" cx={p.x} cy={p.y} r="3" />)}
-            {last && <text className="ask-slabel" x={last.x + 8} y={last.y + 3.5}>{s.label}</text>}
           </g>
         )
       })}
@@ -105,16 +119,35 @@ function Lines({ series, unit }) {
   )
 }
 
+// Which line is which. Below the chart, in flowing text, so a long grid name wraps instead
+// of being cropped and every name is readable in full.
+function Key({ series }) {
+  return (
+    <ul className="ask-key">
+      {series.map((s, i) => (
+        <li key={`${s.label}-${i}`} className={`ask-s${i % 5}`}><i aria-hidden="true" /><span>{s.label}</span></li>
+      ))}
+    </ul>
+  )
+}
+
 function AskChart({ chart, unit }) {
   if (!chart?.series?.length) return null
-  return <div className="ask-chart">{chart.type === 'bars' ? <Bars series={chart.series} unit={unit} /> : <Lines series={chart.series} unit={unit} />}</div>
+  if (chart.type === 'bars') return <div className="ask-chart"><Bars series={chart.series} unit={unit} /></div>
+  return (
+    <div className="ask-chart">
+      <Lines series={chart.series} unit={unit} />
+      <Key series={chart.series} />
+    </div>
+  )
 }
 
 // ---------------------------------------------------------------- the view
 
 export default function AskView({ view }) {
   const columns = useMemo(() => [
-    { key: '_label', label: view.kind === 'ranking' ? 'Place' : 'What', raw: r => r.label, width: '34%' },
+    // No inline width: ask.css sets the name column, so it can narrow with the card.
+    { key: '_label', label: view.kind === 'ranking' ? 'Place' : 'What', raw: r => r.label },
     ...view.columns.map(c => ({
       key: c.key, label: headerLabel(c), num: true,
       raw: r => r.values?.[c.key],

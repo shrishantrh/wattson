@@ -23,6 +23,8 @@ const load = async () => {
 
 const cents = v => (v == null ? null : Math.round(Number(v) * 100))
 const CLASS_LABEL = { equity: 'Equity', commodity: 'Commodity', event: 'Event market' }
+// Spelled out, because an 's' on the end of the singular gives "Equitys" and "Commoditys".
+const CLASS_PLURAL = { equity: 'Equities', commodity: 'Commodities', event: 'Event markets' }
 
 /** A Kalshi contract as a price bar: the strike, where yes trades, and when it closes. */
 function Contract({ m }) {
@@ -89,7 +91,7 @@ function Chain({ c, open, onToggle }) {
             <p className="chain-inherit">Fuel figures are {c.fuel_inherited_from}&rsquo;s. {c.region} reports demand only and inherits its parent grid&rsquo;s generation.</p>}
           {['event', 'equity', 'commodity'].map(k => byClass[k]?.length ? (
             <div key={k} className="inst-group">
-              <h4 className="inst-group-t">{CLASS_LABEL[k]}{byClass[k].length > 1 ? 's' : ''}</h4>
+              <h4 className="inst-group-t">{byClass[k].length > 1 ? CLASS_PLURAL[k] : CLASS_LABEL[k]}</h4>
               {byClass[k].map(i => <Instrument key={i.symbol || i.series} i={i} />)}
             </div>
           ) : null)}
