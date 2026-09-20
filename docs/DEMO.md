@@ -24,19 +24,30 @@ your first real question is instant instead of taking three seconds.
 
 Pause.
 
-> **"The reason isn't that nobody cared. The claim is one sentence in a PDF. The proof is
-> nine years of hourly data from every power grid in the country. Joining them means knowing
-> exactly which grid each individual building plugs into."**
+> **"And it isn't that nobody cared. It's that greenwashing here is an accounting problem, not
+> a lying problem. These companies don't say they run on clean power. They say they *matched*
+> their *annual* consumption with renewable *purchases*. That's a real accounting standard,
+> it's correct, and it averages over every hour of the year. So buying solar at noon cancels
+> burning gas at 3am, on paper. The claim is airtight and the physical question underneath it
+> had never been asked."**
 
-> **"And datacenters are unusual in one way that matters enormously. Your house uses most of
-> its power in the evening. A factory runs on shifts. A datacenter draws the same power at
-> three in the morning as at noon, and it never stops. That turns out to be the whole
-> story."**
+> **"And datacenters are unusual in one way that makes it matter. Your house uses most of its
+> power in the evening. A factory runs shifts. A datacenter draws the same power at three in
+> the morning as at noon, and it never stops. So half its life is spent in the half of the
+> day that never got cleaner."**
 
-> **"So we take a company's published claim, work out which grid each of its datacenters
-> actually plugs into, and put its own words next to what the power plants actually burned.
-> What we wanted was one thing: to turn a claim nobody could check into a number you can
-> look up."**
+> **"We hold fifty-two operators. The four you've heard of at least publish a report we can
+> check. The other forty-eight, the neoclouds, the bitcoin miners that converted to AI, the
+> colocation companies, mostly publish nothing at all. There is no claim to check and no
+> report to read."**
+
+> **"That's exactly why this works. The grid data doesn't care whether anyone published
+> anything. We can measure what a company runs on whether or not it ever says a word, and
+> those forty-eight are the ones building fastest right now."**
+
+> **"So we take the claim where there is one, work out which grid each datacenter actually
+> plugs into, and put it next to what the power plants burned. What we wanted was one thing:
+> to turn a claim nobody could check into a number you can look up."**
 
 **Now click "What we found in the grid data →" at the bottom of the home screen.**
 
