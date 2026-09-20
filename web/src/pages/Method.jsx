@@ -84,6 +84,51 @@ export default function Method() {
         />
       </Card>
 
+      {/* Every formula in the project, in one place, so nobody has to remember them. */}
+      <Section title="Every formula, in one place">
+        <div className="mt-forms">
+          <div className="mt-form">
+            <b>Detector score</b>
+            <code className="mt-formula">score = z(overnight excess) + z(neighbor divergence) + 0.5 x z(load factor change)</code>
+            <p className="note">
+              <b>overnight excess</b>: points by which night demand grew faster than average demand, 2019 to 2025.
+              <b> neighbor divergence</b>: this region's demand growth minus the median growth of the other zones on its own grid.
+              <b> load factor change</b>: change in (average demand / peak demand). A 24/7 load flattens the curve, so this rises.
+            </p>
+            <p className="note">
+              <b>z</b> is a robust z-score, <code>(x - median) / (MAD x 1.4826)</code>, not mean and standard deviation.
+              ERCOT's two zones grew +94.6% and +116.1%; with a normal z those two would inflate the spread and crush
+              every other region's score toward zero. Load factor takes half weight because it hangs on a single peak hour.
+            </p>
+            <p className="note">Cuts: regions under 500 MW average demand are excluded, and peak is the 99.5th percentile hour, not the maximum.</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Carbon-free share</b>
+            <code className="mt-formula">cf_share = (nuclear + hydro + wind + solar + geothermal) / total generation</code>
+            <p className="note">Per region, per hour, then averaged inside a window. Storage is excluded because it is not generation. Unknown fuel stays in the denominator so a grid is never flattered by what we cannot classify.</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Walk score</b>
+            <code className="mt-formula">walk = mean(cf_share_2025 of every grid the company's mapped sites sit on)</code>
+            <p className="note">Plain average, unweighted by site size. Grid only: purchases and certificates are excluded, because the walk score is what the wires carried.</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Talk score</b>
+            <code className="mt-formula">talk = magnitude x specificity x scope_breadth</code>
+            <p className="note">How big the claimed number is, how precisely it is stated, and how little it is hedged. Each narrowing qualifier cuts scope: <b>annual</b> costs the most (0.30), then <b>market-based</b> and <b>owned-and-operated</b> (0.20), <b>certificates</b> and <b>matched</b> (0.15), <b>purchases</b> and <b>REC</b> (0.10).</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Siting score</b>
+            <code className="mt-formula">siting = level (overnight cf share, 2025) + direction (2019 to 2025 slope) + headroom (overnight clean MW / overnight demand)</code>
+            <p className="note">Where a new 24/7 load would be served cleanly. All three read at 3am, because that is the hour that decides whether new load meets existing clean capacity or new gas.</p>
+          </div>
+        </div>
+      </Section>
+
       <MxFreeze />
 
       {ready

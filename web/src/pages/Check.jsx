@@ -82,14 +82,16 @@ function AnsGap({ claimed, lo, hi, claimText, measuredText, note, walk }) {
   return (
     <div className="ans-gap">
       <div className="ans-gap-main" aria-label={`says ${claimText}, its grids ${measuredText}`}>
-        <span className="ans-gap-k">says</span>
+        {/* Measured on the LEFT where the fill starts, claimed on the RIGHT where the track
+            ends, so the bar reads as "you are here, they claim there" in one direction. */}
         <span className="ans-gap-k">its grids</span>
-        <span className={`ans-gap-v${claimText.length > 5 ? ' long' : ''}`}>{claimText}</span>
+        <span className="ans-gap-k">says</span>
+        <span className={`ans-gap-v ${tone}${measuredText.length > 5 ? ' long' : ''}`}>{measuredText}</span>
         <span className="ans-gap-t" aria-hidden="true">
           <i className="claim" style={{ width: `${Math.min(1, claimed) * 100}%` }} />
           <i className={tone} style={{ left: '0%', width: `${Math.max(2.5, fill * 100)}%` }} />
         </span>
-        <span className={`ans-gap-v ${tone}${measuredText.length > 5 ? ' long' : ''}`}>{measuredText}</span>
+        <span className={`ans-gap-v${claimText.length > 5 ? ' long' : ''}`}>{claimText}</span>
       </div>
       {note}
     </div>

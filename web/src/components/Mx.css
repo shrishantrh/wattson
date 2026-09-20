@@ -103,3 +103,11 @@ a.mx-val-row:hover .mx-name { color: var(--ink); }
   .mx-bar { grid-template-columns: 5.4em 1fr 4.4em; }
   .mx-figs { gap: var(--s1) var(--s4); }
 }
+
+/* The formula cheat sheet at the top of Method: one card per formula, code line first. */
+.mt-forms { display: grid; gap: 14px; }
+.mt-form { padding: 12px 14px; border: 1px solid var(--line-soft); border-radius: 8px; background: var(--bg-2, rgba(255,255,255,0.02)); }
+.mt-form > b { display: block; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.mt-form .mt-formula { display: block; margin-bottom: 8px; overflow-wrap: anywhere; }
+.mt-form .note { margin: 6px 0 0; }
+.mt-form .note b { color: var(--ink); font-weight: 600; }
