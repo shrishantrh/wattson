@@ -78,6 +78,11 @@ async function main() {
   log('chrome:', chrome)
   const browser = await puppeteer.launch({
     executablePath: chrome, headless: false, defaultViewport: null,
+    // Puppeteer's default protocolTimeout is 180 s, and a three-minute film outlives it: the wait for
+    // __film.done was being killed by the library at 180.6 s with a bare "Waiting failed", which looked
+    // exactly like the film hanging. It was not. 0 disables the cap; the waitForFunction timeout below
+    // is the real limit.
+    protocolTimeout: 0,
     args: [`--window-size=${W},${H + 87}`, '--start-fullscreen', '--hide-scrollbars', '--autoplay-policy=no-user-gesture-required', '--no-first-run', '--no-default-browser-check', '--disable-infobars', '--disable-session-crashed-bubble', '--hide-crash-restore-bubble'],
   })
   const [page] = await browser.pages()
