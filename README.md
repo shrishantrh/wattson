@@ -253,6 +253,3 @@ set -a && . ~/.wattson.env && set +a
 python3 -m uvicorn server.app:app --port 8010
 cd web && VITE_API_BASE=http://localhost:8010 npm run build
 ```
-
-**Credentials never live in this repo.** Keys are in `~/.wattson.env` (chmod 600) and in
-Fly's secret store. The client reads only `VITE_API_BASE`, which is a URL, not a secret.
