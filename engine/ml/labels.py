@@ -104,9 +104,11 @@ def build_labels(
         f = f[~f.btm]
 
     rows = f[["region", "ba", "company"]].copy()
-    if propagate_to_ba:
+    rows["site_id"] = f.index                 # identity is the facility, not the name:
+    if propagate_to_ba:                       # two Oracle sites are two sites
         parents = rows.assign(region=rows["ba"])
-        rows = pd.concat([rows, parents], ignore_index=True).drop_duplicates()
+        rows = (pd.concat([rows, parents], ignore_index=True)
+                  .drop_duplicates(subset=["region", "site_id"]))
 
     regions = pd.Index(regions, name="region")
     grp = rows.groupby("region")
