@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Command } from 'cmdk'
+import { Blobatar } from '@blobatar/react'
+import { happy, idle as calm, sad, sleepy, unsure } from 'blobatar/expression'
+import 'blobatar/motion.css'
 import { askItem, matchGroups, useCommands, openPalette, toggleView, GROUP } from '../lib/commands.js'
 import { parseQuery, resolvePlace, DEMO_COMPARE } from '../lib/query.js'
 import { askAvailable, summarize } from '../lib/ask.js'
@@ -198,6 +201,9 @@ function Preview({ preview }) {
 
 // cmdk root with shouldFilter=false: lib/commands.js does the matching, so each group is capped
 // and the free-text "Ask" fallback is offered only when nothing matches (or the query is composed).
+const FACE_EXPR = { idle: calm, listening: calm, thinking: unsure, answering: happy, failed: sad, unavailable: sleepy }
+const FACE_SAY = { idle: 'Ask layer ready', listening: 'Listening', thinking: 'Working on it', answering: 'Answer ready', failed: 'That did not come back', unavailable: 'Ask layer not running in this copy' }
+
 function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, onDone, footer, className = '', onEscape, modal = false }) {
   const [q, setQ] = useState('')
   const [value, setValue] = useState('')
@@ -280,6 +286,13 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   // being inert, becomes the pinned best match, and ↵ sends it. With no server the empty state
   // owns it exactly as before, the Ask row stays disabled and the Try group carries the way on.
   // The Try group also returns underneath a failed answer, so a dead ask is never a dead end.
+  // The face's state, read off the one real signal the ask layer gives us.
+  const faceState = !aiOn ? 'unavailable'
+    : answer?.state === 'loading' ? 'thinking'
+      : answer?.state === 'error' ? 'failed'
+        : answer?.state === 'done' ? 'answering'
+          : hasQuery ? 'listening' : 'idle'
+
   const canAsk = aiOn && hasQuery
 
   // `partial` items parsed, but only by discarding most of what was typed ("compare ERCOT, PJM and
@@ -374,6 +387,14 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   return (
     <Command shouldFilter={false} loop label="Wattson commands" className={`pal ${className}`} value={value} onValueChange={setValue} onKeyDown={onKeyDown}>
       <div className="pal-inputwrap">
+        {/* The ask layer's face, in the bar you type into. It is the one place every question
+            starts, so the state belongs here rather than on a page you may never open. Seeded
+            with the product's name so it is the same face everywhere; hue pinned off the clean
+            and fossil colours, which mean carbon-free and burned in this product. */}
+        <span className="pal-face" data-state={faceState} title={FACE_SAY[faceState]} aria-hidden="true">
+          <Blobatar key={faceState} name="wattson" size={26} hue={272} background="circle"
+            animate={faceState === 'idle' ? 'always' : 'hover'} expression={FACE_EXPR[faceState]} title="" />
+        </span>
         {/* The completion is drawn behind the input: the typed half is transparent so the
             grey tail lands exactly under the caret, and the layer never takes a click. */}
         {!!ghost && <div className="pal-ghost" aria-hidden="true"><span className="pal-ghost-typed">{q}</span><span className="pal-ghost-rest">{ghost}</span></div>}

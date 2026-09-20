@@ -175,3 +175,21 @@ button.quick:hover, button.quick:focus-visible { color: var(--ink-2); border-col
   .pal-inline .pal-ghost { font-size: 16px; padding: 14px 16px; }
   .pal-inline .pal-tab { right: 14px; }
 }
+
+/* The ask layer's face, sitting in the bar you type into. Fixed box so a change of expression
+   cannot nudge the caret, and the figure never takes a click. */
+.pal-face {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  margin-right: 10px;
+  pointer-events: none;
+  transition: opacity var(--dur-ui, 160ms) var(--ease-out, cubic-bezier(0.22, 0.61, 0.36, 1));
+}
+.pal-face[data-state="unavailable"] { opacity: 0.42; }
+.pal-face[data-state="thinking"]    { opacity: 1; }
+.pal-inputwrap { display: flex; align-items: center; }
+/* The ghost completion is absolutely placed against the wrap, so the face must not offset it. */
+.pal-inputwrap .pal-ghost { left: 36px; }
