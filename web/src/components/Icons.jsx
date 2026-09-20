@@ -4,8 +4,8 @@
 //     deliberate fill; Pause is two round-capped strokes, not two filled bars)
 //   · corners at r=2
 //   · one optical square. Glyphs made of area (a rect, a circle, a table) sit inside
-//     3..21 — about 17 units. Glyphs made of a line or two (a chevron, an X, a check,
-//     a play triangle) sit inside roughly 5.5..18.5 — about 13 units — because the same
+//     3..21, about 17 units. Glyphs made of a line or two (a chevron, an X, a check,
+//     a play triangle) sit inside roughly 5.5..18.5, about 13 units, because the same
 //     bounding box would make them shout. They used to sit inside 6.25..17.75, which was
 //     small enough that a chevron read lighter than the table icon beside it at 16px.
 // Each icon takes `size` (px, default 16) and passes everything else to the <svg>, so className,

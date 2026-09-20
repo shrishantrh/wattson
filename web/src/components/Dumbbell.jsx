@@ -11,7 +11,7 @@ import '../styles/dataviz.css'
 // Values are 0–100; a null value draws no dot. Rows are links when `href` is given. Pure SVG, measured
 // to the container's width so text stays at CSS pixel sizes (13px labels, 12px mono values).
 const ROW = 34, AXIS = 22, R = 4
-const fmtDefault = v => (v == null || !Number.isFinite(Number(v)) ? '—' : `${Math.round(Number(v))}%`)
+const fmtDefault = v => (v == null || !Number.isFinite(Number(v)) ? ', ' : `${Math.round(Number(v))}%`)
 const isNum = v => v != null && Number.isFinite(Number(v))
 const clamp = v => Math.min(100, Math.max(0, Number(v)))
 const short = (s, n = 19) => { const t = String(s ?? ''); return t.length > n ? `${t.slice(0, n - 1).trimEnd()}…` : t }

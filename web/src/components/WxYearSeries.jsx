@@ -55,7 +55,7 @@ export default function WxYearSeries({ share, clean, total, corrections, label =
   const first = rows.find(r => isNum(r[key])), last = [...rows].reverse().find(r => isNum(r[key]))
   const anyCorrected = rows.some(r => r.corrected)
 
-  if (!values.length) return <p className="note">No yearly series for {label} in this data source, so there is nothing to switch between.</p>
+  if (!values.length) return <p className="note">{label} reports a single period in this source.</p>
   const top = Math.max(...values)
 
   const a = rows[0], b = rows[rows.length - 1]

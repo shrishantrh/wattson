@@ -13,7 +13,7 @@ export default function HeatmapView({ hm, height = 220 }) {
   return (
     <Mod
       className="mod-heatmap"
-      caption={`One row per day of ${year}, one column per hour. Darker is less clean — and a round-the-clock load sits in every column, dark ones included.`}
+      caption={`One row per day of ${year}, one column per hour. Darker is less clean, and a round-the-clock load sits in every column, dark ones included.`}
       foot={`EIA-930 hourly via PUDL, ${year}, local time. Generation within the footprint, not consumption.`}
     >
       <Plot data={built.data} layout={built.layout} height={height} />

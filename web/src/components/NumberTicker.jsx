@@ -53,6 +53,6 @@ export default function NumberTicker({ value, format, duration = 600, className 
   }, [target, from, animate, duration])
   const shown = s.shown
   const fmt = format || defaultFormat
-  const text = shown == null ? '—' : typeof shown === 'string' ? shown : isNum(shown) ? fmt(shown, target) : String(shown)
+  const text = shown == null ? ', ' : typeof shown === 'string' ? shown : isNum(shown) ? fmt(shown, target) : String(shown)
   return <span className={`ticker ${className}`} data-ticking={isNum(shown) && shown !== target ? 'true' : undefined}>{text}</span>
 }

@@ -21,7 +21,7 @@ export const cellValue = (col, row) => (col.raw ? col.raw(row) : row[col.key])
 export function cellText(col, row) {
   const v = cellValue(col, row)
   if (col.format) return String(col.format(v, row) ?? '')
-  if (isNil(v)) return '—'
+  if (isNil(v)) return ', '
   return isNum(v) ? numFmt.format(v) : String(v)
 }
 
@@ -153,7 +153,7 @@ export default function Table({ columns, rows, sortKey, defaultSort, onSortChang
                   {columns.map((c, ci) => {
                     const node = c.render ? c.render(r) : cellText(c, r)
                     const inner = ci === 0 && h ? <a className="tbl-link" href={h} tabIndex={-1}>{node}</a> : c.num ? node : <span className="tbl-cell">{node}</span>
-                    return <td key={c.key} className={`${c.num ? 'num' : ''} ${c.dim ? 'dim' : ''} ${sort?.key === c.key ? 'on' : ''}`} title={typeof node === 'string' && node !== '—' ? node : undefined}>{inner}</td>
+                    return <td key={c.key} className={`${c.num ? 'num' : ''} ${c.dim ? 'dim' : ''} ${sort?.key === c.key ? 'on' : ''}`} title={typeof node === 'string' && node !== ', ' ? node : undefined}>{inner}</td>
                   })}
                 </tr>
               )

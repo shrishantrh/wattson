@@ -19,11 +19,11 @@ const VERDICT_LABEL = {
 const CALLOUT_ID = 'ERCO/NRTH'
 
 function ptsLabel(v) {
-  return v == null ? '—' : `${signed(v, 1)} pts`
+  return v == null ? ', ' : `${signed(v, 1)} pts`
 }
 
 function sharePct(v) {
-  return v == null ? '—' : pct(v, 1)
+  return v == null ? ', ' : pct(v, 1)
 }
 
 function KVFlat({ rows }) {
@@ -56,7 +56,7 @@ function HourPayoff({ profile, mw = 300 }) {
         {p.map((v, h) => {
           const band = h >= 10 && h < 16 ? 'sun' : h < 6 ? 'dark' : 'mid'
           return <div key={h} className={`hp-bar hp-${band}`} style={{ height: `${Math.round((v / max) * 100)}%` }}
-                      title={`${String(h).padStart(2, '0')}:00 — ${Math.round(v * 100)}% clean`} />
+                      title={`${String(h).padStart(2, '0')}:00, ${Math.round(v * 100)}% clean`} />
         })}
       </div>
       <div className="hp-axis"><span>midnight</span><span>6am</span><span>noon</span><span>6pm</span></div>
@@ -64,7 +64,7 @@ function HourPayoff({ profile, mw = 300 }) {
         A <b>{mw} MW</b> load running here draws <b className="fossil">{fossilNight} MW</b> from
         fossil generation between midnight and 6am, and <b className="clean">{fossilSun} MW</b> between
         10am and 4pm. Same machine, same power, <b>{Math.round((fossilNight - fossilSun))} MW</b> of
-        difference — decided entirely by the hour.
+        difference, decided entirely by the hour.
       </p>
       <p className="hp-note">
         Sun hours run {Math.round(sunAvg * 100)}% clean, dark hours {Math.round(darkAvg * 100)}%,
@@ -141,20 +141,20 @@ export default function Irradiance() {
           Sunlight is the control variable here, and it did not move: satellite irradiance varies only
           {' '}{Math.min(...regions.map(r => r.irradiance.year_to_year_variation_pct)).toFixed(2)}–
           {Math.max(...regions.map(r => r.irradiance.year_to_year_variation_pct)).toFixed(2)}% a year at all five points.
-          So the daytime gain below is panels we built, not a sunnier decade — and panels make nothing at 3am,
+          So the daytime gain below is panels we built, not a sunnier decade, and panels make nothing at 3am,
           which is the hour a datacenter pulls exactly as hard as at noon.
         </p>
         {n19 && n25 && (
           <div className="nums" style={{ marginTop: 14 }}>
-            <Num num={n25.daytime} format={v => sharePct(v)} label="Clean 10am–4pm — the window that improved" sub={`up from ${sharePct(n19.daytime)} in 2019 · ${ptsLabel(dayDelta)}`} accent />
-            <Num num={n25.overnight} format={v => sharePct(v)} label="Clean midnight–6am — the window that did not" sub={`down from ${sharePct(n19.overnight)} in 2019 · ${ptsLabel(nightDelta)}${mw19 && mw25 ? ` · clean output still rose ${gw(mw19.overnight)}→${gw(mw25.overnight)}; the rest of the night grew faster` : ''}`} />
-            <Num value="flat" label="The sun, 2019 to 2025" sub="unchanged at all 5 points — so it explains none of the daytime gain" />
+            <Num num={n25.daytime} format={v => sharePct(v)} label="Clean 10am–4pm, the window that improved" sub={`up from ${sharePct(n19.daytime)} in 2019 · ${ptsLabel(dayDelta)}`} accent />
+            <Num num={n25.overnight} format={v => sharePct(v)} label="Clean midnight–6am, the window that did not" sub={`down from ${sharePct(n19.overnight)} in 2019 · ${ptsLabel(nightDelta)}${mw19 && mw25 ? ` · clean output still rose ${gw(mw19.overnight)}→${gw(mw25.overnight)}; the rest of the night grew faster` : ''}`} />
+            <Num value="flat" label="The sun, 2019 to 2025" sub="unchanged at all 5 points, so it explains none of the daytime gain" />
           </div>
         )}
         <p className="note" style={{ marginTop: 12 }}>
           Day and night pull apart in {(conclusion?.supporting_regions || []).length} of {regions.length} regions
-          ({(conclusion?.supporting_regions || []).join(', ')}). In the other {(conclusion?.non_supporting_regions || []).length} they move together —
-          wind grids and one broken feed — and we left them on screen rather than dropping them:
+          ({(conclusion?.supporting_regions || []).join(', ')}). In the other {(conclusion?.non_supporting_regions || []).length} they move together , 
+          wind grids and one broken feed, and we left them on screen rather than dropping them:
           {' '}{(conclusion?.non_supporting_regions || []).join(', ')}.
         </p>
       </Card>
@@ -172,7 +172,7 @@ export default function Irradiance() {
           right={<Chip small accent onClick={() => setFocus(CALLOUT_ID)}>{VERDICT_LABEL[ercot.verdict]}</Chip>}
         >
           <p className="note" style={{ marginBottom: 12 }}>
-            {ercotRatio != null && <>The cleanest split in the data: ERCOT&apos;s daytime clean share moved ~{ercotRatio.toFixed(0)}× as far as its overnight share over the same years, under sun that did not change — consistent with solar, which only works in daylight. </>}
+            {ercotRatio != null && <>The cleanest split in the data: ERCOT&apos;s daytime clean share moved ~{ercotRatio.toFixed(0)}× as far as its overnight share over the same years, under sun that did not change, consistent with solar, which only works in daylight. </>}
             The share is all of ERCOT; the irradiance point is Dallas.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 12 }}>
@@ -183,7 +183,7 @@ export default function Irradiance() {
           <HourPayoff profile={data.profiles?.[focus]} />
           <KVFlat rows={[
             ['Sun over Dallas, every year since 2019', `${ercot.irradiance.mean.toFixed(2)} ${ercot.irradiance.units}, moving ${ercot.irradiance.year_to_year_variation_pct.toFixed(2)}% a year`],
-            ['The share above is', `all of ${ercot.cf_share_actually_describes} — the zone reports demand only, so it inherits its grid's mix`],
+            ['The share above is', `all of ${ercot.cf_share_actually_describes}, the zone reports demand only, so it inherits its grid's mix`],
           ]} />
         </Section>
       )}
@@ -217,10 +217,10 @@ export default function Irradiance() {
                     {' · '}night {sharePct(r.cf_share['2019'].overnight)}→{sharePct(r.cf_share['2025'].overnight)} ({ptsLabel(r.cf_share.overnight_change_pts)})
                   </div>
                   <div className="d">
-                    Sun here: {r.irradiance.is_flat ? 'flat' : 'moving'} — ±{r.irradiance.year_to_year_variation_pct.toFixed(2)}% a year, {signed(r.irradiance.change_pct_2019_2025, 2)}% end to end
+                    Sun here: {r.irradiance.is_flat ? 'flat' : 'moving'}, ±{r.irradiance.year_to_year_variation_pct.toFixed(2)}% a year, {signed(r.irradiance.change_pct_2019_2025, 2)}% end to end
                   </div>
-                  {r.cf_inherited_from_ba && <p className="note" style={{ marginTop: 6 }}>Share is all of {r.cf_share_actually_describes}, not just {r.point?.place} — the zone reports demand only.</p>}
-                  {r.data_caveat && <p className="note" style={{ marginTop: 6 }}><b>Not a real collapse — a reporting break.</b> {r.data_caveat}</p>}
+                  {r.cf_inherited_from_ba && <p className="note" style={{ marginTop: 6 }}>Share is all of {r.cf_share_actually_describes}, not just {r.point?.place}, the zone reports demand only.</p>}
+                  {r.data_caveat && <p className="note" style={{ marginTop: 6 }}><b>Not a real collapse, a reporting break.</b> {r.data_caveat}</p>}
                   {r.why_it_does_not_support?.reading && (
                     <p className="note" style={{ marginTop: 6 }}>
                       {r.why_it_does_not_support.post_hoc ? 'Why it misses, worked out after we saw it: ' : 'Why it misses: '}{r.why_it_does_not_support.reading}
@@ -235,7 +235,7 @@ export default function Irradiance() {
 
       <Section title="What this page cannot tell you">
         <details>
-          <summary className="note" style={{ cursor: 'pointer' }}>{(data.irr.caveats || []).length} limits — chiefly that one hand-picked point is not a grid. Open them.</summary>
+          <summary className="note" style={{ cursor: 'pointer' }}>{(data.irr.caveats || []).length} limits, chiefly that one hand-picked point is not a grid. Open them.</summary>
           <ul className="rows" style={{ marginTop: 8 }}>{(data.irr.caveats || []).map((c, i) => <li className="row" key={i}><div className="t" style={{ fontSize: 13 }}>{c}</div></li>)}</ul>
         </details>
       </Section>

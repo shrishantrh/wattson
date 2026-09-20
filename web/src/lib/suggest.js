@@ -108,7 +108,7 @@ export function suggestions(ctx) {
   return out.filter(s => { const k = s.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true })
 }
 
-/** True when `s` continues `q` — prefix first, then "starts with a word of the query". */
+/** True when `s` continues `q`, prefix first, then "starts with a word of the query". */
 function matches(s, q) {
   const a = s.toLowerCase(), b = q.trim().toLowerCase()
   if (!b) return false

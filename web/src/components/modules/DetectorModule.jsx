@@ -26,12 +26,12 @@ export default function DetectorView({ detection: d }) {
   return (
     <Mod
       className="mod-detector"
-      caption={d.pattern ? `Pattern: ${d.pattern} — a label, never part of the score.` : 'A demand-only score: no generation figure goes into it.'}
+      caption={d.pattern ? `Pattern: ${d.pattern}, a label, never part of the score.` : 'A demand-only score: no generation figure goes into it.'}
       lead={
         <Lead
-          value={rank != null ? `#${fmt(rank)}` : '—'}
-          label={`of ${fmt(n)} regions scored on demand alone${rank != null ? ` — ${rank <= 1 ? 'nowhere in the country shows' : rank === 2 ? 'one other region shows' : `${fmt(rank - 1)} regions show`} this pattern more strongly` : ''}`}
-          aside={score != null ? fmt(score, 2).replace(/^-/, '−') : '—'}
+          value={rank != null ? `#${fmt(rank)}` : ', '}
+          label={`of ${fmt(n)} regions scored on demand alone${rank != null ? `, ${rank <= 1 ? 'nowhere in the country shows' : rank === 2 ? 'one other region shows' : `${fmt(rank - 1)} regions show`} this pattern more strongly` : ''}`}
+          aside={score != null ? fmt(score, 2).replace(/^-/, '−') : ', '}
           asideLabel="detector score"
         />
       }

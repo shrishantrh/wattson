@@ -117,7 +117,7 @@ export default function Found({ route }) {
     })
     if (t19 != null && t25 != null) out.push({
       key: 'total', title: 'All power at night', value: signedGw((t25 - t19) / 1000), unit: 'more generation in those same hours since 2019',
-      say: `Overnight generation went ${n0(t19)} MW to ${n0(t25)} MW. The night got ${gw1(t25 - t19)} bigger while the clean part of it stayed flat — which is the entire reason the overnight clean share falls without a single clean megawatt being lost.`,
+      say: `Overnight generation went ${n0(t19)} MW to ${n0(t25)} MW. The night got ${gw1(t25 - t19)} bigger while the clean part of it stayed flat, which is the entire reason the overnight clean share falls without a single clean megawatt being lost.`,
     })
     if (gas != null) out.push({
       key: 'gas', title: 'What filled the gap', value: signedGw(gas), unit: 'gas at night, 2019 to 2025', tone: 'fossil',
@@ -125,7 +125,7 @@ export default function Found({ route }) {
       say: `Gas overnight rose ${signedGw(gas)}${coal != null && coal < 0 ? `, more than the growth itself, because it also had to cover ${signedGw(coal).replace('\u2212', '')} of coal that retired` : ''}. Consistent with new round-the-clock load being served by gas; the demand data does not say whose load it is.`,
     })
     if (e19 != null && e25 != null) out.push({
-      key: 'export', title: 'Where it went', value: `${gw1(e19)} → ${gw1(e25)}`, unit: 'net exports at night — positive means PJM sends power out',
+      key: 'export', title: 'Where it went', value: `${gw1(e19)} → ${gw1(e25)}`, unit: 'net exports at night, positive means PJM sends power out',
       say: e25 < e19
         ? `If the extra power had been for the neighbors, exports would have risen. They fell from ${gw1(e19)} to ${gw1(e25)}, so the new gas generation stayed inside PJM and served load here.`
         : `Net exports rose from ${gw1(e19)} to ${gw1(e25)}, so some of the extra power left PJM rather than serving load inside it.`,
@@ -139,7 +139,7 @@ export default function Found({ route }) {
   const head = openingTitle(pjm), natT = nationalTitle(nat), detT = detectorTitle(det)
   const live = interpYears(nat, scene === 'sweep' ? p : 0)
   const validation = scored.filter(r => r.validation).sort((a, b) => a.rank - b.rank)
-  const rows = list => <div className="rows pg-ranked">{list.map(r => <a className="row" key={r.id} href={href.region(r.id)}><span className="rk">{r.rank}</span><div><div className={`t ${leads.has(r.id) ? 'accent' : ''}`}>{r.known_cluster_label || r.c.label}{r.data_flagged ? ' · data flagged' : leads.has(r.id) ? ' · new' : ''}</div><div className="d">{r.pattern}</div></div><div className="n">{r.growth_pct != null ? `${r.growth_pct > 0 ? '+' : ''}${r.growth_pct.toFixed(0)}%` : '—'}</div></a>)}</div>
+  const rows = list => <div className="rows pg-ranked">{list.map(r => <a className="row" key={r.id} href={href.region(r.id)}><span className="rk">{r.rank}</span><div><div className={`t ${leads.has(r.id) ? 'accent' : ''}`}>{r.known_cluster_label || r.c.label}{r.data_flagged ? ' · data flagged' : leads.has(r.id) ? ' · new' : ''}</div><div className="d">{r.pattern}</div></div><div className="n">{r.growth_pct != null ? `${r.growth_pct > 0 ? '+' : ''}${r.growth_pct.toFixed(0)}%` : ', '}</div></a>)}</div>
 
   const column = (
     <>
@@ -198,15 +198,15 @@ export default function Found({ route }) {
           <p className="note" style={{ marginTop: 10 }}>{detT.sub}</p>
           <YearSlider years={traj.years} value={yp.year} onChange={yp.setYear} playing={yp.playing} onPlay={v => (v ? yp.play() : yp.setPlaying(false))} label="clean power at night, by year" />
           <div className="legend"><span><i /> under 30% clean at night</span><span><i className="dim" /> 30–60%</span><span><i className="ink" /> over 60%</span><span><i className="hollow" /> data flagged or corrected</span></div>
-          <p className="note pg-fine">{(() => { const by = traj.summary?.by_year?.[yi]; const d = traj.summary?.biggest_drop?.[0], u = traj.summary?.biggest_rise?.[0]; const ex = traj.summary?.excluded_step_changes || []; const natY = nat[String(yp.year)]?.overnight; return by && d && u ? `In ${yp.year} the US ran ${natY != null ? pct1(natY) : '—'} clean at night. From 2019 to 2025 the biggest fall among grids was ${coords.regions[d.id]?.label || d.id} (${Math.round(d.from * 100)}% to ${Math.round(d.to * 100)}%), the biggest rise ${coords.regions[u.id]?.label || u.id} (${Math.round(u.from * 100)}% to ${Math.round(u.to * 100)}%) — where a datacenter lands decides what burns for it. Zones are colored with their grid's share, since zones report demand only.${ex.length ? ` ${ex.map(id => coords.regions[id]?.label || id).join(', ')} show a single-year step in the published data and are left out.` : ''} Press play.` : '' })()}</p>
+          <p className="note pg-fine">{(() => { const by = traj.summary?.by_year?.[yi]; const d = traj.summary?.biggest_drop?.[0], u = traj.summary?.biggest_rise?.[0]; const ex = traj.summary?.excluded_step_changes || []; const natY = nat[String(yp.year)]?.overnight; return by && d && u ? `In ${yp.year} the US ran ${natY != null ? pct1(natY) : ', '} clean at night. From 2019 to 2025 the biggest fall among grids was ${coords.regions[d.id]?.label || d.id} (${Math.round(d.from * 100)}% to ${Math.round(d.to * 100)}%), the biggest rise ${coords.regions[u.id]?.label || u.id} (${Math.round(u.from * 100)}% to ${Math.round(u.to * 100)}%), where a datacenter lands decides what burns for it. Zones are colored with their grid's share, since zones report demand only.${ex.length ? ` ${ex.map(id => coords.regions[id]?.label || id).join(', ')} show a single-year step in the published data and are left out.` : ''} Press play.` : '' })()}</p>
         </div>}
         <WxStepper steps={sceneSteps} index={sceneIdx} onIndex={i => { window.location.hash = href.found(SCENES[i][0]) }} label="finding" keys={false} prevLabel="Previous finding" nextLabel="Next finding" />
       </Card>
       {scene === 'headline' && <Section title="PJM's cleanest hours are the middle of the day; a datacenter runs the marked ones too (2025)"><HourBars values={pjm.profile_24h?.['2025'] || pjm.profile_24h} /></Section>}
       {scene === 'headline' && <Section title="The test we could have failed: clusters named before the ranking was run"><KV rows={validation.map(r => [r.known_cluster_label || r.id, `${ordinal(r.rank)} of ${det.n_scored}`])} /></Section>}
-      {scene === 'night' && <Section title="Where flat load is landing hardest — the detector's top ten" right={<span className="mono muted" style={{ fontSize: 11 }}>rank · avg demand growth since 2019</span>}>{rows(top)}</Section>}
+      {scene === 'night' && <Section title="Where flat load is landing hardest, the detector's top ten" right={<span className="mono muted" style={{ fontSize: 11 }}>rank · avg demand growth since 2019</span>}>{rows(top)}</Section>}
       {scene === 'detector' && <Section title="Named in advance, plus the places the detector found that nobody has named" right={<span className="mono muted" style={{ fontSize: 11 }}>avg demand growth since 2019</span>}>{rows(named)}</Section>}
-      {scene === 'sweep' && <Section title="The night's share fell while its clean output rose — total demand simply grew faster (US average MW)"><KV rows={[['day, 2019', `${n0(data.national?.cf_avg_mw?.['2019']?.daytime)} MW`], ['day, 2025', `${n0(data.national?.cf_avg_mw?.['2025']?.daytime)} MW`], ['night, 2019', `${n0(data.national?.cf_avg_mw?.['2019']?.overnight)} MW`], ['night, 2025', `${n0(data.national?.cf_avg_mw?.['2025']?.overnight)} MW`]]} /></Section>}
+      {scene === 'sweep' && <Section title="The night's share fell while its clean output rose, total demand simply grew faster (US average MW)"><KV rows={[['day, 2019', `${n0(data.national?.cf_avg_mw?.['2019']?.daytime)} MW`], ['day, 2025', `${n0(data.national?.cf_avg_mw?.['2025']?.daytime)} MW`], ['night, 2019', `${n0(data.national?.cf_avg_mw?.['2019']?.overnight)} MW`], ['night, 2025', `${n0(data.national?.cf_avg_mw?.['2025']?.overnight)} MW`]]} /></Section>}
     </>
   )
   return <Shell page="found" globe={{ view: VIEWS[scene], points, rings, markers, terminator, interactive: false }} column={column} />

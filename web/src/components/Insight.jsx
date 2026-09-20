@@ -5,7 +5,7 @@ import { Info, Close, ArrowRight } from './Icons.jsx'
 import '../styles/insight.css'
 
 // "What am I looking at": a small card in the bottom-right corner that explains the screen you
-// are on and what to do next. The words come from lib/insight.js — generated from the route and
+// are on and what to do next. The words come from lib/insight.js, generated from the route and
 // from whatever numbers the page chose to publish, never from a model and never from the network.
 //
 // A page can hand it its own figures without importing anything:

@@ -4,7 +4,7 @@
  "id": "MSFT",
  "listed_equity": true,
  "coverage_status": "sites_and_claims",
- "coverage_status_note": "Sites mapped to grids, and claims read from its own documents.",
+ "coverage_status_note": "Sites located through their serving utilities, and claims read from its own filings.",
  "claims_absent_reason": null,
  "claims_absent_note": null,
  "sites": [

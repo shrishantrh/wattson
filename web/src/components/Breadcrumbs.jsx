@@ -153,7 +153,7 @@ export default function Breadcrumbs({ trail, onBack }) {
   return (
     <nav className="bc" aria-label="Breadcrumb" ref={navRef} data-stuck={stuck ? 'true' : undefined} data-folded={folded}>
       {/* The one way up, and it says where up is. It used to be an arrow with a tooltip, which
-          read as a mystery next to the answer card's × — so the label is on the button now. */}
+          read as a mystery next to the answer card's ×, so the label is on the button now. */}
       <button type="button" className="bc-back" onClick={back}><ArrowLeft size={15} /><span className="bc-back-text">Back{up && <span className="bc-back-to"> to {up.label}</span>}</span></button>
       <ol className="bc-list" ref={listRef}>
         {items.map((c, i) => {

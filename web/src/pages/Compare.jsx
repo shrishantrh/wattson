@@ -18,7 +18,7 @@ import { Bolt, Layers, Info, Place, Pin, Night, ChevronDown, ChevronUp } from '.
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 import '../styles/answer.css'
 
-const trend = s => (s == null ? '—' : `${s > 0 ? '+' : ''}${(s * 100).toFixed(1)} pts / yr`)
+const trend = s => (s == null ? ', ' : `${s > 0 ? '+' : ''}${(s * 100).toFixed(1)} pts / yr`)
 const pctFmt = n => `${Math.round(n)}%`
 
 // Zone label: what kind of thing the next block is.
@@ -116,14 +116,14 @@ export default function Compare({ route }) {
           <>
             <div className="instrument"><Ring value={cf} /><div className="num"><div className="v" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{pct1(cf)}{series && <Sparkline values={series} width={72} height={20} accentLast baseline title="clean at night, 2019 to 2025" />}</div><div className="l">{whatIf ? `clean power in the hours a ${shapeLabel} load runs` : 'clean power at night'}, 2025 · {trend(c.siting?.ratio_slope_per_year)}</div></div></div>
             <KV rows={[
-              ['since 2019', c.siting?.change_since_2019 != null ? `${c.siting.change_since_2019 > 0 ? '+' : ''}${(c.siting.change_since_2019 * 100).toFixed(1)} pts` : '—'],
-              ['clean power vs night demand', c.siting?.overnight_clean_mw_over_demand != null ? `${c.siting.overnight_clean_mw_over_demand.toFixed(2)}×` : '—'],
+              ['since 2019', c.siting?.change_since_2019 != null ? `${c.siting.change_since_2019 > 0 ? '+' : ''}${(c.siting.change_since_2019 * 100).toFixed(1)} pts` : ', '],
+              ['clean power vs night demand', c.siting?.overnight_clean_mw_over_demand != null ? `${c.siting.overnight_clean_mw_over_demand.toFixed(2)}×` : ', '],
               c.filled_by && ['last growth filled by', <span key="f" className={c.filled_by.fuel === 'gas' ? 'accent' : ''}>{c.filled_by.fuel} {signedGw(c.filled_by.gw)}</span>],
-              ['served by', c.operator ? `${c.operator.utility}${c.operator.ticker ? ` · ${c.operator.ticker}` : ''}` : c.serving_utility || '—'],
+              ['served by', c.operator ? `${c.operator.utility}${c.operator.ticker ? ` · ${c.operator.ticker}` : ''}` : c.serving_utility || ', '],
               dem && ['your load', `${(load / dem * 100).toFixed(1)}% of night demand`],
               cf != null && ['fossil at the 2025 mix', `${n0(load * (1 - cf))} of ${n0(load)} MW`],
               c.detector?.rank && ['flat-load rank', `#${c.detector.rank} of ${c.detector.n_scored || 111} · ${c.detector.growth_pct > 0 ? '+' : ''}${Math.round(c.detector.growth_pct)}% since 2019`],
-              ['siting rank', c.siting?.siting_rank ? `${c.siting.siting_rank} of ${c.siting.n_ranked}, 1 is best` : '—'],
+              ['siting rank', c.siting?.siting_rank ? `${c.siting.siting_rank} of ${c.siting.n_ranked}, 1 is best` : ', '],
             ]} />
             {prof && <div style={{ marginTop: 12 }}><HourBars values={prof} caption="Clean share by hour, 2025 (night hours marked)" /></div>}
             {cav && <div className="banner banner-error" style={{ marginTop: 10 }}>{cav}</div>}

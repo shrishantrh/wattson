@@ -11,7 +11,7 @@ import { SHORTCUTS, openShortcuts } from './Shortcuts.jsx'
 import { href } from '../router.js'
 import '../styles/palette.css'
 
-// The command palette: the app's front door. <CommandPalette /> is the dialog — ⌘K / Ctrl+K
+// The command palette: the app's front door. <CommandPalette /> is the dialog, ⌘K / Ctrl+K
 // toggles it, "/" opens it when nothing is focused for typing, Esc dismisses then clears then
 // closes, and window 'wattson:palette' events (openPalette() in lib/commands.js) open it from
 // anywhere. Mount it as many times as is convenient: only the earliest-mounted living instance
@@ -24,15 +24,15 @@ import '../styles/palette.css'
 // before you run it, and an empty state that offers four ways out instead of "nothing found".
 //
 // THE ASK LAYER (lib/ask.js, lib/askStore.js) is an enhancement layered on top of all of that,
-// never a dependency. askAvailable() resolves false whenever no API base is configured — which is
-// how the static export runs — and in that case every line below behaves exactly as it does
+// never a dependency. askAvailable() resolves false whenever no API base is configured, which is
+// how the static export runs, and in that case every line below behaves exactly as it does
 // without it: no ask bar, no ghost completion, no suggestions, no answer panel, no error, and the
 // deterministic empty state owns an unreadable query.
 //
 // When the ask layer IS up it brings three things: prewritten prompts for this screen (grey ghost
 // tail under the caret, Tab to accept, and the same prompts as real rows in the list), an answer
 // that renders in place when it is a sentence, and a hand-off to #/ask when the answer has a shape
-// — a table, a ranking, places side by side — because a table does not belong in a dropdown.
+//, a table, a ranking, places side by side, because a table does not belong in a dropdown.
 
 // oxlint-disable-next-line react/only-export-components
 export { useCommands } from '../lib/commands.js'
@@ -135,7 +135,7 @@ const doingOf = it => it?.doing || (it ? (DOING.find(([re]) => re.test(it.id))?.
 
 // Group headings, said as the thing they do rather than as a category. A row in "Regions" did
 // not tell you what pressing it would do; a row under "Open a region" does, and it does it for
-// every row in the group at once, without a verb on each line. Display only — lib/commands.js
+// every row in the group at once, without a verb on each line. Display only, lib/commands.js
 // keeps its own GROUP names, which are what the items are tagged with.
 const HEADING = {
   [GROUP.company]: 'Check a company',
@@ -220,7 +220,7 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
 
   // Two different things share one input. "Summarize this screen" is prose about the screen you
   // are on, and it stays in the dropdown over that screen. A free-text question can come back
-  // with a shape — places side by side, a ranking, one subject and its figures — and a table does
+  // with a shape, places side by side, a ranking, one subject and its figures, and a table does
   // not belong in a dropdown, so that goes to #/ask, which reads the answer the store is already
   // holding rather than asking again. An answer that is genuinely a sentence renders here exactly
   // as it always did.
@@ -272,13 +272,13 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
                action: () => runAsk(t, t === SUMMARIZE ? 'summary' : 'ask') })) }
   }, [aiOn, q, sugg]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // The ask layer and the empty state are two answers to the same moment — a query the parser
-  // cannot read — so exactly one of them owns it, and which one is decided here.
+  // The ask layer and the empty state are two answers to the same moment, a query the parser
+  // cannot read, so exactly one of them owns it, and which one is decided here.
   //
   // With a server configured the ask layer wins: that query is no longer a dead end, and saying
   // "nothing matches" while a model is standing by to answer it would be false. The Ask row stops
   // being inert, becomes the pinned best match, and ↵ sends it. With no server the empty state
-  // owns it exactly as before — the Ask row stays disabled and the Try group carries the way on.
+  // owns it exactly as before, the Ask row stays disabled and the Try group carries the way on.
   // The Try group also returns underneath a failed answer, so a dead ask is never a dead end.
   const canAsk = aiOn && hasQuery
 

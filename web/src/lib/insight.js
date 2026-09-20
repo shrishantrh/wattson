@@ -1,4 +1,4 @@
-// "What am I looking at" — one short explainer per screen, generated here, not written by hand
+// "What am I looking at", one short explainer per screen, generated here, not written by hand
 // per page and never by a model. Same rules as lib/findings.js: plain English, no jargon, and no
 // number that the page did not hand us. Nothing in this file contains a digit; every figure that
 // appears comes from `ctx` and is interpolated only when it is given.

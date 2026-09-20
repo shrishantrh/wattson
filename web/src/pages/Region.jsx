@@ -24,7 +24,7 @@ const LOAD_MW = 300
 const COLUMN = 460
 const pctFmt = n => `${n.toFixed(1)}%`
 const mwFmt = n => n0(n)
-const ptsValue = x => (x == null ? '—' : pts1(x).replace(' pts', ''))
+const ptsValue = x => (x == null ? ', ' : pts1(x).replace(' pts', ''))
 
 function NotFoundState({ label, error }) {
   const avail = (error?.available || []).filter(Boolean)
@@ -75,12 +75,12 @@ export default function Region({ route }) {
     if (!data) return []
     const hours = {
       id: 'hours',
-      title: 'A flat load buys every one of these hours — walk through them',
+      title: 'A flat load buys every one of these hours, walk through them',
       render: () => <WxHourScrub profile={prof24} loadMW={LOAD_MW} corrected2019={corr.some(x => x.path === 'profile_24h.2019')} />,
     }
     const series = {
       id: 'series',
-      title: 'Clean share or clean megawatts — the two do not have to move together',
+      title: 'Clean share or clean megawatts, the two do not have to move together',
       render: () => <WxYearSeries share={gen?.cf_share} clean={gen?.cf_avg_mw} total={gen?.total_avg_mw} corrections={corr} label={s?.inherited ? `the ${s.grid} grid` : (s?.label || 'this grid')} />,
     }
     const rest = applicableModules(ctx).map(m => ({ id: m.id, title: m.title, render: () => m.render(ctx), default: m.id !== 'heatmap' }))
@@ -114,9 +114,9 @@ export default function Region({ route }) {
           {s.rank != null && <span className="rg-rank">flat load <b>#{s.rank}</b> of {s.n_scored ?? 111}</span>}
         </div>
         <div className="nums rg-nums">
-          <Num num={s.night2025 != null ? s.night2025 * 100 : undefined} value="—" format={pctFmt} label="clean at night, 2025" accent />
+          <Num num={s.night2025 != null ? s.night2025 * 100 : undefined} value=", " format={pctFmt} label="clean at night, 2025" accent />
           <Num value={ptsValue(s.change)} label={`pts since 2019${s.corrected ? ', corrected' : ''}`} sub={s.night2019 != null ? `from ${Math.round(s.night2019 * 100)}%${s.cleanDelta != null ? `, clean output ${s.cleanDelta > 0 ? '+' : s.cleanDelta < 0 ? '−' : ''}${Math.abs(s.cleanDelta).toFixed(1)} GW` : ''}` : null} />
-          <Num num={s.demandNight2025 ?? undefined} value="—" format={mwFmt} label="MW at night, 2025" sub={s.demandNight2019 != null ? `${n0(s.demandNight2019)} in 2019` : null} />
+          <Num num={s.demandNight2025 ?? undefined} value=", " format={mwFmt} label="MW at night, 2025" sub={s.demandNight2019 != null ? `${n0(s.demandNight2019)} in 2019` : null} />
         </div>
         {/* flagged or corrected data comes before anything a reader could take at face value */}
         {(facts.length > 0 || s.caveat) && (
@@ -138,7 +138,7 @@ export default function Region({ route }) {
         </div>
       </Card>
       <SectionLabel icon={Layers} count={modules.length}>Evidence</SectionLabel>
-      <p className="note" style={{ margin: '-4px 0 10px 2px' }}>The first two are live: scrub the 24 hours to see what a flat load buys at any one of them, and switch the yearly series between the clean share and the megawatts behind it — a falling share is not the same thing as less clean power.</p>
+      <p className="note" style={{ margin: '-4px 0 10px 2px' }}>The first two are live: scrub the 24 hours to see what a flat load buys at any one of them, and switch the yearly series between the clean share and the megawatts behind it, a falling share is not the same thing as less clean power.</p>
       <Workspace id="region" modules={modules} />
     </>
   )

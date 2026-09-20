@@ -29,7 +29,7 @@ async function post(path, body) {
 }
 
 /** Answer a question. `page` tells the model what the user is looking at; it is a pointer
- *  for resolving "this" and "here", not a source — the server re-fetches every figure. */
+ *  for resolving "this" and "here", not a source, the server re-fetches every figure. */
 export const ask = (q, page) => post('/api/ask', { q, page })
 
 /** Plain-English summary of the current screen. */

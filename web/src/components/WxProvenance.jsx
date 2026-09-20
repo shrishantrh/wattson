@@ -12,12 +12,12 @@ import '../styles/wx.css'
 // now, so the panel cannot drift from the table above it.
 
 const PIPELINE = {
-  detector: 'scripts/l3_detector.py — demand only, weights frozen before the ranking was seen',
-  siting: 'scripts/l4_supply.py — the siting score (level, direction, clean power against night demand)',
-  index: 'scripts/carbon_free_index.py — hourly carbon-free share per balancing authority',
-  alerts: 'scripts/alerts.py — monthly thresholds, ranked by magnitude × persistence × recency',
-  claims: 'claims/companies.json — claims read off the rendered pages of each company’s own reports',
-  hand: 'hand-curated lookup in web/src/data — not derived from the grid data',
+  detector: 'scripts/l3_detector.py, demand only, weights frozen before the ranking was seen',
+  siting: 'scripts/l4_supply.py, the siting score (level, direction, clean power against night demand)',
+  index: 'scripts/carbon_free_index.py, hourly carbon-free share per balancing authority',
+  alerts: 'scripts/alerts.py, monthly thresholds, ranked by magnitude × persistence × recency',
+  claims: 'claims/companies.json, claims read off the rendered pages of each company’s own reports',
+  hand: 'hand-curated lookup in web/src/data, not derived from the grid data',
 }
 const EIA = 'EIA-930 hourly operations and net generation by energy source, via PUDL; snapshot ends 2026-09-05'
 
@@ -46,14 +46,14 @@ const FIELDS = {
     severity: { path: 'alerts[].severity', file: 'api/alerts.json', by: PIPELINE.alerts, unit: 'score', note: 'How far past the threshold, times how many months it has held, times how recent. A slow drift never outranks a change that is big and still moving.' },
     since: { path: 'alerts[].first_crossed', file: 'api/alerts.json', by: PIPELINE.alerts, unit: 'month', note: 'The first trailing-12 month that crossed. Blank where the alert comes from demand shape rather than a monthly threshold.' },
     months: { path: 'alerts[].months_active_streak', file: 'api/alerts.json', by: PIPELINE.alerts, unit: 'months', note: 'Consecutive months over the line, without a break.' },
-    value: { path: 'alerts[].current_value', file: 'api/alerts.json', by: PIPELINE.alerts, unit: 'MW, a 0–1 share, or a rank — see the row’s rule', note: 'The trailing-12 figure for the latest month. Compare it with the 2019 column beside it, and read MW rows as output and share rows as a slice.' },
+    value: { path: 'alerts[].current_value', file: 'api/alerts.json', by: PIPELINE.alerts, unit: 'MW, a 0–1 share, or a rank, see the row’s rule', note: 'The trailing-12 figure for the latest month. Compare it with the 2019 column beside it, and read MW rows as output and share rows as a slice.' },
     base: { path: 'alerts[].baseline_2019', file: 'api/alerts.json', by: PIPELINE.alerts, unit: 'same unit as the row', note: 'The 2019 baseline the threshold is measured against.' },
   },
   companies: {
     talk_score: { path: 'companies[].talk_score', file: 'api/companies.json', by: PIPELINE.claims, unit: '0–1 fraction, shown as a percent', note: 'What the company claims. Null where no claim has been extracted yet, and a null is an em dash, never a zero.' },
     walk_score: { path: 'companies[].walk_score', file: 'api/companies.json', by: PIPELINE.claims, unit: '0–1 fraction, shown as a percent', note: 'The average clean share of the grids under its mapped sites. Grid-only and all-hours: contracted clean power is excluded by design, so this is not a score of the company.' },
     coverage: { path: 'companies[].coverage', file: 'api/companies.json', by: PIPELINE.claims, unit: '0–1 fraction', note: 'How much of the company’s site list we could map to a grid.' },
-    cannot_verify_count: { path: 'companies[].cannot_verify_count', file: 'api/companies.json', by: PIPELINE.claims, unit: 'count', note: 'Claims that grid data cannot settle either way. Counted on screen rather than dropped.' },
+    cannot_verify_count: { path: 'companies[].cannot_verify_count', file: 'api/companies.json', by: PIPELINE.claims, unit: 'count', note: 'Contract-based claims, which are settled on paper rather than on the wire. Counted on screen.' },
   },
   claims: {
     verbatim: { path: 'company.claims[].verbatim', file: 'api/company/<TICKER>.json', by: PIPELINE.claims, unit: 'text', note: 'The sentence as printed in the company’s own report, with the document and page beside it.' },

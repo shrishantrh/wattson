@@ -85,9 +85,7 @@ RULES YOU MUST FOLLOW. These are not style preferences.
 
     Never say a price will rise or fall, never imply a position, never claim our signal
     predicts a price -- it has no such validation. Two things attach whenever you do this:
-    regions are coarse, so one zone is not a utility's whole business; and 5 of the 12
-    sites whose serving utility we could establish are public power, cooperatives or state
-    authorities with no listed equity at all.
+    regions are coarse, so one zone is not a utility's whole business; and NO_EQUITY_LINE
 
 STYLE. Lead with the answer. Two to five sentences unless asked for more. Plain words: say
 "clean power at night", not "overnight carbon-free generation share". Give the caveat in
@@ -96,6 +94,33 @@ the same breath as the number, not as a footnote. If you do not know, say so in 
 
 def _regions():
     return data.regions_doc()["regions"]
+
+
+def _no_equity_line() -> str:
+    """The public-power caveat, counted from the facilities table at call time.
+
+    WHY NOT A CONSTANT. This sentence used to read "5 of the 12 sites" and the model was told
+    to attach it to every stock-exposure answer. The facilities table has since grown to 134
+    sites, so the prompt was handing the reader 5 of 12 where the data says 42 of 107 -- an
+    invented number, in the one place the prompt swears never to invent one. Counted here, it
+    cannot drift again.
+    """
+    try:
+        rows = list(data.facilities())
+        resolved = [f for f in rows if f.get("serving_utility")]
+        no_equity = [f for f in resolved if not f.get("utility_ticker")]
+        if not resolved:
+            raise ValueError("no resolved sites")
+        return (f"{len(no_equity)} of the {len(resolved)} sites whose serving utility we could "
+                f"establish are public power, cooperatives or state authorities with no listed "
+                f"equity at all.")
+    except Exception:  # noqa: BLE001 - never let the caveat's arithmetic break the answer
+        return ("a substantial share of the sites whose serving utility we could establish are "
+                "public power, cooperatives or state authorities with no listed equity at all.")
+
+
+def _system() -> str:
+    return SYSTEM.replace("NO_EQUITY_LINE", _no_equity_line())
 
 
 # Sorts whose metric is derived from GENERATION. A zone reports demand only and inherits
@@ -704,7 +729,7 @@ def ask(question: str, page_context: dict | None = None, max_turns: int = MAX_TU
         return {"error": "openai_not_installed", "view": None, "answer": "pip install openai"}
 
     client = OpenAI(api_key=key)
-    msgs = [{"role": "system", "content": SYSTEM}]
+    msgs = [{"role": "system", "content": _system()}]
     if page_context:
         msgs.append({"role": "system", "content":
                      "The user is looking at this screen right now. Use it to resolve "

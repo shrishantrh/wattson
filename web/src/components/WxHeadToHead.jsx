@@ -11,7 +11,7 @@ import '../styles/wx.css'
 // other question a site selector actually asks: "how much worse is the site I already have
 // than the one I am being sold". Both columns are read off the same export, so the difference
 // is arithmetic, not a judgement. A row either side of which is missing shows an em dash and
-// no difference — a missing figure is never drawn as a zero gap.
+// no difference, a missing figure is never drawn as a zero gap.
 
 const pct1 = v => (isNum(v) ? `${(v * 100).toFixed(1)}%` : DASH)
 const pts1 = v => (isNum(v) ? `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v * 100).toFixed(1)} pts` : DASH)
