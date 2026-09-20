@@ -9,7 +9,7 @@ Shape: **talk for a minute → show for four → land the payoff in one.**
 ---
 
 # PART ONE · THE OPENING
-## 75 seconds. Laptop closed or screen on Home. Just talk.
+## 75 seconds. Stay on the Home screen. Talk over it.
 
 > **"Every company building AI datacenters publishes a clean energy claim. Google, Microsoft,
 > Meta, Amazon, all of them. And every one of those claims is checked by nobody."**
@@ -20,28 +20,22 @@ Shape: **talk for a minute → show for four → land the payoff in one.**
 
 Pause.
 
-> **"The reason isn't that nobody cared. It's that checking it was genuinely hard. The claim
-> is one sentence in a PDF. The proof is nine years of hourly data from every power grid in
-> the country. Those two things live in completely different worlds, and joining them means
-> knowing exactly which grid each individual building plugs into."**
-
-> **"So here's the thing that makes this possible. A datacenter is a fixed address, drawing
-> power from one specific grid. And the US government publishes what every grid generated,
-> every single hour, broken down by fuel, going back to 2018. It's free and it's public."**
+> **"The reason isn't that nobody cared. The claim is one sentence in a PDF. The proof is
+> nine years of hourly data from every power grid in the country. Joining them means knowing
+> exactly which grid each individual building plugs into."**
 
 > **"And datacenters are unusual in one way that matters enormously. Your house uses most of
-> its power in the evening. A factory runs on shifts. **A datacenter draws the same power at
-> three in the morning as it does at noon, and it never stops.** That turns out to be the
-> whole story."**
+> its power in the evening. A factory runs on shifts. A datacenter draws the same power at
+> three in the morning as at noon, and it never stops. That turns out to be the whole
+> story."**
 
-> **"So what we built is Wattson. We take a company's published claim, we work out which grid
-> each of its datacenters actually plugs into, and we put its own words next to what the
-> power plants actually burned. Hour by hour."**
+> **"So we take a company's published claim, work out which grid each of its datacenters
+> actually plugs into, and put its own words next to what the power plants actually burned.
+> What we wanted was one thing: to turn a claim nobody could check into a number you can
+> look up."**
 
-> **"What we wanted out of it was one thing: to make a claim that nobody could check into a
-> number you can look up."**
+**Now click "What we found in the grid data →" at the bottom of the home screen.**
 
-**Now open the laptop.**
 
 ---
 
@@ -50,44 +44,8 @@ Pause.
 
 ---
 
-## SCREEN 1 · Home → click **Alphabet (Google)**
-
-Click it immediately. Show before you explain.
-
-> **"This is Google's own sentence, from its own report, page four. It says it matched one
-> hundred percent of its electricity with renewable purchases, on an annual basis."**
-
-> **"And these are its ten datacenters, each one mapped to the grid it actually draws from.
-> They run from six percent carbon-free to ninety-one percent."**
-
-> **"Both things are true at once. The claim is correct under the accounting standard. But
-> one annual number is covering ten completely different physical realities, and until now
-> there was no way to see that."**
-
----
-
-## SCREEN 2 · **Day vs night**
-
-> **"So why is there a gap at all? This screen is the mechanism."**
-
-Point at the three numbers.
-
-> **"America's grid got dramatically cleaner during the day. Forty-six percent carbon-free
-> between ten and four. At three in the morning it's thirty-nine percent, and it has barely
-> moved since 2019."**
-
-> **"And the third number is the control. We pulled satellite data on actual sunlight
-> hitting the ground. **The sun didn't change** — it varies about one percent a year. So the
-> daytime improvement is panels we built, not a sunnier decade. And panels produce nothing
-> at three in the morning."**
-
-> **"Which is exactly when a datacenter is pulling just as hard as at noon."**
-
----
-
-## SCREEN 3 · **What we found**
-
-Arrow through the four steps.
+## SCREEN 1 · **What we found**
+### You just clicked here from Home. Arrow through the four steps.
 
 > **"This is PJM, the grid serving the largest datacenter cluster on earth. Northern Virginia
 > sits inside it."**
@@ -97,14 +55,64 @@ Arrow through the four steps.
 > megawatts of where it started."**
 
 > **"Meanwhile total generation at night went up eight point seven gigawatts, and gas went up
-> ten point seven. **Everything they added after dark, they added by burning something.**"**
+> ten point seven. Everything they added after dark, they added by burning something."**
 
 > **"And if you only look at annual averages, this finding does not exist."**
 
 ---
 
+## SCREEN 2 · **Day vs night**
+### Why the gap is there at all
+
+Point at the three numbers.
+
+> **"America's grid got dramatically cleaner during the day. Forty-six percent carbon-free
+> between ten and four. At three in the morning it's thirty-nine percent and has barely moved
+> since 2019."**
+
+> **"And the third number is the control. We pulled satellite data on actual sunlight hitting
+> the ground. The sun didn't change, it varies about one percent a year. So the daytime
+> improvement is panels we built, not a sunnier decade. And panels make nothing at 3am."**
+
+> **"Which is exactly when a datacenter pulls just as hard as at noon."**
+
+---
+
+## SCREEN 3 · Search box → **GOOGL**
+### The company side. This is where you show the AI reading documents.
+
+> **"So who's claiming otherwise? This is Google's own sentence, from its own report, page
+> four. It says it matched one hundred percent of its electricity with renewable purchases,
+> on an annual basis."**
+
+**Now the part that shows the text work:**
+
+> **"We didn't type that in. We ingested three hundred and fifty-four documents, sustainability
+> reports and SEC filings, and had a model pull every clean-energy claim out with its page
+> number and a verbatim quote. Then it scores each one: how big the number is, how precisely
+> it's stated, and how heavily it's hedged."**
+
+> **"Because the hedging is where the meaning is. 'One hundred percent renewable' and 'one
+> hundred percent of annual consumption matched with market-based certificates' are the same
+> number and completely different claims. Every qualifier cuts the score."**
+
+**Then the measurement:**
+
+> **"That's the talk. Here's the walk. Its ten datacenters averaged **forty-six percent** clean
+> power, ranging from six percent to ninety-one."**
+
+> **"Both things are true at once. The claim is correct under the accounting standard. But one
+> annual number is covering ten completely different physical realities."**
+
+**If you have a spare five seconds, type MSFT then META:**
+
+> **"Microsoft, forty-six percent. Meta, forty-six percent. The claims are all worded
+> differently. The physics is the same."**
+
+---
+
 ## SCREEN 4 · **Method**
-### This is the one that scores technical complexity. Don't rush it.
+### This is the technical complexity score. Don't rush it.
 
 > **"Underneath all of this is a detector. It scores all one hundred and eleven US grid
 > regions on one question: how much does your electricity demand look like a customer moved
@@ -114,18 +122,17 @@ Arrow through the four steps.
 > than its neighbours on the same grid. Did the daily demand curve flatten out. Only an
 > always-on customer does all three."**
 
-> **"And it never reads a press release. It finds datacenters **without a list of
-> datacenters.**"**
+> **"And it never reads a press release. It finds datacenters without a list of datacenters."**
 
-Then, and slow down here:
+Then slow down:
 
-> **"We fixed that formula and named four test regions **before** we looked at any results,
-> in the same commit as the code. Three of the four landed in the top twenty."**
+> **"We fixed that formula and named four test regions before we looked at any results, in the
+> same commit as the code. Three of the four landed in the top twenty."**
 
 > **"Then we spent last night trying to break it. We re-ran the frozen formula on 2026 data
-> that didn't exist when we locked it. It held — eight of the top ten regions unchanged. We
-> ran it ending in 2021, 22, 23, 24: **nothing before 2025 shows a signal at all.** It's
-> dated to the buildout."**
+> that didn't exist when we locked it. It held, eight of the top ten unchanged. We ran it
+> ending in 2021, 22, 23, 24: nothing before 2025 shows a signal at all. It's dated to the
+> buildout."**
 
 > **"And we trained a machine learning model on raw demand shape that was never shown our
 > formula. It found the same regions. We wrote the formula from a hypothesis; the model found
@@ -134,10 +141,10 @@ Then, and slow down here:
 **Then the strongest single thing you have:**
 
 > **"And along the way we found an error in the federal data itself. Two grid operators were
-> each reporting the same nuclear plant in full, instead of their share. Together they
-> reported **one point nine one times what that plant can physically produce.** We confirmed
-> it three ways, including pulling the plant's ownership records and its smokestack
-> emissions. The site shows the corrected number next to the published one."**
+> each reporting the same nuclear plant in full instead of their share. Together they
+> reported one point nine one times what that plant can physically produce. We confirmed it
+> three ways, including pulling the plant's ownership records and its smokestack emissions.
+> The site shows the corrected number next to the published one."**
 
 ---
 
