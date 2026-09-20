@@ -47,10 +47,12 @@ def static_export(out_dir: Path) -> int:
     for rid in data.regions_by_id():
         w(f"region/{quote(rid, safe='')}.json", A.get_region(rid))
 
+    # Every operator, keyed on the route key -- an operator with no listed equity has a
+    # null ticker and would silently drop out of the export if we keyed on the symbol.
     for c in data.company_list():
-        t = c.get("ticker")
-        if t:
-            w(f"company/{t.upper()}.json", A.get_company(t))
+        k = data.company_key(c)
+        if k:
+            w(f"company/{k}.json", A.get_company(k))
 
     # Precomputed answers for the demo path, so SITE works with no server at all.
     class _Req:

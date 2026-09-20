@@ -1,0 +1,48 @@
+{
+ "company": "Poolside",
+ "ticker": null,
+ "id": "POOLSIDE",
+ "listed_equity": false,
+ "coverage_status": "sites_only",
+ "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+ "claims_absent_reason": "no_documents_ingested",
+ "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+ "sites": [
+  {
+   "metro": "Pecos County",
+   "state": "TX",
+   "ba": "ERCO",
+   "zone": "ERCO/FWES",
+   "pjm_zone": "ERCO/FWES",
+   "region_id": "ERCO/FWES",
+   "serving_utility": null,
+   "utility_parent": null,
+   "utility_ticker": null,
+   "source_type": "press",
+   "source_url": "https://www.datacenterfrontier.com/machine-learning/article/55326541/how-coreweave-and-poolside-are-teaming-up-in-west-texas-to-build-the-next-generation-of-ai-data-centers",
+   "note": "confidence=low. Project Horizon on Longfellow Ranch in the Permian Basin, planned behind-the-meter with aeroderivative turbines plus storage and grid-interconnect redundancy. CoreWeave was announced as anchor tenant for phase 1 but was separately reported in April 2026 to have exited, so the site may be undeveloped and carrying no load. Included for coverage with that caveat, not as an operating site.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.461,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 2,
+   "detector_score": 13.89,
+   "detector_pattern": "flat-load growth"
+  }
+ ],
+ "claims": [],
+ "talk_score": null,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.461,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 0,
+ "notes": [
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+ ],
+ "is_mock": false
+}

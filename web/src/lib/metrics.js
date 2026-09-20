@@ -6,7 +6,7 @@
 //
 // `get(region)` returns the value in DISPLAY units. Shares and share changes come out of the
 // export as 0-1 fractions (the project rule) and are multiplied by 100 here so '%' and 'pts'
-// axes read directly; growth, overnight excess and neighbour divergence are already percentages
+// axes read directly; growth, overnight excess and neighbor divergence are already percentages
 // in the export. Pearson r is unaffected by the scaling; the slope is reported in display units.
 import { signed } from './format.js'
 
@@ -34,7 +34,7 @@ export const METRICS = [
   { key: 'growth_pct', label: 'Demand growth since 2019', short: 'Growth', phrase: 'demand growth', unit: '%', get: r => num(r?.detection?.growth_pct), format: fmtSignedPct },
   { key: 'overnight_growth_pct', label: 'Overnight demand growth since 2019', short: 'Night growth', phrase: 'overnight growth', unit: '%', get: r => num(r?.detection?.overnight_growth_pct), format: fmtSignedPct },
   { key: 'overnight_excess', label: 'Overnight excess (night growth minus average)', short: 'Night excess', phrase: 'overnight excess', unit: 'pts', get: r => num(r?.detection?.overnight_excess), format: fmtPts },
-  { key: 'neighbor_divergence', label: 'Neighbour divergence', short: 'Divergence', phrase: 'neighbour divergence', unit: 'pts', get: r => num(r?.detection?.neighbor_divergence), format: fmtPts },
+  { key: 'neighbor_divergence', label: 'Neighbor divergence', short: 'Divergence', phrase: 'neighbor divergence', unit: 'pts', get: r => num(r?.detection?.neighbor_divergence), format: fmtPts },
   { key: 'score', label: 'Detector score', short: 'Score', phrase: 'detector score', unit: 'score', get: r => num(r?.detection?.score), format: fmtScore(2) },
   { key: 'rank', label: 'Detector rank', short: 'Rank', phrase: 'detector rank', unit: 'rank', get: r => num(r?.detection?.rank), format: fmtRank },
   { key: 'night_cf', label: 'Clean at night, 2025', short: 'Clean at night', phrase: 'clean share at night', unit: '%', get: r => pc(night(r)), format: fmtPct },

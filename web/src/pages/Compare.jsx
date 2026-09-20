@@ -11,6 +11,7 @@ import { compareAnswer, caveatFor, pct0, pct1, pts1, gw1, n0, signedGw } from '.
 import { resolvePlace, DEMO_COMPARE } from '../lib/query.js'
 import { SHAPES, FLEX_FRACTION, cleanShareFor, shiftable, profileOf } from '../lib/shape.js'
 import ShapePicker from '../components/ShapePicker.jsx'
+import WxHeadToHead from '../components/WxHeadToHead.jsx'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import { Bolt, Layers, Info, Place, Pin, Night } from '../components/Icons.jsx'
@@ -159,6 +160,12 @@ export default function Compare({ route }) {
             </dl>
           </details>
           <Evidence open={evidence} onToggle={toggle} label="Show why" />
+        </Card>
+        <Zone icon={Place}>Head to head</Zone>
+        <Card className="ans-card" title={<><b>Any two regions</b> · the difference, at {n0(Number(mw) || load)} MW</>}>
+          {regs.data
+            ? <WxHeadToHead regions={regs.data.regions} mw={Number(mw) || load} initial={[cands[0]?.region_id, cands[1]?.region_id].filter(Boolean)} />
+            : <p className="note">Loading the region list.</p>}
         </Card>
         {evidence && (
           <>

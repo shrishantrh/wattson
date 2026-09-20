@@ -21,6 +21,9 @@ const P = {
   coords: join(ROOT, 'web', 'src', 'data', 'region_coords.json'),
   metros: join(ROOT, 'web', 'src', 'data', 'metros.json'),
   caveats: join(ROOT, 'web', 'src', 'data', 'data_caveats.json'),
+  companies: join(ROOT, 'claims', 'companies.json'),
+  companiesIndex: join(ROOT, 'web', 'src', 'data', 'companies_index.json'),
+  exportCompany: join(ROOT, 'server', 'static_export', 'company'),
 }
 
 // README headline table (README.md L15-21) and the validation ranks (L86). Frozen.
@@ -242,6 +245,79 @@ if (prov.company) {
         else ok('company.json META: site BAs generate at least half their own demand')
       }
     } else fail('company.json META: a claim with physical_min exists')
+  }
+}
+
+// ------------------------------------------------- operator coverage (claims/companies.json)
+// The product must answer for EVERY operator the repo has mapped, and must say which of the
+// three things it holds on each one. The trap this guards: the searchable list in the web app
+// is generated from claims/companies.json, so a regenerated engine with a stale index silently
+// tells a user "we don't have CRWV" about an operator that is sitting in the data.
+const STATUSES = new Set(['sites_and_claims', 'sites_only', 'no_site_resolved'])
+const ABSENT_REASONS = new Set(['no_documents_ingested', 'no_site_resolved'])
+const engineCompanies = existsSync(P.companies) ? loadJSON('claims/companies.json', P.companies) : null
+if (!engineCompanies) skip('operator coverage', `${P.companies} absent; run python3 -m engine.verify`)
+else {
+  const keyOf = c => String(c.id || c.ticker || '').toUpperCase()
+  check('companies.json: every operator has a route key', engineCompanies.every(c => keyOf(c)),
+    engineCompanies.filter(c => !keyOf(c)).map(c => c.company).join(', ') || `${engineCompanies.length} operators`)
+  const dupes = engineCompanies.map(keyOf).filter((k, i, a) => a.indexOf(k) !== i)
+  check('companies.json: route keys are unique', dupes.length === 0, dupes.join(', ') || undefined)
+  const badStatus = engineCompanies.filter(c => !STATUSES.has(c.coverage_status)).map(c => `${keyOf(c)}:${c.coverage_status}`)
+  check('companies.json: coverage_status is one of the three values', badStatus.length === 0, badStatus.join(', ') || [...STATUSES].join(' / '))
+  // An empty claims array without a stated reason is the exact failure this guards against.
+  const silent = engineCompanies.filter(c => !(c.claims || []).length && !ABSENT_REASONS.has(c.claims_absent_reason)).map(keyOf)
+  check('companies.json: an operator with no claims states an enumerated reason', silent.length === 0,
+    silent.join(', ') || `${engineCompanies.filter(c => !(c.claims || []).length).length} operators with no claims, all with a reason`)
+  const wrongReason = engineCompanies.filter(c => (c.claims || []).length && c.claims_absent_reason).map(keyOf)
+  check('companies.json: an operator WITH claims states no absence reason', wrongReason.length === 0, wrongReason.join(', ') || undefined)
+  const noRegion = engineCompanies.flatMap(c => (c.sites || []).filter(x => !inCoords(x.region_id || x.ba)).map(x => `${keyOf(c)}:${x.metro}`))
+  check('companies.json: every site resolves to a region in region_coords', noRegion.length === 0, noRegion.join(', ')
+    || `${engineCompanies.reduce((a, c) => a + (c.sites || []).length, 0)} sites`)
+  const badShare = engineCompanies.flatMap(c => (c.sites || []).filter(x => x.cf_share_2025 != null && (x.cf_share_2025 < 0 || x.cf_share_2025 > 1)).map(x => `${keyOf(c)}:${x.ba}`))
+  check('companies.json: site shares are 0-1 fractions', badShare.length === 0, badShare.join(', ') || undefined)
+  // walk_score is the unweighted mean of the mapped sites' shares, for every operator, not just META.
+  const badWalk = engineCompanies.filter(c => {
+    const sh = (c.sites || []).map(x => x.cf_share_2025).filter(v => typeof v === 'number')
+    if (!sh.length) return c.walk_score != null
+    return !near(c.walk_score, sh.reduce((a, b) => a + b, 0) / sh.length, 0.0006)
+  }).map(keyOf)
+  check('companies.json: walk_score is the unweighted mean of its mapped sites', badWalk.length === 0, badWalk.join(', ') || undefined)
+  // An operator with no document read must not carry a talk score: there is nothing to score.
+  const ghostTalk = engineCompanies.filter(c => !(c.claims || []).length && c.talk_score != null).map(keyOf)
+  check('companies.json: no talk score without a claim', ghostTalk.length === 0, ghostTalk.join(', ') || undefined)
+
+  const idx = existsSync(P.companiesIndex) ? loadJSON('companies_index.json', P.companiesIndex) : null
+  if (!idx) fail('companies_index.json exists', `${P.companiesIndex} missing; run node web/scripts/companies_index.mjs`)
+  else {
+    const idxKeys = (idx.companies || []).map(c => c.key)
+    const engineKeys = engineCompanies.map(keyOf)
+    const missing = engineKeys.filter(k => !idxKeys.includes(k))
+    check('companies_index: findable list covers every operator in companies.json', missing.length === 0,
+      missing.length ? `${missing.join(', ')} not searchable; run node web/scripts/companies_index.mjs` : `${idxKeys.length} operators`)
+    const extra = idxKeys.filter(k => !engineKeys.includes(k))
+    check('companies_index: nothing findable that the API cannot answer', extra.length === 0, extra.join(', ') || undefined)
+    const owner = new Map(); const clashes = []
+    for (const c of idx.companies || []) for (const a of c.aliases || []) {
+      if (owner.has(a)) clashes.push(`"${a}" → ${owner.get(a)} and ${c.key}`); else owner.set(a, c.key)
+    }
+    check('companies_index: aliases name one operator each', clashes.length === 0, clashes.join('; ') || `${owner.size} aliases`)
+    const lower = (idx.companies || []).flatMap(c => (c.aliases || []).filter(a => a !== a.toLowerCase()).map(a => `${c.key}:"${a}"`))
+    check('companies_index: aliases are lowercase', lower.length === 0, lower.join(', ') || undefined)
+    const statusDrift = (idx.companies || []).filter(c => {
+      const e = engineCompanies.find(x => keyOf(x) === c.key)
+      return !e || e.coverage_status !== c.coverage_status || (e.sites || []).length !== c.n_sites || (e.claims || []).length !== c.n_claims
+    }).map(c => c.key)
+    check('companies_index: counts and status match companies.json', statusDrift.length === 0,
+      statusDrift.length ? `${statusDrift.join(', ')} stale; run node web/scripts/companies_index.mjs` : undefined)
+  }
+
+  if (!existsSync(P.exportCompany)) skip('static export: one file per operator', `${P.exportCompany} absent`)
+  else {
+    const shipped = new Set(readdirSync(P.exportCompany).filter(f => f.endsWith('.json')).map(f => f.replace('.json', '')))
+    const notShipped = engineCompanies.map(keyOf).filter(k => !shipped.has(k))
+    check('static export: one file per operator', notShipped.length === 0,
+      notShipped.length ? `${notShipped.join(', ')} missing; run python3 -m server --static-export` : `${shipped.size} files`)
   }
 }
 

@@ -134,9 +134,9 @@ one predicate before it shipped.
 containing five days of data, while every other rule used 2026-08. Our own written rule says partial
 months are dropped. The code did not know that.
 
-**9. A ranking that was secretly a tautology.** Our first alert-prioritisation pass scored missing
+**9. A ranking that was secretly a tautology.** Our first alert-prioritization pass scored missing
 persistence and recency values as 1.0. Structural alerts have no such values, so they got a free
-pass on two of three factors and swept the top eight slots — the "prioritised" screen was the
+pass on two of three factors and swept the top eight slots — the "prioritized" screen was the
 detector ranking relabelled, and it looked entirely reasonable. Unknown factors now score at the
 population median, so missing data is never an advantage.
 
@@ -174,9 +174,9 @@ targeted substring check and be mangled two inches higher up.
 test we wrote, while three of four real filings sliced wrong: 759 words instead of 11,754;
 a 52,000-word run-on; a 367-word truncation. Tests only test what you imagined.
 
-**A ranking that was secretly a tautology.** Our alert prioritiser scored missing values
+**A ranking that was secretly a tautology.** Our alert prioritizer scored missing values
 as 1.0, so structural alerts got a free pass on two of three factors and swept the top
-eight slots. The "prioritised" screen was the detector ranking relabelled. Every test
+eight slots. The "prioritized" screen was the detector ranking relabelled. Every test
 passed. It was caught by noticing the ordering looked too tidy.
 
 **A sweep that missed the thing it was built to find.** Our first pairwise duplicate
@@ -315,7 +315,7 @@ hour in BANC.
 
 We published a claim: the AZPS/SRP double-count was the only pair of balancing
 authorities reporting the same generation as each other. That came from investigating
-Arizona and then checking its neighbour. It had never been tested exhaustively.
+Arizona and then checking its neighbor. It had never been tested exhaustively.
 
 So we tested it. **Every unordered pair of balancing authorities, every fuel, every hour
 both report, in 90-day windows stepped 30 days: 4,430 pairs with enough data across
@@ -355,7 +355,7 @@ produced dozens of false accusations about named grid operators.
 
 Google publishes grid carbon-free share per balancing authority in its environmental
 report — the same quantity we compute from EIA-930, calculated independently, by a
-different organisation, from different inputs.
+different organization, from different inputs.
 
 | BA | Google | Wattson |
 |---|---|---|

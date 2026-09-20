@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
 import { Card, Num, Evidence, Chip, KV, Ticks } from '../console/widgets.jsx'
 import Workspace from '../components/Workspace.jsx'
@@ -6,8 +6,8 @@ import Sparkline from '../components/Sparkline.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
 import { loadCompany, useAsync, useRegionDetails, nightSeries } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
-import { checkAnswer, pct0, caveatFor } from '../lib/findings.js'
-import { COMPANIES } from '../lib/query.js'
+import { checkAnswer, pct0, caveatFor, COVERAGE_LINE } from '../lib/findings.js'
+import { COMPANIES, COMPANY_COUNTS, companyByKey, nearestCompanies } from '../lib/query.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import ingest from '../data/ingest_status.json'
@@ -20,6 +20,13 @@ import '../styles/answer.css'
 
 // A grid that generates far less than it uses is mostly imports; its footprint share is not what the site consumes.
 const importerNote = d => { const g = d && d.type === 'zone' && d.parent ? d.parent : d; const gen = g?.total_avg_mw?.['2025']?.all, dem = d?.demand?.['2025']?.avg_mw; return gen && dem && gen / dem < 0.5 ? `generates only ${Math.round(gen / dem * 100)}% of the power it uses, so this share describes what it makes, not what the site draws` : null }
+
+// The site lookup's own flag words. Whoever mapped the site wrote these in capitals because
+// they change how the figure must be read -- a naive-geography trap, an on-site gas plant that
+// EIA-930 never sees, a serving utility we could not resolve. Newly material now that xAI and
+// Crusoe/Abilene are in the product: both burn gas on site, outside the data entirely.
+const SITE_FLAG = /(TRAP[^:.]*|MATERIAL CAVEAT|COARSE-REGION CAVEAT|DEMAND RESPONSE|UNRESOLVED)/
+const siteFlag = note => { const m = String(note || '').match(SITE_FLAG); return m ? m[1].replace(/,[^]*$/, '').trim().toLowerCase() : null }
 
 const VERDICT = { true_on_paper: 'true on paper, not on the wire', contradicted: 'contradicted', unfalsifiable: 'too vague to check', cannot_verify: "can't verify" }
 const PATTERN = { hidden_tradeoff: 'hidden trade-off: a true number that hides the cost next to it', vague_wording: 'vague wording: nothing measurable', no_proof: 'no proof offered', irrelevant: 'irrelevant to the impact', lesser_of_two_evils: 'lesser of two evils', worshiping_false_labels: 'a label that sounds like a standard', fibbing: 'contradicted by its own filing' }
@@ -68,6 +75,56 @@ function AnsGap({ claimed, lo, hi, claimText, measuredText, note }) {
   )
 }
 
+// What we hold, for an operator the data does not answer for. Three cases, said plainly:
+// we hold nothing on this name; we hold sites but no documents; we hold it and this build
+// failed to ship it. The old screen said "Verified so far: Meta" -- one name, when we have
+// four verified and a dozen more mapped, and it never said which of the three was true.
+const COVERAGE_WORD = {
+  sites_and_claims: 'sites mapped and claims read',
+  sites_only: 'sites mapped, no documents read',
+  no_site_resolved: 'no site we could map',
+}
+function CompanyChips({ list }) {
+  return <>{list.map(c => <Chip key={c.key} small href={href.check(c.key)}>{c.name}</Chip>)}</>
+}
+function NotHeld({ ticker, known }) {
+  const verified = COMPANIES.filter(c => c.coverage_status === 'sites_and_claims')
+  const mapped = COMPANIES.filter(c => c.coverage_status === 'sites_only')
+  const unmapped = COMPANIES.filter(c => c.coverage_status === 'no_site_resolved')
+  const near = known ? [] : nearestCompanies(ticker, 3)
+  const ing = known && ingest.companies?.[known.key]
+  if (known) {
+    return (
+      <>
+        <h1 className="verdict">We have {known.name}, but this build did not ship its record.</h1>
+        <p className="note" style={{ marginTop: 10 }}>
+          The operator lookup holds {known.name} ({COVERAGE_WORD[known.coverage_status]}{known.n_sites ? `, ${known.n_sites} site${known.n_sites === 1 ? '' : 's'} on ${known.grids.join(', ')}` : ''}), so this is a missing export, not a coverage gap.
+          {ing ? ` Its documents are ingested — ${ing.documents.map(d => `${d.kind.toUpperCase()}, ${d.pages} pages`).join('; ')}.` : ''}
+        </p>
+        <p className="note" style={{ marginTop: 10 }}>Operators this build does answer for: <CompanyChips list={verified} /></p>
+      </>
+    )
+  }
+  return (
+    <>
+      <h1 className="verdict">We hold nothing on {ticker}.</h1>
+      <p className="note" style={{ marginTop: 10 }}>
+        {ticker} is not in our operator lookup. The lookup is built from the serving utility outward — an operator appears once we can name the utility that serves at least one of its sites — so a missing name means we could not do that, not that the operator is small.
+      </p>
+      {near.length > 0 && <p className="note" style={{ marginTop: 10 }}>Closest thing we do hold: <CompanyChips list={near} /></p>}
+      <p className="note" style={{ marginTop: 14 }}>
+        <b>{COMPANY_COUNTS.total} operators are in the data.</b> {COMPANY_COUNTS.sites_and_claims} with their own documents read and checked against the grid: <CompanyChips list={verified} />
+      </p>
+      <p className="note" style={{ marginTop: 10 }}>
+        {COMPANY_COUNTS.sites_only} more with sites mapped to grids and no documents read — the grid figures are real, the claims column is empty and says why: <CompanyChips list={mapped} />
+      </p>
+      {unmapped.length > 0 && <p className="note" style={{ marginTop: 10 }}>
+        And {unmapped.length === 1 ? 'one we could not map at all, recorded on purpose so the gap is visible' : `${unmapped.length} we could not map at all, recorded on purpose so the gaps are visible`}: <CompanyChips list={unmapped} />
+      </p>}
+    </>
+  )
+}
+
 const REASON = { no_falsifiable_content: 'nothing measurable in the claim', no_site_mapping: 'no site could be mapped to a grid', ba_out_of_coverage: 'its grid is outside our coverage', year_out_of_range: 'the year is outside the data' }
 const pctFmt = n => `${Math.round(n)}%`
 
@@ -78,7 +135,7 @@ export default function Check({ route }) {
   const evidence = route.params?.evidence === '1'
   const { loading, error, data, reload } = useAsync(() => loadCompany(ticker), [ticker])
   const tk = useMemo(readTokens, [])
-  const known = COMPANIES.find(c => c.ticker === ticker)
+  const known = companyByKey(ticker)
   const sites = data?.sites || []
   const details = useRegionDetails(evidence ? sites.map(s => s.region_id) : [])
   const bySite = useMemo(() => {
@@ -100,37 +157,43 @@ export default function Check({ route }) {
   let column
   if (loading) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}><Loading what={known?.name || ticker} /></Card></>
   else if (error) {
-    const others = COMPANIES.filter(c => (error.available || []).includes(c.ticker))
     column = (
       <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}>
-        {error.name === 'NotFound' ? (
-          <>
-            <h1 className="verdict">{known ? `${known.name} isn't verified yet.` : `We don't have ${ticker}.`}</h1>
-            {known && ingest.companies?.[known.ticker] && <p className="note" style={{ marginTop: 10 }}>We have its filings — {ingest.companies[known.ticker].documents.map(d => `${d.kind.toUpperCase()}, ${d.pages} pages`).join('; ')} — but {ingest.companies[known.ticker].extracted ? 'the claims are still being matched to grids' : 'have not pulled the claims out of them yet, so there is nothing to hold against the grid'}.</p>}
-            <p className="note" style={{ marginTop: 10 }}>{others.length ? <>Verified so far: {others.map(c => <Chip key={c.ticker} small href={href.check(c.ticker)}>{c.name}</Chip>)}</> : 'No company has been verified yet.'}</p>
-          </>
-        ) : <ErrorState error={error} onRetry={reload} />}
+        {error.name === 'NotFound' ? <NotHeld ticker={ticker} known={known} /> : <ErrorState error={error} onRetry={reload} />}
       </Card></>
     )
   } else {
     const a = checkAnswer(data)
+    // No claim of its own read. The page still has sites, utilities and grid shares; what it
+    // does not have is a sentence to hold against them, and it has to say so, not go quiet.
+    const noClaim = !a.primary
     const modules = [
       ...((data.claims || []).some(k => k.page && k.verbatim) ? [{ id: 'sbs', title: mtitle(LinkIcon, 'Says, and discloses, in the same report'), render: () => <SideBySideModule company={data} /> }] : []),
       ...(innovLadderModule.applies({ company: data }) ? [{ id: innovLadderModule.id, title: mtitle(Layers, innovLadderModule.title), render: () => innovLadderModule.render({ company: data }) }] : []),
       { id: 'sites', title: mtitle(Place, 'Where its sites draw power'), render: () => (
         <>
           <div className="rows">
-            {sites.map(s => { const e = bySite[s.ba]; const cav = caveatFor(s.region_id); const series = nightSeries(details[s.region_id]); return (
-              <a className="row" key={s.metro} href={href.region(s.region_id)}>
-                <div><div className="t">{s.metro}</div><div className="d">{s.serving_utility || 'utility unknown'} · {s.grid_label}{s.source_type ? ` · ${s.source_type.replace(/_/g, ' ')}` : ''}{cav ? ' · history corrected' : ''}{importerNote(details[s.region_id]) ? ` · ${importerNote(details[s.region_id])}` : ''}</div></div>
-                <div className="n" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>{series && <Sparkline values={series} width={64} height={18} accentLast baseline title="clean at night, 2019 to 2025" />}<span>{e?.cf_share != null ? pct0(e.cf_share) : '—'}{(e?.overnight_cf_share ?? series?.[6]) != null && <small> · {pct0(e?.overnight_cf_share ?? series[6])} at night, when the servers still run</small>}</span></div>
-              </a>) })}
+            {sites.map(s => { const e = bySite[s.ba]; const cav = caveatFor(s.region_id); const series = nightSeries(details[s.region_id]); const flag = siteFlag(s.note); return (
+              <Fragment key={s.metro}>
+                <a className="row site-row" href={href.region(s.region_id)}>
+                  <div><div className="t">{s.metro}</div><div className="d">{s.serving_utility || 'utility unknown'} · {s.grid_label}{s.source_type ? ` · ${s.source_type.replace(/_/g, ' ')}` : ''}{s.detector_rank ? ` · #${s.detector_rank} of 111 for flat load` : ''}{cav ? ' · history corrected' : ''}{importerNote(details[s.region_id]) ? ` · ${importerNote(details[s.region_id])}` : ''}</div></div>
+                  <div className="n" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 10 }}>{series && <Sparkline values={series} width={64} height={18} accentLast baseline title="clean at night, 2019 to 2025" />}<span>{e?.cf_share != null ? pct0(e.cf_share) : '—'}{(e?.overnight_cf_share ?? series?.[6]) != null && <small> · {pct0(e?.overnight_cf_share ?? series[6])} at night, when the servers still run</small>}</span></div>
+                </a>
+                {flag && <details className="site-note"><summary>{flag} — how this site's figure has to be read</summary><p className="note">{s.note}</p></details>}
+              </Fragment>) })}
           </div>
-          <p className="note" style={{ marginTop: 10 }}>Each row is one building and the grid under it: the share of that grid's 2025 power that was carbon-free, then the same figure at night, then that night-time share year by year from 2019. A flat line is a grid that never got cleaner after dark. Sites are traced from the serving utility, never guessed from the state.</p>
+          <p className="note" style={{ marginTop: 10 }}>Each row is one building and the grid under it: the share of that grid's 2025 power that was carbon-free, then the same figure at night, then that night-time share year by year from 2019. A flat line is a grid that never got cleaner after dark. Sites are traced from the serving utility, never guessed from the state{sites.some(s => !s.serving_utility) ? ', and where no utility could be named the row says so rather than filling it in' : ''}.</p>
         </>
       ) },
-      { id: 'claims', title: mtitle(CompanyIcon, 'What it claims, and the verdict'), render: () => (
+      { id: 'claims', title: mtitle(CompanyIcon, noClaim ? 'What it claims — and why this is empty' : 'What it claims, and the verdict'), render: () => (
         <>
+          {noClaim && (
+            <div className="claim">
+              <div className="q" style={{ fontStyle: 'normal', opacity: 0.85 }}>{data.claims_absent_note || COVERAGE_LINE[a.coverage_status] || COVERAGE_LINE.sites_only}</div>
+              <div className="m"><Chip small>{(data.claims_absent_reason || a.claims_absent_reason || 'no_documents_ingested').replace(/_/g, ' ')}</Chip><span>0 claims read</span></div>
+              <div className="why">An empty claims list here is a statement about our coverage, not about {data.company}. The grid figures on this page are measured either way: they describe the power on the wire at its sites, whatever it has or has not published.</div>
+            </div>
+          )}
           {(data.claims || []).map(k => {
             const contra = (k.evidence || []).find(e => e.type === 'internal_contradiction' || e.type === 'cross_document_contradiction')
             const reason = (k.evidence || []).find(e => e.type === 'note' && /cannot_verify/.test(e.note || ''))
@@ -182,14 +245,19 @@ export default function Check({ route }) {
     column = (
       <>
         <Breadcrumbs trail={crumbs} />
-        <Zone icon={Bolt} right={<span className="chip sm ans-chip"><VerdictIcon size={12} />{VERDICT[a.verdict] || 'read'}</span>}>Answer</Zone>
+        <Zone icon={Bolt} right={<span className="chip sm ans-chip"><VerdictIcon size={12} />{noClaim ? 'no claim read' : (VERDICT[a.verdict] || 'read')}</span>}>Answer</Zone>
         <div className="ans-sticky">
           <span className="ans-sticky-name"><CompanyIcon size={13} />{data.company}</span>
-          <span className="ans-sticky-v"><b>{claimText}</b> claimed on paper · <b className={measuredTone}>{measuredText}</b> generated on its grids</span>
+          {noClaim
+            ? <span className="ans-sticky-v">{a.coverage_status === 'no_site_resolved'
+              ? 'no claim read, and no site we could map'
+              : <>no claim of its own read · <b className={data.walk_score >= 0.5 ? 'clean' : 'fossil'}>{data.walk_score != null ? pct0(data.walk_score) : '—'}</b> generated on its grids</>}</span>
+            : <span className="ans-sticky-v"><b>{claimText}</b> claimed on paper · <b className={measuredTone}>{measuredText}</b> generated on its grids</span>}
         </div>
-        <Card className="ans-card" title={<><b>{data.company}</b> · {data.ticker}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
+        <Card className="ans-card" title={<><b>{data.company}</b> · {data.ticker || <span className="muted">no listed equity</span>}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
           <h1 className="verdict ans-lead">{lead}</h1>
           {rest && <p className="ans-rest">{rest}</p>}
+          {noClaim && <p className="note ans-coverage"><b>{(data.claims_absent_reason || a.claims_absent_reason || 'no_documents_ingested').replace(/_/g, ' ')}.</b> {data.unmapped_reason || data.claims_absent_note || COVERAGE_LINE[a.coverage_status] || COVERAGE_LINE.sites_only}{(data.unmapped_searched || []).length > 0 && <><br />What we looked for: {data.unmapped_searched.join('; ')}.</>}</p>}
           {track ? (
             <>
               <AnsGap
@@ -201,14 +269,14 @@ export default function Check({ route }) {
               {a.numbers.length > 2 && <div className="nums ans-meta" style={{ gridTemplateColumns: `repeat(${a.numbers.length - 2}, auto)` }}>{a.numbers.slice(2).map((n, i) => <Num key={i} {...n} />)}</div>}
             </>
           ) : a.numbers.length > 0 && <div className="nums">{a.numbers.map((n, i) => <Num key={i} {...n} />)}</div>}
-          <details className="ans-why" open={!!whyLine}>
+          {a.coverage_status !== 'no_site_resolved' && <details className="ans-why" open={!!whyLine}>
             <summary>Why this number is conservative</summary>
             <dl className="ans-dl">
               {scopeLine && <div><dt>what it covers</dt><dd>{scopeLine}</dd></div>}
               {whyLine && <div><dt>why it reads low</dt><dd>{whyLine}</dd></div>}
-              <div><dt>basis</dt><dd>Only what the grids around its sites generated. Clean power the company contracts for elsewhere is not counted, which is why this sits below its own published figure.</dd></div>
+              <div><dt>basis</dt><dd>Only what the grids around its sites generated. Clean power the company contracts for elsewhere is not counted{noClaim ? ', so this is the power on the wire, not an accounting figure.' : ', which is why this sits below its own published figure.'}</dd></div>
             </dl>
-          </details>
+          </details>}
           <Evidence open={evidence} onToggle={toggle} />
         </Card>
         {evidence && (

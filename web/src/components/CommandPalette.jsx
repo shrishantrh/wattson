@@ -2,8 +2,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Command } from 'cmdk'
 import { askItem, matchGroups, useCommands } from '../lib/commands.js'
-import { ask as askServer, askAvailable, summarize } from '../lib/ask.js'
+import { askAvailable, summarize } from '../lib/ask.js'
+import { renderable, runAsk as runAskServer } from '../lib/askStore.js'
 import { pageContext } from '../lib/pageContext.js'
+import { accept, completion, suggestions, SUMMARIZE } from '../lib/suggest.js'
+import { href } from '../router.js'
 import '../styles/palette.css'
 
 // The command palette. <CommandPalette /> is the dialog: ⌘K / Ctrl+K toggles it, "/" opens it
@@ -42,24 +45,68 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   const [aiOn, setAiOn] = useState(false)
   const [answer, setAnswer] = useState(null)   // {state:'loading'|'done'|'error', text, tools}
   useEffect(() => { askAvailable().then(setAiOn) }, [])
+  // Prewritten prompts for whatever screen this is. Recomputed on navigation, because the
+  // useful question on a company page is not the useful question on the landing page.
+  const [sugg, setSugg] = useState(() => suggestions(pageContext()))
+  useEffect(() => {
+    const f = () => setSugg(suggestions(pageContext()))
+    window.addEventListener('hashchange', f)
+    return () => window.removeEventListener('hashchange', f)
+  }, [])
+  // The grey tail under the caret. '' whenever more than one prompt still matches, so we
+  // never put a question under the caret that Tab would not actually run.
+  const ghost = useMemo(() => (aiOn ? completion(q, sugg) : ''), [aiOn, q, sugg])
+  // Suggestions ride in the list as a normal group, so the arrow keys and Enter that already
+  // work for commands work for them too. Capped, and only the ones that still match.
+  const suggGroup = useMemo(() => {
+    if (!aiOn) return null
+    const b = q.trim().toLowerCase()
+    const hits = sugg.filter(t => !b || t.toLowerCase().startsWith(b))
+    if (!hits.length) return null
+    return { id: 'suggest', label: 'Ask the data', total: hits.length,
+             items: hits.slice(0, 4).map((t, i) => ({ id: `sug-${i}`, label: t, hint: 'ask',
+               action: () => runAsk(t, t === SUMMARIZE ? 'summary' : 'ask') })) }
+  }, [aiOn, q, sugg]) // eslint-disable-line react-hooks/exhaustive-deps
   const list = useMemo(() => {
-    if (!ask) return shown
-    if (!shown.length) return [{ id: 'ask', label: 'Ask', items: [ask], total: 1 }]
-    if (ask.href && ask.composed) return [{ id: 'ask', label: 'Ask', items: [ask], total: 1 }, ...shown]
-    return shown
-  }, [ask, shown])
+    if (!ask) return suggGroup ? [...shown, suggGroup] : shown
+    const askG = { id: 'ask', label: 'Ask', items: [ask], total: 1 }
+    if (!shown.length) return suggGroup ? [askG, suggGroup] : [askG]
+    if (ask.href && ask.composed) return suggGroup ? [askG, ...shown, suggGroup] : [askG, ...shown]
+    return suggGroup ? [...shown, suggGroup] : shown
+  }, [ask, shown, suggGroup])
+  // Two different things share one input. "Summarise this screen" is prose about the screen
+  // you are on, and it stays in the dropdown over that screen. A free-text question can come
+  // back with a shape — places side by side, a ranking, one subject and its figures — and a
+  // table does not belong in a dropdown, so that goes to #/ask, which reads the answer the
+  // store is already holding rather than asking again. An answer that is genuinely a sentence
+  // renders here exactly as it always did.
   const runAsk = async (question, kind = 'ask') => {
     setAnswer({ state: 'loading', q: question })
     try {
       const ctx = pageContext()
-      const r = kind === 'summary' ? await summarize(ctx) : await askServer(question, ctx)
-      setAnswer({ state: 'done', q: question, text: r.answer || '', tools: r.tools_used || [] })
+      if (kind === 'summary') {
+        const r = await summarize(ctx)
+        setAnswer({ state: 'done', q: question, text: r.answer || '', tools: r.tools_used || [] })
+        return
+      }
+      const r = await runAskServer(question, ctx)
+      if (r.state === 'error') { setAnswer({ state: 'error', q: question, text: r.error }); return }
+      if (renderable(r.view)) {
+        setAnswer(null); setQ('')
+        onDone?.()
+        window.location.assign(href.ask(question))
+        return
+      }
+      setAnswer({ state: 'done', q: question, text: r.answer || '', tools: r.tools || [] })
     } catch (e) {
       setAnswer({ state: 'error', q: question, text: String(e.message || e) })
     }
   }
+  // `partial` items parsed, but only by discarding most of what was typed; with the ask layer
+  // up they are questions, not commands.
+  const toAsk = it => !!it.unknown || (!!it.partial && aiOn)
   const run = it => {
-    if (it.unknown) { if (aiOn) runAsk(q); return }
+    if (toAsk(it)) { if (aiOn) runAsk(q); return }
     if (it.action) it.action(); else if (it.href) window.location.assign(it.href)
     setQ('')
     onDone?.()
@@ -69,14 +116,20 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   const showList = hasQuery || emptyLimit > 0
   return (
     <Command shouldFilter={false} loop label="Wattson commands" className={`pal ${className}`}
-      onKeyDown={e => { if (e.key === 'Escape' && emptyLimit === 0 && hasQuery) { e.preventDefault(); e.stopPropagation(); setQ('') } }}>
-      <Command.Input className="pal-input" value={q} onValueChange={setQ} placeholder={placeholder} autoFocus={autoFocus} autoComplete="off" spellCheck={false} aria-label={placeholder} />
-      {aiOn && (
-        <div className="pal-askbar">
-          <button type="button" className="pal-askbtn" onClick={() => runAsk(q || 'this screen', 'summary')}>Summarise this screen</button>
-          {canAsk && <button type="button" className="pal-askbtn" onClick={() => runAsk(q)}>Ask: {q}</button>}
-        </div>
-      )}
+      onKeyDown={e => {
+        if (e.key === 'Tab' && aiOn && !e.shiftKey) {
+          const full = accept(q, sugg)
+          if (full && full !== q.trim()) { e.preventDefault(); setQ(full); return }
+        }
+        if (e.key === 'Escape' && emptyLimit === 0 && hasQuery) { e.preventDefault(); e.stopPropagation(); setQ('') }
+      }}>
+      <div className="pal-inputwrap">
+        {/* The completion is drawn behind the input: the typed half is transparent so the
+            grey tail lands exactly under the caret, and the layer never takes a click. */}
+        {!!ghost && <div className="pal-ghost" aria-hidden="true"><span className="pal-ghost-typed">{q}</span><span className="pal-ghost-rest">{ghost}</span></div>}
+        <Command.Input className="pal-input" value={q} onValueChange={setQ} placeholder={placeholder} autoFocus={autoFocus} autoComplete="off" spellCheck={false} aria-label={placeholder} />
+        {!!ghost && <span className="pal-tab" aria-hidden="true">tab</span>}
+      </div>
       {answer && (
         <div className={`pal-answer ${answer.state}`}>
           {answer.state === 'loading' && <p className="muted">Reading the data…</p>}
@@ -92,10 +145,13 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
           {list.map(g => (
             <Command.Group key={g.id} className="pal-group" heading={<span className="pal-heading"><span>{g.label}</span>{g.total > g.items.length && <span className="pal-count">{g.items.length} of {g.total}</span>}</span>}>
               {g.items.map(it => (
-                <Command.Item key={it.id} value={it.id} className={`pal-item${it.unknown ? ' unknown' : ''}${it.id === 'ask' ? ' ask' : ''}`} disabled={!!it.unknown} onSelect={() => run(it)}>
+                /* A question the deterministic parser cannot route is still answerable: with the
+                   ask layer up, Enter sends it to the model and the answer opens as a view. Only
+                   with no ask layer is it a dead row. */
+                <Command.Item key={it.id} value={it.id} className={`pal-item${it.unknown ? ' unknown' : ''}${it.id === 'ask' ? ' ask' : ''}`} disabled={!!it.unknown && !aiOn} onSelect={() => run(it)}>
                   <span className="pal-label">{it.label}</span>
-                  {it.hint && <span className={`pal-hint${it.mono ? ' mono' : ''}`}>{it.hint}</span>}
-                  {!it.unknown && <span className="pal-go" aria-hidden="true">↵</span>}
+                  {it.hint && <span className={`pal-hint${it.mono ? ' mono' : ''}`}>{toAsk(it) && aiOn ? 'ask the data' : it.hint}</span>}
+                  {(!it.unknown || aiOn) && <span className="pal-go" aria-hidden="true">↵</span>}
                 </Command.Item>
               ))}
             </Command.Group>

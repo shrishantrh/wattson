@@ -103,6 +103,35 @@
 /* ---------- the honesty note ----------
    Never hidden, never the heaviest thing on the card: a compact disclosure with a
    leading warn rule. Open where the caveat changes how the number should be read. */
+/* Coverage, not verdict: why the claims column on this page is empty. Set apart from the
+   answer so it never reads as a finding about the operator. */
+.ans-coverage {
+  margin: 12px 0 0;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2, transparent);
+}
+.ans-coverage b { text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; }
+/* The site rows put a sentence in the number cell ("46% · 41% at night, when the servers
+   still run"). .row's `auto` track plus nowrap let that sentence take the whole width and
+   squeezed the site name to one letter per line at the column's real width. Cap the number
+   track and let it wrap; the name keeps at least half the row. */
+.row.site-row { grid-template-columns: minmax(0, 1fr) minmax(0, 46%); }
+.row.site-row .n { white-space: normal; }
+/* A per-site caveat the lookup flagged in capitals. Collapsed so the row stays quiet, but
+   present, because these change what the number means (on-site gas is outside EIA-930). */
+.site-note { margin: -2px 0 8px; padding-left: 10px; border-left: 2px solid var(--warn-line); }
+.site-note > summary {
+  cursor: pointer; list-style: none; font-size: 11px; letter-spacing: 0.03em;
+  text-transform: uppercase; color: var(--muted); padding: 4px 0;
+}
+.site-note > summary::-webkit-details-marker { display: none; }
+.site-note > summary::after { content: ' ▾'; font-size: 9px; }
+.site-note[open] > summary::after { content: ' ▴'; }
+.site-note > summary:hover { color: var(--ink-2); }
+.site-note .note { margin: 2px 0 6px; }
 .ans-why { margin-top: 14px; padding-left: 10px; border-left: 2px solid var(--warn-line); }
 .ans-why > summary {
   list-style: none;

@@ -46,7 +46,7 @@ Add the API base to the Pages build. In `.github/workflows/pages.yml`, on the bu
           VITE_API_BASE: https://wattson-api.fly.dev
 ```
 
-Then push. ⌘K on the public site gains "Summarise this screen" and free-text ask.
+Then push. ⌘K on the public site gains "Summarize this screen" and free-text ask.
 
 ## Check it worked
 

@@ -178,7 +178,7 @@ Hero: **35,700 → 35,619 MW clean at night**. Sub: "35,700 MW then, 35,619 MW n
 Overnight generation rose 8.7 GW. Gas rose 10.7 GW while coal fell 2.5 GW. Net exports
 fell from 3.8 GW to 2.5 GW, so the new generation served PJM's own load." Numbers:
 **+8.7 GW** more power at night since 2019 · **+10.7 GW** of it from gas · **3.8 GW → 2.5 GW**
-exports to neighbours. Globe marker: "Northern Virginia · +39% at night". Below:
+exports to neighbors. Globe marker: "Northern Virginia · +39% at night". Below:
 "Named before the ranking was seen: Northern Virginia 6th of 111 · Omaha 7th · Central
 Ohio 19th · Dallas 91st."
 
@@ -288,7 +288,7 @@ oil +0.1, nuclear −0.9, hydro −0.2, wind +1.1, solar 0.0, other +0.4) · *Wh
 load* (hand-mapped chip; Virginia Electric and Power (Dominion Energy Virginia) · Dominion
 Energy · D; Northern Virginia Electric Cooperative (NOVEC) · member-owned) · *How the
 detector scored it* ("Night demand grew faster than average demand +7.7 pts"; "Grew faster
-than its neighbours +32.9 pts"; "Load got flatter +0.042"; "Detector rank #6 of 111, score
+than its neighbors +32.9 pts"; "Load got flatter +0.042"; "Detector rank #6 of 111, score
 7.71"; "Demand growth since 2019 +31.8%") · *Alerts here* (night demand at a record since
 Dec 2024 · 21 months · 14,807 MW vs 10,060 in 2019) · *Clean at night, year by year*
 (43.3% → 39.0%).

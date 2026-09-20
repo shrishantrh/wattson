@@ -1,0 +1,48 @@
+{
+ "company": "Tesla",
+ "ticker": "TSLA",
+ "id": "TSLA",
+ "listed_equity": true,
+ "coverage_status": "sites_only",
+ "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+ "claims_absent_reason": "no_documents_ingested",
+ "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+ "sites": [
+  {
+   "metro": "Austin (Travis County)",
+   "state": "TX",
+   "ba": "ERCO",
+   "zone": "ERCO/SCEN",
+   "pjm_zone": "ERCO/SCEN",
+   "region_id": "ERCO/SCEN",
+   "serving_utility": "Bluebonnet Electric Cooperative",
+   "utility_parent": "member-owned cooperative",
+   "utility_ticker": null,
+   "source_type": "press",
+   "source_url": "https://kwhi.com/2020/07/23/new-tesla-gigafactory-in-travis-co-to-be-located-in-bluebonnet-electric-coop-service-area/",
+   "note": "confidence=medium. Article states the southeast Travis County Gigafactory site is inside Bluebonnet's service area and that the co-op has the legal responsibility to provide power. The Cortex AI training cluster sits on that same campus; ERCO/SCEN assigned from ERCOT's South Central weather zone.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.461,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 16,
+   "detector_score": 2.88,
+   "detector_pattern": "flat-load growth"
+  }
+ ],
+ "claims": [],
+ "talk_score": null,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.461,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 0,
+ "notes": [
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+ ],
+ "is_mock": false
+}

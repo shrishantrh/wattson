@@ -49,8 +49,8 @@ Dallas             91st of 111   <- say this one out loud
 ```
 
 > "Four regions named before we saw the ranking. Two landed in the top seven, one at
-> nineteen, **and we missed Dallas.** Neighbour divergence compares a zone against its
-> neighbours, and every ERCOT zone is booming, so a booming Dallas looks unremarkable.
+> nineteen, **and we missed Dallas.** Neighbor divergence compares a zone against its
+> neighbors, and every ERCOT zone is booming, so a booming Dallas looks unremarkable.
 > That's a property of the method. We reported it rather than retuning."
 
 **If asked what the detector can't do:** it finds flat 24/7 load, not datacenters. It

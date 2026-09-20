@@ -1,19 +1,22 @@
 import { useMemo } from 'react'
 import Shell from '../console/Console.jsx'
-import { Card, Num, HourBars, Chip } from '../console/widgets.jsx'
+import { Card, Num, Chip } from '../console/widgets.jsx'
 import Workspace from '../components/Workspace.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
+import WxHourScrub from '../components/WxHourScrub.jsx'
+import WxYearSeries from '../components/WxYearSeries.jsx'
 import { applicableModules } from '../components/modules/index.js'
 import coords from '../data/region_coords.json'
-import { loadRegion, loadRegions, useAsync, hourProfile } from '../lib/data.js'
+import { loadRegion, loadRegions, useAsync } from '../lib/data.js'
 import { nearbyModule } from '../components/modules/NearbyModule.jsx'
 import { readTokens } from '../lib/tokens.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { regionTitle, pts1, n0 } from '../lib/findings.js'
-import { summarize, orderEvidence } from '../lib/regionSummary.js'
+import { summarize, orderEvidence, EVIDENCE_ORDER } from '../lib/regionSummary.js'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 import { Bolt, Layers, Info } from '../components/Icons.jsx'
 import { href, useHash } from '../router.js'
+import '../styles/wx.css'
 
 // The dossier for one place: one sentence, four numbers, one line on what 300 MW here would run on,
 // then the evidence in order of importance. Nothing shows that the source does not have.
@@ -55,15 +58,35 @@ export default function Region({ route }) {
   const back = () => { if (window.history.length > 1) window.history.back(); else window.location.hash = href.landing() }
 
   const s = useMemo(() => (data ? summarize(data, id, { loadMW: LOAD_MW, coords: c }) : null), [data, id, c])
-  const prof = data ? hourProfile(data) : null
+  // A zone reports demand only, so every generation series below is its parent grid's. The
+  // engine's correction overlay (AZPS's 2019 counted a plant SRP also reported) is applied
+  // here rather than in the components, so what is drawn is what the engine stands behind.
+  const gen = data && data.type === 'zone' && data.parent && typeof data.parent === 'object' ? data.parent : data
+  const corr = useMemo(() => (data?.corrections?.corrections || gen?.corrections?.corrections || []), [data, gen])
+  const prof24 = useMemo(() => {
+    const raw = gen?.profile_24h
+    if (!raw) return null
+    if (Array.isArray(raw)) return { 2025: raw }
+    const fixed = corr.find(x => x.path === 'profile_24h.2019')?.corrected
+    return fixed ? { ...raw, 2019: fixed } : raw
+  }, [gen, corr])
   const ctx = useMemo(() => ({ detail: data, region_id: id, load_mw: LOAD_MW }), [data, id])
   const modules = useMemo(() => {
     if (!data) return []
-    const hours = { id: 'hours', title: 'A 24/7 load takes every hour, good and bad — clean power by hour, 2025', render: () => (prof ? <HourBars values={prof} /> : <p className="note">No hour-by-hour data for this grid, so we cannot show which hours here are clean.</p>) }
+    const hours = {
+      id: 'hours',
+      title: 'A flat load buys every one of these hours — walk through them',
+      render: () => <WxHourScrub profile={prof24} loadMW={LOAD_MW} corrected2019={corr.some(x => x.path === 'profile_24h.2019')} />,
+    }
+    const series = {
+      id: 'series',
+      title: 'Clean share or clean megawatts — the two do not have to move together',
+      render: () => <WxYearSeries share={gen?.cf_share} clean={gen?.cf_avg_mw} total={gen?.total_avg_mw} corrections={corr} label={s?.inherited ? `the ${s.grid} grid` : (s?.label || 'this grid')} />,
+    }
     const rest = applicableModules(ctx).map(m => ({ id: m.id, title: m.title, render: () => m.render(ctx), default: m.id !== 'heatmap' }))
     const nb = regs.data && nearbyModule.applies({ regions: regs.data, region_id: id }) ? [{ id: 'nearby', title: nearbyModule.title, render: () => nearbyModule.render({ regions: regs.data, region_id: id, load_mw: 300 }) }] : []
-    return orderEvidence([hours, ...rest, ...nb])
-  }, [data, prof, ctx, regs.data])
+    return orderEvidence([hours, series, ...rest, ...nb], ['hours', 'series', ...EVIDENCE_ORDER.slice(1)])
+  }, [data, prof24, gen, corr, s, ctx, regs.data, id])
 
   if (loading || error) {
     const title = <><b>{c?.place || label}</b>{c ? ` · ${id.split('/')[0]} grid` : ''}</>
@@ -106,6 +129,7 @@ export default function Region({ route }) {
         </div>
       </Card>
       <SectionLabel icon={Layers} count={modules.length}>Evidence</SectionLabel>
+      <p className="note" style={{ margin: '-4px 0 10px 2px' }}>The first two are live: scrub the 24 hours to see what a flat load buys at any one of them, and switch the yearly series between the clean share and the megawatts behind it — a falling share is not the same thing as less clean power.</p>
       <Workspace id="region" modules={modules} />
     </>
   )

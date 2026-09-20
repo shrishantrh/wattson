@@ -21,7 +21,7 @@ export function openingTitle(pjm, baseline = 2019, latest = 2025) {
   if (tot != null) parts.push(tot > 0 ? `The grid made ${gw1(tot)} more power in those hours anyway.` : `The grid made ${gw1(tot)} less power in those hours.`)
   const coal = pjm.fuel_delta_overnight_gw?.coal
   if (gas != null) parts.push(`${b - a <= 0 ? 'None of that growth was clean. ' : ''}Gas rose ${signedGw(gas).replace('+', '')}${coal != null && coal < 0 ? `, more than the growth itself, because it also replaced ${signedGw(coal).replace('−', '')} of retired coal` : ''}.`)
-  if (ex0 != null && ex1 != null) parts.push(ex1 < ex0 ? `It was not for the neighbours either: net exports fell from ${gw1(ex0)} to ${gw1(ex1)}, so the extra power stayed inside PJM.` : `Net exports rose from ${gw1(ex0)} to ${gw1(ex1)}, so some of the extra power left PJM.`)
+  if (ex0 != null && ex1 != null) parts.push(ex1 < ex0 ? `It was not for the neighbors either: net exports fell from ${gw1(ex0)} to ${gw1(ex1)}, so the extra power stayed inside PJM.` : `Net exports rose from ${gw1(ex0)} to ${gw1(ex1)}, so some of the extra power left PJM.`)
   return { title: `PJM's clean power at night ${verb} since ${baseline}.`, sub: parts.join(' ') }
 }
 
@@ -100,11 +100,51 @@ export const caveatFor = id => caveats[id] || (id && id.includes('/') ? caveats[
 // Direction from the change since 2019 (points); the per-year slope only when that is missing.
 const trendWord = (chg, slope) => (chg != null ? (chg > 0.01 ? 'improving' : chg < -0.01 ? 'getting worse' : 'holding steady') : slope == null ? 'with no trend data' : slope > 0.005 ? 'improving' : slope < -0.005 ? 'getting worse' : 'holding steady')
 
+// What we hold on an operator, in its own words. Three values, set by the engine, never
+// inferred here from an empty array: an operator with no claims is a statement about OUR
+// document coverage, and the screen has to say which of the two it is looking at.
+export const COVERAGE_LINE = {
+  sites_only: 'We have read no documents from this operator. Its sites and their grids are measured; there is no claim of its own to hold against them.',
+  no_site_resolved: 'We could not tie a single site to the utility that serves it, so there is no grid to check. Recorded as an unmapped operator rather than given a grid it may not draw from.',
+}
+
 export function checkAnswer(c) {
   const claims = c?.claims || [], sites = c?.sites || []
   const primary = claims.find(k => k.magnitude != null && ['true_on_paper', 'contradicted'].includes(k.verdict)) || claims.find(k => k.magnitude != null) || claims[0]
   const cv = c?.cannot_verify_count ?? 0
-  if (!primary) return { sentence: `${c?.company || 'This company'} has no extracted claims yet.`, numbers: [], verdict: null }
+  // No claim read. Say so as a coverage fact and show the grid figures we do have, which
+  // for a mapped operator is most of the screen: sites, serving utilities, clean shares.
+  if (!primary) {
+    const status = c?.coverage_status || (sites.length ? 'sites_only' : 'no_site_resolved')
+    const shares = sites.map(s => s.cf_share_2025).filter(v => v != null)
+    const lo = shares.length ? Math.min(...shares) : null, hi = shares.length ? Math.max(...shares) : null
+    const range = lo == null ? null : Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`
+    const name = c?.company || 'This operator'
+    if (status === 'no_site_resolved' || !sites.length) {
+      return {
+        sentence: `We have not mapped a single ${name} site to the utility that serves it, so there is nothing here to check. That is a gap in our coverage, not a finding about them.`,
+        verdict: null, primary: null, coverage_status: 'no_site_resolved', claims_absent_reason: c?.claims_absent_reason || 'no_site_resolved',
+        numbers: [
+          { value: '0', label: 'sites mapped', sub: 'no site tied to a named serving utility' },
+          { value: '0', label: 'claims read', sub: 'nothing to hold against a grid' },
+        ],
+      }
+    }
+    const traced = sites.filter(x => x.serving_utility).length
+    const where = sites.length === 1 ? 'The grid under its one mapped site' : `The grids under its ${sites.length} mapped sites`
+    return {
+      sentence: `We have read no documents from ${name}, so there is no claim of its own to check. What we can measure is where it draws power. ${where} generated ${range} carbon-free power in 2025.`,
+      verdict: null, primary: null, coverage_status: 'sites_only', claims_absent_reason: c?.claims_absent_reason || 'no_documents_ingested',
+      numbers: [
+        { value: c?.walk_score != null ? pct0(c.walk_score) : range || '—', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: 'carbon-free share of 2025 generation, all hours', accent: true },
+        // Only say 'traced from the serving utility' about sites where we actually named one.
+        // Cipher's Wink and the Ellendale campus have no established serving utility: their BA is
+        // the operator's own attribution, and the stat must not launder that into a trace.
+        { value: String(sites.length), label: sites.length === 1 ? 'site mapped' : 'sites mapped', sub: traced === sites.length ? 'traced from the serving utility, never the state' : traced ? `${traced} traced from the serving utility, ${sites.length - traced} with none established` : 'grid is the operator\u2019s own attribution; no serving utility established' },
+        { value: '0', label: 'claims read', sub: 'no documents ingested from this operator' },
+      ],
+    }
+  }
   const claimed = primary.metric === 'renewable_electricity_share' && primary.unit === 'fraction' ? `${Math.round(primary.magnitude * 100)}% renewable` : primary.metric === 'contracted_capacity_mw' ? `${n0(primary.magnitude)} MW of contracted clean power` : primary.magnitude != null ? `${primary.magnitude} ${primary.unit || ''}`.trim() : (primary.metric || 'a clean-energy claim').replace(/_/g, ' ')
   const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'Too vague to check.', cannot_verify: "Can't be checked from grid data." }[primary.verdict] || ''
   const lo = primary.physical_min, hi = primary.physical_max

@@ -70,7 +70,7 @@ the weights and the p99.5 peak before the ranking was looked at, and the region 
 [`web/src/components/modules/DetectorModule.jsx`].
 
 **8. You missed Dallas. Why show that?**
-ERCOT North Central grew 14.2% but the median ERCOT zone grew about 26%, so its neighbour
+ERCOT North Central grew 14.2% but the median ERCOT zone grew about 26%, so its neighbor
 divergence is −12.2 points and its score −1.32, rank 91 of 111: the detector penalises a
 zone inside a grid that is booming everywhere [`api/region/ERCO%2FNCEN.json` detection;
 README L91-93]. That is a property of the method, and Dallas was named in advance
@@ -153,7 +153,7 @@ ba_out_of_coverage and year_out_of_range [`web/src/pages/Check.jsx` REASON].
 **17. Why does Google read 6%, and what is that number not?**
 Google's one mapped site, Moncks Corner SC, is served by Berkeley Electric Cooperative from
 Santee Cooper, whose balancing authority generated 5.6% carbon-free in 2025 (0.7% at
-night), while the V.C. Summer nuclear it co-owns reports under the neighbouring SCEG
+night), while the V.C. Summer nuclear it co-owns reports under the neighboring SCEG
 authority at 42.1% [`api/company/GOOGL.json` sites[0]; `api/region/SC.json`;
 `api/region/SCEG.json`]. So 6% is that grid's own generation, not Google's consumption,
 not its fleet (one site of many), and not its hourly CFE, which Google itself reports as 65%

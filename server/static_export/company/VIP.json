@@ -1,0 +1,48 @@
+{
+ "company": "Vulcan Infrastructure and Power (formerly Greenidge)",
+ "ticker": "VIP",
+ "id": "VIP",
+ "listed_equity": true,
+ "coverage_status": "sites_only",
+ "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+ "claims_absent_reason": "no_documents_ingested",
+ "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+ "sites": [
+  {
+   "metro": "Torrey / Dresden (Yates County)",
+   "state": "NY",
+   "ba": "NYIS",
+   "zone": "NYIS/ZONC",
+   "pjm_zone": "NYIS/ZONC",
+   "region_id": "NYIS/ZONC",
+   "serving_utility": null,
+   "utility_parent": null,
+   "utility_ticker": null,
+   "source_type": "sec_filing",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1844971/000162828025015543/gree-20241231.htm",
+   "note": "confidence=medium. The 10-K states all power for the New York datacenter comes from the company's own 106 MW behind-the-meter gas plant, so EIA-930 sees that plant's net sales into NYISO and never the datacenter load - the cleanest example in this file of a site our method structurally cannot see. Ticker changed from GREE to VIP on 24 Jul 2026.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.446,
+   "cf_inherited_from_ba": true,
+   "detector_rank": 32,
+   "detector_score": 1.27,
+   "detector_pattern": "possible midday solar suppression"
+  }
+ ],
+ "claims": [],
+ "talk_score": null,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.446,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 0,
+ "notes": [
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+ ],
+ "is_mock": false
+}

@@ -59,3 +59,26 @@ button.quick:hover, button.quick:focus-visible { color: var(--ink-2); border-col
 /* phones and portrait tablets: mobile.css re-pads the input row, so the badge stands down */
 @media (max-width: 900px) { .pal-inline-k { display: none; } }
 @media (max-width: 640px) { .pal-overlay { padding-top: 10vh; } .pal-panel { max-height: 72vh; } .pal-hint { max-width: 40%; } }
+
+/* ---- inline completion -------------------------------------------------------------
+   The grey tail is a layer UNDER the input, not inside it: the typed half is rendered
+   transparent so the suggested half starts exactly where the caret is. Every metric here
+   has to match .pal-input or the tail drifts off the caret, so the two are edited together. */
+.pal-inputwrap { position: relative; }
+.pal-ghost {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  font-size: 16px; font-family: var(--font-ui); padding: 15px 18px;
+  white-space: pre; overflow: hidden; line-height: inherit;
+}
+.pal-ghost-typed { color: transparent; }
+.pal-ghost-rest { color: var(--muted); opacity: 0.72; }
+.pal-inputwrap .pal-input { position: relative; z-index: 1; }
+/* the landing-page input is a different size; keep the layer on the caret there too */
+.pal-inline .pal-ghost { font-size: 17px; letter-spacing: -0.01em; padding: 17px 54px 17px 18px; }
+.pal-tab {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%); z-index: 2;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  border: 1px solid var(--line-soft, rgba(255,255,255,0.14)); border-radius: 4px;
+  padding: 2px 6px; pointer-events: none; opacity: 0.8;
+}
+.pal-inline .pal-tab { right: 54px; }

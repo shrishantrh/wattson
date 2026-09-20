@@ -2,12 +2,15 @@ import { useMemo } from 'react'
 import Shell from '../console/Console.jsx'
 import { Card, Chip } from '../console/widgets.jsx'
 import Table from '../components/Table.jsx'
+import WxProvenance from '../components/WxProvenance.jsx'
+import { useTableKeys } from '../components/WxControls.jsx'
 import coords from '../data/region_coords.json'
 import { loadRegions, loadAlerts, loadCompanies, loadCompany, loadFacilities, useAsync } from '../lib/data.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { pct1 } from '../lib/findings.js'
 import { href, useHash } from '../router.js'
 import '../styles/pages.css'
+import '../styles/wx.css'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 // The sheets: every dataset the answers are built from, sortable, filterable, exportable.
@@ -39,14 +42,23 @@ export default function Data({ route }) {
   const globe = useMemo(() => ({ view: { lat: 38.5, lng: -97, altitude: 1.6 }, interactive: true }), [])
   const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
+  const keys = useTableKeys()
   const column = (
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<><b>Data</b> · the sheets behind every answer</>} onClose={back}>
         <div className="pg-chips">{SHEETS.map(([id, label]) => <Chip key={id} small active={id === t} href={`#/data?t=${id}`}>{label}</Chip>)}</div>
-        <p className="pg-lede">Sort any column, filter any text, download the CSV. Hourly EIA-930 via PUDL through 2026-09-05; claims read off the rendered pages of each company's own reports; site mapping and operators hand-curated.</p>
+        <p className="pg-lede">Nothing on this site is a figure you have to take our word for. Every number an answer uses is in one of these sheets, and every column below says which file it was read from, which script produced it, and what it is stored as — shares are 0–1 fractions in the file and percentages only on screen. Sort any column, filter any text, take the CSV.</p>
+        {!loading && !error && <WxProvenance sheet={t} columns={data.columns} rows={data.rows} snapshot="Hourly EIA-930 via PUDL, snapshot ending 2026-09-05. Claims are read off the rendered pages of each company's own reports; the site-to-utility-to-grid mapping and the operator table are hand-curated and a human should check them before anyone judges an operator." />}
       </Card>
-      {loading ? <Card><Loading what="the sheet" /></Card> : error ? <Card><ErrorState error={error} onRetry={reload} /></Card> : <Card><Table columns={data.columns} rows={data.rows} sortKey={data.sortKey} defaultSort={data.defaultSort} rowHref={data.rowHref} rowKey={data.rowKey} filter csvName={`wattson-${t}`} dense maxHeight="min(66vh, 720px)" /></Card>}
+      {loading ? <Card><Loading what="the sheet" /></Card> : error ? <Card><ErrorState error={error} onRetry={reload} /></Card> : (
+        <Card>
+          <div ref={keys.ref} onKeyDown={keys.onKeyDown}>
+            <Table columns={data.columns} rows={data.rows} sortKey={data.sortKey} defaultSort={data.defaultSort} rowHref={data.rowHref} rowKey={data.rowKey} filter csvName={`wattson-${t}`} dense maxHeight="min(60vh, 660px)" />
+            <p className="wx-hint" style={{ marginTop: 8 }}>Tab into the table, then <span className="wx-kbd">&uarr;</span> <span className="wx-kbd">&darr;</span> to move and <span className="wx-kbd">&crarr;</span> to open the row. An em dash is a value the source does not have — it is never a zero.</p>
+          </div>
+        </Card>
+      )}
     </>
   )
   return <Shell page="data" globe={globe} column={column} columnWidth={860} />

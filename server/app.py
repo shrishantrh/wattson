@@ -206,6 +206,14 @@ def get_companies():
     for c in data.company_list():
         claims = c.get("claims") or []
         rows.append({"company": c.get("company"), "ticker": c.get("ticker"),
+                     "id": data.company_key(c),
+                     "listed_equity": c.get("listed_equity", bool(c.get("ticker"))),
+                     # Three values, never inferred from an empty array by the client:
+                     # sites_and_claims / sites_only / no_site_resolved.
+                     "coverage_status": c.get("coverage_status"),
+                     "coverage_status_note": c.get("coverage_status_note"),
+                     "claims_absent_reason": c.get("claims_absent_reason"),
+                     "claims_absent_note": c.get("claims_absent_note"),
                      "talk_score": c.get("talk_score"), "walk_score": c.get("walk_score"),
                      "coverage": c.get("coverage"),
                      "unverifiable_share": c.get("unverifiable_share"),
@@ -213,21 +221,34 @@ def get_companies():
                                                 if x.get("verdict") == "cannot_verify"),
                      "n_sites": len(c.get("sites") or []), "n_claims": len(claims),
                      "is_mock": bool(c.get("_mock") or d["is_mock"])})
+    with_claims = [r for r in rows if r["n_claims"]]
     return {"is_mock": d["is_mock"], "count": len(rows),
+            "count_with_claims": len(with_claims),
+            "count_sites_only": sum(1 for r in rows
+                                    if r["coverage_status"] == "sites_only"),
+            "count_no_site_resolved": sum(1 for r in rows
+                                          if r["coverage_status"] == "no_site_resolved"),
             "cannot_verify_total": sum(r["cannot_verify_count"] for r in rows),
             "companies": rows,
             "notes": ["grid-only, excludes PPAs", "unweighted across sites",
-                      "site mapping hand-curated"]}
+                      "site mapping hand-curated",
+                      "an operator with no claims is a gap in OUR document coverage, "
+                      "stated with a reason, not a finding about that operator"]}
 
 
 @app.get("/api/company/{ticker}")
 def get_company(ticker: str):
+    """Look up by route key or ticker. An operator with no listed equity has a null
+    ticker and routes on its name, so the key -- not the symbol -- is the identifier."""
+    want = ticker.upper()
     for c in data.company_list():
-        if (c.get("ticker") or "").upper() == ticker.upper():
+        if data.company_key(c) == want or (c.get("ticker") or "").upper() == want:
             out = dict(c)
+            out["id"] = data.company_key(c)
             out["is_mock"] = bool(c.get("_mock") or data.companies_doc()["is_mock"])
             return out
-    raise HTTPException(404, f"unknown ticker: {ticker}")
+    known = [data.company_key(c) for c in data.company_list()]
+    raise HTTPException(404, f"unknown company: {ticker}. known: {', '.join(known)}")
 
 
 @app.get("/api/search")
@@ -375,7 +396,10 @@ def get_facilities():
         cf = ((r.get("cf_share") or {}).get("2025") or {}).get("all") if r else None
         det = (r.get("detection") or {}) if r else {}
         rows.append({
-            "company": f["company"], "ticker": f["ticker"],
+            "company": f["company"], "ticker": f["ticker"] or None,
+            # The operator's page key. xAI and Vantage have no listed equity, so keying the
+            # site on the ticker alone dropped them out of every per-operator view.
+            "operator_key": data.operator_key(f),
             "metro": f["metro"], "state": f["state"],
             "lat": float(f["lat"]) if f.get("lat") else None,
             "lon": float(f["lon"]) if f.get("lon") else None,
@@ -436,6 +460,11 @@ class AskRequest(BaseModel):
 def post_ask(req: AskRequest):
     """Answer a question using ONLY typed tools over the published datasets.
 
+    Returns {answer, view, tools_used, model}. `answer` is the prose and is always present.
+    `view` is that same answer as something to render -- columns, rows, an optional chart --
+    or null when the question has no table in it, in which case the prose IS the answer. No
+    figure reaches `view` that the tools did not return; see the render step in server/ai.py.
+
     The model may not state a number a tool did not return. This is the one surface where
     a model writes prose a reader takes as ours, so the honesty rules -- consistent with
     rather than caused by, never 'they lied', share alongside absolute, zones inherit
@@ -444,8 +473,10 @@ def post_ask(req: AskRequest):
     """
     if not (req.q or "").strip():
         return {"answer": "Ask me something about a grid region, a company claim, or a comparison.",
-                "tools_used": []}
-    return ask_layer.ask(req.q.strip(), page_context=req.page)
+                "view": None, "tools_used": []}
+    out = ask_layer.ask(req.q.strip(), page_context=req.page)
+    out.setdefault("view", None)
+    return out
 
 
 @app.post("/api/ask/summarize")

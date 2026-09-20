@@ -121,7 +121,7 @@ Zones (OPPD, DOM) use the parent BA's siting (`siting_from` SWPP, PJM); verified
 | sub "35,700 MW then, 35,619 MW now. Overnight generation rose 8.7 GW." | `(91240−82539)/1000` = 8.701 → "8.7 GW" | README L18 (82,539 / 91,240); `overnight_fuel_mw` sums to 82,539 and 91,241 (1 MW rounding) | OK | — |
 | sub "Gas supplied 10.7 GW of it." | `fuel_delta_overnight_gw.gas=10.74` | README L35 gas +10.7 | OK number; **DISC 3** wording: 10.7 of 8.7 GW is arithmetically odd (coal −2.5, nuclear −0.9 explain it; README says coal-to-gas switching, the UI does not) | fuel deltas sum to 8.69 GW vs 8.70 total: they close, so no fuel category was dropped by the 2024-07-01 recategorisation |
 | sub "Net exports fell from 3.8 GW to 2.5 GW, so the new generation served PJM's own load." | `overnight_net_export_mw` 3814 → 2489 | README L20; `regions.json PJM interchange[y].overnight_net_export_mw` (EIA-adjusted operations table, positive = export) | OK | a sign flip (PJM-MISO tie) would show exports rising; the frozen decision pins the operations table for this |
-| Nums **+8.7 GW** "more power at night since 2019" / **+10.7 GW** "of it from gas" / **3.8 GW → 2.5 GW** "exports to neighbours" | as above via `signedGw`, `gw1` | as above | OK | — |
+| Nums **+8.7 GW** "more power at night since 2019" / **+10.7 GW** "of it from gas" / **3.8 GW → 2.5 GW** "exports to neighbors" | as above via `signedGw`, `gw1` | as above | OK | — |
 | globe marker "Northern Virginia · +39% at night" | **HARD** string in `Found.jsx` L73 | 14,033/10,060 − 1 = 0.3949 → 39%; README L41 "overnight demand 39%" | OK today, HARD (**DISC 7**) | will not follow the data |
 | hour bars "Clean share by hour on that grid, 2025" | `pjm.profile_24h[2025]` (24 values) | mean of hours 0-5 = 0.3905 vs `cf_share[2025].overnight` 0.390; hours 10-15 mean 0.4160 vs daytime 0.416; 2019 hours 0-5 mean 0.4327 vs 0.433 | OK, internally consistent | if the profile were in UTC the night trough would sit at hours 4-9 |
 | "Named before the ranking was seen": Northern Virginia **6th of 111**, Omaha **7th**, Central Ohio **19th**, Dallas **91st** | `detector.regions` with `validation: true`, `ordinal(rank)`, `n_scored` | README L86; `regions.json meta.detector.validation_named_in_advance` | OK | — |
@@ -131,7 +131,7 @@ Zones (OPPD, DOM) use the parent BA's siting (`siting_from` SWPP, PJM); verified
 | Shown | Fixture field (how computed) | Pipeline source | Check |
 |---|---|---|---|
 | "Night-time demand is rising faster than daytime demand in **8** places." | top-10 by rank, minus `data_flagged` (WACM) and minus `pattern ≠ flat-load growth` (CISO/SDGE), that have coords → 8 | README detector table rows 1-10 | OK count; **DISC 8** framing: it is "8 of the top 10", and the detector compares overnight growth to *average* growth, not to daytime |
-| rows: N. Texas · new #1 +95% / Permian · new #2 +116% / Phoenix · new #3 +31% / Tucson · new #4 +15% / WAPA Rockies · data flagged #5 +52% / Northern Virginia #6 +32% / Omaha #7 +39% / ERCOT · new #8 +27% / Santee Cooper · new #9 +28% / San Diego · new #10 +4% | `growth_pct.toFixed(0)`, labels from `coords.label`, "new" = in `new_leads` | README rows 1-10: 94.6, 116.1, 31.0, 15.1, 52.1, 31.8, 39.4, 27.2, 28.3, 3.5 | OK (all 12 README detector rows match the fixture and `regions.json` on growth, excess, LF delta, neighbour divergence and score) |
+| rows: N. Texas · new #1 +95% / Permian · new #2 +116% / Phoenix · new #3 +31% / Tucson · new #4 +15% / WAPA Rockies · data flagged #5 +52% / Northern Virginia #6 +32% / Omaha #7 +39% / ERCOT · new #8 +27% / Santee Cooper · new #9 +28% / San Diego · new #10 +4% | `growth_pct.toFixed(0)`, labels from `coords.label`, "new" = in `new_leads` | README rows 1-10: 94.6, 116.1, 31.0, 15.1, 52.1, 31.8, 39.4, 27.2, 28.3, 3.5 | OK (all 12 README detector rows match the fixture and `regions.json` on growth, excess, LF delta, neighbor divergence and score) |
 
 ### 4.3 Day vs night (sweep)
 
@@ -168,7 +168,7 @@ Zones (OPPD, DOM) use the parent BA's siting (`siting_from` SWPP, PJM); verified
 | What changed at night: gas **+10.7 GW**, coal **−2.5**, nuclear **−0.9**, wind **+1.1**, solar **+0.0**, hydro **−0.2** | `parent.fuel_delta_overnight_gw` via `signedGw` (10.74, −2.52, −0.95, 1.07, 0.01, −0.22) | README L35 "gas +10.7 GW, coal −2.5, nuclear −0.9, wind +1.1, hydro −0.2, solar 0.0" | OK (note `(0.95).toFixed(1)` is "0.9" only because 0.95 is below 0.95 in binary; a pipeline change to 0.96 would print 1.0) | deltas sum to 8.69 GW = total growth, so nothing was dropped |
 | "clean power vs night demand **0.41× · -0.4 pts/yr**" | `siting.overnight_clean_mw_over_demand=0.408`, `ratio_slope_per_year=−0.0044` | README PJM row 0.408 / −0.004 | OK | — |
 | Who serves the load (hand-mapped): Virginia Electric and Power (Dominion Energy Virginia) → Dominion Energy · **D**; NOVEC → member-owned | `operators_manual` = `scripts/operators_manual.json["PJM/DOM"]` | HAND; CLAUDE.md says tickers unverified | HAND | — |
-| How the detector scored it: score **7.71**, night faster than average by **7.7 pts**, faster than neighbours by **32.9 pts**, load factor change **0.042**, demand growth **+31.8%** | `detection.*` | README row 6 (31.8, 7.7, 0.042, 32.9, 7.7); load factor 0.628 → 0.670 (README L87) matches `demand[y].load_factor` | OK | — |
+| How the detector scored it: score **7.71**, night faster than average by **7.7 pts**, faster than neighbors by **32.9 pts**, load factor change **0.042**, demand growth **+31.8%** | `detection.*` | README row 6 (31.8, 7.7, 0.042, 32.9, 7.7); load factor 0.628 → 0.670 (README L87) matches `demand[y].load_factor` | OK | — |
 
 ---
 
@@ -201,7 +201,7 @@ Zones (OPPD, DOM) use the parent BA's siting (`siting_from` SWPP, PJM); verified
 
 - `opening.pjm` ↔ `regions.json` PJM/DOM: 12 of 12 scalar fields equal; fuel deltas and national series equal.
 - README headline table (L15-21): all 10 numbers equal the fixture and the export.
-- README detector table (L71-84): all 12 rows equal on id, growth, overnight excess, LF delta, neighbour divergence and score (to 1 dp); 111 regions, ranks 1..111 contiguous, validation ids at 6 / 19 / 7 / 91.
+- README detector table (L71-84): all 12 rows equal on id, growth, overnight excess, LF delta, neighbor divergence and score (to 1 dp); 111 regions, ranks 1..111 contiguous, validation ids at 6 / 19 / 7 / 91.
 - README siting table (L117-125): all 7 BAs equal on all five columns; 52 BAs ranked.
 - `site.json`: siting, fuel deltas, 2025 demand, detector fields and overnight fuel mix equal the export (zones via the parent BA); sorted by `siting_score` desc.
 - `company.json` grid evidence: 8 of 8 shares equal `regions.json cf_share[2024]`; physical min/max/mean recompute exactly.

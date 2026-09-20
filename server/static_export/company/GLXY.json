@@ -1,0 +1,48 @@
+{
+ "company": "Galaxy Digital",
+ "ticker": "GLXY",
+ "id": "GLXY",
+ "listed_equity": true,
+ "coverage_status": "sites_only",
+ "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+ "claims_absent_reason": "no_documents_ingested",
+ "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+ "sites": [
+  {
+   "metro": "Dickens County (Helios)",
+   "state": "TX",
+   "ba": "ERCO",
+   "zone": null,
+   "pjm_zone": null,
+   "region_id": "ERCO",
+   "serving_utility": null,
+   "utility_parent": null,
+   "utility_ticker": null,
+   "source_type": "press",
+   "source_url": "https://www.prnewswire.com/news-releases/galaxy-expands-data-center-footprint-with-acquisition-of-500-acre-campus-in-mcgregor-texas-302836014.html",
+   "note": "confidence=high. The release states Helios is in Dickens County West Texas with more than 1.6 GW of ERCOT-approved power capacity. Fully converted from Argo bitcoin mining to AI/HPC under a CoreWeave lease. No utility named; ERCOT weather zone not established.",
+   "lat": null,
+   "lng": null,
+   "cf_share_2025": 0.461,
+   "cf_inherited_from_ba": false,
+   "detector_rank": 8,
+   "detector_score": 5.14,
+   "detector_pattern": "flat-load growth"
+  }
+ ],
+ "claims": [],
+ "talk_score": null,
+ "talk_score_method": "magnitude x specificity x scope_breadth, 0-1. How big the number is, how precisely it is stated, and how little it is hedged. Narrowing qualifiers (annual, market-based, certificates, owned-and-operated) reduce scope_breadth.",
+ "walk_score": 0.461,
+ "walk_score_method": "mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size.",
+ "coverage": 1.0,
+ "cannot_verify_count": 0,
+ "notes": [
+  "Grid-only. Excludes power purchase agreements and renewable energy certificates.",
+  "Unweighted across sites; we do not know each site's load.",
+  "Site mapping is hand-curated from serving utilities, never inferred from state.",
+  "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
+  "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+ ],
+ "is_mock": false
+}

@@ -4,6 +4,83 @@
 
 ---
 
+## 0. How to say what this is
+
+Three registers. Same claim, different lengths. The phrase **"greenwashing investigation
+of datacenter operators"** appears in all three on purpose — it is the fastest way to make
+a stranger understand the project, because everyone already knows what a greenwashing
+investigation is for consumer brands and nobody has seen one pointed at this industry.
+
+### One line
+
+> **Wattson is a greenwashing investigation of datacenter operators — we settle every
+> "100% renewable" claim against 4.45 million hours of federal meter data, and hand asset
+> managers the named utility on the other side of the gap.**
+
+Alternates, same content, pick by audience:
+
+- *Industry:* Wattson is a greenwashing investigation of datacenter operators: the claim
+  is a sentence in a PDF, the truth is nine years of hourly federal generation data, and
+  we are the first people to join them.
+- *Investor:* A greenwashing investigation of datacenter operators that ends in a ticker —
+  we rank 111 US grid regions by where flat 24/7 AI load is landing, and name the utility
+  that has to burn something to serve it.
+- *Blunt:* Everyone building AI datacenters says they run clean. We checked the meter.
+
+### Fifteen seconds
+
+> Every AI datacenter operator says it runs clean. Nobody had checked, because the claim
+> is a sentence in a sustainability PDF and the evidence is 4.45 million hours of federal
+> grid data across all 70 US balancing authorities. **Wattson is that join** — a
+> greenwashing investigation of datacenter operators.
+>
+> And because every verdict resolves to a *named utility in a named region*, it is not
+> just an exposé. **An asset manager can trade it.** We rank 111 regions by where flat
+> 24/7 load is landing and who has to burn gas to serve it, which is a demand signal on
+> regulated utilities eighteen months before it shows up in a rate case.
+
+### Thirty seconds
+
+> Greenwashing analysis is a mature field — for fast fashion, airlines, oil majors. It
+> does not exist for datacenters, which are now the fastest-growing industrial
+> electricity load in the United States. Not because nobody cared, but because the claim
+> and the evidence live in different formats.
+>
+> **Wattson is a greenwashing investigation of datacenter operators.** We take a company's
+> published claim with a page cite, resolve which grid each of its datacenters physically
+> draws from, and put its own words next to what the meter recorded.
+>
+> The finding is in the hours. **Since 2019 the US added 61.4 GW of clean power to the
+> average daytime hour and 14.3 GW to the average overnight hour — 4.3x more to the hours
+> a datacenter does not care about.** Solar cleaned up the middle of the day and did
+> nothing for the middle of the night — and a datacenter draws the same power at 3am in January as at
+> noon in June. In PJM, the grid serving the largest datacenter cluster on earth,
+> **overnight clean generation has not increased since 2019.** Every added gigawatt of
+> overnight generation was fossil. At annual resolution this finding does not exist.
+>
+> We never say a company lied — annual matched claims are genuinely true under the GHG
+> Protocol. The verdict is *"true on paper, X physically."* **Two of a company's own
+> published numbers side by side are not arguable.**
+>
+> For an asset manager that gap is an input: 111 regions ranked by where flat load is
+> arriving, each mapped to the serving utility and its ticker, plus the physical
+> constraint — clean headroom at 3am — that decides whether the next gigawatt gets served
+> cleanly or with gas.
+
+### The asset-manager use case, stated plainly
+
+The investigation produces three things a fund can actually use:
+
+| Output | What it is | Why it is tradeable |
+|---|---|---|
+| **Regional flat-load ranking** | 111 regions scored on the demand signature of 24/7 load, from hourly meter data | Load growth hits a regulated utility's rate base before it hits its filings |
+| **Serving utility + ticker** | Each flagged region resolved to the utility that must serve it | Turns a grid observation into a named security |
+| **Overnight clean headroom** | Clean MW available at 3am relative to overnight demand | Decides whether new load is served by existing clean capacity or new gas — a capex question |
+
+We stop at the input. We publish no backtest, no price target and no position. See §12.
+
+---
+
 ## 1. What this is
 
 > **Wattson is a greenwashing investigation of datacenter operators — settled against
@@ -19,7 +96,7 @@ resolution this finding does not exist** — it only appears once you separate t
 ### Why nobody had done it
 
 Greenwashing analysis is a mature field — for consumer brands. Fast fashion, airlines,
-oil majors, packaged goods: all have watchdogs, ratings, journalists, and standardised
+oil majors, packaged goods: all have watchdogs, ratings, journalists, and standardized
 frameworks pulling their claims apart. **Datacenters have none of that**, and they are now
 the fastest-growing industrial electricity load in the United States.
 
@@ -186,7 +263,7 @@ Four regions were named **before the ranking was computed**:
 | ERCO/NCEN — Dallas | **91st — missed** |
 
 **Why Dallas was missed, reported rather than fixed:** neighbor divergence compares a
-zone against its neighbours, and *every* ERCOT zone is booming, so a booming Dallas looks
+zone against its neighbors, and *every* ERCOT zone is booming, so a booming Dallas looks
 unremarkable relative to them. That is a property of the method. Weights were frozen
 before results were seen and nothing was retuned.
 
@@ -301,7 +378,7 @@ Not one of the eight most serious failures was caught by a test.
 4. The 10-K section slicer passed every synthetic test while **three of four real filings
    sliced wrong** (759 words instead of 11,754; a 52,000-word run-on; a 367-word truncation).
 5. The alert ranking scored missing values as 1.0, so structural alerts swept the top
-   eight and **the "prioritised" screen became the detector ranking relabelled.**
+   eight and **the "prioritized" screen became the detector ranking relabelled.**
 6. The first duplicate sweep **missed the pair it was built to find** — the duplication
    *ended*, and a whole-period test cannot see a duplication that stops.
 7. A derived field **overwrote its own source**, destroying the record of what the model
@@ -344,7 +421,7 @@ Voloridge's challenge is about noise. This is what this dataset does to you.
 ## 9. How we know the numbers are right
 
 **Google independently publishes grid carbon-free share per balancing authority** — the
-same quantity we compute from EIA-930, calculated by a different organisation from
+same quantity we compute from EIA-930, calculated by a different organization from
 different inputs.
 
 | BA | Google | Wattson |

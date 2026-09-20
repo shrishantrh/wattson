@@ -173,6 +173,28 @@ def _equities(region_id: str, operators: list, facilities: list) -> list:
             "verification_status": "facility_lookup",
             "why": "",
         })
+
+    # The OPERATOR of the site, kept separate from the utility that sells it power. Two
+    # different exposures to the same grid, and conflating them is how Digital Realty ended
+    # up in this list labelled as the utility serving its own building. An operator earns a
+    # row only when it is listed; xAI, Vantage and Crusoe have no traded equity and say so
+    # through their absence.
+    for f in facilities:
+        rid = f.get("zone") or f.get("ba")
+        sym = (f.get("ticker") or "").strip().upper()
+        if rid != region_id or not sym or sym in seen:
+            continue
+        seen.add(sym)
+        out.append({
+            "class": "equity",
+            "symbol": sym,
+            "name": f["company"],
+            "role": f"{f['company']} operates the {f['metro']} site on this grid",
+            "exchange": None,
+            "source_url": f["source_url"],
+            "verification_status": "facility_lookup",
+            "why": "",
+        })
     return out
 
 

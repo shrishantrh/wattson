@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import '../../styles/relocate.css'
 import { loadRegions } from '../../lib/data.js'
-import { resolvePlace, COMPANIES } from '../../lib/query.js'
+import { resolvePlace, companyByKey } from '../../lib/query.js'
 import { indexRegions, siteShare, companyPhysical, relocate, bestMoves, regionLabel } from '../../lib/relocate.js'
 import { pct } from '../../lib/format.js'
 import { Chip, Num } from '../../console/widgets.jsx'
@@ -11,7 +11,7 @@ import { Mod, Say, Empty } from './Shell.jsx'
 // Move one of a company's sites to another grid and watch its physical figure (the unweighted
 // mean clean share of the grids under its sites) and range move. The claim does not move: it is
 // accounting, and this is where the power comes from. No chart; two numbers and a sentence.
-const shortName = c => COMPANIES.find(x => x.ticker === c?.ticker)?.name || c?.company || c?.ticker || 'the company'
+const shortName = c => companyByKey(c?.id || c?.ticker)?.name || c?.company || c?.ticker || 'the company'
 const shortMetro = m => String(m || '').replace(/\s*\([^)]*\)/g, '').split(',')[0].trim() || 'this site'
 const pct1 = n => (n == null || Number.isNaN(Number(n)) ? '—' : `${Number(n).toFixed(1)}%`)
 const range = (s, d = 0) => (s?.n ? (s.min === s.max ? pct(s.min, d) : `${pct(s.min, d)}–${pct(s.max, d)}`) : '—')
@@ -97,7 +97,7 @@ export default function RelocateModule({ company }) {
 }
 
 // Registry entry, same shape as the modules in ./index.js (the integrator registers it on the
-// company page). ctx = { company } with the normalised company from lib/data.js loadCompany().
+// company page). ctx = { company } with the normalized company from lib/data.js loadCompany().
 // oxlint-disable-next-line react/only-export-components -- a registry entry, not a component
 export const relocateModule = {
   id: 'relocate', title: 'Move one site and watch the physics move',

@@ -8,9 +8,17 @@ exists to prevent. Tools return real rows; the model may only report what a tool
 The honesty rules in SYSTEM are not decoration. They are the same rules enforced in
 engine/verify, server/irradiance_narrate and CLAUDE.md, applied to the one surface where
 a model writes prose a judge reads.
+
+WHY A SECOND CALL RENDERS A VIEW. A paragraph is the wrong answer to "compare ERCOT, PJM
+and CAISO at night": the reader wants the three numbers side by side. So after the tool
+loop finishes, one more call turns the answer it just wrote into a view spec -- columns,
+rows, an optional chart -- as strict JSON. That call gets NO tools, so it cannot fetch a
+new figure, and every number it emits is checked against the numbers the tools actually
+returned in this conversation (_grounding_index below). A view whose figures are all
+unaccounted for is dropped and the prose is served instead. The prose is always returned.
 """
 from __future__ import annotations
-import json, os
+import bisect, json, os, re
 from server import data
 
 # gpt-4.1 answers the same questions with the same tool calls in ~2s where gpt-5
@@ -90,6 +98,14 @@ def _regions():
     return data.regions_doc()["regions"]
 
 
+# Sorts whose metric is derived from GENERATION. A zone reports demand only and inherits
+# its parent BA's generation, so several zones of one BA carry byte-identical figures: rank
+# them together and one grid is presented as five findings. The demand-side sorts are the
+# opposite case -- a zone's demand is its own, and Dominion placing 6th inside PJM is the
+# whole point of the detector -- so those must NOT collapse.
+_GENERATION_SORTS = {"siting"}
+
+
 def t_rank_regions(sort_by: str = "detector", limit: int = 10, min_demand_mw: float = 0):
     """Regions ranked by detector score, siting score, or growth."""
     rs = [r for r in _regions() if isinstance(r.get("detection"), dict) and r["detection"].get("rank")]
@@ -102,8 +118,29 @@ def t_rank_regions(sort_by: str = "detector", limit: int = 10, min_demand_mw: fl
     if key is None:
         return {"error": f"unknown sort_by {sort_by}", "allowed": ["detector", "growth", "siting", "overnight_growth"]}
     rs.sort(key=key)
-    return {"sort_by": sort_by, "n_scored": len(rs), "regions": [{
+    note = None
+    if sort_by in _GENERATION_SORTS:
+        # Keep the PARENT row where we have it: the figure describes the whole BA, so it
+        # should be labelled "Southwest Power Pool", not whichever of its zones sorted first.
+        have_parent = {r["id"] for r in rs if not r.get("zone")}
+        kept, seen = [], set()
+        for r in rs:
+            ba = r.get("ba") or r["id"]
+            if ba in seen or (r.get("zone") and ba in have_parent):
+                continue
+            seen.add(ba)
+            kept.append(r)
+        dropped = len(rs) - len(kept)
+        rs = kept
+        if dropped:
+            note = (f"{sort_by} is computed from generation, and zones report demand only -- they "
+                    f"inherit their parent BA's generation and so its {sort_by} figures. {dropped} "
+                    f"zones were collapsed into their parent so one grid is not listed several "
+                    f"times. Say the ranking is by balancing authority.")
+    return {"sort_by": sort_by, "n_scored": len(rs), "note": note, "regions": [{
         "id": r["id"], "name": r["name"],
+        "ba": r.get("ba"), "is_zone": bool(r.get("zone")),
+        "cf_inherited_from_ba": bool(r.get("cf_inherited_from_ba")),
         "detector_rank": r["detection"]["rank"], "detector_score": r["detection"]["score"],
         "growth_pct": r["detection"].get("growth_pct"),
         "overnight_growth_pct": r["detection"].get("overnight_growth_pct"),
@@ -294,17 +331,235 @@ SCHEMAS = [
 MAX_TURNS = 5
 
 
-def ask(question: str, page_context: dict | None = None, max_turns: int = MAX_TURNS) -> dict:
+# ---- the render step: the answer as a view, not a paragraph ------------------------
+
+RENDER_PROMPT = """Now render the answer you just gave as a VIEW SPEC the interface can draw.
+
+Reply with ONE JSON object and nothing else. No prose around it, no markdown fence.
+
+YOU HAVE NO TOOLS IN THIS STEP. Every value you put in "rows" or "chart" MUST already
+appear in a tool result above, or in the answer you just wrote. Do not compute, convert,
+average, interpolate, estimate or recall any figure that is not already in this
+conversation. A cell you cannot fill from the transcript you leave out; a cell you invent
+is the exact failure this project exists to catch. The ONE conversion allowed is a 0-1
+share to a percentage number: 0.397 becomes 39.7 with unit "%".
+
+The shape:
+
+{
+  "headline": "the answer as a phrase, at most 80 characters, no trailing full stop",
+  "summary":  "one or two sentences. The caveat rides with the number, not after it.",
+  (read the rows back before writing those two: a headline saying every region fell, over a
+   table where one rose, is the same failure as an invented number)
+  "kind":     "comparison" | "ranking" | "single" | "prose",
+  "columns":  [{"key": "short_snake_case", "label": "plain words", "unit": "%|pp|MW|GW|rank|score|"}],
+  "rows":     [{"label": "the thing", "href": "#/region/PJM/DOM", "values": {"col_key": 39.7}}],
+  "chart":    {"type": "bars"|"lines", "series": [{"label": "...", "points": [{"x": "2019", "y": 43.3}]}]} or null,
+  "caveats":  ["short honest notes that actually apply to THESE numbers"],
+  "sources":  ["the tool names you used"]
+}
+
+CHOOSING kind:
+  comparison  the user named several things and wants them beside each other. One row each.
+  ranking     an ordered list over many regions. Keep the tool's order; a rank column first.
+  single      one subject. Return exactly ONE row, its figures in that row's values.
+  prose       nothing tabular -- a method question, a definition, an answer that is a
+              sentence. Then "rows": [] and "columns": [], and the paragraph is served.
+
+COLUMNS. Two to five of them. Label them in words a reader knows ("clean at night, 2025"),
+not field names. Give the unit. When you show a share, ALSO show the absolute MW or GW
+beside it if a tool returned one -- a share falling is not clean generation shrinking.
+Never repeat the row's own name as a column: the label is already the first column. A rank
+column must be a rank a tool RETURNED (the detector rank, the siting rank) and must say
+which -- never the position of the row in the list you just wrote.
+
+ROWS. "href" deep-links into the app: "#/region/<id>" with the id spelled exactly as the
+tools spell it (PJM, ERCO/NCEN, PJM/DOM -- do not url-encode the slash), or
+"#/check/<TICKER>" for a company. Omit href when you do not know the id.
+
+CHART. "bars" compares one value across the rows; "lines" is a value over years, one series
+per thing. null when a chart would add nothing. Chart y values obey the same rule: from the
+transcript only.
+
+CAVEATS. One to three, and only the ones that bear on these numbers: that a zone's
+generation figures are its parent BA's, that a share is not output, a correction a tool
+returned, the coarseness of a region. Not a generic disclaimer."""
+
+VIEW_KINDS = {"comparison", "ranking", "single", "prose"}
+MAX_ROWS, MAX_COLS, MAX_SERIES, MAX_POINTS = 24, 6, 6, 40
+HREF_OK = re.compile(r"^#/[A-Za-z0-9/_\-.%?=&]{1,120}$")
+_NUM = re.compile(r"-?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?")
+# A model rounds (0.3966 -> 39.7) and rescales (MW -> GW), so grounding is checked against
+# the transcript at those scales with a 2% tolerance. This is a guard against invention,
+# not a proof of provenance: it catches a figure that resembles nothing a tool returned.
+SCALES = (1.0, 100.0, 0.01, 1000.0, 0.001)
+GROUND_TOL = 0.02
+
+
+def _num(v):
+    return isinstance(v, (int, float)) and not isinstance(v, bool)
+
+
+def _grounding_index(msgs) -> list:
+    """Every number the tools returned in this conversation, at the scales a model may use."""
+    raw = set()
+    for m in msgs:
+        if not isinstance(m, dict) or m.get("role") != "tool":
+            continue
+        for t in _NUM.findall(str(m.get("content") or "")):
+            try:
+                raw.add(float(t))
+            except ValueError:
+                pass
+    return sorted({round(x * s, 9) for x in raw for s in SCALES})
+
+
+def _grounded(v: float, idx: list) -> bool:
+    if not idx:
+        return False
+    i = bisect.bisect_left(idx, v)
+    for j in (i - 1, i):
+        if 0 <= j < len(idx):
+            u = idx[j]
+            if abs(v - u) <= max(GROUND_TOL * abs(u), 1e-9):
+                return True
+    return False
+
+
+def _href(h):
+    h = str(h or "").strip()
+    return h if HREF_OK.match(h) else None
+
+
+def _coerce_chart(c):
+    if not isinstance(c, dict) or c.get("type") not in ("bars", "lines"):
+        return None
+    series = []
+    for s in (c.get("series") or [])[:MAX_SERIES]:
+        if not isinstance(s, dict):
+            continue
+        pts = []
+        for p in (s.get("points") or [])[:MAX_POINTS]:
+            if isinstance(p, dict) and _num(p.get("y")) and p.get("x") is not None:
+                pts.append({"x": p["x"] if _num(p["x"]) else str(p["x"])[:60], "y": float(p["y"])})
+        if pts:
+            series.append({"label": str(s.get("label") or "")[:60], "points": pts})
+    return {"type": c["type"], "series": series} if series else None
+
+
+def _coerce_view(obj, question: str, idx: list) -> dict | None:
+    """Structure-check the model's JSON and reject anything it could not have measured.
+
+    Returns None whenever the view would not beat the paragraph: wrong shape, no rows, or
+    figures that match nothing any tool returned.
+    """
+    if not isinstance(obj, dict):
+        return None
+    kind = str(obj.get("kind") or "").strip().lower()
+    if kind not in VIEW_KINDS or kind == "prose":
+        return None
+
+    cols, keys = [], []
+    for c in (obj.get("columns") or [])[:MAX_COLS]:
+        if not isinstance(c, dict):
+            continue
+        k = str(c.get("key") or "").strip()[:40]
+        if not k or k in keys:
+            continue
+        keys.append(k)
+        cols.append({"key": k, "label": str(c.get("label") or k).strip()[:48],
+                     "unit": str(c.get("unit") or "").strip()[:8]})
+
+    rows = []
+    for r in (obj.get("rows") or [])[:MAX_ROWS]:
+        if not isinstance(r, dict):
+            continue
+        label = str(r.get("label") or "").strip()[:80]
+        if not label:
+            continue
+        vals = {}
+        for k, v in (r.get("values") or {}).items():
+            k = str(k)[:40]
+            if keys and k not in keys:
+                continue
+            if _num(v):
+                vals[k] = float(v)
+            elif isinstance(v, str) and v.strip():
+                vals[k] = v.strip()[:60]
+        row = {"label": label, "values": vals}
+        h = _href(r.get("href"))
+        if h:
+            row["href"] = h
+        rows.append(row)
+    if not rows:
+        return None
+    if not cols:
+        cols = [{"key": k, "label": k.replace("_", " "), "unit": ""}
+                for k in list(rows[0]["values"])[:MAX_COLS]]
+    # A column that just restates the row's own name is a column of noise: the label is
+    # already the first thing on the row.
+    cols = [c for c in cols
+            if not all(str(r["values"].get(c["key"], "")) == r["label"] for r in rows)]
+    if not cols:
+        return None
+    keys = [c["key"] for c in cols]
+    for r in rows:
+        r["values"] = {k: v for k, v in r["values"].items() if k in keys}
+    if not any(r["values"] for r in rows):
+        return None
+
+    chart = _coerce_chart(obj.get("chart"))
+    figures = [v for r in rows for v in r["values"].values() if _num(v)]
+    figures += [p["y"] for s in (chart or {}).get("series", []) for p in s["points"]]
+    unverified = [v for v in figures if not _grounded(v, idx)]
+    # Every figure unaccounted for means the render step wrote its own numbers. Serve the
+    # prose instead: a wrong table is worse than a right paragraph.
+    if figures and len(unverified) == len(figures):
+        return None
+    return {
+        "question": question,
+        "kind": kind,
+        "headline": str(obj.get("headline") or "").strip()[:120],
+        "summary": str(obj.get("summary") or "").strip()[:600],
+        "columns": cols,
+        "rows": rows,
+        "chart": chart,
+        "caveats": [str(x).strip()[:240] for x in (obj.get("caveats") or [])[:4] if str(x).strip()],
+        "sources": [str(x).strip()[:40] for x in (obj.get("sources") or [])[:12] if str(x).strip()],
+        "values_checked": len(figures),
+        "unverified_value_count": len(unverified),
+    }
+
+
+def _render_view(client, msgs, question: str, trace: list) -> dict | None:
+    """One extra call, no tools, JSON only. Any failure returns None and the prose stands."""
+    try:
+        r = client.chat.completions.create(
+            model=MODEL, temperature=0,
+            response_format={"type": "json_object"},
+            messages=msgs + [{"role": "user", "content": RENDER_PROMPT}])
+        raw = r.choices[0].message.content or ""
+        view = _coerce_view(json.loads(raw), question, _grounding_index(msgs))
+        if view is not None:
+            # The sources line is what actually ran, not what the model remembers running.
+            view["sources"] = list(dict.fromkeys(t["tool"] for t in trace))
+        return view
+    except Exception:  # noqa: BLE001 - the view is an enhancement; the answer is the product
+        return None
+
+
+def ask(question: str, page_context: dict | None = None, max_turns: int = MAX_TURNS,
+        render: bool = True) -> dict:
     """Answer a question using only tool results. Returns the answer plus the trace."""
     key = os.environ.get("OPENAI_API_KEY")
     if not key:
-        return {"error": "no_api_key",
+        return {"error": "no_api_key", "view": None,
                 "answer": "The ask layer needs OPENAI_API_KEY. Everything else on this "
                           "page works without it."}
     try:
         from openai import OpenAI
     except ImportError:
-        return {"error": "openai_not_installed", "answer": "pip install openai"}
+        return {"error": "openai_not_installed", "view": None, "answer": "pip install openai"}
 
     client = OpenAI(api_key=key)
     msgs = [{"role": "system", "content": SYSTEM}]
@@ -327,7 +582,10 @@ def ask(question: str, page_context: dict | None = None, max_turns: int = MAX_TU
         m = r.choices[0].message
         msgs.append(m.model_dump(exclude_none=True))
         if not m.tool_calls:
-            return {"answer": m.content or "", "tools_used": trace, "model": MODEL}
+            # No tool ran, so there is nothing to tabulate and nothing to ground a view in.
+            view = _render_view(client, msgs, question, trace) if (render and trace) else None
+            return {"answer": m.content or "", "view": view,
+                    "tools_used": trace, "model": MODEL}
         for tc in m.tool_calls:
             name = tc.function.name
             try:
@@ -340,14 +598,18 @@ def ask(question: str, page_context: dict | None = None, max_turns: int = MAX_TU
             msgs.append({"role": "tool", "tool_call_id": tc.id,
                          "content": json.dumps(out, default=str)[:24000]})
     return {"answer": "I ran out of steps on that one. Try a narrower question.",
-            "tools_used": trace, "model": MODEL}
+            "view": None, "tools_used": trace, "model": MODEL}
 
 
 def summarize(page_context: dict) -> dict:
-    """Plain-English summary of whatever screen the user is on."""
+    """Plain-English summary of whatever screen the user is on.
+
+    Prose on purpose: the summary is read in the palette, over the screen it describes, and
+    sending the reader to a table of the screen they are already looking at helps nobody.
+    """
     what = page_context.get("route") or "this screen"
     return ask(
         f"Summarise the {what} screen for someone seeing it for the first time. What is the "
         f"single most important number here, what does it mean, and what is the one caveat "
         f"they must hear with it? Three sentences.",
-        page_context=page_context)
+        page_context=page_context, render=False)

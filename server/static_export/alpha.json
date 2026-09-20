@@ -10,11 +10,11 @@
   "We measure generation inside a footprint, not consumption, and we do not allocate interchange. Average grid mix, not marginal emissions."
  ],
  "no_listed_equity": {
-  "count": 7,
-  "resolved": 17,
-  "unresolved": 3,
-  "total_sites": 20,
-  "note": "7 of the 17 sites whose serving utility we could establish are served by public power, a cooperative or a state authority with no listed equity. A further 3 sites have no established serving utility at all, which is a gap in our coverage rather than a finding about the grid."
+  "count": 42,
+  "resolved": 107,
+  "unresolved": 27,
+  "total_sites": 134,
+  "note": "42 of the 107 sites whose serving utility we could establish are served by public power, a cooperative or a state authority with no listed equity. A further 27 sites have no established serving utility at all, which is a gap in our coverage rather than a finding about the grid."
  },
  "event_markets": {
   "available": true,
@@ -202,6 +202,36 @@
      "why": "Vistra serves load in ERCO/FWES, a region ranked 2 of 111 with +116.1% demand growth against 2019."
     },
     {
+     "class": "equity",
+     "symbol": "CORZ",
+     "name": "Core Scientific",
+     "role": "Core Scientific operates the Pecos (Reeves County) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828024010682/core-20231231.htm",
+     "verification_status": "facility_lookup",
+     "why": "Core Scientific operates the Pecos (Reeves County) site on this grid, a region ranked 2 of 111 with +116.1% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "HUT",
+     "name": "Hut 8",
+     "role": "Hut 8 operates the Orla (Reeves County) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1964789/000155837025001996/hut-20241231x10k.htm",
+     "verification_status": "facility_lookup",
+     "why": "Hut 8 operates the Orla (Reeves County) site on this grid, a region ranked 2 of 111 with +116.1% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "CIFR",
+     "name": "Cipher Digital (Cipher Mining)",
+     "role": "Cipher Digital (Cipher Mining) operates the Odessa (Ector County) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998925000005/cifr-20241231.htm",
+     "verification_status": "facility_lookup",
+     "why": "Cipher Digital (Cipher Mining) operates the Odessa (Ector County) site on this grid, a region ranked 2 of 111 with +116.1% demand growth against 2019."
+    },
+    {
      "class": "commodity",
      "symbol": "NG (Henry Hub)",
      "name": "US natural gas benchmark",
@@ -289,6 +319,16 @@
      "why": "Arizona Public Service serves load in AZPS, a region ranked 3 of 111 with +31.0% demand growth against 2019."
     },
     {
+     "class": "equity",
+     "symbol": "MSFT",
+     "name": "Microsoft",
+     "role": "Microsoft operates the Goodyear / El Mirage site on this grid",
+     "exchange": null,
+     "source_url": "https://www.goodyearaz.gov/Home/Components/News/News/9849",
+     "verification_status": "facility_lookup",
+     "why": "Microsoft operates the Goodyear / El Mirage site on this grid, a region ranked 3 of 111 with +31.0% demand growth against 2019."
+    },
+    {
      "class": "commodity",
      "symbol": "NG (Henry Hub)",
      "name": "US natural gas benchmark",
@@ -365,23 +405,63 @@
     },
     {
      "class": "equity",
+     "symbol": "AMZN",
+     "name": "Amazon",
+     "role": "Amazon operates the Loudoun County / Ashburn site on this grid",
+     "exchange": null,
+     "source_url": "https://rmi.org/amazon-dominion-virginia-power-reach-breakthrough-renewable-energy-agreement/",
+     "verification_status": "facility_lookup",
+     "why": "Amazon operates the Loudoun County / Ashburn site on this grid, a region ranked 6 of 111 with +31.8% demand growth against 2019."
+    },
+    {
+     "class": "equity",
      "symbol": "DLR",
-     "name": "Digital Realty Trust",
-     "role": "Dominion Energy Virginia serves the Digital Realty Ashburn site",
+     "name": "Digital Realty",
+     "role": "Digital Realty operates the Ashburn site on this grid",
      "exchange": null,
      "source_url": "https://dcmap.us/markets/northern-virginia/",
      "verification_status": "facility_lookup",
-     "why": "Dominion Energy Virginia serves the Digital Realty Ashburn site, a region ranked 6 of 111 with +31.8% demand growth against 2019."
+     "why": "Digital Realty operates the Ashburn site on this grid, a region ranked 6 of 111 with +31.8% demand growth against 2019."
     },
     {
      "class": "equity",
      "symbol": "EQIX",
-     "name": "Equinix Inc",
-     "role": "Dominion Energy Virginia serves the Equinix Ashburn site",
+     "name": "Equinix",
+     "role": "Equinix operates the Ashburn site on this grid",
      "exchange": null,
      "source_url": "https://dcmap.us/markets/northern-virginia/",
      "verification_status": "facility_lookup",
-     "why": "Dominion Energy Virginia serves the Equinix Ashburn site, a region ranked 6 of 111 with +31.8% demand growth against 2019."
+     "why": "Equinix operates the Ashburn site on this grid, a region ranked 6 of 111 with +31.8% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "MSFT",
+     "name": "Microsoft",
+     "role": "Microsoft operates the Boydton (Mecklenburg County) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.sovanow.com/articles/data-center-debates/",
+     "verification_status": "facility_lookup",
+     "why": "Microsoft operates the Boydton (Mecklenburg County) site on this grid, a region ranked 6 of 111 with +31.8% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "META",
+     "name": "Meta",
+     "role": "Meta operates the Henrico County (Richmond) site on this grid",
+     "exchange": null,
+     "source_url": "https://datacenters.atmeta.com/asset/henrico-data-center-info-sheet/",
+     "verification_status": "facility_lookup",
+     "why": "Meta operates the Henrico County (Richmond) site on this grid, a region ranked 6 of 111 with +31.8% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "ORCL",
+     "name": "Oracle",
+     "role": "Oracle operates the Ashburn (Loudoun County) site on this grid",
+     "exchange": null,
+     "source_url": "https://docs.oracle.com/en-us/iaas/releasenotes/changes/3ce6b9cf-fb14-443a-9ced-72df8fc4110f/index.htm",
+     "verification_status": "facility_lookup",
+     "why": "Oracle operates the Ashburn (Loudoun County) site on this grid, a region ranked 6 of 111 with +31.8% demand growth against 2019."
     },
     {
      "class": "commodity",
@@ -553,6 +633,16 @@
    },
    "instruments": [
     {
+     "class": "equity",
+     "symbol": "META",
+     "name": "Meta",
+     "role": "Meta operates the Papillion (Sarpy County) site on this grid",
+     "exchange": null,
+     "source_url": "https://oppdthewire.com/papillion-facebook-data-center-goes-live/",
+     "verification_status": "facility_lookup",
+     "why": "Meta operates the Papillion (Sarpy County) site on this grid, a region ranked 7 of 111 with +39.4% demand growth against 2019."
+    },
+    {
      "class": "commodity",
      "symbol": "NG (Henry Hub)",
      "name": "US natural gas benchmark",
@@ -641,6 +731,86 @@
      "source_url": "https://investor.vistracorp.com/",
      "verification_status": "verified",
      "why": "Vistra serves load in ERCO, a region ranked 8 of 111 with +27.2% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "IREN",
+     "name": "IREN",
+     "role": "IREN operates the Childress site on this grid",
+     "exchange": null,
+     "source_url": "https://iren.com/data-centers/childress",
+     "verification_status": "facility_lookup",
+     "why": "IREN operates the Childress site on this grid, a region ranked 8 of 111 with +27.2% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "RIOT",
+     "name": "Riot Platforms",
+     "role": "Riot Platforms operates the Rockdale site on this grid",
+     "exchange": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1167419/000155837023009137/riot-20230331x10q.htm",
+     "verification_status": "facility_lookup",
+     "why": "Riot Platforms operates the Rockdale site on this grid, a region ranked 8 of 111 with +27.2% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "CIFR",
+     "name": "Cipher Digital (Cipher Mining)",
+     "role": "Cipher Digital (Cipher Mining) operates the Wink (Winkler County) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.datacenterdynamics.com/en/news/cipher-mining-to-develop-300mw-cryptomining-data-center-site-in-west-texas/",
+     "verification_status": "facility_lookup",
+     "why": "Cipher Digital (Cipher Mining) operates the Wink (Winkler County) site on this grid, a region ranked 8 of 111 with +27.2% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "ORCL",
+     "name": "Crusoe / Stargate (Oracle, OpenAI)",
+     "role": "Crusoe / Stargate (Oracle, OpenAI) operates the Abilene site on this grid",
+     "exchange": null,
+     "source_url": "https://www.datacenterdynamics.com/en/news/xai-colossus-memphis-power-tva/",
+     "verification_status": "facility_lookup",
+     "why": "Crusoe / Stargate (Oracle, OpenAI) operates the Abilene site on this grid, a region ranked 8 of 111 with +27.2% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "HUT",
+     "name": "Hut 8",
+     "role": "Hut 8 operates the Vega (Texas Panhandle) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1964789/000155837025001996/hut-20241231x10k.htm",
+     "verification_status": "facility_lookup",
+     "why": "Hut 8 operates the Vega (Texas Panhandle) site on this grid, a region ranked 8 of 111 with +27.2% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "GLXY",
+     "name": "Galaxy Digital",
+     "role": "Galaxy Digital operates the Dickens County (Helios) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.prnewswire.com/news-releases/galaxy-expands-data-center-footprint-with-acquisition-of-500-acre-campus-in-mcgregor-texas-302836014.html",
+     "verification_status": "facility_lookup",
+     "why": "Galaxy Digital operates the Dickens County (Helios) site on this grid, a region ranked 8 of 111 with +27.2% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "BTDR",
+     "name": "Bitdeer",
+     "role": "Bitdeer operates the Rockdale (Milam County) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/0001899123/000121390025107866/ea026473802ex99-1_bitdeer.htm",
+     "verification_status": "facility_lookup",
+     "why": "Bitdeer operates the Rockdale (Milam County) site on this grid, a region ranked 8 of 111 with +27.2% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "SLNH",
+     "name": "Soluna",
+     "role": "Soluna operates the Briscoe County (Silverton) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.solunacomputing.com/news/soluna-secures-conditional-base-load-position-for-project-dorothys-100-mw-in-ercot-batch-zero/",
+     "verification_status": "facility_lookup",
+     "why": "Soluna operates the Briscoe County (Silverton) site on this grid, a region ranked 8 of 111 with +27.2% demand growth against 2019."
     },
     {
      "class": "commodity",
@@ -758,6 +928,16 @@
      "source_url": "https://investor.vistracorp.com/",
      "verification_status": "verified",
      "why": "Vistra serves load in PJM, a region ranked 52 of 111 with +5.4% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "BTDR",
+     "name": "Bitdeer",
+     "role": "Bitdeer operates the Massillon (Stark County) site on this grid",
+     "exchange": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/0001899123/000121390025107866/ea026473802ex99-1_bitdeer.htm",
+     "verification_status": "facility_lookup",
+     "why": "Bitdeer operates the Massillon (Stark County) site on this grid, a region ranked 52 of 111 with +5.4% demand growth against 2019."
     },
     {
      "class": "commodity",

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Shell from '../console/Console.jsx'
 import { Chip } from '../console/widgets.jsx'
-import { COMPANIES, DEMO_COMPARE } from '../lib/query.js'
+import { VERIFIED, COMPANY_COUNTS, DEMO_COMPARE } from '../lib/query.js'
 import { CommandInline } from '../components/CommandPalette.jsx'
 import { loadRegions } from '../lib/data.js'
 import { href } from '../router.js'
@@ -63,7 +63,8 @@ export default function Landing() {
       </div>
 
       <div className="lx-chips">
-        {COMPANIES.map(c => <Chip key={c.ticker} href={href.check(c.ticker)}>{c.name}</Chip>)}
+        {VERIFIED.map(c => <Chip key={c.key} href={href.check(c.key)}>{c.name}</Chip>)}
+        <Chip href={href.companies()}>+{COMPANY_COUNTS.total - COMPANY_COUNTS.sites_and_claims} more operators mapped &rarr;</Chip>
         <Chip href={href.compare(DEMO_COMPARE)}>{DEMO_COMPARE.mw} MW: {DEMO_COMPARE.metros.join(' vs ')} &rarr;</Chip>
       </div>
 
