@@ -1,5 +1,7 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { hoverCardPosition, placeLabels } from './labels.js'
 import { subsolarPoint } from './sun.js'
+import '../styles/globe.css'
 
 const NIGHT_URL = import.meta.env.BASE_URL + 'textures/earth-night.jpg'
 const EMPTY = []
@@ -12,6 +14,14 @@ const DAY_WASH = [150, 165, 190] // faint daylight tint laid over the night text
 const DAY_WASH_ALPHA = 0.16
 const MASK_COLS = 128
 const MASK_ROWS = 64
+const EARTH_KM = 6371
+const KM_PER_DEG = (Math.PI * EARTH_KM) / 180 // 111.2 km: the flat map is equirectangular
+const DIM = 0.4 // how far an unselected point or outline drops while something is selected
+const STEM = 24 // pin stem in px; the flat map has no camera, so it does not breathe
+const STEM_STAGGER = 13
+const STEM_FROM = 6 // stagger every other stem once there are this many pins
+const OUTLINE_FILL = 0.06
+const OUTLINE_LINE = 0.5
 const KEYFRAMES = `@keyframes wattson-flat-pulse{from{transform:scale(0.001);opacity:1}to{transform:scale(var(--wattson-r));opacity:0}}`
 
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x))
@@ -58,8 +68,12 @@ function projection(size, bbox) {
  * canvas, lays a faint daylight wash over the day side when `terminator` is enabled, and
  * overlays points, pulse rings and labels as SVG.
  *
- * Accepted but ignored (no meaning in 2D): interactive, autoRotate, intro, heat, markers,
- * atmosphere, quality, style, landColors, terminator.dayDim.
+ * Pin markers, their hover cards, the label collision pass, `selected` and `outline` all work
+ * here too, drawn as HTML and SVG rather than as three objects.
+ *
+ * Accepted but ignored (no meaning in 2D): interactive, autoRotate, intro, heat (the land is a
+ * photograph here, not a dot field there is anything to tint — `heatRange` is still exported
+ * for the legend), atmosphere, quality, style, landColors, terminator.dayDim.
  *
  * @param {object} props
  * @param {{ lat: number, lng: number, altitude: number }} [props.view]
@@ -68,6 +82,9 @@ function projection(size, bbox) {
  * @param {Array<{ id, lat, lng, r?, color?, hollow? }>} [props.points] `r` in degrees, as on the globe
  * @param {Array<{ id, lat, lng, color?, maxR?, speed?, period? }>} [props.rings] degrees, degrees/second, milliseconds
  * @param {Array<{ id, lat, lng, text, size?, color?, dot? }>} [props.labels]
+ * @param {Array<{ id, lat, lng, label?, tip?, rank?, color?, hollow?, muted?, lead?, side?, href?, hover? }>} [props.markers] pin markers, as on the globe; `hover` opens the same anchored card
+ * @param {string|number|null} [props.selected] the chosen id: brighter and larger, everything else a step back
+ * @param {Array<{ id?, lat, lng, radiusKm?, color? }>} [props.outline] circular region boundaries; a circle of `radiusKm` (200) around the point
  * @param {{ enabled?: boolean, sunLng?: number, sunLat?: number }} [props.terminator]
  * @param {string} [props.background='rgba(0,0,0,0)']
  * @param {() => void} [props.onReady] called after the first draw
@@ -81,6 +98,9 @@ export default function FlatMap({
   points = EMPTY,
   rings = EMPTY,
   labels = EMPTY,
+  markers = EMPTY,
+  selected = null,
+  outline = EMPTY,
   terminator = { enabled: true },
   background = 'rgba(0,0,0,0)',
   onReady,
@@ -234,6 +254,60 @@ export default function FlatMap({
 
   const interactivePoints = !!(onPointClick || onPointHover)
   const pxPerDeg = proj.pxPerDeg
+  const selId = selected == null || selected === '' ? null : String(selected)
+  const pins = useMemo(() => (markers || EMPTY).filter(Boolean), [markers])
+  const [hoverId, setHoverId] = useState(null)
+  const hoverPin = hoverId == null ? null : pins.find((m) => String(m.id) === String(hoverId)) || null
+  const pinLayerRef = useRef(null)
+  const cardRef = useRef(null)
+  const dimOf = useCallback((id) => (selId == null ? 1 : String(id) === selId ? 1 : DIM), [selId])
+
+  // Label collision, the same pass the globe runs: measure each tag once, then place them by
+  // priority and hide the ones with no free side. React re-applies its own className on the
+  // next render, so this runs after every render that can move a pin.
+  useLayoutEffect(() => {
+    const layer = pinLayerRef.current
+    if (!layer || !pins.length || !size.w) return
+    const els = layer.querySelectorAll('.gpin')
+    const items = []
+    els.forEach((el, i) => {
+      const label = el.querySelector('.gpin-label')
+      const d = pins[i]
+      if (!label || !d) return
+      items.push({
+        el,
+        d,
+        ax: proj.x(d.lng),
+        ay: proj.y(d.lat),
+        w: label.offsetWidth,
+        h: label.offsetHeight,
+        stem: parseFloat(el.style.getPropertyValue('--gstem')) || STEM,
+        prio: selId != null && String(d.id) === selId ? 3 : d.lead ? 2 : 1,
+        order: i,
+      })
+    })
+    placeLabels(items, size.w).forEach(({ item, side }) => {
+      item.el.classList.toggle('left', side === 'left')
+      item.el.classList.toggle('right', side === 'right')
+      item.el.classList.toggle('gpin-nolabel', side === null)
+    })
+  }, [pins, proj, size, selId])
+
+  // The hover card is placed by the same rule as on the globe: beside its pin, inside the map,
+  // never over the pin itself.
+  useLayoutEffect(() => {
+    const card = cardRef.current
+    if (!card || !hoverPin) return
+    const { x, y } = hoverCardPosition({
+      ax: proj.x(hoverPin.lng),
+      ay: proj.y(hoverPin.lat),
+      cw: card.offsetWidth,
+      ch: card.offsetHeight,
+      width: size.w,
+      height: size.h,
+    })
+    card.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`
+  }, [hoverPin, proj, size])
 
   return (
     <div
@@ -256,6 +330,30 @@ export default function FlatMap({
           viewBox={`0 0 ${size.w} ${size.h}`}
           style={{ position: 'absolute', inset: 0, overflow: 'visible', pointerEvents: 'none' }}
         >
+          <g>
+            {outline.map((o, i) => {
+              if (!o || o.lat == null || o.lng == null) return null
+              // Equirectangular: a circle of radiusKm around the centre, in degrees of latitude.
+              const r = Math.max(2, ((o.radiusKm ?? 200) / KM_PER_DEG) * pxPerDeg)
+              const color = o.color || DEFAULT_LABEL
+              const k = dimOf(o.id)
+              return (
+                <circle
+                  key={o.id ?? i}
+                  cx={proj.x(o.lng)}
+                  cy={proj.y(o.lat)}
+                  r={r}
+                  fill={color}
+                  fillOpacity={OUTLINE_FILL * k}
+                  stroke={color}
+                  strokeOpacity={OUTLINE_LINE * k}
+                  strokeWidth="1"
+                  vectorEffect="non-scaling-stroke"
+                  style={{ transition: 'fill-opacity 150ms ease, stroke-opacity 150ms ease' }}
+                />
+              )
+            })}
+          </g>
           <g>
             {rings.map((rg) => {
               if (!rg) return null
@@ -290,7 +388,8 @@ export default function FlatMap({
           <g>
             {points.map((p) => {
               if (!p) return null
-              const r = Math.max(2, (p.r ?? 0.25) * pxPerDeg)
+              const isSel = selId != null && String(p.id) === selId
+              const r = Math.max(2, (p.r ?? 0.25) * pxPerDeg) * (isSel ? 1.35 : 1)
               const color = p.color || DEFAULT_DOT
               return (
                 <circle
@@ -301,7 +400,8 @@ export default function FlatMap({
                   fill={p.hollow ? 'none' : color}
                   stroke={p.hollow ? color : 'none'}
                   strokeWidth={p.hollow ? 1.25 : 0}
-                  style={{ pointerEvents: interactivePoints ? 'auto' : 'none', cursor: interactivePoints ? 'pointer' : 'default' }}
+                  opacity={dimOf(p.id)}
+                  style={{ pointerEvents: interactivePoints ? 'auto' : 'none', cursor: interactivePoints ? 'pointer' : 'default', transition: 'opacity 150ms ease, r 150ms ease' }}
                   onClick={onPointClick ? () => onPointClick(p) : undefined}
                   onMouseEnter={onPointHover ? () => onPointHover(p) : undefined}
                   onMouseLeave={onPointHover ? () => onPointHover(null) : undefined}
@@ -336,6 +436,72 @@ export default function FlatMap({
             })}
           </g>
         </svg>
+      )}
+      {size.w > 0 && pins.length > 0 && (
+        <div ref={pinLayerRef} style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          {pins.map((m, i) => {
+            const Tag = m.href ? 'a' : 'div'
+            const isSel = selId != null && String(m.id) === selId
+            const cls =
+              'gpin gpin-dyn' +
+              (m.hollow ? ' hollow' : '') +
+              (m.muted ? ' muted' : '') +
+              (m.lead ? ' lead' : '') +
+              (m.side === 'left' ? ' left' : m.side === 'right' ? ' right' : '') +
+              (m.rank != null ? ' has-rank' : '') +
+              (m.hover ? ' has-hover' : '') +
+              (isSel ? ' gsel' : selId != null ? ' gdim' : '')
+            const on = m.hover
+              ? {
+                  onPointerEnter: () => setHoverId(m.id),
+                  onPointerLeave: () => setHoverId((v) => (v === m.id ? null : v)),
+                  onFocus: () => setHoverId(m.id),
+                  onBlur: () => setHoverId((v) => (v === m.id ? null : v)),
+                }
+              : null
+            return (
+              <Tag
+                key={m.id ?? i}
+                className={cls}
+                href={m.href}
+                tabIndex={m.hover && !m.href ? 0 : undefined}
+                role={m.hover && !m.href ? 'button' : undefined}
+                aria-label={m.hover ? m.hover.title : undefined}
+                style={{
+                  position: 'absolute',
+                  left: proj.x(m.lng),
+                  top: proj.y(m.lat),
+                  '--gstem': `${STEM + (pins.length >= STEM_FROM && i % 2 ? STEM_STAGGER : 0)}px`,
+                  ...(m.color ? { '--pin': m.color } : null),
+                  pointerEvents: m.href || m.hover ? 'auto' : 'none',
+                }}
+                {...on}
+              >
+                <span className="gpin-tile">{m.rank != null && <i className="gpin-rank">{m.rank}</i>}</span>
+                <span className="gpin-stem" />
+                {m.label && (
+                  <span className="gpin-label" data-tip={m.tip || undefined}>
+                    {m.label}
+                  </span>
+                )}
+              </Tag>
+            )
+          })}
+        </div>
+      )}
+      {hoverPin && hoverPin.hover && (
+        <div ref={cardRef} className="ghover on" role="tooltip">
+          <div className="ghover-title">{hoverPin.hover.title || ''}</div>
+          {!!(hoverPin.hover.lines || EMPTY).length && (
+            <div className="ghover-lines">
+              {hoverPin.hover.lines.map((t, i) => (
+                <div className="ghover-line" key={i}>
+                  {t}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       )}
     </div>
   )

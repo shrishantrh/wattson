@@ -488,8 +488,7 @@ def post_summarize(req: AskRequest):
 @app.get("/api/ask/status")
 def get_ask_status():
     """Whether the ask layer is available. The UI hides it rather than failing when not."""
-    import os
-    return {"available": bool(os.environ.get("OPENAI_API_KEY")),
+    return {"available": bool(ask_layer._api_key()),
             "model": ask_layer.MODEL, "tools": sorted(ask_layer.TOOLS)}
 
 

@@ -24,47 +24,76 @@
   --dv-n4: var(--n4, var(--line-soft));
   --dv-n5: var(--n5, var(--line-strong));
   --dv-label: var(--font-mono);
+
+  /* ---- one axis treatment for every chart in the app ----------------------------------
+     Three jobs, three values, and a chart may not invent a fourth:
+       --dv-axis   every baseline, gridline, tick and rule the chart draws for itself
+       --dv-mark   a reference value drawn OVER the data (a median, a comparison series)
+       --dv-halo   what a label is knocked out against, so no text can ever sit on a mark
+     Before this, the hour bars drew their rules in --muted while the scatter and the
+     dumbbell drew theirs in the n5 hairline, so two charts side by side disagreed about
+     what an axis looks like. */
+  --dv-axis: var(--line-strong);
+  --dv-mark: var(--muted);
+  --dv-halo: var(--surface);
+  /* every label in every chart: one size (the scale's floor, 11px -- charts used to run
+     down to 8px), one colour, one leading, and one guaranteed gap to the mark it labels. */
+  --dv-label-size: var(--t-micro);
+  --dv-label-ink: var(--muted);
+  --dv-gap: var(--gap-label);
 }
 
 /* ---------- shared micro-label ---------- */
-.dv-micro { font-family: var(--dv-label); font-size: 10px; line-height: 1; color: var(--muted); font-feature-settings: normal; letter-spacing: 0; white-space: nowrap; }
+.dv-micro { font-family: var(--dv-label); font-size: var(--dv-label-size); line-height: var(--lh-flat); color: var(--dv-label-ink); font-feature-settings: normal; font-variant-numeric: var(--fv-num); letter-spacing: var(--ls-body); white-space: nowrap; }
+/* an SVG label, knocked out of whatever it crosses. Any chart text that can land on a mark
+   carries this, so clearance never depends on the data happening to be low. */
+.dv-label-svg { font-family: var(--dv-label); font-size: var(--dv-label-size); fill: var(--dv-label-ink); font-variant-numeric: var(--fv-num); paint-order: stroke; stroke: var(--dv-halo); stroke-width: 3px; stroke-linejoin: round; }
 
 /* ---------- Ring ---------- */
 .dv-ring { display: block; flex: none; overflow: visible; }
 .dv-ring .dv-ring-track { fill: none; stroke: var(--dv-n3); stroke-width: 6; }
 .dv-ring .dv-ring-val { fill: none; stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dasharray var(--dur) var(--ease), stroke var(--dur) var(--ease); }
-.dv-ring .dv-ring-v { font-family: var(--font-display); font-weight: var(--w-num); font-size: 17px; letter-spacing: -0.02em; fill: var(--ink); text-anchor: middle; dominant-baseline: central; font-variant-numeric: tabular-nums; font-feature-settings: var(--ff-num); }
-.dv-ring.has-sub .dv-ring-v { font-size: 15px; }
-.dv-ring .dv-ring-sub { font-family: var(--dv-label); font-size: 8px; fill: var(--muted); text-anchor: middle; dominant-baseline: central; font-feature-settings: normal; letter-spacing: 0; }
+.dv-ring .dv-ring-v { font-family: var(--font-display); font-weight: var(--w-num); font-size: 17px; letter-spacing: var(--ls-display); fill: var(--ink); text-anchor: middle; dominant-baseline: central; font-variant-numeric: var(--fv-num); font-feature-settings: var(--ff-num); }
+.dv-ring.has-sub .dv-ring-v { font-size: 15px; }  /* = 13px drawn: the --t-small step */
+/* 12.5 units = 10.9px drawn, the --t-micro floor. It was 8 units = 7px, which was below
+   anything the scale allows and unreadable on a projector. */
+.dv-ring .dv-ring-sub { font-family: var(--dv-label); font-size: 12.5px; fill: var(--dv-label-ink); text-anchor: middle; dominant-baseline: central; font-feature-settings: normal; font-variant-numeric: var(--fv-num); letter-spacing: var(--ls-body); }
 @media (prefers-reduced-motion: reduce) { .dv-ring .dv-ring-val { transition: none; } }
 
 /* ---------- Ticks ---------- */
 .dv-ticks { position: relative; display: block; width: 100%; height: 9px; }
-.dv-ticks-row { display: flex; gap: 2px; height: 100%; }
+.dv-ticks-row { display: flex; gap: var(--s0); height: 100%; }
 .dv-ticks-row i { flex: 1; border-radius: 1px; background: var(--dv-n3); transition: background-color var(--dur-fast) var(--ease); }
 .dv-ticks-row i.on { background: var(--dv-fill, var(--dv-n5)); }
-.dv-ticks-mark { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--ink-2); transform: translateX(-0.5px); pointer-events: none; }
+.dv-ticks-mark { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--dv-mark); transform: translateX(-0.5px); pointer-events: none; }
 
 /* ---------- HourBars ---------- */
 .dv-hours { display: block; }
 .dv-hours-plot { position: relative; }
-.dv-hours-bars { display: flex; align-items: flex-end; gap: 2px; height: 100%; }
+.dv-hours-bars { display: flex; align-items: flex-end; gap: var(--s0); height: 100%; }
 .dv-hours-bars i { flex: 1; min-height: 2px; border-radius: 1px 1px 0 0; background: var(--dv-n3); transform-origin: 50% 100%; transition: background-color var(--dur-fast) var(--ease); }
 .dv-hours-cmp { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
-.dv-hours-cmp path { fill: none; stroke: var(--muted); stroke-width: 1; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.dv-hours-mark { display: flex; align-items: center; gap: 6px; margin-top: 9px; }
-.dv-hours-mark .rule { display: block; height: 1px; background: var(--muted); flex: none; opacity: 0.8; }
+.dv-hours-cmp path { fill: none; stroke: var(--dv-mark); stroke-width: 1; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+/* --dv-gap under the plot, --dv-gap again under the rule: the axis row can never ride up
+   onto the bars, whatever height the caller passes. */
+.dv-hours-mark { display: flex; align-items: center; gap: var(--s2); margin-top: var(--dv-gap); min-height: 14px; }
+.dv-hours-mark .rule { display: block; height: 1px; background: var(--dv-mark); flex: none; opacity: 0.8; }
 .dv-hours-mark .scale { margin-left: auto; }
-.dv-hours-axis { display: flex; justify-content: space-between; margin-top: 6px; }
-.dv-hours-legend { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
-.dv-hours-legend .sw { display: inline-block; width: 12px; height: 0; border-top: 1px solid var(--muted); vertical-align: middle; margin-right: 5px; }
-.dv-hours-ramp { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; }
+.dv-hours-axis { display: flex; justify-content: space-between; gap: var(--s2); margin-top: var(--s1); padding-top: var(--s1); border-top: 1px solid var(--dv-axis); }
+.dv-hours-legend { display: flex; align-items: center; gap: var(--s3); margin-top: var(--dv-gap); }
+.dv-hours-legend .sw { display: inline-block; width: 12px; height: 0; border-top: 1px solid var(--dv-mark); vertical-align: middle; margin-right: var(--s1); }
+.dv-hours-ramp { margin-left: auto; display: inline-flex; align-items: center; gap: var(--s1); }
 .dv-hours-ramp .bar { display: block; width: 44px; height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--dv-fossil), var(--dv-clean)); }
 .dv-enter .dv-hours-bars i { animation: dv-rise var(--dur-slow) var(--ease-out) both; }
 @keyframes dv-rise { from { transform: scaleY(0.04); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .dv-enter .dv-hours-bars i { animation: none; } }
 
 /* ---------- Sparkline ---------- */
+/* the line keeps whatever strokeWidth the caller passed (it is a prop); only the joins and
+   the baseline are standardised here. The baseline is the series' first value, so it is the
+   shared axis colour at full strength, dashed to say "reference", not "frame". */
+.dv-spark .spark-line { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.dv-spark .spark-base { stroke: var(--dv-axis); stroke-width: 1; stroke-dasharray: 2 3; opacity: 1; }
 .dv-spark .dv-spark-area { stroke: none; opacity: 0.1; }
 .dv-spark .dv-spark-first { fill: var(--surface); stroke-width: 1.2; }
 .dv-spark.up .spark-line, .dv-spark.up .dv-spark-first { stroke: var(--dv-pos); }
@@ -75,30 +104,30 @@
 .dv-spark.down .spark-dot { fill: var(--dv-neg); }
 
 /* ---------- Dumbbell (overrides companies.css) ---------- */
-.co-label { font-size: 13px; font-weight: 500; letter-spacing: -0.005em; fill: var(--ink); }
-.co-seg { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
+.co-label { font-size: var(--t-small); font-weight: 500; letter-spacing: var(--ls-body); fill: var(--ink); paint-order: stroke; stroke: var(--dv-halo); stroke-width: 3px; stroke-linejoin: round; }
+.co-seg { stroke: var(--dv-mark); stroke-width: 3; stroke-linecap: round; }
 .co-row.gap .co-seg { stroke: var(--dv-fossil); stroke-width: 3; }
 .co-a { fill: var(--surface); stroke: var(--ink-2); stroke-width: 1.5; }
 .co-b { fill: var(--dv-clean); stroke: none; }
-.co-val { font-size: 11px; font-variant-numeric: tabular-nums; }
-.co-va { fill: var(--muted); }
+.co-val { font-family: var(--dv-label); font-size: var(--dv-label-size); font-variant-numeric: var(--fv-num); paint-order: stroke; stroke: var(--dv-halo); stroke-width: 3px; stroke-linejoin: round; }
+.co-va { fill: var(--dv-label-ink); }
 .co-vb { fill: var(--ink); font-weight: 500; }
-.co-half { stroke: var(--dv-n5); stroke-width: 1; }
+.co-half { stroke: var(--dv-axis); stroke-width: 1; }
 .co-axis.mid { fill: var(--ink-2); }
 
 /* ---------- Scatter (overrides explore.css) ---------- */
-.xp-median { stroke: var(--dv-n5); stroke-dasharray: none; stroke-width: 1; opacity: 1; }
+.xp-median { stroke: var(--dv-axis); stroke-dasharray: none; stroke-width: 1; opacity: 1; }
 .xp-quad { fill: rgba(255, 255, 255, 0.02); }
-.xp-axis line { stroke: var(--dv-n5); }
-.xp-axis text { font-size: 10px; }
-.xp-lead { stroke: var(--muted); stroke-width: 1; fill: none; }
-.xp-guide { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.5; pointer-events: none; }
-.xp-gval { fill: var(--ink); font-family: var(--dv-label); font-size: 10px; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+.xp-axis line { stroke: var(--dv-axis); }
+.xp-axis text { font-family: var(--dv-label); font-size: var(--dv-label-size); font-variant-numeric: var(--fv-num); fill: var(--dv-label-ink); }
+.xp-lead { stroke: var(--dv-mark); stroke-width: 1; fill: none; }
+.xp-guide { stroke: var(--dv-mark); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.8; pointer-events: none; }
+.xp-gval { fill: var(--ink); font-family: var(--dv-label); font-size: var(--dv-label-size); font-variant-numeric: var(--fv-num); paint-order: stroke; stroke: var(--dv-halo); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
 /* radius comes from the point's own --xp-r so the size encoding survives hover; these rules
    sit after explore.css and replace its flat `r: 4px` on hover. */
 .xp-pt .xp-dot { r: var(--xp-r, 2.5px); transition: r var(--dur-fast) var(--ease), fill var(--dur-fast) var(--ease), stroke var(--dur-fast) var(--ease); }
 .xp-pt:hover .xp-dot, .xp-pt.hov .xp-dot { r: var(--xp-rh, 4px); stroke: var(--ink); stroke-width: 1.5; }
 .xp-pt.sel .xp-dot { r: var(--xp-rh, 4px); }
-.xp-pt.hov .xp-halo { fill: none; stroke: var(--dv-n5); stroke-width: 1; }
-.xp-name { font-size: 11px; }
+.xp-pt.hov .xp-halo { fill: none; stroke: var(--dv-axis); stroke-width: 1; }
+.xp-name { font-size: var(--dv-label-size); paint-order: stroke; stroke: var(--dv-halo); stroke-width: 3px; stroke-linejoin: round; }
 @media (prefers-reduced-motion: reduce) { .xp-pt .xp-dot { transition: none; } }

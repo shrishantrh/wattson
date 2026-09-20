@@ -1,0 +1,167 @@
+/* The shell (console/Console.jsx): the frame that holds the content column against the globe.
+   base.css owns the layout boxes themselves (.app, .stage, .topbar, .column, .overlay, .foot);
+   this file owns the things that have to agree across the shell's own surfaces — the one small
+   section-header treatment, the one scroll behaviour, and the route-level loading and error
+   states, which have to land at the column's real geometry so nothing jumps when the page
+   arrives. Colours come from tokens.css only. */
+
+/* ---- one section-header treatment ----
+   Every small label above a block in the shell — the palette's group headings and its preview
+   eyebrow, the breadcrumb section labels, the shortcut sheet's group titles — is the same thing:
+   11px, 600, 0.08em, upper, --muted. It is a label, never a heading, so it is never inked up. */
+.pal-heading,
+.pal-preview-k,
+.bc-sect,
+.sheet .grp h3 {
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+/* the sheet's rows say where a key works, when it is not global */
+.sheet .grp li .where { display: block; margin-top: 2px; font-style: normal; font-size: var(--t-micro); color: var(--muted); }
+
+/* ---- the top-right sections group ----
+   base.css draws the links; this makes them read as a place to go rather than three verbs. One
+   bordered group, a micro label naming it, a hairline between the label and the first link. */
+.topbar .toplinks {
+  align-items: center;
+  gap: 2px;
+  padding: 3px 4px 3px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-ctl);
+  background: var(--surface-a);
+}
+.topbar .toplinks-label {
+  padding-right: 10px;
+  margin-right: 4px;
+  border-right: 1px solid var(--line-soft);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.topbar .toplinks a {
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  transition: var(--tr-ui);
+}
+.topbar .toplinks a:hover { background: var(--line-soft); }
+.topbar .toplinks a.on { background: var(--surface-3); }
+
+/* ---- the globe's controls ----
+   Docked to the top-left corner of the globe's own area (the inline `left` is the content
+   column's live width, so the group sits where the globe starts and moves with it) instead of
+   hanging off the right edge of the window with nothing to belong to. Every control in it is
+   named: the two zoom buttons are an icon pair with the word "Zoom" between them, and the night
+   toggle carries its own text and its pressed state. */
+.app .stage-ctl {
+  top: 72px;
+  right: auto;
+  bottom: auto;
+  transform: none;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--s2);
+  margin-left: var(--s5);
+  padding: 5px 6px 5px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-ctl);
+  background: var(--surface-a);
+  box-shadow: var(--shadow-sm);
+}
+.stage-ctl-title {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: var(--t-small);
+  font-weight: 500;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.stage-ctl-title svg { align-self: center; color: var(--muted); }
+.stage-ctl-hint { font-size: var(--t-micro); color: var(--muted); }
+.stage-ctl-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding-left: var(--s2);
+  border-left: 1px solid var(--line-soft);
+}
+.stage-ctl-k { font-size: var(--t-micro); color: var(--muted); padding: 0 2px; }
+/* base.css makes every .stage-ctl button a 32px square with a mono face; the two zoom buttons
+   stay square and quiet inside the group, and the night toggle grows to fit its label. */
+.app .stage-ctl button { width: 26px; height: 26px; border-color: transparent; background: transparent; color: var(--muted); }
+.app .stage-ctl button:hover { color: var(--ink); border-color: var(--line-strong); background: transparent; }
+.app .stage-ctl .stage-ctl-night {
+  width: auto;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border-color: var(--line-strong);
+  font-family: var(--font-ui);
+  font-size: var(--t-small);
+  font-weight: 500;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.app .stage-ctl .stage-ctl-night.on { color: var(--ink); border-color: var(--line-focus); background: var(--surface-a-2); }
+
+/* ---- one scroll behaviour ----
+   The app is position:fixed, so the document never scrolls and nothing a panel does can trap the
+   page. Every scrolling panel in the shell gets the same thin bar and the same containment, so a
+   wheel inside the insight card cannot leak into the result column behind it. */
+.column,
+.pal-list,
+.insight,
+.sheet {
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.column::-webkit-scrollbar, .pal-list::-webkit-scrollbar, .insight::-webkit-scrollbar, .sheet::-webkit-scrollbar { width: 5px; }
+.column::-webkit-scrollbar-thumb, .pal-list::-webkit-scrollbar-thumb, .insight::-webkit-scrollbar-thumb, .sheet::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+
+/* ---- route-level loading and error ----
+   A lazy route's fallback and the render-error card both stand in for the content column. They
+   are given the column's live width (--col-w, published by StageProvider from the same value the
+   resize handle writes) and the column's own top and left, so the skeleton occupies exactly the
+   box the page will occupy: the card does not resize under the reader when the page lands. */
+.app > .card:not(.st-boundary),
+.st-boundary {
+  width: var(--col-w, 420px) !important;
+  max-width: calc(100vw - 44px);
+  left: 22px !important;
+}
+.st-boundary { top: 66px !important; }
+
+/* The route skeleton sits where the page's first card will sit — one breadcrumb row below the
+   top of the column — and draws the shape of that bar above itself, so the trail arriving does
+   not shove the card down by 54px. Both numbers come from the column: 66px top, 44px bar, 10px
+   gap. Nothing here animates: a skeleton that pulses is a second thing to watch. */
+.app > .card:not(.st-boundary) { top: 120px !important; }
+.app > .card:not(.st-boundary)::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  top: -55px;
+  height: 44px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-card);
+  background: var(--surface-a);
+  box-shadow: var(--shadow-sm);
+}
+
+/* the skeleton itself stays still: solid blocks, no shimmer, no spinner, and a first block the
+   height of the verdict sentence it stands in for. States.jsx draws it; this only calms it. */
+.app > .card:not(.st-boundary) .st-loading { padding-top: 0; }
+.app > .card:not(.st-boundary) .st-line { background: rgba(255, 255, 255, 0.055); }
+
+@media (max-width: 900px) {
+  .app > .card:not(.st-boundary), .st-boundary { width: auto !important; right: 22px; }
+}

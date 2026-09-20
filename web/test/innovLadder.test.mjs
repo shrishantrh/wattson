@@ -117,7 +117,9 @@ test('companyLadder without grid details: rungs from the company file, overnight
   assert.equal(L.rungs[2].lo, 0.1); assert.equal(L.rungs[2].hi, 0.5); assert.ok(near(L.rungs[2].share, 0.3))
   assert.equal(L.rungs[3].status, 'loading'); assert.equal(L.rungs[4].status, 'loading')
   assert.ok(near(L.rungs[1].drop, -0.38)); assert.ok(near(L.rungs[2].drop, -0.32))
-  assert.match(L.sentence, /^Acme says 100% renewable on an annual, market-based basis \(p\. 4\)\. Measured hourly, its own report puts it at 62% \(p\. 94, 2025\)\. On the grids its 2 mapped sites draw from \(Place A, Place B\), with contracted power excluded, 2025 generation was 10–50% clean over all hours\. Each rung removes one accounting convention; the claim is true on paper at the rung it was made for\.$/)
+  // The lead: paper, the company's own hourly figure, the physical floor, both page citations, the grids.
+  // Nothing a rung already draws (the basis words, the rung sources, the per-rung drops) is repeated.
+  assert.equal(L.sentence, 'Acme is 100% renewable on paper (p. 4), 62% hourly by its own report (p. 94) and 10–50% physically over all hours at Place A and Place B.')
   assert.deepEqual(L.flags, ['Nuclear reports under NB, not under AA (0.10).'])   // the note that names a site's grid, and only that one
   assert.equal(L.counts.cannot_verify, 0)
 })
@@ -132,9 +134,12 @@ test('companyLadder with grids: a range overnight, one readable increment and on
   assert.equal(L.rungs[3].lo, 0.05); assert.equal(L.rungs[3].hi, 0.6)
   assert.equal(L.rungs[4].status, 'grid'); assert.ok(near(L.rungs[4].share, 0.9)); assert.equal(L.rungs[4].source, '1 of 2 grids readable')
   assert.ok(near(L.rungs[2].drop, -0.7))   // from the claim straight to the grid when the hourly rung is empty
-  assert.match(L.sentence, /It discloses no hourly figure in the documents read, so that rung cannot be verified\./)
-  assert.match(L.sentence, /10–50% clean over all hours and 5\.0–60% between midnight and 6am\./)
-  assert.match(L.sentence, /Of the generation added at night since 2019, Place A's overnight generation fell 0\.5 GW, so its increment cannot be read and Place B's grid was 90% clean \(wind \+0\.9 GW\)\./)
+  // Once the grids have loaded the physical reading is the overnight range, not the all-hours one.
+  assert.match(L.sentence, /^Acme is 100% renewable on paper \(p\. 4\) and 5\.0–60% physically between midnight and 6am at Place A and Place B\./)
+  // The two caveats survive in words: no hourly disclosure, and the one footprint whose increment is unreadable.
+  assert.match(L.sentence, /It discloses no hourly figure of its own in the documents read\./)
+  assert.match(L.sentence, /Place A's overnight generation fell since 2019, so that increment cannot be read\./)
+  assert.ok(!/Place B's/.test(L.sentence), 'the readable increment is a rung, not sentence material')
   assert.equal(L.counts.cannot_verify, 1)
   const step = biggestDrop(L.rungs)
   assert.equal(step.from.id, 'claimed'); assert.equal(step.to.id, 'grid_all'); assert.ok(near(step.pts, 0.7))
@@ -146,21 +151,36 @@ test('companyLadder is null with no fraction claim or no site', () => {
 })
 
 // ---- region ladder on a fixture -----------------------------------------------------------------------
-test('regionLadder: average, overnight, increment; the sentence says what moved and what a flat load means', () => {
+test('regionLadder: average, overnight, increment; the sentence says what filled the growth, not what the rungs draw', () => {
   const L = regionLadder({ ...pjmLike, id: 'X/Z', type: 'zone', ba: 'X', cf_inherited_from_ba: true, demand: { 2019: { overnight_avg_mw: 10060 }, 2025: { overnight_avg_mw: 14033 } } }, { label: 'Somewhere', load_mw: 300 })
   assert.deepEqual(L.rungs.map(r => [r.id, r.status]), [['grid_all', 'grid'], ['grid_night', 'grid'], ['increment', 'grid']])
   assert.equal(L.rungs[0].share, 0.393); assert.equal(L.rungs[1].share, 0.39); assert.ok(L.rungs[2].share < 0)
-  assert.equal(L.sentence, 'In Somewhere the X grid (this zone inherits its generation figures) ran 39% clean over all hours of 2025 and 39% between midnight and 6am. Of the 8.7 GW of overnight generation added since 2019, 0% was clean: clean output fell 0.1 GW, gas rose 10.7 GW and coal fell 2.5 GW. Consistent with the zone\'s +4.0 GW of overnight demand growth being served by gas. For a 300 MW flat load that means 182 MW not carbon-free at the average mix, and 300 MW if it is served the way the last 8.7 GW was.')
+  assert.equal(L.sentence, "In Somewhere, 0% of the overnight generation added since 2019 was clean (gas +10.7 GW), consistent with the zone's +4.0 GW of overnight demand growth being served by gas.")
+  // The substance: the share of the increment, the fuel that filled it, the demand growth it is consistent
+  // with, and the hedged verb the project rule requires.
+  assert.ok(L.sentence.includes('0%') && L.sentence.includes('gas +10.7 GW') && L.sentence.includes('+4.0 GW'), L.sentence)
+  assert.ok(L.sentence.includes('consistent with') && !/caused by/.test(L.sentence), L.sentence)
+  // The three shares and the GW added are drawn on the rungs, so the lead never restates them.
+  assert.ok(!/39%/.test(L.sentence) && !/8\.7 GW/.test(L.sentence), L.sentence)
   assert.equal(L.counts.cannot_verify, 0)
+  // load_mw no longer changes the sentence: what a flat load would run on belongs to the load-shape card.
+  assert.equal(regionLadder({ ...pjmLike, id: 'X/Z', type: 'zone', ba: 'X', cf_inherited_from_ba: true, demand: { 2019: { overnight_avg_mw: 10060 }, 2025: { overnight_avg_mw: 14033 } } }, { label: 'Somewhere', load_mw: 900 }).sentence, L.sentence)
 })
 test('regionLadder: unreadable increment says so, a clean increment names the fuel, a corrected history is said', () => {
   const flat = regionLadder({ id: 'S', type: 'ba', cf_share: { 2025: { all: 0.056, overnight: 0.007 } }, total_avg_mw: { 2019: { overnight: 1896 } }, fuel_delta_overnight_gw: { hydro: -0.06, gas: -0.13, coal: 0.21, other: -0.01 }, demand: { 2019: { overnight_avg_mw: 2107 }, 2025: { overnight_avg_mw: 2817 } } }, { label: 'S-place' })
   assert.equal(flat.rungs[2].status, 'unreadable')
-  assert.match(flat.sentence, /^In S-place the S grid ran 5\.6% clean over all hours of 2025 and 0\.7% between midnight and 6am\. Its own overnight generation did not grow since 2019 \(0\.0 GW\) while overnight demand rose 0\.7 GW, so the increment cannot be read from generation inside the footprint\.$/)
+  // The whole caveat survives: demand up, the footprint's own generation flat, and why that makes the
+  // increment unreadable -- we measure generation inside a footprint, not consumption.
+  assert.equal(flat.sentence, "In S-place overnight demand rose 0.7 GW but the grid's own overnight generation did not grow since 2019, so the increment cannot be read from generation inside the footprint.")
   assert.equal(flat.counts.cannot_verify, 1)
   const wind = regionLadder({ id: 'W', type: 'ba', cf_share: { 2025: { all: 0.456, overnight: 0.519 } }, total_avg_mw: { 2019: { overnight: 28275 } }, fuel_delta_overnight_gw: { nuclear: -0.01, hydro: -0.91, wind: 4.16, solar: 0.05, gas: 0.6, coal: -0.41, other: 0.01 }, demand: { 2019: { overnight_avg_mw: 1160 }, 2025: { overnight_avg_mw: 1682 } }, corrections: { corrections: [{ path: 'cf_share.2019', corrected: { overnight: 0.4 } }] } }, { label: 'W-place', load_mw: 100 })
-  assert.match(wind.sentence, /Of the 3\.5 GW of overnight generation added since 2019, 94% was clean: clean output rose 3\.3 GW, gas rose 0\.6 GW and coal fell 0\.4 GW\. Consistent with its \+0\.5 GW of overnight demand growth being served by wind\. For a 100 MW flat load that means 54 MW not carbon-free at the average mix, and 6 MW if it is served the way the last 3\.5 GW was\. Its published 2019 history is corrected here; read the increment with care\.$/)
+  // A clean increment names the fuel that filled it; a corrected history keeps its warning.
+  assert.equal(wind.sentence, "In W-place, 94% of the overnight generation added since 2019 was clean (wind +4.2 GW), consistent with its +0.5 GW of overnight demand growth being served by wind. Its published 2019 history is corrected here; read the increment with care.")
+  assert.ok(wind.sentence.includes('corrected here'), 'the correction caveat is not dropped for brevity')
   assert.equal(wind.counts.corrected, 1)
+  // A region with no fuel breakdown at all still says why the increment is unreadable.
+  const bare = regionLadder({ id: 'B', type: 'ba', cf_share: { 2025: { all: 0.2, overnight: 0.2 } } }, { label: 'B-place' })
+  assert.equal(bare.sentence, 'In B-place there is no fuel breakdown for this grid, so the increment cannot be read.')
   assert.equal(regionLadder(null), null)
   assert.equal(regionLadder({ id: 'E', cf_share: {} }), null)
 })
@@ -172,14 +192,24 @@ test('real export: Google', { skip: !company('GOOGL') || !region('SC') }, () => 
   assert.deepEqual(L.rungs.map(r => [r.id, r.status]), [['claimed', 'paper'], ['hourly', 'disclosed'], ['grid_all', 'grid'], ['grid_night', 'grid'], ['increment', 'unreadable']])
   assert.equal(L.rungs[0].share, 1); assert.equal(L.rungs[1].share, 0.65); assert.equal(L.rungs[2].share, 0.056); assert.equal(L.rungs[3].share, 0.007)
   assert.equal(L.rungs[1].source, 'p. 94, google-2026-environmental-report, 2025')
-  assert.equal(L.sentence, "Alphabet (Google) says 100% renewable on an annual, market-based basis (p. 4). Measured hourly, its own report puts it at 65% (p. 94, 2025). On the grid its one mapped site draws from (Santee Cooper), with contracted power excluded, 2025 generation was 5.6% clean over all hours and 0.7% between midnight and 6am. The footprint's own overnight generation did not grow since 2019 (0.0 GW against +0.7 GW of demand), so the increment cannot be read. Each rung removes one accounting convention; the claim is true on paper at the rung it was made for.")
+  assert.equal(L.sentence, "Alphabet (Google) is 100% renewable on paper (p. 4), 65% hourly by its own report (p. 94) and 0.7% physically between midnight and 6am at Santee Cooper. Santee Cooper's overnight generation did not grow since 2019, so that increment cannot be read.")
+  // Both page citations survive -- a page number is the evidence the whole product rests on.
+  assert.ok(L.sentence.includes('(p. 4)') && L.sentence.includes('(p. 94)'), L.sentence)
+  // "true on paper, X physically", never an accusation.
+  assert.ok(L.sentence.includes('on paper') && L.sentence.includes('physically'), L.sentence)
+  assert.ok(!/lied|lying|false|greenwash/i.test(L.sentence), L.sentence)
+  // The unreadable increment is stated, not swallowed.
+  assert.ok(L.sentence.includes('cannot be read'), L.sentence)
   assert.equal(L.flags.length, 1); assert.match(L.flags[0], /V\.C\. Summer/)
   const step = biggestDrop(L.rungs); assert.equal(step.from.id, 'hourly'); assert.equal(step.to.id, 'grid_all'); assert.ok(near(step.pts, 0.594))
 })
 test('real export: PJM/DOM', { skip: !region('PJM/DOM') }, () => {
   const L = regionLadder(region('PJM/DOM'), { label: coords['PJM/DOM']?.label, load_mw: 300 })
-  assert.equal(L.sentence, "In N. Virginia the PJM grid (this zone inherits its generation figures) ran 39% clean over all hours of 2025 and 39% between midnight and 6am. Of the 8.7 GW of overnight generation added since 2019, 0% was clean: clean output fell 0.1 GW, gas rose 10.7 GW and coal fell 2.5 GW. Consistent with the zone's +4.0 GW of overnight demand growth being served by gas. For a 300 MW flat load that means 182 MW not carbon-free at the average mix, and 300 MW if it is served the way the last 8.7 GW was.")
+  assert.equal(L.sentence, "In N. Virginia, 0% of the overnight generation added since 2019 was clean (gas +10.7 GW), consistent with the zone's +4.0 GW of overnight demand growth being served by gas.")
   assert.deepEqual(L.flags, [])
+  // The headline figures are still figures, and the hedge is the project's, not an accusation.
+  assert.ok(L.sentence.includes('gas +10.7 GW') && L.sentence.includes("the zone's +4.0 GW"), L.sentence)
+  assert.ok(!/caused by/.test(L.sentence), L.sentence)
 })
 test('real export: Meta (two sites, no hourly disclosure) and Amazon (nothing measurable)', { skip: !company('META') || !region('PACW') }, () => {
   const m = company('META')
@@ -187,7 +217,9 @@ test('real export: Meta (two sites, no hourly disclosure) and Amazon (nothing me
   assert.equal(L.rungs[1].status, 'cannot_verify')
   assert.equal(fmtRange(L.rungs[2].lo, L.rungs[2].hi), '46–75%')
   assert.equal(fmtRange(L.rungs[3].lo, L.rungs[3].hi), '52–72%')
-  assert.match(L.sentence, /W\. Oregon's overnight generation fell 0\.7 GW, so its increment cannot be read and Omaha's grid was 94% clean \(wind \+4\.2 GW\)/)
+  assert.equal(L.sentence, "Meta Platforms is 100% renewable on paper (p. 18) and 52–72% physically between midnight and 6am at W. Oregon and Omaha. It discloses no hourly figure of its own in the documents read. W. Oregon's overnight generation fell since 2019, so that increment cannot be read.")
+  // Meta discloses nothing hourly, so the cannot-verify is said in words as well as counted.
+  assert.ok(L.sentence.includes('no hourly figure of its own'), L.sentence)
   assert.equal(L.counts.cannot_verify, 1)
   const a = company('AMZN')
   if (a) assert.equal(companyLadder(a), null)
@@ -195,7 +227,26 @@ test('real export: Meta (two sites, no hourly disclosure) and Amazon (nothing me
 test('real export: Microsoft carries the Phoenix correction as a flag', { skip: !company('MSFT') || !region('AZPS') }, () => {
   const m = company('MSFT')
   const L = companyLadder(m, { grids: Object.fromEntries(m.sites.map(s => [s.region_id, gridFacts(region(s.region_id), { caveat: s.region_id === 'AZPS' ? 'Phoenix history corrected' : null })]).filter(([, g]) => g)) })
+  // The correction is carried by `corrected` and `flags`, which the card prints under the ladder, so the
+  // sentence does not have to repeat it -- but the unreadable Phoenix increment is still spelled out.
   assert.deepEqual(L.corrected, ['Phoenix'])
   assert.ok(L.flags.includes('Phoenix history corrected'))
-  assert.match(L.sentence, /Grant Co\. WA's grid was 100% clean \(hydro \+0\.2 GW\)/)
+  assert.equal(L.counts.corrected, 1)
+  assert.match(L.sentence, /Phoenix's overnight generation fell since 2019, so that increment cannot be read\./)
+  assert.ok(L.sentence.includes('(p. 6)'), L.sentence)
+})
+
+// The whole point of the rewrite: the lead is the shape of the finding, and the rungs carry the components.
+test('the lead sentence stays short in every shape it takes', { skip: !company('GOOGL') || !company('META') || !region('PJM/DOM') || !region('AZPS') }, () => {
+  const ladders = []
+  for (const t of ['GOOGL', 'META', 'MSFT']) { const c = company(t); if (c) ladders.push(companyLadder(c, { grids: gridsFor(c) })) }
+  for (const id of ['PJM/DOM', 'SC', 'PACW', 'AZPS']) { const d = region(id); if (d) ladders.push(regionLadder(d, { label: coords[id]?.label, load_mw: 300 })) }
+  for (const L of ladders) {
+    assert.ok(L, 'a ladder for every fixture we asked for')
+    assert.ok(L.sentence.length <= 300, `${L.sentence.length} chars: ${L.sentence}`)
+    // The finding, plus at most two caveats. "p. 4", "W. Oregon" and "Co. WA" are not sentence ends.
+    const sentences = L.sentence.replace(/\b(?:[A-Z]|p|pp|Co|St|Mt)\.\s/g, '').split(/\.\s/)
+    assert.ok(sentences.length <= 3, `${sentences.length} sentences: ${L.sentence}`)
+    assert.ok(!/caused by|lied|greenwash/i.test(L.sentence), L.sentence)
+  }
 })

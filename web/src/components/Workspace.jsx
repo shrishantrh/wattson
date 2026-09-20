@@ -1,14 +1,15 @@
 /* oxlint-disable react/only-export-components -- the state hook and the pure reducer are exported for pages and tests */
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { DndContext, closestCenter, PointerSensor, KeyboardSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { DndContext, DragOverlay, closestCenter, PointerSensor, KeyboardSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, useSortable, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { Plus } from './Icons.jsx'
 import '../styles/workspace.css'
 
 // Modular evidence column. <Workspace id="check" modules={[{ id, title, render: () => node, default?, right? }]} />
 // Order and the enabled set persist in localStorage under `wattson.ws.<id>`. A module the stored
-// state has never seen slots in where it sits in the definition; a hidden one comes back from
-// Customize. Every storage read/write is wrapped; with storage gone it just runs on defaults.
+// state has never seen slots in where it sits in the definition; a hidden one is listed above the
+// cards and comes back with one click. Every storage read/write is wrapped; with storage gone it just runs on defaults.
 
 export const storeKey = id => `wattson.ws.${id}`
 export const emptyState = () => ({ order: [], enabled: {} })
@@ -96,7 +97,15 @@ export function useWorkspaceState(id, modules) {
 }
 
 const VERTICAL = [({ transform }) => ({ ...transform, x: 0 })]
-const label = m => (typeof m.title === 'string' ? m.title : m.id)
+// A module's title is usually an icon plus words, so the plain words are dug out of it: they name
+// the card in its Drag and Hide buttons and on the button that brings it back.
+const textOf = n => {
+  if (n == null || typeof n === 'boolean') return ''
+  if (typeof n === 'string' || typeof n === 'number') return String(n)
+  if (Array.isArray(n)) return n.map(textOf).join('')
+  return n.props ? textOf(n.props.children) : ''
+}
+const label = m => (typeof m.title === 'string' ? m.title : textOf(m.title).trim() || m.id)
 
 export default function Workspace({ id, modules, title, className = '' }) {
   return <WorkspaceBody key={id} id={id} modules={modules} title={title} className={className} />
@@ -110,22 +119,51 @@ function WorkspaceBody({ id, modules, title, className }) {
   )
   const idsKey = JSON.stringify(ws.visible.map(m => m.id))   // stable identity for SortableContext
   const ids = useMemo(() => JSON.parse(idsKey), [idsKey])
-  const onDragEnd = ({ active, over }) => { if (over && active.id !== over.id) ws.move(String(active.id), String(over.id)) }
+  // While a card is in the air the whole column says so: every handle comes up, the card that was
+  // picked up becomes an outlined slot where it would land, and a small chip follows the pointer
+  // (or the keyboard cursor) so what is moving is never ambiguous.
+  const [active, setActive] = useState(null)
+  const onDragEnd = ({ active: a, over }) => { setActive(null); if (over && a.id !== over.id) ws.move(String(a.id), String(over.id)) }
+  const dragging = active ? ws.visible.find(m => m.id === active) : null
   return (
-    <div className={`ws ${className}`} data-workspace={id}>
+    <div className={`ws ${className}`} data-workspace={id} data-dragging={dragging ? 'true' : undefined}>
       <div className="ws-bar">
         {title && <span className="ws-bar-title">{title}</span>}
         <Customize ws={ws} />
       </div>
-      <DndContext id={`ws-${id}`} sensors={sensors} collisionDetection={closestCenter} modifiers={VERTICAL} onDragEnd={onDragEnd}>
+      <Hidden ws={ws} />
+      <DndContext id={`ws-${id}`} sensors={sensors} collisionDetection={closestCenter} modifiers={VERTICAL}
+        onDragStart={({ active: a }) => setActive(String(a.id))} onDragCancel={() => setActive(null)} onDragEnd={onDragEnd}>
         <SortableContext items={ids} strategy={verticalListSortingStrategy}>
           {ws.visible.map(m => <Module key={m.id} module={m} onHide={() => ws.hide(m.id)} />)}
         </SortableContext>
+        <DragOverlay dropAnimation={null}>
+          {dragging && <div className="ws-ghost"><Grip /><span>{label(dragging)}</span></div>}
+        </DragOverlay>
       </DndContext>
-      {ws.visible.length === 0 && <div className="ws-empty">Every module is hidden. <button type="button" className="ws-linkbtn" onClick={ws.showAll}>Show all</button></div>}
+      {ws.visible.length === 0 && <div className="ws-empty">Every card is hidden. <button type="button" className="ws-linkbtn" onClick={ws.showAll}>Show all</button></div>}
     </div>
   )
 }
+
+// Hiding a card with no visible way to get it back is the one thing worse than not knowing what a
+// control does. Every hidden card sits here as a named button that puts it back where it was.
+function Hidden({ ws }) {
+  const hidden = ws.modules.filter(m => !ws.enabled[m.id])
+  if (!hidden.length) return null
+  return (
+    <div className="ws-hidden">
+      <span className="ws-hidden-label">Hidden</span>
+      {hidden.map(m => (
+        <button type="button" key={m.id} className="ws-restore" onClick={() => ws.show(m.id)} aria-label={`Show ${label(m)}`}>
+          <Plus size={12} />{label(m)}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+const Grip = () => <svg viewBox="0 0 10 14" width="10" height="14" aria-hidden="true"><circle cx="3" cy="3" r="1" /><circle cx="7" cy="3" r="1" /><circle cx="3" cy="7" r="1" /><circle cx="7" cy="7" r="1" /><circle cx="3" cy="11" r="1" /><circle cx="7" cy="11" r="1" /></svg>
 
 function Module({ module: m, onHide }) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id: m.id })
@@ -136,12 +174,12 @@ function Module({ module: m, onHide }) {
         <span className="ws-title">{m.title}</span>
         <span className="ws-tools">
           {m.right}
-          <button type="button" ref={setActivatorNodeRef} className="ws-handle" title="Drag to reorder. Keyboard: Space, arrows, Space" {...attributes} {...listeners} aria-label={`Reorder ${label(m)}`}>
-            <svg viewBox="0 0 10 14" width="10" height="14" aria-hidden="true"><circle cx="3" cy="3" r="1" /><circle cx="7" cy="3" r="1" /><circle cx="3" cy="7" r="1" /><circle cx="7" cy="7" r="1" /><circle cx="3" cy="11" r="1" /><circle cx="7" cy="11" r="1" /></svg>
+          {/* Both card controls are always visible and both say what they do: the grip is the
+              only thing you can drag, and "Hide" is a word, not an × that could mean anything. */}
+          <button type="button" ref={setActivatorNodeRef} className="ws-handle" {...attributes} {...listeners} aria-label={`Drag to reorder ${label(m)}`}>
+            <Grip /><span className="ws-handle-text">Drag</span>
           </button>
-          <button type="button" className="ws-hide" onClick={onHide} title="Hide" aria-label={`Hide ${label(m)}`}>
-            <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" /></svg>
-          </button>
+          <button type="button" className="ws-hide" onClick={onHide} aria-label={`Hide ${label(m)}`}>Hide</button>
         </span>
       </header>
       {typeof m.render === 'function' ? m.render() : m.render ?? null}
@@ -164,11 +202,11 @@ function Customize({ ws }) {
   return (
     <div className="ws-pop-host" ref={host}>
       <button type="button" className="ws-customize" aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        Customize{n < total && <span className="ws-customize-n">{n}/{total}</span>}
+        Show or hide cards<span className="ws-customize-n">{n}/{total}</span>
       </button>
       {open && (
-        <div className="ws-pop" role="dialog" aria-label="Customize modules">
-          <div className="ws-pop-head">Modules<span className="ws-pop-hint">drag the handle on a card to reorder</span></div>
+        <div className="ws-pop" role="dialog" aria-label="Show or hide cards">
+          <div className="ws-pop-head">Cards on this page<span className="ws-pop-hint">tick to show, untick to hide</span></div>
           <div className="ws-pop-list">
             {ws.modules.map(m => (
               <label key={m.id} className={`ws-pop-row ${ws.enabled[m.id] ? '' : 'off'}`}>

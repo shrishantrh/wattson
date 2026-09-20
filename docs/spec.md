@@ -311,7 +311,7 @@ balancing-authority mappings.
 | **ingest** | 4 sustainability PDFs + 4 SEC 10-Ks → citable passages, page preserved | **354 passages** |
 | **extract** | one structured-output call per chunk, 8 hand-written falsifiability anchors | **1,317 claims, 841 quantified** |
 | **contradict** | deterministic pattern matching, every hit human-verified | **9 findings, 0 unverified** |
-| **verify** | claims × mapped sites × grid share → verdict | **4 companies, 10 curated claims** |
+| **verify** | claims × mapped sites × grid share → verdict | **52 operators, 134 sites, 4 with documents read** |
 | **retrieval** | Elasticsearch over all 354, cross-company and cross-document | live |
 
 ### Verdicts
@@ -326,8 +326,20 @@ reason — `no_falsifiable_content`, `no_site_mapping`, `ba_out_of_coverage`,
 
 ### The facility lookup — the trap that flips verdicts
 
-Built by hand, from the serving utility outward, **never from the state**. 20 sites, 16
-companies, every row with a source URL.
+Built by hand, from the serving utility outward, **never from the state**. **134 sites
+across 52 operators**, every row with a source URL and a confidence grade — 42 high, 61
+medium, 11 low. Confidence grades the *site → balancing authority* mapping, not the press
+release: "company announced it, utility inferred from a city that straddles two BAs" is
+`low`, and it ships as `low` rather than being dropped or dressed up.
+
+`lat`/`lon` are deliberately blank on the expanded rows. Most public sources give a city,
+not an address, and a city-centre pin rendered as a facility pin is exactly the kind of
+small lie this project cannot afford.
+
+**Eleven of these sites are behind the meter** — served by generation that never touches
+the grid — so EIA-930 cannot see their load at all, and for two of them the operator's own
+fact sheet says so in writing. This is a structural blind spot in a demand-only detector
+and we state it on screen rather than waiting to be caught by it.
 
 | Site | Naive guess | Actual | Effect |
 |---|---|---|---|
@@ -338,6 +350,13 @@ companies, every row with a source URL.
 
 **Childress and Abernathy are 120 miles apart and either rule of thumb gets one wrong.**
 Only the serving utility settles it.
+
+Three tickers in the research were stale and were corrected against filings: Bitfarms
+`BITF` → **`KEEL`** (April 2026), Greenidge `GREE` → **`VIP`** (July 2026), and Stronghold
+`SDIG` is delisted. TXNM was checked and is live and correct, which closes a known open
+issue. One row was wrong in substance, not just in ticker: CoreWeave does **not** own the
+Denton campus — the Core Scientific acquisition was voted down on 30 October 2025 — so it
+is recorded as a tenant at Core Scientific's site.
 
 ---
 

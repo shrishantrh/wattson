@@ -1,32 +1,25 @@
 /* Relocate module (components/modules/RelocateModule): move one site, watch the physical figure
    move. Renders inside a caller's card, so there is no outer surface. The one accent is a figure
    that got dirtier. Colors come from tokens.css only. */
-.rl-mod { min-width: 0; }
 .rl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 8px; }
-.rl-k { font-size: 11px; color: var(--muted); margin-right: 2px; white-space: nowrap; }
+.rl-k { font-size: var(--t-micro); color: var(--muted); margin-right: 2px; white-space: nowrap; }
 .rl-chip { display: inline-flex; align-items: center; gap: 6px; }
-.rl-chip b { font-family: var(--font-mono); font-weight: 400; font-size: 10.5px; color: var(--muted); font-feature-settings: normal; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.rl-chip b { font-family: var(--font-mono); font-weight: 400; font-size: var(--t-micro); color: var(--muted); font-feature-settings: normal; letter-spacing: 0; font-variant-numeric: tabular-nums; }
 .chip.on .rl-chip b { color: var(--ink-2); }
-.rl-input { height: 24px; min-width: 200px; flex: 1 1 200px; max-width: 340px; padding: 0 9px; border: 1px solid var(--line-strong); border-radius: 8px; background: transparent; color: var(--ink); font-size: 12px; outline: none; transition: var(--tr-ui); }
+.rl-input { height: 24px; min-width: 200px; flex: 1 1 200px; max-width: 340px; padding: 0 9px; border: 1px solid var(--line-strong); border-radius: 8px; background: transparent; color: var(--ink); font-size: var(--t-small); outline: none; transition: var(--tr-ui); }
 .rl-input::placeholder { color: var(--muted); }
 .rl-input:hover { border-color: var(--line-focus); }
 .rl-input:focus-visible { border-color: var(--line-focus); box-shadow: var(--ring); }
-.rl-hint { font-size: 11px; color: var(--muted); }
+.rl-hint { font-size: var(--t-micro); color: var(--muted); }
 .rl-hint.bad { color: var(--accent); }
 
 /* before → after: the before in muted, the after in ink (accent only when it got dirtier) */
 .rl-nums { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 28px; margin-top: 12px; }
 .rl-pair { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
 .rl-pair .num:first-child .v { color: var(--muted); }
-.rl-arrow { color: var(--muted); font-weight: 300; font-size: 22px; line-height: 1.2; }
+.rl-arrow { color: var(--muted); font-weight: 300; font-size: var(--t-h2); line-height: 1.2; }
 
-/* the sentence */
-.rl-say { font-size: 13px; color: var(--ink-2); line-height: 1.5; margin-top: 12px; }
-.rl-say b { color: var(--ink); font-weight: 500; }
-.rl-say.accent b.after { color: var(--accent); }
-.rl-say a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-focus); text-underline-offset: 2px; transition: text-decoration-color var(--dur-fast) var(--ease); }
-.rl-say a:hover { text-decoration-color: var(--ink-2); }
 
-.rl-caveat { margin-top: 8px; font-size: 11px; color: var(--muted); line-height: 1.45; }
+.rl-caveat { margin-top: 8px; font-size: var(--t-micro); color: var(--muted); line-height: 1.45; }
 .rl-caveat summary { cursor: pointer; color: var(--ink-2); user-select: none; }
 .rl-caveat p { margin: 4px 0 0; }

@@ -1,5 +1,5 @@
 /* oxlint-disable react/only-export-components -- sortRows, filterRows, nextSort and the cell helpers are pure and exported for tests */
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { downloadCSV } from '../lib/csv.js'
 import '../styles/workspace.css'
 import '../styles/pages.css'
@@ -84,6 +84,25 @@ export default function Table({ columns, rows, sortKey, defaultSort, onSortChang
   const showBar = !!(filter || csvName || toolbar)
   const keyOf = (r, i) => (rowKey ? rowKey(r) : r.id ?? r.key ?? r.region_id ?? r.ticker ?? i)
   const onHeader = col => { const n = nextSort(sort, col.key, col); setSort(n); if (onSortChange) onSortChange(n) }
+  // The only cue that columns continue past the right edge: a hairline on that edge and a count.
+  const wrapRef = useRef(null)
+  const [more, setMore] = useState(0)
+  const measure = useCallback(() => {
+    const el = wrapRef.current
+    if (!el) return
+    const left = el.scrollWidth - el.clientWidth - el.scrollLeft
+    if (left <= 2) { setMore(0); return }
+    const edge = el.getBoundingClientRect().right
+    setMore([...el.querySelectorAll('thead th')].filter(th => th.getBoundingClientRect().left > edge - 8).length)
+  }, [])
+  useLayoutEffect(measure, [measure, sorted.length, columns, compact])
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [measure])
   const go = (r, e) => {
     if (e.defaultPrevented) return
     if (e.target && e.target.closest && e.target.closest('a, button, input, [data-noclick]')) return
@@ -100,6 +119,7 @@ export default function Table({ columns, rows, sortKey, defaultSort, onSortChang
           {filter && <input className="tbl-filter" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder={filterPlaceholder || (typeof filter === 'string' ? filter : 'Filter rows')} aria-label="Filter rows" />}
           {toolbar}
           <span className="tbl-count">{q ? `${sorted.length} of ${plural(total)}` : plural(total)}</span>
+          {more > 0 && <span className="tbl-more" title="Scroll the table sideways for the rest">{more} more col{more === 1 ? '' : 's'} →</span>}
           <span className="tbl-density" role="group" aria-label="Row density">
             <button type="button" aria-pressed={!compact} onClick={() => setCompact(false)}>Comfortable</button>
             <button type="button" aria-pressed={compact} onClick={() => setCompact(true)}>Compact</button>
@@ -107,7 +127,7 @@ export default function Table({ columns, rows, sortKey, defaultSort, onSortChang
           {csvName && <button type="button" className="tbl-csv" onClick={() => downloadCSV(csvName, columns.filter(c => c.csv !== false), sorted)} disabled={!sorted.length} title="Download these rows as CSV">CSV</button>}
         </div>
       )}
-      <div className={`tbl-wrap ${maxHeight ? 'scroll' : ''}`} style={maxHeight ? { maxHeight } : undefined}>
+      <div ref={wrapRef} onScroll={measure} className={`tbl-wrap ${maxHeight ? 'scroll' : ''} ${more > 0 ? 'more-r' : ''}`} style={maxHeight ? { maxHeight } : undefined}>
         <table>
           <colgroup>{columns.map(c => <col key={c.key} style={c.width ? { width: c.width } : undefined} />)}</colgroup>
           <thead>
@@ -133,15 +153,20 @@ export default function Table({ columns, rows, sortKey, defaultSort, onSortChang
                   {columns.map((c, ci) => {
                     const node = c.render ? c.render(r) : cellText(c, r)
                     const inner = ci === 0 && h ? <a className="tbl-link" href={h} tabIndex={-1}>{node}</a> : c.num ? node : <span className="tbl-cell">{node}</span>
-                    return <td key={c.key} className={`${c.num ? 'num' : ''} ${c.dim ? 'dim' : ''}`} title={typeof node === 'string' && node !== '—' ? node : undefined}>{inner}</td>
+                    return <td key={c.key} className={`${c.num ? 'num' : ''} ${c.dim ? 'dim' : ''} ${sort?.key === c.key ? 'on' : ''}`} title={typeof node === 'string' && node !== '—' ? node : undefined}>{inner}</td>
                   })}
                 </tr>
               )
             })}
           </tbody>
         </table>
-        {sorted.length === 0 && <div className="tbl-empty">{q ? `No rows match “${q}”` : emptyText}</div>}
       </div>
+      {sorted.length === 0 && (
+        <div className="tbl-empty">
+          <p className="tbl-empty-t">{q ? <>Nothing matches <b>“{q}”</b>{total ? ` in these ${total} rows.` : '.'}</> : emptyText}</p>
+          {q && <button type="button" className="btn" onClick={() => setQ('')}>Clear the filter</button>}
+        </div>
+      )}
     </div>
   )
 }

@@ -102,6 +102,33 @@ Land on the verdict.
 
 Say the miss out loud. It buys more credibility than the three hits.
 
+**(b2) OpenAI — 20s. Use this. It is the best beat in the demo.**
+
+Type `openai`. Six Stargate sites come up, every one mapped to a grid.
+
+> **"We built the ask layer on OpenAI's models. So let's point it at OpenAI."**
+>
+> **"Six Stargate sites. Abilene, Milam County, Lordstown, Pike County, Port Washington,
+> Santa Teresa. Thirty-seven percent carbon-free across them — and the two we're most
+> confident about are the two where the utility is named in the press release: AEP Ohio
+> and We Energies."**
+
+Then open the New Mexico site. **This is the line.**
+
+> **"And this one we cannot see at all. Project Jupiter is a 700-to-900 megawatt gas
+> microgrid that explicitly does not connect to El Paso Electric. So that load never
+> appears in federal demand data — including ours."**
+>
+> **"That's not a gap we found in someone else's work. That's our own blind spot, on our
+> own screen, in writing. Eleven of our mapped sites are behind the meter. A demand-only
+> detector cannot see a datacenter that brought its own power plant."**
+
+Why this beat works: it is a sponsor demo, a finding, and a confession in one move, and
+the confession is what makes the other two credible. Do not skip the last paragraph to
+save time — it is the most persuasive thing you will say.
+
+---
+
 **(c) ⌘K — 20s. This is the moment.** Open it. Start typing; let the grey completion appear
 and hit Tab.
 
@@ -192,4 +219,7 @@ apologize for it on camera; just move to the next screen.
 | Dominion detector rank | 6th of 111 | |
 | Dallas (ERCO/NCEN) | 91st | the pre-registered miss |
 | Grant County PUD overnight clean | 100% | `GCPD.cf_share_2025.overnight` = 1.0 |
-| Companies held | 16 | 4 with claims checked, 11 sites-only, 1 unmapped |
+| Operators held | 52 | 134 sites; 4 with claims checked, 48 sites-only |
+| OpenAI Stargate sites | 6 | walk score 0.369, coverage 1.0 |
+| Project Jupiter microgrid | 700–900 MW | gas, not connected to El Paso Electric |
+| Behind-the-meter sites | 11 | invisible to EIA-930 by construction |

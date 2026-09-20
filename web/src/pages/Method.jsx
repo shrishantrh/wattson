@@ -55,7 +55,18 @@ export default function Method() {
       <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<b>Method</b>} onClose={back}>
         <h1 className="verdict">We measure what each grid physically generated, hour by hour — not what was bought on paper.</h1>
-        <p className="pg-lede">Every US balancing authority, from EIA-930 via PUDL. Clean = nuclear, hydro, wind, solar, geothermal; storage excluded, other and unknown counted in the denominator only. Night is {data.overnight_hours_local || '00:00–05:59'} local, the window with no solar in it and a datacenter still at full draw; day is {data.daytime_hours_local || '10:00–15:59'}, when solar does the work. Splitting the two is the whole method: an annual average hides the fact that the hours a 24/7 load is stuck with are the hours that did not improve. Baseline {data.baseline_year || 2019}, before the buildout; data through {data.data_snapshot_end || '2026-09-05'}.</p>
+        {/* the definitions as a grid, not a paragraph: each one is looked up, not read through.
+            The lede under it carries the one thing a lookup table cannot: why the split matters. */}
+        <dl className="pg-defs">
+          <div><dt>Source</dt><dd>EIA-930 via PUDL</dd></div>
+          <div><dt>Coverage</dt><dd>Every US balancing authority</dd></div>
+          <div><dt>Clean</dt><dd>Nuclear, hydro, wind, solar, geothermal — storage excluded, other and unknown counted in the denominator only</dd></div>
+          <div><dt>Night</dt><dd>{data.overnight_hours_local || '00:00–05:59'} local — no solar, a datacenter still at full draw</dd></div>
+          <div><dt>Day</dt><dd>{data.daytime_hours_local || '10:00–15:59'} local — the window solar output is largest in</dd></div>
+          <div><dt>Baseline</dt><dd>{data.baseline_year || 2019}, before the buildout</dd></div>
+          <div><dt>Through</dt><dd>{data.data_snapshot_end || '2026-09-05'}</dd></div>
+        </dl>
+        <p className="pg-lede">Splitting night from day is the whole method: an annual average hides the fact that the hours a 24/7 load is stuck with are the hours that did not improve.</p>
       </Card>
 
       <Section title="The flat-load detector — weights set before we saw the ranking">

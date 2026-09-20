@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useMemo, useState } from 'react'
 import Shell from '../console/Console.jsx'
-import { Card, Num, Ticks } from '../console/widgets.jsx'
+import { Card, Num } from '../console/widgets.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
 import { WxRange, WxSeg, WxChips, WxReadout, useEscape, useKeyList, isNum, DASH } from '../components/WxControls.jsx'
 import coords from '../data/region_coords.json'
@@ -48,6 +48,9 @@ export default function Alerts() {
   const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
   const nav = useKeyList(rows.length, { onOpen: i => { if (rows[i]) window.location.assign(href.region(rows[i].region)) }, onEscape: reset })
+  // Before the reader touches a key the lead row is simply the first one; after that the lead
+  // marker follows the cursor, so the ember rank number always means "the row you are on".
+  const leadAt = nav.index < 0 ? 0 : nav.index
 
   const streaks = rows.map(r => r.months_active_streak).filter(isNum)
   const byRule = all.reduce((m, r) => ({ ...m, [r.rule]: (m[r.rule] || 0) + 1 }), {})
@@ -67,7 +70,7 @@ export default function Alerts() {
     <>
       {crumb}
       <Card title={<><b>What changed this month</b> · trailing 12 months to {month(data.latest_month)}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
-        <h1 className="verdict">{sentence}</h1>
+        <h1 className="verdict pg-top">{sentence}</h1>
         <div className="nums">
           <Num value={String(all.length)} label="signals across every region we score" sub={data.count_before_ranking && data.count_before_ranking !== all.length ? `ranked down from ${data.count_before_ranking}` : null} />
           <Num value={String(all.filter(r => r.rule === 'detector_top10').length)} label="are the demand shape of a load that never switches off" accent />
@@ -93,24 +96,26 @@ export default function Alerts() {
           // streak at all. That is an absent figure, not a run of zero months.
           { value: streaks.length ? String(Math.max(...streaks)) : DASH, label: streaks.length ? 'longest run of months over the line' : 'none of these come from a monthly threshold' },
         ]} />
-        <p className="note" style={{ marginTop: 12 }}>Severity is how far past the threshold, times how many months it has held, times how recent, so a slow drift that has run for years never outranks something big and still moving. Most of the volume in a monitor like this is real but old; rather than pick a cut for you, raise the severity bar or drop a rule until what is left is what you would actually call someone about. {data.excluded_regions?.length ? `${data.excluded_regions.join(', ')} raise no alerts at all: their reported numbers move in a way the data does not explain, and we would rather say so than publish a signal we cannot stand behind.` : 'Regions whose reported numbers move in a way the data does not explain raise no alerts at all.'}</p>
+        <p className="note pg-fine" style={{ marginTop: 12 }}>Severity is how far past the threshold, times how many months it has held, times how recent, so a slow drift that has run for years never outranks something big and still moving. In the list the bar length is that severity and it runs ember while an alert is in the primary tier, which is the whole legend. Most of the volume in a monitor like this is real but old; rather than pick a cut for you, raise the severity bar or drop a rule until what is left is what you would actually call someone about. {data.excluded_regions?.length ? `${data.excluded_regions.join(', ')} raise no alerts at all: their reported numbers move in a way the data does not explain, and we would rather say so than publish a signal we cannot stand behind.` : 'Regions whose reported numbers move in a way the data does not explain raise no alerts at all.'}</p>
       </Card>
       <Card>
         {rows.length === 0 ? (
           <p className="wx-none">Nothing clears <b>severity {minSev.toFixed(2)}</b>{rules.length ? <> under the {rules.length === 1 ? 'rule' : 'rules'} you kept</> : null}. The highest severity in the whole set is <b>{maxSev.toFixed(2)}</b>. Lower the bar, or press Reset.</p>
         ) : (
           <>
+            <div className="al-head"><span>#</span><span>Place and signal</span><span>Severity</span><span>Score</span></div>
             <div {...nav.listProps} className="rows al-rows wx-list" role="list" aria-label="Alerts">
               {rows.map((r, i) => (
                 <Fragment key={r.region + r.rule}>
                   {i > 0 && rows[i - 1].tier === 'primary' && r.tier !== 'primary' && order === 'severity' && <div className="al-tier">supporting and chronic</div>}
-                  <a data-wx-item className={`row${r.tier && r.tier !== 'primary' ? ' supporting' : ''}${i === nav.index ? ' lead' : ''}`} href={href.region(r.region)} aria-current={i === nav.index ? 'true' : undefined}>
+                  <a data-wx-item className={`row${r.tier && r.tier !== 'primary' ? ' supporting' : ''}${i === leadAt ? ' lead' : ''}`} href={href.region(r.region)} aria-current={i === nav.index ? 'true' : undefined}>
                     <span className="rk">{i + 1}</span>
                     <div>
                       <div className="t">{r.label} <span className="muted">· {SHORT[r.rule] || r.rule}</span>{r.tier && r.tier !== 'primary' && <span className="chip sm al-chip">{r.tier}</span>}</div>
                       <div className="d">{r.first_crossed ? `over the line since ${month(r.first_crossed)}` : 'flagged by demand shape, not a monthly threshold'}{r.months_active_streak ? ` · ${r.months_active_streak} months without a break` : ''}{r.unit === 'MW' && r.current_value != null ? (r.rule === 'clean_mw_below_2019' ? ` · ${n0(r.current_value)} MW of clean power overnight, was ${n0(r.baseline_2019)} MW in 2019` : ` · drawing ${n0(r.current_value)} MW through the night, was ${n0(r.baseline_2019)} MW in 2019`) : r.unit === 'share' && r.current_value != null ? ` · clean covers ${pct1(r.current_value)} of the night, was ${pct1(r.baseline_2019)} in 2019 — a share, not output` : r.unit === 'rank' && r.current_value != null ? ` · #${n0(r.current_value)} of every region scored${r.growth_pct != null ? `, demand up ${r.growth_pct}% since 2019` : ''}` : isNum(r.score) ? ` · score ${r.score.toFixed(1)}` : ''}</div>
                     </div>
-                    <Ticks value={(r.severity ?? 0) / maxSev * 100} max={100} n={12} accent={i === 0} />
+                    {/* length is severity, ember is the primary tier: readable without a legend */}
+                    <span className={`al-meter${!r.tier || r.tier === 'primary' ? ' hot' : ''}`} role="img" aria-label={`severity ${isNum(r.severity) ? r.severity.toFixed(2) : 'not reported'}`}><i style={{ width: `${Math.round(((r.severity ?? 0) / maxSev) * 100)}%` }} /></span>
                     <span className="n">{isNum(r.severity) ? r.severity.toFixed(2) : DASH}</span>
                   </a>
                 </Fragment>

@@ -1,7 +1,13 @@
-// Wattson icon set. One drawing system: a 24-unit grid, 1.5 stroke, round caps and joins, no
-// fill (except the six dots of Drag and the two bars of Pause), corners at r=2, and every glyph
-// sized to the same optical square — the busy ones sit inside 3..21, the quiet ones inside 4..20,
-// so a chevron does not read lighter than a table next to it in the same row.
+// Wattson icon set. One drawing system, no exceptions:
+//   · a 24-unit grid, viewBox 0 0 24 24, rendered at 16px unless a call site says otherwise
+//   · stroke 1.5, round caps, round joins, fill none (the six dots of Drag are the one
+//     deliberate fill; Pause is two round-capped strokes, not two filled bars)
+//   · corners at r=2
+//   · one optical square. Glyphs made of area (a rect, a circle, a table) sit inside
+//     3..21 — about 17 units. Glyphs made of a line or two (a chevron, an X, a check,
+//     a play triangle) sit inside roughly 5.5..18.5 — about 13 units — because the same
+//     bounding box would make them shout. They used to sit inside 6.25..17.75, which was
+//     small enough that a chevron read lighter than the table icon beside it at 16px.
 // Each icon takes `size` (px, default 16) and passes everything else to the <svg>, so className,
 // style, onClick and aria-* all work. Decorative by default (aria-hidden); pass aria-hidden={false}
 // and aria-label for a meaningful icon. Drawn by hand in the Lucide idiom, not copied from it.
@@ -134,11 +140,11 @@ export function Copy(props) {
 /* ---- state and transport ---- */
 
 export function Close(props) {
-  return <Svg {...props}><path d="M6.25 6.25 17.75 17.75M17.75 6.25 6.25 17.75" /></Svg>
+  return <Svg {...props}><path d="M5.75 5.75 18.25 18.25M18.25 5.75 5.75 18.25" /></Svg>
 }
 
 export function Check(props) {
-  return <Svg {...props}><path d="m4.5 12.5 4.75 4.75L19.5 7" /></Svg>
+  return <Svg {...props}><path d="m4.25 12.5 5 5L19.75 6.75" /></Svg>
 }
 
 export function Info(props) {
@@ -150,33 +156,62 @@ export function Help(props) {
 }
 
 export function Play(props) {
-  return <Svg {...props}><path d="M7.5 4.75 19 12 7.5 19.25V4.75Z" /></Svg>
+  return <Svg {...props}><path d="M7 4.5 19.5 12 7 19.5V4.5Z" /></Svg>
 }
 
 export function Pause(props) {
-  return <Svg {...props}><path d="M9 4.75v14.5M15 4.75v14.5" /></Svg>
+  return <Svg {...props}><path d="M8.75 4.5v15M15.25 4.5v15" /></Svg>
 }
 
 export function Keyboard(props) {
-  return <Svg {...props}><rect x="2.5" y="6" width="19" height="12" rx="2" /><path d="M6.25 10h.02M10 10h.02M13.75 10h.02M17.5 10h.02M6.25 14h.02M17.5 14h.02M9.25 14h5.5" /></Svg>
+  return <Svg {...props}><rect x="3" y="6" width="18" height="12" rx="2" /><path d="M6.5 10h.02M10 10h.02M13.5 10h.02M17 10h.02M6.5 14h.02M17 14h.02M9.5 14h5" /></Svg>
 }
 
 /* ---- direction ---- */
 
 export function ArrowRight(props) {
-  return <Svg {...props}><path d="M4 12h15.5M13.5 6l6 6-6 6" /></Svg>
+  return <Svg {...props}><path d="M4.25 12h15.5M13.75 6l6 6-6 6" /></Svg>
 }
 
 export function ArrowLeft(props) {
-  return <Svg {...props}><path d="M20 12H4.5M10.5 6l-6 6 6 6" /></Svg>
+  return <Svg {...props}><path d="M19.75 12H4.25M10.25 6l-6 6 6 6" /></Svg>
 }
 
 export function ChevronDown(props) {
-  return <Svg {...props}><path d="m6.5 9.5 5.5 5.5 5.5-5.5" /></Svg>
+  return <Svg {...props}><path d="m5.75 8.75 6.25 6.25 6.25-6.25" /></Svg>
 }
 
 export function ChevronUp(props) {
-  return <Svg {...props}><path d="m6.5 14.5 5.5-5.5 5.5 5.5" /></Svg>
+  return <Svg {...props}><path d="m5.75 15.25 6.25-6.25 6.25 6.25" /></Svg>
+}
+
+export function ChevronRight(props) {
+  return <Svg {...props}><path d="m9.5 5.75 6.25 6.25-6.25 6.25" /></Svg>
+}
+
+export function ChevronLeft(props) {
+  return <Svg {...props}><path d="m14.5 5.75-6.25 6.25 6.25 6.25" /></Svg>
+}
+
+export function ArrowUp(props) {
+  return <Svg {...props}><path d="M12 20V4.5M6 10.5l6-6 6 6" /></Svg>
+}
+
+export function ArrowDown(props) {
+  return <Svg {...props}><path d="M12 4v15.5M6 13.5l6 6 6-6" /></Svg>
+}
+
+export function Plus(props) {
+  return <Svg {...props}><path d="M12 5.5v13M5.5 12h13" /></Svg>
+}
+
+export function Minus(props) {
+  return <Svg {...props}><path d="M5.5 12h13" /></Svg>
+}
+
+// the amber case: a figure that is flagged, corrected or provisional
+export function Warning(props) {
+  return <Svg {...props}><path d="M12 3.75 21 19.5H3l9-15.75Z" /><path d="M12 10v4.25" /><path d="M12 17.5h.01" /></Svg>
 }
 
 // oxlint-disable-next-line react/only-export-components
@@ -186,5 +221,7 @@ export const ICONS = {
   Globe, Map2D, ZoomIn, ZoomOut,
   Company, Csv, Download, Link, External, Copy,
   Close, Check, Info, Help, Play, Pause, Keyboard,
-  ArrowRight, ArrowLeft, ChevronDown, ChevronUp,
+  ArrowRight, ArrowLeft, ArrowUp, ArrowDown,
+  ChevronDown, ChevronUp, ChevronRight, ChevronLeft,
+  Plus, Minus, Warning,
 }

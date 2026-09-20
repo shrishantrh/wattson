@@ -49,9 +49,11 @@ authority from EIA-930, then uses it four ways:
 
 **1. It checks a company's claim against its own grids.** Type a ticker. You get the claim
 verbatim with a page citation, the grid share the company's mapped sites actually ran on,
-a verdict, and the contradiction where there is one. We currently hold 16 operators —
-hyperscalers, the bitcoin-to-AI converts (IREN, TeraWulf, Riot, Cipher, Applied Digital),
-neoclouds (CoreWeave, Nebius), and colocation (Equinix, Digital Realty, Vantage, xAI, Oracle).
+a verdict, and the contradiction where there is one. We hold **52 operators across 134
+sites** — hyperscalers, the bitcoin-to-AI converts (IREN, TeraWulf, Riot, Cipher, Applied
+Digital, Hut 8, Core Scientific, MARA), neoclouds (CoreWeave, Nebius, Lambda, Crusoe,
+Fluidstack), and the colocation REITs (Equinix, Digital Realty, Vantage, QTS, Switch,
+CyrusOne, STACK, Aligned). Every site carries a source URL and a confidence grade.
 
 **2. It finds datacenters without a list of datacenters.** A demand-only detector scores
 111 regions on the *signature* of flat 24/7 load: overnight demand growing faster than
@@ -190,11 +192,14 @@ projects would have quietly fixed the export.
 "caused by" when we mean "consistent with", and `cannot_verify` is counted on screen. We
 had every incentive to write a punchier claim and did not.
 
-**Nebius has no data and we shipped it that way.** We could not tie a single Nebius site to
-a named serving utility from public sources. Rather than assigning it a plausible grid, its
-record says so explicitly — `no_site_resolved`. Twelve more operators have sites mapped but
-no documents read, and each says `no_documents_ingested` with a note explaining that this is
-a gap in our coverage, not a finding about them.
+**Every gap is a recorded decision, not a 404.** 48 of our 52 operators have sites mapped
+but no documents read, and each says `no_documents_ingested` in words: *a gap in our
+coverage, not a finding about them*. Seven operators we searched for and could not honestly
+place — IBM, Salesforce, Nvidia, Together AI, Anthropic among them — are written down with
+what we looked for and why we stopped. Anthropic is the instructive one: its $50bn
+Fluidstack deal names only "Texas and New York," and no source we opened puts Anthropic at
+either placeable Fluidstack site, so both sites are filed under **Fluidstack**, not
+Anthropic. Guessing there would have been the exact error this project exists to expose.
 
 **The counterexample.** Vantage's Quincy, Washington site runs on Grant County PUD — 100%
 carbon-free at 3am, all year, Columbia River hydro. The method isn't "everyone is dirty."
@@ -234,6 +239,13 @@ probe for what you are hiding; the fastest way through is to have hidden nothing
 
 ## What's next
 
+**See behind the meter.** Eleven of our mapped sites are behind-the-meter — powered by
+generation that never touches the grid — so EIA-930 cannot see their load at all, and for
+two of them the operator's own fact sheet says so in writing. That is a structural blind
+spot in a demand-only detector: the largest, newest, most vertically integrated campuses
+are precisely the ones most likely to be invisible to it. We state it rather than wait to
+be caught by it, but closing it needs interconnection and permit data, not EIA-930.
+
 **Marginal emissions, not average.** We report the average grid mix. The question a siting
 decision actually turns on is what the *marginal* generator is when your load arrives —
 which is almost always dirtier than the average. That needs dispatch-level modeling.
@@ -250,8 +262,8 @@ the size of six states.
 flips verdicts. Interconnection queues, FERC filings and utility IRPs could do it at scale,
 but only with a confidence grade attached to every row and a human on anything low.
 
-**Scale the claims corpus.** Four operators have documents read; twelve have sites mapped
-and nothing ingested. The pipeline is built and the bottleneck is now just documents through it.
+**Scale the claims corpus.** Four operators have documents read; forty-eight have sites
+mapped and nothing ingested. The pipeline is built and the bottleneck is now just documents through it.
 
 **Track it forward.** Everything here is retrospective. The same detector run monthly
 against fresh EIA-930 becomes an early-warning system — flat load showing up on a utility's

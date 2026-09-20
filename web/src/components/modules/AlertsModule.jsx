@@ -36,13 +36,13 @@ export default function AlertsView({ region_id, alerts, detail: region }) {
   if (!mine.length) return <Empty>No active alerts here.{region?.exclude_from_alerts ? ' This region is excluded from alerts because its data is flagged.' : ''}</Empty>
   const latest = mine.map(({ a }) => a.latest_month).filter(Boolean).sort().pop()
   const atParent = mine.filter(x => x.parentLevel).length
-  const label = `active alert${mine.length === 1 ? '' : 's'} here${atParent ? `, ${fmt(atParent)} of them for the whole ${ba} grid` : ''}`
+  const label = `active alert${mine.length === 1 ? '' : 's'} here${atParent ? `, ${fmt(atParent)} for the whole ${ba} grid` : ''}`
   return (
     <Mod
       className="mod-alerts"
-      caption="A rule crosses when a trailing-12-month figure passes its 2019 baseline and stays past it."
+      caption="A rule crosses when a trailing-12-month figure passes 2019 and stays past."
       lead={<Lead value={fmt(mine.length)} label={label} t={mine.length ? 'warn' : undefined} />}
-      foot={`EIA-930 hourly via PUDL. Trailing-12-month values${latest ? ` through ${month(latest)}` : ''}, compared with 2019.`}
+      foot={`EIA-930 via PUDL. Trailing 12 months${latest ? ` to ${month(latest)}` : ''}, against 2019.`}
     >
       <div className="mod-rows">
         {mine.map(({ a, parentLevel }, i) => {
@@ -53,7 +53,7 @@ export default function AlertsView({ region_id, alerts, detail: region }) {
                 <div className="mod-t">{a.description || a.rule}</div>
                 <div className="mod-d">{s != null && a.tier ? `${a.tier} · ` : ''}{detail(a, parentLevel, ba)}</div>
               </div>
-              <span className="mod-tk" title={s != null ? `severity ${s.toFixed(2)} of 1` : 'no severity'}><Ticks value={s ?? 0} max={1} n={8} accent label={s != null ? `severity ${s.toFixed(2)} of 1` : 'no severity given'} /></span>
+              <span className="mod-tk" title={s != null ? `severity ${s.toFixed(2)} of 1` : 'no severity'}><Ticks value={s ?? 0} max={1} n={10} accent label={s != null ? `severity ${s.toFixed(2)} of 1` : 'no severity given'} /></span>
               <span className="mod-n">{value(a.current_value, a.unit)}{a.baseline_2019 != null && <small> vs {value(a.baseline_2019, a.unit)} in 2019</small>}</span>
             </div>
           )

@@ -76,7 +76,10 @@ function Chain({ c, open, onToggle }) {
           <a href={href.region(c.region)} onClick={e => e.stopPropagation()}>{c.name || c.region}</a>
         </span>
         <span className="chain-growth">{c.growth_pct > 0 ? '+' : ''}{c.growth_pct?.toFixed?.(1)}%<small>demand since 2019</small></span>
-        {fuel && <span className="chain-fuel"><b>{fuel[0]}</b> filled it<small>{fuel[1] > 0 ? '+' : ''}{fuel[1].toFixed(2)} GW</small></span>}
+        {/* A zone has no generation of its own. PJM's +10.74 GW of gas is never Dominion's, so the
+            collapsed row has to carry the parent's name -- the full caveat inside the body is not
+            enough when the row is what gets read. */}
+        {fuel && <span className="chain-fuel"><b>{fuel[0]}</b> filled it<small>{fuel[1] > 0 ? '+' : ''}{fuel[1].toFixed(2)} GW{c.fuel_inherited_from ? ` \u00b7 ${c.fuel_inherited_from}\u2019s` : ''}</small></span>}
         <span className="chain-count">{(c.instruments || []).length} instruments</span>
         <span className="chain-caret" aria-hidden="true">{open ? '−' : '+'}</span>
       </button>

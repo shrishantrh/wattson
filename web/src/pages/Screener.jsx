@@ -70,17 +70,18 @@ export default function Screener({ route }) {
     return true
   }), [all, minNight, growthFloor, bounds.gMin, scope, sectors, patterns])
 
+  // Short headers, because a header has to be scannable: the long form is the column's title.
   const columns = [
-    { key: 'place', label: 'Place', width: 150 },
-    { key: 'grid', label: 'Grid', width: 60 },
-    { key: 'night', label: 'Clean at night', num: true, format: pct1, title: 'Carbon-free share of generation, midnight to 6am local, 2025' },
-    { key: 'change', label: 'Since 2019', num: true, format: pts1, title: 'Change in that share against 2019. A falling share is not clean output shrinking: open a region to switch the series to megawatts.' },
-    { key: 'slope', label: 'Trend / yr', num: true, format: v => (v == null ? DASH : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)} pts`), title: '2019-2025 slope of overnight clean MW divided by overnight demand' },
-    { key: 'headroom', label: 'Clean ÷ demand', num: true, format: v => (v == null ? DASH : `${v.toFixed(2)}×`), title: 'Clean MW generated at night against this footprint’s own demand at night' },
-    { key: 'rank', label: 'Load rank', num: true, format: v => (v == null ? DASH : `#${v}`), title: 'Flat-load detector: #1 of 111 is the strongest round-the-clock demand growth, not the dirtiest grid' },
-    { key: 'growth', label: 'Demand growth', num: true, format: pctG, title: 'Average demand in 2025 against 2019' },
-    { key: 'excess', label: 'Night excess', num: true, format: v => (v == null ? DASH : `${v > 0 ? '+' : ''}${v.toFixed(1)} pts`), title: 'Overnight demand growth minus average demand growth: the detector’s signal' },
-    { key: 'pattern', label: 'Pattern', width: 140 },
+    { key: 'place', label: 'Place', width: 146 },
+    { key: 'grid', label: 'Grid', width: 62 },
+    { key: 'night', label: 'Night', num: true, width: 80, format: pct1, title: 'Carbon-free share of generation, midnight to 6am local, 2025' },
+    { key: 'change', label: 'Δ 2019', num: true, width: 86, format: pts1, title: 'Change in that share against 2019, in points. A falling share is not clean output shrinking: open a region to switch the series to megawatts.' },
+    { key: 'slope', label: 'Trend', num: true, width: 92, format: v => (v == null ? DASH : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)} pts`), title: 'Points per year: the 2019-2025 slope of overnight clean MW divided by overnight demand' },
+    { key: 'headroom', label: 'Clean ÷ dem', num: true, width: 98, format: v => (v == null ? DASH : `${v.toFixed(2)}×`), title: 'Clean MW generated at night against this footprint’s own demand at night' },
+    { key: 'rank', label: 'Rank', num: true, width: 68, format: v => (v == null ? DASH : `#${v}`), title: 'Flat-load detector, of 111: #1 is the strongest round-the-clock demand growth, not the dirtiest grid' },
+    { key: 'growth', label: 'Growth', num: true, width: 86, format: pctG, title: 'Average demand in 2025 against 2019' },
+    { key: 'excess', label: 'Night excess', num: true, width: 96, format: v => (v == null ? DASH : `${v > 0 ? '+' : ''}${v.toFixed(1)} pts`), title: 'Overnight demand growth minus average demand growth: the detector’s signal' },
+    { key: 'pattern', label: 'Pattern', width: 132 },
     { key: 'flagged', label: 'Data', width: 76, format: v => v || DASH, title: 'flagged: the reported numbers move in a way the data does not explain. corrected: the engine publishes a different 2019 figure from the one in the file.' },
   ]
   const sortKey = sort?.key || preset[2], sortDir = sort?.dir || preset[3]
@@ -104,8 +105,9 @@ export default function Screener({ route }) {
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<><b>Screener</b> · {all.length} regions · hourly grid data</>} onClose={back}>
-        <div className="pg-chips">{PRESETS.map(p => <Chip key={p[0]} small active={p[0] === preset[0] && !sort} href={href.screen(p[0])}>{p[1]}</Chip>)}</div>
-        <p className="pg-lede">A datacenter buys every hour it runs, so the column that decides what gets burned for it is <b>clean at night</b>, not the annual headline. <b>Since 2019</b> and <b>trend / yr</b> say whether the grid you would sign a load onto is moving toward that number or away from it. Cut the 111 down to the ones you would actually consider, sort on any column, then open a row.</p>
+        <p className="pg-top">Every scored region, cut down and sorted any way you like.</p>
+        <div className="pg-chips pg-controls">{PRESETS.map(p => <Chip key={p[0]} small active={p[0] === preset[0] && !sort} href={href.screen(p[0])}>{p[1]}</Chip>)}</div>
+        <p className="pg-lede">A datacenter buys every hour it runs, so the column that decides what gets burned for it is <b>night</b> — the clean share of what the grid generated between midnight and 6am — not the annual headline. <b>Δ 2019</b> and <b>trend</b> say whether the grid you would sign a load onto is moving toward that number or away from it. Cut the 111 down to the ones you would actually consider, sort on any column, then open a row.</p>
         {!loading && !error && (
           <>
             <div className="wx-bar">
@@ -132,7 +134,7 @@ export default function Screener({ route }) {
             <p className="wx-none">No region clears <b>{minNight}% clean at night</b>{growthFloor > bounds.gMin ? <> and <b>{growthFloor > 0 ? '+' : ''}{growthFloor}% demand growth</b></> : null} with these filters. Loosen one, or press Reset.</p>
           ) : (
             <div ref={keys.ref} onKeyDown={keys.onKeyDown}>
-              <Table key={preset[0]} columns={columns} rows={rows} defaultSort={{ key: preset[2], dir: preset[3] }} onSortChange={n => setSort(n)} rowHref={r => href.region(r.id)} filter="Filter by name, grid or pattern" csvName="wattson-screener" dense maxHeight="min(60vh, 640px)" />
+              <Table key={preset[0]} columns={columns} rows={rows} defaultSort={{ key: preset[2], dir: preset[3] }} onSortChange={n => setSort(n)} rowHref={r => href.region(r.id)} filter filterPlaceholder="Filter by name, grid or pattern" csvName="wattson-screener" dense maxHeight="min(60vh, 640px)" />
               <p className="wx-hint" style={{ marginTop: 8 }}>Tab into the table, then <span className="wx-kbd">&uarr;</span> <span className="wx-kbd">&darr;</span> to move and <span className="wx-kbd">&crarr;</span> to open a region. The CSV downloads exactly the rows and the order on screen.</p>
             </div>
           )}

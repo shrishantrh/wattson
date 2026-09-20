@@ -165,6 +165,17 @@ def t_region(region_id: str):
                                  "fuel_delta_overnight_gw", "siting", "operators",
                                  "data_flags", "profile_24h", "interchange"]}
     out["corrections"] = data.corrections_for(region_id)
+    if r.get("cf_inherited_from_ba") and r.get("zone"):
+        ba = r.get("ba") or region_id.split("/")[0]
+        # The zone reports demand only. Every generation figure below is the parent's, identical
+        # across its zones, so a headline reading "<zone> had 35,619 MW" hands one grid's whole
+        # output to one of its zones. Name the owner in the label, not only in a caveat.
+        out["generation_attribution"] = (
+            f"cf_share, cf_avg_mw, total_avg_mw and fuel_delta_overnight_gw below are {ba}'s "
+            f"figures, identical across every {ba} zone. They are NOT {region_id}'s own "
+            f"generation. When one of them is the subject of a headline, a row label or a "
+            f"column, the label must name {ba} (for example \"{ba} (serves {region_id})\"), "
+            f"not {region_id} alone. {region_id}'s own figures are its demand.")
     return out
 
 
@@ -190,6 +201,13 @@ def t_compare_regions(region_ids: list, metric: str = "cf_share_overnight", year
     f = paths.get(metric)
     if f is None:
         return {"error": f"unknown metric {metric}", "allowed": list(paths)}
+    # A SHARE NEVER TRAVELS ALONE. CAISO's overnight clean share fell 0.495 to 0.458 while its
+    # overnight clean output ROSE 6,611 to 7,651 MW. A tool that returns only the share invites
+    # the answer "clean power at night fell in CAISO", which is false. So whenever the metric is
+    # a share, the matching absolute for the same hours goes out beside it, unasked.
+    window = metric[len("cf_share_"):] if metric.startswith("cf_share_") else None
+    mw = lambda r, y, field: ((r.get(field) or {}).get(y) or {}).get(window)
+
     rows = []
     for rid in region_ids:
         r = data.regions_by_id().get(rid)
@@ -197,12 +215,29 @@ def t_compare_regions(region_ids: list, metric: str = "cf_share_overnight", year
             rows.append({"region": rid, "error": "not found"}); continue
         vals = {y: f(r, y) for y in years}
         a, b = vals.get(years[0]), vals.get(years[-1])
-        rows.append({"region": rid, "name": r["name"], "values": vals,
-                     "change": (round(b - a, 4) if a is not None and b is not None else None),
-                     "cf_inherited_from_ba": r.get("cf_inherited_from_ba"),
-                     "has_corrections": data.corrections_for(rid) is not None})
+        row = {"region": rid, "name": r["name"], "values": vals,
+               "change": (round(b - a, 4) if a is not None and b is not None else None),
+               "cf_inherited_from_ba": r.get("cf_inherited_from_ba"),
+               "has_corrections": data.corrections_for(rid) is not None}
+        if window:
+            clean = {y: mw(r, y, "cf_avg_mw") for y in years}
+            ca, cb = clean.get(years[0]), clean.get(years[-1])
+            row["clean_mw"] = clean
+            row["total_mw"] = {y: mw(r, y, "total_avg_mw") for y in years}
+            if ca is not None and cb is not None:
+                row["clean_mw_change"] = round(cb - ca, 1)
+                row["clean_output_direction"] = "rose" if cb > ca else "fell" if cb < ca else "flat"
+        rows.append(row)
     out = {"metric": metric, "years": years, "rows": rows,
            "note": "Shares are 0-1 fractions. A zone's generation figures are its parent BA's."}
+    if window:
+        out["absolute_note"] = (
+            f"clean_mw is the actual carbon-free output in these same {window} hours, in MW. "
+            "A share and its absolute can move in OPPOSITE directions, and several of these rows "
+            "do. Report the direction of clean_output_direction, NOT the direction of the share, "
+            "whenever you say clean power rose or fell. Put the MW column beside the share "
+            "column in any table, and never describe a region whose clean_mw rose as one where "
+            "clean power fell.")
     if truncated:
         out["truncated"] = (f"{truncated} more regions were requested than this tool returns at "
                             f"once. For a ranking across all regions use rank_regions instead of "
@@ -367,11 +402,28 @@ CHOOSING kind:
               sentence. Then "rows": [] and "columns": [], and the paragraph is served.
 
 COLUMNS. Two to five of them. Label them in words a reader knows ("clean at night, 2025"),
-not field names. Give the unit. When you show a share, ALSO show the absolute MW or GW
-beside it if a tool returned one -- a share falling is not clean generation shrinking.
-Never repeat the row's own name as a column: the label is already the first column. A rank
-column must be a rank a tool RETURNED (the detector rank, the siting rank) and must say
-which -- never the position of the row in the list you just wrote.
+not field names. Give the unit. Never repeat the row's own name as a column: the label is
+already the first column. A rank column must be a rank a tool RETURNED (the detector rank,
+the siting rank) and must say which -- never the position of the row in the list you just
+wrote.
+
+A SHARE NEVER GOES ON SCREEN ALONE. If a tool returned the absolute for those same hours
+(clean_mw, cf_avg_mw), one of your columns IS that absolute, beside the share. Two share
+columns and no MW column is a table you must not build when the MW was in the transcript.
+And the direction of clean power is the direction of the MW, never the direction of the
+share: CAISO's overnight share fell 49.5% to 45.8% while its overnight clean output ROSE
+6,611 to 7,651 MW, so "clean power at night fell in CAISO" is FALSE. Before you write
+"fell", "dropped", "declined" or "lost" about clean power, find the MW figure and check it.
+If the two disagree, that disagreement is the story: say the share slipped because demand
+grew faster, and give both.
+
+LABELS. A row's label says whose number it is. A zone (PJM/DOM, ERCO/NRTH, SWPP/OPPD)
+reports DEMAND only and inherits its parent BA's generation, so a generation figure on a
+zone row is the parent's whole output. When the figure in a row is generation and the tool
+said cf_inherited_from_ba or returned generation_attribution, the label names the parent --
+"PJM (serves Dominion)", not "Dominion" -- and so does the headline. Handing one grid's
+35,619 MW to one of its zones is the same failure as inventing the number. A demand figure
+is the zone's own and keeps the zone's name.
 
 ROWS. "href" deep-links into the app: "#/region/<id>" with the id spelled exactly as the
 tools spell it (PJM, ERCO/NCEN, PJM/DOM -- do not url-encode the slash), or
@@ -548,10 +600,39 @@ def _render_view(client, msgs, question: str, trace: list) -> dict | None:
         return None
 
 
+def _api_key() -> str | None:
+    """The key from the process env, or from ~/.wattson.env as server/irradiance_narrate reads it.
+
+    WHY THE FALLBACK. The key used to come only from the shell that happened to start uvicorn,
+    so restarting the API from any other shell turned the ask layer silently off -- every typed
+    question fell back to "this copy of the site has no ask layer" with nothing in the log
+    saying why. The demo should not depend on which terminal the server was launched from.
+    """
+    key = os.environ.get("OPENAI_API_KEY")
+    if key:
+        return key
+    try:
+        from pathlib import Path
+        p = Path.home() / ".wattson.env"
+        if not p.exists():
+            return None
+        for line in p.read_text().splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, _, v = line.partition("=")
+            k, v = k.strip(), v.strip().strip('"').strip("'")
+            if k and k not in os.environ:
+                os.environ[k] = v
+    except OSError:
+        return None
+    return os.environ.get("OPENAI_API_KEY")
+
+
 def ask(question: str, page_context: dict | None = None, max_turns: int = MAX_TURNS,
         render: bool = True) -> dict:
     """Answer a question using only tool results. Returns the answer plus the trace."""
-    key = os.environ.get("OPENAI_API_KEY")
+    key = _api_key()
     if not key:
         return {"error": "no_api_key", "view": None,
                 "answer": "The ask layer needs OPENAI_API_KEY. Everything else on this "

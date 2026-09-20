@@ -185,6 +185,29 @@ function prepareHeat(heat) {
   return k ? { n: k, x, y, z, v } : null
 }
 
+/**
+ * The value range carried by a `heat` array, for a page that wants to draw the legend that
+ * goes with the tint. `min`/`max` are the clamped 0..1 values actually painted (the tint ramps
+ * from `fossil` at 0 to `clean` at 1), `count` the points that carried a usable coordinate.
+ * Returns null when there is nothing to draw a scale for.
+ * @param {Array<{ lat: number, lng: number, value: number }>} heat
+ * @returns {{ min: number, max: number, count: number }|null}
+ */
+export function heatRange(heat) {
+  if (!Array.isArray(heat) || !heat.length) return null
+  let min = Infinity
+  let max = -Infinity
+  let count = 0
+  for (const h of heat) {
+    if (!h || h.lat == null || h.lng == null) continue
+    const v = Math.max(0, Math.min(1, h.value ?? 0))
+    if (v < min) min = v
+    if (v > max) max = v
+    count++
+  }
+  return count ? { min, max, count } : null
+}
+
 /** Free an InstancedMesh built here, including its geometry and material. */
 export function disposeDotMesh(mesh) {
   if (!mesh) return

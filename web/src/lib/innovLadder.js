@@ -9,6 +9,11 @@
 //             at night since 2019 that was clean (average vs increment).
 //   region    the same ladder without the paper rungs.
 //
+// Each ladder also carries one short lead sentence. It is deliberately not a summary of the rungs: every
+// figure, basis and source is drawn beside its own rung, so the lead carries only what the rungs cannot --
+// the shape of the finding, the page citations that make a paper claim checkable, the grids behind the
+// physical rungs, and any caveat the rungs can only abbreviate.
+//
 // Honesty rules baked in: generation within the footprint, not consumption; average mix; contracted power
 // excluded; a zone inherits its grid's generation figures; a corrected or flagged number says so; "consistent
 // with", never "caused by"; "true on paper", never "lied". The increment is a six-year difference of averages,
@@ -33,7 +38,6 @@ export const fmtRange = (lo, hi) => { const a = num(lo), b = num(hi); if (a == n
 export const fmtPts = d => { const v = num(d); if (v == null) return '—'; const p = Math.abs(v) * 100; const s = p < 10 ? p.toFixed(1) : String(Math.round(p)); return `${v < 0 ? '−' : v > 0 ? '+' : ''}${s} pts` }
 export const fmtGw = gw => { const v = num(gw); return v == null ? '—' : `${Math.abs(v).toFixed(1)} GW` }
 export const fmtSignedGw = gw => { const v = num(gw); if (v == null) return '—'; const r = Math.round(v * 10) / 10; return `${r > 0 ? '+' : r < 0 ? '−' : ''}${Math.abs(r).toFixed(1)} GW` }
-const fmtMw = x => { const v = num(x); return v == null ? '—' : `${Math.round(v).toLocaleString('en-US')} MW` }
 const listWords = a => (a.length <= 2 ? a.join(' and ') : `${a.slice(0, -1).join(', ')} and ${a[a.length - 1]}`)
 
 // ---- the increment: what share of the generation added at night since 2019 was clean ------------
@@ -126,13 +130,8 @@ function withDrops(rungs) {
   for (const r of rungs) { if (r.share == null) continue; r.drop = prev == null ? null : r.share - prev; prev = r.share }
   return rungs
 }
-const incWords = (g, label) => {
-  const inc = g.increment
-  if (inc.readable) return `${label}'s grid was ${fmtShare(inc.share)} clean${inc.top ? ` (${inc.top.fuel} ${fmtSignedGw(inc.top.gw)})` : ''}`
-  if (inc.reason === 'fell') return `${label}'s overnight generation fell ${fmtGw(inc.total_gw)}, so its increment cannot be read`
-  if (inc.reason === 'did not grow') return `${label}'s overnight generation did not grow (${fmtSignedGw(inc.total_gw)}), so its increment cannot be read`
-  return `${label}'s grid has no fuel breakdown, so its increment cannot be read`
-}
+// Why a footprint's increment is unreadable, in the fewest words that still name the reason.
+const whyUnreadable = inc => (inc.reason === 'fell' ? 'fell since 2019' : inc.reason === 'did not grow' ? 'did not grow since 2019' : 'has no fuel breakdown')
 // A site's region id, the way lib/data.js normalises it: a zone may already be the full "BA/ZONE" id.
 const siteRegionId = s => s.region_id || (s.zone ? (String(s.zone).includes('/') ? String(s.zone) : `${s.ba}/${s.zone}`) : s.ba)
 
@@ -162,26 +161,21 @@ export function companyLadder(company, { grids = {} } = {}) {
     rung('grid_night', 'same grid, midnight to 6am', 'physical, overnight, 2025', nightS, { status: loaded ? 'grid' : 'loading', source: 'EIA-930 via PUDL; a flat load puts a quarter of its energy here' }),
     rung('increment', 'generation added at night since 2019', 'physical, share of the increment', incS, { status: loaded ? (incS ? 'grid' : 'unreadable') : 'loading', source: incRows.length ? `${incRows.length} of ${rows.length} grid${rows.length > 1 ? 's' : ''} readable` : 'the footprint\'s generation did not grow' }),
   ])
-  // The sentence.
-  const parts = [`${company.company || company.ticker} says ${fmtShare(claimed)}${metricWord(claim)} on an ${basisWords(claim)} basis (p. ${claim.page ?? '—'}).`]
-  parts.push(hourly ? `Measured hourly, its own report puts it at ${fmtShare(hourly.share)} (p. ${hourly.page ?? '—'}${hourly.year ? `, ${hourly.year}` : ''}).` : 'It discloses no hourly figure in the documents read, so that rung cannot be verified.')
-  if (allS) {
-    const where = rows.length === 1 ? `On the grid its one mapped site draws from (${names[0]})` : `On the grids its ${rows.length} mapped sites draw from (${names.join(', ')})`
-    parts.push(`${where}, with contracted power excluded, 2025 generation was ${fmtRange(allS.lo, allS.hi)} clean over all hours${nightS ? ` and ${fmtRange(nightS.lo, nightS.hi)} between midnight and 6am` : ''}.`)
-  }
-  if (loaded) {
-    const withGrid = rows.filter(r => r.grid)
-    if (withGrid.length === 1) {
-      const g = withGrid[0].grid, inc = g.increment
-      parts.push(inc.readable ? `Of the ${fmtGw(inc.total_gw)} of overnight generation added since 2019 there, ${fmtShare(inc.share)} was clean${inc.top ? ` (${inc.top.fuel} ${fmtSignedGw(inc.top.gw)})` : ''}.`
-        : inc.reason === 'fell' ? `Its overnight generation fell ${fmtGw(inc.total_gw)} since 2019${g.demand_delta_gw != null ? ` while overnight demand ${g.demand_delta_gw >= 0 ? 'rose' : 'fell'} ${fmtGw(g.demand_delta_gw)}` : ''}, so the increment cannot be read from generation inside the footprint.`
-        : `The footprint's own overnight generation did not grow since 2019 (${fmtSignedGw(inc.total_gw)}${g.demand_delta_gw != null ? ` against ${fmtSignedGw(g.demand_delta_gw)} of demand` : ''}), so the increment cannot be read.`)
-    } else {
-      parts.push(`Of the generation added at night since 2019, ${listWords(withGrid.map(r => incWords(r.grid, gridLabel(r))))}.`)
-    }
-  }
-  if (claim.verdict === 'true_on_paper') parts.push('Each rung removes one accounting convention; the claim is true on paper at the rung it was made for.')
-  else if (claim.verdict === 'contradicted') parts.push('Each rung removes one accounting convention; the claim is contradicted in its own filings.')
+  // The sentence. Every figure and every source is already on a rung underneath, so the lead repeats none
+  // of them; it says only what the rungs cannot -- the shape of the finding, true on paper against what the
+  // same number reads physically, the pages that make it checkable, and the grids the sites actually draw
+  // from. What survives after that is caveat: a missing hourly disclosure, a footprint whose own generation
+  // did not grow. The rungs can only abbreviate those ("can't verify", "not readable"), so they are spelled
+  // out here. Corrections and data flags are not: the card lists them under the ladder.
+  const floor = nightS || allS
+  const readings = [`${fmtShare(claimed)}${metricWord(claim)} on paper (p. ${claim.page ?? '—'})`]
+  if (hourly) readings.push(`${fmtShare(hourly.share)} hourly by its own report (p. ${hourly.page ?? '—'})`)
+  if (floor) readings.push(`${fmtRange(floor.lo, floor.hi)} physically ${nightS ? 'between midnight and 6am' : 'over all hours'} at ${listWords(names)}`)
+  const parts = [`${company.company || company.ticker} is ${listWords(readings)}.`]
+  if (claim.verdict === 'contradicted') parts.push('The claim is contradicted in its own filings.')
+  if (!hourly) parts.push('It discloses no hourly figure of its own in the documents read.')
+  const unread = rows.filter(r => r.grid && !r.grid.increment.readable)
+  if (loaded && unread.length) parts.push(`${listWords(unread.map(r => `${gridLabel(r)}'s overnight generation ${whyUnreadable(r.grid.increment)}`))}, so ${unread.length > 1 ? 'those increments' : 'that increment'} cannot be read.`)
   // Flags: the company's own notes that name a site's grid, plus each grid's caveats and data flags.
   const flags = []
   for (const n of company.notes || []) if (typeof n === 'string' && rows.some(r => n.includes(`under ${r.site.ba}`) || n.includes(`(${r.site.ba})`) || n.includes(`${r.site.ba} footprint`) || n.includes(`${r.site.ba} balancing`))) flags.push(n)
@@ -192,7 +186,9 @@ export function companyLadder(company, { grids = {} } = {}) {
 }
 
 // region: a region detail; label is the place name the page uses; caveat is findings.js caveatFor(id) if any.
-export function regionLadder(detail, { label = null, caveat = null, load_mw = 300 } = {}) {
+// `load_mw` is still accepted (callers pass the page's load) but no longer changes anything: what a flat load
+// of that size would run on is the load-shape card's job, and the nearby card prints its fossil MW.
+export function regionLadder(detail, { label = null, caveat = null } = {}) {
   const g = gridFacts(detail, { caveat })
   if (!g || g.all == null) return null
   const inc = g.increment
@@ -202,31 +198,28 @@ export function regionLadder(detail, { label = null, caveat = null, load_mw = 30
     rung('increment', 'generation added at night since 2019', 'average vs increment', inc.readable ? { lo: inc.share, hi: inc.share, mean: inc.share } : null, { status: inc.readable ? 'grid' : 'unreadable', source: inc.readable ? `${fmtSignedGw(inc.total_gw)} overnight generation, 2019 to 2025` : inc.reason === 'fell' ? `overnight generation fell ${fmtGw(inc.total_gw)}` : 'overnight generation did not grow' }),
   ])
   const place = label || g.label || g.id || 'this region'
-  const gridName = `the ${g.ba || g.id} grid${g.zone && g.inherited ? ' (this zone inherits its generation figures)' : ''}`
-  const parts = [`In ${place} ${gridName} ran ${fmtShare(g.all)} clean over all hours of 2025${g.overnight != null ? ` and ${fmtShare(g.overnight)} between midnight and 6am` : ''}.`]
-  const load = num(load_mw)
+  // The sentence. The three rungs underneath already carry the annual share, the overnight share, the share
+  // of the increment and the GW behind it, so none of that is repeated here. The lead says the shape instead:
+  // what filled the growth, and the demand growth it is consistent with -- never "caused by". A zone's
+  // inheritance is not restated either; the region page's header chip and the load-shape card both say the
+  // generation is the whole grid's. A corrected history and an unreadable increment do stay: they are caveats.
+  const dd = g.demand_delta_gw
+  const parts = []
   if (inc.readable) {
-    const moves = []
-    const cleanR = Math.round(inc.clean_gw * 10) / 10
-    moves.push(cleanR === 0 ? 'clean output did not move' : `clean output ${cleanR > 0 ? 'rose' : 'fell'} ${fmtGw(inc.clean_gw)}`)
-    if (inc.gas_gw != null && Math.abs(inc.gas_gw) >= 0.05) moves.push(`gas ${inc.gas_gw > 0 ? 'rose' : 'fell'} ${fmtGw(inc.gas_gw)}`)
-    if (inc.coal_gw != null && Math.abs(inc.coal_gw) >= 0.05) moves.push(`coal ${inc.coal_gw > 0 ? 'rose' : 'fell'} ${fmtGw(inc.coal_gw)}`)
-    parts.push(`Of the ${fmtGw(inc.total_gw)} of overnight generation added since 2019, ${fmtShare(inc.share)} was clean: ${listWords(moves)}.`)
-    const dd = g.demand_delta_gw
+    const topWords = inc.top ? ` (${inc.top.fuel} ${fmtSignedGw(inc.top.gw)})` : ''
     const gasShare = inc.gas_gw != null ? inc.gas_gw / inc.total_gw : 0
-    if (dd != null && dd > 0.05) {
-      const whose = g.zone ? "the zone's" : 'its'
-      if (gasShare >= 0.5) parts.push(`Consistent with ${whose} ${fmtSignedGw(dd)} of overnight demand growth being served by gas.`)
-      else if (inc.share >= 0.5 && inc.top) parts.push(`Consistent with ${whose} ${fmtSignedGw(dd)} of overnight demand growth being served by ${inc.top.fuel}.`)
-      else parts.push(`Overnight demand here rose ${fmtGw(dd)} over the same years.`)
-    }
-    if (load != null && load > 0) parts.push(`For a ${fmtMw(load)} flat load that means ${fmtMw(load * (1 - g.all))} not carbon-free at the average mix, and ${fmtMw(load * (1 - clamp01(inc.share)))} if it is served the way the last ${fmtGw(inc.total_gw)} was.`)
+    const served = gasShare >= 0.5 ? 'gas' : inc.share >= 0.5 && inc.top ? inc.top.fuel : null
+    const whose = g.zone ? "the zone's" : 'its'
+    const tail = dd == null || dd <= 0.05 ? ''
+      : served ? `, consistent with ${whose} ${fmtSignedGw(dd)} of overnight demand growth being served by ${served}`
+      : `, while overnight demand rose ${fmtGw(dd)}`
+    parts.push(`In ${place}, ${fmtShare(inc.share)} of the overnight generation added since 2019 was clean${topWords}${tail}.`)
+  } else if (inc.reason === 'no fuel breakdown') {
+    parts.push(`In ${place} there is no fuel breakdown for this grid, so the increment cannot be read.`)
   } else {
-    const dd = g.demand_delta_gw
-    const demandClause = dd != null ? ` while overnight demand ${dd >= 0 ? 'rose' : 'fell'} ${fmtGw(dd)}` : ''
-    parts.push(inc.reason === 'fell' ? `Its own overnight generation fell ${fmtGw(inc.total_gw)} since 2019${demandClause}, so the increment cannot be read from generation inside the footprint.`
-      : inc.reason === 'did not grow' ? `Its own overnight generation did not grow since 2019 (${fmtSignedGw(inc.total_gw)})${demandClause}, so the increment cannot be read from generation inside the footprint.`
-      : 'There is no fuel breakdown for this grid, so the increment cannot be read.')
+    // Only when demand actually moved: "demand fell 0.0 GW but" is noise, not a contrast.
+    const demandClause = dd == null || Math.abs(dd) < 0.05 ? '' : `overnight demand ${dd > 0 ? 'rose' : 'fell'} ${fmtGw(dd)} but `
+    parts.push(`In ${place} ${demandClause}the grid's own overnight generation ${inc.reason === 'fell' ? `fell ${fmtGw(inc.total_gw)}` : 'did not grow'} since 2019, so the increment cannot be read from generation inside the footprint.`)
   }
   if (g.corrected) parts.push('Its published 2019 history is corrected here; read the increment with care.')
   const cannot = rungs.filter(r => r.status === 'unreadable').length

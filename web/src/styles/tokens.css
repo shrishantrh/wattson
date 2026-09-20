@@ -8,8 +8,9 @@
    UI and numerals; JetBrains Mono for small figures, keys and axis labels only.
 
    Contrast (WCAG, measured against --surface, the worst opaque case for body copy):
-   --ink 15.9 · --ink-2 9.4 · --muted 5.9 · --clean 10.1 · --fossil 7.1 · --warn 9.6.
-   Every foreground token passes AA (4.5) on every surface in the ramp, including --surface-3. */
+   --ink 15.9 · --ink-2 9.4 · --muted 6.5 · --clean 10.1 · --fossil 7.1 · --warn 9.6.
+   Every foreground token passes AA (4.5) on every surface in the ramp, including --surface-3,
+   where --muted -- the weakest pair in the app -- measures 5.39. */
 :root {
   /* neutral ramp: n1-n3 are surfaces (page, card, raised), n4-n5 are hairlines.
      Each surface step is a real luminance step, so a card reads as a panel, not a tint. */
@@ -32,7 +33,9 @@
 
   --ink: #edf0ed;
   --ink-2: #b4bcb7;                    /* secondary copy; was #a2a8a4 (7.6 on surface) */
-  --muted: #8b948f;                    /* 11-12px labels; was #676d69 (3.1 on surface, failing) */
+  --muted: #939c97;                    /* small labels. 5.39 on --surface-3 (the worst case), 7.04 on --bg.
+                                          was #8b948f, which measured 4.88 on --surface-3: passing, but with
+                                          no headroom left for a 10px mono label. */
   --line: #232827;
 
   /* the two signal hues */
@@ -46,7 +49,10 @@
   --clean-soft: rgba(79, 212, 208, 0.16);
   --clean-ink: #66dcd8;
   --clean-line: rgba(79, 212, 208, 0.45);
-  --clean-dim: rgba(79, 212, 208, 0.42); /* the same series, de-emphasised (daytime hours) */
+  --clean-dim: rgba(79, 212, 208, 0.55); /* the same series, de-emphasised (daytime hours).
+                                            was 0.42 = 2.76:1 on --surface, under the 3:1 a meaningful
+                                            graphic needs; 0.55 measures 3.86:1 and still reads quieter
+                                            than the full-strength night bars beside it. */
   --warn: #e8b43f;                     /* data flagged, corrected or provisional */
   --warn-soft: rgba(232, 180, 63, 0.16);
   --warn-line: rgba(232, 180, 63, 0.45);
@@ -62,7 +68,9 @@
   --line-soft: rgba(255, 255, 255, 0.08);   /* = --n4 */
   --line-strong: rgba(255, 255, 255, 0.14); /* = --n5 */
   --line-focus: rgba(255, 255, 255, 0.26);
-  --ring: 0 0 0 2px rgba(255, 255, 255, 0.34);
+  /* one focus ring for the whole app, keyboard only: a dark spacer so the ring never
+     touches the control's own edge, then a near-white halo that survives any surface. */
+  --ring: 0 0 0 2px rgba(8, 10, 9, 0.92), 0 0 0 4px rgba(237, 240, 237, 0.78);
   --shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
   --shadow-sm: 0 6px 20px rgba(0, 0, 0, 0.5);
 
@@ -73,21 +81,59 @@
   --ff-num: "cv11", "ss01";  /* + open digits on display numerals */
   --w-num: 300;              /* display numerals; bump to 400 if it reads too thin on a projector */
 
-  --t-hero: clamp(56px, 7.6vw, 118px);
-  --t-h1: clamp(28px, 3.4vw, 46px);
+  /* ---- type: seven steps and nothing between them ----------------------------------
+     A ~1.2 ratio anchored on a 15px body: 11 · 13 · 15 · 18 · 22 · 28 · 44 (+ hero).
+     Every step carries its own line-height and tracking, because a 28px numeral and a
+     13px label do not want the same leading. Nothing in the app should set a size that
+     is not one of these; 9.5/10/10.5/11.5/12/12.5/13.5/16/17/19/21/26 all collapse into
+     the step nearest them, and nothing is allowed below --t-micro (11px).
+     --t-verdict and --t-h2 are deliberately the same size: the one sentence on a card is
+     a heading, and giving it a 21px step of its own only made the scale noisy. */
+  --t-hero: clamp(52px, 7vw, 104px);
+  --t-h1: clamp(30px, 3.2vw, 44px);
+  --t-num: 28px;             /* display figures: the three under a verdict, ring centres */
   --t-h2: 22px;
-  --t-verdict: 21px;         /* the one sentence on a card */
-  --t-num: 26px;             /* the three figures under it */
+  --t-verdict: 22px;         /* the one sentence on a card */
+  --t-lead: 18px;            /* the step between a heading and body: search input, lead-ins */
   --t-body: 15px;
-  --t-small: 13px;
-  --t-micro: 11px;
+  --t-small: 13px;           /* controls, table cells, row titles */
+  --t-micro: 11px;           /* labels, axis ticks, keys. The floor. */
 
+  --lh-hero: 1;
+  --lh-h1: 1.08;
+  --lh-num: 1.05;
+  --lh-h2: 1.25;
+  --lh-lead: 1.4;
+  --lh-body: 1.55;           /* body copy: comfortable, not tight */
+  --lh-small: 1.45;
+  --lh-micro: 1.35;
+  --lh-flat: 1;              /* a single line inside a fixed-height control */
+
+  --ls-hero: -0.03em;
+  --ls-display: -0.025em;    /* h1 and display numerals */
+  --ls-title: -0.015em;      /* h2, verdict */
+  --ls-body: 0;
+  --ls-caps: 0.06em;         /* the one uppercase micro-label */
+  /* numbers that can change or line up are always tabular */
+  --fv-num: tabular-nums;
+
+  /* ---- space: a 4px rhythm, with 2px as the only sub-step ---------------------------
+     s0 is for marks that touch (the gap between two bars), s1-s2 for a label and the
+     thing it labels, s3-s4 inside a card, s5+ between blocks. 5/6/7/9/10/14/18/22/26
+     all snap to the step nearest them. */
+  --s0: 2px;
   --s1: 4px;
   --s2: 8px;
   --s3: 12px;
   --s4: 16px;
   --s5: 24px;
   --s6: 32px;
+  --s7: 40px;
+  --s8: 48px;
+
+  /* the guaranteed air between a label and the mark it belongs to, so no caption, tick or
+     value can ever sit on a bar. Charts use this, never a literal. */
+  --gap-label: 8px;
 
   --pad: 28px;
   --radius-sm: 8px;
@@ -99,10 +145,21 @@
   --h-ctl-sm: 24px;
   --maxw: 1200px;
 
-  --dur-fast: 150ms;
-  --dur: 220ms;
+  /* ---- motion: ONE pair -------------------------------------------------------------
+     Every transition in the app is --dur-ui / --ease. --dur-fast and --dur are kept as
+     names (the rest of the app is written against them) but both now resolve to that one
+     duration, so nothing can drift. --dur-slow is for entrances and data-driven animation
+     only -- never for a hover or a state change. */
+  --dur-ui: 160ms;
+  --dur-fast: var(--dur-ui);
+  --dur: var(--dur-ui);
   --dur-slow: 400ms;
   --ease: cubic-bezier(0.2, 0, 0, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --tr-ui: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  /* the standard control transition. box-shadow is deliberately NOT in this list: the focus
+     ring is drawn with box-shadow, and a ring that fades in over 160ms reads as lag to the
+     only people who ever see it. motion.css asks for transition:none on :focus-visible, but
+     several control rules tie its specificity and win on order, so the reliable fix is to
+     take box-shadow out of the transition altogether. */
+  --tr-ui: color var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease), background-color var(--dur-ui) var(--ease), transform var(--dur-ui) var(--ease);
 }

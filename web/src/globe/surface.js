@@ -21,16 +21,26 @@ export const SURFACE_DEFAULTS = {
   farContrast: 0.6, // ... and how much of the coast-to-interior contrast survives there
   farAlt: 1.9, // camera altitude at which the land is fully quiet
   nearAlt: 0.75, // ... and at which it is fully up
+  // A heat overlay is the subject of the map, so when one is on the land keeps far more of its
+  // brightness and nearly all of its contrast at altitude: a tint the caller asked for must
+  // still read behind a landing headline, where the plain land is deliberately quiet.
+  heatFarTone: 0.66,
+  heatFarContrast: 0.94,
+  dimStep: 0.55, // how far everything unselected drops when one place is selected
 }
 
 /**
  * The land's brightness and contrast for a camera altitude: 1 and 1 close in, falling to
- * `farTone`/`farContrast` as the camera pulls back.
+ * `farTone`/`farContrast` as the camera pulls back. With `heat` set, the far end is raised so
+ * a heat tint survives at landing altitude.
  * @param {number} altitude
+ * @param {boolean} [heat] a heat overlay is being drawn
  * @returns {{ tone: number, contrast: number }}
  */
-export function toneForAltitude(altitude) {
-  const { farAlt, nearAlt, farTone, farContrast } = SURFACE_DEFAULTS
+export function toneForAltitude(altitude, heat = false) {
+  const { farAlt, nearAlt } = SURFACE_DEFAULTS
+  const farTone = heat ? SURFACE_DEFAULTS.heatFarTone : SURFACE_DEFAULTS.farTone
+  const farContrast = heat ? SURFACE_DEFAULTS.heatFarContrast : SURFACE_DEFAULTS.farContrast
   const x = (farAlt - (altitude ?? farAlt)) / (farAlt - nearAlt)
   const t = Math.max(0, Math.min(1, x))
   const e = t * t * (3 - 2 * t) // smoothstep
@@ -100,7 +110,7 @@ export function setSphereColor(material, hex) {
  */
 export function patchDotFalloff(material, limb = SURFACE_DEFAULTS.dotLimb) {
   // Held on the material so the camera can drive them after the shader has compiled.
-  const uniforms = { uDotLimb: { value: limb }, uTone: { value: 1 }, uContrast: { value: 1 } }
+  const uniforms = { uDotLimb: { value: limb }, uTone: { value: 1 }, uContrast: { value: 1 }, uDim: { value: 1 } }
   material.userData.uniforms = uniforms
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms)
@@ -121,12 +131,12 @@ export function patchDotFalloff(material, limb = SURFACE_DEFAULTS.dotLimb) {
     shader.fragmentShader = shader.fragmentShader
       .replace(
         '#include <common>',
-        '#include <common>\nuniform float uDotLimb;\nuniform float uTone;\nuniform float uContrast;\nvarying float vFres;',
+        '#include <common>\nuniform float uDotLimb;\nuniform float uTone;\nuniform float uContrast;\nuniform float uDim;\nvarying float vFres;',
       )
       .replace(
         '#include <colorspace_fragment>',
         `float mAvg = dot(gl_FragColor.rgb, vec3(0.3333));
-        gl_FragColor.rgb = mix(vec3(mAvg), gl_FragColor.rgb, uContrast) * uTone;
+        gl_FragColor.rgb = mix(vec3(mAvg), gl_FragColor.rgb, uContrast) * uTone * uDim;
         gl_FragColor.rgb *= mix(uDotLimb, 1.0, smoothstep(0.0, 1.0, vFres));
         #include <colorspace_fragment>`,
       )
@@ -140,11 +150,24 @@ export function patchDotFalloff(material, limb = SURFACE_DEFAULTS.dotLimb) {
  * two uniform writes, no repaint of the 15k instance colours.
  * @param {THREE.Material} material
  * @param {number} altitude
+ * @param {boolean} [heat] a heat overlay is on: hold the land brighter at altitude
  */
-export function setDotTone(material, altitude) {
+export function setDotTone(material, altitude, heat = false) {
   const u = material && material.userData && material.userData.uniforms
   if (!u) return
-  const { tone, contrast } = toneForAltitude(altitude)
+  const { tone, contrast } = toneForAltitude(altitude, heat)
   u.uTone.value = tone
   u.uContrast.value = contrast
+}
+
+/**
+ * Dim the whole dot field by a factor, on top of whatever the camera altitude asked for. Used
+ * to step the map back while one place is selected; one uniform write, no repaint.
+ * @param {THREE.Material} material
+ * @param {number} k 1 = normal, `SURFACE_DEFAULTS.dimStep` = stepped back
+ */
+export function setDotDim(material, k) {
+  const u = material && material.userData && material.userData.uniforms
+  if (!u) return
+  u.uDim.value = k
 }

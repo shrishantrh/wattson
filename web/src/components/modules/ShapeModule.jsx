@@ -68,7 +68,7 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
   return (
     <Mod
       className="mod-shape"
-      caption="Pick a load shape; the clean share is re-weighted hour by hour to match it."
+      caption="Pick a load shape; the clean share is re-weighted to match it."
       lead={<Lead
         value={share == null ? '—' : <NumberTicker value={share * 100} format={n => `${n.toFixed(1)}%`} />}
         t="clean"
@@ -77,7 +77,7 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
         asideTone="fossil"
         asideLabel={`of ${mw(loadMW)} not carbon-free`}
       />}
-      foot={`EIA-930 hourly via PUDL, ${shown}. Clean share of generation by local hour${grid ? `, for the whole ${grid} grid${inherited ? ' (this zone inherits it)' : ''}` : ''}. Not carbon-free = load × (1 − share); other and unknown fuels count as not clean. Generation within the footprint, not consumption.`}
+      foot={`EIA-930 via PUDL, ${shown}, by local hour${grid ? `, whole ${grid} grid${inherited ? ' (inherited)' : ''}` : ''}. Generation, not consumption.`}
     >
       <ShapePicker value={shape.id} onChange={setShape} flexible={flexible} onFlexible={setFlex} />
       <ShapeChart profile={p} weights={eff} base={fx ? shape.weights : null} best={six.hours} label={label} />
@@ -86,7 +86,7 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
         <span role="listitem" className={`shape-chip${flexible && shape.id === 'flat' ? ' on' : ''}`}>{FLEX_LABEL} <b>{pct(cmp.flexible20.share)}</b></span>
       </div>
       <p className="shape-best">
-        The cleanest six hours are <b>{hourSpanWords(six.hours)}</b>, {pct(six.mean)} clean on average; the dirtiest six ({hourSpanWords(bad.hours)}) run {pct(bad.mean)}. That {((six.mean - bad.mean) * 100).toFixed(1)}-point gap is the most that moving your hours can buy you here.
+        Cleanest six hours <b>{hourSpanWords(six.hours)}</b>, {pct(six.mean)} clean; dirtiest six ({hourSpanWords(bad.hours)}) {pct(bad.mean)} — a {((six.mean - bad.mean) * 100).toFixed(1)}-point gap, all that moving hours can buy here.
         {fx && fx.to.length > 0 && ` The flexible fifth moves from ${hourSpanWords(fx.from)} into ${hourSpanWords(fx.to)}.`}
       </p>
       {s19 != null && s25 != null && (
@@ -103,7 +103,7 @@ const labelOf = d => d?.c?.label || d?.name || d?.id || null
 const gridLabel = d => (d?.type === 'zone' ? d.parent?.id || d.parent?.ba || d.ba || null : d?.id || d?.ba || null)
 // oxlint-disable-next-line react/only-export-components -- a registry entry, not a component
 export const shapeModule = {
-  id: 'shape', title: 'What your load shape would run on',
+  id: 'shape', title: 'What your load runs on',
   applies: ctx => !!profileOf(ctx?.detail),
   render: ctx => <ShapeModule profile={profilesOf(ctx?.detail) || profileOf(ctx?.detail)} label={labelOf(ctx?.detail)} loadMW={Number(ctx?.load_mw) || 300} grid={gridLabel(ctx?.detail)} inherited={!!ctx?.detail?.cf_inherited_from_ba} />,
 }

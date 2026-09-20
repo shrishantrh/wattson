@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
-import { Card, Chip, KV } from '../console/widgets.jsx'
+import { Card, Chip } from '../console/widgets.jsx'
 import Scatter from '../components/Scatter.jsx'
 import { WxSeg, WxRange, WxReadout, useKeyList } from '../components/WxControls.jsx'
 import { loadRegions, useAsync } from '../lib/data.js'
@@ -126,22 +126,20 @@ export default function Explore({ route }) {
   const column = (
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
-      <Card title={<><b>Explore</b> · {data ? `${all.length} regions` : 'regions'} · any two metrics</>} onClose={back}>
-        {loading ? <Loading what="the regions" /> : error ? <ErrorState error={error} onRetry={reload} /> : (
-          <>
-            <div className="xp-head">
-              {s.strength && <span className="xp-strength">{s.strength}</span>}
-              <p className="xp-q">{s.text}</p>
+      <Card title={<><b>Explore</b> · {data ? `${all.length} regions` : 'regions'}</>} onClose={back}>
+        <p className="pg-top">Plot any two metrics against each other. <span className="q">{preset ? preset.question : `${mx.label} against ${my.label}.`}</span></p>
+        {loading ? <Loading what="the regions" /> : error ? <ErrorState error={error} onRetry={reload} /> : null}
+        {/* one control block: the question to ask, the two axes, and which part of the country */}
+        <div className="xp-panel">
+          <div className="xp-panel-row"><span className="xp-rowlabel">Ask</span><span className="pg-chips">{PRESETS.map(p => <Chip key={p.key} small active={preset?.key === p.key} href={exploreHref({ x: p.x, y: p.y, sel, sector })}>{p.label}</Chip>)}</span></div>
+          <div className="xp-panel-row">
+            <div className="xp-axes">
+              <label className="xp-pick"><span>x axis</span><span className="xp-field"><select className="field" value={xKey} onChange={e => pick('x', e.target.value)} aria-label="x axis metric">{METRICS.map(m => <option key={m.key} value={m.key}>{m.label}</option>)}</select></span></label>
+              <button type="button" className="btn xp-swap" onClick={() => go({ x: yKey, y: xKey })} aria-label="Swap axes" data-tip="Swap axes">⇄</button>
+              <label className="xp-pick"><span>y axis</span><span className="xp-field"><select className="field" value={yKey} onChange={e => pick('y', e.target.value)} aria-label="y axis metric">{METRICS.map(m => <option key={m.key} value={m.key}>{m.label}</option>)}</select></span></label>
             </div>
-            <p className="xp-sub">{preset ? preset.question : `${mx.label} against ${my.label}.`} {preset?.note}</p>
-          </>
-        )}
-        <div className="xp-presets">{PRESETS.map(p => <Chip key={p.key} small active={preset?.key === p.key} href={exploreHref({ x: p.x, y: p.y, sel, sector })}>{p.label}</Chip>)}</div>
-        <div className="xp-axes">
-          <label className="xp-pick"><span>x axis</span><span className="xp-field"><select className="field" value={xKey} onChange={e => pick('x', e.target.value)} aria-label="x axis metric">{METRICS.map(m => <option key={m.key} value={m.key}>{m.label}</option>)}</select></span></label>
-          <label className="xp-pick"><span>y axis</span><span className="xp-field"><select className="field" value={yKey} onChange={e => pick('y', e.target.value)} aria-label="y axis metric">{METRICS.map(m => <option key={m.key} value={m.key}>{m.label}</option>)}</select></span></label>
-          <button type="button" className="btn xp-swap" onClick={() => go({ x: yKey, y: xKey })} aria-label="Swap axes" data-tip="Swap axes">⇄</button>
-          <span className="xp-sectors">{SECTORS.map(x => <Chip key={x} small active={x === sector} onClick={() => go({ sector: x, sel: inSector(x, sel) ? sel : null })}>{x}</Chip>)}</span>
+          </div>
+          <div className="xp-panel-row xp-legendrow"><span className="xp-rowlabel">Where</span>{SECTORS.map(x => <Chip key={x} small active={x === sector} onClick={() => go({ sector: x, sel: inSector(x, sel) ? sel : null })}>{x}</Chip>)}</div>
         </div>
         {data && (
           <>
@@ -151,8 +149,23 @@ export default function Explore({ route }) {
         )}
       </Card>
       {data && (
-        <Card title={<><b>Fit</b> · {my.short} on {mx.short}</>}>
-          <KV rows={[['Pearson r', stats.r == null ? '—' : stats.r.toFixed(3)], ['Slope', slopeText], ['n', String(visible.length)], preset?.quadrants && [`Median ${mx.short}`, mx.format(stats.xm)], preset?.quadrants && [`Median ${my.short}`, my.format(stats.ym)]]} />
+        <Card title={<><b>The fit</b> · {my.short} on {mx.short}</>}>
+          {/* result: the correlation first and large, then what it was measured on, then the sentence */}
+          <div className="xp-result">
+            <div className="xp-r">
+              <div className="v">{stats.r == null ? '—' : stats.r.toFixed(2)}</div>
+              <div className="k">Pearson r</div>
+              {s.strength && <span className="xp-strength">{s.strength}</span>}
+            </div>
+            <dl className="xp-basis">
+              <div><dt>n</dt><dd>{stats.n} {stats.unit}</dd></div>
+              <div><dt>Basis</dt><dd>{stats.unit === 'grids' ? 'one per grid' : 'all regions'}</dd></div>
+              <div><dt>Slope</dt><dd>{slopeText}</dd></div>
+              {preset?.quadrants && <div><dt>Median {mx.short}</dt><dd>{mx.format(stats.xm)}</dd></div>}
+              {preset?.quadrants && <div><dt>Median {my.short}</dt><dd>{my.format(stats.ym)}</dd></div>}
+            </dl>
+          </div>
+          <p className="xp-say">{s.text}{preset?.note ? ` ${preset.note}` : ''}</p>
           {selected && (
             <div className="xp-sel">
               <span><b>{selected.label}</b> <span className="mono muted">{selected.id}</span></span>
@@ -176,7 +189,7 @@ export default function Explore({ route }) {
               ))}
             </div>
           ) : <p className="note">No fit: the x axis has no spread.</p>}
-          <p className="note" style={{ marginTop: 12 }}>Generation is measured within a footprint, not consumption, and a zone's generation figures are its parent grid's — a zone reports demand only. A correlation across regions is not a cause: the detector reads demand and nothing else, so a tight fit here says two measurements move together, not that one produced the other.</p>
+          <p className="note pg-fine">Generation is measured within a footprint, not consumption, and a zone's generation figures are its parent grid's — a zone reports demand only. A correlation across regions is not a cause: the detector reads demand and nothing else, so a tight fit here says two measurements move together, not that one produced the other.</p>
         </Card>
       )}
       {data && (

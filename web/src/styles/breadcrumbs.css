@@ -20,23 +20,44 @@
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-sm);
   min-width: 0;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
 }
 
+/* Stuck: the column has scrolled under the bar, so the bar has to look like it is above the
+   content rather than part of it. It goes fully opaque (a card cut in half behind a 3%-transparent
+   bar reads as a rendering fault), takes the resting control edge and the deeper shadow. */
+.bc[data-stuck] {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow);
+}
+
+/* The way up wears its destination. It is the widest thing in the row, so it is also the first
+   thing to give ground: the trail beside it folds its middle segments to icons rather than this
+   label truncating (see .bc-folded), and only under 900px does the label shorten to "Back". */
 .bc-back {
   flex: none;
-  width: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   height: 28px;
+  padding: 0 10px 0 7px;
   margin-left: 6px;
-  display: grid;
-  place-items: center;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--line-soft);
+  border: 1px solid var(--line-strong);
   background: transparent;
-  color: var(--muted);
+  color: var(--ink-2);
+  font-family: var(--font-ui);
+  font-size: var(--t-small);
+  font-weight: 500;
+  line-height: var(--lh-flat);
+  white-space: nowrap;
   cursor: pointer;
   transition: var(--tr-ui);
 }
+.bc-back svg { flex: none; color: var(--muted); transition: color var(--dur-fast) var(--ease); }
 .bc-back:hover { color: var(--ink); border-color: var(--line-focus); }
+.bc-back:hover svg { color: var(--ink); }
 .bc-back:focus-visible { outline: none; box-shadow: var(--ring); }
 
 .bc-list {
@@ -53,18 +74,32 @@
 
 /* the middle gives way first: the last segment (where you are) keeps its width, the ones
    before it shrink and truncate rather than wrapping the row onto a second line. */
-.bc-item { display: flex; align-items: center; gap: 4px; min-width: 0; flex: 0 1 auto; }
-.bc-item.bc-here { flex: 0 0 auto; }
+/* Middle segments never truncate: a trail of "H… › Pl… › PJM…" is worse than no trail at all.
+   They keep their full label or give it up for their icon (see .bc-folded), and only the last
+   segment — where you are, which is the one word that has to stay — is allowed to ellipsise. */
+.bc-item { display: flex; align-items: center; gap: 4px; flex: none; }
+.bc-item:not(.bc-here) .bc-text { overflow: visible; text-overflow: clip; }
+.bc-item.bc-here { flex: none; }
+/* every middle segment is folded and it still does not fit: now, and only now, where you are is
+   allowed to truncate */
+.bc[data-folded="max"] .bc-item.bc-here { flex: 0 1 auto; min-width: 8ch; }
+/* folded (components/Breadcrumbs.jsx measures): the icon stands in for the label rather than
+   every segment shrinking to one letter and an ellipsis. The label stays in the accessible name
+   and in the tooltip, so nothing is lost, and the segment is still the same link. */
+.bc-folded { flex: none; }
+.bc-folded .bc-text { display: none; }
+.bc-folded .bc-seg { padding: 4px 4px; }
+.bc-folded .bc-seg svg { opacity: 1; }
 .bc-sep { flex: none; color: var(--muted); opacity: 0.55; margin: 0 2px; }
 
 .bc-seg {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   min-width: 0;
-  padding: 3px 5px;
+  padding: 4px 4px;
   border-radius: var(--radius-sm);
-  font-size: 12px;
+  font-size: var(--t-small);
   line-height: 1.2;
   color: var(--muted);
   text-decoration: none;
@@ -84,16 +119,18 @@ a.bc-seg:focus-visible { outline: none; box-shadow: var(--ring); }
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 0 2px;
+  padding: 0 6px 0 2px;
   margin: 6px 0 -4px;
-  font-size: 11px;
+  font-size: var(--t-micro);
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
 }
 .bc-sect svg { flex: none; opacity: 0.8; }
-.bc-sect .bc-count { margin-left: auto; letter-spacing: 0.04em; text-transform: none; font-family: var(--font-mono); font-size: 11px; }
+/* the label gives way before the count does; neither is ever cut by the column's edge */
+.bc-sect > *:not(.bc-count):not(svg) { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bc-sect .bc-count { flex: none; margin-left: auto; letter-spacing: 0.04em; text-transform: none; font-family: var(--font-mono); font-size: var(--t-micro); }
 
 .bc-note {
   display: flex;
@@ -103,11 +140,17 @@ a.bc-seg:focus-visible { outline: none; box-shadow: var(--ring); }
   border-left: 2px solid var(--warn);
   background: var(--warn-soft);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-size: 12px;
+  font-size: var(--t-small);
   line-height: 1.45;
   color: var(--ink-2);
 }
-.bc-note svg { flex: none; margin-top: 1px; color: var(--warn); }
+.bc-note svg { flex: none; margin-top: 2px; color: var(--warn); }
 .bc-note b { color: var(--ink); font-weight: 500; }
 .bc-note p { margin: 0; }
 .bc-note p + p { margin-top: 4px; }
+
+/* narrow: the column is the whole screen and the trail below still names the destination, so the
+   button keeps the word that matters and drops the phrase */
+@media (max-width: 900px) {
+  .bc-back-to { display: none; }
+}
