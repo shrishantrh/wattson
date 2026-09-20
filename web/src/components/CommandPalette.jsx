@@ -370,7 +370,10 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
 
   const showList = hasQuery || emptyLimit > 0
   // the deterministic empty state, suppressed wherever the ask layer has taken the moment over
-  const nothing = hasQuery && !shown.length && !canAsk
+  // Only a genuine dead end. A query the parser could not match as a whole but resolved by
+  // scanning it for a known name, "whats the outlook on IREN", has a route and must not be
+  // told it matched nothing.
+  const nothing = hasQuery && !shown.length && !canAsk && !!ask?.unknown
   return (
     <Command shouldFilter={false} loop label="Wattson commands" className={`pal ${className}`} value={value} onValueChange={setValue} onKeyDown={onKeyDown}>
       <div className="pal-inputwrap">

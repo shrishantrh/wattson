@@ -75,6 +75,41 @@ export function resolvePlace(text) {
   return { metro: c.label, region_id: id, lat: c.lat, lng: c.lng, serving_utility: null, source: 'region' }
 }
 
+// Words that are never the subject of a question, so a stray "power" or "data" cannot
+// out-rank the actual entity. Deliberately short: the scan below already requires a real
+// match against a company name, a ticker or a region label.
+const SCAN_STOP = new Set(['the', 'and', 'for', 'what', 'whats', 'how', 'why', 'who', 'where',
+  'when', 'does', 'did', 'is', 'are', 'was', 'were', 'on', 'in', 'at', 'of', 'to', 'vs',
+  'about', 'tell', 'me', 'show', 'give', 'outlook', 'clean', 'power', 'energy', 'grid',
+  'data', 'center', 'centre', 'datacenter', 'datacenters', 'night', 'day', 'renewable'])
+
+/**
+ * A question usually contains the thing it is about. "whats the outlook on IREN" is a
+ * question about IREN, and refusing it because the whole sentence is not a company name
+ * makes the box feel broken. Scan the words (and adjacent pairs, for "Core Scientific")
+ * for exactly one known company or place and route to it. Two or more and we stay out of
+ * the way rather than guessing which one was meant.
+ */
+export function scanEntities(text) {
+  const words = String(text || '').split(/[^A-Za-z0-9.&-]+/).filter(Boolean)
+  const grams = []
+  for (let i = 0; i < words.length; i++) {
+    grams.push(words[i])
+    if (i + 1 < words.length) grams.push(`${words[i]} ${words[i + 1]}`)
+  }
+  const hits = []
+  const seen = new Set()
+  for (const g of grams) {
+    if (g.length < 3) continue
+    if (!g.includes(' ') && SCAN_STOP.has(g.toLowerCase())) continue
+    const c = matchCompany(g)
+    if (c && !seen.has(`c:${c.key}`)) { seen.add(`c:${c.key}`); hits.push({ kind: 'check', ticker: c.key, name: c.name, coverage_status: c.coverage_status, matched: g }) ; continue }
+    const m = resolvePlace(g)
+    if (m && !seen.has(`p:${m.region_id}`)) { seen.add(`p:${m.region_id}`); hits.push({ kind: 'compare', mw: 300, metros: [m.metro], matched: g }) }
+  }
+  return hits
+}
+
 export function parseQuery(text) {
   const raw = String(text || '').trim()
   if (!raw) return { kind: 'unknown', hint: 'Try a company, or "300 MW: Phoenix vs Omaha"' }
@@ -89,7 +124,10 @@ export function parseQuery(text) {
     if (m) return { kind: 'compare', mw: 300, metros: [m.metro] }
     const u = unknownTicker(parts[0])
     if (u) return { kind: 'check', ticker: u.key, name: u.name, unknown: true }
-    return { kind: 'unknown', hint: `Didn't recognise "${parts[0]}". Try ${VERIFIED.slice(0, 2).map(x => x.name).join(' or ')}, a ticker like IREN, or "300 MW: Phoenix vs Omaha".` }
+    // The whole string is not a name, but the sentence may still contain one.
+    const scanned = scanEntities(parts[0])
+    if (scanned.length === 1) { const { matched, ...route } = scanned[0]; return route }
+    return { kind: 'unknown', hint: `Try a company like ${VERIFIED.slice(0, 2).map(x => x.name).join(' or ')}, a ticker like IREN, a metro, or "300 MW: Phoenix vs Omaha".` }
   }
   let mw = mwMatch ? Number(mwMatch[1]) * (/gw/i.test(mwMatch[2]) ? 1000 : 1) : 300
   const metrosOut = [], unknown = []
