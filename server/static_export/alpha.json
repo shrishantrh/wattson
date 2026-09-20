@@ -10,11 +10,11 @@
   "We measure generation inside a footprint, not consumption, and we do not allocate interchange. Average grid mix, not marginal emissions."
  ],
  "no_listed_equity": {
-  "count": 5,
-  "resolved": 12,
+  "count": 7,
+  "resolved": 17,
   "unresolved": 3,
-  "total_sites": 15,
-  "note": "5 of the 12 sites whose serving utility we could establish are served by public power, a cooperative or a state authority with no listed equity. A further 3 sites have no established serving utility at all, which is a gap in our coverage rather than a finding about the grid."
+  "total_sites": 20,
+  "note": "7 of the 17 sites whose serving utility we could establish are served by public power, a cooperative or a state authority with no listed equity. A further 3 sites have no established serving utility at all, which is a gap in our coverage rather than a finding about the grid."
  },
  "event_markets": {
   "available": true,
@@ -143,255 +143,6 @@
      ],
      "why": "ERCO/NRTH ranks 1 of 111 on our detector with +94.6% demand growth; this market settles on ERCOT's annual peak system load.",
      "source_url": "https://kalshi.com/markets/kxtxercotpeak"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASD",
-     "name": "Henry Hub natural gas, daily settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.145",
-       "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.145",
-       "yes_bid": "0.0900",
-       "yes_ask": "0.3500",
-       "last": "0.0800",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.140",
-       "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.140",
-       "yes_bid": "0.1100",
-       "yes_ask": "0.3600",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.135",
-       "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.135",
-       "yes_bid": "0.1000",
-       "yes_ask": "0.3700",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.130",
-       "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.130",
-       "yes_bid": "0.1300",
-       "yes_ask": "0.3900",
-       "last": "0.1100",
-       "close_time": "2026-09-21T21:00:00Z"
-      }
-     ],
-     "why": "ERCO/NRTH ranks 1 of 111 on our detector with +94.6% demand growth, and gas filled that growth; this settles on the daily Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasd"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASMON",
-     "name": "Henry Hub natural gas, monthly settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.899",
-       "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.899",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.799",
-       "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.799",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.699",
-       "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.699",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.599",
-       "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.599",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      }
-     ],
-     "why": "ERCO/NRTH ranks 1 of 111 on our detector with +94.6% demand growth, and gas filled that growth; this settles on the monthly Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasmon"
-    },
-    {
-     "class": "event",
-     "series": "KXPOWERKWH",
-     "name": "US average retail electricity price",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.4",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
-       "strike": "Above 20.4\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.2",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
-       "strike": "Above 20.2\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.0",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
-       "strike": "Above 20.0\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1100",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T19.8",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
-       "strike": "Above 19.8\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1800",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      }
-     ],
-     "why": "ERCO/NRTH ranks 1 of 111 on our detector with +94.6% demand growth; this settles on the US average retail electricity price.",
-     "source_url": "https://kalshi.com/markets/kxpowerkwh"
-    },
-    {
-     "class": "event",
-     "series": "KXDATACENTCON",
-     "name": "US private datacenter construction spending",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T85.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
-       "strike": "Above $85.0B",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0600",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T82.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
-       "strike": "Above $82.5B",
-       "yes_bid": "0.2100",
-       "yes_ask": "0.3300",
-       "last": "0.2100",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T80.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
-       "strike": "Above $80.0B",
-       "yes_bid": "0.1500",
-       "yes_ask": "0.4700",
-       "last": "0.4000",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T77.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
-       "strike": "Above $77.5B",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2026-10-01T13:59:00Z"
-      }
-     ],
-     "why": "ERCO/NRTH ranks 1 of 111 on our detector with +94.6% demand growth; this settles on US datacenter construction spending.",
-     "source_url": "https://kalshi.com/markets/kxdatacentcon"
-    },
-    {
-     "class": "event",
-     "series": "KXUSADATACENTERS",
-     "name": "Number of US datacenters",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T6000",
-       "title": "Will the United States have at least 6,000 data centers listed in 2026?",
-       "strike": "At least 6,000",
-       "yes_bid": "0.1200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5900",
-       "title": "Will the United States have at least 5,900 data centers listed in 2026?",
-       "strike": "At least 5,900",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5800",
-       "title": "Will the United States have at least 5,800 data centers listed in 2026?",
-       "strike": "At least 5,800",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9700",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5700",
-       "title": "Will the United States have at least 5,700 data centers listed in 2026?",
-       "strike": "At least 5,700",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      }
-     ],
-     "why": "ERCO/NRTH ranks 1 of 111 on our detector with +94.6% demand growth; this settles on the number of US datacenters.",
-     "source_url": "https://kalshi.com/markets/kxusadatacenters"
-    },
-    {
-     "class": "event",
-     "series": "KXRATEPAYERLAW",
-     "name": "Federal datacenter power-cost standards",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXRATEPAYERLAW-26SEP-YES",
-       "title": "Will data center power-cost standards become law?",
-       "strike": "Yes",
-       "yes_bid": "0.0800",
-       "yes_ask": "0.1500",
-       "last": "0.1400",
-       "close_time": "2027-01-01T04:59:00Z"
-      }
-     ],
-     "why": "ERCO/NRTH ranks 1 of 111 on our detector with +94.6% demand growth; this settles on whether federal datacenter power-cost standards become law.",
-     "source_url": "https://kalshi.com/markets/kxratepayerlaw"
     }
    ]
   },
@@ -509,255 +260,6 @@
      ],
      "why": "ERCO/FWES ranks 2 of 111 on our detector with +116.1% demand growth; this market settles on ERCOT's annual peak system load.",
      "source_url": "https://kalshi.com/markets/kxtxercotpeak"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASD",
-     "name": "Henry Hub natural gas, daily settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.145",
-       "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.145",
-       "yes_bid": "0.0900",
-       "yes_ask": "0.3500",
-       "last": "0.0800",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.140",
-       "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.140",
-       "yes_bid": "0.1100",
-       "yes_ask": "0.3600",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.135",
-       "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.135",
-       "yes_bid": "0.1000",
-       "yes_ask": "0.3700",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.130",
-       "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.130",
-       "yes_bid": "0.1300",
-       "yes_ask": "0.3900",
-       "last": "0.1100",
-       "close_time": "2026-09-21T21:00:00Z"
-      }
-     ],
-     "why": "ERCO/FWES ranks 2 of 111 on our detector with +116.1% demand growth, and gas filled that growth; this settles on the daily Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasd"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASMON",
-     "name": "Henry Hub natural gas, monthly settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.899",
-       "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.899",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.799",
-       "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.799",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.699",
-       "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.699",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.599",
-       "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.599",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      }
-     ],
-     "why": "ERCO/FWES ranks 2 of 111 on our detector with +116.1% demand growth, and gas filled that growth; this settles on the monthly Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasmon"
-    },
-    {
-     "class": "event",
-     "series": "KXPOWERKWH",
-     "name": "US average retail electricity price",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.4",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
-       "strike": "Above 20.4\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.2",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
-       "strike": "Above 20.2\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.0",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
-       "strike": "Above 20.0\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1100",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T19.8",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
-       "strike": "Above 19.8\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1800",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      }
-     ],
-     "why": "ERCO/FWES ranks 2 of 111 on our detector with +116.1% demand growth; this settles on the US average retail electricity price.",
-     "source_url": "https://kalshi.com/markets/kxpowerkwh"
-    },
-    {
-     "class": "event",
-     "series": "KXDATACENTCON",
-     "name": "US private datacenter construction spending",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T85.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
-       "strike": "Above $85.0B",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0600",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T82.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
-       "strike": "Above $82.5B",
-       "yes_bid": "0.2100",
-       "yes_ask": "0.3300",
-       "last": "0.2100",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T80.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
-       "strike": "Above $80.0B",
-       "yes_bid": "0.1500",
-       "yes_ask": "0.4700",
-       "last": "0.4000",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T77.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
-       "strike": "Above $77.5B",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2026-10-01T13:59:00Z"
-      }
-     ],
-     "why": "ERCO/FWES ranks 2 of 111 on our detector with +116.1% demand growth; this settles on US datacenter construction spending.",
-     "source_url": "https://kalshi.com/markets/kxdatacentcon"
-    },
-    {
-     "class": "event",
-     "series": "KXUSADATACENTERS",
-     "name": "Number of US datacenters",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T6000",
-       "title": "Will the United States have at least 6,000 data centers listed in 2026?",
-       "strike": "At least 6,000",
-       "yes_bid": "0.1200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5900",
-       "title": "Will the United States have at least 5,900 data centers listed in 2026?",
-       "strike": "At least 5,900",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5800",
-       "title": "Will the United States have at least 5,800 data centers listed in 2026?",
-       "strike": "At least 5,800",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9700",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5700",
-       "title": "Will the United States have at least 5,700 data centers listed in 2026?",
-       "strike": "At least 5,700",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      }
-     ],
-     "why": "ERCO/FWES ranks 2 of 111 on our detector with +116.1% demand growth; this settles on the number of US datacenters.",
-     "source_url": "https://kalshi.com/markets/kxusadatacenters"
-    },
-    {
-     "class": "event",
-     "series": "KXRATEPAYERLAW",
-     "name": "Federal datacenter power-cost standards",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXRATEPAYERLAW-26SEP-YES",
-       "title": "Will data center power-cost standards become law?",
-       "strike": "Yes",
-       "yes_bid": "0.0800",
-       "yes_ask": "0.1500",
-       "last": "0.1400",
-       "close_time": "2027-01-01T04:59:00Z"
-      }
-     ],
-     "why": "ERCO/FWES ranks 2 of 111 on our detector with +116.1% demand growth; this settles on whether federal datacenter power-cost standards become law.",
-     "source_url": "https://kalshi.com/markets/kxratepayerlaw"
     }
    ]
   },
@@ -799,255 +301,6 @@
      "name": "Wholesale power in AZPS",
      "why": "AZPS demand grew +31.0% against 2019 with an overnight excess of +12.3 points, which is where scarcity shows up in price first.",
      "source_url": null
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASD",
-     "name": "Henry Hub natural gas, daily settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.145",
-       "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.145",
-       "yes_bid": "0.0900",
-       "yes_ask": "0.3500",
-       "last": "0.0800",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.140",
-       "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.140",
-       "yes_bid": "0.1100",
-       "yes_ask": "0.3600",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.135",
-       "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.135",
-       "yes_bid": "0.1000",
-       "yes_ask": "0.3700",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.130",
-       "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.130",
-       "yes_bid": "0.1300",
-       "yes_ask": "0.3900",
-       "last": "0.1100",
-       "close_time": "2026-09-21T21:00:00Z"
-      }
-     ],
-     "why": "AZPS ranks 3 of 111 on our detector with +31.0% demand growth, and gas filled that growth; this settles on the daily Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasd"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASMON",
-     "name": "Henry Hub natural gas, monthly settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.899",
-       "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.899",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.799",
-       "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.799",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.699",
-       "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.699",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.599",
-       "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.599",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      }
-     ],
-     "why": "AZPS ranks 3 of 111 on our detector with +31.0% demand growth, and gas filled that growth; this settles on the monthly Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasmon"
-    },
-    {
-     "class": "event",
-     "series": "KXPOWERKWH",
-     "name": "US average retail electricity price",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.4",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
-       "strike": "Above 20.4\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.2",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
-       "strike": "Above 20.2\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.0",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
-       "strike": "Above 20.0\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1100",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T19.8",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
-       "strike": "Above 19.8\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1800",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      }
-     ],
-     "why": "AZPS ranks 3 of 111 on our detector with +31.0% demand growth; this settles on the US average retail electricity price.",
-     "source_url": "https://kalshi.com/markets/kxpowerkwh"
-    },
-    {
-     "class": "event",
-     "series": "KXDATACENTCON",
-     "name": "US private datacenter construction spending",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T85.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
-       "strike": "Above $85.0B",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0600",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T82.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
-       "strike": "Above $82.5B",
-       "yes_bid": "0.2100",
-       "yes_ask": "0.3300",
-       "last": "0.2100",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T80.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
-       "strike": "Above $80.0B",
-       "yes_bid": "0.1500",
-       "yes_ask": "0.4700",
-       "last": "0.4000",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T77.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
-       "strike": "Above $77.5B",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2026-10-01T13:59:00Z"
-      }
-     ],
-     "why": "AZPS ranks 3 of 111 on our detector with +31.0% demand growth; this settles on US datacenter construction spending.",
-     "source_url": "https://kalshi.com/markets/kxdatacentcon"
-    },
-    {
-     "class": "event",
-     "series": "KXUSADATACENTERS",
-     "name": "Number of US datacenters",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T6000",
-       "title": "Will the United States have at least 6,000 data centers listed in 2026?",
-       "strike": "At least 6,000",
-       "yes_bid": "0.1200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5900",
-       "title": "Will the United States have at least 5,900 data centers listed in 2026?",
-       "strike": "At least 5,900",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5800",
-       "title": "Will the United States have at least 5,800 data centers listed in 2026?",
-       "strike": "At least 5,800",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9700",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5700",
-       "title": "Will the United States have at least 5,700 data centers listed in 2026?",
-       "strike": "At least 5,700",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      }
-     ],
-     "why": "AZPS ranks 3 of 111 on our detector with +31.0% demand growth; this settles on the number of US datacenters.",
-     "source_url": "https://kalshi.com/markets/kxusadatacenters"
-    },
-    {
-     "class": "event",
-     "series": "KXRATEPAYERLAW",
-     "name": "Federal datacenter power-cost standards",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXRATEPAYERLAW-26SEP-YES",
-       "title": "Will data center power-cost standards become law?",
-       "strike": "Yes",
-       "yes_bid": "0.0800",
-       "yes_ask": "0.1500",
-       "last": "0.1400",
-       "close_time": "2027-01-01T04:59:00Z"
-      }
-     ],
-     "why": "AZPS ranks 3 of 111 on our detector with +31.0% demand growth; this settles on whether federal datacenter power-cost standards become law.",
-     "source_url": "https://kalshi.com/markets/kxratepayerlaw"
     }
    ]
   },
@@ -1082,255 +335,6 @@
      "name": "US natural gas benchmark",
      "why": "Gas supplied the largest overnight generation increase in TEPC: +0.80 GW between 2019 and 2025. Henry Hub and regional basis price that fuel. Coal fell 0.19 GW over the same hours, so gas replaced retiring baseload as well as serving growth.",
      "source_url": null
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASD",
-     "name": "Henry Hub natural gas, daily settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.145",
-       "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.145",
-       "yes_bid": "0.0900",
-       "yes_ask": "0.3500",
-       "last": "0.0800",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.140",
-       "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.140",
-       "yes_bid": "0.1100",
-       "yes_ask": "0.3600",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.135",
-       "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.135",
-       "yes_bid": "0.1000",
-       "yes_ask": "0.3700",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.130",
-       "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.130",
-       "yes_bid": "0.1300",
-       "yes_ask": "0.3900",
-       "last": "0.1100",
-       "close_time": "2026-09-21T21:00:00Z"
-      }
-     ],
-     "why": "TEPC ranks 4 of 111 on our detector with +15.1% demand growth, and gas filled that growth; this settles on the daily Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasd"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASMON",
-     "name": "Henry Hub natural gas, monthly settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.899",
-       "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.899",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.799",
-       "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.799",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.699",
-       "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.699",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.599",
-       "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.599",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      }
-     ],
-     "why": "TEPC ranks 4 of 111 on our detector with +15.1% demand growth, and gas filled that growth; this settles on the monthly Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasmon"
-    },
-    {
-     "class": "event",
-     "series": "KXPOWERKWH",
-     "name": "US average retail electricity price",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.4",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
-       "strike": "Above 20.4\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.2",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
-       "strike": "Above 20.2\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.0",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
-       "strike": "Above 20.0\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1100",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T19.8",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
-       "strike": "Above 19.8\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1800",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      }
-     ],
-     "why": "TEPC ranks 4 of 111 on our detector with +15.1% demand growth; this settles on the US average retail electricity price.",
-     "source_url": "https://kalshi.com/markets/kxpowerkwh"
-    },
-    {
-     "class": "event",
-     "series": "KXDATACENTCON",
-     "name": "US private datacenter construction spending",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T85.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
-       "strike": "Above $85.0B",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0600",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T82.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
-       "strike": "Above $82.5B",
-       "yes_bid": "0.2100",
-       "yes_ask": "0.3300",
-       "last": "0.2100",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T80.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
-       "strike": "Above $80.0B",
-       "yes_bid": "0.1500",
-       "yes_ask": "0.4700",
-       "last": "0.4000",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T77.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
-       "strike": "Above $77.5B",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2026-10-01T13:59:00Z"
-      }
-     ],
-     "why": "TEPC ranks 4 of 111 on our detector with +15.1% demand growth; this settles on US datacenter construction spending.",
-     "source_url": "https://kalshi.com/markets/kxdatacentcon"
-    },
-    {
-     "class": "event",
-     "series": "KXUSADATACENTERS",
-     "name": "Number of US datacenters",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T6000",
-       "title": "Will the United States have at least 6,000 data centers listed in 2026?",
-       "strike": "At least 6,000",
-       "yes_bid": "0.1200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5900",
-       "title": "Will the United States have at least 5,900 data centers listed in 2026?",
-       "strike": "At least 5,900",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5800",
-       "title": "Will the United States have at least 5,800 data centers listed in 2026?",
-       "strike": "At least 5,800",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9700",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5700",
-       "title": "Will the United States have at least 5,700 data centers listed in 2026?",
-       "strike": "At least 5,700",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      }
-     ],
-     "why": "TEPC ranks 4 of 111 on our detector with +15.1% demand growth; this settles on the number of US datacenters.",
-     "source_url": "https://kalshi.com/markets/kxusadatacenters"
-    },
-    {
-     "class": "event",
-     "series": "KXRATEPAYERLAW",
-     "name": "Federal datacenter power-cost standards",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXRATEPAYERLAW-26SEP-YES",
-       "title": "Will data center power-cost standards become law?",
-       "strike": "Yes",
-       "yes_bid": "0.0800",
-       "yes_ask": "0.1500",
-       "last": "0.1400",
-       "close_time": "2027-01-01T04:59:00Z"
-      }
-     ],
-     "why": "TEPC ranks 4 of 111 on our detector with +15.1% demand growth; this settles on whether federal datacenter power-cost standards become law.",
-     "source_url": "https://kalshi.com/markets/kxratepayerlaw"
     }
    ]
   },
@@ -1358,6 +362,26 @@
      "source_url": "https://investors.dominionenergy.com/home/default.aspx",
      "verification_status": "verified",
      "why": "Virginia Electric and Power (Dominion Energy Virginia) serves load in PJM/DOM, a region ranked 6 of 111 with +31.8% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "DLR",
+     "name": "Digital Realty Trust",
+     "role": "Dominion Energy Virginia serves the Digital Realty Ashburn site",
+     "exchange": null,
+     "source_url": "https://dcmap.us/markets/northern-virginia/",
+     "verification_status": "facility_lookup",
+     "why": "Dominion Energy Virginia serves the Digital Realty Ashburn site, a region ranked 6 of 111 with +31.8% demand growth against 2019."
+    },
+    {
+     "class": "equity",
+     "symbol": "EQIX",
+     "name": "Equinix Inc",
+     "role": "Dominion Energy Virginia serves the Equinix Ashburn site",
+     "exchange": null,
+     "source_url": "https://dcmap.us/markets/northern-virginia/",
+     "verification_status": "facility_lookup",
+     "why": "Dominion Energy Virginia serves the Equinix Ashburn site, a region ranked 6 of 111 with +31.8% demand growth against 2019."
     },
     {
      "class": "commodity",
@@ -1510,255 +534,6 @@
      ],
      "why": "PJM/DOM ranks 6 of 111 on our detector with +31.8% demand growth; Illinois nuclear sits inside the PJM footprint.",
      "source_url": "https://kalshi.com/markets/kxilnuclear"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASD",
-     "name": "Henry Hub natural gas, daily settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.145",
-       "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.145",
-       "yes_bid": "0.0900",
-       "yes_ask": "0.3500",
-       "last": "0.0800",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.140",
-       "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.140",
-       "yes_bid": "0.1100",
-       "yes_ask": "0.3600",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.135",
-       "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.135",
-       "yes_bid": "0.1000",
-       "yes_ask": "0.3700",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.130",
-       "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.130",
-       "yes_bid": "0.1300",
-       "yes_ask": "0.3900",
-       "last": "0.1100",
-       "close_time": "2026-09-21T21:00:00Z"
-      }
-     ],
-     "why": "PJM/DOM ranks 6 of 111 on our detector with +31.8% demand growth, and gas filled that growth; this settles on the daily Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasd"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASMON",
-     "name": "Henry Hub natural gas, monthly settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.899",
-       "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.899",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.799",
-       "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.799",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.699",
-       "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.699",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.599",
-       "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.599",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      }
-     ],
-     "why": "PJM/DOM ranks 6 of 111 on our detector with +31.8% demand growth, and gas filled that growth; this settles on the monthly Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasmon"
-    },
-    {
-     "class": "event",
-     "series": "KXPOWERKWH",
-     "name": "US average retail electricity price",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.4",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
-       "strike": "Above 20.4\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.2",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
-       "strike": "Above 20.2\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.0",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
-       "strike": "Above 20.0\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1100",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T19.8",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
-       "strike": "Above 19.8\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1800",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      }
-     ],
-     "why": "PJM/DOM ranks 6 of 111 on our detector with +31.8% demand growth; this settles on the US average retail electricity price.",
-     "source_url": "https://kalshi.com/markets/kxpowerkwh"
-    },
-    {
-     "class": "event",
-     "series": "KXDATACENTCON",
-     "name": "US private datacenter construction spending",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T85.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
-       "strike": "Above $85.0B",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0600",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T82.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
-       "strike": "Above $82.5B",
-       "yes_bid": "0.2100",
-       "yes_ask": "0.3300",
-       "last": "0.2100",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T80.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
-       "strike": "Above $80.0B",
-       "yes_bid": "0.1500",
-       "yes_ask": "0.4700",
-       "last": "0.4000",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T77.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
-       "strike": "Above $77.5B",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2026-10-01T13:59:00Z"
-      }
-     ],
-     "why": "PJM/DOM ranks 6 of 111 on our detector with +31.8% demand growth; this settles on US datacenter construction spending.",
-     "source_url": "https://kalshi.com/markets/kxdatacentcon"
-    },
-    {
-     "class": "event",
-     "series": "KXUSADATACENTERS",
-     "name": "Number of US datacenters",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T6000",
-       "title": "Will the United States have at least 6,000 data centers listed in 2026?",
-       "strike": "At least 6,000",
-       "yes_bid": "0.1200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5900",
-       "title": "Will the United States have at least 5,900 data centers listed in 2026?",
-       "strike": "At least 5,900",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5800",
-       "title": "Will the United States have at least 5,800 data centers listed in 2026?",
-       "strike": "At least 5,800",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9700",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5700",
-       "title": "Will the United States have at least 5,700 data centers listed in 2026?",
-       "strike": "At least 5,700",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      }
-     ],
-     "why": "PJM/DOM ranks 6 of 111 on our detector with +31.8% demand growth; this settles on the number of US datacenters.",
-     "source_url": "https://kalshi.com/markets/kxusadatacenters"
-    },
-    {
-     "class": "event",
-     "series": "KXRATEPAYERLAW",
-     "name": "Federal datacenter power-cost standards",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXRATEPAYERLAW-26SEP-YES",
-       "title": "Will data center power-cost standards become law?",
-       "strike": "Yes",
-       "yes_bid": "0.0800",
-       "yes_ask": "0.1500",
-       "last": "0.1400",
-       "close_time": "2027-01-01T04:59:00Z"
-      }
-     ],
-     "why": "PJM/DOM ranks 6 of 111 on our detector with +31.8% demand growth; this settles on whether federal datacenter power-cost standards become law.",
-     "source_url": "https://kalshi.com/markets/kxratepayerlaw"
     }
    ]
   },
@@ -1790,255 +565,6 @@
      "name": "Wholesale power in SWPP/OPPD",
      "why": "SWPP/OPPD demand grew +39.4% against 2019 with an overnight excess of +5.6 points, which is where scarcity shows up in price first.",
      "source_url": null
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASD",
-     "name": "Henry Hub natural gas, daily settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.145",
-       "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.145",
-       "yes_bid": "0.0900",
-       "yes_ask": "0.3500",
-       "last": "0.0800",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.140",
-       "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.140",
-       "yes_bid": "0.1100",
-       "yes_ask": "0.3600",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.135",
-       "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.135",
-       "yes_bid": "0.1000",
-       "yes_ask": "0.3700",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.130",
-       "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.130",
-       "yes_bid": "0.1300",
-       "yes_ask": "0.3900",
-       "last": "0.1100",
-       "close_time": "2026-09-21T21:00:00Z"
-      }
-     ],
-     "why": "SWPP/OPPD ranks 7 of 111 on our detector with +39.4% demand growth, and gas filled that growth; this settles on the daily Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasd"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASMON",
-     "name": "Henry Hub natural gas, monthly settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.899",
-       "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.899",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.799",
-       "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.799",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.699",
-       "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.699",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.599",
-       "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.599",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      }
-     ],
-     "why": "SWPP/OPPD ranks 7 of 111 on our detector with +39.4% demand growth, and gas filled that growth; this settles on the monthly Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasmon"
-    },
-    {
-     "class": "event",
-     "series": "KXPOWERKWH",
-     "name": "US average retail electricity price",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.4",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
-       "strike": "Above 20.4\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.2",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
-       "strike": "Above 20.2\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.0",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
-       "strike": "Above 20.0\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1100",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T19.8",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
-       "strike": "Above 19.8\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1800",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      }
-     ],
-     "why": "SWPP/OPPD ranks 7 of 111 on our detector with +39.4% demand growth; this settles on the US average retail electricity price.",
-     "source_url": "https://kalshi.com/markets/kxpowerkwh"
-    },
-    {
-     "class": "event",
-     "series": "KXDATACENTCON",
-     "name": "US private datacenter construction spending",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T85.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
-       "strike": "Above $85.0B",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0600",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T82.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
-       "strike": "Above $82.5B",
-       "yes_bid": "0.2100",
-       "yes_ask": "0.3300",
-       "last": "0.2100",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T80.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
-       "strike": "Above $80.0B",
-       "yes_bid": "0.1500",
-       "yes_ask": "0.4700",
-       "last": "0.4000",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T77.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
-       "strike": "Above $77.5B",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2026-10-01T13:59:00Z"
-      }
-     ],
-     "why": "SWPP/OPPD ranks 7 of 111 on our detector with +39.4% demand growth; this settles on US datacenter construction spending.",
-     "source_url": "https://kalshi.com/markets/kxdatacentcon"
-    },
-    {
-     "class": "event",
-     "series": "KXUSADATACENTERS",
-     "name": "Number of US datacenters",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T6000",
-       "title": "Will the United States have at least 6,000 data centers listed in 2026?",
-       "strike": "At least 6,000",
-       "yes_bid": "0.1200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5900",
-       "title": "Will the United States have at least 5,900 data centers listed in 2026?",
-       "strike": "At least 5,900",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5800",
-       "title": "Will the United States have at least 5,800 data centers listed in 2026?",
-       "strike": "At least 5,800",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9700",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5700",
-       "title": "Will the United States have at least 5,700 data centers listed in 2026?",
-       "strike": "At least 5,700",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      }
-     ],
-     "why": "SWPP/OPPD ranks 7 of 111 on our detector with +39.4% demand growth; this settles on the number of US datacenters.",
-     "source_url": "https://kalshi.com/markets/kxusadatacenters"
-    },
-    {
-     "class": "event",
-     "series": "KXRATEPAYERLAW",
-     "name": "Federal datacenter power-cost standards",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXRATEPAYERLAW-26SEP-YES",
-       "title": "Will data center power-cost standards become law?",
-       "strike": "Yes",
-       "yes_bid": "0.0800",
-       "yes_ask": "0.1500",
-       "last": "0.1400",
-       "close_time": "2027-01-01T04:59:00Z"
-      }
-     ],
-     "why": "SWPP/OPPD ranks 7 of 111 on our detector with +39.4% demand growth; this settles on whether federal datacenter power-cost standards become law.",
-     "source_url": "https://kalshi.com/markets/kxratepayerlaw"
     }
    ]
   },
@@ -2175,255 +701,6 @@
      ],
      "why": "ERCO ranks 8 of 111 on our detector with +27.2% demand growth; this market settles on ERCOT's annual peak system load.",
      "source_url": "https://kalshi.com/markets/kxtxercotpeak"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASD",
-     "name": "Henry Hub natural gas, daily settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.145",
-       "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.145",
-       "yes_bid": "0.0900",
-       "yes_ask": "0.3500",
-       "last": "0.0800",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.140",
-       "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.140",
-       "yes_bid": "0.1100",
-       "yes_ask": "0.3600",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.135",
-       "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.135",
-       "yes_bid": "0.1000",
-       "yes_ask": "0.3700",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.130",
-       "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.130",
-       "yes_bid": "0.1300",
-       "yes_ask": "0.3900",
-       "last": "0.1100",
-       "close_time": "2026-09-21T21:00:00Z"
-      }
-     ],
-     "why": "ERCO ranks 8 of 111 on our detector with +27.2% demand growth, and gas filled that growth; this settles on the daily Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasd"
-    },
-    {
-     "class": "event",
-     "series": "KXNATGASMON",
-     "name": "Henry Hub natural gas, monthly settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.899",
-       "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.899",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.799",
-       "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.799",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.699",
-       "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.699",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.599",
-       "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.599",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      }
-     ],
-     "why": "ERCO ranks 8 of 111 on our detector with +27.2% demand growth, and gas filled that growth; this settles on the monthly Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasmon"
-    },
-    {
-     "class": "event",
-     "series": "KXPOWERKWH",
-     "name": "US average retail electricity price",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.4",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
-       "strike": "Above 20.4\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.2",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
-       "strike": "Above 20.2\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.0",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
-       "strike": "Above 20.0\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1100",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T19.8",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
-       "strike": "Above 19.8\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1800",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      }
-     ],
-     "why": "ERCO ranks 8 of 111 on our detector with +27.2% demand growth; this settles on the US average retail electricity price.",
-     "source_url": "https://kalshi.com/markets/kxpowerkwh"
-    },
-    {
-     "class": "event",
-     "series": "KXDATACENTCON",
-     "name": "US private datacenter construction spending",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T85.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
-       "strike": "Above $85.0B",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0600",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T82.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
-       "strike": "Above $82.5B",
-       "yes_bid": "0.2100",
-       "yes_ask": "0.3300",
-       "last": "0.2100",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T80.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
-       "strike": "Above $80.0B",
-       "yes_bid": "0.1500",
-       "yes_ask": "0.4700",
-       "last": "0.4000",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T77.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
-       "strike": "Above $77.5B",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2026-10-01T13:59:00Z"
-      }
-     ],
-     "why": "ERCO ranks 8 of 111 on our detector with +27.2% demand growth; this settles on US datacenter construction spending.",
-     "source_url": "https://kalshi.com/markets/kxdatacentcon"
-    },
-    {
-     "class": "event",
-     "series": "KXUSADATACENTERS",
-     "name": "Number of US datacenters",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T6000",
-       "title": "Will the United States have at least 6,000 data centers listed in 2026?",
-       "strike": "At least 6,000",
-       "yes_bid": "0.1200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5900",
-       "title": "Will the United States have at least 5,900 data centers listed in 2026?",
-       "strike": "At least 5,900",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5800",
-       "title": "Will the United States have at least 5,800 data centers listed in 2026?",
-       "strike": "At least 5,800",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9700",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5700",
-       "title": "Will the United States have at least 5,700 data centers listed in 2026?",
-       "strike": "At least 5,700",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      }
-     ],
-     "why": "ERCO ranks 8 of 111 on our detector with +27.2% demand growth; this settles on the number of US datacenters.",
-     "source_url": "https://kalshi.com/markets/kxusadatacenters"
-    },
-    {
-     "class": "event",
-     "series": "KXRATEPAYERLAW",
-     "name": "Federal datacenter power-cost standards",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXRATEPAYERLAW-26SEP-YES",
-       "title": "Will data center power-cost standards become law?",
-       "strike": "Yes",
-       "yes_bid": "0.0800",
-       "yes_ask": "0.1500",
-       "last": "0.1400",
-       "close_time": "2027-01-01T04:59:00Z"
-      }
-     ],
-     "why": "ERCO ranks 8 of 111 on our detector with +27.2% demand growth; this settles on whether federal datacenter power-cost standards become law.",
-     "source_url": "https://kalshi.com/markets/kxratepayerlaw"
     }
    ]
   },
@@ -2626,255 +903,251 @@
      ],
      "why": "PJM ranks 52 of 111 on our detector with +5.4% demand growth; Illinois nuclear sits inside the PJM footprint.",
      "source_url": "https://kalshi.com/markets/kxilnuclear"
+    }
+   ]
+  }
+ ],
+ "thesis_markets": [
+  {
+   "class": "event",
+   "series": "KXUSADATACENTERS",
+   "name": "Number of US datacenters",
+   "venue": "Kalshi",
+   "why": "We measure flat 24/7 load arriving on grids that did not get cleaner at night. This settles on how many US datacenters actually get built.",
+   "markets": [
+    {
+     "ticker": "KXUSADATACENTERS-26DEC31-T6000",
+     "title": "Will the United States have at least 6,000 data centers listed in 2026?",
+     "strike": "At least 6,000",
+     "yes_bid": "0.1200",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2027-01-07T15:00:00Z"
     },
     {
-     "class": "event",
-     "series": "KXNATGASD",
-     "name": "Henry Hub natural gas, daily settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.145",
-       "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.145",
-       "yes_bid": "0.0900",
-       "yes_ask": "0.3500",
-       "last": "0.0800",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.140",
-       "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.140",
-       "yes_bid": "0.1100",
-       "yes_ask": "0.3600",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.135",
-       "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.135",
-       "yes_bid": "0.1000",
-       "yes_ask": "0.3700",
-       "last": "0.0000",
-       "close_time": "2026-09-21T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASD-26SEP2117-T3.130",
-       "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
-       "strike": "Above $3.130",
-       "yes_bid": "0.1300",
-       "yes_ask": "0.3900",
-       "last": "0.1100",
-       "close_time": "2026-09-21T21:00:00Z"
-      }
-     ],
-     "why": "PJM ranks 52 of 111 on our detector with +5.4% demand growth, and gas filled that growth; this settles on the daily Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasd"
+     "ticker": "KXUSADATACENTERS-26DEC31-T5900",
+     "title": "Will the United States have at least 5,900 data centers listed in 2026?",
+     "strike": "At least 5,900",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2027-01-07T15:00:00Z"
     },
     {
-     "class": "event",
-     "series": "KXNATGASMON",
-     "name": "Henry Hub natural gas, monthly settle",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.899",
-       "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.899",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.799",
-       "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.799",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.0100",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.699",
-       "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.699",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      },
-      {
-       "ticker": "KXNATGASMON-26SEP3017-T4.599",
-       "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
-       "strike": "Above $4.599",
-       "yes_bid": "0.0000",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-09-30T21:00:00Z"
-      }
-     ],
-     "why": "PJM ranks 52 of 111 on our detector with +5.4% demand growth, and gas filled that growth; this settles on the monthly Henry Hub price.",
-     "source_url": "https://kalshi.com/markets/kxnatgasmon"
+     "ticker": "KXUSADATACENTERS-26DEC31-T5800",
+     "title": "Will the United States have at least 5,800 data centers listed in 2026?",
+     "strike": "At least 5,800",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.9700",
+     "last": "0.0000",
+     "close_time": "2027-01-07T15:00:00Z"
     },
     {
-     "class": "event",
-     "series": "KXPOWERKWH",
-     "name": "US average retail electricity price",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.4",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
-       "strike": "Above 20.4\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.2",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
-       "strike": "Above 20.2\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1000",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T20.0",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
-       "strike": "Above 20.0\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1100",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      },
-      {
-       "ticker": "KXPOWERKWH-26OCT14-T19.8",
-       "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
-       "strike": "Above 19.8\u00a2",
-       "yes_bid": "0.0100",
-       "yes_ask": "0.1800",
-       "last": "0.0000",
-       "close_time": "2026-10-14T12:29:00Z"
-      }
-     ],
-     "why": "PJM ranks 52 of 111 on our detector with +5.4% demand growth; this settles on the US average retail electricity price.",
-     "source_url": "https://kalshi.com/markets/kxpowerkwh"
+     "ticker": "KXUSADATACENTERS-26DEC31-T5700",
+     "title": "Will the United States have at least 5,700 data centers listed in 2026?",
+     "strike": "At least 5,700",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2027-01-07T15:00:00Z"
+    }
+   ]
+  },
+  {
+   "class": "event",
+   "series": "KXDATACENTCON",
+   "name": "US private datacenter construction spending",
+   "venue": "Kalshi",
+   "why": "The buildout has to be financed before it shows up as load. This settles on US private datacenter construction spending.",
+   "markets": [
+    {
+     "ticker": "KXDATACENTCON-26OCT01-T85.0",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
+     "strike": "Above $85.0B",
+     "yes_bid": "0.0300",
+     "yes_ask": "0.9800",
+     "last": "0.0600",
+     "close_time": "2026-10-01T13:59:00Z"
     },
     {
-     "class": "event",
-     "series": "KXDATACENTCON",
-     "name": "US private datacenter construction spending",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T85.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $85.0B?",
-       "strike": "Above $85.0B",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0600",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T82.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
-       "strike": "Above $82.5B",
-       "yes_bid": "0.2100",
-       "yes_ask": "0.3300",
-       "last": "0.2100",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T80.0",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
-       "strike": "Above $80.0B",
-       "yes_bid": "0.1500",
-       "yes_ask": "0.4700",
-       "last": "0.4000",
-       "close_time": "2026-10-01T13:59:00Z"
-      },
-      {
-       "ticker": "KXDATACENTCON-26OCT01-T77.5",
-       "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
-       "strike": "Above $77.5B",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2026-10-01T13:59:00Z"
-      }
-     ],
-     "why": "PJM ranks 52 of 111 on our detector with +5.4% demand growth; this settles on US datacenter construction spending.",
-     "source_url": "https://kalshi.com/markets/kxdatacentcon"
+     "ticker": "KXDATACENTCON-26OCT01-T82.5",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $82.5B?",
+     "strike": "Above $82.5B",
+     "yes_bid": "0.2100",
+     "yes_ask": "0.3300",
+     "last": "0.2100",
+     "close_time": "2026-10-01T13:59:00Z"
     },
     {
-     "class": "event",
-     "series": "KXUSADATACENTERS",
-     "name": "Number of US datacenters",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T6000",
-       "title": "Will the United States have at least 6,000 data centers listed in 2026?",
-       "strike": "At least 6,000",
-       "yes_bid": "0.1200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5900",
-       "title": "Will the United States have at least 5,900 data centers listed in 2026?",
-       "strike": "At least 5,900",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5800",
-       "title": "Will the United States have at least 5,800 data centers listed in 2026?",
-       "strike": "At least 5,800",
-       "yes_bid": "0.0200",
-       "yes_ask": "0.9700",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      },
-      {
-       "ticker": "KXUSADATACENTERS-26DEC31-T5700",
-       "title": "Will the United States have at least 5,700 data centers listed in 2026?",
-       "strike": "At least 5,700",
-       "yes_bid": "0.0300",
-       "yes_ask": "0.9800",
-       "last": "0.0000",
-       "close_time": "2027-01-07T15:00:00Z"
-      }
-     ],
-     "why": "PJM ranks 52 of 111 on our detector with +5.4% demand growth; this settles on the number of US datacenters.",
-     "source_url": "https://kalshi.com/markets/kxusadatacenters"
+     "ticker": "KXDATACENTCON-26OCT01-T80.0",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $80.0B?",
+     "strike": "Above $80.0B",
+     "yes_bid": "0.1500",
+     "yes_ask": "0.4700",
+     "last": "0.4000",
+     "close_time": "2026-10-01T13:59:00Z"
     },
     {
-     "class": "event",
-     "series": "KXRATEPAYERLAW",
-     "name": "Federal datacenter power-cost standards",
-     "venue": "Kalshi",
-     "markets": [
-      {
-       "ticker": "KXRATEPAYERLAW-26SEP-YES",
-       "title": "Will data center power-cost standards become law?",
-       "strike": "Yes",
-       "yes_bid": "0.0800",
-       "yes_ask": "0.1500",
-       "last": "0.1400",
-       "close_time": "2027-01-01T04:59:00Z"
-      }
-     ],
-     "why": "PJM ranks 52 of 111 on our detector with +5.4% demand growth; this settles on whether federal datacenter power-cost standards become law.",
-     "source_url": "https://kalshi.com/markets/kxratepayerlaw"
+     "ticker": "KXDATACENTCON-26OCT01-T77.5",
+     "title": "Will U.S. private data center construction spending for August 2026 be above $77.5B?",
+     "strike": "Above $77.5B",
+     "yes_bid": "0.0200",
+     "yes_ask": "0.9800",
+     "last": "0.0000",
+     "close_time": "2026-10-01T13:59:00Z"
+    }
+   ]
+  },
+  {
+   "class": "event",
+   "series": "KXPOWERKWH",
+   "name": "US average retail electricity price",
+   "venue": "Kalshi",
+   "why": "Demand growing faster than clean supply is what tightens a grid. This settles on the US average retail electricity price.",
+   "markets": [
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T20.4",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.4\u00a2?",
+     "strike": "Above 20.4\u00a2",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    },
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T20.2",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.2\u00a2?",
+     "strike": "Above 20.2\u00a2",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    },
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T20.0",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 20.0\u00a2?",
+     "strike": "Above 20.0\u00a2",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.1100",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    },
+    {
+     "ticker": "KXPOWERKWH-26OCT14-T19.8",
+     "title": "Will average price of electricity per kilowatt-hour in the U.S. city average for September 2026 be above 19.8\u00a2?",
+     "strike": "Above 19.8\u00a2",
+     "yes_bid": "0.0100",
+     "yes_ask": "0.1800",
+     "last": "0.0000",
+     "close_time": "2026-10-14T12:29:00Z"
+    }
+   ]
+  },
+  {
+   "class": "event",
+   "series": "KXRATEPAYERLAW",
+   "name": "Federal datacenter power-cost standards",
+   "venue": "Kalshi",
+   "why": "Who pays for the new capacity is the open policy question behind every region we flag. This settles on federal datacenter power-cost standards.",
+   "markets": [
+    {
+     "ticker": "KXRATEPAYERLAW-26SEP-YES",
+     "title": "Will data center power-cost standards become law?",
+     "strike": "Yes",
+     "yes_bid": "0.0800",
+     "yes_ask": "0.1500",
+     "last": "0.1400",
+     "close_time": "2027-01-01T04:59:00Z"
+    }
+   ]
+  },
+  {
+   "class": "event",
+   "series": "KXNATGASD",
+   "name": "Henry Hub natural gas, daily settle",
+   "venue": "Kalshi",
+   "why": "Gas filled the overnight growth in PJM: +10.74 GW while coal fell 2.5. This settles on the daily Henry Hub price, the input cost of that fill.",
+   "markets": [
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.145",
+     "title": "Will the natural gas close price be above 3.145 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.145",
+     "yes_bid": "0.0900",
+     "yes_ask": "0.3500",
+     "last": "0.0800",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.140",
+     "title": "Will the natural gas close price be above 3.140 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.140",
+     "yes_bid": "0.1100",
+     "yes_ask": "0.3600",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.135",
+     "title": "Will the natural gas close price be above 3.135 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.135",
+     "yes_bid": "0.1000",
+     "yes_ask": "0.3700",
+     "last": "0.0000",
+     "close_time": "2026-09-21T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASD-26SEP2117-T3.130",
+     "title": "Will the natural gas close price be above 3.130 USD/MMBtu on September 21, 2026 at 5:00 PM EDT?",
+     "strike": "Above $3.130",
+     "yes_bid": "0.1300",
+     "yes_ask": "0.3900",
+     "last": "0.1100",
+     "close_time": "2026-09-21T21:00:00Z"
+    }
+   ]
+  },
+  {
+   "class": "event",
+   "series": "KXNATGASMON",
+   "name": "Henry Hub natural gas, monthly settle",
+   "venue": "Kalshi",
+   "why": "The same fill, priced monthly rather than daily.",
+   "markets": [
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.899",
+     "title": "Will the natural gas close price be above 4.899 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.899",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.0100",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.799",
+     "title": "Will the natural gas close price be above 4.799 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.799",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.0100",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.699",
+     "title": "Will the natural gas close price be above 4.699 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.699",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
+    },
+    {
+     "ticker": "KXNATGASMON-26SEP3017-T4.599",
+     "title": "Will the natural gas close price be above 4.599 USD/MMBtu on September 30, 2026 at 5:00 PM EDT?",
+     "strike": "Above $4.599",
+     "yes_bid": "0.0000",
+     "yes_ask": "0.1000",
+     "last": "0.0000",
+     "close_time": "2026-09-30T21:00:00Z"
     }
    ]
   }

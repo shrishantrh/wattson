@@ -28,9 +28,31 @@ FACILITIES_EXPORT = REPO_ROOT / "server" / "static_export" / "facilities.json"
 FEATURED = ["ERCO/NRTH", "ERCO/FWES", "AZPS", "TEPC", "PJM/DOM", "SWPP/OPPD",
             "ERCO", "PJM"]
 
-#: Event series that apply to every region, not to one grid.
-NATIONAL_SERIES = ["KXNATGASD", "KXNATGASMON", "KXPOWERKWH",
-                   "KXDATACENTCON", "KXUSADATACENTERS", "KXRATEPAYERLAW"]
+#: Event series that price the THESIS rather than any one grid. Shown once, at the top,
+#: never repeated per region -- repeating them on all eight is what made the page noise.
+NATIONAL_SERIES = ["KXUSADATACENTERS", "KXDATACENTCON", "KXPOWERKWH",
+                   "KXRATEPAYERLAW", "KXNATGASD", "KXNATGASMON"]
+
+#: Why each national series prices what we measured. One sentence, no hedging.
+NATIONAL_WHY = {
+    "KXUSADATACENTERS":
+        "We measure flat 24/7 load arriving on grids that did not get cleaner at night. "
+        "This settles on how many US datacenters actually get built.",
+    "KXDATACENTCON":
+        "The buildout has to be financed before it shows up as load. This settles on US "
+        "private datacenter construction spending.",
+    "KXPOWERKWH":
+        "Demand growing faster than clean supply is what tightens a grid. This settles on "
+        "the US average retail electricity price.",
+    "KXRATEPAYERLAW":
+        "Who pays for the new capacity is the open policy question behind every region we "
+        "flag. This settles on federal datacenter power-cost standards.",
+    "KXNATGASD":
+        "Gas filled the overnight growth in PJM: +10.74 GW while coal fell 2.5. This "
+        "settles on the daily Henry Hub price, the input cost of that fill.",
+    "KXNATGASMON":
+        "The same fill, priced monthly rather than daily.",
+}
 
 #: Event series tied to a specific grid.
 REGIONAL_SERIES = {
@@ -192,7 +214,7 @@ def _events(region_id: str, region: dict, snapshot: dict) -> list:
         return []
     det = region.get("detection") or {}
     ba = region_id.split("/")[0]
-    wanted = list(REGIONAL_SERIES.get(ba, [])) + NATIONAL_SERIES
+    wanted = list(REGIONAL_SERIES.get(ba, []))
 
     out = []
     for series_ticker in wanted:
@@ -326,4 +348,28 @@ def build() -> dict:
             ),
         },
         "chains": chains,
+        # The thesis-level markets, once. These price what we measured nationally --
+        # whether the buildout happens, what it costs, who pays -- rather than any one
+        # grid. Repeating them per region is what made this page read as noise.
+        "thesis_markets": _thesis_markets(snapshot),
     }
+
+
+def _thesis_markets(snapshot: dict) -> list:
+    """National series with the one sentence that ties each to our measurement."""
+    if not snapshot.get("available"):
+        return []
+    out = []
+    for ticker in NATIONAL_SERIES:
+        series = (snapshot.get("series") or {}).get(ticker)
+        if not series or not series.get("markets"):
+            continue
+        out.append({
+            "class": "event",
+            "series": ticker,
+            "name": series.get("title") or kalshi.SERIES.get(ticker, ticker),
+            "venue": "Kalshi",
+            "why": NATIONAL_WHY.get(ticker, ""),
+            "markets": series["markets"][:4],
+        })
+    return out

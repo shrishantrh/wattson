@@ -417,6 +417,12 @@ def get_facilities():
             "separately so it cannot inflate the figure above.",
             "Coverage is partial and hand-curated. Absence of a site is not evidence it does "
             "not exist.",
+            "SOME SITES BURN GAS WE CANNOT SEE. xAI's Memphis campus runs dozens of mobile "
+            "turbines on site, reported around 495 MW, and the Abilene Stargate site pairs an "
+            "on-site plant with the grid. On-site generation does not appear in EIA-930 at all, "
+            "so for those sites our figure describes only the share drawn from the grid and "
+            "understates their fossil use. We found this while mapping them; it is a limit on "
+            "the method, not on those two rows.",
         ],
     }
 
