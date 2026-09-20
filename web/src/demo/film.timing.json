@@ -1,84 +1,106 @@
 {
-  "backend": "say:Samantha@170",
-  "generated": "2026-09-19T22:12:16.322Z",
+  "backend": "openai:gpt-4o-mini-tts:ash@1",
+  "generated": "2026-09-20T06:48:38.609Z",
+  "fingerprint": "d249a225dcb8359c",
   "shots": {
-    "flat": {
-      "durationMs": 3584,
+    "open": {
+      "durationMs": 7068,
       "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-0.m4a",
-      "words": 11
+      "words": 11,
+      "meanDb": -28
     },
-    "night": {
-      "durationMs": 7259,
+    "what": {
+      "durationMs": 14412,
       "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-1.m4a",
-      "words": 25
+      "words": 35,
+      "meanDb": -27.2
     },
-    "two": {
-      "durationMs": 5586,
+    "why": {
+      "durationMs": 12948,
       "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-2.m4a",
-      "words": 15
-    },
-    "landing": {
-      "durationMs": 1003,
-      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-3.m4a",
-      "words": 3
+      "words": 25,
+      "meanDb": -26.6
     },
     "type": {
       "durationMs": 0
     },
     "google": {
-      "durationMs": 8119,
+      "durationMs": 10260,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-4.m4a",
+      "words": 18,
+      "meanDb": -28.5
+    },
+    "grids": {
+      "durationMs": 13908,
       "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-5.m4a",
-      "words": 24
+      "words": 30,
+      "meanDb": -26.6
     },
-    "evidence": {
-      "durationMs": 9112,
+    "claims": {
+      "durationMs": 10548,
       "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-6.m4a",
-      "words": 20
-    },
-    "chip": {
-      "durationMs": 4698,
-      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-7.m4a",
-      "words": 8
-    },
-    "compare": {
-      "durationMs": 9618,
-      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-8.m4a",
-      "words": 25
-    },
-    "shape": {
-      "durationMs": 7694,
-      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-9.m4a",
-      "words": 18
-    },
-    "nearby": {
-      "durationMs": 4244,
-      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-10.m4a",
-      "words": 11
-    },
-    "sweep": {
-      "durationMs": 10616,
-      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-11.m4a",
-      "words": 22
+      "words": 20,
+      "meanDb": -27.7
     },
     "detector": {
-      "durationMs": 9522,
+      "durationMs": 14916,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-7.m4a",
+      "words": 29,
+      "meanDb": -26.7
+    },
+    "method": {
+      "durationMs": 17100,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-8.m4a",
+      "words": 34,
+      "meanDb": -28.4
+    },
+    "pjm": {
+      "durationMs": 13020,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-9.m4a",
+      "words": 26,
+      "meanDb": -27.6
+    },
+    "gas": {
+      "durationMs": 13260,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-10.m4a",
+      "words": 24,
+      "meanDb": -27.4
+    },
+    "stargate": {
+      "durationMs": 18612,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-11.m4a",
+      "words": 42,
+      "meanDb": -26.7
+    },
+    "ask": {
+      "durationMs": 12660,
       "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-12.m4a",
-      "words": 21
+      "words": 26,
+      "meanDb": -26
     },
-    "found": {
-      "durationMs": 5795,
+    "askhow": {
+      "durationMs": 16668,
       "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-13.m4a",
-      "words": 17
+      "words": 31,
+      "meanDb": -26.5
     },
-    "sources": {
-      "durationMs": 5371,
+    "refuse": {
+      "durationMs": 9564,
       "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-14.m4a",
-      "words": 11
+      "words": 23,
+      "meanDb": -27.5
+    },
+    "clean": {
+      "durationMs": 13068,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-15.m4a",
+      "words": 20,
+      "meanDb": -28
     },
     "end": {
-      "durationMs": 3299,
-      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-15.m4a",
-      "words": 9
+      "durationMs": 11820,
+      "clip": "/var/folders/92/k3lqx71n6q3_5vxgm79wbrpr0000gn/T/wattson-film/narration/shot-16.m4a",
+      "words": 24,
+      "meanDb": -29.3
     }
   }
 }

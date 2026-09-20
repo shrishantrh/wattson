@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1280px;height:720px;overflow:hidden;background:#070908}
+.w{position:relative;width:1280px;height:720px;font-family:Inter,-apple-system,system-ui,sans-serif}
+svg{position:absolute;inset:0}
+.v{position:absolute;inset:0;background:
+ radial-gradient(42% 40% at 50% 54%, rgba(7,9,8,.72) 0%, rgba(7,9,8,.40) 62%, rgba(7,9,8,.10) 100%),
+ linear-gradient(180deg, rgba(7,9,8,.52) 0%, rgba(7,9,8,0) 24%, rgba(7,9,8,0) 72%, rgba(7,9,8,.80) 100%)}
+.c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 60px}
+.eyebrow{font-size:19px;font-weight:600;letter-spacing:.20em;text-transform:uppercase;color:#ff7a4a;margin-bottom:22px;text-shadow:0 2px 18px rgba(0,0,0,.95)}
+h1{font-size:146px;line-height:.9;font-weight:800;letter-spacing:-.038em;color:#eef0ee;text-shadow:0 8px 56px rgba(0,0,0,.95)}
+.sub{margin-top:24px;font-size:44px;line-height:1.16;font-weight:600;letter-spacing:-.016em;color:#eef0ee;text-shadow:0 4px 30px rgba(0,0,0,.98)}
+.chips{margin-top:40px;display:flex;gap:16px;justify-content:center}
+.chips span{font-size:27px;font-weight:500;color:rgba(238,240,238,.92);padding:13px 30px;border:1px solid rgba(238,240,238,.22);border-radius:999px;background:rgba(16,20,18,.58);text-shadow:0 2px 14px rgba(0,0,0,.9)}
+</style></head><body><div class="w">
+<svg id="g" viewBox="0 0 1280 720"></svg>
+<div class="v"></div>
+<div class="c">
+ <div class="eyebrow">A greenwashing investigation of datacenter operators</div>
+ <h1>Wattson</h1>
+ <div class="sub">What&rsquo;s really powering their datacenters?</div>
+ <div class="chips"><span>Meta</span><span>Google</span><span>Microsoft</span><span>Amazon</span></div>
+</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg', svg=document.getElementById('g');
+const cx=640, cy=330, R=452, lon0=-98*Math.PI/180, tilt=16*Math.PI/180;
+function add(el,a){const n=document.createElementNS(NS,el);for(const k in a)n.setAttribute(k,a[k]);svg.appendChild(n);return n}
+add('circle',{cx,cy,r:R,fill:'#0d1411'});
+add('circle',{cx,cy,r:R,fill:'none',stroke:'#3d4f47','stroke-width':1.4,'stroke-opacity':0.8});
+const NA=[[24,50,-125,-66],[50,71,-141,-55],[14,32,-118,-86],[60,83,-56,-20],[55,71,-168,-141]];
+const OTHER=[[-56,13,-82,-34],[36,71,-10,40],[-35,37,-18,52],[8,55,40,100],[10,54,100,145],[-44,-11,113,154],[60,78,60,180]];
+const inBox=(la,lo,B)=>B.some(b=>la>=b[0]&&la<=b[1]&&lo>=b[2]&&lo<=b[3]);
+for(let i=0;i<=150;i++){
+  const lat=(-90+180*i/150)*Math.PI/180, latd=lat*180/Math.PI;
+  const circ=Math.max(1,Math.round(Math.cos(lat)*320));
+  for(let j=0;j<circ;j++){
+    const lon=-Math.PI+2*Math.PI*j/circ, lond=lon*180/Math.PI;
+    const x3=Math.cos(lat)*Math.cos(lon-lon0), y3=Math.sin(lat), z3=Math.cos(lat)*Math.sin(lon-lon0);
+    const yr=y3*Math.cos(tilt)-x3*Math.sin(tilt), xr=y3*Math.sin(tilt)+x3*Math.cos(tilt);
+    if(xr<=0.015) continue;
+    const depth=Math.pow(xr,0.7);
+    const na=inBox(latd,lond,NA), other=!na&&inBox(latd,lond,OTHER);
+    let o,r,c;
+    if(na){o=1.0*depth; r=2.25; c='#eaf5ef';}
+    else if(other){o=0.58*depth; r=1.8; c='#93a8a0';}
+    else {o=0.16*depth; r=1.3; c='#56675f';}
+    if(o<0.045) continue;
+    add('circle',{cx:(cx+R*z3).toFixed(1),cy:(cy-R*yr).toFixed(1),r:r.toFixed(2),fill:c,'fill-opacity':o.toFixed(3)});
+  }
+}
+</script></body></html>

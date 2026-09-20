@@ -1,0 +1,119 @@
+/* The ask layer's face and its tool trace.
+ *
+ * The figure itself is blobatar's own SVG, so nothing here draws it; these rules place it, overlay
+ * the ping rings, and set the rail of tool names beside it. Colour comes from tokens.css only, and
+ * never from --clean or --fossil: in this product those mean carbon-free and burned, so a face in
+ * either would read as a claim about electricity. */
+
+.askblob {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s4, 16px);
+  min-height: 76px;
+}
+
+/* The figure sits in a fixed box so a change of expression cannot shift the layout. The circle is
+   ours: the library's own backdrop is a near-white plate that reads as a sticker on a dark panel. */
+.askblob-mark {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 141, 82, 0.10);
+  box-shadow: inset 0 0 0 1px rgba(255, 141, 82, 0.28);
+  overflow: hidden;
+}
+.askblob-mark > svg:not(.ab-svg) { display: block; width: 100%; height: 100%; }
+
+.askblob-mark > svg.ab-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* One ring per keystroke while listening, one per tool name while working. A fresh node replays its
+   own animation, so neither needs a timer or an animation frame. */
+.ab-ping {
+  fill: none;
+  stroke: var(--accent, #a78bfa);
+  stroke-width: 1.5;
+  transform-origin: 50% 50%;
+  animation: ab-ping 900ms var(--ease-out, cubic-bezier(0.22, 0.61, 0.36, 1)) forwards;
+}
+
+.ab-ping-hard {
+  stroke-width: 2.2;
+  animation-duration: 640ms;
+}
+
+@keyframes ab-ping {
+  from { opacity: 0.55; transform: scale(0.82); }
+  to   { opacity: 0;    transform: scale(1.35); }
+}
+
+.askblob-rail {
+  min-width: 0;
+  padding-top: 6px;
+}
+
+.askblob-say {
+  margin: 0;
+  font-size: var(--t-small, 13px);
+  line-height: 1.45;
+  color: var(--ink-2, #b9c1bd);
+}
+
+.askblob-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The function name, verbatim. This is the point of the component: the reader sees the answer being
+   assembled from named sources rather than recalled, so the name is never prettified. */
+.askblob-tool {
+  font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: var(--t-micro, 11px);
+  color: var(--ink-2, #b9c1bd);
+  padding: 3px 8px;
+  border: 1px solid var(--line, rgba(238, 240, 238, 0.16));
+  border-radius: 999px;
+  background: var(--surface-2, rgba(255, 255, 255, 0.03));
+  white-space: nowrap;
+  animation: ab-in 240ms var(--ease-out, cubic-bezier(0.22, 0.61, 0.36, 1)) both;
+}
+
+@keyframes ab-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* No ask server in this copy: a deliberate resting state, not a failure. */
+.askblob[data-state="unavailable"] .askblob-mark { opacity: 0.55; }
+
+.askblob-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab-ping { animation: none; opacity: 0; }
+  .askblob-tool { animation: none; }
+}

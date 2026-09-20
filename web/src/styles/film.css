@@ -1,80 +1,110 @@
 /* The film overlay (pages/Film.jsx): full-screen story slides, a fake cursor, a click ripple, a
    caption plate and a progress line, all fixed over whatever page is showing. Nothing here takes
-   pointer events. Dark, Inter, one ember accent, no gradients, no blur; motion is opacity, translate
-   and scale transitions only. */
+   pointer events, and nothing depends on hover: the synthetic cursor does not produce one.
+   Colour comes only from tokens.css. --clean and --fossil are used where they mean clean and fossil
+   generation and nowhere else; the film's own furniture (cursor, ring, plate, progress) is ink and
+   hairlines. No gradients, no blur, no glow, and every easing decelerates without overshoot.
+   Durations: cursor travel 280-760ms + a 200ms settle, click ring 120ms in / 260ms out, ripple
+   520ms, caption 260ms in / 200ms out, slide cross-fade 420ms, route veil 180/220ms. */
 body[data-film="1"] .demo-hud, body[data-film="1"] .tour-progress, body[data-film="1"] .tour-card, body[data-film="1"] .tour-focus { display: none !important; }
 body[data-film="1"] { cursor: none; }
 
-.film-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; z-index: 1010; background: var(--accent); pointer-events: none; transition: width 250ms linear; }
+/* progress: a hairline the eye can find but never reads as content */
+.film-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 1010; background: var(--line-soft); pointer-events: none; }
+.film-progress i { display: block; height: 100%; width: 0; background: var(--ink-2); transition: width 250ms linear; }
 
-/* slides: the card cross-fades 400 ms; its parts rise in with per-element delays */
-.film-slide { position: fixed; inset: 0; z-index: 1005; background: var(--bg); color: var(--ink); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 400ms ease; }
+/* the one transition: a dip through the page background on a route change at a shot boundary */
+.film-veil { position: fixed; inset: 0; z-index: 1004; background: var(--bg); opacity: 0; pointer-events: none; transition: opacity 220ms var(--ease); }
+.film-veil.on { opacity: 1; transition-duration: 180ms; }
+
+/* slides: the card cross-fades 420ms; its parts rise in with per-element delays */
+.film-slide { position: fixed; inset: 0; z-index: 1005; background: var(--bg); color: var(--ink); display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 420ms var(--ease); }
 .film-slide.show { opacity: 1; }
-.film-slide .rise { opacity: 0; transform: translateY(10px); transition: opacity 400ms ease, transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.film-slide .rise { opacity: 0; transform: translateY(10px); transition: opacity 420ms var(--ease), transform 420ms var(--ease-out); }
 .film-slide.show .rise { opacity: 1; transform: none; }
-.film-slide-body { max-width: 720px; padding: 0 48px; text-align: center; }
+.film-slide-body { max-width: 720px; padding: 0 var(--s8); text-align: center; }
 .film-slide-body.wide { max-width: 900px; width: 100%; text-align: left; }
-.film-wordmark { font-family: var(--font-display); font-weight: 600; font-size: 96px; letter-spacing: -0.03em; line-height: 1; }
-.film-tagline { margin: 18px 0 0; font-size: 22px; color: var(--ink-2); }
-.film-credit { margin: 40px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--muted); }
-.film-eyebrow { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
-.film-h { font-family: var(--font-display); font-weight: 600; font-size: 46px; letter-spacing: -0.02em; line-height: 1.1; text-wrap: balance; margin: 0 0 36px; max-width: 18ch; }
-.film-count { color: var(--accent); font-variant-numeric: tabular-nums; }
-.film-foot { margin: 36px 0 0; font-size: 18px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty; max-width: 62ch; }
 
-/* the 24-hour strip: 24 bars of one height, filling in order */
+/* title and end card */
+.film-wordmark { font-family: var(--font-display); font-weight: 600; font-size: var(--t-hero); line-height: var(--lh-hero); letter-spacing: var(--ls-hero); }
+.film-tagline { margin: var(--s5) 0 0; font-size: var(--t-h2); line-height: var(--lh-h2); letter-spacing: var(--ls-title); color: var(--ink-2); }
+.film-credit { margin: var(--s7) 0 0; font-family: var(--font-mono); font-size: var(--t-micro); line-height: var(--lh-micro); letter-spacing: var(--ls-caps); color: var(--muted); }
+
+.film-eyebrow { margin: 0 0 var(--s4); font-family: var(--font-mono); font-size: var(--t-micro); line-height: var(--lh-micro); letter-spacing: var(--ls-caps); text-transform: uppercase; color: var(--muted); }
+.film-h { font-family: var(--font-display); font-weight: 600; font-size: var(--t-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-display); text-wrap: balance; margin: 0 0 var(--s6); max-width: 18ch; }
+.film-count { font-variant-numeric: var(--fv-num); }
+.film-foot { margin: var(--s6) 0 0; font-size: var(--t-lead); line-height: var(--lh-lead); color: var(--ink-2); text-wrap: pretty; max-width: 62ch; }
+
+/* the 24-hour strip: 24 bars of one height, filling in order. The six overnight hours are the
+   subject, so they are full-strength ink; the rest are secondary. The strip is load, not fuel. */
 .film-strip-wrap { max-width: 720px; }
-.film-strip { display: flex; gap: 6px; align-items: flex-end; height: 140px; }
-.film-strip i { flex: 1; height: 100%; background: var(--ink-2); border-radius: 3px 3px 0 0; transform: scaleY(0); transform-origin: bottom; transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1); }
-.film-strip i.night { background: var(--accent); }
+.film-strip { display: flex; gap: var(--s1); align-items: flex-end; height: 140px; }
+.film-strip i { flex: 1; height: 100%; background: var(--ink-2); opacity: 0.5; border-radius: 3px 3px 0 0; transform: scaleY(0); transform-origin: bottom; transition: transform 500ms var(--ease-out); }
+.film-strip i.night { background: var(--ink); opacity: 1; }
 .film-slide.show .film-strip i { transform: scaleY(1); }
-.film-strip-axis { display: flex; justify-content: space-between; margin-top: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.film-strip-axis { display: flex; justify-content: space-between; margin-top: var(--s2); font-family: var(--font-mono); font-size: var(--t-micro); line-height: var(--lh-micro); color: var(--muted); }
 
-/* the two national numbers and their bars */
-.film-bignums { display: flex; gap: 64px; margin-bottom: 28px; }
-.film-bignum .v { font-family: var(--font-display); font-weight: 300; font-size: 88px; letter-spacing: -0.03em; line-height: 1; font-feature-settings: var(--ff-num); font-variant-numeric: tabular-nums; }
-.film-bignum.accent .v { color: var(--accent); }
-.film-bignum .l { margin-top: 8px; font-size: 15px; color: var(--ink-2); }
-.film-bars { display: flex; flex-direction: column; gap: 22px; max-width: 720px; }
-.film-bar-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; color: var(--ink-2); margin-bottom: 8px; }
-.film-bar-v small { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
-.film-bar-track { position: relative; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.08); }
-.film-bar-track .fill { position: absolute; left: 0; top: 0; bottom: 0; width: var(--w); border-radius: 3px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 1400ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+/* the two national numbers and their bars. Both figures are clean share, so both are --clean;
+   the daytime series is the de-emphasised one (--clean-dim), the night series is the subject. */
+.film-bignums { display: flex; gap: var(--s8); margin-bottom: var(--s6); }
+.film-bignum .v { font-family: var(--font-display); font-weight: var(--w-num); font-size: var(--t-hero); line-height: var(--lh-hero); letter-spacing: var(--ls-hero); font-feature-settings: var(--ff-num); font-variant-numeric: var(--fv-num); }
+.film-bignum.day .v { color: var(--clean-dim); }
+.film-bignum.night .v { color: var(--clean); }
+.film-bignum .l { margin-top: var(--s2); font-size: var(--t-body); line-height: var(--lh-body); color: var(--ink-2); }
+.film-bars { display: flex; flex-direction: column; gap: var(--s5); max-width: 720px; }
+.film-bar-head { display: flex; justify-content: space-between; align-items: baseline; font-size: var(--t-body); line-height: var(--lh-body); color: var(--ink-2); margin-bottom: var(--s2); }
+.film-bar-v small { font-family: var(--font-mono); font-size: var(--t-micro); color: var(--muted); }
+.film-bar-track { position: relative; height: 6px; border-radius: 3px; background: var(--line-soft); }
+.film-bar-track .fill { position: absolute; left: 0; top: 0; bottom: 0; width: var(--w); border-radius: 3px; background: var(--clean-dim); transform: scaleX(0); transform-origin: left; transition: transform 1400ms var(--ease-out); }
 .film-slide.show .film-bar-track .fill { transform: scaleX(1); }
-.film-bar.accent .film-bar-track .fill { background: var(--accent); }
+.film-bar.accent .film-bar-track .fill { background: var(--clean); }
 .film-bar-track .tick { position: absolute; top: -7px; width: 2px; height: 20px; margin-left: -1px; background: var(--bg); box-shadow: 0 0 0 1.5px var(--ink-2); }
 
 /* the two questions, one after the other */
-.film-qs { display: flex; flex-direction: column; gap: 22px; margin: 0; }
-.film-qs li { display: flex; align-items: baseline; gap: 22px; font-family: var(--font-display); font-weight: 600; font-size: 40px; letter-spacing: -0.02em; line-height: 1.15; }
-.film-qs li b { font-family: var(--font-mono); font-weight: 500; font-size: 18px; color: var(--accent); min-width: 28px; }
+.film-qs { display: flex; flex-direction: column; gap: var(--s5); margin: 0; }
+.film-qs li { display: flex; align-items: baseline; gap: var(--s5); font-family: var(--font-display); font-weight: 600; font-size: var(--t-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-display); }
+.film-qs li b { font-family: var(--font-mono); font-weight: 500; font-size: var(--t-h2); color: var(--muted); min-width: var(--s6); }
 
 /* what we found: two columns, a list and chips */
-.film-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-.film-col-h { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-.film-list { display: flex; flex-direction: column; }
-.film-list li { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--line-soft); font-size: 19px; }
-.film-list li b { font-family: var(--font-mono); font-weight: 500; font-size: 15px; color: var(--ink-2); }
-.film-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.film-chips.big { gap: 10px; max-width: 760px; }
-.film-chip { display: inline-flex; align-items: baseline; gap: 6px; height: 34px; line-height: 34px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); font-size: 15px; font-weight: 500; color: var(--ink); background: var(--surface); }
-.film-chips.big .film-chip { height: 40px; line-height: 40px; font-size: 17px; font-family: var(--font-mono); font-weight: 400; }
-.film-chip.accent { border-color: var(--accent); color: var(--accent); }
-.film-chip b { font-family: var(--font-mono); font-weight: 500; font-size: 12px; color: var(--ink-2); }
+.film-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8); }
+.film-col-h { font-family: var(--font-mono); font-size: var(--t-micro); line-height: var(--lh-micro); letter-spacing: var(--ls-caps); text-transform: uppercase; color: var(--muted); margin-bottom: var(--s3); }
+.film-list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+.film-list li { display: flex; justify-content: space-between; align-items: baseline; padding: var(--s3) 0; border-top: 1px solid var(--line-soft); font-size: var(--t-lead); line-height: var(--lh-lead); }
+.film-list li b { font-family: var(--font-mono); font-weight: 500; font-size: var(--t-small); color: var(--muted); }
+.film-chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.film-chips.big { gap: var(--s3); max-width: 760px; }
+.film-chip { display: inline-flex; align-items: baseline; gap: var(--s2); height: var(--s7); line-height: var(--s7); padding: 0 var(--s4); border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); font-size: var(--t-body); font-weight: 500; color: var(--ink); background: var(--surface); }
+.film-chips.big .film-chip { font-family: var(--font-mono); font-weight: 400; }
+.film-chip b { font-family: var(--font-mono); font-weight: 500; font-size: var(--t-micro); color: var(--muted); }
 
-/* cursor and click */
-.film-cursor { position: fixed; left: 0; top: 0; z-index: 1002; width: 22px; height: 22px; pointer-events: none; transform: translate(-9999px, -9999px); transition: transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 250ms ease; will-change: transform; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45)); }
-.film-cursor svg { display: block; width: 22px; height: 22px; }
-.film-cursor.pressed svg { transform: scale(0.9); transform-origin: 3px 3px; }
+/* cursor and click. Travel is set per move in JS (distance-scaled), the settle step is the second
+   half of the same move; the press is a small, fast scale from the cursor's own tip. */
+.film-cursor { position: fixed; left: 0; top: 0; z-index: 1002; width: 22px; height: 22px; pointer-events: none; transform: translate(-9999px, -9999px); transition-property: transform, opacity; transition-duration: 650ms, 220ms; transition-timing-function: cubic-bezier(0.22, 0.61, 0.12, 1), linear; will-change: transform; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45)); }
+.film-cursor svg { display: block; width: 22px; height: 22px; transition: transform 90ms var(--ease); }
+.film-cursor.pressed svg { transform: scale(0.86); transform-origin: 3px 3px; }
 
-.film-ripple { position: fixed; left: 0; top: 0; z-index: 1001; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.85); pointer-events: none; opacity: 0; animation: film-ripple 520ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+/* the ring on the element being clicked: which target was hit is never left ambiguous */
+.film-focus { position: fixed; z-index: 1001; margin: -3px 0 0 -3px; padding: 3px; box-sizing: content-box; border: 2px solid var(--line-focus); box-shadow: 0 0 0 1px rgba(8, 10, 9, 0.9) inset; pointer-events: none; animation: film-focus-in 120ms var(--ease-out) both; }
+@keyframes film-focus-in {
+  from { opacity: 0; transform: scale(1.04); }
+  to { opacity: 1; transform: none; }
+}
+
+.film-ripple { position: fixed; left: 0; top: 0; z-index: 1001; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 2px solid rgba(237, 240, 237, 0.85); pointer-events: none; opacity: 0; animation: film-ripple 520ms var(--ease-out) forwards; }
 @keyframes film-ripple {
   0% { transform: scale(0.25); opacity: 0.9; }
   100% { transform: scale(1); opacity: 0; }
 }
 
-/* caption plate */
-.film-caption { position: fixed; left: 32px; bottom: 32px; z-index: 1000; max-width: min(760px, calc(100vw - 64px)); padding: 20px; border-radius: 16px; background: rgba(10, 12, 11, 0.7); color: var(--ink); pointer-events: none; opacity: 0; transform: translateY(6px); transition: opacity 250ms ease, transform 250ms ease; }
-.film-caption.show { opacity: 1; transform: translateY(0); }
-.film-title { font-family: var(--font-display); font-weight: 600; font-size: 44px; letter-spacing: -0.02em; line-height: 1.1; text-wrap: balance; margin: 0; }
-.film-sub { margin: 8px 0 0; font-size: 18px; line-height: 1.4; color: var(--ink-2); text-wrap: pretty; }
+/* caption plate: an opaque panel of the app's own floating surface, so it is as readable over the
+   globe as over the near-black interface. Its corner is chosen per shot (Film.jsx placeFor) as the
+   one that covers least of the element the narration is describing. */
+.film-caption { position: fixed; left: 32px; bottom: 32px; z-index: 1000; width: max-content; max-width: min(720px, calc(100vw - 64px)); padding: var(--s5); border: 1px solid var(--line-soft); border-radius: var(--radius-lg); background: var(--surface-a); box-shadow: var(--shadow); color: var(--ink); pointer-events: none; opacity: 0; transform: translateY(8px); transition: opacity 200ms var(--ease), transform 200ms var(--ease); }
+.film-caption.show { opacity: 1; transform: none; transition-duration: 260ms; }
+.film-caption[data-place="br"] { left: auto; right: 32px; }
+.film-caption[data-place="tl"] { bottom: auto; top: 32px; transform: translateY(-8px); }
+.film-caption[data-place="tr"] { bottom: auto; top: 32px; left: auto; right: 32px; transform: translateY(-8px); }
+.film-caption[data-place="tl"].show, .film-caption[data-place="tr"].show { transform: none; }
+.film-caption::before { content: ""; position: absolute; left: 0; top: var(--s5); bottom: var(--s5); width: 2px; border-radius: 1px; background: var(--line-strong); }
+.film-title { font-family: var(--font-display); font-weight: 600; font-size: var(--t-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-display); text-wrap: balance; margin: 0; max-width: 20ch; }
+.film-sub { margin: var(--s2) 0 0; font-size: var(--t-lead); line-height: var(--lh-lead); color: var(--ink-2); text-wrap: pretty; max-width: 46ch; }

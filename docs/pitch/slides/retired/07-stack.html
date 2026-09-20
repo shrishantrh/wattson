@@ -1,0 +1,53 @@
+<section class="slide" data-title="Built on" data-notes="NOT SPOKEN. Let this slide pass under the closing line; the shapes say it. If a judge stops you on it, the stack is one pipe, left to right.
+
+FEDERAL DATA IN. EIA-930, the hourly grid monitor the US government publishes, pulled through PUDL with Voloridge&#39;s own fetch script: 4.45 million hourly rows across 70 grid regions, 2018-07-01 to the 2026-09-05 snapshot (numbers.md 2.4: 4,451,763 rows recounted from data/processed/hourly_cf_index.parquet; 70 from ba.nunique(); that parquet is gitignored, so the honest answer if a judge asks for the field is &#39;it is the row count of the hourly index; the published JSON carries the 124 regions built from it&#39;). &#39;Grid region&#39; is the plain word; the unit of record is the balancing authority.
+
+PYTHON. Turns those rows into one number per hour per region - how much of the power generated was clean - ranks 111 regions with the detector, and bakes every endpoint to JSON (numbers.md 2.3: 111 regions, ranks 1..111 contiguous, 43 parents plus 68 zones).
+
+REPRODUCIBILITY, worth one sentence if anyone doubts the headline: docs/headline_from_raw.py rebuilds the PJM result straight from the raw federal table in about fifteen lines and prints 2019 overnight clean 35,744 MW of 82,506, 2025 clean 35,573 MW of 90,265 - within 0.4% of our published figures, the gap being that the quick script uses a fixed five-hour offset while the pipeline handles daylight saving and drops partial months. If a judge asks whether you can reproduce your own result, run it.
+
+REACT. The map is a globe drawn as an instanced dot field, one instance per point, so the whole US region set animates without redrawing geometry.
+
+OPENAI. A tool-calling layer over typed tools rather than retrieval over a blob, so every number in an answer is traceable to a call. ELEVEN tools on gpt-4.1: alerts, companies, company, compare_companies, compare_regions, facilities, irradiance, national, rank_regions, region, search_corpus. SOURCE, AND DO NOT RE-LITIGATE IT: the deployed API&#39;s status endpoint, queried live on 2026-09-20, returns those eleven names. The repo copy of server/ai.py lists only ten (missing compare_companies) and the README also says ten; both are stale, and the demo runs against the live service, so eleven is what a judge would see.
+
+ELASTIC. Retrieval behind search_corpus, and it is LIVE: the search status endpoint reports index wattson-corpus-v1 holding 354 documents, 309 from four sustainability reports and 45 from four 10-Ks, quality split 341 clean, 7 tabular, 6 suspect; a real query against Microsoft&#39;s report returns real passages with page or Item locators. The 354 reconciles with the corpus on disk: wc -l over claims/raw/*.jsonl gives 6+51+9+118+19+74+11+66 = 354 across 8 files. Passages, NOT filings - there are eight filings, and saying &#39;354 filings&#39; is exactly the class of error this project exists to catch. The README&#39;s &#39;no cluster provisioned&#39; line is out of date; do not disclaim Elastic on stage, it is a sponsor track.
+
+FOR THE OPENAI TRACK, the strongest single line: the Elasticsearch retrieval layer was written by Codex - that is the concrete way Codex improved the process.
+
+NO SERVER, which is what the headline means: server/__main__.py --static-export bakes every endpoint to files, so web/dist needs no server, no Python and no network. It is also the demo&#39;s failure plan.">
+  <h2 class="headline">No server</h2>
+  <div class="rule"></div>
+  <svg viewBox="0 0 1200 250" role="img">
+    <line x1="215" y1="105" x2="265" y2="105" stroke="var(--line)" stroke-width="3"/>
+    <line x1="455" y1="105" x2="505" y2="105" stroke="var(--line)" stroke-width="3"/>
+    <line x1="695" y1="105" x2="745" y2="105" stroke="var(--line)" stroke-width="3"/>
+    <line x1="935" y1="105" x2="985" y2="105" stroke="var(--line)" stroke-width="3"/>
+
+    <rect x="25" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <text x="120" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">PUDL</text>
+    <text x="120" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">4.45M rows</text>
+
+    <rect x="265" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <text x="360" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">Python</text>
+    <text x="360" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">111 regions</text>
+
+    <rect x="505" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <text x="600" y="78" text-anchor="middle" font-size="32" fill="var(--ink)">React</text>
+    <g fill="var(--accent)">
+      <circle cx="600" cy="132" r="3"/><circle cx="582" cy="132" r="3"/><circle cx="618" cy="132" r="3"/>
+      <circle cx="591" cy="118" r="3"/><circle cx="609" cy="118" r="3"/><circle cx="573" cy="120" r="2.4"/>
+      <circle cx="627" cy="120" r="2.4"/><circle cx="591" cy="146" r="3"/><circle cx="609" cy="146" r="3"/>
+      <circle cx="573" cy="144" r="2.4"/><circle cx="627" cy="144" r="2.4"/><circle cx="600" cy="108" r="2.4"/>
+      <circle cx="600" cy="156" r="2.4"/>
+    </g>
+    <circle cx="600" cy="132" r="32" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+
+    <rect x="745" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <text x="840" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">OpenAI</text>
+    <text x="840" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">11 tools</text>
+
+    <rect x="985" y="30" width="190" height="150" rx="14" fill="none" stroke="var(--line)" stroke-width="2"/>
+    <text x="1080" y="98" text-anchor="middle" font-size="32" fill="var(--ink)">Elastic</text>
+    <text x="1080" y="138" text-anchor="middle" font-size="26" fill="var(--muted)">354 passages</text>
+  </svg>
+</section>

@@ -1,0 +1,138 @@
+<!-- 09-backup.html · FALLBACK ONLY · parked after the running order. `B` jumps here and `B`
+     again returns the presenter to where they were. NOTE, and it is not what the old comment
+     in this file claimed: `→` from the close DOES walk into these two. Stop pressing on the
+     close. With only four main slides that is now one keystroke away, so it is in the close's
+     notes as well.
+     These two slides exist for one reason: if the site is down, they ARE the pitch. Both
+     findings are shown live and better in docs/DEMO.md - PJM's honest moment in section 4,
+     the prediction in section 10 - and a slide is never the first choice for either.
+     Same rules as every other fragment, including the 15-word cap. -->
+
+<section class="slide" data-backup="1" data-title="Fallback: PJM at night" data-notes="FALLBACK ONLY. Do not open this slide if the site is up: docs/DEMO.md section 4 shows the same finding on the PJM/DOM page, with the hour scrubber dragged to 03:00 and the CLEAN SHARE / CLEAN MW toggle, and a screen that exists beats a drawing of one.
+
+SPOKEN, if you are on this slide: &quot;PJM - the grid from Chicago to New Jersey, which serves the largest concentration of datacenters on earth - generates eight point seven gigawatts more power at night than it did in 2019. (breath) Not one net megawatt of that increase is clean.&quot;
+
+THE HONEST MOMENT, and say it in the demo&#39;s words because they are better than anything that fits on a slide (DEMO.md section 4): &quot;The share fell, but clean output barely moved, 35,700 to 35,619 megawatts. NO CLEAN POWER WAS LOST. The share fell because everything else in those hours grew around it. If you only quote the share, you say something false using true numbers.&quot; That is why the clean bar on this slide is drawn at true scale as a 1.3-pixel sliver below zero rather than as a share: the near-invisibility is the finding, and it is an ABSOLUTE.
+
+THE DRAWING IS AT TRUE SCALE: one megawatt is the same height in all three bars. The dashed rule sits at +8,701 MW, the total overnight growth, and the gas column stands ABOVE it. Gas supplied more than the growth itself because it also replaced retiring coal - coal fell 2,518 MW and nuclear 950 MW. Coal-to-gas switching plus new load. UNDERSTAND.md section 3, step 3.
+
+FIGURES, all from api/region/PJM.json, overnight = 00:00-05:59 local, 2019 vs 2025:
+- 8,701 MW growth: total_avg_mw overnight 82,539 -&gt; 91,240. numbers.md 2.1; numbers-v2.md 2.7.
+- gas +10,740 MW: fuel_delta_overnight_gw.gas = +10.74. numbers.md 2.1; numbers-v2.md 2.7.
+- coal -2,520 MW: fuel_delta_overnight_gw.coal = -2.52. numbers.md 2.1.
+- clean -81 MW: cf_avg_mw overnight 35,700 -&gt; 35,619. Clean = nuclear + hydro + wind + solar + geothermal. numbers.md 2.1: flat within 100 MW, -0.23% of the 2019 level.
+- Full fuel closure if challenged: nuclear -0.95, hydro -0.22, wind +1.07, solar +0.01, gas +10.74, coal -2.52, oil +0.15, other +0.41; sum +8.69 GW against total +8.70. numbers.md 2.1.
+- Net exports fell, so the new power stayed inside PJM: overnight net export 3,814 MW (2019) -&gt; 2,489 MW (2025), EIA-adjusted operations table, positive = export. numbers.md 2.1. Do NOT use the 2026 value (partial year).
+
+THE INDEPENDENT CHECK, the strongest thing here after the bars: EPA&#39;s continuous emissions monitors sit on the smokestacks and measure carbon dioxide directly - a different instrument, on different hardware, with no connection to our pipeline. They measured PJM&#39;s overnight CO2 rising 3,957,992 short tons a year between 2019 and 2025, +5.9%, while overnight carbon intensity went 0.369 -&gt; 0.353 short tons per MWh. Say &#39;up four million tons&#39;. docs/EMISSIONS.md. Across 49 regions our clean share and the measured intensity move together at Spearman -0.868 (Pearson -0.834), which is what it means to say the two instruments agree. Where the proxy fails, volunteer it: the share cannot see whether the fossil half is gas or coal - PACE at 0.255 clean share emits 0.715 short tons per MWh, FPL at 0.263 emits 0.268, a 2.7-fold difference at the same share.
+
+SAY / DO NOT SAY:
+- Consistent with datacenter load being served by gas. Never caused by. (CLAUDE.md)
+- Average mix, not the specific plant that fires up. EIA-930 gives fuel and interchange, not dispatch order (numbers.md T6). Say it before anyone asks; it understates us if anything.
+- We measure what a region generated, not what a building consumed. Imports are not traced through.
+- PJM is coarse: Chicago to New Jersey. If asked where it lands: Dominion is +3,973 MW overnight demand = 45.7% of PJM&#39;s overnight GENERATION growth, 60.6% of its overnight DEMAND growth. Say which denominator (numbers.md D7). About half is true only against generation.
+- The headline on the slide says the EXTRA power at night is fossil. It does not say PJM has no clean power at night - PJM generated 35,619 MW of it. Never let that slide.
+
+VISIBLE WORDS: 15. Chicago to New Jersey (4) + Extra power at night: fossil. (5) + +10,740 gas (2) + -2,520 coal (2) + -81 clean (2).">
+
+  <div class="cola">
+    <p class="eyebrow">Chicago to New Jersey</p>
+    <h2 class="headline">Extra power at night: fossil.</h2>
+    <div class="rule"></div>
+  </div>
+
+  <svg viewBox="0 0 1100 330" role="img" aria-label="Change in average overnight generation since 2019: gas up 10,740 megawatts, coal down 2,520, clean down 81. Drawn at one scale.">
+    <!-- reference: +8,701 MW, the total overnight generation growth -->
+    <line x1="60" y1="58" x2="1040" y2="58" style="stroke:var(--muted)" stroke-width="2" stroke-dasharray="8 8" opacity="0.65"/>
+    <!-- zero -->
+    <line x1="60" y1="200" x2="1040" y2="200" style="stroke:var(--line)" stroke-width="2"/>
+
+    <!-- gas +10,740 MW -->
+    <rect x="170" y="25" width="140" height="175" style="fill:var(--fossil)"/>
+    <text x="240" y="282" text-anchor="middle" style="fill:var(--fossil);font-size:var(--t-h2)">+10,740</text>
+    <text x="240" y="318" text-anchor="middle" style="fill:var(--muted);font-size:var(--t-body)">gas</text>
+
+    <!-- coal -2,520 MW, retiring -->
+    <rect x="480" y="200" width="140" height="41" style="fill:var(--fossil)" opacity="0.5"/>
+    <text x="550" y="282" text-anchor="middle" style="fill:var(--fossil);font-size:var(--t-h2)" opacity="0.8">&#8722;2,520</text>
+    <text x="550" y="318" text-anchor="middle" style="fill:var(--muted);font-size:var(--t-body)">coal</text>
+
+    <!-- clean -81 MW: 1.3 units at the same scale, below zero -->
+    <rect x="790" y="200" width="140" height="1.3" style="fill:var(--clean)"/>
+    <text x="860" y="282" text-anchor="middle" style="fill:var(--clean);font-size:var(--t-h2)">&#8722;81</text>
+    <text x="860" y="318" text-anchor="middle" style="fill:var(--muted);font-size:var(--t-body)">clean</text>
+  </svg>
+
+</section>
+
+
+<section class="slide" data-backup="1" data-title="Fallback: the prediction" data-notes="FALLBACK ONLY. If the site is up, do this on the method page instead (docs/DEMO.md section 10) - and follow it with the three destruction tests and the model, which no slide carries.
+
+SPOKEN, taken from DEMO.md section 10 so the slide and the demo cannot drift: &quot;We fixed the weights and named four test regions BEFORE we looked at any ranking, in the same commit as the code. Three landed in the top twenty. DALLAS CAME 91st. We published the miss.&quot;
+
+WHAT THE PICTURE IS, because it is the one thing a viewer cannot guess. The top row is what we WROTE DOWN: four places, named before anything was run. The rail below is what the detector then produced on its own, 111 regions ranked on demand data alone, with no company list and no list of buildings as an input. The lines are the only claim on the slide: this is where each named place actually came out. It could have failed in public, and one of the four did.
+
+WHY THE NAMES ARE THESE NAMES. PJM/DOM is Data Center Alley, Northern Virginia - the label reads Virginia. SWPP/OPPD is Omaha. PJM/AEP is the AEP zone: call it THE AEP ZONE out loud, not Central Ohio, because it spans Ohio, Indiana, West Virginia, Virginia and Kentucky (numbers.md T9) - the label on the slide is the map coordinate label, Columbus. ERCO/NCEN is Dallas-Fort Worth.
+
+THE RESULT: Northern Virginia 6th of 111 (score 7.71), Omaha 7th (6.82), the AEP zone 19th (2.29), Dallas 91st (-1.32). api/regions.json meta.validation_named_in_advance; docs/spec.md, &#39;Validation, pre-registered&#39;; numbers.md 2.3 and trap T15.
+
+THE MISS, and volunteer it before anyone asks. One of the three things we score is how far a region diverges from its NEIGHBOURS on the same grid. Every region in Texas is booming, so a booming Dallas looks ordinary next to them. Drop that one term and Dallas moves from 91st to 48th. We published the 91st because the weights were fixed before we saw where anything would land. It is not a bug; it is the property that keeps a whole booming region from scoring as a datacenter corridor. UNDERSTAND.md section 4.
+
+NO THRESHOLD WAS EVER DECLARED. We named four regions, not four ranks. If a judge presses on whether 19th counts: &quot;We named the places, not the ranks. Three of the four came back in the top twenty out of a hundred and eleven, and the fourth came back 91st - we show all four.&quot;
+
+WHAT THE SCORE IS, in plain words: how much faster demand grew at night than on average; how much faster than its neighbours on the same grid; and how much the daily curve flattened, at half weight. Written down: score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z on median and median absolute deviation so two Texas zones growing 95% and 116% cannot set the scale for all 111. Regions under 500 MW average demand excluded (13 unranked; largest excluded IID at 434 MW, smallest ranked TPWR at 518 MW); peak at the 99.5th percentile hour. api/regions.json meta.detector_method.
+
+IF THE SITE IS DOWN, THIS IS WHERE THE REST OF THE RIGOR GOES - say it over this slide, because nothing else carries it (DEMO.md sections 10 and 11, code verified):
+- &quot;Then we spent last night trying to destroy our own result.&quot;
+- Randomness: a permutation test on the four named regions gives p = 0.049. Marginal, and say marginal.
+- Resampling: the ranking rebuilt ten thousand times on resampled hours holds Dominion between 3rd and 7th.
+- Out of sample: the frozen method re-run on 2026 data that did not exist when we locked it holds at Spearman 0.877, eight of the top ten unchanged.
+- THE ONE THAT MATTERS MOST: the same frozen method ending in 2021, 22, 23, 24 produces NOTHING statistically significant before 2025. The signal is dated to the buildout. A method that manufactures signal would manufacture it every year.
+- THE MODEL THAT SAYS THE FORMULA WAS OPTIONAL: a gradient boosted model on seventeen features of raw demand shape - flatness, summer versus winter, the size of the day-night swing - never shown the detector&#39;s output, labelled from the 134 datacenters we mapped by hand from utility filings. It found the same regions. AUC 0.727, and zero of a thousand shuffled-label runs beat it. &quot;We wrote the formula from a hypothesis. The model found it without the formula.&quot;
+- THE CONCESSION, unprompted: region SIZE alone predicts our labels better than shape does, 0.749. Bigger regions have more mapped sites because we mapped more of them. The honest claim is that shape adds information beyond size, not that it beats size.
+- Weather, if asked: hourly temperature from 138 stations explains 7.8% of overnight demand growth nationally, and Northern Virginia was COLDER overnight in 2025 than 2019 while its overnight demand rose 3,973 MW. docs/WEATHER.md.
+NOTE: the permutation, resampling, pre-2025 and gradient-boosted figures live in docs/STATS.md and docs/DEMO.md, not yet in numbers.md or numbers-v2.md. They are spoken, not printed on a slide, which is why that is acceptable here - do not put them on a slide until they are traced.
+
+LIMITS TO VOLUNTEER: below the top ten this is not an ordering - the median rank interval is 29 places wide, so treat the top ten as a set. It finds round-the-clock load in general, not datacenters: crypto and oilfield electrification look identical, and rank 2 is probably the Permian oilfield. And about a dozen of our sites run on their own generation and never touch the grid, so a demand-only detector cannot see them at all.
+
+VISIBLE WORDS: 15. We named four. Then ranked 111 regions. (7) + Virginia 6th (2) + Omaha 7th (2) + Columbus 19th (2) + Dallas 91st (2).">
+
+  <h2 class="headline">We named four. Then ranked 111 regions.</h2>
+  <div class="rule"></div>
+
+  <svg viewBox="0 0 1200 400" role="img" aria-label="Four regions named before the ranking was run - Virginia, Omaha, Columbus and Dallas - each joined by a line to where the detector then placed it on a rank line of 111 regions: 6th, 7th, 19th and 91st.">
+
+    <!-- ===== step one: what we wrote down, before anything ran ===== -->
+    <g text-anchor="middle">
+      <text x="180"  y="72" font-size="40" fill="var(--ink)">Virginia</text>
+      <text x="180"  y="118" font-size="40" fill="var(--accent)" font-weight="600">6th</text>
+
+      <text x="460"  y="72" font-size="40" fill="var(--ink)">Omaha</text>
+      <text x="460"  y="118" font-size="40" fill="var(--accent)" font-weight="600">7th</text>
+
+      <text x="740"  y="72" font-size="40" fill="var(--ink)">Columbus</text>
+      <text x="740"  y="118" font-size="40" fill="var(--accent)" font-weight="600">19th</text>
+
+      <text x="1020" y="72" font-size="40" fill="var(--muted)">Dallas</text>
+      <text x="1020" y="118" font-size="40" fill="var(--muted)" font-weight="600">91st</text>
+    </g>
+
+    <!-- ===== step two: where the detector put each one ===== -->
+    <g fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.7">
+      <path d="M180 140 L180 200 L118 260 L118 288"/>
+      <path d="M460 140 L460 200 L128 260 L128 288"/>
+      <path d="M740 140 L740 200 L243 260 L243 288"/>
+    </g>
+    <path d="M1020 140 L1020 200 L937 260 L937 288" fill="none" stroke="var(--muted)" stroke-width="2" opacity="0.7"/>
+
+    <!-- the rank line: 1st at the left edge, 111th at the right -->
+    <line x1="70" y1="300" x2="1130" y2="300" stroke="var(--line)" stroke-width="3"/>
+    <line x1="70" y1="286" x2="70" y2="314" stroke="var(--line)" stroke-width="3"/>
+    <line x1="1130" y1="286" x2="1130" y2="314" stroke="var(--line)" stroke-width="3"/>
+
+    <circle cx="118" cy="300" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+    <circle cx="128" cy="300" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+    <circle cx="243" cy="300" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+    <circle cx="937" cy="300" r="13" fill="none" stroke="var(--muted)" stroke-width="3"/>
+  </svg>
+</section>

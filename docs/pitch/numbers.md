@@ -110,6 +110,16 @@ scored" is all three, correctly.
 
 ### 2.6 Companies — every displayed figure
 
+> **STALE IN TWO PLACES — read this first.** The Alphabet row below records 100% against **5.6%**
+> across **1 site**, a 94.4-point gap. That is superseded: the live record has **10 sites**, mean
+> **0.464**, a **53.6-point** gap, range 0.056 to 0.913. See "Correction, 2026-09-20: the Google
+> headline pair" at the end of this file. The `talk_score` and the page-94 series in that row are
+> unaffected.
+>
+> The totals line ("4 companies, 7 facilities, 10 claims") predates the operator merge. The current
+> figures are **52 operators, 134 sites, 4 with documents read, 48 sites-only** — see numbers-v2.md
+> §2.5. Use those. This file's own rule applies: where prose and `api/` disagree, `api/` wins.
+
 Totals: **4 companies · 7 facilities · 10 claims · 9 true_on_paper · 1 cannot_verify · is_mock false.**
 Verified by counting `api/company/*.json` claims and against `api/companies.json` and
 `api/facilities.json` (count 7).
@@ -203,3 +213,53 @@ spoken only as what they are, labelled out loud.
 6. **Same 300 MW, three grids: 144 MW of fossil at night in Omaha, 269 in Phoenix.** One subtraction a judge can do in their head.
 7. **We caught a double-counted nuclear plant in the federal data.** Two authorities reporting the same generator, r = 0.9948 over 7,976 hours, 7,087 MW against a 3,937 MW nameplate, ending in a step on a single date. Published and corrected shown side by side.
 8. **4.45 million hourly rows, 70 balancing authorities, July 2018 to September 2026.** Scale — but say it as balancing authorities, and only as the setup for 1–4.
+
+---
+
+## Correction, 2026-09-20: the Google headline pair
+
+**Superseded.** Earlier passes of this file quote Google as 100% claimed against **5.6%** measured, a
+94-point gap. That was one mapped site, Moncks Corner on Santee Cooper, from when only one Google
+site had been resolved.
+
+**Current, from `web/public/api/company/GOOGL.json`:** ten mapped sites;
+`claims[0].physical_mean_unweighted` = 0.464; `physical_min` = 0.056; `physical_max` = 0.913;
+`walk_score` = 0.464; `verdict` = `true_on_paper`; the claim is on page 4.
+
+So the pair is **100% claimed against 46% measured, a 54-point gap across ten sites.**
+
+Use that everywhere. The single-site 5.6% figure must not appear on a slide or in narration; it is
+one end of a range, not the company's figure.
+
+**The range is the better story.** One Google site sits on a grid at 5.6% carbon-free and another at
+91.3%. That is the strongest evidence the method distinguishes rather than prosecutes, and it kills
+the objection that the finding rested on a single place. `physical_min` and `physical_max` are the
+fields.
+
+---
+
+## Correction, 2026-09-20: the Palo Verde capacity figures
+
+**Superseded.** Earlier passes quote "a combined 7,087 MW against a 3,937 MW nameplate". That
+mislabels net summer capacity as nameplate, and a judge who knows the plant will catch it.
+
+From `web/public/api/region/AZPS.json` -> `region.corrections.corrections[]`, after the EIA-860
+pass:
+
+| figure | value |
+|---|---|
+| Nameplate capacity | **4,209.6 MW** |
+| Net summer capacity | 3,937 MW |
+| Combined reported output, average | 7,087 MW |
+| Combined reported output, peak hour | **8,041 MW** |
+| Peak as a multiple of nameplate | **1.91x** |
+
+**Say it this way:** at its peak hour the two operators between them reported 8,041 MW from a plant
+whose nameplate is 4,209.6 MW, which is 1.91 times what it can physically produce. That is the
+cleanest form of the impossibility argument and it uses the right capacity term.
+
+The other two confirmations are unchanged and both are strong: the two reports correlate at 0.9948
+across 7,976 hours and are identical within 5 MW in 98.8% of them, ending in a step on 2019-12-04;
+and Arizona's fossil generation stayed flat at about 2,040 MW while its CO2 fell 17.5%, so no fossil
+fleet fired up to replace the clean generation that supposedly vanished. A clean fleet cannot
+disappear without carbon appearing.

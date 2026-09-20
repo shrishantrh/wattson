@@ -1,0 +1,88 @@
+<!-- 06 · WHY YOU CAN BELIEVE IT · three sections: the call we made in advance, the error we
+     found in our own source, and one backup slide holding the out-of-sample test.
+     Visible words: 15 / 15 / 15. Everything else is in data-notes.
+     HITS AND MISSES, resolved 2026-09-20: nothing pre-registered a rank threshold. The two
+     records of the prediction - docs/spec.md "Validation, pre-registered" and
+     docs/pitch/numbers.md §2.3 / T15 - both annotate ONLY Dallas as the miss and list the
+     AEP zone at 19th as a plain result. So the deck now says "three landed in the top
+     twenty, Dallas came 91st", which is what the sources say and is also stronger. The old
+     "two hits, two misses" line came from a deck-internal reconciliation, not from the
+     prediction. -->
+
+<section class="slide" data-title="Called in advance" data-notes="SPOKEN: &quot;We called it in advance: four regions named before we ran the ranking. Three landed in the top twenty. Dallas came ninety-first, and we published it.&quot;
+
+WHAT &#39;CALLED IT IN ADVANCE&#39; MEANS, in plain words, and this is the sentence that replaces the words &#39;frozen&#39; and &#39;pre-registered&#39; everywhere on stage: we decided how the detector would score a region, wrote it down, and named the four places we expected it to find - all before we ran it on anything. So it could have failed in public. A judge who hears &#39;the method was frozen&#39; learns nothing; a judge who hears &#39;we named four regions before we ran it&#39; knows exactly what was at stake.
+
+WHAT WAS FIXED FIRST: the three terms and their weights, the 500 MW exclusion, and the peak definition (the 99.5th percentile hour, because one PJM/DOM hour in 2019 is corrupt). Then the four regions: PJM/DOM, SWPP/OPPD, PJM/AEP and ERCO/NCEN (api/regions.json meta.validation_named_in_advance; docs/spec.md, &#39;Validation, pre-registered&#39;; numbers.md 2.3).
+
+THE RESULT, three of four in the top twenty: Northern Virginia 6th of 111 (score 7.71), Omaha 7th (6.82), the AEP zone 19th (2.29). And Dallas 91st, score -1.32. Call the third one THE AEP ZONE, not Central Ohio: it spans Ohio, Indiana, West Virginia, Virginia and Kentucky (numbers.md T9); the label on the slide is the map coordinate label, Columbus.
+
+THE MISS, and volunteer it before anyone asks. One of the three things we score is how far a region diverges from its neighbours on the same grid. Every region in Texas is booming, so a booming Dallas looks ordinary next to them. Drop that one term and Dallas moves from 91st to 48th. We published the 91st because the weights were fixed before we saw where anything would land (UNDERSTAND.md section 4). Do not describe this as a bug; it is a property of the method, and the property is what keeps a whole booming region from scoring as a datacenter corridor.
+
+NO THRESHOLD WAS EVER DECLARED. We named four regions, not four ranks. Both records of the prediction annotate only Dallas as a miss. If a judge presses on whether 19th counts, the honest answer is: &quot;We named the places, not the ranks. Three of the four came back in the top twenty out of a hundred and eleven, and the fourth came back 91st - we show all four.&quot;
+
+DEMAND DATA ONLY. No generation, no company data, no list of buildings went into this ranking. Robust z means median and median absolute deviation rather than mean and standard deviation, so that two Texas zones growing 95% and 116% cannot set the scale for all 111 regions. The 500 MW cut holds in the output: 13 regions unranked, the largest excluded is IID at 434 MW and the smallest ranked is TPWR at 518 MW. Method string, unchanged: score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z, 500 MW cut, p99.5 peak (api/regions.json meta.detector_method).
+
+THE THREE OTHER CHECKS, all in docs/STATS.md, and the backup slide carries the first: re-ranked on 2026 data the method never saw, the two rankings agree at Spearman 0.877 with eight of the top ten the same regions. A permutation test on the four named regions gives p = 0.049 - marginal, and we say marginal. And each region&#39;s own temperature response explains only 7.8% of overnight demand growth nationally, with nights still growing faster than days in 96 of 111 regions once weather is removed; cooling peaks in the afternoon, so if this were air conditioning the days would have grown more (docs/WEATHER.md).
+
+LIMITS TO VOLUNTEER: below the top ten this is not an ordering - the median rank interval is 29 places wide, so treat the top ten as a set. And it finds round-the-clock load in general, not datacenters: crypto and oilfield electrification look identical, and rank 2 is probably the Permian oilfield.
+
+Figures: numbers.md 2.3 (111 regions, ranks 6/7/19/91, scores, the 500 MW cut) and trap T15; docs/STATS.md tests 1b and 4.">
+  <div class="eyebrow">Predicted</div>
+  <h2 class="headline">Three landed. Dallas didn't.</h2>
+  <div class="rule"></div>
+  <svg viewBox="0 0 1200 330" role="img" aria-label="A rank line from 1st to 111th. Northern Virginia 6th, Omaha 7th and Columbus 19th are marked as landed; Dallas 91st is marked as the miss.">
+    <line x1="70" y1="200" x2="1130" y2="200" stroke="var(--line)" stroke-width="3"/>
+    <line x1="1130" y1="186" x2="1130" y2="214" stroke="var(--line)" stroke-width="3"/>
+    <text x="1130" y="252" text-anchor="end" font-size="26" fill="var(--muted)">111th</text>
+
+    <line x1="243" y1="200" x2="243" y2="118" stroke="var(--accent)" stroke-width="2"/>
+    <text x="243" y="100" font-size="32" fill="var(--ink)">Columbus 19th</text>
+    <circle cx="243" cy="200" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+
+    <line x1="118" y1="200" x2="118" y2="168" stroke="var(--accent)" stroke-width="2"/>
+    <text x="118" y="152" font-size="32" fill="var(--ink)">N. Virginia 6th</text>
+    <circle cx="118" cy="200" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+
+    <line x1="128" y1="200" x2="128" y2="236" stroke="var(--accent)" stroke-width="2"/>
+    <text x="128" y="268" font-size="32" fill="var(--ink)">Omaha 7th</text>
+    <circle cx="128" cy="200" r="12" fill="var(--accent)" stroke="var(--bg)" stroke-width="3"/>
+
+    <line x1="937" y1="200" x2="937" y2="236" stroke="var(--line)" stroke-width="2"/>
+    <text x="937" y="268" text-anchor="middle" font-size="32" fill="var(--muted)">Dallas 91st</text>
+    <circle cx="937" cy="200" r="13" fill="none" stroke="var(--muted)" stroke-width="3"/>
+  </svg>
+</section>
+
+<section class="slide" data-title="What we print" data-notes="SPOKEN: &quot;One region looked like its clean power collapsed. It hadn&#39;t - a plant counted twice in the federal data. (breath) We use the corrected number, and it shrinks our headline.&quot;
+
+THE STORY IN PLAIN WORDS, and it is the easiest one in the project to tell. Arizona&#39;s clean power appeared to fall off a cliff: 62% of overnight generation in 2019 down to 10% in 2025. It never happened. Palo Verde is the only nuclear station in Arizona and it is jointly owned - Arizona Public Service holds 29.1%, Salt River Project 17.5%, five others hold the rest. Both of those two reported the plant to the federal government, and EACH REPORTED THE WHOLE PLANT rather than its share. For eighteen months the same electricity was counted twice. We found it in our own output, we show the published and the corrected number side by side, and we use the corrected one even though it makes our own headline smaller.
+
+THREE INDEPENDENT CONFIRMATIONS. Lead with the third if you only have time for one; it is a physical argument a non-specialist can follow.
+1. The two reports match hour for hour: correlation 0.9948 across 7,976 hours, identical within 5 MW in 98.8% of them - then it stops dead on one day, 2019-12-04, in a step.
+2. The total is physically impossible. At its peak hour the two operators between them reported 8,041 MW from a plant whose NAMEPLATE is 4,209.6 MW - 1.91 times what it can physically produce. (Use nameplate, 4,209.6 MW. The older line &#39;7,087 MW against a 3,937 MW nameplate&#39; is SUPERSEDED: 7,087 MW is the average of the combined reports and 3,937 MW is net summer capacity, not nameplate. numbers.md, &#39;Correction, 2026-09-20: the Palo Verde capacity figures&#39;.)
+3. THE SMOKESTACKS AGREE. If a clean fleet that size had really vanished, fossil plants would have fired up to replace it and carbon would have appeared. Measured: Arizona&#39;s fossil generation stayed flat at about 2,040 MW and its carbon dioxide fell 17.5%. A clean fleet cannot disappear without carbon appearing.
+
+WHAT IT MEANS FOR THE STORY: Phoenix did not collapse from 62% to 10%. Like for like, Phoenix ROSE from 2% to 10%. Its level is still low, but the direction in the federal file was wrong, not merely the size. The correction is applied at serve time and both numbers are on the page (siting score 0.173 published, 0.449 corrected; rank 49 to about 32, plus or minus 2). Never say &#39;it collapsed&#39;; say &#39;a double count we caught&#39;. The plant identification is a high-confidence inference from the hourly record, and why the step falls on that date is not established - say so if asked.
+
+THE OTHER HALF OF THIS SLIDE: what the product refuses to say. We hold 52 operators and 134 buildings, and we have read documents for four of them. The other 48 are matched to grids with nothing of their own held against them, and every one of those records carries its own printed reason (claims_absent_reason &#39;no_documents_ingested&#39;). That is our coverage gap, not a finding about those companies. Same rule inside the four we did read: 10 claims, 9 true on paper, 1 cannot_verify - Amazon&#39;s report has no falsifiable sentence we could extract, so its talk score is null, rendered as a phrase and never as a zero, and the cannot-verify count is on screen.
+
+Figures: numbers.md D1 and trap T2 (0.620 published, 0.017 corrected, 0.104 in 2025, r = 0.9948, 7,976 hours), the Palo Verde capacity correction of 2026-09-20 (nameplate 4,209.6 MW, net summer 3,937 MW, combined average 7,087 MW, peak 8,041 MW, 1.91x), D2 (siting 0.173 to 0.449), 2.6 (10 claims, 9 true on paper, 1 cannot_verify); numbers-v2.md X1 and 2.5 (52 operators, 134 buildings, 4 with claims read, 48 with a printed reason); UNDERSTAND.md section 6.">
+  <h2 class="headline">We print what we got wrong</h2>
+  <div class="rule"></div>
+  <div class="rowa">
+    <div class="cola">
+      <div class="big">62%</div>
+      <div class="label">published</div>
+    </div>
+    <div class="cola">
+      <div class="big" style="color:var(--warn)">2%</div>
+      <div class="label">corrected</div>
+    </div>
+    <div class="cola">
+      <div class="big">48/52</div>
+      <div class="label">documents unread</div>
+    </div>
+  </div>
+  <p class="sub muted">Arizona, 2019</p>
+</section>

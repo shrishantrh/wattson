@@ -14,13 +14,30 @@ const api = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
 
 export class NotFound extends Error { constructor(what, available) { super(`${what} is not in the data`); this.name = 'NotFound'; this.available = available || [] } }
 
+// A static host drops a connection now and then, especially when the page opens a dozen requests at
+// once for the globe's topology and every sheet. One reset used to surface as "the data could not be
+// fetched" and leave the screen empty until the reader found the retry button. Retry the transport
+// errors only: a 404, a non-JSON body or an HTTP status are answers, and repeating them is pointless.
+const RETRY_MS = [120, 400, 1000]
 async function getJSON(url, init) {
-  const res = await fetch(url, init)
-  if (res.status === 404) throw new NotFound(url)
-  if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`)
-  const ct = res.headers.get('content-type') || ''
-  if (!ct.includes('json')) throw new NotFound(url)   // dev server returns index.html for missing files
-  return res.json()
+  let last
+  for (let attempt = 0; attempt <= RETRY_MS.length; attempt++) {
+    try {
+      const res = await fetch(url, init)
+      if (res.status === 404) throw new NotFound(url)
+      if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`)
+      const ct = res.headers.get('content-type') || ''
+      if (!ct.includes('json')) throw new NotFound(url)   // dev server returns index.html for missing files
+      return await res.json()
+    } catch (e) {
+      // A caller that aborted, or an answer we already have, must not be retried.
+      if (e.name === 'NotFound' || e.name === 'AbortError' || init?.signal?.aborted) throw e
+      if (/HTTP \d/.test(e.message || '')) throw e
+      last = e
+      if (attempt < RETRY_MS.length) await new Promise(r => setTimeout(r, RETRY_MS[attempt]))
+    }
+  }
+  throw last
 }
 const tryEach = async fns => { let last; for (const f of fns) { try { return await f() } catch (e) { last = e; if (e.name !== 'NotFound') throw e } } throw last }
 const fixture = name => getJSON(`${base}fixtures/${name}.json`)

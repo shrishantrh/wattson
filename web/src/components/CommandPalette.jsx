@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Command } from 'cmdk'
+import { Blobatar } from '@blobatar/react'
+import { happy, idle as calm, sad, sleepy, unsure } from 'blobatar/expression'
+import { useGaze } from '@blobatar/react/gaze'
+import 'blobatar/motion.css'
+import 'blobatar/gaze.css'
 import { askItem, matchGroups, useCommands, openPalette, toggleView, GROUP } from '../lib/commands.js'
 import { parseQuery, resolvePlace, DEMO_COMPARE } from '../lib/query.js'
 import { askAvailable, summarize } from '../lib/ask.js'
@@ -198,6 +203,12 @@ function Preview({ preview }) {
 
 // cmdk root with shouldFilter=false: lib/commands.js does the matching, so each group is capped
 // and the free-text "Ask" fallback is offered only when nothing matches (or the query is composed).
+// The product's own accent orange, stated rather than derived: the library picks a hue from the
+// seed and 'wattson' lands on a periwinkle that matches nothing else on the page.
+const FACE_PALETTE = { head: '#ff8d52', eye: '#20100a' }
+const FACE_EXPR = { idle: calm, listening: calm, thinking: unsure, answering: happy, failed: sad, unavailable: sleepy }
+const FACE_SAY = { idle: 'Ask layer ready', listening: 'Listening', thinking: 'Working on it', answering: 'Answer ready', failed: 'That did not come back', unavailable: 'Ask layer not running in this copy' }
+
 function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, onDone, footer, className = '', onEscape, modal = false }) {
   const [q, setQ] = useState('')
   const [value, setValue] = useState('')
@@ -280,6 +291,28 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   // being inert, becomes the pinned best match, and ↵ sends it. With no server the empty state
   // owns it exactly as before, the Ask row stays disabled and the Try group carries the way on.
   // The Try group also returns underneath a failed answer, so a dead ask is never a dead end.
+  // The eyes track the pointer, which is what makes it feel alive rather than pasted on.
+  // useGaze only arms when its ref receives the SVG itself (it checks instanceof SVGSVGElement),
+  // and Blobatar renders the element rather than forwarding a ref, so hand it the child.
+  const gaze = useGaze({ travel: 3, lookAt: 'pointer' })
+  const gazeRef = gaze.ref
+  const faceBox = useRef(null)
+  // Blobatar replaces its <svg> whenever the expression changes, so a ref callback on the wrapper
+  // fires once and the driver then holds an element that is no longer in the document. Re-arm after
+  // every render, and only when the element actually changed.
+  const armed = useRef(null)
+  useEffect(() => {
+    const svg = faceBox.current?.querySelector('svg') || null
+    if (svg !== armed.current) { armed.current = svg; gazeRef(svg) }
+  })
+
+  // The face's state, read off the one real signal the ask layer gives us.
+  const faceState = !aiOn ? 'unavailable'
+    : answer?.state === 'loading' ? 'thinking'
+      : answer?.state === 'error' ? 'failed'
+        : answer?.state === 'done' ? 'answering'
+          : hasQuery ? 'listening' : 'idle'
+
   const canAsk = aiOn && hasQuery
 
   // `partial` items parsed, but only by discarding most of what was typed ("compare ERCOT, PJM and
@@ -377,6 +410,20 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
   return (
     <Command shouldFilter={false} loop label="Wattson commands" className={`pal ${className}`} value={value} onValueChange={setValue} onKeyDown={onKeyDown}>
       <div className="pal-inputwrap">
+        {/* The ask layer's face, in the bar you type into. It is the one place every question
+            starts, so the state belongs here rather than on a page you may never open. Seeded
+            with the product's name so it is the same face everywhere; hue pinned off the clean
+            and fossil colours, which mean carbon-free and burned in this product. */}
+        <span ref={faceBox} className="pal-face" data-state={faceState} title={FACE_SAY[faceState]} aria-hidden="true">
+          {/* background={false}: the library's own backdrop is a near-white plate, which reads as a
+              sticker on a dark bar. The blob is the figure; the circle around it is ours, in CSS.
+              hue 16 is the product's own accent orange, so the face matches the wordmark's kicker
+              rather than introducing a fifth colour.
+              animate="always" so it breathes at rest instead of waiting for a hover that never
+              comes inside an input. */}
+          <Blobatar name="wattson" size={38} palette={FACE_PALETTE} background={false}
+            animate="always" expression={FACE_EXPR[faceState]} title="" />
+        </span>
         {/* The completion is drawn behind the input: the typed half is transparent so the
             grey tail lands exactly under the caret, and the layer never takes a click. */}
         {!!ghost && <div className="pal-ghost" aria-hidden="true"><span className="pal-ghost-typed">{q}</span><span className="pal-ghost-rest">{ghost}</span></div>}

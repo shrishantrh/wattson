@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Shell from '../console/Console.jsx'
 import { Card } from '../console/widgets.jsx'
+import AskBlob from '../components/AskBlob.jsx'
 import AskView, { viewRegionIds } from '../components/AskView.jsx'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
@@ -38,6 +39,18 @@ export default function Ask({ route }) {
   const tk = useMemo(() => readTokens(), [])
   const [aiOn, setAiOn] = useState(true)
   const inputRef = useRef(null)
+  // Typing, for the blob beside the box. A count, not a string: it is only ever used to
+  // replay a one-shot CSS ring, so the question itself stays uncontrolled.
+  const [beat, setBeat] = useState(0)
+  const [typing, setTyping] = useState(false)
+  const settle = useRef(null)
+  const onInput = () => {
+    setBeat(b => b + 1)
+    setTyping(true)
+    clearTimeout(settle.current)
+    settle.current = setTimeout(() => setTyping(false), 1100)
+  }
+  useEffect(() => () => clearTimeout(settle.current), [])
 
   useEffect(() => { askAvailable().then(setAiOn) }, [])
   // Ask once per question. A question that failed is not retried on its own; the retry is a
@@ -75,10 +88,19 @@ export default function Ask({ route }) {
   const form = (
     <form className="ask-form" onSubmit={submit}>
       <input ref={inputRef} key={q} defaultValue={q} className="field ask-input"
-        placeholder="Ask anything: compare, rank, or check a company" aria-label="Ask a question" autoComplete="off" spellCheck={false} />
+        onInput={onInput} placeholder="Ask anything: compare, rank, or check a company" aria-label="Ask a question" autoComplete="off" spellCheck={false} />
       <button type="submit" className="btn">Ask</button>
     </form>
   )
+
+  // What the blob is doing, read off the one real state the ask layer has. A question in hand
+  // is thinking even when the status probe said no, for the same reason body() attempts it.
+  const phase =
+    res.q === q && res.state === 'error' ? (aiOn ? 'failed' : 'unavailable')
+      : q && (res.q !== q || res.state === 'loading') ? 'thinking'
+        : res.q === q && res.state === 'done' ? 'answering'
+          : !aiOn ? 'unavailable'
+            : typing ? 'listening' : 'idle'
 
   const body = () => {
     // A question in hand is always attempted, even if the status probe came back negative:
@@ -124,6 +146,7 @@ export default function Ask({ route }) {
         right={q ? <CopyButton text={() => window.location.href} label="Copy link" /> : null}
         onClose={() => { window.location.hash = href.landing() }}>
         {form}
+        <AskBlob phase={phase} tools={res.q === q ? res.tools : null} beat={beat} />
         {body()}
       </Card>
     </>

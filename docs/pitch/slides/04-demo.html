@@ -1,0 +1,39 @@
+<!-- 04-demo.html. THE HOLDING SLIDE. This is now the hinge of the whole pitch: everything
+     after the cold open happens on the live site, driven click by click from docs/DEMO.md.
+     Nothing on this wall competes with the screen being driven. Visible words: 15. -->
+
+<section class="slide" data-title="Live demo" data-notes="HOLDING SLIDE. Up for four to six minutes. THE PITCH IS THE DEMO - drive it from docs/DEMO.md, which is click by click and was checked against the live site. Three-minute cut: sections 2, 6, 10 (the table, the company, the freeze). Five minutes: add 3, 7, 9. Full: all of it, about seven minutes.
+
+THE URL IS ON THE SLIDE so a judge can open it on their own laptop while you talk: shrishantrh.github.io/wattson . Open the site before you start and leave it on the landing page. If the first Command-K question is slow, that is the API waking up and it takes about three seconds once - do not apologise.
+
+THE FOUR LINES TO HAVE COLD (DEMO.md, &#39;Have these four cold&#39;):
+1. The claim quote: &quot;Matched 100% of our electricity consumption with renewable energy purchases, on a global and annual basis.&quot; NEVER paraphrase it as &#39;100% renewable&#39;.
+2. NEVP: 1.8% clean at night, 55.8% by day, 2025. Two columns, one row, no method required. api/region/NEVP.json cf_share.2025 overnight 0.018 / daytime 0.558.
+3. Dallas came 91st. Volunteer it before anyone asks.
+4. 1.91 times the nameplate - the federal data error, confirmed three ways.
+
+THE ONE DISCREPANCY TO CARRY, not to adopt silently: DEMO.md section 7 says eleven of our sites make their own power and never touch the grid. Our fact-check could only reproduce ten site notes saying so. SAY &#39;ABOUT A DOZEN&#39;. The point is undamaged either way, and it is the strongest limit we volunteer: a demand-only detector cannot see a datacenter that brought its own power plant.
+
+WHAT THE STRIP ON THE SLIDE IS FOR: a judge scoring public-dataset use will read it, and this slide is up longer than any other. EIA-930, the federal hourly grid data, pulled through PUDL - the Public Utility Data Liberation project. 4,451,763 hourly rows, 70 grid regions (the term of art is balancing authority; say it once, after the plain word), 2018-07-01 to 2026-09-05. numbers.md 2.4. 52 operators and 134 mapped sites: api/companies.json count=52, api/facilities.json count=134, numbers-v2.md 2.5.
+
+IF THE SITE IS DOWN: press B. Two backup slides carry the PJM finding and the prediction, and they are the pitch that night. The offline path is in docs/DEMO_RUNBOOK.md and, in one line, `cd web &amp;&amp; npm run build &amp;&amp; cd dist &amp;&amp; python3 -m http.server 8099`. Every screen but Command-K still works offline, because the whole site is a baked export.
+
+IF A FIGURE IS CHALLENGED: docs/evidence/, nine files, one per likely challenge, each with the quote and the citation. Have it open in a second window or on your phone.
+
+VISIBLE WORDS: 15. Live demo (2) + Wattson (1) + shrishantrh.github.io/wattson (1) + EIA-930 PUDL (2) + 4,451,763 rows (2) + 70 grid regions (3) + 52 operators, 134 sites (4).">
+
+  <div class="cola">
+    <p class="eyebrow">Live demo</p>
+    <h2 class="headline">Wattson</h2>
+    <div class="rule"></div>
+    <p class="sub">shrishantrh.github.io/wattson</p>
+  </div>
+
+  <div class="rowa">
+    <p class="note">EIA-930 / PUDL</p>
+    <p class="note">4,451,763 rows</p>
+    <p class="note">70 grid regions</p>
+    <p class="note">52 operators, 134 sites</p>
+  </div>
+
+</section>
