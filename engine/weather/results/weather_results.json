@@ -1,0 +1,631 @@
+{
+  "generated": "2026-09-20 03:21:25",
+  "seed": 20260920,
+  "python": "3.14.2",
+  "pandas": "3.0.6",
+  "numpy": "2.5.3",
+  "data": {
+    "source": "NOAA Integrated Surface Database, s3://noaa-global-hourly-pds (anonymous)",
+    "station_inventory": "https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv",
+    "years_fetched": [
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "station_years_fetched": 1104,
+    "station_hours": 9177306,
+    "unique_stations": 138,
+    "regions_mapped": 111,
+    "regions_scored_by_detector": 111,
+    "regions_dropped_no_station": [],
+    "unusable_curated_icao": {
+      "NYIS/ZONE": [
+        "KUCA"
+      ]
+    },
+    "isd_2025_ends": "2025-08-27 06:00:00",
+    "common_day_of_year_span": 238,
+    "common_span_last_date": "2025-08-26",
+    "coverage_frac_min": 0.987399,
+    "coverage_frac_mean": 0.999229,
+    "hours_missing_total": 981,
+    "hours_slots_total": 1281407,
+    "gap_rule": "average over reporting anchors, then linear interpolation over gaps of at most 6 h; longer gaps excluded from every mean",
+    "quality_codes_kept": [
+      "0",
+      "1",
+      "4",
+      "5",
+      "9"
+    ],
+    "report_types_dropped": [
+      "FM-16",
+      "SOD",
+      "SOM"
+    ]
+  },
+  "stations": {
+    "assignment_rule": "curated primary airport(s) per region; ICAO hand-picked, station id / lat / lon / period of record from isd-history.csv",
+    "anchor_to_generation_centroid_km": {
+      "n_with_centroid": 77,
+      "median": 53.8714,
+      "p90": 147.34,
+      "max": 286.064,
+      "farthest": [
+        {
+          "region": "SCL",
+          "icaos": "KSEA",
+          "anchor_to_centroid_km": 286.0
+        },
+        {
+          "region": "CPLW",
+          "icaos": "KAVL",
+          "anchor_to_centroid_km": 212.0
+        },
+        {
+          "region": "LDWP",
+          "icaos": "KBUR,KLAX",
+          "anchor_to_centroid_km": 181.0
+        },
+        {
+          "region": "PACW",
+          "icaos": "KPDX,KMFR",
+          "anchor_to_centroid_km": 179.0
+        },
+        {
+          "region": "WACM",
+          "icaos": "KDEN,KGJT",
+          "anchor_to_centroid_km": 176.0
+        },
+        {
+          "region": "NEVP",
+          "icaos": "KLAS",
+          "anchor_to_centroid_km": 164.0
+        }
+      ]
+    },
+    "centroid_source_counts": {
+      "EIA-860 plants carrying the BA code": 43,
+      "EIA-860 plants of the named utility": 34,
+      "none (geographic subregion)": 34
+    }
+  },
+  "degree_hours": {
+    "base_temperature": "65 F = 18.333 C (US convention); 60 F and 70 F run as sensitivity",
+    "units": "degree hours in Celsius-hours per hour of the window (mean over the window, not a sum)",
+    "windows": {
+      "night": "local 00:00-05:59",
+      "day": "local 10:00-15:59",
+      "all": "all hours"
+    },
+    "mean_change_2019_2025": {
+      "temp_c_all": 0.494602,
+      "temp_c_night": 0.328149,
+      "temp_c_day": 0.619933,
+      "cdh_all": 0.201891,
+      "cdh_night": 0.143184,
+      "cdh_day": 0.237021,
+      "hdh_all": -0.292711,
+      "hdh_night": -0.184966
+    },
+    "regions_that_warmed": 80,
+    "regions_that_cooled": 31,
+    "max_warming_region": "WACM",
+    "max_warming_c": 1.9151
+  },
+  "control_a": {
+    "design": "cross-section over the scored regions: growth regressed on the 2019->2025 change in degree hours, residuals re-centered and pushed back through the frozen scoring formula",
+    "overnight_growth_on_night_weather": {
+      "n": 111,
+      "k": 3,
+      "r2": 0.0737079,
+      "adj_r2": 0.0565543,
+      "coef": {
+        "const": 8.21949,
+        "d_cdh_night": 23.3865,
+        "d_hdh_night": 0.917055
+      },
+      "se": {
+        "const": 2.03941,
+        "d_cdh_night": 8.08485,
+        "d_hdh_night": 3.48476
+      },
+      "t": {
+        "const": 4.03033,
+        "d_cdh_night": 2.89263,
+        "d_hdh_night": 0.263162
+      },
+      "p": {
+        "const": 0.000103975,
+        "d_cdh_night": 0.00462127,
+        "d_hdh_night": 0.792927
+      },
+      "f_p": 0.01601
+    },
+    "average_growth_on_all_hours_weather": {
+      "n": 111,
+      "k": 3,
+      "r2": 0.105491,
+      "adj_r2": 0.088926,
+      "coef": {
+        "const": 4.56955,
+        "d_cdh_all": 20.919,
+        "d_hdh_all": 3.44576
+      },
+      "se": {
+        "const": 2.01688,
+        "d_cdh_all": 5.8622,
+        "d_hdh_all": 3.34875
+      },
+      "t": {
+        "const": 2.26565,
+        "d_cdh_all": 3.56845,
+        "d_hdh_all": 1.02897
+      },
+      "p": {
+        "const": 0.0254671,
+        "d_cdh_all": 0.000537083,
+        "d_hdh_all": 0.305794
+      },
+      "f_p": 0.00242982
+    },
+    "overnight_excess_on_night_minus_all_weather": {
+      "n": 111,
+      "k": 3,
+      "r2": 0.0848672,
+      "adj_r2": 0.0679203,
+      "coef": {
+        "const": 4.15935,
+        "d_cdh_night_minus_all": -1.20144,
+        "d_hdh_night_minus_all": -5.71491
+      },
+      "se": {
+        "const": 0.376968,
+        "d_cdh_night_minus_all": 2.0221,
+        "d_hdh_night_minus_all": 1.85254
+      },
+      "t": {
+        "const": 11.0337,
+        "d_cdh_night_minus_all": -0.594156,
+        "d_hdh_night_minus_all": -3.0849
+      },
+      "p": {
+        "const": 2.07272e-19,
+        "d_cdh_night_minus_all": 0.55365,
+        "d_hdh_night_minus_all": 0.00258616
+      },
+      "f_p": 0.00832035
+    },
+    "r2_headline": 0.0737079
+  },
+  "control_b": {
+    "design": "per region: 2019 hourly demand on its own hourly CDH/HDH + hour-of-day + weekend; predict 2025 from the 2019 response and 2025 weather; growth past that prediction is growth weather does not explain",
+    "n_regions": 111,
+    "median_2019_fit_r2_night": 0.733201,
+    "median_cdh_t_stat_night": 47.1933,
+    "cdh_coefficient_positive_share_night": 1.0,
+    "max_frac_2025_hours_outside_2019_temp_range": 0.0378947,
+    "overnight_mw_change_all_regions": 71861.2,
+    "overnight_mw_weather_explained": 5628.55,
+    "weather_share_of_overnight_growth": 0.0783253,
+    "growing_regions_only": {
+      "threshold_mw": 100,
+      "n": 59,
+      "overnight_mw_change": 71316.6,
+      "overnight_mw_weather_explained": 4824.96,
+      "weather_share": 0.0676554,
+      "median_per_region_share": 0.0480599
+    },
+    "night_vs_day": {
+      "question": "cooling peaks in the afternoon, so if overnight growth were cooling, daytime growth should be larger still",
+      "mean_night_minus_day_pts": 5.73087,
+      "median_night_minus_day_pts": 4.67201,
+      "share_of_regions_night_exceeds_day": 0.864865,
+      "n_regions_night_exceeds_day": 96
+    }
+  },
+  "rankings": {
+    "spearman": {
+      "window_change_only_jan_aug_vs_shipped": {
+        "n": 111,
+        "spearman_rho": 0.977984,
+        "spearman_p": 5.19559e-76,
+        "kendall_tau": 0.884685,
+        "kendall_p": 4.20571e-43
+      },
+      "control_a_vs_shipped": {
+        "n": 111,
+        "spearman_rho": 0.850176,
+        "spearman_p": 3.83357e-32,
+        "kendall_tau": 0.672072,
+        "kendall_p": 1.3749e-25
+      },
+      "control_a_vs_frozen_jan_aug": {
+        "n": 111,
+        "spearman_rho": 0.874166,
+        "spearman_p": 5.57701e-36,
+        "kendall_tau": 0.706798,
+        "kendall_p": 3.98167e-28
+      },
+      "control_b_vs_shipped": {
+        "n": 111,
+        "spearman_rho": 0.965058,
+        "spearman_p": 3.15396e-65,
+        "kendall_tau": 0.85389,
+        "kendall_p": 2.83824e-40
+      },
+      "control_b_vs_frozen_jan_aug": {
+        "n": 111,
+        "spearman_rho": 0.983959,
+        "spearman_p": 1.94695e-83,
+        "kendall_tau": 0.905651,
+        "kendall_p": 4.37343e-45
+      },
+      "control_a_minimal_vs_shipped": {
+        "n": 111,
+        "spearman_rho": 0.8803,
+        "spearman_p": 4.34472e-37,
+        "kendall_tau": 0.708108,
+        "kendall_p": 3.17557e-28
+      },
+      "control_a_direct_vs_shipped": {
+        "n": 111,
+        "spearman_rho": 0.957222,
+        "spearman_p": 1.57345e-60,
+        "kendall_tau": 0.8362,
+        "kendall_p": 1.0802e-38
+      }
+    },
+    "top10_shipped": [
+      "ERCO/NRTH",
+      "ERCO/FWES",
+      "AZPS",
+      "TEPC",
+      "WACM",
+      "PJM/DOM",
+      "SWPP/OPPD",
+      "ERCO",
+      "SC",
+      "CISO/SDGE"
+    ],
+    "top10_control_a": {
+      "ERCO/NRTH": {
+        "shipped_calendar_rank": 1,
+        "frozen_jan_aug_rank": 1,
+        "rank": 1,
+        "score": 14.004
+      },
+      "ERCO/FWES": {
+        "shipped_calendar_rank": 2,
+        "frozen_jan_aug_rank": 2,
+        "rank": 2,
+        "score": 12.203
+      },
+      "AZPS": {
+        "shipped_calendar_rank": 3,
+        "frozen_jan_aug_rank": 4,
+        "rank": 5,
+        "score": 6.42
+      },
+      "TEPC": {
+        "shipped_calendar_rank": 4,
+        "frozen_jan_aug_rank": 3,
+        "rank": 6,
+        "score": 5.409
+      },
+      "WACM": {
+        "shipped_calendar_rank": 5,
+        "frozen_jan_aug_rank": 6,
+        "rank": 3,
+        "score": 7.134
+      },
+      "PJM/DOM": {
+        "shipped_calendar_rank": 6,
+        "frozen_jan_aug_rank": 5,
+        "rank": 8,
+        "score": 5.15
+      },
+      "SWPP/OPPD": {
+        "shipped_calendar_rank": 7,
+        "frozen_jan_aug_rank": 7,
+        "rank": 4,
+        "score": 6.552
+      },
+      "ERCO": {
+        "shipped_calendar_rank": 8,
+        "frozen_jan_aug_rank": 8,
+        "rank": 10,
+        "score": 5.01
+      },
+      "SC": {
+        "shipped_calendar_rank": 9,
+        "frozen_jan_aug_rank": 9,
+        "rank": 11,
+        "score": 4.216
+      },
+      "CISO/SDGE": {
+        "shipped_calendar_rank": 10,
+        "frozen_jan_aug_rank": 13,
+        "rank": 17,
+        "score": 2.815
+      }
+    },
+    "top10_control_b": {
+      "ERCO/NRTH": {
+        "shipped_calendar_rank": 1,
+        "frozen_jan_aug_rank": 1,
+        "rank": 1,
+        "score": 16.658
+      },
+      "ERCO/FWES": {
+        "shipped_calendar_rank": 2,
+        "frozen_jan_aug_rank": 2,
+        "rank": 2,
+        "score": 16.233
+      },
+      "AZPS": {
+        "shipped_calendar_rank": 3,
+        "frozen_jan_aug_rank": 4,
+        "rank": 7,
+        "score": 6.906
+      },
+      "TEPC": {
+        "shipped_calendar_rank": 4,
+        "frozen_jan_aug_rank": 3,
+        "rank": 4,
+        "score": 7.381
+      },
+      "WACM": {
+        "shipped_calendar_rank": 5,
+        "frozen_jan_aug_rank": 6,
+        "rank": 3,
+        "score": 7.979
+      },
+      "PJM/DOM": {
+        "shipped_calendar_rank": 6,
+        "frozen_jan_aug_rank": 5,
+        "rank": 6,
+        "score": 7.2
+      },
+      "SWPP/OPPD": {
+        "shipped_calendar_rank": 7,
+        "frozen_jan_aug_rank": 7,
+        "rank": 5,
+        "score": 7.291
+      },
+      "ERCO": {
+        "shipped_calendar_rank": 8,
+        "frozen_jan_aug_rank": 8,
+        "rank": 8,
+        "score": 5.798
+      },
+      "SC": {
+        "shipped_calendar_rank": 9,
+        "frozen_jan_aug_rank": 9,
+        "rank": 9,
+        "score": 5.379
+      },
+      "CISO/SDGE": {
+        "shipped_calendar_rank": 10,
+        "frozen_jan_aug_rank": 13,
+        "rank": 15,
+        "score": 3.176
+      }
+    },
+    "validation_control_a": {
+      "PJM/DOM": {
+        "shipped_calendar_rank": 6,
+        "frozen_jan_aug_rank": 5,
+        "rank": 8,
+        "score": 5.15
+      },
+      "PJM/AEP": {
+        "shipped_calendar_rank": 19,
+        "frozen_jan_aug_rank": 32,
+        "rank": 41,
+        "score": 0.657
+      },
+      "SWPP/OPPD": {
+        "shipped_calendar_rank": 7,
+        "frozen_jan_aug_rank": 7,
+        "rank": 4,
+        "score": 6.552
+      },
+      "ERCO/NCEN": {
+        "shipped_calendar_rank": 91,
+        "frozen_jan_aug_rank": 69,
+        "rank": 61,
+        "score": -0.096
+      }
+    },
+    "validation_control_b": {
+      "PJM/DOM": {
+        "shipped_calendar_rank": 6,
+        "frozen_jan_aug_rank": 5,
+        "rank": 6,
+        "score": 7.2
+      },
+      "PJM/AEP": {
+        "shipped_calendar_rank": 19,
+        "frozen_jan_aug_rank": 32,
+        "rank": 30,
+        "score": 1.538
+      },
+      "SWPP/OPPD": {
+        "shipped_calendar_rank": 7,
+        "frozen_jan_aug_rank": 7,
+        "rank": 5,
+        "score": 7.291
+      },
+      "ERCO/NCEN": {
+        "shipped_calendar_rank": 91,
+        "frozen_jan_aug_rank": 69,
+        "rank": 63,
+        "score": -0.187
+      }
+    }
+  },
+  "permutation": {
+    "imported_from": "engine/stats/permutation.py (label_permutation)",
+    "n_perm_monte_carlo": 100000,
+    "seed": 20260921,
+    "shipped_calendar": {
+      "obs_mean_score": 3.872,
+      "null_mean_score": 0.7023,
+      "p_exact_mean_score": 0.0488091,
+      "p_monte_carlo_mean_score": 0.0489395,
+      "obs_mean_rank": 30.75,
+      "p_exact_mean_rank": 0.0570903,
+      "p_monte_carlo_mean_rank": 0.0567294,
+      "validation_ranks": {
+        "PJM/DOM": 6,
+        "PJM/AEP": 19,
+        "SWPP/OPPD": 7,
+        "ERCO/NCEN": 91
+      }
+    },
+    "frozen_jan_aug": {
+      "obs_mean_score": 3.5947,
+      "null_mean_score": 0.7016,
+      "p_exact_mean_score": 0.0557755,
+      "p_monte_carlo_mean_score": 0.0553194,
+      "obs_mean_rank": 28.25,
+      "p_exact_mean_rank": 0.0401205,
+      "p_monte_carlo_mean_rank": 0.0403496,
+      "validation_ranks": {
+        "PJM/DOM": 5,
+        "PJM/AEP": 32,
+        "SWPP/OPPD": 7,
+        "ERCO/NCEN": 69
+      }
+    },
+    "control_a_full": {
+      "obs_mean_score": 3.0655,
+      "null_mean_score": 0.6254,
+      "p_exact_mean_score": 0.0615663,
+      "p_monte_carlo_mean_score": 0.0611894,
+      "obs_mean_rank": 28.5,
+      "p_exact_mean_rank": 0.0416218,
+      "p_monte_carlo_mean_rank": 0.0417396,
+      "validation_ranks": {
+        "PJM/DOM": 8,
+        "PJM/AEP": 41,
+        "SWPP/OPPD": 4,
+        "ERCO/NCEN": 61
+      }
+    },
+    "control_b": {
+      "obs_mean_score": 3.9605,
+      "null_mean_score": 0.8683,
+      "p_exact_mean_score": 0.056196,
+      "p_monte_carlo_mean_score": 0.0559794,
+      "obs_mean_rank": 26.0,
+      "p_exact_mean_rank": 0.0283687,
+      "p_monte_carlo_mean_rank": 0.0277697,
+      "validation_ranks": {
+        "PJM/DOM": 6,
+        "PJM/AEP": 30,
+        "SWPP/OPPD": 5,
+        "ERCO/NCEN": 63
+      }
+    }
+  },
+  "sensitivity": [
+    {
+      "spec": "65F Jan-Aug (primary)",
+      "r2_overnight_growth_on_weather": 0.0737,
+      "r2_average_growth_on_weather": 0.1055,
+      "spearman_a_vs_shipped": 0.8502,
+      "spearman_b_vs_shipped": 0.9651,
+      "weather_share_of_overnight_mw": 0.0783,
+      "share_night_exceeds_day": 0.865,
+      "validation_ranks_b": {
+        "PJM/DOM": 6,
+        "PJM/AEP": 30,
+        "SWPP/OPPD": 5,
+        "ERCO/NCEN": 63
+      }
+    },
+    {
+      "spec": "60F Jan-Aug",
+      "r2_overnight_growth_on_weather": 0.0984,
+      "r2_average_growth_on_weather": 0.1255,
+      "spearman_a_vs_shipped": 0.845,
+      "spearman_b_vs_shipped": 0.9662,
+      "weather_share_of_overnight_mw": 0.0631,
+      "share_night_exceeds_day": 0.874,
+      "validation_ranks_b": {
+        "PJM/DOM": 4,
+        "PJM/AEP": 31,
+        "SWPP/OPPD": 6,
+        "ERCO/NCEN": 65
+      }
+    },
+    {
+      "spec": "70F Jan-Aug",
+      "r2_overnight_growth_on_weather": 0.0447,
+      "r2_average_growth_on_weather": 0.0673,
+      "spearman_a_vs_shipped": 0.8701,
+      "spearman_b_vs_shipped": 0.9625,
+      "weather_share_of_overnight_mw": 0.0974,
+      "share_night_exceeds_day": 0.874,
+      "validation_ranks_b": {
+        "PJM/DOM": 6,
+        "PJM/AEP": 30,
+        "SWPP/OPPD": 5,
+        "ERCO/NCEN": 65
+      }
+    },
+    {
+      "spec": "65F Jan-Jul",
+      "r2_overnight_growth_on_weather": 0.1148,
+      "r2_average_growth_on_weather": 0.1943,
+      "spearman_a_vs_shipped": 0.7994,
+      "spearman_b_vs_shipped": 0.9604,
+      "weather_share_of_overnight_mw": 0.1019,
+      "share_night_exceeds_day": 0.892,
+      "validation_ranks_b": {
+        "PJM/DOM": 7,
+        "PJM/AEP": 30,
+        "SWPP/OPPD": 6,
+        "ERCO/NCEN": 65
+      }
+    },
+    {
+      "spec": "65F Jan-Aug, 5% winsorized",
+      "r2_overnight_growth_on_weather": 0.0495,
+      "r2_average_growth_on_weather": 0.1302,
+      "spearman_a_vs_shipped": 0.9073,
+      "spearman_b_vs_shipped": 0.9651,
+      "weather_share_of_overnight_mw": 0.0783,
+      "share_night_exceeds_day": 0.865,
+      "validation_ranks_b": {
+        "PJM/DOM": 6,
+        "PJM/AEP": 30,
+        "SWPP/OPPD": 5,
+        "ERCO/NCEN": 63
+      }
+    },
+    {
+      "spec": "65F Jan-Aug, quadratic response",
+      "r2_overnight_growth_on_weather": 0.0737,
+      "r2_average_growth_on_weather": 0.1055,
+      "spearman_a_vs_shipped": 0.8502,
+      "spearman_b_vs_shipped": 0.9741,
+      "weather_share_of_overnight_mw": 0.0909,
+      "share_night_exceeds_day": 0.892,
+      "validation_ranks_b": {
+        "PJM/DOM": 7,
+        "PJM/AEP": 33,
+        "SWPP/OPPD": 6,
+        "ERCO/NCEN": 74
+      }
+    }
+  ],
+  "runtime_sec": 17.4
+}
