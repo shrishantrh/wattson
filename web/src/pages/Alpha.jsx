@@ -121,25 +121,27 @@ export default function Alpha() {
   const asOf = em.fetched_at ? new Date(em.fetched_at).toISOString().slice(0, 16).replace('T', ' ') : null
 
   const column = (
-      <Card title={<><b>Generating Alpha</b> · where the grid meets the tape</>} onClose={back}>
+      <Card title={<><b>Generating Alpha</b> · what this data could be worth</>} onClose={back}>
         <p className="alpha-lead">
-          We measure which grids tighten first, from federal metered data, months before it reaches a 10-Q.
-          These are the instruments where someone else is already pricing the same physical fact.
+          A datacenter is a huge new electricity customer, and nobody announces where it lands.
+          But it shows up in federal power data within hours of switching on. We can see it early,
+          and point at the company that has to serve it. Below are the markets that move on the
+          same facts. This is an input, not a trade: we have not tested it against prices.
         </p>
 
         <div className="alpha-stats">
           <div><b>{chains.length}</b><span>regions flagged</span></div>
           <div><b>{nContracts}</b><span>live contracts</span></div>
           <div><b>{nEquity}</b><span>listed names</span></div>
-          <div><b>{data.no_listed_equity?.count ?? 5}</b><span>sites with no equity</span></div>
+          <div><b>{data.no_listed_equity?.count ?? 5}</b><span>sites on utilities you cannot buy</span></div>
         </div>
 
         {asOf && <p className="alpha-asof">Kalshi prices cached {asOf} UTC at build time, stale by construction, never fetched from your browser.</p>}
 
         {!!(data.thesis_markets || []).length && (
           <section className="thesis">
-            <h3 className="thesis-t">Markets on the thesis itself</h3>
-            <p className="thesis-s">Whether the buildout happens, what it costs, and who pays. These price what we measured nationally, not any one grid.</p>
+            <h3 className="thesis-t">Markets that move on what we measure</h3>
+            <p className="thesis-s">People are already betting on how many datacenters get built, what they cost, and what that does to power bills. We measure the thing underneath all of it: how much load is actually arriving, and where.</p>
             {data.thesis_markets.map(i => <Instrument key={i.series} i={i} />)}
           </section>
         )}

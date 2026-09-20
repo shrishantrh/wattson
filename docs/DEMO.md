@@ -189,24 +189,36 @@ Then slow down:
 
 ## SCREEN 5 · **Generating Alpha**
 
-> **"So what is this actually for?"**
+> **"Last thing. What is this data worth?"**
 
-> **"A datacenter is a billion-dollar electricity customer that nobody announces. The
-> operator doesn't say which utility serves it. The utility often can't say either. It
-> surfaces in an earnings call months later."**
+> **"A datacenter is a massive new electricity customer, and nobody tells you where it is
+> going. The company won't say, and the utility usually can't. You find out months later on
+> an earnings call."**
 
-> **"But it cannot hide from the meter. The moment that load energises, it is in federal data
-> within two hours."**
+> **"But it can't hide. The moment it switches on, it's in federal power data within hours.
+> So we see it early, and we can point at the company that has to serve it."**
 
-Point at the chain.
+Point at a chain row.
 
-> **"So every region we flag resolves to the utility that delivers the power, that utility's
-> parent company, and a ticker. Northern Virginia is rank six. Overnight demand up
-> thirty-nine percent. Utility: Virginia Electric and Power. Parent: **Dominion Energy,
-> ticker D.**"**
+> **"Northern Virginia. Rank six. Overnight demand up thirty-nine percent. The company that
+> delivers power there is Virginia Electric and Power. Its parent is Dominion Energy,
+> ticker D."**
 
-> **"That is a data point about Dominion that came out of a power meter, not out of
-> Dominion."**
+> **"That's the chain. A power meter to a public company."**
+
+Then the markets:
+
+> **"And people are already betting on this. There are live markets on how many datacenters
+> get built, what they cost, and what that does to electricity bills. They're all guessing at
+> the same thing we're measuring: how much load is actually arriving, and where."**
+
+**Be straight about where it stands:**
+
+> **"Right now this is an input, not a trade. We haven't tested it against prices. But that's
+> the direction: this is the kind of data a fund pays for, because it's public, it's early,
+> and nobody else is joining it to a ticker."**
+
+---
 
 **THE CLOSE — land it, don't hedge it:**
 
