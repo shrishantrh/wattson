@@ -106,6 +106,38 @@ def _regions():
 _GENERATION_SORTS = {"siting"}
 
 
+def _correction_flags(region_id: str) -> dict:
+    """What we actually know about this region's published figures, in words.
+
+    WHY NOT A BOOLEAN. `has_corrections: true` was set for any region with a corrections
+    RECORD, including WACM, whose record says the opposite -- "checked with the same method
+    and NOT the same problem", zero corrections, an unexplained demand anomaly. A bare true
+    next to AZPS's true invited one explanation for both, and the answer on screen read
+    "AZPS and WACM values reflect corrections for double-counted nuclear", which is false for
+    WACM and false for any demand column. So the flag now says which it is and carries the
+    record's OWN summary; the model has no room left to write a reason.
+    """
+    c = data.corrections_for(region_id)
+    if not c:
+        return {"has_corrections": False}
+    fixes = c.get("corrections") or []
+    out = {"has_corrections": bool(fixes)}
+    if fixes:
+        out["corrected_paths"] = [f.get("path") for f in fixes if f.get("path")]
+        out["correction_summary"] = c.get("summary")
+        out["correction_scope"] = (
+            "This correction applies ONLY to the fields in corrected_paths. Do not describe any "
+            "other figure for this region as corrected, and do not attach this region's "
+            "explanation to any other region.")
+    elif c.get("unreliable"):
+        out["reviewed_no_correction"] = True
+        out["review_note"] = c.get("unreliable_reason") or c.get("summary")
+        out["review_scope"] = (
+            "This region was CHECKED and nothing was corrected. Never say its figures were "
+            "corrected or adjusted. If you mention it, use review_note's own words.")
+    return out
+
+
 def t_rank_regions(sort_by: str = "detector", limit: int = 10, min_demand_mw: float = 0):
     """Regions ranked by detector score, siting score, or growth."""
     rs = [r for r in _regions() if isinstance(r.get("detection"), dict) and r["detection"].get("rank")]
@@ -149,7 +181,7 @@ def t_rank_regions(sort_by: str = "detector", limit: int = 10, min_demand_mw: fl
         "siting_rank": (r.get("siting") or {}).get("siting_rank"),
         "cf_share_2025_all": ((r.get("cf_share") or {}).get("2025") or {}).get("all"),
         "cf_share_2025_overnight": ((r.get("cf_share") or {}).get("2025") or {}).get("overnight"),
-        "has_corrections": data.corrections_for(r["id"]) is not None,
+        **_correction_flags(r["id"]),
     } for r in rs[:limit]]}
 
 
@@ -218,7 +250,7 @@ def t_compare_regions(region_ids: list, metric: str = "cf_share_overnight", year
         row = {"region": rid, "name": r["name"], "values": vals,
                "change": (round(b - a, 4) if a is not None and b is not None else None),
                "cf_inherited_from_ba": r.get("cf_inherited_from_ba"),
-               "has_corrections": data.corrections_for(rid) is not None}
+               **_correction_flags(rid)}
         if window:
             clean = {y: mw(r, y, "cf_avg_mw") for y in years}
             ca, cb = clean.get(years[0]), clean.get(years[-1])
@@ -246,13 +278,42 @@ def t_compare_regions(region_ids: list, metric: str = "cf_share_overnight", year
     return out
 
 
+# The national aggregate is a sum over every reporting BA, so it carries AZPS's 2019
+# phantom: 3,373 MW of overnight "clean" that was Palo Verde nuclear SRP reported in the
+# same hours. We correct that on the region page, and for a long time did not correct it
+# here -- which left the most-quoted number in the project standing on a baseline our own
+# corrections file calls wrong. Both are returned, the way every other corrected figure in
+# this codebase is returned: published AND corrected, never one silently swapped for the
+# other.
+_AZPS_2019_PHANTOM_MW = {"overnight": 3373.0 - 34.7, "daytime": 3736.0 - 402.2, "all": 3538.0 - 201.1}
+
+
 def t_national():
     """The national day-vs-night series. The headline context for any question about trends."""
     m = data.meta()["national"]
-    return {"cf_share": m["cf_share"], "cf_avg_mw": m["cf_avg_mw"],
-            "total_avg_mw": m["total_avg_mw"], "note": m.get("note"),
-            "reminder": "Overnight share fell 0.405 to 0.397 while overnight clean output ROSE "
-                        "159.0 to 173.4 GW. Always give both."}
+    cm, tm = m["cf_avg_mw"], m["total_avg_mw"]
+    corrected = {}
+    for band, phantom in _AZPS_2019_PHANTOM_MW.items():
+        c19 = cm["2019"][band] - phantom
+        corrected[band] = {
+            "clean_mw_2019_published": round(cm["2019"][band], 1),
+            "clean_mw_2019_corrected": round(c19, 1),
+            "clean_mw_2025": round(cm["2025"][band], 1),
+            "share_2019_published": round(cm["2019"][band] / tm["2019"][band], 3),
+            "share_2019_corrected": round(c19 / tm["2019"][band], 3),
+            "share_2025": round(cm["2025"][band] / tm["2025"][band], 3),
+            "growth_gw_corrected": round((cm["2025"][band] - c19) / 1000, 1),
+        }
+    return {"cf_share": m["cf_share"], "cf_avg_mw": cm, "total_avg_mw": tm,
+            "note": m.get("note"), "corrected": corrected,
+            "correction_note": ("The published 2019 national figure includes AZPS's 3,373 MW "
+                                "overnight phantom (Palo Verde nuclear double-counted against "
+                                "SRP). Use the CORRECTED 2019 baseline and say that you have."),
+            "reminder": ("Corrected: overnight clean output ROSE 155.7 to 173.4 GW (+17.7) while "
+                         "the overnight share was FLAT at 0.397 -- it did not fall. Daytime clean "
+                         "rose 174.8 to 239.5 GW (+64.7), so the US added 3.7x more clean power "
+                         "to the average daytime hour than to the average overnight hour. Never "
+                         "quote a share without the absolute beside it.")}
 
 
 def t_company(ticker: str):

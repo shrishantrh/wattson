@@ -50,9 +50,10 @@ Alternates, same content, pick by audience:
 > published claim with a page cite, resolve which grid each of its datacenters physically
 > draws from, and put its own words next to what the meter recorded.
 >
-> The finding is in the hours. **Since 2019 the US added 61.4 GW of clean power to the
-> average daytime hour and 14.3 GW to the average overnight hour — 4.3x more to the hours
-> a datacenter does not care about.** Solar cleaned up the middle of the day and did
+> The finding is in the hours. **Since 2019 the US added 64.7 GW of clean power to the
+> average daytime hour and 17.7 GW to the average overnight hour — 3.7x more to the hours
+> a datacenter does not care about**, on a 2019 baseline corrected for a double-count we
+> found in our own data. Solar cleaned up the middle of the day and did
 > nothing for the middle of the night — and a datacenter draws the same power at 3am in January as at
 > noon in June. In PJM, the grid serving the largest datacenter cluster on earth,
 > **overnight clean generation has not increased since 2019.** Every added gigawatt of

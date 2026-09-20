@@ -30,9 +30,15 @@ Run from a local build, not a URL:
 **The line:** *"Every added gigawatt of overnight generation in PJM since 2019 was fossil."*
 Say it once, slowly, then stop.
 
-**National, if asked:** overnight share 0.405 → 0.397 while daytime went 0.372 → 0.465.
-**Always pair the share fall with the absolute rise: overnight clean output grew 159.0 →
-173.4 GW.** The share alone implies clean generation shrank. It grew 14.3 GW; demand grew
+> **Use the CORRECTED 2019 baseline.** The published national 2019 figure carries AZPS's
+> 3,373 MW overnight phantom (Palo Verde nuclear counted under both Arizona and SRP), which
+> our own corrections file proves. Published 2019 overnight clean is 159.0 GW; corrected it
+> is 155.7 GW, and the overnight share then held flat rather than falling. If a judge
+> catches the discrepancy, the answer is "yes — that's our correction, and here it is."
+
+**National, if asked:** overnight share held **flat at 0.397** while daytime went 0.365 →
+0.465. **Always pair the share with the absolute: overnight clean output grew 155.7 →
+173.4 GW.** The share alone implies clean generation shrank. It grew 17.7 GW; demand grew
 faster.
 
 ---

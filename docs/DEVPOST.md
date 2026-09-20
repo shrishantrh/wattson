@@ -36,9 +36,9 @@ it draws the same power at 3am in January as at noon in June. If that hunch held
 annual "100% renewable" claim could be completely true on paper and still describe a
 facility that ran on gas every single night for seven years.
 
-It held, and the size of it surprised us. **Since 2019 the US added 61.4 GW of clean
-power to the average daytime hour and 14.3 GW to the average overnight hour** — 4.3 times
-as much to the hours a datacenter does not care about.
+It held, and the size of it surprised us. Since 2019 the US added **64.7 GW** of clean power to the average daytime hour and **17.7 GW** to the average overnight hour — 3.7x as much to the hours a datacenter does not care about. The overnight *share* did not fall; it held flat at 39.7% while demand grew underneath it.
+
+These are the **corrected** 2019 figures. The published national 2019 baseline includes AZPS's 3,373 MW overnight phantom — Palo Verde nuclear counted twice, once under Arizona and once under SRP — which our own corrections file proves. Published 2019 overnight clean reads 159.0 GW; corrected it is 155.7 GW. Quote the corrected number and say that you corrected it; that exchange is worth more than the number.
 
 ---
 
@@ -70,9 +70,9 @@ ten typed tools against the real data, and returns a table, a chart and links �
 paragraph of prose. Every figure it shows has to trace back to a tool result; the model is
 structurally unable to introduce a number the data did not produce.
 
-**The finding:** nationally, clean power was added to the day and not the night — 61.4 GW
-to the average daytime hour since 2019 against 14.3 GW to the average overnight hour. And
-in PJM — the grid serving the largest datacenter cluster on earth —
+**The finding:** nationally, clean power was added to the day and not the night — 64.7 GW
+to the average daytime hour since 2019 against 17.7 GW to the average overnight hour, on a
+2019 baseline corrected for a double-count we found ourselves. And in PJM — the grid serving the largest datacenter cluster on earth —
 overnight clean generation has not increased since 2019. Overnight generation rose 8.7 GW.
 Gas supplied 10.7 GW of it. Net exports to neighbors fell from 3,814 MW to 2,489 MW, so
 the extra power stayed inside PJM. **At annual resolution this finding does not exist.**
@@ -218,7 +218,7 @@ refused to average over the hours that mattered.
 
 **A share falling is not the same as a quantity shrinking,** and conflating them is the
 easiest way to write something false out of true numbers. National overnight clean share
-fell from 0.405 to 0.397 — while overnight clean output *rose* from 159.0 GW to 173.4 GW.
+held flat at 0.397 — while overnight clean output *rose* from 155.7 GW to 173.4 GW.
 Demand simply grew faster. Every screen that shows a share now has the absolute beside it.
 
 **Organizational boundaries are not geographic ones.** Balancing authority zones nest
