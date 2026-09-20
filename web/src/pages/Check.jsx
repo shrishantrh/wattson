@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
-import { Card, Num, Evidence, Chip, KV, Ticks } from '../console/widgets.jsx'
+import { Card, Num, Chip, KV, Ticks } from '../console/widgets.jsx'
 import Workspace from '../components/Workspace.jsx'
 import Sparkline from '../components/Sparkline.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
@@ -11,10 +11,10 @@ import { COMPANIES } from '../lib/query.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
 import ingest from '../data/ingest_status.json'
-import SideBySideModule, { sideBySideOf } from '../components/modules/SideBySideModule.jsx'
+import SideBySideModule from '../components/modules/SideBySideModule.jsx'
 import { relocateModule } from '../components/modules/RelocateModule.jsx'
 import { innovLadderModule } from '../components/modules/InnovLadderModule.jsx'
-import { Bolt, Layers, Info, Company as CompanyIcon, Place, Link as LinkIcon, Night, ArrowRight, Check as CheckIcon, Close as CloseIcon, Help } from '../components/Icons.jsx'
+import { Bolt, Layers, Info, Company as CompanyIcon, Place, Link as LinkIcon, Night, ArrowRight, Check as CheckIcon, Close as CloseIcon, Help, ChevronDown, ChevronUp } from '../components/Icons.jsx'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 import '../styles/answer.css'
 
@@ -81,6 +81,21 @@ function AnsGap({ claimed, lo, hi, claimText, measuredText, note }) {
   )
 }
 
+// The one thing to do next, and the only solid control on the screen. Two lines: what the click
+// gives you, and that it opens on this page instead of navigating away. Once the evidence is
+// open the action is only a way back, so it drops to a quiet outline and says so.
+function NextAction({ open, onToggle, label, sub }) {
+  return (
+    <button type="button" className={`ans-next${open ? ' is-open' : ''}`} aria-expanded={open} onClick={onToggle}>
+      <span className="ans-next-t">{open ? 'Hide the evidence' : label}</span>
+      <span className="ans-next-d">{open ? 'the answer stays' : sub}</span>
+      {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+    </button>
+  )
+}
+// A disclosure summary that says whether it is open, in words as well as in the caret.
+const Disc = ({ children }) => <summary><span>{children}</span><span className="ans-disc" aria-hidden="true" /></summary>
+
 const REASON = { no_falsifiable_content: 'nothing measurable in the claim', no_site_mapping: 'no site could be mapped to a grid', ba_out_of_coverage: 'its grid is outside our coverage', year_out_of_range: 'the year is outside the data' }
 const pctFmt = n => `${Math.round(n)}%`
 
@@ -100,15 +115,14 @@ export default function Check({ route }) {
     return { view: fitView(pts), points: pts.map(s => ({ id: s.metro, lat: s.lat, lng: s.lng, r: 0.2, color: tk.accent })), rings: pts.map(s => ({ id: s.metro, lat: s.lat, lng: s.lng, color: tk.accent, maxR: 2, speed: 0.6, period: 1800 })),
       markers: pts.map(s => { const e = bySite[s.ba]; return { id: s.metro, lat: s.lat, lng: s.lng, label: `${s.metro.split(',')[0]}${e?.cf_share != null ? ` · ${pct0(e.cf_share)} clean` : ''}`, tip: `${s.metro} · ${s.serving_utility || 'utility unknown'} · ${s.grid_label}`, href: href.region(s.region_id), color: tk.accent } }) }
   }, [sites, bySite, tk])
-  const back = () => { window.location.hash = href.landing() }
   const toggle = () => { window.location.hash = href.check(ticker, !evidence) }
 
   let column
-  if (loading) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}><Loading what={known?.name || ticker} /></Card></>
+  if (loading) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>{known?.name || ticker}</b>}><Loading what={known?.name || ticker} /></Card></>
   else if (error) {
     const others = COMPANIES.filter(c => (error.available || []).includes(c.ticker))
     column = (
-      <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>{known?.name || ticker}</b>} onClose={back}>
+      <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>{known?.name || ticker}</b>}>
         {error.name === 'NotFound' ? (
           <>
             <h1 className="verdict">{known ? `${known.name} isn't verified yet.` : `We don't have ${ticker}.`}</h1>
@@ -184,6 +198,9 @@ export default function Check({ route }) {
     const whyLine = !track ? null : siteNote || (importer ? `One grid ${importer}.` : null)
     const VerdictIcon = VERDICT_ICON[a.verdict] || Info
     const modCount = modules.length
+    // Name the payoff rather than the mechanism: when the company's own report pages are in the
+    // stack, the button says so, because that is the most persuasive thing behind it.
+    const evLabel = (data.claims || []).some(k => k.page && k.verbatim) ? 'See its report pages' : 'See the evidence'
     const [lead, rest] = leadRest(a.sentence)
     column = (
       <>
@@ -193,7 +210,7 @@ export default function Check({ route }) {
           <span className="ans-sticky-name"><CompanyIcon size={13} />{data.company}</span>
           <span className="ans-sticky-v"><b>{claimText}</b> claimed · <b className={measuredTone}>{measuredText}</b> measured</span>
         </div>
-        <Card className="ans-card" title={<><b>{data.company}</b> · {data.ticker}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
+        <Card className="ans-card" title={<><b>{data.company}</b> · {data.ticker}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />}>
           <h1 className="verdict ans-lead">{lead}</h1>
           {rest && <p className="ans-rest">{rest}</p>}
           {track ? (
@@ -211,15 +228,15 @@ export default function Check({ route }) {
               {a.numbers.map((n, i) => <div key={i}><dt>{n.label}{n.sub && <small>{n.sub}</small>}</dt><dd className={n.accent ? 'accent' : ''}>{n.value}</dd></div>)}
             </dl>
           )}
-          <details className="ans-why" open={!!whyLine}>
-            <summary>{track ? 'Why this reads low' : "What this can't show"}</summary>
+          <NextAction open={evidence} onToggle={toggle} label={evLabel} sub={`opens below · ${modCount} cards`} />
+          <details className="ans-why">
+            <Disc>{track ? 'Why this reads low' : "What this can't show"}</Disc>
             <dl className="ans-dl">
               {scopeLine && <div><dt>what it covers</dt><dd>{scopeLine}</dd></div>}
               {whyLine && <div><dt>why it reads low</dt><dd>{whyLine}</dd></div>}
               <div><dt>basis</dt><dd>Grid-only, average mix; contracted clean power is not counted.</dd></div>
             </dl>
           </details>
-          <Evidence open={evidence} onToggle={toggle} />
         </Card>
         {evidence && (
           <>

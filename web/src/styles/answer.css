@@ -144,6 +144,40 @@
 .ans-figs dd { margin: 0; max-width: 70%; font-size: var(--t-body); line-height: 1.3; text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: break-word; }
 .ans-figs dd.accent { color: var(--fossil); }
 
+/* ---------- the one thing to do next ----------
+   The only filled control on an answer screen, directly under the figure that IS the answer and
+   above every caveat, so the eye lands on it as soon as the sentence has been read. Two lines:
+   what the click gives you, and that it opens on this page rather than navigating away. Once it
+   is open the action is only a way back, so it drops to the ordinary outline and every other
+   control on the card keeps its resting weight. No new colour: ink on the page, nothing else. */
+.ans-next {
+  margin-top: 16px;
+  width: 100%;
+  min-height: 44px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 2px;
+  padding: 8px 12px;
+  text-align: left;
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-ctl);
+  cursor: pointer;
+  transition: var(--tr-ui);
+}
+.ans-next > svg { grid-area: 1 / 2 / 3 / 3; color: currentColor; flex: none; }
+.ans-next-t { grid-area: 1 / 1; font-size: var(--t-small); font-weight: 600; line-height: var(--lh-flat); }
+.ans-next-d { grid-area: 2 / 1; font-size: var(--t-micro); line-height: var(--lh-micro); opacity: 0.68; }
+.ans-next:hover { background: #fff; border-color: #fff; }
+.ans-next:active { transform: scale(0.99); }
+.ans-next:focus-visible { outline: none; box-shadow: var(--ring); }
+.ans-next.is-open { background: transparent; color: var(--ink-2); border-color: var(--line-strong); }
+.ans-next.is-open:hover { background: transparent; color: var(--ink); border-color: var(--line-focus); }
+.ans-next.is-open .ans-next-d { opacity: 1; color: var(--muted); }
+
 /* ---------- the honesty note ----------
    Never hidden, never the heaviest thing on the card: a compact disclosure with a
    leading warn rule. Open where the caveat changes how the number should be read. */
@@ -161,6 +195,12 @@
 .ans-why > summary::-webkit-details-marker { display: none; }
 .ans-why > summary::after { content: '▾'; font-size: var(--t-micro); color: var(--muted); transition: transform var(--dur-fast) var(--ease); }
 .ans-why[open] > summary::after { transform: rotate(180deg); }
+/* the caret alone does not say which way it is pointing: the word does. It is the last thing
+   before the caret, so open and closed are legible without hovering or counting rows. */
+.ans-why > summary > span:first-child { margin-right: auto; }
+.ans-disc { font-size: var(--t-micro); letter-spacing: var(--ls-caps); text-transform: uppercase; color: var(--muted); }
+.ans-disc::after { content: 'show'; }
+.ans-why[open] > summary .ans-disc::after { content: 'hide'; }
 .ans-why > summary:hover { color: var(--ink); }
 .ans-why > summary:focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--radius-sm); }
 .ans-why .note { margin: 8px 0 0; }
@@ -181,15 +221,19 @@
 .ans-list li:first-child { padding-top: 0; border-top: none; }
 .ans-list li:last-child { padding-bottom: 0; }
 
-/* ---------- Compare: one control group ---------- */
+/* ---------- Compare: one control group ----------
+   It sits BELOW the answer it changes: the card opens with the ranking, and the way to ask a
+   different question follows it. Recessed on --surface-2 and carrying no filled button, so it
+   reads as an adjustment to the answer above rather than the thing to do first. */
 .ans-controls {
   background: var(--surface-2);
   border: 1px solid var(--line-soft);
   border-radius: var(--radius);
   padding: 12px;
-  margin-bottom: 16px;
+  margin-top: 16px;
 }
 .ans-controls .formline { margin-bottom: 0; row-gap: 8px; }
+.ans-controls > .note { margin-top: 8px; }
 .ans-controls .formline .field { background: var(--n1); }
 /* the shape picker is a refinement of the request above it, not a peer of it */
 .ans-controls-sub { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line-soft); }
@@ -203,6 +247,28 @@
    The winner takes two rows (rank, place and the figure on one baseline, the trend
    under it); 2 and 3 take one line each, so the list reads as a podium rather than
    three equal rows. Nothing but the winner's figure carries a hue. */
+/* Two columns of the list carry two different quantities: the order is the siting score, the
+   figure on the right is the clean share. One micro row names both, sitting on the list's own
+   grid edges, so a reader never has to guess which number the order came from. */
+.ans-rank-h {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-bottom: 8px;
+  font-size: var(--t-micro);
+  line-height: var(--lh-micro);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ans-rank-h + .ans-rank { margin-top: 0; }
+/* when the order and the figure disagree, the generated sentence that says why is lifted out of
+   the paragraph and set directly against the list it explains */
+.ans-rank-note { margin: 12px 0 0; padding: 8px 12px; background: var(--surface-2); border-left: 2px solid var(--line-focus); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
+.ans-rank-note + .ans-rank-h { margin-top: 12px; }
+
 .ans-rank { list-style: none; margin: 16px 0 0; padding: 0; display: grid; }
 .ans-rank li {
   display: grid;

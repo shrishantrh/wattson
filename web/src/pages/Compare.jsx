@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import Shell, { fitView } from '../console/Console.jsx'
-import { Card, Num, Evidence, Chip, KV, Ring, HourBars } from '../console/widgets.jsx'
+import { Card, Num, Chip, KV, Ring, HourBars } from '../console/widgets.jsx'
 import Workspace from '../components/Workspace.jsx'
 import Sparkline from '../components/Sparkline.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
@@ -13,7 +13,7 @@ import { SHAPES, FLEX_FRACTION, cleanShareFor, shiftable, profileOf } from '../l
 import ShapePicker from '../components/ShapePicker.jsx'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { href } from '../router.js'
-import { Bolt, Layers, Info, Place, Pin, Night } from '../components/Icons.jsx'
+import { Bolt, Layers, Info, Place, Pin, Night, ChevronDown, ChevronUp } from '../components/Icons.jsx'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 import '../styles/answer.css'
 
@@ -29,6 +29,20 @@ function Zone({ icon: Icon, children, right }) {
 // "N. Virginia" and initials stay whole. The words themselves are never changed.
 const leadRest = s => { const m = String(s || '').match(/^([\s\S]*?[a-z0-9%)]\.)\s+([\s\S]+)$/); return m ? [m[1], m[2]] : [s, null] }
 const mtitle = (Icon, text) => <span className="ans-mtitle"><Icon size={13} />{text}</span>
+// The one thing to do next, and the only solid control on the screen. Two lines: what the click
+// gives you, and that it opens on this page instead of navigating away. Once the evidence is
+// open the action is only a way back, so it drops to a quiet outline and says so.
+function NextAction({ open, onToggle, label, sub }) {
+  return (
+    <button type="button" className={`ans-next${open ? ' is-open' : ''}`} aria-expanded={open} onClick={onToggle}>
+      <span className="ans-next-t">{open ? 'Hide the evidence' : label}</span>
+      <span className="ans-next-d">{open ? 'the ranking stays' : sub}</span>
+      {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+    </button>
+  )
+}
+// A disclosure summary that says whether it is open, in words as well as in the caret.
+const Disc = ({ children }) => <summary><span>{children}</span><span className="ans-disc" aria-hidden="true" /></summary>
 
 // Question 2: "Where should I put a datacenter so it runs on the cleanest power?"
 export default function Compare({ route }) {
@@ -63,7 +77,6 @@ export default function Compare({ route }) {
   }, [cands, answer, tk])
   const go = (m = request.metros, load = mw) => { window.location.hash = href.compare({ mw: Number(load) || 300, metros: m, evidence }) }
   const addMetro = e => { e.preventDefault(); const m = resolvePlace(add); if (m && !request.metros.some(x => resolvePlace(x)?.region_id === m.region_id)) go([...request.metros, m.metro]); setAdd('') }
-  const back = () => { window.location.hash = href.landing() }
   const toggle = () => { window.location.hash = href.compare({ ...request, evidence: !evidence }) }
   const nat = found.data?.national?.cf_share, top = (found.data?.detector?.regions || []).filter(r => r.rank <= 5)
 
@@ -72,24 +85,27 @@ export default function Compare({ route }) {
       <input className="field" type="number" min="1" value={mw} onChange={e => setMw(e.target.value)} style={{ width: 74 }} aria-label="Load in MW" /><span className="muted" style={{ fontSize: 11 }}>MW</span>
       {request.metros.map(m => <Chip key={m} small onRemove={request.metros.length > 1 ? () => go(request.metros.filter(x => x !== m)) : undefined}>{resolvePlace(m)?.metro || m}</Chip>)}
       <input className="field" value={add} onChange={e => setAdd(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addMetro(e) }} placeholder="+ add a place" style={{ width: 132 }} aria-label="Add a place" />
-      <button className="btn primary" type="submit">Rank</button>
+      <button className="btn" type="submit">Rank</button>
     </form>
   )
-  // One control group: the request (how much, where) with the load shape subordinate to it.
+  // One control group, below the answer it changes. The two halves behave differently and say so:
+  // the request is a form and waits for Rank, the load shape re-ranks the list on the spot.
   const controls = (
     <div className="ans-controls">
+      <span className="ans-controls-k">Change the question</span>
       {form}
+      <p className="note">How much load, and where. The list re-ranks when you press Rank.</p>
       <div className="ans-controls-sub">
-        <span className="ans-controls-k">load shape</span>
+        <span className="ans-controls-k">load shape · re-ranks live</span>
         <ShapePicker value={shape} onChange={setShape} flexible={flexible} onFlexible={setFlexible} />
-        <p className="note">{whatIf ? `Ranked on clean share over the hours a ${shapeLabel} load uses.` : 'Pick a shape to re-rank on the hours it uses.'}</p>
+        <p className="note">{whatIf ? `Ranked on clean share over the hours a ${shapeLabel} load uses.` : 'Pick a shape to re-rank on the hours it uses. No Rank needed.'}</p>
       </div>
     </div>
   )
 
   let column
-  if (loading) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<><b>Compare</b> · {request.mw} MW</>} onClose={back}><div className="ans-controls">{form}</div><Loading what="the ranking" /></Card></>
-  else if (error) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>Compare</b>} onClose={back}><div className="ans-controls">{form}</div><ErrorState error={error} onRetry={reload} /></Card></>
+  if (loading) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<><b>Compare</b> · {request.mw} MW</>}><div className="ans-controls">{form}</div><Loading what="the ranking" /></Card></>
+  else if (error) column = <><Breadcrumbs trail={crumbs} /><Card className="ans-card" title={<b>Compare</b>}><div className="ans-controls">{form}</div><ErrorState error={error} onRetry={reload} /></Card></>
   else {
     const load = Number(data.request.mw)
     const modules = [
@@ -126,6 +142,10 @@ export default function Compare({ route }) {
     const bestShare = answer.best?.siting?.overnight_cf_share_2025
     const bestTone = bestShare != null && bestShare >= 0.5 ? 'clean' : 'fossil'
     const [cmpLead, cmpRest] = leadRest(answer.sentence)
+    // True when rank order and the displayed figure disagree anywhere in the list: some place
+    // below outranks a place above it on the number the reader can see.
+    const shareOf = c => c.siting?.overnight_cf_share_2025 ?? -1
+    const disagree = cands.some((c, i) => cands.slice(i + 1).some(o => shareOf(o) > shareOf(c)))
     column = (
       <>
         <Breadcrumbs trail={crumbs} />
@@ -134,34 +154,44 @@ export default function Compare({ route }) {
           <span className="ans-sticky-name"><Place size={13} />{n0(data.request.mw)} MW · {cands.length} place{cands.length === 1 ? '' : 's'}</span>
           {answer.best && <span className="ans-sticky-v"><b>{answer.best.metro}</b> · <b className={bestTone}>{pct0(bestShare)}</b> clean</span>}
         </div>
-        <Card className="ans-card" title={<><b>Compare</b> · {n0(data.request.mw)} MW of flat load{data._computed_client_side && ' · ranked here'}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
-          {controls}
+        <Card className="ans-card" title={<><b>Compare</b> · {n0(data.request.mw)} MW of flat load{data._computed_client_side && ' · ranked here'}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />}>
           {data.unmapped.length > 0 && <div className="banner">No data for {data.unmapped.join(', ')}. Try a nearby city or a grid name.</div>}
           <h1 className="verdict ans-lead">{cmpLead}</h1>
-          {cmpRest && <p className="ans-rest">{cmpRest}</p>}
-          {cands.length === 0 && <p className="note" style={{ marginTop: 12 }}>Add a place above, or start from the example: <Chip small href={href.compare(DEMO_COMPARE)}>{DEMO_COMPARE.mw} MW: {DEMO_COMPARE.metros.join(' vs ')}</Chip></p>}
+          {cmpRest && !disagree && <p className="ans-rest">{cmpRest}</p>}
+          {cands.length === 0 && <p className="note" style={{ marginTop: 12 }}>Add a place below, or start from the example: <Chip small href={href.compare(DEMO_COMPARE)}>{DEMO_COMPARE.mw} MW: {DEMO_COMPARE.metros.join(' vs ')}</Chip></p>}
           {answer.numbers.length > 0 && (
-            <ol className="ans-rank">
-              {answer.numbers.map((n, i) => (
-                <li key={i} className={i === 0 ? 'is-best' : ''}>
-                  <span className="ans-rank-n">{i + 1}</span>
-                  <span className="ans-rank-name">{n.label.replace(/^\d+\.\s*/, '')}</span>
-                  <span className="ans-rank-t">{whatIf ? shapeDef.label : n.sub}</span>
-                  <span className={`ans-rank-v ${i === 0 ? bestTone : ''}`}>{n.value}</span>
-                </li>
-              ))}
-            </ol>
+            <>
+              {/* The list is ordered on the score; the figure beside each place is its clean share.
+                  When the two disagree the generated sentence that explains it is pulled out of the
+                  paragraph and set against the list, so the order cannot be read without it. */}
+              {cmpRest && disagree && <p className="ans-rank-note">{cmpRest}</p>}
+              <div className="ans-rank-h">
+                <span>{cands.length < 2 ? 'the one place you asked' : whatIf ? `ranked on ${shapeDef.label} hours` : 'ranked on the siting score'}</span>
+                <span>{whatIf ? 'clean over those hours' : 'clean at night, 2025'}</span>
+              </div>
+              <ol className="ans-rank">
+                {answer.numbers.map((n, i) => (
+                  <li key={i} className={i === 0 ? 'is-best' : ''}>
+                    <span className="ans-rank-n">{i + 1}</span>
+                    <span className="ans-rank-name">{n.label.replace(/^\d+\.\s*/, '')}</span>
+                    <span className="ans-rank-t">{whatIf ? shapeDef.label : n.sub}</span>
+                    <span className={`ans-rank-v ${i === 0 ? bestTone : ''}`}>{n.value}</span>
+                  </li>
+                ))}
+              </ol>
+            </>
           )}
           {cands.length > 1 && <div className="sharebar" aria-hidden="true">{cands.map(c => { const v = c.siting?.overnight_cf_share_2025 ?? 0; return <span key={c.region_id} className={c === answer.best ? 'best' : ''} style={{ width: `${Math.max(2, v * 100) / cands.length}%` }} title={`${c.metro} ${pct0(v)}`} /> })}</div>}
           {bestShare != null && <p className="note live" style={{ marginTop: 12 }}>At <b>{n0(Number(mw) || load)} MW</b>, {answer.best.metro} would draw about <b>{n0((Number(mw) || load) * (1 - bestShare))} MW</b> of fossil {whatIf ? 'over those hours' : 'at night'} on the 2025 mix{cands[1]?.siting?.overnight_cf_share_2025 != null ? <>, versus <b>{n0((Number(mw) || load) * (1 - cands[1].siting.overnight_cf_share_2025))} MW</b> in {cands[1].metro}</> : null}.</p>}
+          <NextAction open={evidence} onToggle={toggle} label="See the evidence" sub={`opens below · ${modules.length} cards`} />
+          {controls}
           <details className="ans-why is-method">
-            <summary>How this ranking is made</summary>
+            <Disc>How this ranking is made</Disc>
             <dl className="ans-dl">
               <div><dt>score</dt><dd>Clean power at night, its trend, and clean power against demand. Equal weight, frozen before any result was seen.</dd></div>
               {whatIf && <div><dt>what-if</dt><dd>Re-ranked on the clean share over the hours this shape uses; the frozen score is the flat case.</dd></div>}
             </dl>
           </details>
-          <Evidence open={evidence} onToggle={toggle} label="Show why" />
         </Card>
         {evidence && (
           <>
