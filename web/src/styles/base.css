@@ -448,3 +448,17 @@ a.gpin:hover .gpin-label { border-color: var(--line-focus); }
 .thesis-s, .chains-s { font-size: 12px; color: var(--muted); margin: 0 0 12px; }
 .chains-t { margin-top: 4px; }
 .thesis .inst:first-of-type { border-top: 0; padding-top: 0; }
+
+/* --- irradiance: what the flat sun cost, hour by hour ------------------------- */
+.hp { margin: 4px 0 14px; }
+.hp-bars { display: flex; align-items: flex-end; gap: 2px; height: 72px; }
+.hp-bar { flex: 1; border-radius: 2px 2px 0 0; min-height: 2px; transition: opacity .15s; }
+.hp-bar:hover { opacity: .7; }
+.hp-sun { background: var(--clean); }
+.hp-dark { background: var(--fossil); }
+.hp-mid { background: color-mix(in srgb, var(--ink) 22%, transparent); }
+.hp-axis { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 5px; }
+.hp-read { font-size: 13px; line-height: 1.55; margin: 10px 0 0; }
+.hp-read .fossil { color: var(--fossil); }
+.hp-read .clean { color: var(--clean); }
+.hp-note { font-size: 11px; color: var(--muted); line-height: 1.5; margin: 6px 0 0; }
