@@ -3,11 +3,19 @@
    Colours come from tokens.css only; the one accent is the sparkline's last dot. */
 
 /* ---- workspace: ordered, hideable modules ----
-   One 10px rhythm down the column. A module card's controls stay out of the way until the pointer
-   or the keyboard arrives on that card; the title is the only thing showing at rest. */
+   One 10px rhythm down the column. A card's two controls — Drag and Hide — are always on the
+   title row and always worded, and anything hidden is listed above the first card with a button
+   that puts it back. Nothing in this column appears only on hover. */
 .ws { display: flex; flex-direction: column; gap: 10px; flex: none; min-width: 0; }
 .ws-bar { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 24px; padding: 0 2px; }
 .ws-bar-title { font-size: var(--t-small); color: var(--muted); }
+/* hidden cards, and the way back: always on screen while anything is hidden */
+.ws-hidden { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1); padding: 0 2px; }
+.ws-hidden-label { font-size: var(--t-micro); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: var(--s1); }
+.ws-restore { display: inline-flex; align-items: center; gap: 4px; height: var(--h-ctl-sm); padding: 0 8px 0 6px; border: 1px dashed var(--line-strong); border-radius: 999px; background: transparent; color: var(--ink-2); font-family: var(--font-ui); font-size: var(--t-micro); cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
+.ws-restore:hover { color: var(--ink); border-color: var(--line-focus); border-style: solid; }
+.ws-restore:focus-visible { outline: none; box-shadow: var(--ring); }
+.ws-restore svg { color: var(--muted); flex: none; }
 .ws-pop-host { position: relative; margin-left: auto; }
 .ws-customize { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-strong); background: var(--surface-a); border-radius: 999px; padding: 4px 12px; font-size: var(--t-small); color: var(--ink-2); cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
 .ws-customize:hover, .ws-customize[aria-expanded="true"] { color: var(--ink); border-color: var(--line-focus); }
@@ -37,20 +45,15 @@
 @keyframes ws-enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 .ws-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; min-height: 22px; }
 .ws-title { font-size: var(--t-small); color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ws-tools { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+.ws-tools { display: inline-flex; align-items: center; gap: var(--s1); flex: none; }
 
-/* The drag affordance is always there and always quiet: the grip sits at 45% ink at rest, which
-   is enough to see on a 12px title row and not enough to compete with it, and comes up to full
-   on hover, on keyboard focus, and across the whole column while something is in the air.
-   The × is the destructive one, so it stays out of sight until the pointer or the keyboard
-   arrives on that card. */
-.ws-handle, .ws-hide { width: 22px; height: 22px; padding: 0; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; line-height: 1; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease); }
-.ws-handle { cursor: grab; touch-action: none; opacity: 0.45; }
-.ws-hide { opacity: 0; }
-.ws-module:hover .ws-handle, .ws-module:focus-within .ws-handle, .ws[data-dragging] .ws-handle { opacity: 1; }
-.ws-module:hover .ws-hide, .ws-module:focus-within .ws-hide { opacity: 1; }
+/* Both controls are always on screen and both are words. A grip that fades in on hover cannot
+   tell anyone the card moves, and an × that appears on hover cannot tell anyone what it removes
+   or how to get it back — the Hidden row above the cards answers the second half. */
+.ws-handle, .ws-hide { height: 22px; padding: 0 6px; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); display: inline-flex; align-items: center; gap: 4px; cursor: pointer; font-family: var(--font-ui); font-size: var(--t-micro); line-height: var(--lh-flat); transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.ws-handle { cursor: grab; touch-action: none; }
+.ws-handle svg { flex: none; }
 .ws-handle svg circle { fill: currentColor; }
-.ws-hide svg path { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; }
 .ws-handle:active, .ws-module.is-dragging .ws-handle { cursor: grabbing; }
 .ws-handle:hover, .ws-hide:hover { color: var(--ink); border-color: var(--line-strong); }
 /* keyboard focus reveals the tools even without a pointer, and says so with the ring */
@@ -83,7 +86,8 @@
   .ws-bar { flex-wrap: nowrap; }
   .ws-bar-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .ws-pop { width: min(264px, calc(100vw - 56px)); }
-  .ws-handle, .ws-hide { width: 26px; height: 26px; opacity: 1; }
+  .ws-handle, .ws-hide { height: 26px; }
+  .ws-handle-text { display: none; }
 }
 
 /* ---- table: dense, sortable, sticky header ---- */

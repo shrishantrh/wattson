@@ -122,7 +122,9 @@ function useFold(listRef, count) {
 }
 
 // Props, all optional: `trail` (from useCrumbs; omitted, the component derives it from the live
-// hash itself) and `onBack` (omitted, the back button walks history, falling back to Home).
+// hash itself) and `onBack`, used only by a trail that has no linked ancestor. Whenever the trail
+// does have one, the back button goes there and says so on its face: a button reading "Back to
+// Companies" that lands somewhere else is worse than no button.
 export default function Breadcrumbs({ trail, onBack }) {
   const derived = useCrumbs(useHash())
   const items = trail && trail.length ? trail : trail ? [] : derived
@@ -130,15 +132,24 @@ export default function Breadcrumbs({ trail, onBack }) {
   const stuck = useStuck(navRef)
   const fold = useFold(listRef, items.length)
   if (!items.length) return null
-  const back = onBack || (() => { if (window.history.length > 1) window.history.back(); else window.location.hash = href.landing() })
   const last = items.length - 1
   const up = items.slice(0, last).reverse().find(c => c.href) || null
+  // The button says where it goes, so it has to go there: up one level, not wherever history
+  // happens to be. History is only the fallback for a trail with nothing above it.
+  const back = () => {
+    if (up) window.location.hash = up.href           // the label names this destination
+    else if (onBack) onBack()
+    else if (window.history.length > 1) window.history.back()
+    else window.location.hash = href.landing()
+  }
   // Once every middle segment is folded there is nothing left to give but the last label, so the
   // trail says so and lets it ellipsise. Until then the last segment keeps its full width.
   const folded = fold >= Math.max(0, items.length - 2) ? 'max' : undefined
   return (
     <nav className="bc" aria-label="Breadcrumb" ref={navRef} data-stuck={stuck ? 'true' : undefined} data-folded={folded}>
-      <button type="button" className="bc-back" onClick={back} aria-label={up ? `Back to ${up.label}` : 'Back'} data-tip={up ? `Back to ${up.label}` : 'Back'} data-tip-side="bottom"><ArrowLeft size={15} /></button>
+      {/* The one way up, and it says where up is. It used to be an arrow with a tooltip, which
+          read as a mystery next to the answer card's × — so the label is on the button now. */}
+      <button type="button" className="bc-back" onClick={back}><ArrowLeft size={15} /><span className="bc-back-text">Back{up && <span className="bc-back-to"> to {up.label}</span>}</span></button>
       <ol className="bc-list" ref={listRef}>
         {items.map((c, i) => {
           const Icon = c.icon

@@ -74,6 +74,16 @@
   background: var(--surface-a);
   border-bottom: 1px solid var(--line-soft);
 }
+.insight-headings { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+/* the panel says what it is before it says what the screen is, so the control that opened it and
+   the thing it opened read as the same promise */
+.insight-kicker {
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 .insight-title {
   margin: 0;
   font-family: var(--font-display);
@@ -85,16 +95,22 @@
   min-width: 0;
   overflow-wrap: break-word;
 }
+/* a labelled close, not a bare ×: it closes this panel and nothing else, and it says so */
 .insight-x {
   flex: none;
-  width: 24px;
-  height: 24px;
-  display: grid;
-  place-items: center;
+  height: var(--h-ctl-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px;
   border: 1px solid var(--line-soft);
   border-radius: var(--radius-sm);
   background: transparent;
   color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: var(--t-micro);
+  font-weight: 500;
+  line-height: var(--lh-flat);
   cursor: pointer;
   transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }

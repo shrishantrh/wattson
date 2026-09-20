@@ -32,21 +32,32 @@
   box-shadow: var(--shadow);
 }
 
+/* The way up wears its destination. It is the widest thing in the row, so it is also the first
+   thing to give ground: the trail beside it folds its middle segments to icons rather than this
+   label truncating (see .bc-folded), and only under 900px does the label shorten to "Back". */
 .bc-back {
   flex: none;
-  width: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   height: 28px;
+  padding: 0 10px 0 7px;
   margin-left: 6px;
-  display: grid;
-  place-items: center;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--line-soft);
+  border: 1px solid var(--line-strong);
   background: transparent;
-  color: var(--muted);
+  color: var(--ink-2);
+  font-family: var(--font-ui);
+  font-size: var(--t-small);
+  font-weight: 500;
+  line-height: var(--lh-flat);
+  white-space: nowrap;
   cursor: pointer;
   transition: var(--tr-ui);
 }
+.bc-back svg { flex: none; color: var(--muted); transition: color var(--dur-fast) var(--ease); }
 .bc-back:hover { color: var(--ink); border-color: var(--line-focus); }
+.bc-back:hover svg { color: var(--ink); }
 .bc-back:focus-visible { outline: none; box-shadow: var(--ring); }
 
 .bc-list {
@@ -137,3 +148,9 @@ a.bc-seg:focus-visible { outline: none; box-shadow: var(--ring); }
 .bc-note b { color: var(--ink); font-weight: 500; }
 .bc-note p { margin: 0; }
 .bc-note p + p { margin-top: 4px; }
+
+/* narrow: the column is the whole screen and the trail below still names the destination, so the
+   button keeps the word that matters and drops the phrase */
+@media (max-width: 900px) {
+  .bc-back-to { display: none; }
+}

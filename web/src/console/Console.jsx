@@ -60,13 +60,26 @@ export function StageProvider({ children }) {
         <header className="topbar">
           <a className="brand" href="#/"><span className="wordmark">Wattson</span><span className="tagline">It follows the power, not the press release.</span></a>
           {spec.page !== 'landing' && <QuickSearch />}
-          <nav className="toplinks"><a href={href.data()} className={spec.page === 'data' ? 'on' : ''}><TableIcon size={13} />Data</a><a href={href.found()} className={spec.page === 'found' ? 'on' : ''}><GlobeIcon size={13} />What we found</a><a href={href.method()} className={spec.page === 'method' ? 'on' : ''}><Layers size={13} />Method</a></nav>
+          {/* Three bare words in a row read as three actions on the page you are on. They are
+              sections of the site, so they are labelled as such and sit in one bordered group. */}
+          <nav className="toplinks" aria-label="Sections">
+            <span className="toplinks-label">Sections</span>
+            <a href={href.data()} className={spec.page === 'data' ? 'on' : ''} aria-current={spec.page === 'data' ? 'page' : undefined}><TableIcon size={13} />Data</a>
+            <a href={href.found()} className={spec.page === 'found' ? 'on' : ''} aria-current={spec.page === 'found' ? 'page' : undefined}><GlobeIcon size={13} />What we found</a>
+            <a href={href.method()} className={spec.page === 'method' ? 'on' : ''} aria-current={spec.page === 'method' ? 'page' : undefined}><Layers size={13} />Method</a>
+          </nav>
         </header>
-        <div className="stage-ctl">
-          <button type="button" onClick={() => setZoom(z => Math.min(6, z + 1))} aria-label="Zoom in"><ZoomIn size={15} /></button>
-          <button type="button" onClick={() => setZoom(z => Math.max(-4, z - 1))} aria-label="Zoom out"><ZoomOut size={15} /></button>
-          <span className="gap" />
-          <button type="button" className={style === 'night' ? 'on' : ''} onClick={() => setStyle(v => (v === 'night' ? 'dots' : 'night'))} aria-label="Toggle night lights" data-tip="Night lights" data-tip-side="left"><Night size={15} /></button>
+        {/* The globe's own controls, docked to the top-left corner of the globe's area rather than
+            floating against the window edge, and named on their faces. The group says what it
+            operates and that the globe answers the pointer at all. */}
+        <div className="stage-ctl" style={{ left: colWidth }} role="group" aria-label="Globe controls">
+          <span className="stage-ctl-title"><GlobeIcon size={13} />Globe<span className="stage-ctl-hint">drag to spin</span></span>
+          <span className="stage-ctl-zoom">
+            <button type="button" onClick={() => setZoom(z => Math.max(-4, z - 1))} aria-label="Zoom out"><ZoomOut size={15} /></button>
+            <span className="stage-ctl-k">Zoom</span>
+            <button type="button" onClick={() => setZoom(z => Math.min(6, z + 1))} aria-label="Zoom in"><ZoomIn size={15} /></button>
+          </span>
+          <button type="button" className={`stage-ctl-night ${style === 'night' ? 'on' : ''}`} aria-pressed={style === 'night'} onClick={() => setStyle(v => (v === 'night' ? 'dots' : 'night'))}><Night size={15} />Night lights</button>
         </div>
         {spec.column && <div className="column-wrap" style={{ width: colWidth }}><div className="column stagger mo-col" key={routeKey} data-route={routeKey}>{spec.column}</div>{!spec.columnWidth && <ResizeHandle {...handleProps} />}</div>}
         {spec.overlay && <div className="overlay">{spec.overlay}</div>}
