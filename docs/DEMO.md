@@ -47,10 +47,11 @@ Pause.
 
 > **"So that's what Wattson is."**
 
-> **"We check what AI datacenters actually run on."**
+> **"Wattson is a greenwashing investigation of datacenter operators. We settle every
+> renewable claim against four and a half million hours of federal meter data, and hand
+> asset managers the named utility on the other side of the gap."**
 
-Say that line flat and stop. It is the whole product in eight words, and everything after
-this is you proving it.
+Say it flat and stop. Everything after this is you proving that sentence.
 
 **Now click "What we found in the grid data →" at the bottom of the home screen.**
 
