@@ -24,7 +24,7 @@ function ShapeChart({ profile, weights, base, best, label }) {
   return (
     <div className="shape-chart">
       <svg className="shape-svg" viewBox="0 0 24 100" preserveAspectRatio="none" role="img" aria-label={`Clean share by hour${label ? ` in ${label}` : ''} with the load shape drawn over it`}>
-        {profile.map((v, h) => { const hgt = v == null ? 0 : Math.max(4, (v / max) * 100); return <rect key={h} className={`shape-bar${bright.has(h) ? ' best' : ''}`} x={h + 0.1} width={0.8} y={100 - hgt} height={hgt}><title>{`${hourWord(h)} · ${v == null ? ', ' : pct(v)} clean`}</title></rect> })}
+        {profile.map((v, h) => { const hgt = v == null ? 0 : Math.max(4, (v / max) * 100); return <rect key={h} className={`shape-bar${bright.has(h) ? ' best' : ''}`} x={h + 0.1} width={0.8} y={100 - hgt} height={hgt}><title>{`${hourWord(h)} · ${v == null ? '—' : pct(v)} clean`}</title></rect> })}
         {base && <path className="shape-line base" d={line(base)} />}
         <path className="shape-line" d={line(weights)} />
         <path className="shape-dots" d={dots(weights)} />
@@ -70,10 +70,10 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
       className="mod-shape"
       caption="Pick a load shape; the clean share is re-weighted to match it."
       lead={<Lead
-        value={share == null ? ', ' : <NumberTicker value={share * 100} format={n => `${n.toFixed(1)}%`} />}
+        value={share == null ? '—' : <NumberTicker value={share * 100} format={n => `${n.toFixed(1)}%`} />}
         t="clean"
         label={`clean power for a ${shapeWords} load, ${shown}`}
-        aside={fossil == null ? ', ' : <NumberTicker value={Math.round(fossil)} format={n => mw(n)} />}
+        aside={fossil == null ? '—' : <NumberTicker value={Math.round(fossil)} format={n => mw(n)} />}
         asideTone="fossil"
         asideLabel={`of ${mw(loadMW)} not carbon-free`}
       />}

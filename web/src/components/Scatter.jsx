@@ -16,7 +16,7 @@ import '../styles/dataviz.css'
 // container. No animation except the 150 ms hover transition in the stylesheet.
 const M = { top: 16, right: 20, bottom: 42, left: 58 }
 const R_MIN = 2.2, R_MAX = 6
-const num = v => (typeof v === 'number' && Number.isFinite(v) ? String(Number(v.toPrecision(10))) : ', ')
+const num = v => (typeof v === 'number' && Number.isFinite(v) ? String(Number(v.toPrecision(10))) : '—')
 const isNum = v => typeof v === 'number' && Number.isFinite(v)
 const sectorClass = s => (s === 'Texas' ? 'texas' : s === 'Western' ? 'west' : s === 'Eastern' ? 'east' : 'other')
 const textW = (s, px) => String(s ?? '').length * px * 0.62

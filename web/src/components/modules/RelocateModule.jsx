@@ -13,8 +13,8 @@ import { Mod, Say, Empty, Fold } from './Shell.jsx'
 // accounting, and this is where the power comes from. No chart; two numbers and a sentence.
 const shortName = c => companyByKey(c?.id || c?.ticker)?.name || c?.company || c?.ticker || 'the company'
 const shortMetro = m => String(m || '').replace(/\s*\([^)]*\)/g, '').split(',')[0].trim() || 'this site'
-const pct1 = n => (n == null || Number.isNaN(Number(n)) ? ', ' : `${Number(n).toFixed(1)}%`)
-const range = (s, d = 0) => (s?.n ? (s.min === s.max ? pct(s.min, d) : `${pct(s.min, d)}–${pct(s.max, d)}`) : ', ')
+const pct1 = n => (n == null || Number.isNaN(Number(n)) ? '—' : `${Number(n).toFixed(1)}%`)
+const range = (s, d = 0) => (s?.n ? (s.min === s.max ? pct(s.min, d) : `${pct(s.min, d)}–${pct(s.max, d)}`) : '—')
 
 export default function RelocateModule({ company }) {
   const sites = useMemo(() => (Array.isArray(company?.sites) ? company.sites : []), [company])
@@ -64,7 +64,7 @@ export default function RelocateModule({ company }) {
     >
       <div className="rl-row" role="group" aria-label="Which site to move">
         <span className="rl-k">Move</span>
-        {sites.map((s, i) => { const sh = siteShare(s, byId); return <Chip key={i} small active={i === siteIndex} dim={sh == null} onClick={() => chooseSite(i)}><span className="rl-chip" title={`${s.metro || ''}${s.serving_utility ? ` · ${s.serving_utility}` : ''}`}>{shortMetro(s.metro)} <b>{sh == null ? ', ' : pct(sh)}</b></span></Chip> })}
+        {sites.map((s, i) => { const sh = siteShare(s, byId); return <Chip key={i} small active={i === siteIndex} dim={sh == null} onClick={() => chooseSite(i)}><span className="rl-chip" title={`${s.metro || ''}${s.serving_utility ? ` · ${s.serving_utility}` : ''}`}>{shortMetro(s.metro)} <b>{sh == null ? '—' : pct(sh)}</b></span></Chip> })}
       </div>
       <div className="rl-row" role="group" aria-label="Where to move it">
         <span className="rl-k">to</span>

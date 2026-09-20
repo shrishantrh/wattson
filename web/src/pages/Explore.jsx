@@ -120,7 +120,7 @@ export default function Explore({ route }) {
   }, [visible, sel, sector, tk, mx, my])
 
   const s = data ? sentence({ n: stats.n, unit: stats.unit, enough: stats.enough, mx, my, r: stats.r, preset, sector }) : null
-  const slopeText = stats.fit.slope == null ? ', ' : `${signed(stats.fit.slope, Math.abs(stats.fit.slope) < 0.1 ? 3 : 2)} ${my.unit} per ${mx.unit === '%' ? '1%' : mx.unit === 'pts' ? 'pt' : mx.unit}`
+  const slopeText = stats.fit.slope == null ? '—' : `${signed(stats.fit.slope, Math.abs(stats.fit.slope) < 0.1 ? 3 : 2)} ${my.unit} per ${mx.unit === '%' ? '1%' : mx.unit === 'pts' ? 'pt' : mx.unit}`
   const pick = (axis, key) => go(axis === 'x' ? { x: key } : { y: key })
 
   const column = (
@@ -153,7 +153,7 @@ export default function Explore({ route }) {
           {/* result: the correlation first and large, then what it was measured on, then the sentence */}
           <div className="xp-result">
             <div className="xp-r">
-              <div className="v">{stats.r == null ? ', ' : stats.r.toFixed(2)}</div>
+              <div className="v">{stats.r == null ? '—' : stats.r.toFixed(2)}</div>
               <div className="k">Pearson r</div>
               {s.strength && <span className="xp-strength">{s.strength}</span>}
             </div>

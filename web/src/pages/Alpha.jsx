@@ -35,7 +35,7 @@ function Contract({ m }) {
       <div className="kx-track" aria-hidden="true">
         {mid != null && <div className="kx-fill" style={{ width: `${Math.max(2, Math.min(100, mid))}%` }} />}
       </div>
-      <div className="kx-px">{bid != null ? `${bid}¢` : ', '}<span className="kx-sep">/</span>{ask != null ? `${ask}¢` : ', '}</div>
+      <div className="kx-px">{bid != null ? `${bid}¢` : '—'}<span className="kx-sep">/</span>{ask != null ? `${ask}¢` : '—'}</div>
       <div className="kx-close">{close || ''}</div>
     </div>
   )

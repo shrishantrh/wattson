@@ -25,7 +25,7 @@ const sign = v => (v > 0 ? '+' : v < 0 ? '−' : '')
 const CELL_UNITS = new Set(['%', 'rank', 'score', ''])
 
 export function formatValue(v, unit = '') {
-  if (v == null || v === '') return ', '
+  if (v == null || v === '') return '—'
   if (!isNum(v)) return String(v)
   if (unit === '%') return `${v.toFixed(1)}%`
   if (unit === 'pp' || unit === 'pts') return `${sign(v)}${nf.format(Math.abs(v))}`

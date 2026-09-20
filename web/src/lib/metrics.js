@@ -14,13 +14,13 @@ const isNum = v => typeof v === 'number' && Number.isFinite(v)
 const num = v => (v == null || v === '' || Number.isNaN(Number(v)) ? null : Number(v))
 const pc = v => { const n = num(v); return n == null ? null : Math.round(n * 1000) / 10 }   // fraction -> percent, 1 dp
 
-const fmtPct = v => (isNum(v) ? `${v.toFixed(1)}%` : ', ')
-const fmtSignedPct = v => (isNum(v) ? `${signed(v, 1)}%` : ', ')
-const fmtPts = v => (isNum(v) ? `${signed(v, 1)} pts` : ', ')
-const fmtPtsYr = v => (isNum(v) ? `${signed(v, 2)} pts/yr` : ', ')
-const fmtX = v => (isNum(v) ? `${v.toFixed(2)}×` : ', ')
-const fmtScore = d => v => (isNum(v) ? v.toFixed(d) : ', ')
-const fmtRank = v => (isNum(v) ? `#${Math.round(v)}` : ', ')
+const fmtPct = v => (isNum(v) ? `${v.toFixed(1)}%` : '—')
+const fmtSignedPct = v => (isNum(v) ? `${signed(v, 1)}%` : '—')
+const fmtPts = v => (isNum(v) ? `${signed(v, 1)} pts` : '—')
+const fmtPtsYr = v => (isNum(v) ? `${signed(v, 2)} pts/yr` : '—')
+const fmtX = v => (isNum(v) ? `${v.toFixed(2)}×` : '—')
+const fmtScore = d => v => (isNum(v) ? v.toFixed(d) : '—')
+const fmtRank = v => (isNum(v) ? `#${Math.round(v)}` : '—')
 
 const night = r => r?.siting?.overnight_cf_share_2025 ?? r?.cf_share_2025?.overnight ?? r?.overnight_cf_share_2025 ?? null
 const day = r => r?.cf_share_2025?.daytime ?? null

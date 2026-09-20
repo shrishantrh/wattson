@@ -6,8 +6,8 @@ import { Mod, Lead, Empty, Fold } from './Shell.jsx'
 const fmtOne = (v, path) => (/cf_share/.test(path) ? `${(v * 100).toFixed(1)}%` : typeof v === 'number' ? v.toLocaleString('en-US', { maximumFractionDigits: 0 }) : String(v))
 // A corrected figure can be a whole monthly series; print its ends and its length, never the dump.
 const fmtVal = (v, path) => {
-  if (v == null) return ', '
-  if (Array.isArray(v)) return v.length ? `${fmtOne(v[0], path)} … ${fmtOne(v[v.length - 1], path)} (${v.length})` : ', '
+  if (v == null) return '—'
+  if (Array.isArray(v)) return v.length ? `${fmtOne(v[0], path)} … ${fmtOne(v[v.length - 1], path)} (${v.length})` : '—'
   return fmtOne(v, path)
 }
 const pretty = path => path.replace('cf_share.', 'clean share ').replace('cf_avg_mw.', 'clean MW ').replace('total_avg_mw.', 'total MW ').replace('siting.', 'siting ').replace(/_/g, ' ')

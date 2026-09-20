@@ -61,23 +61,43 @@ body *:focus-visible:focus-visible { transition: none; }
 .warn { color: var(--warn); }
 
 /* stage */
-.app { position: fixed; inset: 0; background: var(--bg); }
+/* The column's geometry lives here, in one place, and everything that has to line up with the
+   column is derived from it: the globe's left edge, the globe's own controls, the route
+   skeleton. StageProvider publishes --col-w (the live, resizable width); --col-l is the gutter
+   on the column's left and --col-gap the matching one on its right, so --stage-l is where the
+   column ends and the globe's area begins. When the globe's left edge was its own number it
+   was set to the column's WIDTH and so started one gutter inside the column, and the cards ran
+   under it. Change the column's gutters here and nothing can fall out of step again. */
+.app {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  --col-l: 24px;
+  --col-gap: 24px;
+  --stage-l: calc(var(--col-l) + var(--col-w, 420px) + var(--col-gap));
+}
 .stage { position: absolute; inset: 0; z-index: 0; }
 .globe-host { position: absolute; top: 0; bottom: 0; left: 0; right: 0; transition: left var(--dur-slow) var(--ease); }
-.globe-host.with-column { left: 420px; }
+.globe-host.with-column { left: var(--stage-l); }
 .globe-host.flat { top: 56px; bottom: 0; }
-.globe-host.flat.with-column { left: 500px; right: 24px; }
+.globe-host.flat.with-column { left: calc(var(--stage-l) + 60px); right: 24px; }
 
-/* top bar */
-.topbar { position: absolute; top: 0; left: 0; right: 0; height: 56px; z-index: 5; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; pointer-events: none; }
+/* top bar
+   Three items that must never run into each other or off the right edge: the brand, the search
+   box and the sections group. They are laid out so the search box is the only one that gives.
+   The brand and the sections group hold their size and their words stay on one line; with
+   nothing set, every one of them shrank at once below 1440 and the labels wrapped to two lines
+   in a 56px bar. The tagline is the one piece that is only decoration, so it steps out below
+   the width where it fits whole (see the media query at the end of the file). */
+.topbar { position: absolute; top: 0; left: 0; right: 0; height: 56px; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 24px; pointer-events: none; }
 .topbar > * { pointer-events: auto; }
-.brand { display: flex; align-items: baseline; gap: 12px; }
-.wordmark { font-weight: 600; font-size: var(--t-body); letter-spacing: -0.01em; }
-.tagline { font-size: var(--t-small); color: var(--muted); }
-.toplinks { display: flex; gap: 24px; font-size: var(--t-small); font-weight: 500; color: var(--ink-2); }
-.toplinks a { transition: color var(--dur-fast) var(--ease); }
+.brand { display: flex; align-items: baseline; gap: 12px; flex: none; min-width: 0; }
+.wordmark { font-weight: 600; font-size: var(--t-body); letter-spacing: -0.01em; white-space: nowrap; }
+.tagline { font-size: var(--t-small); color: var(--muted); white-space: nowrap; }
+.toplinks { display: flex; gap: 24px; flex: none; font-size: var(--t-small); font-weight: 500; color: var(--ink-2); }
+.toplinks a { white-space: nowrap; transition: color var(--dur-fast) var(--ease); }
 .toplinks a:hover, .toplinks a.on { color: var(--ink); }
-.quick { display: flex; align-items: center; gap: 8px; height: var(--h-ctl); background: var(--surface-a); border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); padding: 0 8px 0 12px; width: 380px; transition: border-color var(--dur-ui) var(--ease); }
+.quick { display: flex; align-items: center; gap: 8px; height: var(--h-ctl); background: var(--surface-a); border: 1px solid var(--line-strong); border-radius: var(--radius-ctl); padding: 0 8px 0 12px; width: 380px; flex: 0 1 380px; min-width: 160px; transition: border-color var(--dur-ui) var(--ease); }
 .quick:focus-within { border-color: var(--line-focus); }
 .quick:has(input:focus-visible) { box-shadow: var(--ring); }
 .quick input { flex: 1; background: transparent; border: 0; outline: none; font-size: var(--t-small); color: var(--ink); min-width: 0; }
@@ -132,9 +152,9 @@ body *:focus-visible:focus-visible { transition: none; }
 .foot { position: absolute; left: 0; right: 0; bottom: 16px; z-index: 4; text-align: center; font-size: var(--t-micro); color: var(--muted); pointer-events: none; }
 
 /* result column: cards 10px apart, a 5px scrollbar, nothing drawn between cards but space */
-.column { position: absolute; top: 68px; left: 24px; bottom: 20px; width: 420px; z-index: 4; overflow: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 12px; padding-right: 8px; scrollbar-width: thin; }
+.column { position: absolute; top: 68px; left: var(--col-l); bottom: 20px; width: var(--col-w, 420px); z-index: 4; overflow: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 12px; padding-right: 8px; scrollbar-width: thin; }
 .column::-webkit-scrollbar { width: 5px; }
-.column-wrap { position: absolute; top: 68px; left: 24px; bottom: 20px; z-index: 4; }
+.column-wrap { position: absolute; top: 68px; left: var(--col-l); bottom: 20px; width: var(--col-w, 420px); z-index: 4; }
 .column-wrap > .column { position: absolute; inset: 0; width: auto; left: 0; top: 0; bottom: 0; }
 .card { background: var(--surface-a); border: 1px solid var(--line-strong); border-radius: var(--radius-card); padding: 20px 20px; flex: none; min-width: 0; overflow-wrap: break-word; box-shadow: var(--shadow-sm); transition: border-color var(--dur-fast) var(--ease); }
 /* .card.raised: the next step up the ladder (popovers, the palette, the tour caption) */
@@ -381,12 +401,19 @@ a.gpin:hover .gpin-label { border-color: var(--line-focus); }
 @keyframes fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .fade-up, .stagger > * { animation: none; } .globe-host { transition: none; } [data-tip]::after { transition: none; } }
 
-/* narrow: the column keeps 24px from the viewport edge and takes the rest (the shell sets its
-   width and the globe's left edge inline, hence !important), cards drop to a 16px gutter, the
-   globe dims to 45% behind the column, and the right-edge controls step aside while one is up. */
+/* The tagline is the only optional thing in the top bar. Below this width the brand, the search
+   box and the five sections cannot all sit on one 56px line with it, and an ellipsized half of
+   a sentence is worse than no sentence: it steps out whole and the wordmark stays. */
+@media (max-width: 1439px) {
+  .tagline { display: none; }
+}
+
+/* narrow: the column keeps its gutter on both edges and takes the rest, cards drop to a 16px
+   gutter, the globe dims to 45% behind the column, and the right-edge controls step aside
+   while one is up. */
 @media (max-width: 900px) {
-  .column { left: 24px; right: 24px; width: auto; }
-  .column-wrap { left: 24px; right: 24px; width: auto !important; }
+  .column { left: var(--col-l); right: var(--col-l); width: auto; }
+  .column-wrap { left: var(--col-l); right: var(--col-l); width: auto; }
   .card { padding: 16px; }
   .globe-host.with-column, .globe-host.flat.with-column { left: 0 !important; right: 0; opacity: 0.45; }
   .app:has(.column-wrap) .stage-ctl { display: none; }

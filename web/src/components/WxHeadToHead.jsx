@@ -2,149 +2,139 @@ import { useMemo, useState } from 'react'
 import { useRegionDetails } from '../lib/data.js'
 import { caveatFor } from '../lib/findings.js'
 import { href } from '../router.js'
-import { isNum, DASH } from './WxControls.jsx'
+import { CmpHero, CmpTable } from './CmpTable.jsx'
+import CmpPicker from './CmpPicker.jsx'
+import { baOf, fGrowth, fMw, fPct1, fPts, fPtsYr, fRank, fTimes, isNum, mwAt, placeOfId, regionName } from '../lib/cmpData.js'
 import '../styles/wx.css'
+import '../styles/compare.css'
 
-// Any two of the scored regions, side by side, with the difference spelled out.
+// Any two of the scored grids, side by side, with the difference spelled out.
 //
-// The ranked list above answers "of the places I named, which is cleanest". This answers the
-// other question a site selector actually asks: "how much worse is the site I already have
-// than the one I am being sold". Both columns are read off the same export, so the difference
-// is arithmetic, not a judgement. A row either side of which is missing shows an em dash and
-// no difference, a missing figure is never drawn as a zero gap.
+// The ranked list on the compare page answers "of the places I named, which is cleanest".
+// This answers the other question a site selector actually asks: "how much worse is the site
+// I already have than the one I am being sold". Both columns are read off the same export,
+// so the third column is arithmetic, not a judgement.
+//
+// Every share row is printed with the megawatts behind it. A share falling is not clean
+// generation shrinking: PJM's clean output at night held within 100 MW while its share slid,
+// because everything around it grew. The share alone would have said the opposite.
+//
+// A zone reports demand only and inherits its parent authority's generation, so each
+// generation figure carries the id of the grid it actually describes, and the demand row
+// carries the zone's own.
 
-const pct1 = v => (isNum(v) ? `${(v * 100).toFixed(1)}%` : DASH)
-const pts1 = v => (isNum(v) ? `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v * 100).toFixed(1)} pts` : DASH)
-const ptsYr = v => (isNum(v) ? `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v * 100).toFixed(2)} pts/yr` : DASH)
-const times = v => (isNum(v) ? `${v.toFixed(2)}×` : DASH)
-const rank = v => (isNum(v) ? `#${Math.round(v)}` : DASH)
-const pctG = v => (isNum(v) ? `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(0)}%` : DASH)
-const mw0 = v => (isNum(v) ? `${Math.round(v).toLocaleString('en-US')} MW` : DASH)
-const labelOf = r => r?.c?.label || r?.name || r?.id || ''
-
-export default function WxHeadToHead({ regions = [], mw = 300, initial = [] }) {
-  const sorted = useMemo(() => [...regions].sort((x, y) => labelOf(x).localeCompare(labelOf(y))), [regions])
-  const [aId, setA] = useState(() => initial[0] || sorted[0]?.id || '')
-  const [bId, setB] = useState(() => initial[1] || sorted.find(r => r.id !== (initial[0] || sorted[0]?.id))?.id || '')
-  const details = useRegionDetails([aId, bId])
-  const A = sorted.find(r => r.id === aId) || null
-  const B = sorted.find(r => r.id === bId) || null
-  const load = Number(mw) || 300
+export default function WxHeadToHead({ regions = [], mw = 300, initial = [], value, onChange, chrome = true }) {
+  const sorted = useMemo(() => [...regions].sort((x, y) => regionName(x).localeCompare(regionName(y))), [regions])
+  const [own, setOwn] = useState(() => [
+    initial[0] || sorted[0]?.id || '',
+    initial[1] || sorted.find(r => r.id !== (initial[0] || sorted[0]?.id))?.id || '',
+  ])
+  const pair = value && value[0] ? value : own
+  const set = next => { if (onChange) onChange(next); else setOwn(next) }
+  const [aId, bId] = pair
+  const ids = useMemo(() => [...new Set([aId, bId, baOf(aId), baOf(bId)].filter(Boolean))], [aId, bId])
+  const details = useRegionDetails(ids)
+  const items = useMemo(() => sorted.map(r => ({ id: r.id, label: regionName(r), sub: placeOfId(r.id) || r.ba_name || r.name, keywords: `${r.id} ${regionName(r)} ${placeOfId(r.id)} ${r.name} ${r.ba_name}` })), [sorted])
 
   if (!sorted.length) return null
 
-  const night = r => r?.siting?.overnight_cf_share_2025 ?? r?.cf_share_2025?.overnight ?? null
-  const dem = id => details[id]?.demand?.['2025']?.overnight_avg_mw ?? null
-  const fossil = r => (isNum(night(r)) ? load * (1 - night(r)) : null)
+  const load = Number(mw) || 300
+  const side = id => {
+    const r = sorted.find(x => x.id === id) || null
+    const ba = baOf(id)
+    const night = r?.siting?.overnight_cf_share_2025 ?? r?.cf_share_2025?.overnight ?? null
+    return {
+      id, r, ba, night,
+      name: r ? regionName(r) : id,
+      isZone: !!r && (r.cf_inherited_from_ba || id !== ba),
+      gen: mwAt(details[ba]),
+      own: mwAt(details[id]),
+      allHours: r?.cf_share_2025?.all ?? null,
+      fossil: isNum(night) ? load * (1 - night) : null,
+    }
+  }
+  const a = side(aId), b = side(bId)
+  const same = aId === bId
 
-  // A region whose published history the engine has corrected (AZPS counted a plant SRP also
-  // reported) carries a caveat. Its level for 2025 is sound, but anything measured against 2019
-  // is wrong in direction as published, so those rows are marked and their difference withheld
-  // rather than printed as if the two sides were measured the same way.
+  // A grid whose published history the engine has corrected (Phoenix counted a plant SRP also
+  // reported) carries a caveat. Its 2025 level is sound; anything measured against 2019 is not
+  // on the same basis as the other column, so those differences are withheld rather than printed.
   const cavA = caveatFor(aId), cavB = caveatFor(bId)
-  const suspect = row => !!(row.history && (cavA || cavB))
+  const suspect = !!(cavA || cavB)
+  // Every clean-power figure a zone carries is its parent authority's, and so is its siting
+  // score. Two regions inside one authority therefore agree on all of them by construction,
+  // and a "0.0 pts" difference there would read as a finding when it is a definition. Those
+  // differences are withheld and the reason is said above the table, not buried under it.
+  const sameGrid = same || a.ba === b.ba
+  const byDef = 'Both sit inside one balancing authority, which reports this figure for both. The difference is zero by construction, not by measurement.'
 
-  // good: which direction is better for a datacenter siting decision. null = no direction.
-  const ROWS = [
-    { k: 'Clean at night, 2025', a: night(A), b: night(B), fmt: pct1, good: 'high', d: 'pts' },
-    { k: 'Change in that since 2019', a: A?.siting?.change_since_2019, b: B?.siting?.change_since_2019, fmt: pts1, good: 'high', d: 'pts', history: true },
-    { k: 'Trend per year (clean ÷ night demand)', a: A?.siting?.ratio_slope_per_year, b: B?.siting?.ratio_slope_per_year, fmt: ptsYr, good: 'high', d: 'ptsyr', history: true },
-    { k: 'Clean power against its own night demand', a: A?.siting?.overnight_clean_mw_over_demand, b: B?.siting?.overnight_clean_mw_over_demand, fmt: times, good: 'high', d: 'x' },
-    { k: 'Siting rank (1 is best)', a: A?.siting?.siting_rank, b: B?.siting?.siting_rank, fmt: rank, good: 'low', d: 'places', history: true },
-    { k: 'Flat-load rank of 111 (1 = most 24/7 growth)', a: A?.detection?.rank, b: B?.detection?.rank, fmt: rank, good: null, d: 'places' },
-    { k: 'Demand growth since 2019', a: A?.detection?.growth_pct, b: B?.detection?.growth_pct, fmt: pctG, good: null, d: 'pts' },
-    { k: 'Its own demand at night, 2025', a: dem(aId), b: dem(bId), fmt: mw0, good: null, d: 'mw' },
-    { k: `Of ${load.toLocaleString('en-US')} MW, run on non-carbon-free generation at night`, a: fossil(A), b: fossil(B), fmt: mw0, good: 'low', d: 'mw', hero: true },
+  const rows = [
+    { k: 'Clean at night, 2025', hint: '00:00 to 05:59 local', a: a.night, b: b.night, fmt: fPct1, diff: 'pts', good: 'high', hero: true, noDiff: sameGrid, noDiffWhy: byDef },
+    { k: 'Clean generation at night, 2025 average', a: a.gen.cleanNight, b: b.gen.cleanNight, fmt: fMw, diff: 'mw', aTag: a.ba, bTag: b.ba, noDiff: sameGrid, noDiffWhy: byDef },
+    { k: 'All generation at night, 2025 average', a: a.gen.totalNight, b: b.gen.totalNight, fmt: fMw, diff: 'mw', aTag: a.ba, bTag: b.ba, noDiff: sameGrid, noDiffWhy: byDef },
+    { k: 'Clean share, 2025, all hours', a: a.allHours, b: b.allHours, fmt: fPct1, diff: 'pts', good: 'high', noDiff: sameGrid, noDiffWhy: byDef },
+    { k: 'Clean generation, 2025 average, all hours', a: a.gen.cleanAll, b: b.gen.cleanAll, fmt: fMw, diff: 'mw', aTag: a.ba, bTag: b.ba, noDiff: sameGrid, noDiffWhy: byDef },
+    { k: 'All generation, 2025 average, all hours', a: a.gen.totalAll, b: b.gen.totalAll, fmt: fMw, diff: 'mw', aTag: a.ba, bTag: b.ba, noDiff: sameGrid, noDiffWhy: byDef },
+    { k: 'Change in clean at night since 2019', a: a.r?.siting?.change_since_2019, b: b.r?.siting?.change_since_2019, fmt: fPts, diff: 'pts', good: 'high', noDiff: sameGrid || suspect, aWarn: !!cavA, bWarn: !!cavB, aTitle: cavA || undefined, bTitle: cavB || undefined, noDiffWhy: suspect ? 'One side’s published history is corrected, so the two are not on the same basis.' : byDef },
+    { k: 'Trend per year, clean power against night demand', a: a.r?.siting?.ratio_slope_per_year, b: b.r?.siting?.ratio_slope_per_year, fmt: fPtsYr, diff: 'ptsyr', good: 'high', noDiff: sameGrid || suspect, aWarn: !!cavA, bWarn: !!cavB, noDiffWhy: suspect ? 'One side’s published history is corrected, so the two are not on the same basis.' : byDef },
+    { k: 'Clean power against its own night demand', a: a.r?.siting?.overnight_clean_mw_over_demand, b: b.r?.siting?.overnight_clean_mw_over_demand, fmt: fTimes, diff: 'x', good: 'high', noDiff: sameGrid, noDiffWhy: byDef },
+    { k: 'Siting rank, 1 is best', a: a.r?.siting?.siting_rank, b: b.r?.siting?.siting_rank, fmt: fRank, diff: 'places', good: 'low', noDiff: sameGrid, noDiffWhy: byDef },
+    { k: 'Flat-load rank of 111', hint: '1 is where 24/7 load is landing hardest', a: a.r?.detection?.rank, b: b.r?.detection?.rank, fmt: fRank, diff: 'places', noDiff: same },
+    { k: 'Demand growth since 2019', a: a.r?.detection?.growth_pct, b: b.r?.detection?.growth_pct, fmt: fGrowth, diff: 'pct', noDiff: same },
+    { k: 'Its own demand at night, 2025 average', hint: 'the region’s own meter, never the parent’s', a: a.own.demandNight, b: b.own.demandNight, fmt: fMw, diff: 'mw', aTag: a.id, bTag: b.id, noDiff: same },
+    { k: `Of ${fMw(load)} of flat load, run at night on generation that is not carbon-free`, a: a.fossil, b: b.fossil, fmt: fMw, diff: 'mw', good: 'low', hero: true, noDiff: sameGrid, noDiffWhy: byDef },
   ]
 
-  const deltaText = row => {
-    if (suspect(row)) return DASH
-    if (!isNum(row.a) || !isNum(row.b)) return DASH
-    const d = row.a - row.b
-    const sign = d > 0 ? '+' : d < 0 ? '−' : ''
-    const m = Math.abs(d)
-    if (row.d === 'pts') return `${sign}${(row.fmt === pctG ? m : m * 100).toFixed(1)} pts`
-    if (row.d === 'ptsyr') return `${sign}${(m * 100).toFixed(2)} pts/yr`
-    if (row.d === 'x') return `${sign}${m.toFixed(2)}×`
-    if (row.d === 'mw') return `${sign}${Math.round(m).toLocaleString('en-US')} MW`
-    return `${sign}${Math.round(m)}`
-  }
-  const deltaTone = row => {
-    if (suspect(row) || !isNum(row.a) || !isNum(row.b) || !row.good || row.a === row.b) return ''
-    const aBetter = row.good === 'high' ? row.a > row.b : row.a < row.b
-    return aBetter ? 'pos' : 'neg'
-  }
+  const gap = isNum(a.night) && isNum(b.night) ? a.night - b.night : null
+  const cleaner = gap == null || gap === 0 ? null : gap > 0 ? a : b
+  const verdict = same
+    ? `Both sides are ${a.name}, so every row is the same figure twice. Pick a second grid and the difference appears in the third column.`
+    : cleaner
+      ? `${cleaner.name} runs ${Math.abs(gap * 100).toFixed(1)} points cleaner at night on the 2025 mix. Siting ${fMw(load)} there instead takes ${fMw(Math.abs(a.fossil - b.fossil))} of that load off generation that is not carbon-free, in every night hour of the year.`
+      : isNum(a.night) && isNum(b.night)
+        ? 'The two run on the same clean share at night, so the choice between them turns on the rows below.'
+        : 'Both columns are read off the same export, so the third column is arithmetic.'
 
-  const nA = night(A), nB = night(B)
-  const gap = isNum(nA) && isNum(nB) ? Math.abs(nA - nB) : null
-  const cleaner = isNum(nA) && isNum(nB) ? (nA > nB ? A : nA < nB ? B : null) : null
-  const fossilGap = isNum(fossil(A)) && isNum(fossil(B)) ? Math.abs(fossil(A) - fossil(B)) : null
-  const zones = [A, B].filter(r => r?.cf_inherited_from_ba)
+  const zones = [a, b].filter(s => s.isZone)
 
   return (
-    <div>
-      <p className="note">Pick any two of the {regions.length} scored regions. Everything below is read from the same export for both, so the third column is arithmetic.</p>
-      <div className="wx-h2h">
-        <label className="wx-group"><span className="wx-k">left</span>
-          <select className="field" value={aId} onChange={e => setA(e.target.value)} aria-label="First region">
-            {sorted.map(r => <option key={r.id} value={r.id}>{labelOf(r)}</option>)}
-          </select>
-        </label>
-        <button type="button" className="btn wx-swap" onClick={() => { setA(bId); setB(aId) }} aria-label="Swap the two regions" title="Swap">&#8646;</button>
-        <label className="wx-group"><span className="wx-k">right</span>
-          <select className="field" value={bId} onChange={e => setB(e.target.value)} aria-label="Second region">
-            {sorted.map(r => <option key={r.id} value={r.id}>{labelOf(r)}</option>)}
-          </select>
-        </label>
-      </div>
-
-      {aId === bId ? (
-        <p className="wx-none">That is the same region on both sides. Pick a second one and the difference appears here.</p>
-      ) : (
-        <>
-          <table className="wx-delta">
-            <thead>
-              <tr>
-                <th scope="col">Measure</th>
-                <th scope="col">{labelOf(A)}</th>
-                <th scope="col">{labelOf(B)}</th>
-                <th scope="col">left &minus; right</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ROWS.map(row => (
-                <tr key={row.k} className={row.hero ? 'hero' : ''}>
-                  <td>{row.k}</td>
-                  <td className={`a ${row.history && cavA ? 'warn' : ''}`} title={row.history && cavA ? cavA : undefined}>{isNum(row.a) ? row.fmt(row.a) : DASH}</td>
-                  <td className={`b ${row.history && cavB ? 'warn' : ''}`} title={row.history && cavB ? cavB : undefined}>{isNum(row.b) ? row.fmt(row.b) : DASH}</td>
-                  <td className={`d ${deltaTone(row)}`} title={suspect(row) ? 'Withheld: one side’s published history is corrected, so the two are not measured on the same basis.' : undefined}>{deltaText(row)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <p className="note" style={{ marginTop: 12, color: 'var(--ink-2)' }}>
-            {cleaner
-              ? <><b style={{ color: 'var(--ink)' }}>{labelOf(cleaner)}</b> runs {(gap * 100).toFixed(1)} points cleaner at night on the 2025 mix. Siting {load.toLocaleString('en-US')} MW there instead takes <b style={{ color: 'var(--ink)' }}>{Math.round(fossilGap).toLocaleString('en-US')} MW</b> of that load off generation that is not carbon-free, in every night hour of the year.</>
-              : isNum(nA) && isNum(nB) ? 'The two run on the same clean share at night, so the choice between them turns on the other rows.' : 'One of these regions has no published clean share at night, so the night comparison cannot be made.'}
-            {' '}Cyan marks the row where the left-hand grid is the better of the two for a flat load; ember, the worse.
-          </p>
-          {(cavA || cavB) && (
-            <div className="banner" style={{ marginTop: 10 }}>
-              <b>{[cavA && labelOf(A), cavB && labelOf(B)].filter(Boolean).join(' and ')}</b>: {cavA || cavB} The rows measured against 2019 are shown in amber and their difference is withheld, because the two sides are not on the same basis. The 2025 level, and the megawatts derived from it, stand.
-            </div>
-          )}
-          {zones.length > 0 && (
-            <p className="note" style={{ marginTop: 8 }}>
-              {zones.map(z => labelOf(z)).join(' and ')} {zones.length === 1 ? 'reports' : 'report'} demand only, so {zones.length === 1 ? 'its' : 'their'} generation figures above are the whole parent grid&rsquo;s, not the zone&rsquo;s.
-            </p>
-          )}
-          <p className="wx-row" style={{ marginTop: 10 }}>
-            <a className="chip sm" href={href.region(aId)}>Open {labelOf(A)}</a>
-            <a className="chip sm" href={href.region(bId)}>Open {labelOf(B)}</a>
-          </p>
-        </>
+    <div className="cmp-h2h">
+      {chrome && (
+        <div className="cmp-sides">
+          <CmpPicker side="left" label="left" items={items} value={aId} onChange={id => set([id, bId])} disabledId={bId} />
+          <button type="button" className="cmp-swap" onClick={() => set([bId, aId])} aria-label="Swap the two grids" title="Swap sides">&#8646;</button>
+          <CmpPicker side="right" label="right" items={items} value={bId} onChange={id => set([aId, id])} disabledId={aId} />
+        </div>
       )}
+
+      <CmpHero
+        a={{ name: a.name, href: href.region(aId), meta: aId, value: fPct1(a.night), label: 'clean at night, 2025', mw: `${fMw(a.gen.cleanNight)} clean of ${fMw(a.gen.totalNight)} at night in ${a.ba}`, tone: isNum(a.night) && a.night >= 0.5 ? 'clean' : 'fossil' }}
+        b={{ name: b.name, href: href.region(bId), meta: bId, value: fPct1(b.night), label: 'clean at night, 2025', mw: `${fMw(b.gen.cleanNight)} clean of ${fMw(b.gen.totalNight)} at night in ${b.ba}`, tone: isNum(b.night) && b.night >= 0.5 ? 'clean' : 'fossil' }}
+        verdict={verdict}
+      />
+      <CmpTable rows={rows} aLabel={a.name} bLabel={b.name} />
+      <div className="cmp-notes">
+        <p>Cyan marks a row where the left-hand grid is the better of the two for a flat load, ember where it is worse. A row with no direction, such as which grid grew faster, is left uncolored.</p>
+        {sameGen && !same && (
+          <p>Both grids sit inside {a.ba}, so the generation rows are the same figure twice by construction. What differs is the demand each one meters and where it ranks.</p>
+        )}
+        {zones.length > 0 && (
+          <p>
+            {zones.map(z => `${z.name} (${z.id})`).join(' and ')} {zones.length === 1 ? 'reports' : 'report'} demand only, so the generation rows above carry the parent authority&rsquo;s name
+            {' '}({[...new Set(zones.map(z => z.ba))].join(', ')}), and the demand row carries the zone&rsquo;s own.
+          </p>
+        )}
+        <p>Average mix inside each grid&rsquo;s footprint, not marginal emissions and not consumption: imports are not allocated.</p>
+        {(cavA || cavB) && (
+          <p className="cmp-warn">
+            <b>{[cavA && a.name, cavB && b.name].filter(Boolean).join(' and ')}:</b> {cavA || cavB} Rows measured against 2019 are marked in amber and their difference is withheld. The 2025 level, and the megawatts derived from it, stand.
+          </p>
+        )}
+        <p className="cmp-links">
+          <a className="chip sm" href={href.region(aId)}>Open {a.name}</a>
+          <a className="chip sm" href={href.region(bId)}>Open {b.name}</a>
+        </p>
+      </div>
     </div>
   )
 }

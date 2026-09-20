@@ -24,7 +24,7 @@ const LOAD_MW = 300
 const COLUMN = 460
 const pctFmt = n => `${n.toFixed(1)}%`
 const mwFmt = n => n0(n)
-const ptsValue = x => (x == null ? ', ' : pts1(x).replace(' pts', ''))
+const ptsValue = x => (x == null ? '—' : pts1(x).replace(' pts', ''))
 
 function NotFoundState({ label, error }) {
   const avail = (error?.available || []).filter(Boolean)

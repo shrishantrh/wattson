@@ -2,17 +2,21 @@
    ≤ 900px (phones, portrait tablets): the globe is a dim background, the landing stacks, the
    column becomes a bottom sheet, the right-edge controls move under the top bar.
    901–1100px (landscape tablets): a 380px column with the globe beside it.
-   Console.jsx sets `left` on .globe-host and `width` on .column-wrap inline, so those two
-   properties are the only !important rules here. Colors come from tokens.css only. */
+   The column's width is one custom property, --col-w on .app; base.css derives the column, the
+   globe's left edge and the globe's controls from it. StageProvider publishes it as an inline
+   style, so pinning it to a band's width is the one !important rule here. Colors come from
+   tokens.css only. */
 
 /* ---- tablet band: 901–1100px ---- */
 @media (min-width: 901px) and (max-width: 1100px) {
-  .tagline { display: none; }
-  .quick { width: 260px; }
-  .toplinks { gap: 16px; }
-  .column-wrap, .column-wrap[style*="width"] { width: 380px !important; }
-  .globe-host.with-column { left: 380px !important; }
-  .globe-host.flat.with-column { left: 420px !important; right: 12px; }
+  /* The top bar keeps all five sections on one line here by giving up the search box's width
+     and the group's own "Sections" heading; the nav still carries that name to a screen reader. */
+  .quick { width: 260px; flex-basis: 260px; }
+  .topbar .toplinks-label { display: none; }
+  /* A fixed column at this width, and a tighter gutter to it: the globe and its controls
+     follow --col-w, so they cannot be left behind at whatever width the reader last dragged. */
+  .app { --col-w: 380px !important; --col-gap: 16px; }
+  .globe-host.flat.with-column { right: 12px; }
   .resize-handle { display: none; }
 }
 
@@ -43,7 +47,7 @@
 
   /* stage controls: a horizontal group at the top right, under the top bar (base.css hides
      them while a column is up; the same selector shows them again here) */
-  .stage-ctl, .app:has(.column-wrap) .stage-ctl { display: flex; top: calc(var(--m-top) + 6px); right: max(12px, env(safe-area-inset-right, 0px)); transform: none; flex-direction: row; gap: 6px; }
+  .app .stage-ctl, .app:has(.column-wrap) .stage-ctl { display: flex; top: calc(var(--m-top) + 6px); right: max(12px, env(safe-area-inset-right, 0px)); transform: none; flex-direction: row; gap: 6px; }
   .stage-ctl .gap { height: auto; width: 4px; }
   .stage-ctl button { width: 36px; height: 36px; }
   [data-tip-side="left"]::after { right: auto; left: 50%; top: calc(100% + 6px); bottom: auto; transform: translateX(-50%) translateY(-2px); }

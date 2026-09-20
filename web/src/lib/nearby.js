@@ -21,9 +21,9 @@ export const milesToKm = mi => Number(mi) * KM_PER_MILE
 export const kmToMiles = km => Number(km) / KM_PER_MILE
 
 const num = x => (x == null || x === '' ? null : Number.isFinite(Number(x)) ? Number(x) : null)
-const n0 = x => (x == null || !Number.isFinite(Number(x)) ? ', ' : Math.round(Number(x)).toLocaleString('en-US'))
-const pct0 = x => (x == null ? ', ' : `${Math.round(x * 100)}%`)
-const pct1 = x => (x == null ? ', ' : `${(x * 100).toFixed(1)}%`)
+const n0 = x => (x == null || !Number.isFinite(Number(x)) ? '—' : Math.round(Number(x)).toLocaleString('en-US'))
+const pct0 = x => (x == null ? '—' : `${Math.round(x * 100)}%`)
+const pct1 = x => (x == null ? '—' : `${(x * 100).toFixed(1)}%`)
 // Two shares that round to the same whole percent are shown with one decimal, so "39% against 39%" cannot happen.
 const sharePair = (a, b) => (pct0(a) === pct0(b) ? [pct1(a), pct1(b)] : [pct0(a), pct0(b)])
 
@@ -48,7 +48,7 @@ export const coordsOf = r => {
   return null
 }
 export const shareOf = r => { const s = num(r?.siting?.overnight_cf_share_2025) ?? num(r?.cf_share_2025?.overnight); return s == null ? null : Math.min(1, Math.max(0, s)) }
-export const labelOf = r => r?.c?.label || r?.name || r?.id || ', '
+export const labelOf = r => r?.c?.label || r?.name || r?.id || '—'
 export const placeOf = r => r?.c?.place || r?.name || r?.ba_name || null
 export const gridIdOf = id => String(id || '').split('/')[0]
 export const realFlags = r => (Array.isArray(r?.data_flags) ? r.data_flags.filter(f => !INHERIT_NOTE.test(String(f))) : [])

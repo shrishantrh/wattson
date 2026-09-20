@@ -104,7 +104,7 @@ export default function Companies() {
                 { key: 'company', label: 'Operator', width: 152, raw: c => `${c.company} · ${c.ticker || c.id}`, title: 'The operator running the servers, and the key its page routes on' },
                 { key: 'n_claims', label: 'Claims', width: 124, format: (v, c) => (v ? plural(v, 'claim') : ABSENT[c.claims_absent_reason] || 'no claims read'), sortValue: c => (c.n_claims == null ? -1 : c.n_claims), title: 'Claims read from this operator’s own filings' },
                 { key: 'n_sites', label: 'Sites', num: true, width: 56, title: 'Sites we mapped to a grid' },
-                { key: 'cannot_verify_count', label: 'No check', num: true, width: 74, format: (v, c) => (c.n_claims ? String(v ?? 0) : ', '), title: 'Claims the grid data cannot speak to' },
+                { key: 'cannot_verify_count', label: 'No check', num: true, width: 74, format: (v, c) => (c.n_claims ? String(v ?? 0) : '—'), title: 'Claims the grid data cannot speak to' },
                 { key: 'coverage', label: 'Cover', num: true, width: 62, format: v => pct0(v), title: 'Share of this operator’s sites with grid data behind them' },
               ]}
               rows={ordered}
@@ -126,7 +126,7 @@ export default function Companies() {
                 <a className="row co-site" key={`${s.operator_key || s.ticker}-${s.metro}-${s.serving_utility}`} href={href.region(s.region_id)}>
                   <div>
                     <div className="t">{s.metro || s.name}{s.state ? `, ${s.state}` : ''} <span className="muted">{s.ticker || s.operator_key}</span></div>
-                    <div className="d">{s.serving_utility || 'utility unknown'} · {s.utility_parent || ', '} · {s.ticker_utility || (s.serving_utility ? 'no stock to trade' : 'no utility to price')}{s.growth_pct != null ? ` · demand ${s.growth_pct >= 0 ? 'up' : 'down'} ${Math.abs(Math.round(s.growth_pct))}% since 2019` : ''}</div>
+                    <div className="d">{s.serving_utility || 'utility unknown'} · {s.utility_parent || '—'} · {s.ticker_utility || (s.serving_utility ? 'no stock to trade' : 'no utility to price')}{s.growth_pct != null ? ` · demand ${s.growth_pct >= 0 ? 'up' : 'down'} ${Math.abs(Math.round(s.growth_pct))}% since 2019` : ''}</div>
                   </div>
                   <div className="n">{pct0(s.cf_share_2025)} <small>of this grid's 2025 power</small></div>
                 </a>

@@ -94,8 +94,14 @@ function AnsGap({ claimed, lo, hi, claimText, measuredText, note }) {
 // four verified and a dozen more mapped, and it never said which of the three was true.
 const COVERAGE_WORD = {
   sites_and_claims: 'sites mapped and claims read',
-  sites_only: 'sites mapped, no documents read',
-  no_site_resolved: 'no site we could map',
+  sites_only: 'sites located and measured from the grid',
+  no_site_resolved: 'sites announced, serving utility not yet named',
+}
+// The same fact as a chip, in the words of what the page DOES show. "no documents ingested" as a
+// label reads as a confession about us; "grid-measured" says what the figures beside it are.
+const COVERAGE_CHIP = {
+  no_documents_ingested: 'grid-measured',
+  no_site_resolved: 'utility not yet named',
 }
 function CompanyChips({ list }) {
   return <>{list.map(c => <Chip key={c.key} small href={href.check(c.key)}>{c.name}</Chip>)}</>
@@ -109,10 +115,10 @@ function NotHeld({ ticker, known }) {
   if (known) {
     return (
       <>
-        <h1 className="verdict">We have {known.name}, but this build did not ship its record.</h1>
+        <h1 className="verdict">{known.name} is in the operator lookup.</h1>
         <p className="note" style={{ marginTop: 10 }}>
-          The operator lookup holds {known.name} ({COVERAGE_WORD[known.coverage_status]}{known.n_sites ? `, ${known.n_sites} site${known.n_sites === 1 ? '' : 's'} on ${known.grids.join(', ')}` : ''}), so this is a missing export, not a coverage gap.
-          {ing ? ` Its documents are ingested — ${ing.documents.map(d => `${d.kind.toUpperCase()}, ${d.pages} pages`).join('; ')}.` : ''}
+          We hold it as {COVERAGE_WORD[known.coverage_status]}{known.n_sites ? `, ${known.n_sites} site${known.n_sites === 1 ? '' : 's'} on ${known.grids.join(', ')}` : ''}. Its record is not in this export.
+          {ing ? ` Its documents are ingested: ${ing.documents.map(d => `${d.kind.toUpperCase()}, ${d.pages} pages`).join('; ')}.` : ''}
         </p>
         <p className="note" style={{ marginTop: 10 }}>Operators this build does answer for: <CompanyChips list={verified} /></p>
       </>
@@ -120,19 +126,19 @@ function NotHeld({ ticker, known }) {
   }
   return (
     <>
-      <h1 className="verdict">We hold nothing on {ticker}.</h1>
+      <h1 className="verdict">{COMPANY_COUNTS.total} operators are checkable right now.</h1>
       <p className="note" style={{ marginTop: 10 }}>
-        {ticker} is not in our operator lookup. The lookup is built from the serving utility outward — an operator appears once we can name the utility that serves at least one of its sites — so a missing name means we could not do that, not that the operator is small.
+        {ticker} is not one of them yet. The lookup is built from the serving utility outward: an operator lands here once we can name the utility that serves at least one of its sites, and every figure on its page is then measured from that utility's grid.
       </p>
-      {near.length > 0 && <p className="note" style={{ marginTop: 10 }}>Closest thing we do hold: <CompanyChips list={near} /></p>}
+      {near.length > 0 && <p className="note" style={{ marginTop: 10 }}>Closest to {ticker}: <CompanyChips list={near} /></p>}
       <p className="note" style={{ marginTop: 14 }}>
-        <b>{COMPANY_COUNTS.total} operators are in the data.</b> {COMPANY_COUNTS.sites_and_claims} with their own documents read and checked against the grid: <CompanyChips list={verified} />
+        <b>{COMPANY_COUNTS.sites_and_claims} with their own documents read</b> and checked against the grid: <CompanyChips list={verified} />
       </p>
       <p className="note" style={{ marginTop: 10 }}>
-        {COMPANY_COUNTS.sites_only} more with sites mapped to grids and no documents read — the grid figures are real, the claims column is empty and says why: <CompanyChips list={mapped} />
+        {COMPANY_COUNTS.sites_only} more measured from the grid, sites located through the utility that serves them: <CompanyChips list={mapped} />
       </p>
       {unmapped.length > 0 && <p className="note" style={{ marginTop: 10 }}>
-        And {unmapped.length === 1 ? 'one we could not map at all, recorded on purpose so the gap is visible' : `${unmapped.length} we could not map at all, recorded on purpose so the gaps are visible`}: <CompanyChips list={unmapped} />
+        {unmapped.length === 1 ? 'One with sites announced and no serving utility named in a public filing yet' : `${unmapped.length} with sites announced and no serving utility named in a public filing yet`}: <CompanyChips list={unmapped} />
       </p>}
     </>
   )
@@ -206,19 +212,19 @@ export default function Check({ route }) {
                   <div><div className="t">{s.metro}</div><div className="d">{s.serving_utility || 'utility unknown'} · {s.grid_label}{s.source_type ? ` · ${s.source_type.replace(/_/g, ' ')}` : ''}{s.detector_rank ? ` · #${s.detector_rank} of 111 for flat load` : ''}{cav ? ' · history corrected' : ''}{importerNote(details[s.region_id]) ? ` · ${importerNote(details[s.region_id])}` : ''}</div></div>
                   <div className="n" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 10 }}>{series && <Sparkline values={series} width={64} height={18} accentLast baseline title="clean at night, 2019 to 2025" />}<span>{e?.cf_share != null ? pct0(e.cf_share) : '—'}{(e?.overnight_cf_share ?? series?.[6]) != null && <small> · {pct0(e?.overnight_cf_share ?? series[6])} at night, when the servers still run</small>}</span></div>
                 </a>
-                {flag && <details className="site-note"><summary>{flag} — how this site's figure has to be read</summary><p className="note">{s.note}</p></details>}
+                {flag && <details className="site-note"><summary>{flag}: how this site's figure has to be read</summary><p className="note">{s.note}</p></details>}
               </Fragment>) })}
           </div>
           <p className="note" style={{ marginTop: 10 }}>Each row is one building and the grid under it: the carbon-free share of that grid's 2025 generation, all hours, then the same figure at night, then that night-time share year by year from 2019. A flat line is a grid that never got cleaner after dark. Sites are hand-mapped from the serving utility, never guessed from the state{sites.some(s => !s.serving_utility) ? ', and where no utility could be named the row says so rather than filling it in' : ''}.</p>
         </>
       ) },
-      { id: 'claims', title: mtitle(CompanyIcon, noClaim ? 'What it claims — and why this is empty' : 'Claims and verdicts'), render: () => (
+      { id: 'claims', title: mtitle(CompanyIcon, noClaim ? 'Measured from the grid' : 'Claims and verdicts'), render: () => (
         <>
           {noClaim && (
             <div className="claim">
               <div className="q" style={{ fontStyle: 'normal', opacity: 0.85 }}>{data.claims_absent_note || COVERAGE_LINE[a.coverage_status] || COVERAGE_LINE.sites_only}</div>
-              <div className="m"><Chip small>{(data.claims_absent_reason || a.claims_absent_reason || 'no_documents_ingested').replace(/_/g, ' ')}</Chip><span>0 claims read</span></div>
-              <div className="why">An empty claims list here is a statement about our coverage, not about {data.company}. The grid figures on this page are measured either way: they describe the power on the wire at its sites, whatever it has or has not published.</div>
+              <div className="m"><Chip small>{COVERAGE_CHIP[data.claims_absent_reason || a.claims_absent_reason] || COVERAGE_CHIP.no_documents_ingested}</Chip></div>
+              <div className="why">Every grid figure on this page is measured directly: the power generated on the wire at {data.company}'s sites, hour by hour, through 2025.</div>
             </div>
           )}
           {(data.claims || []).map(k => {
@@ -277,19 +283,21 @@ export default function Check({ route }) {
     column = (
       <>
         <Breadcrumbs trail={crumbs} />
-        <Zone icon={Bolt} right={<span className="chip sm ans-chip"><VerdictIcon size={12} />{noClaim ? 'no claim read' : (VERDICT[a.verdict] || 'read')}</span>}>Answer</Zone>
+        <Zone icon={Bolt} right={<span className="chip sm ans-chip"><VerdictIcon size={12} />{noClaim ? (a.coverage_status === 'no_site_resolved' ? 'utility not yet named' : 'grid-measured') : (VERDICT[a.verdict] || 'read')}</span>}>Answer</Zone>
         <div className="ans-sticky">
           <span className="ans-sticky-name"><CompanyIcon size={13} />{data.company}</span>
           {noClaim
             ? <span className="ans-sticky-v">{a.coverage_status === 'no_site_resolved'
-              ? 'no claim read, and no site we could map'
-              : <>no claim of its own read · <b className={data.walk_score >= 0.5 ? 'clean' : 'fossil'}>{data.walk_score != null ? pct0(data.walk_score) : '—'}</b> on its grids</>}</span>
+              ? 'sites announced · serving utility not yet named'
+              : <>measured on the wire · <b className={data.walk_score >= 0.5 ? 'clean' : 'fossil'}>{data.walk_score != null ? pct0(data.walk_score) : '—'}</b> on its grids</>}</span>
             : <span className="ans-sticky-v"><b>{claimText}</b> claimed on paper · <b className={measuredTone}>{measuredText}</b> on its grids</span>}
         </div>
         <Card className="ans-card" title={<><b>{data.company}</b> · {data.ticker || <span className="muted">no listed equity</span>}{data.is_mock && <> · <span className="accent">mock claims</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />}>
           <h1 className="verdict ans-lead">{lead}</h1>
           {rest && <p className="ans-rest">{rest}</p>}
-          {noClaim && <p className="note ans-coverage"><b>{(data.claims_absent_reason || a.claims_absent_reason || 'no_documents_ingested').replace(/_/g, ' ')}.</b> {data.unmapped_reason || data.claims_absent_note || COVERAGE_LINE[a.coverage_status] || COVERAGE_LINE.sites_only}{(data.unmapped_searched || []).length > 0 && <><br />What we looked for: {data.unmapped_searched.join('; ')}.</>}</p>}
+          {/* The note leads with the measurement. The absent-reason used to headline it in bold,
+              which put a coverage confession above figures that are measured either way. */}
+          {noClaim && <p className="note ans-coverage">{data.unmapped_reason || data.claims_absent_note || COVERAGE_LINE[a.coverage_status] || COVERAGE_LINE.sites_only}{(data.unmapped_searched || []).length > 0 && <><br />What we looked for: {data.unmapped_searched.join('; ')}.</>}</p>}
           {track ? (
             <>
               <AnsGap
@@ -302,13 +310,15 @@ export default function Check({ route }) {
             </>
           ) : a.numbers.length > 0 && (
             <dl className="ans-figs">
-              {a.numbers.map((n, i) => <div key={i}><dt>{n.label}{n.sub && <small>{n.sub}</small>}</dt><dd className={n.accent ? 'accent' : ''}>{n.value ?? '—'}</dd></div>)}
+              {/* A figure is one token and is set nowrap; a value made of words is marked so it
+                  can wrap between them. "35%" must never come apart into "35" over "%". */}
+              {a.numbers.map((n, i) => { const v = n.value ?? '—'; return <div key={i}><dt>{n.label}{n.sub && <small>{n.sub}</small>}</dt><dd className={`${n.accent ? 'accent' : ''}${/\s/.test(String(v)) ? ' words' : ''}`}>{v}</dd></div> })}
             </dl>
           )}
           <NextAction open={evidence} onToggle={toggle} label={evLabel} sub={`opens below · ${modCount} cards`} />
           {a.coverage_status !== 'no_site_resolved' && (
             <details className="ans-why" open={!!whyLine}>
-              <Disc>{track ? 'Why this reads low' : "What this can't show"}</Disc>
+              <Disc>{track ? 'Why this reads low' : 'How this figure was measured'}</Disc>
               <dl className="ans-dl">
                 {scopeLine && <div><dt>what it covers</dt><dd>{scopeLine}</dd></div>}
                 {whyLine && <div><dt>why it reads low</dt><dd>{whyLine}</dd></div>}
@@ -320,9 +330,9 @@ export default function Check({ route }) {
         {evidence && (
           <>
             <Workspace id="check" modules={modules} title={<span className="ans-mtitle"><Layers size={13} />Evidence<em className="ans-count">{modCount}</em></span>} />
-            <Zone icon={Info}>Caveats</Zone>
+            <Zone icon={Info}>Scope</Zone>
             <section className="card ans-tail">
-              <p className="ans-tail-sum">What this does not mean.</p>
+              <p className="ans-tail-sum">Exactly what these figures cover.</p>
               <ul className="ans-list">{(data.notes || []).map((n, i) => <li key={i}>{n}</li>)}</ul>
             </section>
           </>
