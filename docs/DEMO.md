@@ -122,21 +122,47 @@ Never introduce these as features. Each one answers a doubt they already have.
 
 ---
 
-## THE SCORE · answers *"how did you find them?"*
+## THE SCORES · there are THREE. Name which one, never just say "score".
+
+| name it | describes | example | where it is |
+|---|---|---|---|
+| **Walk score** | a **company** | Google **46%** | company pages |
+| **Talk score** | a **company** | Google **0.405** | company pages |
+| **Rank** | a **grid region** | N. Virginia **rank 6 of 111** | Method, Data, region pages |
+
+---
+
+### Walk score · USE THIS ONE. It is one sentence and you cannot get it wrong.
+
+> **"We take each of Google's ten datacenters, look up how clean the grid it sits on actually
+> was in 2025, and average those ten numbers. That's 46%."**
+
+A plain average. If pushed: *"Unweighted, so a big site counts the same as a small one. And
+grid only, so contracts and certificates are excluded. It's what the wires carried."*
+
+### Talk score · only in the pairing
+
+> **"Talk is what they said. Walk is what the wires did. Google says 100%, walks 46%."**
+
+That is the only place two scores belong in one sentence.
+
+### Rank · a different thing entirely, about places not companies
+
+This answers *"how did you find the regions?"*, not *"how clean is this company?"*
 
 **Open:**
 > **"We had to find datacenters without a list of datacenters."**
 
-**Land:**
-> **"So we scored every grid on three things you'd only see if a customer moved in that
-> never turns off. Are the nights growing as fast as the days. Is it growing faster than its
-> neighbours on the same grid. And is the daily demand curve flattening out."**
->
-> **"Only an always-on customer does all three. It never reads a press release."**
+**Land, in words, never the formula:**
+> **"So we scored every grid on three things you'd only see if a customer moved in that never
+> turns off. Are the nights growing as fast as the days. Is it growing faster than its
+> neighbours on the same grid. Is the daily demand curve flattening. Only an always-on
+> customer does all three."**
 
-**If they lean in:** the formula's on the Method tab. `z(overnight excess) + z(neighbour
-divergence) + 0.5 × z(load factor change)`. The z puts three different units on one scale.
-Half weight on the third because it hangs on a single peak hour.
+**If they want the actual formula:** say *"it's on the Method tab"* and click it. **Do not
+recite z-scores.** If they ask why robust statistics, one sentence then move on:
+*"ERCOT's two zones grew 95 and 116 percent; without it those outliers swamp everything
+else."*
 
 ---
 
