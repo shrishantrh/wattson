@@ -239,6 +239,41 @@ If they want the limits they will ask, and you have them.
 
 ---
 
+# THE TECH STACK, IF THEY ASK
+
+Short answers. Do not volunteer this, it is not what wins.
+
+**"What's it built with?"**
+> **"Python for the data work, pandas and pyarrow over parquet. FastAPI for the API. React
+> and Vite for the front end. Deployed as a static build on GitHub Pages with the API on
+> Fly."**
+
+**"How big is the data?"**
+> **"Four and a half million hourly rows. We pull it from PUDL on S3, which is where the
+> federal energy data is published in parquet."**
+
+**"What's the AI stack?"**
+> **"OpenAI for reading documents and for the question box, which is a tool-calling loop over
+> ten typed tools. Elasticsearch indexes the 354 documents so every quote comes back with its
+> page and source. Grok narrates the day-versus-night screen."**
+
+**"What about the machine learning?"**
+> **"scikit-learn. Gradient boosting and logistic regression for the supervised check,
+> k-means and PCA for the clustering, and ruptures for changepoint detection. All of it in
+> `engine/`, all seeded, and the raw results are committed as JSON so anyone can re-run
+> them."**
+
+**"Does it need a server?"**
+> **"No. Every screen except the question box is a static build with the data baked in, so
+> it runs with no network at all. That was deliberate."**
+
+**If they want to see the code:** `github.com/shrishantrh/wattson`. The analysis modules are
+`engine/stats`, `engine/ml`, `engine/shape`, `engine/weather`, `engine/emissions` and
+`engine/plants`. The frozen detector is `scripts/l3_detector.py`.
+
+
+---
+
 # THE ML AND THE AI, IF YOU GET THE CHANCE
 
 Two separate things, and keep them separate.

@@ -57,7 +57,7 @@ export default function CmpCompany({ aKey, bKey, regionsById, regionsLoading }) 
     { k: 'Datacenter sites mapped to a grid', a: A.nSites, b: B.nSites, fmt: fInt, diff: 'n' },
     { k: 'Sites with grid data behind them', aText: covWords(A), bText: covWords(B), noDiff: true },
     { k: 'Claims read from its own documents', a: A.nClaims, b: B.nClaims, fmt: fInt, diff: 'n' },
-    { k: 'Claims we could not verify', a: A.cannotVerify, b: B.cannotVerify, fmt: fInt, diff: 'n' },
+    { k: 'Claims Wattson could not verify', a: A.cannotVerify, b: B.cannotVerify, fmt: fInt, diff: 'n' },
     {
       k: 'Talk score', hint: 'how big, how specific and how little hedged its claims are, 0 to 1',
       a: A.talk, b: B.talk, fmt: fScore2, diff: 'n',

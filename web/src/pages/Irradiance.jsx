@@ -136,7 +136,7 @@ export default function Irradiance() {
   const column = (
     <>
       <Card title={<b>Why the day got clean and the night didn&apos;t</b>} onClose={back}>
-        <h1 className="verdict" style={{ fontSize: 24, lineHeight: 1.2 }}>The sun never changed. We built panels. Panels don&apos;t work at night.</h1>
+        <h1 className="verdict" style={{ fontSize: 24, lineHeight: 1.2 }}>The sun never changed. Wattson built panels. Panels don&apos;t work at night.</h1>
         <p className="note" style={{ marginTop: 10 }}>
           Sunlight is the control variable here, and it did not move: satellite irradiance varies only
           {' '}{Math.min(...regions.map(r => r.irradiance.year_to_year_variation_pct)).toFixed(2)}–

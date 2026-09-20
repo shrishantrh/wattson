@@ -42,7 +42,7 @@ export default function Companies() {
     const withWalk = list.filter(c => c.walk_score != null)
     // Two different sentences, and which one is true depends on the data, not on us.
     //
-    // The named comparison is drawn ONLY from operators whose documents we have read. An
+    // The named comparison is drawn ONLY from operators whose documents Wattson has read. An
     // operator we hold no claim on has made no claim we can speak to, and naming it in a
     // sentence about what clean-power claims look like would put words in its mouth --
     // which is what happened when this ranged over all 52 and opened on Vantage.
@@ -62,7 +62,7 @@ export default function Companies() {
     const sentence = !best || !worst ? `${list.length} companies, checked against the grids their sites actually draw from.`
       : gap >= 3
         ? `Clean-power claims look alike on paper; the grids underneath them are ${gap} point${gap === 1 ? '' : 's'} apart. The grids under ${best.company}'s sites generated ${pct0(best.walk_score)} carbon-free power in 2025, those under ${worst.company}'s ${pct0(worst.walk_score)}${worst.n_sites === 1 ? ' at its one mapped site' : ''}. An annual certificate shows none of that.${allLine}`
-        : `The ${claimed.length} operators whose reports we have read all draw from grids that generated about ${pct0(best.walk_score)} carbon-free power in 2025, ${gap === 0 ? 'no measurable spread between them' : `${gap} point${gap === 1 ? '' : 's'} between them`}, behind claims that are nothing alike. An annual certificate shows none of that.${allLine}`
+        : `The ${claimed.length} operators whose reports Wattson has read all draw from grids that generated about ${pct0(best.walk_score)} carbon-free power in 2025, ${gap === 0 ? 'no measurable spread between them' : `${gap} point${gap === 1 ? '' : 's'} between them`}, behind claims that are nothing alike. An annual certificate shows none of that.${allLine}`
     const cv = list.reduce((a, c) => a + (c.cannot_verify_count || 0), 0), n = list.reduce((a, c) => a + (c.n_claims || 0), 0)
     const ordered = [...list].sort((a, b) => gapOf(b) - gapOf(a))
     const rows = ordered.filter(c => c.walk_score != null || c.talk_score != null)
@@ -71,7 +71,7 @@ export default function Companies() {
     const withClaims = list.filter(c => c.n_claims > 0)
     const noDocs = list.filter(c => c.coverage_status === 'sites_only')
     const unmapped = list.filter(c => c.coverage_status === 'no_site_resolved')
-    // The written lines are the operators whose own documents we have read, in the same
+    // The written lines are the operators whose own documents Wattson has read, in the same
     // order as the dumbbell. The table below carries every operator, and its claims column
     // states why the rest have nothing read, so no operator goes unexplained either way.
     const lines = ordered.filter(c => c.n_claims > 0)
@@ -115,7 +115,7 @@ export default function Companies() {
               dense
             />
           </div>
-          <p className="note pg-fine">Every operator here is measured against its grid; the lines above are the ones whose own documents we have read, and the table says why the claims column is empty for the rest. The gap between talk and walk is the story, not a verdict on honesty: annual matching is true under the market-based method. A wide line means clean power bought in one place and servers running somewhere else, legal, and not the same electricity. The line turns ember past a 20-point gap.</p>
+          <p className="note pg-fine">Every operator here is measured against its grid; the lines above are the ones whose own documents Wattson has read, and the table says why the claims column is empty for the rest. The gap between talk and walk is the story, not a verdict on honesty: annual matching is true under the market-based method. A wide line means clean power bought in one place and servers running somewhere else, legal, and not the same electricity. The line turns ember past a 20-point gap.</p>
         </Card>
         <Card title={<><b>Sites</b> · {sites.data.length} buildings on {new Set(siteRows.map(s => s.region_id)).size} grids · {siteRows.filter(s => s.serving_utility).length} traced to the utility that serves them</>}>
           {fac.loading && <Loading what="the sites" />}

@@ -39,7 +39,7 @@ export function detectorTitle(det) {
   const v = (det?.regions || []).filter(r => r.validation).sort((a, b) => a.rank - b.rank)
   const ranks = v.map(r => `${r.known_cluster_label || r.id} ${ordinal(r.rank)}`).join(', ')
   const hits = v.filter(r => r.rank <= 20), miss = v.filter(r => r.rank > 20)
-  return { title: `The demand data finds the datacenters by itself: ${n} regions ranked with no company list, and ${leads} of the top ten ${leads === 1 ? 'is a place' : 'are places'} nobody has called a datacenter cluster.`, sub: `Flat 24/7 load lifts a region's night-time floor faster than its average, and that is the only thing the detector reads. We named ${v.length} known clusters before we saw the ranking, so the test could fail: ${ranks}. ${hits.length} landed in the top 20${miss.length ? `; ${miss.map(r => r.known_cluster_label || r.id).join(', ')} did not, and the miss stands` : ''}.` }
+  return { title: `The demand data finds the datacenters by itself: ${n} regions ranked with no company list, and ${leads} of the top ten ${leads === 1 ? 'is a place' : 'are places'} nobody has called a datacenter cluster.`, sub: `Flat 24/7 load lifts a region's night-time floor faster than its average, and that is the only thing the detector reads. Wattson named ${v.length} known clusters before we saw the ranking, so the test could fail: ${ranks}. ${hits.length} landed in the top 20${miss.length ? `; ${miss.map(r => r.known_cluster_label || r.id).join(', ')} did not, and the miss stands` : ''}.` }
 }
 
 // The engine's corrected 2019 overnight clean share, when it published one.
@@ -145,7 +145,7 @@ export function checkAnswer(c) {
     }
   }
   const claimed = primary.metric === 'renewable_electricity_share' && primary.unit === 'fraction' ? `it matched ${Math.round(primary.magnitude * 100)}% of its electricity with renewable purchases` : primary.metric === 'contracted_capacity_mw' ? `${n0(primary.magnitude)} MW of contracted clean power` : primary.magnitude != null ? `${primary.magnitude} ${primary.unit || ''}`.trim() : (primary.metric || 'a clean-energy claim').replace(/_/g, ' ')
-  const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'No number in it to check.', cannot_verify: 'A contract claim. We measure the wire.' }[primary.verdict] || ''
+  const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'No number in it to check.', cannot_verify: 'A contract claim. Wattson measures the wire.' }[primary.verdict] || ''
   const lo = primary.physical_min, hi = primary.physical_max
   const range = lo != null && hi != null ? (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`) : null
   // Lead with the WALK SCORE, the mean across its mapped grids, because that is the figure

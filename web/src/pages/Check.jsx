@@ -23,7 +23,7 @@ const importerNote = d => { const g = d && d.type === 'zone' && d.parent ? d.par
 
 // The site lookup's own flag words. Whoever mapped the site wrote these in capitals because
 // they change how the figure must be read -- a naive-geography trap, an on-site gas plant that
-// EIA-930 never sees, a serving utility we could not resolve. Newly material now that xAI and
+// EIA-930 never sees, a serving utility Wattson could not resolve. Newly material now that xAI and
 // Crusoe/Abilene are in the product: both burn gas on site, outside the data entirely.
 const SITE_FLAG = /(TRAP[^:.]*|MATERIAL CAVEAT|COARSE-REGION CAVEAT|DEMAND RESPONSE|UNRESOLVED)/
 const siteFlag = note => { const m = String(note || '').match(SITE_FLAG); return m ? m[1].replace(/,[^]*$/, '').trim().toLowerCase() : null }
@@ -127,7 +127,7 @@ function NotHeld({ ticker, known }) {
       <>
         <h1 className="verdict">{known.name} is in the operator lookup.</h1>
         <p className="note" style={{ marginTop: 10 }}>
-          We hold it as {COVERAGE_WORD[known.coverage_status]}{known.n_sites ? `, ${known.n_sites} site${known.n_sites === 1 ? '' : 's'} on ${known.grids.join(', ')}` : ''}. Its record is not in this export.
+          Wattson holds it as {COVERAGE_WORD[known.coverage_status]}{known.n_sites ? `, ${known.n_sites} site${known.n_sites === 1 ? '' : 's'} on ${known.grids.join(', ')}` : ''}. Its record is not in this export.
           {ing ? ` Its documents are ingested: ${ing.documents.map(d => `${d.kind.toUpperCase()}, ${d.pages} pages`).join('; ')}.` : ''}
         </p>
         <p className="note" style={{ marginTop: 10 }}>Operators this build does answer for: <CompanyChips list={verified} /></p>

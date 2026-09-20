@@ -30,7 +30,7 @@ function useNational() {
       if (!year) return
       const base = years.includes('2019') ? '2019' : years[0]
       // The published 2019 national figure carries AZPS's overnight phantom: Palo Verde
-      // nuclear counted once under Arizona and once under SRP. We prove that double count in
+      // nuclear counted once under Arizona and once under SRP. Wattson proves that double count in
       // claims/derived/corrections.json and correct it on the region page, so the headline
       // has to use the corrected baseline too. Published 2019 overnight clean reads 159.0 GW;
       // corrected it is 155.7 GW, and the overnight share then holds flat instead of falling.
@@ -67,7 +67,7 @@ export default function Landing() {
     <div className="landing">
       <h1 className="hero-q">What&apos;s really powering it?</h1>
       <p className="hero-kicker">A greenwashing investigation of datacenter operators</p>
-      <p className="hero-sub">Every AI datacenter operator says it runs clean. Nobody checked against the meter. We did. Hour by hour, for every grid in the country.</p>
+      <p className="hero-sub">Every AI datacenter operator says it runs clean. Nobody checked against the meter. Wattson did. Hour by hour, for every grid in the country.</p>
 
       <div className="lx-box">
         <CommandInline autoFocus limit={5} placeholder="Try: Google  ·  or  300 MW: Phoenix vs Omaha" />

@@ -75,7 +75,7 @@ export default function Method() {
           <div className="mt-form">
             <b>Permutation test &middot; is it better than chance?</b>
             <code className="mt-formula">all C(111,4) = 5,989,005 combinations scored &rarr; p = 0.0488</code>
-            <p className="note">We named four test regions in advance. We then scored every possible four-region combination out of 111. Only 4.9% do as well as ours. Marginal, and we say so: the out-of-sample result below is the stronger claim.</p>
+            <p className="note">Wattson named four test regions in advance. Wattson then scored every possible four-region combination out of 111. Only 4.9% do as well as ours. Marginal, and we say so: the out-of-sample result below is the stronger claim.</p>
           </div>
 
           <div className="mt-form">

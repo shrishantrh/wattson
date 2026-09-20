@@ -124,7 +124,7 @@ export default function Alpha() {
       <Card title={<><b>Generating Alpha</b> · what this data could be worth</>} onClose={back}>
         <p className="alpha-lead">
           A datacenter is a huge new electricity customer, and nobody announces where it lands.
-          But it shows up in federal power data within hours of switching on. We can see it early,
+          But it shows up in federal power data within hours of switching on. Wattson sees it early,
           and point at the company that has to serve it. Below are the markets that move on the
           same facts. This is an input, not a trade: we have not tested it against prices.
         </p>
@@ -141,7 +141,7 @@ export default function Alpha() {
         {!!(data.thesis_markets || []).length && (
           <section className="thesis">
             <h3 className="thesis-t">Markets that move on what we measure</h3>
-            <p className="thesis-s">People are already betting on how many datacenters get built, what they cost, and what that does to power bills. We measure the thing underneath all of it: how much load is actually arriving, and where.</p>
+            <p className="thesis-s">People are already betting on how many datacenters get built, what they cost, and what that does to power bills. Wattson measures the thing underneath all of it: how much load is actually arriving, and where.</p>
             {data.thesis_markets.map(i => <Instrument key={i.series} i={i} />)}
           </section>
         )}
