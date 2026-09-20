@@ -9,22 +9,22 @@
 .co-sep { stroke: var(--line-soft); stroke-width: 1; }
 .co-tick { stroke: var(--line-strong); stroke-width: 1; }
 .co-hit { fill: transparent; stroke: transparent; transition: fill var(--dur-fast) var(--ease), stroke var(--dur-fast) var(--ease); }
-.co-label { font-family: var(--font-ui); font-size: 13px; font-weight: 500; fill: var(--ink); font-feature-settings: var(--ff-ui); }
+.co-label { font-family: var(--font-ui); font-size: var(--t-small); font-weight: 500; fill: var(--ink); font-feature-settings: var(--ff-ui); }
 .co-seg { stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; }
 .co-row.gap .co-seg { stroke: var(--accent); stroke-width: 2; }
 .co-a { fill: var(--surface); stroke: var(--ink); stroke-width: 1.5; }
 .co-b { fill: var(--ink); stroke: none; }
-.co-val { font-family: var(--font-mono); font-size: 12px; fill: var(--ink); font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
+.co-val { font-family: var(--font-mono); font-size: var(--t-small); fill: var(--ink); font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; }
 .co-va { fill: var(--ink-2); }
 .co-vs { fill: var(--muted); }
-.co-axis { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); font-feature-settings: normal; letter-spacing: 0; }
+.co-axis { font-family: var(--font-mono); font-size: var(--t-micro); fill: var(--muted); font-feature-settings: normal; letter-spacing: 0; }
 .co-link { cursor: pointer; outline: none; }
 .co-link:hover .co-hit { fill: rgba(255, 255, 255, 0.035); }
 .co-link:focus-visible .co-hit { fill: rgba(255, 255, 255, 0.035); stroke: var(--line-focus); }
 
 /* one line per company under the chart */
-.co-lines { display: flex; flex-direction: column; gap: 3px; margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.4; }
-.co-lines b { color: var(--ink-2); font-weight: 500; font-family: var(--font-mono); font-size: 11px; font-feature-settings: normal; letter-spacing: 0; margin-right: 2px; }
+.co-lines { display: flex; flex-direction: column; gap: 3px; margin-top: 12px; font-size: var(--t-micro); color: var(--muted); line-height: 1.4; }
+.co-lines b { color: var(--ink-2); font-weight: 500; font-family: var(--font-mono); font-size: var(--t-micro); font-feature-settings: normal; letter-spacing: 0; margin-right: 2px; }
 .co-lines a { transition: color var(--dur-fast) var(--ease); }
 .co-lines a:hover b { color: var(--ink); }
 
@@ -33,35 +33,48 @@
 .co-site .d { text-wrap: pretty; }
 .co-site .n { align-self: start; padding-top: 2px; }
 
-/* Says / Discloses: two columns, a hairline between, nothing in accent */
-.sbs-wrap { display: flex; flex-direction: column; gap: 16px; container-type: inline-size; }
-.sbs-crops { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-.sbs-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
-.sbs-col { min-width: 0; }
-.sbs-col + .sbs-col { border-left: 1px solid var(--line-strong); padding-left: 18px; }
-.sbs-head { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; min-height: 18px; font-size: 12px; font-weight: 500; color: var(--muted); line-height: 1.3; }
+/* Says / Discloses: two exhibits, stacked. Each is a head row (what it is, which page), the page
+   itself with the claimed lines marked, and then the words or the figures. The page image is the
+   evidence, so it always gets the full width of the card; nothing here is in the accent but the
+   highlight on the page. */
+.sbs-wrap { display: flex; flex-direction: column; gap: 18px; min-width: 0; max-width: 100%; }
+.sbs { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.sbs + .sbs { padding-top: 16px; border-top: 1px solid var(--line-soft); }
+.sbs-ex { display: flex; flex-direction: column; gap: 10px; min-width: 0; max-width: 100%; }
+.sbs-ex + .sbs-ex { padding-top: 14px; border-top: 1px solid var(--line-soft); }
+.sbs-head { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-height: 18px; font-size: var(--t-micro); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); line-height: 1.3; }
 .sbs-head b { color: var(--ink-2); font-weight: 500; }
-.sbs-head-l { margin: -4px 0 10px; font-size: 11.5px; line-height: 1.35; color: var(--muted); text-wrap: pretty; }
-.sbs-chip { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; border: 1px solid var(--line-strong); border-radius: 5px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 400; line-height: 1; color: var(--ink-2); white-space: nowrap; font-feature-settings: normal; letter-spacing: 0; flex: none; }
+.sbs-head-l { font-size: var(--t-micro); line-height: 1.35; color: var(--muted); text-wrap: pretty; }
+.sbs-chip { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; border: 1px solid var(--line-strong); border-radius: 5px; font-family: var(--font-mono); font-size: var(--t-micro); font-weight: 400; line-height: 1; color: var(--ink-2); white-space: nowrap; text-transform: none; letter-spacing: 0; font-feature-settings: normal; flex: none; }
 .sbs-chip.dim { color: var(--muted); border-style: dashed; }
-.sbs-quote { position: relative; margin: 0; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.45; color: var(--ink); text-wrap: pretty; }
-.sbs-quote::before { content: '\201C'; position: absolute; left: -0.5em; top: 0; color: var(--ink-2); }
-.sbs-bars { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; height: 108px; }
+.sbs-quote { margin: 0; font-size: var(--t-body); font-weight: 500; letter-spacing: -0.01em; line-height: 1.45; color: var(--ink); text-wrap: pretty; text-indent: -0.42em; }
+.sbs-quote::before { content: '\201C'; color: var(--ink-2); }
+
+/* the page itself: a button, so it opens from the keyboard too */
+.sbs-shot { position: relative; display: block; width: 100%; max-width: 100%; min-width: 0; padding: 0; border: 1px solid var(--line-strong); border-radius: 8px; overflow: hidden; background: var(--n3); cursor: zoom-in; transition: border-color var(--dur-fast) var(--ease); }
+.sbs-shot img { display: block; width: 100%; max-width: 100%; height: auto; }
+.sbs-shot:hover, .sbs-shot:focus-visible { border-color: var(--line-focus); outline: none; }
+.sbs-shot:focus-visible { box-shadow: var(--ring); }
+.sbs-zoom { position: absolute; right: 6px; bottom: 6px; padding: 2px 6px; border-radius: 5px; background: var(--surface-a); color: var(--ink-2); font-size: var(--t-micro); line-height: 1.4; opacity: 0; transition: opacity var(--dur-fast) var(--ease); pointer-events: none; }
+.sbs-shot:hover .sbs-zoom, .sbs-shot:focus-visible .sbs-zoom { opacity: 1; }
+
+/* the claimed lines, marked in place on the page, in the one accent */
+.sbs-mark { position: absolute; border: 2px solid var(--accent); background: var(--accent-soft); border-radius: 3px; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3); pointer-events: none; }
+.sbs-mark.big { border-width: 2.5px; border-radius: 4px; }
+
+/* full size */
+.sbs-lb { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: 32px; overflow: auto; background: rgba(0, 0, 0, 0.86); cursor: zoom-out; }
+.sbs-lb-in { flex: 0 1 1100px; display: flex; flex-direction: column; align-items: stretch; gap: 10px; min-width: 0; }
+.sbs-lb-page { position: relative; display: block; width: 100%; border-radius: 10px; overflow: hidden; }
+.sbs-lb-page img { display: block; width: 100%; height: auto; }
+.sbs-lb-cap { margin: 0; font-size: var(--t-micro); color: var(--muted); text-align: center; line-height: 1.45; }
+.sbs-lb-cap b { color: var(--ink-2); font-weight: 500; }
+
+/* the disclosed series: a 54px plot, the value above each bar and the year under it */
+.sbs-bars { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; height: 92px; }
 .sbs-bar { position: relative; min-width: 0; height: 100%; }
-.sbs-bar-t { position: absolute; left: 0; right: 0; top: 18px; bottom: 18px; }
-.sbs-bar-i { position: absolute; left: 50%; bottom: 0; width: 12px; margin-left: -6px; min-height: 2px; background: var(--ink-2); border-radius: 2px 2px 0 0; }
-.sbs-bar-v { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: 11px; line-height: 1; color: var(--ink-2); font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; white-space: nowrap; }
-.sbs-bar-y { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; font-family: var(--font-mono); font-size: 10px; line-height: 1; color: var(--muted); font-feature-settings: normal; letter-spacing: 0; white-space: nowrap; }
-.sbs-foot { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line-soft); font-size: 11.5px; color: var(--muted); line-height: 1.45; }
-@container (max-width: 340px) {
-  .sbs-pair { grid-template-columns: 1fr; gap: 14px 0; }
-  .sbs-col + .sbs-col { border-left: 0; padding-left: 0; border-top: 1px solid var(--line-strong); padding-top: 14px; }
-  .sbs-crops { grid-template-columns: 1fr; }
-}
-
-.sbs-pair.sbs-pair-one { grid-template-columns: 1fr; }
-.sbs-pair.sbs-pair-one .sbs-col { border: 0; padding-right: 0; }
-
-/* a lone page image gets the full card width: it is the evidence, not a thumbnail */
-.sbs-crops:has(> :only-child) { grid-template-columns: 1fr; }
-.sbs-crops:has(> :only-child) .sbs-page img { width: 100%; }
+.sbs-bar-t { position: absolute; left: 0; right: 0; top: 18px; bottom: 20px; }
+.sbs-bar-i { position: absolute; left: 50%; bottom: 0; width: 16px; margin-left: -8px; min-height: 2px; background: var(--clean); border-radius: 2px 2px 0 0; }
+.sbs-bar-v { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: var(--t-micro); line-height: 1; color: var(--ink-2); font-variant-numeric: tabular-nums; font-feature-settings: normal; letter-spacing: 0; white-space: nowrap; }
+.sbs-bar-y { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; font-family: var(--font-mono); font-size: var(--t-micro); line-height: 1; color: var(--muted); font-feature-settings: normal; letter-spacing: 0; white-space: nowrap; }
+.sbs-bar:last-child .sbs-bar-v { color: var(--ink); }

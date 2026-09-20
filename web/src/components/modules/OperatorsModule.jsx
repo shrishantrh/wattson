@@ -10,9 +10,9 @@ export default function OperatorsView({ operators }) {
   return (
     <Mod
       className="mod-ops"
-      caption="Who would build for, and bill, a new flat load in this region."
+      caption="Who would build for, and bill, a new flat load here."
       lead={<Lead value={lead} label={label} />}
-      foot="Hand-mapped from public service-territory information, not derived from the hourly data. Tickers are unverified; a human must check one before judging it."
+      foot="Hand-mapped from public service territories, not from the hourly data. Tickers are unverified."
     >
       <div className="mod-rows">
         {rows.map((o, i) => {

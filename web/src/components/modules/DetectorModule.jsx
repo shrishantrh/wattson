@@ -18,23 +18,23 @@ export default function DetectorView({ detection: d }) {
   const ex = num(d.overnight_excess), nd = num(d.neighbor_divergence), lf = num(d.load_factor_delta), g = num(d.growth_pct)
   const rank = num(d.rank), score = num(d.score)
   const rows = [
-    ex != null && { key: 'excess', t: `Night demand grew ${ex >= 0 ? 'faster' : 'slower'} than average demand`, d: 'overnight excess, percentage points', n: `${sgn(ex, 1)} pts`, v: Math.abs(ex), max: SCALE.excess, accent: ex >= 0 },
-    nd != null && { key: 'neighbours', t: `Grew ${nd >= 0 ? 'faster' : 'slower'} than its neighbours`, d: 'neighbour divergence, percentage points', n: `${sgn(nd, 1)} pts`, v: Math.abs(nd), max: SCALE.neighbours, accent: nd >= 0 },
-    lf != null && { key: 'lf', t: `Load got ${lf >= 0 ? 'flatter' : 'peakier'}`, d: 'load factor change, 2019 to 2025', n: sgn(lf, 3), v: Math.abs(lf), max: SCALE.lf, accent: lf >= 0 },
-    g != null && { key: 'growth', t: 'Demand growth since 2019', d: 'average MW, all hours', n: `${sgn(g, 1)}%`, v: Math.abs(g), max: SCALE.growth, accent: false },
+    ex != null && { key: 'excess', t: `Night grew ${ex >= 0 ? 'faster' : 'slower'} than average`, n: `${sgn(ex, 1)} pts`, v: Math.abs(ex), max: SCALE.excess, accent: ex >= 0 },
+    nd != null && { key: 'neighbours', t: `${nd >= 0 ? 'Faster' : 'Slower'} than its neighbours`, n: `${sgn(nd, 1)} pts`, v: Math.abs(nd), max: SCALE.neighbours, accent: nd >= 0 },
+    lf != null && { key: 'lf', t: `Load got ${lf >= 0 ? 'flatter' : 'peakier'}`, d: 'load factor, 2019 to 2025', n: sgn(lf, 3), v: Math.abs(lf), max: SCALE.lf, accent: lf >= 0 },
+    g != null && { key: 'growth', t: 'Demand growth since 2019', n: `${sgn(g, 1)}%`, v: Math.abs(g), max: SCALE.growth, accent: false },
   ].filter(Boolean)
   return (
     <Mod
       className="mod-detector"
-      caption={d.pattern ? `Pattern: ${d.pattern}. A label, never part of the score.` : 'A demand-only score: no generation figure goes into it.'}
-      lead={<Lead value={rank != null ? `#${fmt(rank)}` : '—'} label={`of ${fmt(n)} regions scored for flat-load growth${score != null ? ` · score ${fmt(score, 2).replace(/^-/, '−')}` : ''}`} />}
-      foot="Score = z(night excess) + z(neighbour divergence) + 0.5 z(load factor change), robust z, frozen before the ranking was seen. Bars are drawn on a fixed scale (±20 pts, ±40 pts, ±0.10, ±60%); the figures beside them are exact."
+      caption={d.pattern ? `Pattern: ${d.pattern} \u2014 a label, never part of the score.` : 'A demand-only score: no generation figure goes into it.'}
+      lead={<Lead value={rank != null ? `#${fmt(rank)}` : '—'} label={`of ${fmt(n)} regions${score != null ? ` · score ${fmt(score, 2).replace(/^-/, '−')}` : ''}`} />}
+      foot="Demand-only score, frozen before the ranking was seen. Bars are scaled; the figures are exact."
     >
       <div className="mod-ticks">
         {rows.map(r => (
           <div key={r.key} className="mod-tickrow">
-            <div className="mod-cell"><div className="mod-t">{r.t}</div><div className="mod-d">{r.d}</div></div>
-            <span className="mod-tk"><Ticks value={r.v} max={r.max} n={12} accent={r.accent} label={`${r.d}: ${r.n}`} /></span>
+            <div className="mod-cell"><div className="mod-t">{r.t}</div>{r.d && <div className="mod-d">{r.d}</div>}</div>
+            <span className="mod-tk"><Ticks value={r.v} max={r.max} n={10} accent={r.accent} label={`${r.t}: ${r.n}`} /></span>
             <span className="mod-n">{r.n}</span>
           </div>
         ))}

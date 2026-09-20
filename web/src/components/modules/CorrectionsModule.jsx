@@ -1,9 +1,15 @@
 /* oxlint-disable react/only-export-components -- correctionsOf is a pure selector the registry imports */
-import { Mod, Lead, Empty } from './Shell.jsx'
+import { Mod, Lead, Empty, Fold } from './Shell.jsx'
 
 // Published vs corrected, side by side. Showing the published figure next to our correction is
 // the point: the engine found a reporting error (AZPS 2019 counted SRP's nuclear) and says so.
-const fmtVal = (v, path) => (v == null ? '—' : /cf_share/.test(path) ? `${(v * 100).toFixed(1)}%` : typeof v === 'number' ? v.toLocaleString('en-US', { maximumFractionDigits: 0 }) : String(v))
+const fmtOne = (v, path) => (/cf_share/.test(path) ? `${(v * 100).toFixed(1)}%` : typeof v === 'number' ? v.toLocaleString('en-US', { maximumFractionDigits: 0 }) : String(v))
+// A corrected figure can be a whole monthly series; print its ends and its length, never the dump.
+const fmtVal = (v, path) => {
+  if (v == null) return '—'
+  if (Array.isArray(v)) return v.length ? `${fmtOne(v[0], path)} … ${fmtOne(v[v.length - 1], path)} (${v.length})` : '—'
+  return fmtOne(v, path)
+}
 const pretty = path => path.replace('cf_share.', 'clean share ').replace('cf_avg_mw.', 'clean MW ').replace('total_avg_mw.', 'total MW ').replace('siting.', 'siting ').replace(/_/g, ' ')
 
 export function correctionsOf(detail) {
@@ -49,16 +55,15 @@ export default function CorrectionsModule({ detail }) {
       className="mod-corr"
       caption={c.summary || 'What the export says, and what the engine reads instead.'}
       lead={h
-        ? <Lead value={<><s>{h.published}</s><span className="arrow"> → </span>{h.corrected}</>} t="warn" label={`published, then corrected — ${pretty(h.path)} ${h.key}`} />
+        ? <Lead value={<><s>{h.published}</s><span className="arrow"> → </span>{h.corrected}</>} t="warn" label={`${pretty(h.path)} ${h.key}, corrected`} />
         : <Lead value={String((c.corrections || []).length)} label="figures corrected on this region" t="warn" />}
-      foot="Published = what the EIA-930 export says. Corrected = recomputed on a consistent basis by the engine. Both are shown on purpose."
+      foot="Published = the EIA-930 export. Corrected = recomputed on a consistent basis."
     >
       <Block x={c.corrections[0]} />
       {c.corrections.length > 1 && (
-        <details className="mod-more">
-          <summary>{c.corrections.length - 1} more corrected {c.corrections.length === 2 ? 'figure' : 'figures'}</summary>
+        <Fold summary={`${c.corrections.length - 1} more corrected ${c.corrections.length === 2 ? 'figure' : 'figures'}`}>
           {c.corrections.slice(1).map((x, i) => <Block key={i} x={x} />)}
-        </details>
+        </Fold>
       )}
     </Mod>
   )
