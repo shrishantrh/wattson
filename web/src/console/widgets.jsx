@@ -3,6 +3,7 @@
 // ember, everything else is the neutral ramp. A share in 0..1 is coloured by mixing
 // fossil -> clean in oklab, so the same value always reads the same way on every screen.
 import NumberTicker from '../components/NumberTicker.jsx'
+import { Close, ChevronDown, ChevronUp } from '../components/Icons.jsx'
 import '../styles/dataviz.css'
 
 const clamp01 = v => Math.min(1, Math.max(0, Number(v) || 0))
@@ -15,7 +16,7 @@ const pct = v => `${(clamp01(v) * 100).toFixed(1)}%`
 export function Card({ title, right, children, className = '', style, onClose }) {
   return (
     <section className={`card ${className}`} style={style}>
-      {(title || right || onClose) && <header className="card-head"><span className="eyebrow">{title}</span><span style={{ display: 'flex', gap: 8, alignItems: 'center' }}>{right}{onClose && <button type="button" className="close" onClick={onClose} aria-label="Back to start">×</button>}</span></header>}
+      {(title || right || onClose) && <header className="card-head"><span className="eyebrow">{title}</span><span style={{ display: 'flex', gap: 8, alignItems: 'center' }}>{right}{onClose && <button type="button" className="close" onClick={onClose} aria-label="Back to start"><Close size={14} /></button>}</span></header>}
       {children}
     </section>
   )
@@ -120,7 +121,7 @@ export function HourBars({ values, night = [0, 5], day = [10, 15], caption, comp
 
 export function Chip({ children, href, onClick, active, dim, small, accent, onRemove }) {
   const cls = `chip ${active ? 'on' : ''} ${dim ? 'dim' : ''} ${small ? 'sm' : ''} ${accent ? 'accent' : ''}`
-  const inner = <>{children}{onRemove && <span className="x" role="button" aria-label="Remove" onClick={e => { e.preventDefault(); e.stopPropagation(); onRemove() }}>×</span>}</>
+  const inner = <>{children}{onRemove && <span className="x" role="button" aria-label="Remove" onClick={e => { e.preventDefault(); e.stopPropagation(); onRemove() }}><Close size={12} /></span>}</>
   return href ? <a className={cls} href={href}>{inner}</a> : <button type="button" className={cls} onClick={onClick}>{inner}</button>
 }
 
@@ -128,7 +129,7 @@ export function Chip({ children, href, onClick, active, dim, small, accent, onRe
 export function Evidence({ open, onToggle, label = 'Show the evidence', children }) {
   return (
     <>
-      <button type="button" className="toggle" onClick={onToggle} aria-expanded={open}><b>{open ? 'Hide' : label}</b><span>{open ? '▴' : '▾'}</span></button>
+      <button type="button" className="toggle" onClick={onToggle} aria-expanded={open}><b>{open ? 'Hide' : label}</b>{open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</button>
       {open && children}
     </>
   )

@@ -29,16 +29,17 @@ export default function Screener({ route }) {
     id: r.id, place: r.c?.label || r.name || r.id, grid: r.ba, night: night(r), change: r.siting?.change_since_2019 ?? null, slope: r.siting?.ratio_slope_per_year ?? null, headroom: r.siting?.overnight_clean_mw_over_demand ?? null,
     rank: r.detection?.rank ?? null, score: r.detection?.score ?? null, growth: r.detection?.growth_pct ?? null, pattern: r.detection?.pattern || '', flagged: (data?.meta?.data_flags || {})[r.id] ? 'flagged' : '', lat: r.c?.lat, lng: r.c?.lng,
   })), [data])
+  // Short headers, because a header has to be scannable: the long form is the column's title.
   const columns = [
-    { key: 'place', label: 'Place', width: 150 },
-    { key: 'grid', label: 'Grid', width: 60 },
-    { key: 'night', label: 'Clean at night', num: true, format: pct1 },
-    { key: 'change', label: 'Since 2019', num: true, format: pts1 },
-    { key: 'slope', label: 'Trend / yr', num: true, format: v => (v == null ? '—' : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)} pts`) },
-    { key: 'headroom', label: 'Clean ÷ demand', num: true, format: v => (v == null ? '—' : `${v.toFixed(2)}×`) },
-    { key: 'rank', label: 'Load rank', num: true, format: v => (v == null ? '—' : `#${v}`) },
-    { key: 'growth', label: 'Demand growth', num: true, format: v => (v == null ? '—' : `${v > 0 ? '+' : ''}${v.toFixed(0)}%`) },
-    { key: 'pattern', label: 'Pattern', width: 140 },
+    { key: 'place', label: 'Place', width: 146 },
+    { key: 'grid', label: 'Grid', width: 62 },
+    { key: 'night', label: 'Night', num: true, width: 78, format: pct1, title: 'Clean share of generation, overnight hours, 2025' },
+    { key: 'change', label: 'Δ 2019', num: true, width: 84, format: pts1, title: 'Change in that share since 2019, in points' },
+    { key: 'slope', label: 'Trend', num: true, width: 84, format: v => (v == null ? '—' : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)}`), title: 'Points per year, 2019-2025' },
+    { key: 'headroom', label: 'Clean ÷ dem', num: true, width: 96, format: v => (v == null ? '—' : `${v.toFixed(2)}×`), title: 'Overnight clean MW divided by overnight demand' },
+    { key: 'rank', label: 'Rank', num: true, width: 66, format: v => (v == null ? '—' : `#${v}`), title: 'Flat-load detector rank, of 111' },
+    { key: 'growth', label: 'Growth', num: true, width: 84, format: v => (v == null ? '—' : `${v > 0 ? '+' : ''}${v.toFixed(0)}%`), title: 'Demand growth since 2019' },
+    { key: 'pattern', label: 'Pattern', width: 132 },
   ]
   const sortKey = sort?.key || preset[2], sortDir = sort?.dir || preset[3]
   const visible = useMemo(() => [...rows].filter(r => r[sortKey] != null).sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1) * (sortDir === 'asc' ? 1 : -1)).slice(0, 12), [rows, sortKey, sortDir])
@@ -50,13 +51,14 @@ export default function Screener({ route }) {
   const column = (
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
-      <Card title={<><b>Screener</b> · {rows.length} regions · hourly grid data</>} onClose={back}>
-        <div className="pg-chips">{PRESETS.map(p => <Chip key={p[0]} small active={p[0] === preset[0] && !sort} href={href.screen(p[0])}>{p[1]}</Chip>)}</div>
-        <p className="pg-lede">Clean share of what each grid generated at night in 2025, how it moved since 2019, its yearly trend, clean power relative to night demand, and the flat-load detector's rank. Zones inherit their grid's generation figures. Top 12 of the current sort are pinned on the globe.</p>
+      <Card title={<><b>Screener</b> · {rows.length} regions</>} onClose={back}>
+        <p className="pg-top">Every scored region, sorted any way you like.</p>
+        <div className="pg-chips pg-controls">{PRESETS.map(p => <Chip key={p[0]} small active={p[0] === preset[0] && !sort} href={href.screen(p[0])}>{p[1]}</Chip>)}</div>
+        <p className="pg-lede">Night is the clean share of what the grid generated between midnight and 6am. Zones inherit their grid's figures. The top 12 of the current sort are pinned on the globe.</p>
       </Card>
       {loading ? <Card><Loading what="the screener" /></Card> : error ? <Card><ErrorState error={error} onRetry={reload} /></Card> : (
         <Card>
-          <Table columns={columns} rows={rows} sortKey={sortKey} sortDir={sortDir} onSortChange={n => setSort(n)} rowHref={r => href.region(r.id)} filter csvName="wattson-screener" dense maxHeight="min(66vh, 720px)" />
+          <Table key={preset[0]} columns={columns} rows={rows} defaultSort={{ key: preset[2], dir: preset[3] }} onSortChange={n => setSort(n)} rowHref={r => href.region(r.id)} filter filterPlaceholder="Filter 111 regions" csvName="wattson-screener" maxHeight="min(66vh, 720px)" />
         </Card>
       )}
     </>

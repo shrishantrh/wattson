@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wattson</title>
+<style>
+  :root{
+    --bg:#0a0c0e;
+    --ink:#f2f4f6;
+    --dim:#8b949c;
+    --line:#242a30;
+    --accent:#e8a33d;
+    --cool:#6fb3d2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg);color:var(--ink);overflow:hidden;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  #stagewrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  #stage{width:1600px;height:900px;position:relative;transform-origin:center center;flex:0 0 auto}
+  section{position:absolute;inset:0;padding:86px 96px 96px;display:none;flex-direction:column}
+  section.on{display:flex}
+  .eyebrow{font-size:24px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-weight:600}
+  h1{font-size:112px;line-height:1.02;font-weight:700;letter-spacing:-.02em}
+  h2{font-size:62px;line-height:1.1;font-weight:700;letter-spacing:-.015em;max-width:1340px}
+  .lede{font-size:38px;line-height:1.32;color:var(--dim);max-width:1240px;font-weight:400}
+  .spacer{flex:1}
+  .rule{height:1px;background:var(--line);margin:34px 0}
+  .big{font-size:158px;line-height:.94;font-weight:700;letter-spacing:-.03em;white-space:nowrap}
+  .big.accent{color:var(--accent)}
+  .cap{font-size:27px;color:var(--dim);line-height:1.3}
+  .row{display:flex;gap:74px;align-items:flex-end}
+  .col{display:flex;flex-direction:column;gap:12px}
+  .num{font-size:84px;font-weight:700;line-height:1;letter-spacing:-.02em;white-space:nowrap}
+  .num.sub{font-size:70px}
+  .ul{list-style:none;display:flex;flex-direction:column;gap:26px;font-size:36px;line-height:1.28}
+  .ul li{padding-left:40px;position:relative;color:var(--ink)}
+  .ul li::before{content:"";position:absolute;left:0;top:17px;width:18px;height:2px;background:var(--accent)}
+  .ul.quiet li{color:var(--dim);font-size:33px}
+  .ul.quiet li::before{background:var(--line);top:16px}
+  .foot{font-size:23px;color:var(--dim);letter-spacing:.04em}
+  .tag{display:inline-block;font-size:23px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--bg);background:var(--accent);padding:8px 16px;font-weight:700}
+  .tag.cool{background:var(--cool)}
+  .tag.ghost{background:none;color:var(--dim);border:1px solid var(--line)}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:48px}
+  .grid4 .k{font-size:80px;font-weight:700;line-height:1}
+  .grid4 .v{font-size:26px;color:var(--dim);line-height:1.3;margin-top:12px}
+  .quote{font-size:46px;line-height:1.3;font-weight:500;max-width:1300px}
+  .quote .mark{color:var(--dim)}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .panel{border-left:3px solid var(--line);padding-left:34px}
+  .panel.hot{border-left-color:var(--accent)}
+  .panel .h{font-size:26px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .panel .n{font-size:92px;font-weight:700;line-height:1.05;margin-top:16px;letter-spacing:-.02em}
+  .panel .t{font-size:28px;color:var(--dim);margin-top:14px;line-height:1.35}
+  #hud{position:fixed;right:22px;bottom:16px;font-size:16px;color:#4a5158;letter-spacing:.1em}
+  section[data-backup]::after{content:"BACKUP \2014 NOT IN THE RUNNING ORDER";position:absolute;
+    top:34px;right:96px;font-size:20px;letter-spacing:.16em;color:#4a5158;font-weight:700}
+  #notes{position:fixed;left:0;right:0;bottom:0;background:#12161a;border-top:1px solid var(--line);
+    padding:18px 26px;font-size:19px;line-height:1.45;color:#c9d1d8;display:none;max-height:33vh;overflow:auto}
+  #notes.on{display:block}
+  #notes b{color:var(--accent);letter-spacing:.08em;text-transform:uppercase;font-size:16px}
+  #help{position:fixed;left:22px;bottom:16px;font-size:16px;color:#3c4247;letter-spacing:.08em}
+  .demo-live{display:flex;align-items:center;gap:22px}
+  .dot{width:26px;height:26px;border-radius:50%;background:var(--accent)}
+</style>
+</head>
+<body>
+<div id="stagewrap"><div id="stage">
+
+  <!-- 1 -->
+  <section data-notes="0:00-0:05 (5s) | Script setup lines 0:00 and 0:03: &quot;I'm Shrishant. This is Wattson.&quot; / &quot;AI datacenters draw the same power at 3am as at noon.&quot; Hands off the laptop.">
+    <div class="eyebrow">HackMIT 2026 &middot; Voloridge, Signal in the Noise</div>
+    <div class="spacer"></div>
+    <h1>Wattson</h1>
+    <div class="rule"></div>
+    <div class="lede">It follows the power, not the press release.</div>
+    <div class="spacer"></div>
+    <div class="foot">Hourly carbon-free share of generation for 70 US balancing authorities &middot; EIA-930 via PUDL &middot; snapshot ends 2026-09-05</div>
+  </section>
+
+  <!-- 2 -->
+  <section data-notes="0:05-0:18 (13s) | Script lines 0:08 and 0:18. Say the pair slowly - it is the only pair with no app behind it. SHARE, not level: clean megawatts at night did rise 14 GW nationally, they just did not keep up with 45 GW of new overnight generation.">
+    <div class="eyebrow">The US grid since 2019</div>
+    <h2>Decarbonization happened in daylight.</h2>
+    <div class="spacer"></div>
+    <div class="vs">
+      <div class="panel">
+        <div class="h">Clean share, midday</div>
+        <div class="n">37.2% &rarr; 46.5%</div>
+        <div class="t">10:00&ndash;15:59 local, 2019 to 2025</div>
+      </div>
+      <div class="panel hot">
+        <div class="h">Clean share, overnight</div>
+        <div class="n">40.5% &rarr; 39.7%</div>
+        <div class="t">00:00&ndash;05:59 local, 2019 to 2025</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="lede">A datacenter draws the same power at 3am in January as at noon in June.</div>
+  </section>
+
+  <!-- 3 -->
+  <section data-notes="0:18-0:30 (12s) | Under the script's 0:23 line: &quot;one hundred percent clean is an annual average - we wanted the hourly one.&quot; This is a PREVIEW of the finding you narrate in the app at 2:04; do not narrate the digits here. PJM = 'the mid-Atlantic grid'. Never say 'caused by'.">
+    <div class="eyebrow">PJM &middot; the mid-Atlantic grid &middot; overnight</div>
+    <h2>PJM added 8.7 GW of generation at night since 2019. None of it was clean.</h2>
+    <div class="spacer"></div>
+    <div class="row">
+      <div class="col"><div class="big">+8,701</div><div class="cap">avg MW more generation at night</div></div>
+      <div class="col"><div class="big accent">&minus;81</div><div class="cap">avg MW clean at night (35,700 &rarr; 35,619)</div></div>
+    </div>
+    <div class="rule"></div>
+    <div class="row" style="gap:84px">
+      <div class="col"><div class="num">&minus;0.9%</div><div class="cap">of the increment was clean</div></div>
+      <div class="col"><div class="num">+10.7 GW</div><div class="cap">gas (coal &minus;2.5)</div></div>
+      <div class="col"><div class="num">3.8 &rarr; 2.5 GW</div><div class="cap">night exports to neighbours</div></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="foot">Consistent with datacenter load being served by gas. Part of the gas rise is coal-to-gas switching. Average mix, not marginal.</div>
+  </section>
+
+  <!-- 4 -->
+  <section data-notes="0:30-0:42 (12s) | Script line 0:29: what Wattson reads, and the two questions. Say 'no company list' out loud. On stage say 'grids', never 'balancing authorities' (script ban) - the written counts are here for the judges reading the screen.">
+    <div class="eyebrow">One index, three uses</div>
+    <h2>A clean-power number for every hour, every balancing authority.</h2>
+    <div class="spacer"></div>
+    <div class="grid4">
+      <div><div class="k">4,451,763</div><div class="v">hourly rows, 70 balancing authorities, 2018-07-01 to 2026-09-05</div></div>
+      <div><div class="k">111</div><div class="v">regions scored for flat 24/7 load (68 zones + 43 balancing authorities) &mdash; from demand alone, no company list</div></div>
+      <div><div class="k">52</div><div class="v">balancing authorities ranked for where new flat load would run cleanest</div></div>
+      <div><div class="k">10</div><div class="v">claims from 4 companies, checked against the grids their sites draw from</div></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="lede">Flat load raises the overnight floor faster than the mean. That fingerprint is visible in demand data before anyone announces a building.</div>
+  </section>
+
+  <!-- 5 holding -->
+  <section data-notes="0:42-2:34 (112s) | HOLDING SLIDE. Switch to the app now and stay there. Beat 1 (0:42) Google, then Show the evidence. Beat 2 (1:23) Compare 300 MW - Phoenix is 2nd, not worst, and the double-count line is MANDATORY. Beat 3 (1:59) the finding, then the four ranks and the Dallas miss. Come back to the deck at 2:34 no matter where you are.">
+    <div class="demo-live"><span class="dot"></span><span class="eyebrow" style="color:var(--accent)">Live</span></div>
+    <div class="spacer"></div>
+    <h1 style="font-size:96px">Wattson, running.</h1>
+    <div class="rule"></div>
+    <ul class="ul" style="font-size:40px">
+      <li>Check a company's claim against its grid</li>
+      <li>Compare 300 MW of new flat load across three places</li>
+      <li>Watch where the load is already landing</li>
+    </ul>
+    <div class="spacer"></div>
+    <div class="foot">Static site, precomputed JSON, no backend to fail.</div>
+  </section>
+
+  <!-- 6 -->
+  <section data-notes="2:34-2:44 (10s) | Script's first close line, word for word. Hands off the laptop, look up. Fast and flat: this is the differentiator, not an apology.">
+    <div class="eyebrow">What we do not claim</div>
+    <h2>The limits are on the screen, not in a footnote.</h2>
+    <div class="spacer"></div>
+    <ul class="ul quiet">
+      <li>Generation inside a footprint, not consumption. Interchange is not allocated.</li>
+      <li>Average grid mix, not marginal emissions.</li>
+      <li>&ldquo;Consistent with datacenter load being served by gas,&rdquo; never &ldquo;caused by.&rdquo;</li>
+      <li>&ldquo;True on paper, X physically,&rdquo; never &ldquo;they lied.&rdquo; 9 of 10 claims true on paper, 1 we cannot verify &mdash; counted on screen.</li>
+      <li>Regions are coarse; PJM spans Chicago to New Jersey. Site and operator mapping is hand-curated.</li>
+    </ul>
+    <div class="spacer"></div>
+    <div class="foot">Every figure in the app traces to a file in the repo: <span style="color:var(--ink)">docs/numbers_checklist.md</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section data-notes="2:44-2:59 (15s) | Script's last three lines: Yash built the engine and the claims extraction, I built the product / four and a half million hours of grid data / the tagline. Stop. Backup slides follow for questions - press B.">
+    <div class="eyebrow">Wattson</div>
+    <div class="spacer"></div>
+    <h2 style="font-size:74px">It follows the power, not the press release.</h2>
+    <div class="rule"></div>
+    <div class="row" style="gap:84px">
+      <div class="col"><div class="num sub">4,451,763</div><div class="cap">hours of grid data, 70 US grids, 2018&ndash;2026</div></div>
+      <div class="col"><div class="num sub">Yash</div><div class="cap">the data engine and the claims extraction</div></div>
+      <div class="col"><div class="num sub">Shrishant</div><div class="cap">the product you just used</div></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="foot">EIA-930 via PUDL (Voloridge dataset #6) &middot; static site, no backend &middot; every figure traces to a file in the repo</div>
+  </section>
+
+  <!-- BACKUP B1 -->
+  <section data-backup="1" data-notes="BACKUP B1, not in the running order | For judges' Q4: &quot;how do I know you didn't tune the detector?&quot; Spoken live in the app at 2:19, so never shown during the talk. AEP is a five-state zone: say 'the AEP zone', not 'Central Ohio'.">
+    <div class="eyebrow">The detector</div>
+    <h2>Frozen before we saw a single rank.</h2>
+    <div class="lede" style="margin-top:22px">Weights, the 500 MW cut and the p99.5 peak were fixed first. Four validation regions were named in advance. Ranks are reported as they came out.</div>
+    <div class="spacer"></div>
+    <div class="row" style="gap:80px">
+      <div class="col"><div class="num sub">6th</div><div class="cap">N. Virginia (PJM/DOM)</div></div>
+      <div class="col"><div class="num sub">7th</div><div class="cap">Omaha (SWPP/OPPD)</div></div>
+      <div class="col"><div class="num sub">19th</div><div class="cap">AEP zone, Columbus out across five states (PJM/AEP)</div></div>
+      <div class="col"><div class="num sub" style="color:var(--accent)">91st</div><div class="cap">Dallas (ERCO/NCEN) &mdash; the miss, kept on screen</div></div>
+    </div>
+    <div class="rule"></div>
+    <div class="foot">score = z(overnight excess) + z(neighbour divergence) + 0.5&thinsp;z(load-factor delta), robust z &middot; 111 regions scored &middot; nothing re-tuned after the fact</div>
+  </section>
+
+  <!-- BACKUP B2 -->
+  <section data-backup="1" data-notes="BACKUP B2, not in the running order | For judges' Q5: &quot;did Phoenix collapse from 62% to 10%?&quot; Spoken live in the app at 1:35. 'A double count we caught', never 'it collapsed'. The 2025 level (10.4%) is sound; the 2019 baseline and every delta from it were not. Palo Verde is an inference, not confirmed.">
+    <div class="eyebrow">A correction in the federal data</div>
+    <h2>Two operators were reporting the same nuclear plant.</h2>
+    <div class="spacer"></div>
+    <div class="vs">
+      <div class="panel">
+        <div class="h">Phoenix at night, as published</div>
+        <div class="n">62% &rarr; 10%</div>
+        <div class="t">a collapse, 2019 to 2025</div>
+      </div>
+      <div class="panel hot">
+        <div class="h">Like for like, corrected</div>
+        <div class="n">1.7% &rarr; 10.4%</div>
+        <div class="t">a rise. The published figure was wrong in direction, not just magnitude.</div>
+      </div>
+    </div>
+    <div class="rule"></div>
+    <div class="row" style="gap:76px">
+      <div class="col"><div class="num sub">0.9948</div><div class="cap">correlation over 7,976 hours</div></div>
+      <div class="col"><div class="num sub">98.8%</div><div class="cap">of hours identical within 5 MW</div></div>
+      <div class="col"><div class="num sub">7,087 MW</div><div class="cap">combined, against a 3,937 MW nameplate</div></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="foot">Ends in a step on one date, 2019-12-04, not a decline. Published and corrected are shown side by side; the export is not rewritten. The demand-side detector rank (3rd) has no generation term and is untouched.</div>
+  </section>
+
+  <!-- BACKUP B3 -->
+  <section data-backup="1" data-notes="BACKUP B3, not in the running order | For judges' Q3: &quot;does 'true on paper' mean they lied?&quot; Spoken live in the app at 0:44-1:21. On stage the app says 6%; this slide's 5.6% is the same number unrounded.">
+    <div class="eyebrow">Claims, checked against physics</div>
+    <div class="quote"><span class="mark">&ldquo;</span>we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)<span class="mark">&rdquo;</span></div>
+    <div class="foot" style="margin-top:18px">Alphabet, 2026 Environmental Report, page 4</div>
+    <div class="spacer"></div>
+    <div class="row" style="gap:80px">
+      <div class="col"><div class="num sub">100%</div><div class="cap">claimed, market-based, annual</div></div>
+      <div class="col"><div class="num sub">65%</div><div class="cap">hourly carbon-free, 2025 &mdash; their own page 94</div></div>
+      <div class="col"><div class="num sub" style="color:var(--accent)">5.6%</div><div class="cap">generated clean by the grid at their Moncks Corner site, 2025</div></div>
+    </div>
+    <div class="rule"></div>
+    <div class="lede" style="font-size:34px">True on paper. 5.6% physically. That is the footprint, not the meter: grid-only, contracted power excluded &mdash; and it understates the site, because Santee Cooper's nuclear reports under a neighbouring balancing authority (SCEG, 42%).</div>
+  </section>
+
+
+</div></div>
+
+<div id="hud"></div>
+<div id="help">&larr; &rarr; / space &middot; N notes &middot; B backup slides &middot; F full screen</div>
+<div id="notes"></div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('section'));
+  var i=0, notesOn=false;
+  var hud=document.getElementById('hud'), notes=document.getElementById('notes');
+  var stage=document.getElementById('stage');
+  function fit(){
+    var pad=notesOn?Math.round(window.innerHeight*0.33):0;
+    var s=Math.min(window.innerWidth/1600,(window.innerHeight-pad)/900);
+    stage.style.transform='scale('+s+')';
+    stage.style.marginBottom=(notesOn?pad/s*0:0)+'px';
+    document.getElementById('stagewrap').style.bottom=pad+'px';
+  }
+  var running=slides.filter(function(s){return !s.dataset.backup;});
+  var firstBackup=running.length;
+  function draw(){
+    slides.forEach(function(s,n){s.classList.toggle('on',n===i);});
+    hud.textContent=(i<firstBackup)?((i+1)+' / '+running.length)
+      :('backup '+(i-firstBackup+1)+' / '+(slides.length-running.length));
+    notes.innerHTML='<b>Slide '+(i+1)+'</b> &nbsp; '+(slides[i].dataset.notes||'');
+    fit();
+  }
+  function go(d){ i=Math.max(0,Math.min(slides.length-1,i+d)); draw(); }
+  document.addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='ArrowRight'||k===' '||k==='PageDown'||k==='ArrowDown'){e.preventDefault();go(1);}
+    else if(k==='ArrowLeft'||k==='PageUp'||k==='ArrowUp'){e.preventDefault();go(-1);}
+    else if(k==='Home'){i=0;draw();}
+    else if(k==='End'){i=slides.length-1;draw();}
+    else if(k==='b'||k==='B'){i=(i<firstBackup)?firstBackup:0;draw();}
+    else if(k==='n'||k==='N'){notesOn=!notesOn;notes.classList.toggle('on',notesOn);fit();}
+    else if(k==='f'||k==='F'){ if(document.fullscreenElement){document.exitFullscreen();} else {document.documentElement.requestFullscreen();} }
+  });
+  document.addEventListener('click',function(e){ go(e.clientX < window.innerWidth*0.25 ? -1 : 1); });
+  window.addEventListener('resize',fit);
+  draw();
+})();
+</script>
+</body>
+</html>

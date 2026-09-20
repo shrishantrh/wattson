@@ -7,79 +7,109 @@
    or the keyboard arrives on that card; the title is the only thing showing at rest. */
 .ws { display: flex; flex-direction: column; gap: 10px; flex: none; min-width: 0; }
 .ws-bar { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 24px; padding: 0 2px; }
-.ws-bar-title { font-size: 12px; color: var(--muted); }
+.ws-bar-title { font-size: var(--t-small); color: var(--muted); }
 .ws-pop-host { position: relative; margin-left: auto; }
-.ws-customize { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-strong); background: var(--surface-a); border-radius: 999px; padding: 4px 11px; font-size: 12px; color: var(--ink-2); cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
+.ws-customize { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-strong); background: var(--surface-a); border-radius: 999px; padding: 4px 12px; font-size: var(--t-small); color: var(--ink-2); cursor: pointer; white-space: nowrap; transition: var(--tr-ui); }
 .ws-customize:hover, .ws-customize[aria-expanded="true"] { color: var(--ink); border-color: var(--line-focus); }
 .ws-customize:focus-visible { outline: none; box-shadow: var(--ring); }
-.ws-customize-n { font-family: var(--font-mono); font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ws-customize-n { font-family: var(--font-mono); font-size: var(--t-micro); color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* the Customize popover is a menu: a titled header, a scrollable list of rows, a footer of actions */
 .ws-pop { position: absolute; right: 0; top: calc(100% + 6px); width: 264px; background: var(--surface-a); backdrop-filter: blur(12px); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow); padding: 4px; z-index: 20; }
-.ws-pop-head { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px 6px; font-size: 12px; font-weight: 500; color: var(--ink-2); }
-.ws-pop-hint { font-size: 11px; font-weight: 400; color: var(--muted); }
+.ws-pop-head { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px 6px; font-size: var(--t-small); font-weight: 500; color: var(--ink-2); }
+.ws-pop-hint { font-size: var(--t-micro); font-weight: 400; color: var(--muted); }
 .ws-pop-list { display: flex; flex-direction: column; max-height: min(40vh, 240px); overflow: auto; scrollbar-width: thin; padding: 2px 0; border-top: 1px solid var(--line-soft); }
-.ws-pop-row { display: flex; align-items: center; gap: 9px; padding: 7px 10px; border-radius: 7px; font-size: 13px; color: var(--ink); cursor: pointer; user-select: none; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.ws-pop-row { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 7px; font-size: var(--t-small); color: var(--ink); cursor: pointer; user-select: none; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
 .ws-pop-row:hover { background: rgba(255, 255, 255, 0.05); }
 .ws-pop-row:focus-within { background: rgba(255, 255, 255, 0.05); box-shadow: var(--ring); }
 .ws-pop-row.off { color: var(--muted); }
 .ws-pop-row input { margin: 0; width: 13px; height: 13px; accent-color: var(--ink-2); flex: none; }
 .ws-pop-row input:focus-visible { outline: none; }
 .ws-pop-row span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ws-pop-foot { display: flex; justify-content: space-between; gap: 6px; padding: 5px 6px 3px; border-top: 1px solid var(--line-soft); margin-top: 2px; }
-.ws-linkbtn { background: transparent; border: 0; padding: 4px 5px; font-size: 12px; color: var(--ink-2); cursor: pointer; border-radius: 6px; transition: color var(--dur-fast) var(--ease); }
+.ws-pop-foot { display: flex; justify-content: space-between; gap: 6px; padding: 4px 6px 4px; border-top: 1px solid var(--line-soft); margin-top: 2px; }
+.ws-linkbtn { background: transparent; border: 0; padding: 4px 4px; font-size: var(--t-small); color: var(--ink-2); cursor: pointer; border-radius: 6px; transition: color var(--dur-fast) var(--ease); }
 .ws-linkbtn:hover { color: var(--ink); }
 .ws-linkbtn:focus-visible { outline: none; box-shadow: var(--ring); }
 .ws-linkbtn:disabled { color: var(--muted); cursor: default; }
 
 /* the card */
 .ws-module { position: relative; animation: ws-enter var(--dur) var(--ease-out) both; }
-.ws-module.is-dragging { z-index: 10; border-color: var(--line-focus); box-shadow: var(--shadow); animation: none; }
 @keyframes ws-enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 .ws-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; min-height: 22px; }
-.ws-title { font-size: 12px; color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ws-tools { display: inline-flex; align-items: center; gap: 2px; flex: none; opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
-.ws-module:hover .ws-tools, .ws-module:focus-within .ws-tools, .ws-module.is-dragging .ws-tools { opacity: 1; }
-.ws-handle, .ws-hide { width: 22px; height: 22px; padding: 0; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; line-height: 1; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.ws-title { font-size: var(--t-small); color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ws-tools { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+
+/* The drag affordance is always there and always quiet: the grip sits at 45% ink at rest, which
+   is enough to see on a 12px title row and not enough to compete with it, and comes up to full
+   on hover, on keyboard focus, and across the whole column while something is in the air.
+   The × is the destructive one, so it stays out of sight until the pointer or the keyboard
+   arrives on that card. */
+.ws-handle, .ws-hide { width: 22px; height: 22px; padding: 0; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; line-height: 1; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease); }
+.ws-handle { cursor: grab; touch-action: none; opacity: 0.45; }
+.ws-hide { opacity: 0; }
+.ws-module:hover .ws-handle, .ws-module:focus-within .ws-handle, .ws[data-dragging] .ws-handle { opacity: 1; }
+.ws-module:hover .ws-hide, .ws-module:focus-within .ws-hide { opacity: 1; }
 .ws-handle svg circle { fill: currentColor; }
 .ws-hide svg path { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; }
-.ws-handle { cursor: grab; touch-action: none; }
 .ws-handle:active, .ws-module.is-dragging .ws-handle { cursor: grabbing; }
 .ws-handle:hover, .ws-hide:hover { color: var(--ink); border-color: var(--line-strong); }
 /* keyboard focus reveals the tools even without a pointer, and says so with the ring */
-.ws-handle:focus-visible, .ws-hide:focus-visible { color: var(--ink); outline: none; box-shadow: var(--ring); }
-.ws-empty { font-size: 13px; color: var(--muted); padding: 10px 2px; }
+.ws-handle:focus-visible, .ws-hide:focus-visible { opacity: 1; color: var(--ink); outline: none; box-shadow: var(--ring); }
+
+/* The drop target: the card that was picked up stays in the list as an outlined slot, so the gap
+   opening in the column is where it will land, not an absence. Its contents are hidden rather
+   than removed, so nothing reflows and the column's height never jumps. */
+.ws-module.is-dragging { z-index: 1; animation: none; background: transparent; border: 1px dashed var(--line-focus); box-shadow: none; }
+.ws-module.is-dragging > * { visibility: hidden; }
+.ws-module.is-dragging::after { content: "drop here"; position: absolute; inset: 0; display: grid; place-items: center; font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+/* the rest of the column recedes while one card is being placed */
+.ws[data-dragging] .ws-module:not(.is-dragging) { opacity: 0.5; transition: opacity var(--dur-fast) var(--ease); }
+
+/* what is being moved, following the pointer or the keyboard cursor */
+.ws-ghost { display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px 0 8px; border: 1px solid var(--line-focus); border-radius: var(--radius-ctl); background: var(--surface-3); box-shadow: var(--shadow); color: var(--ink); font-size: var(--t-small); font-weight: 500; white-space: nowrap; cursor: grabbing; }
+.ws-ghost svg circle { fill: var(--muted); }
+
+.ws-empty { font-size: var(--t-small); color: var(--muted); padding: 10px 2px; }
 /* a module that draws its own surface would double the card's border: flatten it */
 .ws-module > .card, .ws-module .mod > .card { background: transparent; border: 0; border-radius: 0; padding: 0; }
 @media (prefers-reduced-motion: reduce) {
   .ws-module { transition: none !important; animation: none; }
-  .ws-tools { transition: none; }
+  .ws-handle, .ws-hide { transition: none; }
+}
+
+/* narrow: the column goes full width, so the bar's title takes the room and the Customize
+   popover stops being wider than the column it is anchored in. */
+@media (max-width: 900px) {
+  .ws-bar { flex-wrap: nowrap; }
+  .ws-bar-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ws-pop { width: min(264px, calc(100vw - 56px)); }
+  .ws-handle, .ws-hide { width: 26px; height: 26px; opacity: 1; }
 }
 
 /* ---- table: dense, sortable, sticky header ---- */
 .tbl { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .tbl-bar { display: flex; align-items: center; gap: 8px; }
-.tbl-filter { flex: 1; min-width: 0; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 5px 9px; font-size: 12px; color: var(--ink); outline: none; }
+.tbl-filter { flex: 1; min-width: 0; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 4px 8px; font-size: var(--t-small); color: var(--ink); outline: none; }
 .tbl-filter:focus { border-color: rgba(255, 255, 255, 0.24); }
 .tbl-filter::placeholder { color: var(--muted); }
 .tbl-filter::-webkit-search-cancel-button { -webkit-appearance: none; }
-.tbl-count { font-family: var(--font-mono); font-size: 11px; color: var(--muted); white-space: nowrap; margin-left: auto; font-variant-numeric: tabular-nums; }
-.tbl-csv { border: 1px solid rgba(255, 255, 255, 0.12); background: transparent; color: var(--ink-2); border-radius: 8px; padding: 4px 9px; font-size: 12px; cursor: pointer; white-space: nowrap; font-family: var(--font-mono); }
+.tbl-count { font-family: var(--font-mono); font-size: var(--t-micro); color: var(--muted); white-space: nowrap; margin-left: auto; font-variant-numeric: tabular-nums; }
+.tbl-csv { border: 1px solid rgba(255, 255, 255, 0.12); background: transparent; color: var(--ink-2); border-radius: 8px; padding: 4px 8px; font-size: var(--t-small); cursor: pointer; white-space: nowrap; font-family: var(--font-mono); }
 .tbl-csv:hover { color: var(--ink); border-color: rgba(255, 255, 255, 0.24); }
 .tbl-csv:disabled { color: var(--muted); cursor: default; border-color: rgba(255, 255, 255, 0.06); }
 .tbl-wrap { min-width: 0; }
 .tbl-wrap.scroll { overflow: auto; scrollbar-width: thin; }
-.tbl table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; line-height: 1.35; }
-.tbl th { position: sticky; top: 0; z-index: 1; background: var(--surface); text-align: left; font-weight: 500; font-size: 11px; color: var(--muted); padding: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); white-space: nowrap; }
+.tbl table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: var(--t-small); line-height: 1.35; }
+.tbl th { position: sticky; top: 0; z-index: 1; background: var(--surface); text-align: left; font-weight: 500; font-size: var(--t-micro); color: var(--muted); padding: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); white-space: nowrap; }
 .tbl th > button, .tbl th > .tbl-th { display: flex; align-items: center; gap: 4px; width: 100%; padding: 6px 8px; background: transparent; border: 0; color: inherit; font: inherit; text-align: inherit; cursor: pointer; box-sizing: border-box; }
 .tbl th > .tbl-th { cursor: default; }
 .tbl th > button:hover, .tbl th > button:focus-visible { color: var(--ink-2); outline: none; }
 .tbl th.on { color: var(--ink-2); }
 .tbl th.num > button, .tbl th.num > .tbl-th { justify-content: flex-end; }
-.tbl-sort { font-size: 9px; opacity: 0; transition: opacity 120ms; }
+.tbl-sort { font-size: var(--t-micro); opacity: 0; transition: opacity 120ms; }
 .tbl th > button:hover .tbl-sort { opacity: 0.5; }
 .tbl th.on .tbl-sort { opacity: 1; }
-.tbl td { padding: 7px 8px; border-top: 1px solid rgba(255, 255, 255, 0.06); color: var(--ink); vertical-align: middle; }
+.tbl td { padding: 8px 8px; border-top: 1px solid rgba(255, 255, 255, 0.06); color: var(--ink); vertical-align: middle; }
 .tbl tbody tr:first-child td { border-top: 0; }
 .tbl th:first-child > button, .tbl th:first-child > .tbl-th, .tbl td:first-child { padding-left: 0; }
 .tbl th:last-child > button, .tbl th:last-child > .tbl-th, .tbl td:last-child { padding-right: 0; }
@@ -91,10 +121,10 @@
 .tbl tbody tr.clickable:focus-visible { outline: none; }
 .tbl tbody tr.clickable:focus-visible td { background: rgba(255, 255, 255, 0.06); }
 .tbl-link { color: inherit; display: block; }
-.tbl.dense table { font-size: 12px; }
+.tbl.dense table { font-size: var(--t-small); }
 .tbl.dense td { padding: 4px 8px; }
-.tbl.dense th > button, .tbl.dense th > .tbl-th { padding: 5px 8px; }
-.tbl-empty { padding: 14px 0 6px; font-size: 13px; color: var(--muted); }
+.tbl.dense th > button, .tbl.dense th > .tbl-th { padding: 4px 8px; }
+.tbl-empty { padding: 14px 0 6px; font-size: var(--t-small); color: var(--muted); }
 
 /* ---- sparkline ---- */
 .spark { display: inline-block; vertical-align: middle; flex: none; overflow: visible; color: var(--ink-2); }

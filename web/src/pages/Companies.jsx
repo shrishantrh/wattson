@@ -3,6 +3,7 @@ import Shell, { fitView } from '../console/Console.jsx'
 import { Card, Num } from '../console/widgets.jsx'
 import { CopyButton } from '../components/CopyButton.jsx'
 import Dumbbell from '../components/Dumbbell.jsx'
+import Table from '../components/Table.jsx'
 import { loadCompanies, loadFacilities, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { pct0 } from '../lib/findings.js'
@@ -13,7 +14,6 @@ import '../styles/pages.css'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 
 const to100 = v => (v == null ? null : Number(v) * 100)
-const plural = (n, one, many = `${one}s`) => (n == null ? `— ${many}` : `${n} ${n === 1 ? one : many}`)
 // Biggest talk-over-walk gap first; a company with no talk score sits last.
 const gapOf = c => (c.talk_score == null || c.walk_score == null ? -Infinity : c.talk_score - c.walk_score)
 
@@ -47,18 +47,29 @@ export default function Companies() {
       <>
         {crumb}
         <Card title={<><b>Companies</b> · talk vs walk{data.is_mock && <> · <span className="accent">mock</span></>}</>} right={<CopyButton text={() => window.location.href} label="Copy link" />} onClose={back}>
-          <h1 className="verdict">{sentence}</h1>
+          <p className="pg-top">What four companies say about clean power, against what their grids actually ran on.</p>
+          <p className="verdict" style={{ marginTop: 14 }}>{sentence}</p>
           <div className="nums"><Num value={String(list.length)} label="companies read" /><Num value={String(n)} label="claims extracted" sub={`${cv} can't be verified`} /><Num value={String(pts.length)} label="sites mapped" sub={noEquity != null ? `${noEquity} on public power or co-ops, no listed equity` : 'hand-curated, utility outward'} /></div>
-          <p className="note" style={{ marginTop: 12 }}>Talk = how bold and specific the claims are, 0–1. Walk = the clean share of generation on the grids its mapped sites use, averaged, grid-only, contracted power excluded.</p>
+          <p className="note pg-fine">Talk = how bold and specific the claims are, 0–1. Walk = the clean share of generation on the grids its mapped sites use, averaged, grid-only, contracted power excluded.</p>
         </Card>
         <Card title={<><b>Talk</b> against <b>walk</b>, per company</>}>
           <Dumbbell rows={rows} aLabel="talk" bLabel="walk" />
-          <ul className="co-lines">
-            {ordered.map(c => (
-              <li key={c.ticker}><a href={href.check(c.ticker)}><b>{c.ticker}</b></a> {plural(c.n_claims, 'claim')} · {plural(c.n_sites, 'site')} · {c.cannot_verify_count ?? 0} can't verify · coverage {pct0(c.coverage)}</li>
-            ))}
-          </ul>
-          <p className="note" style={{ marginTop: 12 }}>The gap between talk and walk is the story, not a verdict on honesty: annual matching is true under the market-based method. The line turns ember when walk trails talk by more than 20 points.</p>
+          <div className="co-tbl">
+            <Table
+              columns={[
+                { key: 'ticker', label: 'Co', width: 62 },
+                { key: 'n_claims', label: 'Claims', num: true, width: 68 },
+                { key: 'n_sites', label: 'Sites', num: true, width: 62 },
+                { key: 'cannot_verify_count', label: 'No check', num: true, width: 82, format: v => String(v ?? 0), title: 'Claims the grid data cannot speak to' },
+                { key: 'coverage', label: 'Cover', num: true, width: 72, format: v => pct0(v) },
+              ]}
+              rows={ordered}
+              rowKey={c => c.ticker}
+              rowHref={c => href.check(c.ticker)}
+              dense
+            />
+          </div>
+          <p className="note pg-fine">The gap between talk and walk is the story, not a verdict on honesty: annual matching is true under the market-based method. The line turns ember when walk trails talk by more than 20 points.</p>
         </Card>
         <Card title={<><b>Sites</b> · {sites.data.length} mapped, from the serving utility outward</>}>
           {fac.loading && <Loading what="the sites" />}
@@ -76,7 +87,7 @@ export default function Companies() {
               ))}
             </div>
           )}
-          <p className="note" style={{ marginTop: 10 }}>Parent and ticker describe the serving utility's owner, not the operator. Clean 2025 is the share of generation on that grid, all hours, grid-only. Sites are on the globe; click one for its grid.</p>
+          <p className="note pg-fine">Parent and ticker describe the serving utility's owner, not the operator. Clean 2025 is the share of generation on that grid, all hours, grid-only. Sites are on the globe; click one for its grid.</p>
         </Card>
       </>
     )

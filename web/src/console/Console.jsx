@@ -5,6 +5,7 @@ import QuickSearch from '../components/QuickSearch.jsx'
 import { useColumnWidth, ResizeHandle } from '../components/ColumnResize.jsx'
 import Insight from '../components/Insight.jsx'
 import { ZoomIn, ZoomOut, Night, Table as TableIcon, Layers, Globe as GlobeIcon } from '../components/Icons.jsx'
+import '../styles/console.css'
 
 // The shell: ONE persistent night globe (mounted once, in StageProvider at the app root) with,
 // at most, a top bar, a left column of cards and a centred overlay. Pages render <Shell> to
@@ -50,7 +51,7 @@ export function StageProvider({ children }) {
   const ctx = useMemo(() => ({ setSpec }), [])
   return (
     <StageCtx.Provider value={ctx}>
-      <div className="app">
+      <div className="app" style={{ '--col-w': `${colWidth || colW}px` }}>
         <div className="stage" aria-hidden="true">
           <div className={`globe-host ${flat ? 'flat' : ''} ${spec.column ? 'with-column' : ''} ${navAck ? 'mo-nav' : ''}`} style={spec.column ? { left: colWidth + (flat ? 60 : 0) } : undefined}>
             <GlobeC view={view} points={g.points || NONE} rings={g.rings || NONE} labels={NONE} markers={g.markers || NONE} terminator={terminator} interactive={g.interactive ?? !!spec.column} autoRotate={g.autoRotate ?? 0} atmosphere={style === 'night' ? { color: '#ffffff', altitude: 0.1 } : { color: '#ffffff', altitude: 0.08 }} quality="auto" style={style} landColors={g.landColors} />

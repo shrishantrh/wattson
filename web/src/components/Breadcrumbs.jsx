@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Place, Layers, Company, Table, Bolt, Info, Globe as GlobeIcon, Sort, Filter, ArrowLeft, Pin } from './Icons.jsx'
 import coords from '../data/region_coords.json'
 import { COMPANIES } from '../lib/query.js'
@@ -76,27 +77,81 @@ function Sep() {
   return <svg className="bc-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9.5 5.5 7 6.5-7 6.5" /></svg>
 }
 
+// Is the trail scrolled away from the top of its column? The bar is sticky, so it has to say
+// whether it is resting on the content or floating over it; a flat bar sitting on a card that is
+// cut in half reads as a bug. Walks up to the nearest scrolling ancestor and listens there.
+function useStuck(ref) {
+  const [stuck, setStuck] = useState(false)
+  useEffect(() => {
+    let el = ref.current?.parentElement
+    while (el && el !== document.body && !/auto|scroll/.test(getComputedStyle(el).overflowY)) el = el.parentElement
+    const host = el && el !== document.body ? el : window
+    const read = () => setStuck((host === window ? window.scrollY : host.scrollTop) > 2)
+    read()
+    host.addEventListener('scroll', read, { passive: true })
+    return () => host.removeEventListener('scroll', read)
+  }, [ref])
+  return stuck
+}
+
+// How many of the middle segments have to give up their text for the trail to fit on one line.
+// Grows from the left: the segment nearest Home loses its label first, the one right before where
+// you are keeps it longest, and the last segment is never touched. Resets on every resize, so a
+// window that gets wider gets its labels back.
+function useFold(listRef, count) {
+  // `gen` is bumped by the resize observer and by a change of trail; each bump unfolds the trail
+  // and lets the measurement below fold it again from scratch. The measurement can only ever add
+  // one fold per pass and stops at `middle`, so the chain is bounded by the number of segments.
+  const [{ fold, gen }, set] = useState({ fold: 0, gen: 0 })
+  const middle = Math.max(0, count - 2)
+  const unfold = () => set(s => ({ fold: 0, gen: s.gen + 1 }))
+  useLayoutEffect(unfold, [count])   // oxlint-disable-line react-hooks/exhaustive-deps
+  useLayoutEffect(() => {
+    const el = listRef.current
+    if (!el || fold >= middle) return
+    if (el.scrollWidth > el.clientWidth + 1) set(s => ({ ...s, fold: s.fold + 1 }))
+  }, [listRef, fold, middle, gen])
+  useEffect(() => {
+    const el = listRef.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(unfold)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [listRef])   // oxlint-disable-line react-hooks/exhaustive-deps
+  return fold
+}
+
 // Props, all optional: `trail` (from useCrumbs; omitted, the component derives it from the live
 // hash itself) and `onBack` (omitted, the back button walks history, falling back to Home).
 export default function Breadcrumbs({ trail, onBack }) {
   const derived = useCrumbs(useHash())
   const items = trail && trail.length ? trail : trail ? [] : derived
+  const navRef = useRef(null), listRef = useRef(null)
+  const stuck = useStuck(navRef)
+  const fold = useFold(listRef, items.length)
   if (!items.length) return null
   const back = onBack || (() => { if (window.history.length > 1) window.history.back(); else window.location.hash = href.landing() })
   const last = items.length - 1
+  const up = items.slice(0, last).reverse().find(c => c.href) || null
+  // Once every middle segment is folded there is nothing left to give but the last label, so the
+  // trail says so and lets it ellipsise. Until then the last segment keeps its full width.
+  const folded = fold >= Math.max(0, items.length - 2) ? 'max' : undefined
   return (
-    <nav className="bc" aria-label="Breadcrumb">
-      <button type="button" className="bc-back" onClick={back} aria-label="Back"><ArrowLeft size={15} /></button>
-      <ol className="bc-list">
+    <nav className="bc" aria-label="Breadcrumb" ref={navRef} data-stuck={stuck ? 'true' : undefined} data-folded={folded}>
+      <button type="button" className="bc-back" onClick={back} aria-label={up ? `Back to ${up.label}` : 'Back'} data-tip={up ? `Back to ${up.label}` : 'Back'} data-tip-side="bottom"><ArrowLeft size={15} /></button>
+      <ol className="bc-list" ref={listRef}>
         {items.map((c, i) => {
           const Icon = c.icon
+          // folded: the icon carries the segment, the label stays in the accessible name
+          const folded = i > 0 && i < last && i <= fold
           const inner = <>{Icon && <Icon size={13} />}<span className="bc-text">{c.label}</span></>
+          const props = { className: 'bc-seg', title: folded ? c.label : undefined, 'aria-label': folded ? c.label : undefined }
           return (
-            <li className={`bc-item${i === last ? ' bc-here' : ''}`} key={`${c.label}-${i}`}>
+            <li className={`bc-item${i === last ? ' bc-here' : ''}${folded ? ' bc-folded' : ''}`} key={`${c.label}-${i}`}>
               {i > 0 && <Sep />}
               {i === last || !c.href
-                ? <span className="bc-seg" aria-current="page">{inner}</span>
-                : <a className="bc-seg" href={c.href}>{inner}</a>}
+                ? <span {...props} aria-current={i === last ? 'page' : undefined}>{inner}</span>
+                : <a {...props} href={c.href}>{inner}</a>}
             </li>
           )
         })}

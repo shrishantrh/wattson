@@ -8,6 +8,7 @@ import { loadOpening, useAsync } from '../lib/data.js'
 import { readTokens } from '../lib/tokens.js'
 import { openingTitle, nationalTitle, detectorTitle, n0, pct1, gw1, signedGw, interpYears, ordinal, caveatFor } from '../lib/findings.js'
 import { Loading, ErrorState } from '../components/States.jsx'
+import { useKey } from '../components/Shortcuts.jsx'
 import { href, useHash } from '../router.js'
 import '../styles/pages.css'
 import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
@@ -15,6 +16,7 @@ import Breadcrumbs, { useCrumbs } from '../components/Breadcrumbs.jsx'
 // "What we found": the evidence behind the answers, one scene at a time.
 const SCENES = [['headline', 'The finding'], ['night', 'At night'], ['sweep', 'Day vs night'], ['detector', 'Where load is landing']]
 const VIEWS = { headline: { lat: 37, lng: -88, altitude: 1.5 }, night: { lat: 38.5, lng: -96, altitude: 1.45 }, sweep: { lat: 38.5, lng: -96, altitude: 1.45 }, detector: { lat: 38.5, lng: -96, altitude: 1.3 } }
+const SCENE_KEYS = SCENES.map((_, i) => String(i + 1))
 const SUN_NIGHT = 60, SUN_SWEEP = [15, -45], SWEEP_MS = 7000, YEARS = [2019, 2020, 2021, 2022, 2023, 2024, 2025]
 
 function sideLabels(pins, dLng = 7, dLat = 2.6) {
@@ -83,13 +85,13 @@ export default function Found({ route }) {
   const sunTarget = scene === 'sweep' ? SUN_SWEEP[0] + (SUN_SWEEP[1] - SUN_SWEEP[0]) * p : SUN_NIGHT
   const sunLng = useTween(sunTarget, 1100, scene !== 'sweep')
   const terminator = useMemo(() => ({ enabled: true, sunLng, sunLat: 0, dayDim: 0.3 }), [sunLng])
-  useEffect(() => {
-    const onKey = e => { if (['INPUT', 'TEXTAREA'].includes(e.target?.tagName)) return; const i = Number(e.key) - 1; if (SCENES[i]) window.location.hash = href.found(SCENES[i][0]) }
-    window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)
-  }, [])
+  // 1-4 jump between findings, through the app's one keyboard listener (which knows when the
+  // user is typing in a field), never a listener of our own.
+  useKey(SCENE_KEYS, e => { const i = Number(e.key) - 1; if (SCENES[i]) window.location.hash = href.found(SCENES[i][0]) })
   const crumbs = useCrumbs(useHash())
   const back = () => { window.location.hash = href.landing() }
-  const tabs = <div className="seg fd-tabs" role="tablist" aria-label="Scenes">{SCENES.map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={id === scene} className={id === scene ? 'on' : ''} onClick={() => { window.location.hash = href.found(id) }}>{label}</button>)}</div>
+  // Numbered sections, not a button bar: the number says there is an order and where you are.
+  const tabs = <nav className="fd-nav" aria-label="Findings">{SCENES.map(([id, label], i) => <a key={id} href={href.found(id)} aria-current={id === scene ? 'true' : undefined}><span className="n">{String(i + 1).padStart(2, '0')}</span><span className="l">{label}</span></a>)}</nav>
 
   if (loading || error) return <Shell page="found" globe={{ view: VIEWS.headline }} column={<><Breadcrumbs trail={crumbs} onBack={back} /><Card title={<b>What we found</b>} onClose={back}>{loading ? <Loading what="the findings" /> : <ErrorState error={error} onRetry={reload} />}</Card></>} />
   const pjm = data.pjm, nat = data.national?.cf_share || {}
@@ -102,36 +104,41 @@ export default function Found({ route }) {
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<b>What we found</b>} onClose={back}>
+        <p className="pg-top">Four findings from the hourly grid data. <span className="q">Take them in order.</span></p>
         {tabs}
         {scene === 'headline' && <div className="fd-scene">
-          <h1 className="verdict">{head.title.replace("PJM's", "The mid-Atlantic grid's (PJM)")}</h1>
           <div className="fd-fig">
             <div className="fd-fig-val">{n0(pjm.overnight_clean_mw?.['2019'])}<span className="arrow">→</span>{n0(pjm.overnight_clean_mw?.['2025'])}</div>
-            <div className="fd-fig-unit">MW clean at night</div>
+            <div className="fd-fig-unit">MW clean at night, 2019 → 2025</div>
           </div>
-          <p className="note fd-fig-cap">{head.sub}</p>
+          <p className="fd-say">{head.title.replace("PJM's", "The mid-Atlantic grid's (PJM)")}</p>
           <div className="nums fd-nums"><Num value={signedGw((pjm.overnight_total_mw?.['2025'] - pjm.overnight_total_mw?.['2019']) / 1000)} label="more power at night since 2019" /><Num value={signedGw(pjm.fuel_delta_overnight_gw?.gas)} label="of it from gas" accent /><Num value={`${gw1(pjm.overnight_net_export_mw?.['2019'])} → ${gw1(pjm.overnight_net_export_mw?.['2025'])}`} label="exports to neighbours" /></div>
+          <p className="note pg-fine">{head.sub}</p>
         </div>}
         {scene === 'night' && <div className="fd-scene">
-          <h1 className="verdict">Night-time demand is rising faster than daytime demand in {pulses.length} places.</h1>
-          <p className="note" style={{ marginTop: 10 }}>A datacenter draws the same power at 3am in January as at noon in June. That lifts a region's night-time floor faster than its average, and the demand data shows it without any company list. Rings mark the top-ranked places with that fingerprint.</p>
+          <div className="fd-fig">
+            <div className="fd-fig-val">{pulses.length}</div>
+            <div className="fd-fig-unit">places with the flat-load fingerprint</div>
+          </div>
+          <p className="fd-say">Night-time demand is rising faster than daytime demand in {pulses.length} places.</p>
+          <p className="note pg-fine">A datacenter draws the same power at 3am in January as at noon in June. That lifts a region's night-time floor faster than its average, and the demand data shows it without any company list. Rings mark the top-ranked places with that fingerprint.</p>
         </div>}
         {scene === 'sweep' && <div className="fd-scene">
-          <h1 className="verdict">{natT.title}</h1>
+          <p className="fd-say" style={{ marginTop: 0 }}>{natT.title}</p>
           <div className="pair"><div><div className="label">Clean during the day</div><div className="val">{pct1(live.daytime)}</div><div className="delta">{pct1(nat['2019']?.daytime)} → {pct1(nat['2025']?.daytime)}</div></div><div><div className="label">Clean at night</div><div className="val clean">{pct1(live.overnight)}</div><div className="delta">{pct1(nat['2019']?.overnight)} → {pct1(nat['2025']?.overnight)}</div></div></div>
           <div className="fd-years">
             <div className="fd-years-top"><span className="fd-years-year">{live.year}</span><span className="fd-years-label">clean share, by year</span><button type="button" className="btn" onClick={() => setReplay(k => k + 1)}>Replay</button></div>
             <div className="fd-track"><i style={{ width: `${Math.round(p * 100)}%` }} /></div>
             <div className="fd-ticks">{YEARS.map(yr => <span key={yr} className={yr === live.year ? 'on' : ''}>{String(yr).slice(2)}</span>)}</div>
           </div>
-          <p className="note" style={{ marginTop: 14 }}>{natT.sub}</p>
+          <p className="note pg-fine">{natT.sub}</p>
         </div>}
         {scene === 'detector' && <div className="fd-scene">
-          <h1 className="verdict">{detT.title}</h1>
+          <p className="fd-say" style={{ marginTop: 0 }}>{detT.title}</p>
           <p className="note" style={{ marginTop: 10 }}>{detT.sub}</p>
           <YearSlider years={traj.years} value={yp.year} onChange={yp.setYear} playing={yp.playing} onPlay={v => (v ? yp.play() : yp.setPlaying(false))} label="clean power at night, by year" />
           <div className="legend"><span><i /> under 30% clean at night</span><span><i className="dim" /> 30–60%</span><span><i className="ink" /> over 60%</span><span><i className="hollow" /> data flagged or corrected</span></div>
-          <p className="note" style={{ marginTop: 10 }}>{(() => { const by = traj.summary?.by_year?.[yi]; const d = traj.summary?.biggest_drop?.[0], u = traj.summary?.biggest_rise?.[0]; const ex = traj.summary?.excluded_step_changes || []; const natY = nat[String(yp.year)]?.overnight; return by && d && u ? `In ${yp.year} the US ran ${natY != null ? pct1(natY) : '—'} clean at night. From 2019 to 2025 the biggest fall among grids was ${coords.regions[d.id]?.label || d.id} (${Math.round(d.from * 100)}% to ${Math.round(d.to * 100)}%), the biggest rise ${coords.regions[u.id]?.label || u.id} (${Math.round(u.from * 100)}% to ${Math.round(u.to * 100)}%). Zones are coloured with their grid's share, since zones report demand only.${ex.length ? ` ${ex.map(id => coords.regions[id]?.label || id).join(', ')} show a single-year step in the published data and are left out.` : ''} Press play.` : '' })()}</p>
+          <p className="note pg-fine">{(() => { const by = traj.summary?.by_year?.[yi]; const d = traj.summary?.biggest_drop?.[0], u = traj.summary?.biggest_rise?.[0]; const ex = traj.summary?.excluded_step_changes || []; const natY = nat[String(yp.year)]?.overnight; return by && d && u ? `In ${yp.year} the US ran ${natY != null ? pct1(natY) : '—'} clean at night. From 2019 to 2025 the biggest fall among grids was ${coords.regions[d.id]?.label || d.id} (${Math.round(d.from * 100)}% to ${Math.round(d.to * 100)}%), the biggest rise ${coords.regions[u.id]?.label || u.id} (${Math.round(u.from * 100)}% to ${Math.round(u.to * 100)}%). Zones are coloured with their grid's share, since zones report demand only.${ex.length ? ` ${ex.map(id => coords.regions[id]?.label || id).join(', ')} show a single-year step in the published data and are left out.` : ''} Press play.` : '' })()}</p>
         </div>}
       </Card>
       {scene === 'headline' && <Section title="Clean share by hour on that grid, 2025 (night hours marked)"><HourBars values={pjm.profile_24h?.['2025'] || pjm.profile_24h} /></Section>}

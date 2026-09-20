@@ -28,8 +28,17 @@ export default function Method() {
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
       <Card title={<b>Method</b>} onClose={back}>
-        <h1 className="verdict">We measure what each grid physically generated, hour by hour.</h1>
-        <p className="pg-lede">Every US balancing authority, from EIA-930 via PUDL. Clean = nuclear, hydro, wind, solar, geothermal. Night is {data.overnight_hours_local || '00:00–05:59'} local, day is {data.daytime_hours_local || '10:00–15:59'}. Baseline {data.baseline_year || 2019}; data through {data.data_snapshot_end || '2026-09-05'}.</p>
+        <p className="pg-top">We measure what each grid physically generated, hour by hour.</p>
+        {/* the definitions as a grid, not a paragraph: each one is looked up, not read through */}
+        <dl className="pg-defs">
+          <div><dt>Source</dt><dd>EIA-930 via PUDL</dd></div>
+          <div><dt>Coverage</dt><dd>Every US balancing authority</dd></div>
+          <div><dt>Clean</dt><dd>Nuclear, hydro, wind, solar, geothermal</dd></div>
+          <div><dt>Night</dt><dd>{data.overnight_hours_local || '00:00–05:59'} local</dd></div>
+          <div><dt>Day</dt><dd>{data.daytime_hours_local || '10:00–15:59'} local</dd></div>
+          <div><dt>Baseline</dt><dd>{data.baseline_year || 2019}</dd></div>
+          <div><dt>Through</dt><dd>{data.data_snapshot_end || '2026-09-05'}</dd></div>
+        </dl>
       </Card>
       <Section title="The flat-load detector (frozen before results)">
         <code className="mt-formula">{det.method}</code>

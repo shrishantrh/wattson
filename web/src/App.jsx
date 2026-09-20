@@ -22,7 +22,7 @@ const lazyPage = name => lazy(() => (pageFiles[`./pages/${name}.jsx`] ? pageFile
 const Film = lazyPage('Film')
 const Screener = lazyPage('Screener'), Explore = lazyPage('Explore'), Alerts = lazyPage('Alerts'), Companies = lazyPage('Companies'), Data = lazyPage('Data')
 
-const PAGES = { landing: Landing, check: Check, compare: Compare, found: Found, region: Region, method: Method, screen: Screener, explore: Explore, alerts: Alerts, companies: Companies, data: Data }
+const PAGES = { landing: Landing, check: Check, compare: Compare, found: Found, region: Region, method: Method, screen: Screener, screener: Screener, explore: Explore, alerts: Alerts, companies: Companies, data: Data }
 
 export default function App() {
   const hash = useHash()

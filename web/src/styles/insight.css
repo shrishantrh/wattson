@@ -15,15 +15,15 @@
 .insight-fab {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   height: 32px;
-  padding: 0 12px 0 9px;
+  padding: 0 12px 0 8px;
   border: 1px solid var(--line-strong);
   border-radius: 16px;
   background: var(--surface-a);
   color: var(--ink-2);
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: var(--t-small);
   font-weight: 500;
   letter-spacing: -0.005em;
   cursor: pointer;
@@ -42,7 +42,7 @@
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  padding: 14px 16px 13px;
+  padding: 0 16px 14px;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-card);
   background: var(--surface-a);
@@ -58,11 +58,26 @@
   to { opacity: 1; transform: none; }
 }
 
-.insight-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
+/* one header treatment: a titled row with a full-bleed hairline under it, the same shape the
+   palette and the shortcut sheet use, and the same 16px gutter as the body below it. The row is
+   sticky so the title stays while a long panel scrolls. */
+.insight-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 -16px 12px;
+  padding: 12px 16px 10px;
+  background: var(--surface-a);
+  border-bottom: 1px solid var(--line-soft);
+}
 .insight-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: var(--t-body);
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.25;
@@ -86,11 +101,11 @@
 .insight-x:hover { color: var(--ink); border-color: var(--line-focus); }
 .insight-x:focus-visible { outline: none; box-shadow: var(--ring); }
 
-.insight-lines { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.insight-lines { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .insight-lines li {
   position: relative;
   padding-left: 12px;
-  font-size: 12.5px;
+  font-size: var(--t-small);
   line-height: 1.45;
   text-wrap: pretty;
 }
@@ -106,9 +121,9 @@
 
 .insight-hint {
   margin: 10px 0 0;
-  padding-left: 9px;
+  padding-left: 8px;
   border-left: 2px solid var(--accent);
-  font-size: 12px;
+  font-size: var(--t-small);
   line-height: 1.4;
   color: var(--muted);
 }
@@ -117,13 +132,13 @@
 .insight-act {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   height: var(--h-ctl-sm);
-  padding: 0 9px;
+  padding: 0 8px;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
   color: var(--ink-2);
-  font-size: 12px;
+  font-size: var(--t-small);
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
@@ -133,8 +148,8 @@
 .insight-act:focus-visible { outline: none; box-shadow: var(--ring); }
 .insight-act svg { color: var(--accent); }
 
-.insight-foot { margin: 11px 0 0; font-size: 11px; line-height: 1.4; color: var(--muted); }
-.insight-foot .kbd { font-family: var(--font-mono); font-size: 10px; color: var(--ink-2); }
+.insight-foot { margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--line-soft); font-size: var(--t-micro); line-height: 1.4; color: var(--muted); }
+.insight-foot .kbd { font-family: var(--font-mono); font-size: var(--t-micro); color: var(--ink-2); }
 
 /* narrow screens: the column goes full width, so the panel stays collapsed-sized and low */
 @media (max-width: 900px) {

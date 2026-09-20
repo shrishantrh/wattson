@@ -1,6 +1,6 @@
 /* oxlint-disable react/only-export-components -- the state hook and the pure reducer are exported for pages and tests */
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { DndContext, closestCenter, PointerSensor, KeyboardSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { DndContext, DragOverlay, closestCenter, PointerSensor, KeyboardSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, useSortable, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import '../styles/workspace.css'
@@ -110,22 +110,33 @@ function WorkspaceBody({ id, modules, title, className }) {
   )
   const idsKey = JSON.stringify(ws.visible.map(m => m.id))   // stable identity for SortableContext
   const ids = useMemo(() => JSON.parse(idsKey), [idsKey])
-  const onDragEnd = ({ active, over }) => { if (over && active.id !== over.id) ws.move(String(active.id), String(over.id)) }
+  // While a card is in the air the whole column says so: every handle comes up, the card that was
+  // picked up becomes an outlined slot where it would land, and a small chip follows the pointer
+  // (or the keyboard cursor) so what is moving is never ambiguous.
+  const [active, setActive] = useState(null)
+  const onDragEnd = ({ active: a, over }) => { setActive(null); if (over && a.id !== over.id) ws.move(String(a.id), String(over.id)) }
+  const dragging = active ? ws.visible.find(m => m.id === active) : null
   return (
-    <div className={`ws ${className}`} data-workspace={id}>
+    <div className={`ws ${className}`} data-workspace={id} data-dragging={dragging ? 'true' : undefined}>
       <div className="ws-bar">
         {title && <span className="ws-bar-title">{title}</span>}
         <Customize ws={ws} />
       </div>
-      <DndContext id={`ws-${id}`} sensors={sensors} collisionDetection={closestCenter} modifiers={VERTICAL} onDragEnd={onDragEnd}>
+      <DndContext id={`ws-${id}`} sensors={sensors} collisionDetection={closestCenter} modifiers={VERTICAL}
+        onDragStart={({ active: a }) => setActive(String(a.id))} onDragCancel={() => setActive(null)} onDragEnd={onDragEnd}>
         <SortableContext items={ids} strategy={verticalListSortingStrategy}>
           {ws.visible.map(m => <Module key={m.id} module={m} onHide={() => ws.hide(m.id)} />)}
         </SortableContext>
+        <DragOverlay dropAnimation={null}>
+          {dragging && <div className="ws-ghost"><Grip /><span>{label(dragging)}</span></div>}
+        </DragOverlay>
       </DndContext>
       {ws.visible.length === 0 && <div className="ws-empty">Every module is hidden. <button type="button" className="ws-linkbtn" onClick={ws.showAll}>Show all</button></div>}
     </div>
   )
 }
+
+const Grip = () => <svg viewBox="0 0 10 14" width="10" height="14" aria-hidden="true"><circle cx="3" cy="3" r="1" /><circle cx="7" cy="3" r="1" /><circle cx="3" cy="7" r="1" /><circle cx="7" cy="7" r="1" /><circle cx="3" cy="11" r="1" /><circle cx="7" cy="11" r="1" /></svg>
 
 function Module({ module: m, onHide }) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id: m.id })
@@ -137,7 +148,7 @@ function Module({ module: m, onHide }) {
         <span className="ws-tools">
           {m.right}
           <button type="button" ref={setActivatorNodeRef} className="ws-handle" title="Drag to reorder. Keyboard: Space, arrows, Space" {...attributes} {...listeners} aria-label={`Reorder ${label(m)}`}>
-            <svg viewBox="0 0 10 14" width="10" height="14" aria-hidden="true"><circle cx="3" cy="3" r="1" /><circle cx="7" cy="3" r="1" /><circle cx="3" cy="7" r="1" /><circle cx="7" cy="7" r="1" /><circle cx="3" cy="11" r="1" /><circle cx="7" cy="11" r="1" /></svg>
+            <Grip />
           </button>
           <button type="button" className="ws-hide" onClick={onHide} title="Hide" aria-label={`Hide ${label(m)}`}>
             <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" /></svg>
