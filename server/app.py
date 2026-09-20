@@ -472,3 +472,19 @@ def get_alpha():
     """
     from engine.alpha import build as alpha_build
     return alpha_build.build()
+
+
+@app.get("/")
+def root():
+    """The API root. The site itself lives elsewhere -- this host only answers questions."""
+    return {
+        "service": "Wattson API",
+        "site": "https://shrishantrh.github.io/wattson/",
+        "what_this_is": ("The ask layer behind Cmd-K on the site, plus corpus search. Every "
+                         "screen renders without it; this only answers questions."),
+        "endpoints": ["/api/health", "/api/ask/status", "/api/ask", "/api/ask/summarize",
+                      "/api/regions", "/api/region/{id}", "/api/site", "/api/alerts",
+                      "/api/companies", "/api/company/{ticker}", "/api/facilities",
+                      "/api/irradiance", "/api/alpha", "/api/search", "/api/export/{kind}.csv"],
+        "docs": "/docs",
+    }

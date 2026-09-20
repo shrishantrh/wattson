@@ -13,7 +13,9 @@ from __future__ import annotations
 import json, os
 from server import data
 
-MODEL = os.environ.get("WATTSON_ASK_MODEL", "gpt-5")
+# gpt-4.1 answers the same questions with the same tool calls in ~2s where gpt-5
+# takes ~13s. Measured, not assumed, against the four questions in the test below.
+MODEL = os.environ.get("WATTSON_ASK_MODEL", "gpt-4.1")
 
 SYSTEM = """You are Wattson's analyst. You answer questions about US electricity grids and
 corporate clean-energy claims using ONLY the tools provided.
@@ -62,12 +64,16 @@ RULES YOU MUST FOLLOW. These are not style preferences.
       which region -> its detector rank and demand growth -> what fuel filled that growth
       -> the serving utility -> its parent -> its ticker
 
-    Then stop at the edge of the data, without narrating that you are stopping. Example
-    shape, for Dominion: "Dominion serves PJM/DOM, our 6th-ranked region. Its own overnight
-    demand grew 3,973 MW since 2019, about half of PJM's overnight growth, and PJM-wide
-    overnight gas rose 10.74 GW while coal fell 2.5. Its overnight clean share slipped
-    0.433 to 0.390 — a utility serving load growing faster than its clean supply. The
-    merchant names exposed to the same tightening are CEG, VST, NRG and TLN."
+    Then stop at the edge of the data, without narrating that you are stopping.
+
+    CALL THE TOOLS. Do not answer this from memory or from the examples in this prompt.
+    The shape is: "<utility> serves <region>, our <rank>-ranked region. Its own overnight
+    demand grew <X> MW since 2019, <share> of <parent BA>'s overnight growth, and <parent>
+    -wide overnight gas rose <Y> GW while coal fell <Z>. Its overnight clean share moved
+    <a> to <b> — a utility serving load growing faster than its clean supply. The merchant
+    names exposed to the same tightening are <tickers from the operator table>."
+    Every one of those placeholders comes from region(), facilities() or rank_regions().
+    An answer with no tool call is an answer you invented, however right it sounds.
 
     Never say a price will rise or fall, never imply a position, never claim our signal
     predicts a price -- it has no such validation. Two things attach whenever you do this:
