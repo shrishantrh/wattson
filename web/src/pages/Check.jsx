@@ -43,13 +43,17 @@ const PATTERN = {
 }
 const patternOf = g => PATTERN[g] || [g.replace(/_/g, ' '), null]
 // Claimed vs physical, drawn: a full-width claimed bar and the physical range under it.
-function GapBar({ claim }) {
+function GapBar({ claim, walk }) {
   if (claim.magnitude == null || claim.unit !== 'fraction' || claim.physical_min == null) return null
   const c = Math.min(1, claim.magnitude), lo = claim.physical_min, hi = claim.physical_max ?? claim.physical_min
+  const w = walk != null ? Math.min(1, Math.max(0, walk)) : null
   return (
     <div className="gapbar" aria-label={`claimed ${Math.round(c * 100)}%, physically ${Math.round(lo * 100)} to ${Math.round(hi * 100)}%`}>
       <div className="gapbar-row"><span className="gapbar-l">claims</span><span className="gapbar-t"><i style={{ width: `${c * 100}%`, background: 'var(--ink-2)' }} /></span><span className="gapbar-v">{Math.round(c * 100)}%</span></div>
-      <div className="gapbar-row"><span className="gapbar-l">its grids</span><span className="gapbar-t"><i style={{ left: `${lo * 100}%`, width: `${Math.max(1.5, (hi - lo) * 100)}%`, background: 'var(--accent)' }} /></span><span className="gapbar-v accent">{Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`}</span></div>
+      {/* The number beside the bar is the WALK SCORE, the mean across the company's mapped
+          grids, because that is the figure we compute and the one the gap is measured from.
+          The bar still spans the range, so the spread is visible without replacing the score. */}
+      <div className="gapbar-row"><span className="gapbar-l">its grids</span><span className="gapbar-t"><i style={{ left: `${lo * 100}%`, width: `${Math.max(1.5, (hi - lo) * 100)}%`, background: 'var(--accent)' }} />{w != null && <i style={{ left: `${w * 100}%`, width: '2px', background: 'var(--ink)' }} />}</span><span className="gapbar-v accent">{w != null ? `${Math.round(w * 100)}%` : (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`)}</span></div>
     </div>
   )
 }
@@ -235,7 +239,7 @@ export default function Check({ route }) {
                 {k.verbatim ? <div className="q">“{k.verbatim}”</div>
                   : <div className="q" style={{ fontStyle: 'normal', opacity: 0.85 }}>No quotable claim found in this company's documents.</div>}
                 <div className="m"><span>{k.source_doc || 'no source document'}{k.page ? `, p. ${k.page}` : (k.locator?.item ? `, Item ${k.locator.item}` : '')}{k.year ? ` · ${k.year}` : ''}</span><Chip small accent={k.verdict === 'contradicted'}>{VERDICT[k.verdict] || k.verdict}</Chip>{k.cannot_verify_reason && <span>{REASON[k.cannot_verify_reason] || k.cannot_verify_reason.replace(/_/g, ' ')}</span>}{(k.greenwash_patterns || []).map(g => { const [label, tip] = patternOf(g); return <span key={g} className="chip sm" data-tip={tip || undefined}>{label}</span> })}</div>
-                <GapBar claim={k} />
+                <GapBar claim={k} walk={data.walk_score} />
                 {k.falsifiability != null && <div className="m" style={{ alignItems: 'center' }}><span style={{ width: 84 }}>checkable</span><span style={{ width: 90 }}><Ticks value={k.falsifiability * 100} max={100} n={10} /></span><span>{Math.round(k.falsifiability * 100)}%{k.scope === 'market_based' ? ' · certificates bought, not power generated' : k.scope ? ` · ${k.scope.replace(/_/g, ' ')}` : ''}</span></div>}
                 {contra && <div className="why">Contradicted in {contra.source_doc}{contra.page ? `, p. ${contra.page}` : ''}: {contra.note}</div>}
                 {!contra && reason && <div className="why">{reason.note.replace(/^cannot_verify:\s*/, '')}</div>}
@@ -261,7 +265,8 @@ export default function Check({ route }) {
       ? { claimed: Math.min(1, p.magnitude), lo: p.physical_min, hi: p.physical_max ?? p.physical_min }
       : null
     const claimText = a.numbers[0]?.value ?? '—'
-    const measuredText = a.numbers[1]?.value ?? '—'
+    // The headline figure beside the claim is the walk score, the mean across its grids.
+    const measuredText = data.walk_score != null ? pct0(data.walk_score) : (a.numbers[1]?.value ?? '—')
     const measuredTone = track && (track.lo + (track.hi - track.lo) / 2) >= 0.5 ? 'clean' : 'fossil'
     // A grid whose footprint understates what its sites can draw, or a single site, changes how the
     // figure should be read. The gap is still stated -- it is the finding -- but the note that

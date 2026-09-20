@@ -144,7 +144,7 @@ export function checkAnswer(c) {
       ],
     }
   }
-  const claimed = primary.metric === 'renewable_electricity_share' && primary.unit === 'fraction' ? `${Math.round(primary.magnitude * 100)}% renewable` : primary.metric === 'contracted_capacity_mw' ? `${n0(primary.magnitude)} MW of contracted clean power` : primary.magnitude != null ? `${primary.magnitude} ${primary.unit || ''}`.trim() : (primary.metric || 'a clean-energy claim').replace(/_/g, ' ')
+  const claimed = primary.metric === 'renewable_electricity_share' && primary.unit === 'fraction' ? `it matched ${Math.round(primary.magnitude * 100)}% of its electricity with renewable purchases` : primary.metric === 'contracted_capacity_mw' ? `${n0(primary.magnitude)} MW of contracted clean power` : primary.magnitude != null ? `${primary.magnitude} ${primary.unit || ''}`.trim() : (primary.metric || 'a clean-energy claim').replace(/_/g, ' ')
   const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'No number in it to check.', cannot_verify: 'A contract claim. We measure the wire.' }[primary.verdict] || ''
   const lo = primary.physical_min, hi = primary.physical_max
   const range = lo != null && hi != null ? (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`) : null
