@@ -1,9 +1,16 @@
-# The demo, as a script
+# DEMO
 
-Verified against the live site. Every screen below was opened and checked. Where something
-does not work, it says so.
+**This is the final demo doc.** Everything you need on stage is here. Every screen below
+was opened and checked against the live site; where something does not work, it says so.
 
 **Live:** https://shrishantrh.github.io/wattson/
+
+| | |
+|---|---|
+| Deeper background | `docs/UNDERSTAND.md` |
+| If a judge challenges a number | `docs/evidence/` (9 files, one per likely challenge) |
+| Video script | `docs/DEMO_VIDEO.md` |
+| Deploy and offline fallback | `docs/DEMO_RUNBOOK.md` |
 
 ---
 
@@ -244,3 +251,73 @@ Then the limit:
   Company to region is. Use the Facilities sheet for that direction.
 - **The Compare deep link does not pre-fill tickers.** Pick them manually.
 - **First ⌘K question may take a few seconds** while the API wakes.
+
+---
+
+## The answers to the four questions you will definitely get
+
+### "Isn't this just that summers got hotter?"
+
+> "We pulled hourly temperature from a hundred and thirty-eight weather stations and
+> measured, for every region, exactly how much extra power it uses when it gets hot. Then we
+> asked how much of the growth that explains. **Seven point eight percent.**"
+
+> "And Northern Virginia was actually **colder** overnight in 2025 than in 2019, while its
+> overnight demand went up **three thousand nine hundred and sixty megawatts.** It got
+> colder and used four gigawatts more power at night. That isn't air conditioning."
+
+If they push on whether the weather model was any good: *"It explains about three quarters
+of the normal hour-to-hour swing in demand. It works. Weather is just not what grew."*
+
+### "Did you tune this after seeing the results?"
+
+> "No, and git proves it. The four test regions are named in the same commit as the code
+> that produced the first ranking. The only change after that is twenty-two lines, none of
+> which touch the score."
+
+Two commands they can run in front of you:
+```
+git show 7dc87a0:scripts/l3_detector.py | grep NCEN
+git show --numstat c421061 -- scripts/l3_detector.py
+```
+
+### "How do I know your data is right?"
+
+> "We found an error in the federal data. Two grid operators were each reporting the same
+> nuclear plant in full instead of their share. Combined they reported **1.91 times what
+> that plant can physically produce.** We confirmed it three ways and we show the corrected
+> number next to the published one."
+
+### "Is this actually tradeable?"
+
+> "It's an input to a trade, not a trade. A datacenter is a billion-dollar capex event
+> nobody announces, and it shows up in federal meter data with a two hour lag. We resolve it
+> to the utility and the ticker. But a third of the load we found sits on public power with
+> no listed equity, that number is on the screen, and we have run no backtest and don't
+> claim one."
+
+---
+
+## Have these four cold
+
+1. **The claim quote.** "Matched 100% of our electricity consumption with renewable energy
+   purchases, on a global and annual basis." **Never** paraphrase as "100% renewable."
+2. **NEVP: 1.8% at night, 55.8% by day.** Two columns, one row, no method required.
+3. **Dallas came 91st.** Volunteer it before anyone asks.
+4. **1.91 times the nameplate.** The federal data error, confirmed three ways.
+
+---
+
+## If something breaks
+
+**⌘K is slow or dead:** the API sleeps when idle; the first question takes a few seconds.
+If it is genuinely down, every other screen still works because the whole site is a baked
+export. Do not apologise, move to the next beat.
+
+**No network at all:**
+```bash
+cd web && npm run build && cd dist && python3 -m http.server 8099
+```
+
+**Someone challenges a figure:** open `docs/evidence/`. Nine files, each with the quote and
+the citation.
