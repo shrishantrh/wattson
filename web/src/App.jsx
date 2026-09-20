@@ -18,7 +18,23 @@ import Method from './pages/Method.jsx'
 // still being written by someone else: a missing page shows a short message instead of failing the bundle.
 const pageFiles = import.meta.glob('./pages/*.jsx')
 const Missing = ({ name }) => <div className="card" style={{ position: 'fixed', left: 22, top: 66, width: 420, zIndex: 60 }}><p className="note">The {name} page is not built yet.</p><a className="btn" href="#/" style={{ marginTop: 10, display: 'inline-block' }}>Back to start</a></div>
-const lazyPage = name => lazy(() => (pageFiles[`./pages/${name}.jsx`] ? pageFiles[`./pages/${name}.jsx`]() : Promise.resolve({ default: () => <Missing name={name} /> })))
+// A deploy replaces every chunk's filename. A tab opened before it still asks for the old
+// name and gets a 404, which surfaces as "Failed to fetch dynamically imported module" on the
+// first navigation to a lazy route. The page is not broken; the tab is stale. Reload once to
+// pick up the new index, and only once, so a genuinely missing chunk cannot loop.
+const RELOAD_KEY = 'wattson:chunk-reload'
+const recoverStaleChunk = err => {
+  const stale = /dynamically imported module|Importing a module script failed|Failed to fetch/i.test(String(err?.message || err))
+  let already = true
+  try { already = sessionStorage.getItem(RELOAD_KEY) === '1' } catch { /* private mode: do not reload */ }
+  if (!stale || already) throw err
+  try { sessionStorage.setItem(RELOAD_KEY, '1') } catch { /* ignore */ }
+  window.location.reload()
+  return new Promise(() => {})            // hold the import open while the page goes away
+}
+try { window.addEventListener('load', () => { try { sessionStorage.removeItem(RELOAD_KEY) } catch { /* ignore */ } }) } catch { /* ignore */ }
+
+const lazyPage = name => lazy(() => (pageFiles[`./pages/${name}.jsx`] ? pageFiles[`./pages/${name}.jsx`]().catch(recoverStaleChunk) : Promise.resolve({ default: () => <Missing name={name} /> })))
 const Film = lazyPage('Film')
 const Screener = lazyPage('Screener'), Explore = lazyPage('Explore'), Alerts = lazyPage('Alerts'), Companies = lazyPage('Companies'), Data = lazyPage('Data')
 
