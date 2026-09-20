@@ -129,7 +129,7 @@ held flat at **0.397** while demand grew underneath it.
 > SRP, which our own corrections file proves. Published 2019 overnight clean reads 159.0 GW;
 > corrected it is 155.7 GW. Quote the corrected number and say that you corrected it.
 
-**In PJM, overnight got dirtier.** Overnight generation grew 8.7 GW from 2019 to 2025. By
+**In PJM, load growth ate the whole cleanup.** Overnight generation grew 8.7 GW from 2019 to 2025. By
 fuel: gas +10.7, coal -2.5, nuclear -0.9, wind +1.1, hydro -0.2, solar 0.0. Overnight net
 exports fell from 3.8 GW to 2.5 GW, so the new generation serves PJM's own load, not its
 neighbors. Consistent with datacenter load being served by gas; part of the gas rise is
@@ -142,6 +142,14 @@ coal-to-gas switching.
 | PJM overnight carbon-free share | 0.433 | 0.390 |
 | PJM overnight net export, avg MW | 3,814 | 2,489 |
 | Dominion (N. Virginia) zone overnight demand, avg MW | 10,060 | 14,033 |
+| PJM overnight CO2, measured, short tons | 66,643,207 | 70,601,199 |
+| PJM overnight carbon intensity, kg CO2/MWh | 334 | 321 |
+
+Measured against EPA CEMS smokestack data, PJM's overnight power got **cleaner per unit**,
+321 kg of CO2 per MWh against 334 in 2019. Total overnight CO2 still rose **3.96 million
+short tons**. The coal retirements saved 3.03 million tons; the extra generation added 6.99
+million. Load growth consumed the entire decarbonization benefit and 4 million tons more on
+top. That is the honest sentence, and it is a harder one to argue with than "it got dirtier".
 
 **El Paso Electric is the thesis in one grid:** 34.1% carbon-free at midday, **0.1% at
 night**, one megawatt of clean generation out of 655. OpenAI's Santa Teresa campus sits
