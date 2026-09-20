@@ -239,6 +239,50 @@ If they want the limits they will ask, and you have them.
 
 ---
 
+# THE OPENAI BEAT AND THE CMD-K PROMPTS
+
+## The OpenAI beat. Do this one.
+
+Type **`openai`** in the search box.
+
+> **"We built the question box on OpenAI's models. So let's point it at OpenAI."**
+
+Six Stargate sites come up, each mapped to the utility that serves it. Open the **New
+Mexico** one.
+
+> **"El Paso Electric. Thirty-four percent clean at midday. One tenth of one percent at
+> three in the morning."**
+
+> **"And this campus we can't see at all. It runs on its own gas plant that never touches
+> the grid. We'd rather tell you that than have you find it."**
+
+Sponsor demo, real finding, and a confession that makes the rest credible, in one move.
+
+## The three Cmd-K prompts. All verified working.
+
+**1. Shows the most, seven tool calls:**
+> **"Which five regions have the most clean power at 3am, and which utility serves each?"**
+
+Comes back a table with links.
+> **"Seven tool calls against the real data, and it structurally can't show you a number the
+> tools didn't return."**
+
+**2. Shows the document work, with a page cite:**
+> **"What did Google say about 24/7 carbon free energy?"**
+
+Pulls the passage out of 354 indexed documents with its page number.
+> **"That's not our summary. That's their sentence and the page it's on."**
+
+**3. The fast one:**
+> **"Compare NBIS and CRWV"**
+
+Two neoclouds side by side in about three seconds.
+
+**If you only get one thing:** type `openai`, then prompt 1.
+**If it's slow**, that's the server waking. Keep talking, it comes back in a few seconds.
+
+---
+
 # THE TECH STACK, IF THEY ASK
 
 Short answers. Do not volunteer this, it is not what wins.
@@ -249,7 +293,7 @@ Short answers. Do not volunteer this, it is not what wins.
 > Fly."**
 
 **"How big is the data?"**
-> **"Four and a half million hourly rows. We pull it from PUDL on S3, which is where the
+> **"Four and a half million hourly rows, pulled from PUDL on S3, which is where the
 > federal energy data is published in parquet."**
 
 **"What's the AI stack?"**
