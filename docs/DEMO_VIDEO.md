@@ -115,6 +115,14 @@ Type `openai`. Six Stargate sites come up, every one mapped to a grid.
 
 Then open the New Mexico site. **This is the line.**
 
+Before the microgrid point, land the grid it sits in — it is the thesis in one region:
+
+> **"Look at the grid that campus sits on. El Paso Electric runs thirty-four percent
+> carbon-free in the middle of the day, and one tenth of one percent at night. One
+> megawatt of clean generation out of six hundred and fifty-five. That is the entire
+> argument in a single utility."**
+
+
 > **"And this one we cannot see at all. Project Jupiter is a 700-to-900 megawatt gas
 > microgrid that explicitly does not connect to El Paso Electric. So that load never
 > appears in federal demand data — including ours."**
@@ -223,3 +231,5 @@ apologize for it on camera; just move to the next screen.
 | OpenAI Stargate sites | 6 | walk score 0.369, coverage 1.0 |
 | Project Jupiter microgrid | 700–900 MW | gas, not connected to El Paso Electric |
 | Behind-the-meter sites | 11 | invisible to EIA-930 by construction |
+| El Paso Electric daytime clean | 34.1% | `EPE.cf_share.2025.daytime` |
+| El Paso Electric overnight clean | **0.1%** | 1 MW clean of 655 MW total |
