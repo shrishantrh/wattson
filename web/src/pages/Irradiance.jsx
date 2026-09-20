@@ -3,7 +3,7 @@ import Shell from '../console/Console.jsx'
 import { Card, Chip, Num, Section } from '../console/widgets.jsx'
 import Plot from '../charts/Plot.jsx'
 import { irradianceDayNight } from '../charts/builders.js'
-import { loadIrradiance, loadRegions, useAsync } from '../lib/data.js'
+import { loadIrradiance, loadRegion, loadRegions, useAsync } from '../lib/data.js'
 import { Loading, ErrorState } from '../components/States.jsx'
 import { readTokens } from '../lib/tokens.js'
 import { gw, pct, signed } from '../lib/format.js'
@@ -34,10 +34,55 @@ function KVFlat({ rows }) {
   )
 }
 
+
+/** The hour-by-hour payoff of a flat load in one region.
+ *
+ *  Irradiance tells you the sun did not change. profile_24h tells you what that meant:
+ *  the hours the sun covers got cleaner and the hours it does not did not. A 24/7 load
+ *  runs through both, so the gap between them is what it actually costs to site here.
+ */
+function HourPayoff({ profile, mw = 300 }) {
+  const p = profile?.['2025']
+  if (!Array.isArray(p) || p.length !== 24) return null
+  const sun = p.slice(10, 16), dark = [...p.slice(0, 6)]
+  const avg = a => a.reduce((x, y) => x + y, 0) / a.length
+  const sunAvg = avg(sun), darkAvg = avg(dark), allAvg = avg(p)
+  const max = Math.max(...p)
+  const fossilNight = Math.round(mw * (1 - darkAvg))
+  const fossilSun = Math.round(mw * (1 - sunAvg))
+  return (
+    <div className="hp">
+      <div className="hp-bars" role="img" aria-label="clean share by hour of day">
+        {p.map((v, h) => {
+          const band = h >= 10 && h < 16 ? 'sun' : h < 6 ? 'dark' : 'mid'
+          return <div key={h} className={`hp-bar hp-${band}`} style={{ height: `${Math.round((v / max) * 100)}%` }}
+                      title={`${String(h).padStart(2, '0')}:00 — ${Math.round(v * 100)}% clean`} />
+        })}
+      </div>
+      <div className="hp-axis"><span>midnight</span><span>6am</span><span>noon</span><span>6pm</span></div>
+      <p className="hp-read">
+        A <b>{mw} MW</b> load running here draws <b className="fossil">{fossilNight} MW</b> from
+        fossil generation between midnight and 6am, and <b className="clean">{fossilSun} MW</b> between
+        10am and 4pm. Same machine, same power, <b>{Math.round((fossilNight - fossilSun))} MW</b> of
+        difference — decided entirely by the hour.
+      </p>
+      <p className="hp-note">
+        Sun hours run {Math.round(sunAvg * 100)}% clean, dark hours {Math.round(darkAvg * 100)}%,
+        and the whole day averages {Math.round(allAvg * 100)}%. Satellite irradiance at this point
+        did not change over the period; what changed is how much was built to catch it.
+      </p>
+    </div>
+  )
+}
+
 export default function Irradiance() {
   const { loading, error, data, reload } = useAsync(async () => {
     const [irr, regs] = await Promise.all([loadIrradiance(), loadRegions()])
-    return { irr, meta: regs.meta }
+    const ids = (irr.regions || []).map(r => r.region)
+    const details = await Promise.all(ids.map(id => loadRegion(id).catch(() => null)))
+    const profiles = {}
+    ids.forEach((id, i) => { if (details[i]?.profile_24h) profiles[id] = details[i].profile_24h })
+    return { irr, meta: regs.meta, profiles }
   }, [])
   const [focus, setFocus] = useState(CALLOUT_ID)
   const back = () => { window.location.hash = href.landing() }
@@ -123,7 +168,7 @@ export default function Irradiance() {
 
       {ercot && (
         <Section
-          title="The clearest case · ERCOT North"
+          title={`What the flat sun cost · ${(regions.find(r => r.region === focus) || ercot).name || focus}`}
           right={<Chip small accent onClick={() => setFocus(CALLOUT_ID)}>{VERDICT_LABEL[ercot.verdict]}</Chip>}
         >
           <p className="note" style={{ marginBottom: 12 }}>
@@ -135,6 +180,7 @@ export default function Irradiance() {
             <Num num={ercot.irradiance.change_pct_2019_2025} format={v => `${signed(v, 1)}%`} label="Sun: no trend" sub={`no bigger than its ordinary ${ercot.irradiance.year_to_year_variation_pct.toFixed(2)}% yearly wobble`} />
             <Num num={ercot.cf_share.overnight_change_pts} format={v => ptsLabel(v)} label="Night: barely moved" sub={`${sharePct(ercot.cf_share['2019'].overnight)} → ${sharePct(ercot.cf_share['2025'].overnight)}`} />
           </div>
+          <HourPayoff profile={data.profiles?.[focus]} />
           <KVFlat rows={[
             ['Sun over Dallas, every year since 2019', `${ercot.irradiance.mean.toFixed(2)} ${ercot.irradiance.units}, moving ${ercot.irradiance.year_to_year_variation_pct.toFixed(2)}% a year`],
             ['The share above is', `all of ${ercot.cf_share_actually_describes} — the zone reports demand only, so it inherits its grid's mix`],
