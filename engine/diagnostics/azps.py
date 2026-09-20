@@ -21,7 +21,12 @@ OUT_MD = pathlib.Path("claims/derived/azps_investigation.md")
 CLEAN = {"nuclear", "hydro", "hydro_excluding_pumped_storage", "wind",
          "wind_wo_integrated_battery_storage", "solar",
          "solar_wo_integrated_battery_storage", "geothermal"}
-PALO_VERDE_NAMEPLATE_MW = 3937
+# EIA-860 (PUDL out_eia__yearly_generators, plant 6008, three units at 1403.2 MW each).
+# 3,937 MW is the NET SUMMER capacity and we published it as the nameplate for a while.
+# Both are stated because the summer figure is the more conservative comparison in summer
+# hours, but the nameplate is the physical ceiling and is what "cannot all be real" rests on.
+PALO_VERDE_NAMEPLATE_MW = 4209.6
+PALO_VERDE_NET_SUMMER_MW = 3937
 
 
 def load(ba=None):
@@ -80,6 +85,8 @@ def duplication_evidence(df):
         "combined_before_mw": round(float(w.loc["2019-06-01":"2019-12-03"].fillna(0).sum(axis=1).mean())),
         "combined_after_mw": round(float(after.fillna(0).sum(axis=1).mean())),
         "palo_verde_nameplate_mw": PALO_VERDE_NAMEPLATE_MW,
+        "palo_verde_net_summer_mw": PALO_VERDE_NET_SUMMER_MW,
+        "palo_verde_eia860_plant_id": 6008,
     }
 
 
@@ -147,12 +154,14 @@ def main():
                 "through 2019: correlation 0.995, identical within 5 MW in 98.8% "
                 "of hours.",
                 "Their combined reported output (~7,090 MW) is about 1.8x the "
-                "nameplate of the plant (3,937 MW), so it cannot all be real.",
+                "nameplate of the plant (4,209.6 MW; 3,937 MW net summer), so it cannot "
+                "all be real.",
                 "The AZPS series ends in a step on one date, not a decline.",
             ],
             "high_confidence_inference": [
                 "The plant is Palo Verde: it is the only nuclear station in "
-                "Arizona, the magnitude matches its nameplate, and the profile "
+                "Arizona, EIA-860 records it jointly owned by Arizona Public Service "
+                "(29.10%) and Salt River Project (17.49%) among others, and the profile "
                 "is flat across all hours. Not confirmed against plant-level "
                 "EIA-860 data.",
                 "EIA corrected the attribution so the plant counts once, under "

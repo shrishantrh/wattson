@@ -1,0 +1,1412 @@
+{
+  "question": "Was the generation AZPS and SRP both reported through 2019 Palo Verde, and does EIA-860 support counting it once under SRP?",
+  "plant_id_eia": 6008,
+  "identify": {
+    "search": "Palo Verde",
+    "matches_nationwide": [
+      {
+        "plant_id_eia": 57773,
+        "plant_name_eia": "Palo Verde College",
+        "city": "Blythe",
+        "county": "Riverside",
+        "state": "CA",
+        "latitude": 33.661667,
+        "longitude": -114.651667,
+        "timezone": "America/Los_Angeles"
+      },
+      {
+        "plant_id_eia": 6008,
+        "plant_name_eia": "Palo Verde",
+        "city": "Wintersburg",
+        "county": "Maricopa",
+        "state": "AZ",
+        "latitude": 33.3881,
+        "longitude": -112.8617,
+        "timezone": "America/Phoenix"
+      }
+    ],
+    "arizona_matches": [
+      {
+        "plant_id_eia": 6008,
+        "plant_name_eia": "Palo Verde",
+        "city": "Wintersburg",
+        "county": "Maricopa",
+        "state": "AZ",
+        "latitude": 33.3881,
+        "longitude": -112.8617,
+        "timezone": "America/Phoenix"
+      }
+    ],
+    "plant_id_eia": 6008
+  },
+  "capacity": {
+    "year": 2019,
+    "generators": [
+      {
+        "generator_id": "1",
+        "capacity_mw": 1403.2,
+        "summer_capacity_mw": 1311.0,
+        "winter_capacity_mw": 1333.0,
+        "prime_mover_code": "ST",
+        "energy_source_code_1": "NUC",
+        "technology_description": "Nuclear",
+        "operational_status": "existing",
+        "ownership_code": "J",
+        "utility_id_eia": 803,
+        "generator_operating_date": "1986-01-01"
+      },
+      {
+        "generator_id": "2",
+        "capacity_mw": 1403.2,
+        "summer_capacity_mw": 1314.0,
+        "winter_capacity_mw": 1336.0,
+        "prime_mover_code": "ST",
+        "energy_source_code_1": "NUC",
+        "technology_description": "Nuclear",
+        "operational_status": "existing",
+        "ownership_code": "J",
+        "utility_id_eia": 803,
+        "generator_operating_date": "1986-09-01"
+      },
+      {
+        "generator_id": "3",
+        "capacity_mw": 1403.2,
+        "summer_capacity_mw": 1312.0,
+        "winter_capacity_mw": 1334.0,
+        "prime_mover_code": "ST",
+        "energy_source_code_1": "NUC",
+        "technology_description": "Nuclear",
+        "operational_status": "existing",
+        "ownership_code": "J",
+        "utility_id_eia": 803,
+        "generator_operating_date": "1988-01-01"
+      }
+    ],
+    "nameplate_mw": 4209.6,
+    "net_summer_capacity_mw": 3937.0,
+    "net_winter_capacity_mw": 4003.0,
+    "by_year": [
+      {
+        "year": 2001,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3733.0,
+        "net_winter_mw": 3754.0,
+        "generators": 3
+      },
+      {
+        "year": 2002,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3733.0,
+        "net_winter_mw": 3754.0,
+        "generators": 3
+      },
+      {
+        "year": 2003,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3825.0,
+        "net_winter_mw": 3846.0,
+        "generators": 3
+      },
+      {
+        "year": 2004,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3804.0,
+        "net_winter_mw": 3804.0,
+        "generators": 3
+      },
+      {
+        "year": 2005,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3875.0,
+        "net_winter_mw": 3875.0,
+        "generators": 3
+      },
+      {
+        "year": 2006,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3872.0,
+        "net_winter_mw": 3872.0,
+        "generators": 3
+      },
+      {
+        "year": 2007,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3872.0,
+        "net_winter_mw": 3872.0,
+        "generators": 3
+      },
+      {
+        "year": 2008,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3942.0,
+        "net_winter_mw": 3942.0,
+        "generators": 3
+      },
+      {
+        "year": 2009,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3942.0,
+        "net_winter_mw": 3942.0,
+        "generators": 3
+      },
+      {
+        "year": 2010,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 3937.0,
+        "generators": 3
+      },
+      {
+        "year": 2011,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 3937.0,
+        "generators": 3
+      },
+      {
+        "year": 2012,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 3937.0,
+        "generators": 3
+      },
+      {
+        "year": 2013,
+        "nameplate_mw": 4209.3,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 3937.0,
+        "generators": 3
+      },
+      {
+        "year": 2014,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2015,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2016,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2017,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2018,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2019,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2020,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2021,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2022,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2023,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2024,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2025,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      },
+      {
+        "year": 2026,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "net_winter_mw": 4003.0,
+        "generators": 3
+      }
+    ],
+    "published_nameplate_mw": 3937,
+    "published_figure_matches_nameplate": false,
+    "published_figure_matches_net_summer": true,
+    "published_figure_is": "net summer capacity, not nameplate"
+  },
+  "ownership": {
+    "year": 2019,
+    "available": true,
+    "source_table": "out_eia860__yearly_ownership",
+    "table": [
+      {
+        "owner_utility_id_eia": 803,
+        "owner_utility_name_eia": "Arizona Public Service Co",
+        "owner_state": "AZ",
+        "fraction_owned": 0.291
+      },
+      {
+        "owner_utility_id_eia": 16572,
+        "owner_utility_name_eia": "Salt River Project",
+        "owner_state": "AZ",
+        "fraction_owned": 0.1749
+      },
+      {
+        "owner_utility_id_eia": 5701,
+        "owner_utility_name_eia": "El Paso Electric Co",
+        "owner_state": "TX",
+        "fraction_owned": 0.158
+      },
+      {
+        "owner_utility_id_eia": 17609,
+        "owner_utility_name_eia": "Southern California Edison Co",
+        "owner_state": "CA",
+        "fraction_owned": 0.158
+      },
+      {
+        "owner_utility_id_eia": 15473,
+        "owner_utility_name_eia": "Public Service Co of NM",
+        "owner_state": "NM",
+        "fraction_owned": 0.102
+      },
+      {
+        "owner_utility_id_eia": 17513,
+        "owner_utility_name_eia": "Southern California P P A",
+        "owner_state": "CA",
+        "fraction_owned": 0.0591
+      },
+      {
+        "owner_utility_id_eia": 11208,
+        "owner_utility_name_eia": "Los Angeles Department of Water & Power",
+        "owner_state": "CA",
+        "fraction_owned": 0.057
+      }
+    ],
+    "fraction_sums_to_one": true,
+    "identical_across_units": true,
+    "operator_utility_id_eia": 803,
+    "operator_utility_name_eia": "Arizona Public Service Co",
+    "aps_share": 0.291,
+    "srp_share": 0.1749,
+    "aps_and_srp_both_own": true,
+    "aps_plus_srp_share": 0.4659,
+    "history_by_year": [
+      {
+        "owner_utility_name_eia": "Arizona Public Service Co",
+        "2001": 0.291,
+        "2002": 0.291,
+        "2003": 0.291,
+        "2004": 0.291,
+        "2005": 0.291,
+        "2006": 0.291,
+        "2007": 0.291,
+        "2008": 0.291,
+        "2009": 0.291,
+        "2010": 0.291,
+        "2011": 0.291,
+        "2012": 0.29,
+        "2013": 0.29,
+        "2014": 0.291,
+        "2015": 0.291,
+        "2016": 0.291,
+        "2017": 0.291,
+        "2018": 0.291,
+        "2019": 0.291,
+        "2020": 0.291,
+        "2021": 0.291,
+        "2022": 0.291,
+        "2023": 0.291,
+        "2024": 0.291,
+        "2025": 0.291
+      },
+      {
+        "owner_utility_name_eia": "El Paso Electric Co",
+        "2001": 0.158,
+        "2002": 0.158,
+        "2003": 0.158,
+        "2004": 0.158,
+        "2005": 0.158,
+        "2006": 0.158,
+        "2007": 0.158,
+        "2008": 0.158,
+        "2009": 0.158,
+        "2010": 0.158,
+        "2011": 0.158,
+        "2012": 0.16,
+        "2013": 0.16,
+        "2014": 0.158,
+        "2015": 0.158,
+        "2016": 0.158,
+        "2017": 0.158,
+        "2018": 0.158,
+        "2019": 0.158,
+        "2020": 0.158,
+        "2021": 0.158,
+        "2022": 0.158,
+        "2023": 0.158,
+        "2024": 0.158,
+        "2025": 0.158
+      },
+      {
+        "owner_utility_name_eia": "Los Angeles City of",
+        "2001": 0.057,
+        "2002": 0.057,
+        "2003": 0.057,
+        "2004": 0.057,
+        "2005": 0.057,
+        "2006": 0.057,
+        "2007": 0.057,
+        "2008": 0.057,
+        "2009": 0.057,
+        "2010": NaN,
+        "2011": NaN,
+        "2012": NaN,
+        "2013": NaN,
+        "2014": NaN,
+        "2015": NaN,
+        "2016": NaN,
+        "2017": NaN,
+        "2018": NaN,
+        "2019": NaN,
+        "2020": NaN,
+        "2021": NaN,
+        "2022": NaN,
+        "2023": NaN,
+        "2024": NaN,
+        "2025": NaN
+      },
+      {
+        "owner_utility_name_eia": "Los Angeles Department of Water & Power",
+        "2001": NaN,
+        "2002": NaN,
+        "2003": NaN,
+        "2004": NaN,
+        "2005": NaN,
+        "2006": NaN,
+        "2007": NaN,
+        "2008": NaN,
+        "2009": NaN,
+        "2010": 0.057,
+        "2011": 0.057,
+        "2012": 0.06,
+        "2013": 0.06,
+        "2014": 0.057,
+        "2015": 0.057,
+        "2016": 0.057,
+        "2017": 0.057,
+        "2018": 0.057,
+        "2019": 0.057,
+        "2020": 0.057,
+        "2021": 0.057,
+        "2022": 0.057,
+        "2023": 0.057,
+        "2024": 0.057,
+        "2025": 0.057
+      },
+      {
+        "owner_utility_name_eia": "Public Service Co of NM",
+        "2001": 0.102,
+        "2002": 0.102,
+        "2003": 0.102,
+        "2004": 0.102,
+        "2005": 0.102,
+        "2006": 0.102,
+        "2007": 0.102,
+        "2008": 0.102,
+        "2009": 0.102,
+        "2010": 0.102,
+        "2011": 0.102,
+        "2012": 0.1,
+        "2013": 0.1,
+        "2014": 0.102,
+        "2015": 0.102,
+        "2016": 0.102,
+        "2017": 0.102,
+        "2018": 0.102,
+        "2019": 0.102,
+        "2020": 0.102,
+        "2021": 0.102,
+        "2022": 0.102,
+        "2023": 0.102,
+        "2024": 0.102,
+        "2025": 0.102
+      },
+      {
+        "owner_utility_name_eia": "Salt River Proj Ag I & P Dist",
+        "2001": 0.1749,
+        "2002": 0.1749,
+        "2003": 0.1749,
+        "2004": 0.1749,
+        "2005": 0.1749,
+        "2006": NaN,
+        "2007": NaN,
+        "2008": NaN,
+        "2009": NaN,
+        "2010": NaN,
+        "2011": NaN,
+        "2012": NaN,
+        "2013": NaN,
+        "2014": NaN,
+        "2015": NaN,
+        "2016": NaN,
+        "2017": NaN,
+        "2018": NaN,
+        "2019": NaN,
+        "2020": NaN,
+        "2021": NaN,
+        "2022": NaN,
+        "2023": NaN,
+        "2024": NaN,
+        "2025": NaN
+      },
+      {
+        "owner_utility_name_eia": "Salt River Project",
+        "2001": NaN,
+        "2002": NaN,
+        "2003": NaN,
+        "2004": NaN,
+        "2005": NaN,
+        "2006": 0.1749,
+        "2007": 0.1749,
+        "2008": 0.1749,
+        "2009": 0.1749,
+        "2010": 0.1749,
+        "2011": 0.1749,
+        "2012": 0.17,
+        "2013": 0.17,
+        "2014": 0.1749,
+        "2015": 0.1749,
+        "2016": 0.1749,
+        "2017": 0.1749,
+        "2018": 0.1749,
+        "2019": 0.1749,
+        "2020": 0.1749,
+        "2021": 0.1749,
+        "2022": 0.1749,
+        "2023": 0.1749,
+        "2024": 0.1749,
+        "2025": 0.1749
+      },
+      {
+        "owner_utility_name_eia": "Southern California Edison Co",
+        "2001": 0.158,
+        "2002": 0.158,
+        "2003": 0.158,
+        "2004": 0.158,
+        "2005": 0.158,
+        "2006": 0.158,
+        "2007": 0.158,
+        "2008": 0.158,
+        "2009": 0.158,
+        "2010": 0.158,
+        "2011": 0.158,
+        "2012": 0.16,
+        "2013": 0.16,
+        "2014": 0.158,
+        "2015": 0.158,
+        "2016": 0.158,
+        "2017": 0.158,
+        "2018": 0.158,
+        "2019": 0.158,
+        "2020": 0.158,
+        "2021": 0.158,
+        "2022": 0.158,
+        "2023": 0.158,
+        "2024": 0.158,
+        "2025": 0.158
+      },
+      {
+        "owner_utility_name_eia": "Southern California P P A",
+        "2001": 0.0591,
+        "2002": 0.0591,
+        "2003": 0.0591,
+        "2004": 0.0591,
+        "2005": 0.0591,
+        "2006": 0.0591,
+        "2007": 0.0591,
+        "2008": 0.0591,
+        "2009": 0.0591,
+        "2010": NaN,
+        "2011": 0.0591,
+        "2012": 0.06,
+        "2013": 0.06,
+        "2014": 0.0591,
+        "2015": 0.0591,
+        "2016": 0.0591,
+        "2017": 0.0591,
+        "2018": 0.0591,
+        "2019": 0.0591,
+        "2020": 0.0591,
+        "2021": 0.0591,
+        "2022": 0.0591,
+        "2023": 0.0591,
+        "2024": 0.0591,
+        "2025": 0.0591
+      }
+    ],
+    "shares_unchanged_2017_2025": true
+  },
+  "ba_attribution": {
+    "by_year": [
+      {
+        "year": 2001,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": null,
+        "transmission_distribution_owner_name": null,
+        "nerc_region": "WSCC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2002,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": null,
+        "transmission_distribution_owner_name": null,
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2003,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": null,
+        "transmission_distribution_owner_name": null,
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2004,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": null,
+        "transmission_distribution_owner_name": null,
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2005,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": null,
+        "transmission_distribution_owner_name": null,
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2006,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": null,
+        "transmission_distribution_owner_name": null,
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2007,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2008,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2009,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2010,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2011,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2012,
+        "balancing_authority_code_eia": null,
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2013,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2014,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2015,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2016,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2017,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": NaN,
+        "data_maturity": "final"
+      },
+      {
+        "year": 2018,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": "M",
+        "data_maturity": "final"
+      },
+      {
+        "year": 2019,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": "M",
+        "data_maturity": "final"
+      },
+      {
+        "year": 2020,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": "M",
+        "data_maturity": "final"
+      },
+      {
+        "year": 2021,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": "M",
+        "data_maturity": "final"
+      },
+      {
+        "year": 2022,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": "M",
+        "data_maturity": "final"
+      },
+      {
+        "year": 2023,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": "M",
+        "data_maturity": "final"
+      },
+      {
+        "year": 2024,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": "M",
+        "data_maturity": "final"
+      },
+      {
+        "year": 2025,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": "Salt River Project",
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": 16572,
+        "transmission_distribution_owner_name": "Salt River Project",
+        "nerc_region": "WECC",
+        "reporting_frequency_code": "M",
+        "data_maturity": "provisional"
+      },
+      {
+        "year": 2026,
+        "balancing_authority_code_eia": "SRP",
+        "balancing_authority_name_eia": null,
+        "utility_id_eia": 803,
+        "transmission_distribution_owner_id": null,
+        "transmission_distribution_owner_name": null,
+        "nerc_region": NaN,
+        "reporting_frequency_code": NaN,
+        "data_maturity": "incremental_ytd"
+      }
+    ],
+    "distinct_codes_ever": [
+      "SRP"
+    ],
+    "code_in_base_year": "SRP",
+    "changed_around_step": false,
+    "first_year_with_a_code": 2013,
+    "caveat": "EIA-860 is annual. It can say which BA a plant belonged to in a given year; it cannot date a change to 2019-12-04."
+  },
+  "alternatives": {
+    "year": 2019,
+    "az_plants_over_min_mw": [
+      {
+        "plant_id_eia": 6008,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "generators": 3,
+        "fuels": "nuclear",
+        "plant_name_eia": "Palo Verde",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 8223,
+        "nameplate_mw": 1779.2,
+        "net_summer_mw": 1638.4,
+        "generators": 7,
+        "fuels": "coal,solar",
+        "plant_name_eia": "Springerville",
+        "county": "Apache",
+        "balancing_authority_code_eia": "TEPC"
+      },
+      {
+        "plant_id_eia": 8068,
+        "nameplate_mw": 1326.0,
+        "net_summer_mw": 1227.0,
+        "generators": 9,
+        "fuels": "gas",
+        "plant_name_eia": "Santan",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 55372,
+        "nameplate_mw": 1325.1,
+        "net_summer_mw": 1042.9,
+        "generators": 6,
+        "fuels": "gas",
+        "plant_name_eia": "Harquahala Generating Project",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "HGMA"
+      },
+      {
+        "plant_id_eia": 153,
+        "nameplate_mw": 1312.0,
+        "net_summer_mw": 1312.0,
+        "generators": 8,
+        "fuels": "hydro",
+        "plant_name_eia": "Glen Canyon Dam",
+        "county": "Coconino",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 117,
+        "nameplate_mw": 1207.4,
+        "net_summer_mw": 920.0,
+        "generators": 10,
+        "fuels": "gas",
+        "plant_name_eia": "West Phoenix",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "AZPS"
+      },
+      {
+        "plant_id_eia": 55455,
+        "nameplate_mw": 1140.3,
+        "net_summer_mw": 934.0,
+        "generators": 6,
+        "fuels": "gas",
+        "plant_name_eia": "Red Hawk",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 8902,
+        "nameplate_mw": 1039.4,
+        "net_summer_mw": 1039.7,
+        "generators": 10,
+        "fuels": "hydro",
+        "plant_name_eia": "Hoover Dam (AZ)",
+        "county": "Mohave",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 116,
+        "nameplate_mw": 915.7,
+        "net_summer_mw": 623.5,
+        "generators": 7,
+        "fuels": "gas",
+        "plant_name_eia": "Ocotillo",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "AZPS"
+      },
+      {
+        "plant_id_eia": 113,
+        "nameplate_mw": 839.9,
+        "net_summer_mw": 767.0,
+        "generators": 3,
+        "fuels": "coal",
+        "plant_name_eia": "Cholla",
+        "county": "Navajo",
+        "balancing_authority_code_eia": "AZPS"
+      },
+      {
+        "plant_id_eia": 6177,
+        "nameplate_mw": 821.8,
+        "net_summer_mw": 762.0,
+        "generators": 2,
+        "fuels": "coal",
+        "plant_name_eia": "Coronado",
+        "county": "Apache",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 56948,
+        "nameplate_mw": 726.0,
+        "net_summer_mw": 520.8,
+        "generators": 12,
+        "fuels": "gas",
+        "plant_name_eia": "Coolidge Generation Station",
+        "county": "Pinal",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 55282,
+        "nameplate_mw": 713.0,
+        "net_summer_mw": 580.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "Arlington Valley Energy Facility",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "DEAA"
+      },
+      {
+        "plant_id_eia": 55177,
+        "nameplate_mw": 708.0,
+        "net_summer_mw": 550.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "South Point Energy Center",
+        "county": "Mohave",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 58557,
+        "nameplate_mw": 691.6,
+        "net_summer_mw": 595.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "Mesquite Generating Station Block 1",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 55481,
+        "nameplate_mw": 691.6,
+        "net_summer_mw": 624.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "Mesquite Generating Station Block 2",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 160,
+        "nameplate_mw": 660.7,
+        "net_summer_mw": 548.5,
+        "generators": 7,
+        "fuels": "coal,gas",
+        "plant_name_eia": "Apache Station",
+        "county": "Cochise",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 55124,
+        "nameplate_mw": 655.0,
+        "net_summer_mw": 570.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "Griffith Energy LLC",
+        "county": "Mohave",
+        "balancing_authority_code_eia": "GRIF"
+      },
+      {
+        "plant_id_eia": 55129,
+        "nameplate_mw": 646.1,
+        "net_summer_mw": 577.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "Desert Basin",
+        "county": "Pinal",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 59338,
+        "nameplate_mw": 619.0,
+        "net_summer_mw": 515.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "Gila River Power Block 1",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 60768,
+        "nameplate_mw": 619.0,
+        "net_summer_mw": 515.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "Gila River Power Block 2",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 59784,
+        "nameplate_mw": 619.0,
+        "net_summer_mw": 515.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "Gila River Power Block 3",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "GRMA"
+      },
+      {
+        "plant_id_eia": 55306,
+        "nameplate_mw": 619.0,
+        "net_summer_mw": 515.0,
+        "generators": 3,
+        "fuels": "gas",
+        "plant_name_eia": "Gila River Power Station",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 141,
+        "nameplate_mw": 613.5,
+        "net_summer_mw": 626.2,
+        "generators": 7,
+        "fuels": "gas,solar",
+        "plant_name_eia": "Agua Fria",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 55522,
+        "nameplate_mw": 605.0,
+        "net_summer_mw": 410.0,
+        "generators": 10,
+        "fuels": "gas",
+        "plant_name_eia": "Sundance",
+        "county": "Pinal",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 147,
+        "nameplate_mw": 573.7,
+        "net_summer_mw": 525.0,
+        "generators": 7,
+        "fuels": "gas",
+        "plant_name_eia": "Kyrene",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 126,
+        "nameplate_mw": 434.9,
+        "net_summer_mw": 401.5,
+        "generators": 9,
+        "fuels": "gas",
+        "plant_name_eia": "H Wilson Sundt Generating Station",
+        "county": "Pima",
+        "balancing_authority_code_eia": "TEPC"
+      },
+      {
+        "plant_id_eia": 120,
+        "nameplate_mw": 425.0,
+        "net_summer_mw": 328.0,
+        "generators": 8,
+        "fuels": "gas,oil",
+        "plant_name_eia": "Yucca",
+        "county": "Yuma",
+        "balancing_authority_code_eia": "AZPS"
+      }
+    ],
+    "az_carbon_free_plants_over_100mw": [
+      {
+        "plant_id_eia": 6008,
+        "nameplate_mw": 4209.6,
+        "net_summer_mw": 3937.0,
+        "generators": 3,
+        "fuels": "nuclear",
+        "plant_name_eia": "Palo Verde",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 153,
+        "nameplate_mw": 1312.0,
+        "net_summer_mw": 1312.0,
+        "generators": 8,
+        "fuels": "hydro",
+        "plant_name_eia": "Glen Canyon Dam",
+        "county": "Coconino",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 8902,
+        "nameplate_mw": 1039.4,
+        "net_summer_mw": 1039.7,
+        "generators": 10,
+        "fuels": "hydro",
+        "plant_name_eia": "Hoover Dam (AZ)",
+        "county": "Mohave",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 57373,
+        "nameplate_mw": 347.7,
+        "net_summer_mw": 347.7,
+        "generators": 3,
+        "fuels": "solar",
+        "plant_name_eia": "Agua Caliente Solar Project",
+        "county": "Yuma",
+        "balancing_authority_code_eia": "CISO"
+      },
+      {
+        "plant_id_eia": 56812,
+        "nameplate_mw": 280.0,
+        "net_summer_mw": 295.6,
+        "generators": 2,
+        "fuels": "solar",
+        "plant_name_eia": "Solana Generating Station",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "AZPS"
+      },
+      {
+        "plant_id_eia": 152,
+        "nameplate_mw": 254.8,
+        "net_summer_mw": 254.8,
+        "generators": 5,
+        "fuels": "hydro",
+        "plant_name_eia": "Davis Dam",
+        "county": "Mohave",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 57707,
+        "nameplate_mw": 170.0,
+        "net_summer_mw": 170.0,
+        "generators": 12,
+        "fuels": "solar",
+        "plant_name_eia": "Mesquite Solar 1",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 60308,
+        "nameplate_mw": 150.0,
+        "net_summer_mw": 150.0,
+        "generators": 1,
+        "fuels": "solar",
+        "plant_name_eia": "Mesquite Solar 3, LLC",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "CISO"
+      },
+      {
+        "plant_id_eia": 145,
+        "nameplate_mw": 129.5,
+        "net_summer_mw": 149.0,
+        "generators": 4,
+        "fuels": "hydro",
+        "plant_name_eia": "Horse Mesa",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "SRP"
+      },
+      {
+        "plant_id_eia": 57680,
+        "nameplate_mw": 129.0,
+        "net_summer_mw": 125.4,
+        "generators": 5,
+        "fuels": "solar",
+        "plant_name_eia": "Arlington Valley Solar Energy II",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "AZPS"
+      },
+      {
+        "plant_id_eia": 60307,
+        "nameplate_mw": 100.0,
+        "net_summer_mw": 100.0,
+        "generators": 1,
+        "fuels": "solar",
+        "plant_name_eia": "Mesquite Solar 2, LLC",
+        "county": "Maricopa",
+        "balancing_authority_code_eia": "CISO"
+      }
+    ],
+    "az_nuclear_plants_any_year": [
+      {
+        "plant_id_eia": 6008,
+        "plant_name_eia": "Palo Verde"
+      }
+    ],
+    "nuclear_plant_years_under_azps": 0,
+    "nuclear_plants_under_srp": [
+      6008
+    ],
+    "largest_az_carbon_free_after_palo_verde": [
+      {
+        "plant_id_eia": 153,
+        "plant_name_eia": "Glen Canyon Dam",
+        "nameplate_mw": 1312.0,
+        "fuels": "hydro",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 8902,
+        "plant_name_eia": "Hoover Dam (AZ)",
+        "nameplate_mw": 1039.4,
+        "fuels": "hydro",
+        "balancing_authority_code_eia": "WALC"
+      },
+      {
+        "plant_id_eia": 57373,
+        "plant_name_eia": "Agua Caliente Solar Project",
+        "nameplate_mw": 347.7,
+        "fuels": "solar",
+        "balancing_authority_code_eia": "CISO"
+      }
+    ],
+    "largest_azps_carbon_free": [
+      {
+        "plant_id_eia": 56812,
+        "plant_name_eia": "Solana Generating Station",
+        "nameplate_mw": 280.0,
+        "fuels": "solar"
+      },
+      {
+        "plant_id_eia": 57680,
+        "plant_name_eia": "Arlington Valley Solar Energy II",
+        "nameplate_mw": 129.0,
+        "fuels": "solar"
+      }
+    ]
+  },
+  "eia930_cross_check": {
+    "available": true,
+    "hours_both_reported": 7976,
+    "correlation": 0.994765,
+    "share_within_5mw": 0.9878,
+    "azps_mean_mw": 3619.5,
+    "srp_mean_mw": 3621.7,
+    "combined_mean_before_mw": 7086.6,
+    "combined_mean_after_mw": 3636.7,
+    "peak_combined_hour_mw": 8041.0,
+    "peak_azps_hour_mw": 4032.0,
+    "peak_srp_hour_mw": 4096.0,
+    "nameplate_mw": 4209.6,
+    "peak_combined_over_nameplate": 1.91,
+    "combined_over_nameplate": 1.683,
+    "after_over_nameplate": 0.864,
+    "azps_last_nonzero_hour_utc": "2019-12-04 07:00:00",
+    "each_ba_reported_whole_plant": true,
+    "aps_share_of_nameplate_mw": 1225.0,
+    "srp_share_of_nameplate_mw": 736.3
+  },
+  "verdict": {
+    "verdict": "confirmed",
+    "checks": {
+      "palo_verde_found_in_eia860": true,
+      "only_nuclear_station_in_arizona": true,
+      "aps_and_srp_both_own_it": true,
+      "eia860_puts_the_plant_under_srp": true,
+      "no_nuclear_plant_anywhere_sits_under_azps": true,
+      "combined_report_exceeds_one_plant": true,
+      "published_3937_is_the_nameplate": false,
+      "eia860_dates_the_correction": false
+    },
+    "supporting": [
+      "palo_verde_found_in_eia860",
+      "only_nuclear_station_in_arizona",
+      "aps_and_srp_both_own_it",
+      "eia860_puts_the_plant_under_srp",
+      "no_nuclear_plant_anywhere_sits_under_azps",
+      "combined_report_exceeds_one_plant"
+    ],
+    "failed": [],
+    "unavailable_in_eia860": [
+      "the date of the correction: EIA-860 is annual and records Palo Verde under SRP for every year from 2013, so it cannot place the step on 2019-12-04. It says which attribution is right, not when EIA-930 was fixed.",
+      "why EIA-930 carried the wrong attribution at all: EIA-860 has no field for the reporting error."
+    ],
+    "corrections_to_our_published_text": [
+      {
+        "field": "confidence_tiers.proven and every corrections[].evidence",
+        "published": "7087 MW against a 3937 MW plant nameplate",
+        "should_say": "7087 MW against a 4209.6 MW nameplate (3937 MW net summer capacity), EIA-860 plant 6008",
+        "why": "3937 MW is Palo Verde's net SUMMER capacity in EIA-860, not its nameplate. The nameplate is 4209.6 MW (3 x 1403.2 MW). The argument is unchanged, the label is wrong."
+      },
+      {
+        "field": "confidence_tiers.high_confidence_inference",
+        "published": "NOT CONFIRMED AGAINST PLANT-LEVEL EIA-860 DATA",
+        "should_say": "confirmed against EIA-860: plant 6008, the only nuclear station in Arizona, jointly owned by Arizona Public Service and Salt River Project among others, recorded by EIA-860 in the SRP balancing authority",
+        "why": "the clause was flagged as an inference precisely because it had not been checked at plant level. It has been."
+      }
+    ]
+  },
+  "tables_used": {
+    "core_eia__entity_plants": "one row per plant that never changes: name, state, county, coordinates",
+    "core_eia860__scd_generators": "annual generator record: nameplate capacity, net summer and winter capacity, prime mover, fuel, operational status",
+    "core_eia__entity_generators": "one row per generator that never changes: operating date",
+    "out_eia860__yearly_ownership": "the same ownership rows, denormalized with plant and owner names",
+    "core_eia__entity_utilities": "one row per utility that never changes: name",
+    "core_eia860__scd_plants": "annual plant record: balancing authority code, operator utility, transmission and distribution owner",
+    "core_eia930__hourly_net_generation_by_energy_source": "hourly generation by BA and fuel; already used by the rest of Wattson, read here only to cross-check reported MW against plant capacity"
+  },
+  "row_counts": {
+    "core_eia__entity_plants": 19904,
+    "core_eia860__scd_generators": 666422,
+    "core_eia__entity_generators": 43227,
+    "out_eia860__yearly_ownership": 106281,
+    "core_eia__entity_utilities": 17429,
+    "core_eia860__scd_plants": 252168,
+    "core_eia930__hourly_net_generation_by_energy_source": 196080
+  },
+  "read_notes": {
+    "core_eia930__hourly_net_generation_by_energy_source": "filtered read: AZPS and SRP, nuclear only, 4 of 6 columns"
+  }
+}

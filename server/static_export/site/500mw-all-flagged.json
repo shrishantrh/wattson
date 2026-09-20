@@ -180,19 +180,19 @@
      "published": 0.087,
      "corrected": 0.087,
      "confidence": "proven",
-     "evidence": "Published value has the wrong SIGN: it reports a 0.517 fall where the like-for-like change is an increase. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
+     "evidence": "Published value has the wrong SIGN: it reports a 0.517 fall where the like-for-like change is an increase. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 4,209.6 MW nameplate (3,937 MW net summer capacity), and a peak combined hour of 8,041 MW, which is 1.91 times the nameplate. A plant cannot produce 1.91 times its nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
     },
     "ratio_slope_per_year": {
      "published": 0.011,
      "corrected": 0.011,
      "confidence": "proven",
-     "evidence": "Wrong sign, driven entirely by the inflated 2019 point. Recomputed over 2019-2025 with nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
+     "evidence": "Wrong sign, driven entirely by the inflated 2019 point. Recomputed over 2019-2025 with nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 4,209.6 MW nameplate (3,937 MW net summer capacity), and a peak combined hour of 8,041 MW, which is 1.91 times the nameplate. A plant cannot produce 1.91 times its nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
     },
     "ratio_2019": {
      "published": 0.0118,
      "corrected": 0.0118,
      "confidence": "proven",
-     "evidence": "Overnight clean MW over overnight demand, nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
+     "evidence": "Overnight clean MW over overnight demand, nuclear excluded. AZPS and SRP reported the same generation hour by hour through 2019: correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 4,209.6 MW nameplate (3,937 MW net summer capacity), and a peak combined hour of 8,041 MW, which is 1.91 times the nameplate. A plant cannot produce 1.91 times its nameplate. The series ends in a step on a single date, 2019-12-04, not a decline."
     },
     "siting_score": {
      "published": 0.449,

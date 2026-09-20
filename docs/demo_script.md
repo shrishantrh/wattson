@@ -310,7 +310,7 @@ figure)". Numbers: 10.4% · +8.7 pts since 2019, corrected | #3 of 111 | 4,221 M
 it: clean share 2019 overnight 62.0% → 1.7% (proven); siting change −0.517 → +0.087;
 siting rank 49 → 32 (high-confidence inference, ±2); nuclear delta −3.61 → 0.0 GW. The
 evidence line: "correlation 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of
-them, combined 7,087 MW against a 3,937 MW plant nameplate. The series ends in a step on a
+them, combined 7,087 MW against a 4,209.6 MW nameplate (3,937 MW net summer). The series ends in a step on a
 single date, 2019-12-04, not a decline."
 
 ---
