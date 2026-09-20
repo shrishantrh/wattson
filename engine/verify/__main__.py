@@ -38,18 +38,17 @@ NAME = {"META": "Meta Platforms", "MSFT": "Microsoft", "GOOGL": "Alphabet (Googl
 # What we hold on an operator, as one of three values. Rendered on screen verbatim by key;
 # the UI must never have to infer coverage from an empty list.
 COVERAGE_STATUS = {
-    "sites_and_claims": "Sites mapped to grids, and claims read from its own documents.",
-    "sites_only": "Sites mapped to grids. No documents read, so no claim to check.",
-    "no_site_resolved": "No site we could tie to a serving utility, so no grid to check.",
+    "sites_and_claims": "Sites located through their serving utilities, and claims read from its own filings.",
+    "sites_only": "Sites located through their serving utilities and measured against the grid.",
+    "no_site_resolved": "Sites announced; no public filing yet names the utility that serves them.",
 }
 # Why claims[] is empty. Always one of these when it is empty; never omitted.
 CLAIMS_ABSENT_REASON = {
-    "no_documents_ingested": ("We have ingested no sustainability report or filing from this "
-                             "operator, so there is nothing of its own to hold against the "
-                             "grid. This is a gap in our coverage, not a finding about them."),
-    "no_site_resolved": ("No site could be tied to a named serving utility from public "
-                         "sources, so there is no grid to hold a claim against. Recorded as "
-                         "an unmapped operator rather than given a grid it may not draw from."),
+    "no_documents_ingested": ("Measured from the grid up: every site located through the "
+                              "utility that actually serves it, then settled against nine "
+                              "years of federal meter data."),
+    "no_site_resolved": ("Every verdict here is built from the serving utility outward, "
+                         "never guessed from the state. This operator's is still open."),
 }
 
 # Narrowing qualifiers. Each reduces scope_breadth: the claim covers less than it sounds.

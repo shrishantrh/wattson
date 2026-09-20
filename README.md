@@ -2,15 +2,68 @@
 
 *It follows the power, not the press release.*
 
-**PJM overnight clean generation has been flat within 100 MW since 2019, while overnight generation rose 8.7 GW and exports fell.**
+> **Wattson is a greenwashing investigation of datacenter operators. We settle every
+> "100% renewable" claim against 4.45 million hours of federal meter data, and hand asset
+> managers the named utility on the other side of the gap.**
 
-HackMIT 2026, Voloridge "Signal in the Noise" track. Team: Yash and Shri.
+**HackMIT 2026.** Team: Yash and Shri.
+Live: https://shrishantrh.github.io/wattson/ · API: https://wattson-api-ivory-seastar-408.fly.dev/
 
-A monitor for what the US grid is physically doing every hour in every balancing
-authority, built on PUDL's EIA-930 tables (Voloridge dataset #6). It uses that index to
-(a) detect flat 24/7 load growth from demand data alone, (b) score where new flat load
-would be served cleanly, and (c) check company clean-energy claims against the grid
-their facilities draw from. The spec is [docs/spec.md](docs/spec.md).
+Greenwashing analysis is mature for fast fashion, airlines and oil majors. It does not
+exist for datacenters, the fastest-growing industrial electricity load in the United
+States, because the claim is a sentence in a PDF and the evidence is nine years of hourly
+data across seventy balancing authorities. **Wattson is the join.**
+
+---
+
+## Tracks we are entered in, and what backs each one
+
+| Track | Prize | What we put in front of it | State |
+|---|---|---|---|
+| **Voloridge, "Signal in the Noise"** (primary) | $5k + interview fast-track | The flat-load detector: 111 regions scored on demand data alone, method frozen before the ranking, one pre-registered miss published. Plus the AZPS correction we found in our own output. Built on PUDL EIA-930, Voloridge dataset #6, fetched with their own script. | **Ready.** Write-up in `docs/voloridge/SUBMISSION.md`, reproducibility run in `docs/ec2_repro.md` |
+| **Arrowstreet, "Best Textual Analysis Hack"** (secondary) | $1k + research interview | Claims pulled from company PDFs and SEC filings with page cites, scored for magnitude, specificity and hedging, then held against the physical grid. Four verdict classes with an explicit reason on every unsettled one. | **Ready.** Write-up in `docs/arrowstreet/SUBMISSION.md` |
+| **OpenAI** | demo piece | The ask layer is an OpenAI tool-calling loop over ten typed tools. The demo points it at OpenAI's own buildout: six Stargate sites, mapped. | **Live** |
+| **Elastic, "Find the Signal"** | conditional | `server/search.py` and the `search_corpus` tool exist and are wired into the ask layer. **No cluster is provisioned**, so the tool currently returns nothing. | **Not claimable until `ELASTICSEARCH_URL` and `ELASTIC_API_KEY` are set on Fly.** One command, see `docs/DEPLOY_API.md` |
+| **Kalshi** | optional | `engine/alpha/kalshi.py` pulls contracts onto the Generating Alpha screen with strike, bid, ask and close. | **Live** |
+| xAI | optional | `XAI_API_KEY` drives a Grok narration on the irradiance screen; degrades silently when absent. | Optional |
+
+**Rule we hold to on every track: never claim something is verified that is not.** The
+`cannot_verify` count, the coverage gaps and the one pre-registered miss are all on screen.
+Judges probe for what you are hiding; the fastest way through is to hide nothing.
+
+---
+
+## What it does, in four moves
+
+| Move | Screens | Question it answers |
+|---|---|---|
+| **Accuse** | Check, Companies | This company says it is clean. What actually powers its sites? |
+| **Detect** | Found, Screener, Explore, Region, Alerts | Where is flat 24/7 load landing, and on whose grid? |
+| **Advise** | Compare, Irradiance | Where should the next gigawatt go, and why does the hour decide it? |
+| **Monetize** | Generating Alpha | Who is exposed to this? |
+
+Plus **Method** and **Data**, so nothing above has to be taken on trust, and **⌘K**, which
+answers free text against the real data and returns a table, not a paragraph.
+
+---
+
+## What the data says
+
+**Clean power was added to the day, not the night.** Since 2019 the US added **64.7 GW** of
+clean generation to the average daytime hour and **17.7 GW** to the average overnight hour,
+3.7x more to the hours a datacenter does not use. The overnight *share* did not fall: it
+held flat at **0.397** while demand grew underneath it.
+
+> These are the **corrected** 2019 figures. The published national baseline includes AZPS's
+> 3,373 MW overnight phantom, Palo Verde nuclear counted once under Arizona and once under
+> SRP, which our own corrections file proves. Published 2019 overnight clean reads 159.0 GW;
+> corrected it is 155.7 GW. Quote the corrected number and say that you corrected it.
+
+**In PJM, overnight got dirtier.** Overnight generation grew 8.7 GW from 2019 to 2025. By
+fuel: gas +10.7, coal -2.5, nuclear -0.9, wind +1.1, hydro -0.2, solar 0.0. Overnight net
+exports fell from 3.8 GW to 2.5 GW, so the new generation serves PJM's own load, not its
+neighbors. Consistent with datacenter load being served by gas; part of the gas rise is
+coal-to-gas switching.
 
 | | 2019 | 2025 |
 |---|---|---|
@@ -20,162 +73,94 @@ their facilities draw from. The spec is [docs/spec.md](docs/spec.md).
 | PJM overnight net export, avg MW | 3,814 | 2,489 |
 | Dominion (N. Virginia) zone overnight demand, avg MW | 10,060 | 14,033 |
 
-Overnight is 00:00–05:59 local time; daytime is 10:00–15:59. Baseline year is 2019.
-The data snapshot ends 2026-09-05.
+**El Paso Electric is the thesis in one grid:** 34.1% carbon-free at midday, **0.1% at
+night**, one megawatt of clean generation out of 655. OpenAI's Santa Teresa campus sits
+there.
 
-## What the data says
+Overnight is 00:00-05:59 local; daytime 10:00-15:59. Baseline 2019. Snapshot ends 2026-09-05.
 
-**All of the grid's decarbonization since 2019 happened in daylight.** Nationally,
-daytime clean generation rose 61 GW (share 0.372 to 0.465) while overnight clean
-generation rose 14 GW against 45 GW of overnight demand growth, so the overnight share
-slipped from 0.405 to 0.397. The trailing twelve months to August 2026 read 0.484 daytime
-and 0.401 overnight. These figures are consistent with EIA's published generation mix.
+---
 
-**In PJM, overnight got dirtier.** Overnight generation grew 8.7 GW from 2019 to 2025.
-By fuel: gas +10.7 GW, coal −2.5, nuclear −0.9, wind +1.1, hydro −0.2, solar 0.0. PJM's
-overnight net exports fell from 3.8 GW to 2.5 GW over the same period, so the new
-overnight generation is serving PJM's own load, not its neighbors. This is consistent
-with datacenter load being served by gas; part of the gas rise is coal-to-gas switching.
+## Coverage, as of the final build
 
-**The load growth sits in one zone.** Dominion Virginia's PJM zone grew average demand
-32% (11.7 GW to 15.4 GW) and overnight demand 39%. The next fastest PJM zones, EKPC
-(eastern Kentucky) and AEP (central Ohio), grew 11% and 9%; the other 16 of 19 scored zones grew
-under 3%. Dominion's roughly +4 GW overnight is about
-half of PJM's overnight growth. +32% in six years far exceeds plausible demographic
-growth, and overnight growing faster than average is the discriminator: residential and
-EV load is peakier, not flatter.
-
-**Same pattern elsewhere.** NYISO's overnight clean generation fell 2.3 GW after Indian
-Point closed (overnight share 0.654 to 0.459). TVA and ISO-NE also lost overnight share.
-ERCOT, MISO and SPP added overnight clean generation faster than overnight demand grew.
-
-## The detector (L3)
-
-A scoring function over demand data alone. It needs no company list: it finds flat 24/7
-load from its electrical fingerprint. 111 regions scored: 68 zones from
-`out_eia930__hourly_subregion_demand` and 43 balancing authorities from
-`out_eia930__hourly_operations`, 2019 to 2025 calendar years, after excluding regions
-under 500 MW average demand.
-
-| component | definition |
+| | |
 |---|---|
-| overnight excess | overnight demand growth % minus average demand growth % |
-| load factor delta | mean / p99.5 demand, 2025 minus 2019 (supporting evidence only) |
-| neighbor divergence | growth % minus median growth of peers (other zones in the same BA; for BAs, other BAs in the same interconnection) |
-| score | z(overnight excess) + z(neighbor divergence) + 0.5 z(load factor delta), robust z (median / MAD) |
+| Hourly rows | 4.45M, EIA-930 via PUDL, 2018-07 to 2026-09-05 |
+| Balancing authorities | 70 |
+| Regions scored by the detector | 111 |
+| Operators held | **52** |
+| Sites located | **134**, each with a source URL and a confidence grade (42 high, 61 medium, 11 low) |
+| Operators with their own filings read | 4 |
+| Sites behind the meter | 11, invisible to a demand-only detector by construction. We state this rather than wait to be caught by it |
 
-**Method frozen.** The weights, the 500 MW cut and the p99.5 peak were set before the
-ranking was looked at and were not tuned to it. The four validation regions were named in
-advance: Northern Virginia (PJM/DOM), central Ohio (PJM/AEP), Omaha (SWPP/OPPD) and
-Dallas (ERCOT/NCEN). Ranks are reported as they came out.
+---
 
-| rank | region | growth % | overnight excess | LF delta | neighbor div. | score | pattern |
-|---|---|---|---|---|---|---|---|
-| 1 | ERCOT / North | 94.6 | 13.4 | 0.069 | 74.5 | 16.5 | flat-load growth |
-| 2 | ERCOT / Far West | 116.1 | 3.1 | 0.015 | 96.0 | 13.9 | flat-load growth |
-| 3 | AZPS (Phoenix) | 31.0 | 12.3 | 0.051 | 26.4 | 9.0 | flat-load growth |
-| 4 | TEPC (Tucson) | 15.1 | 14.5 | 0.090 | 10.6 | 8.5 | flat-load growth |
-| 5 | WACM (flagged, see below) | 52.1 | 4.9 | 0.028 | 47.5 | 8.2 | flat-load growth |
-| 6 | **PJM / DOM** | 31.8 | 7.7 | 0.042 | 32.9 | 7.7 | flat-load growth |
-| 7 | **SWPP / OPPD** | 39.4 | 5.6 | 0.059 | 30.9 | 6.8 | flat-load growth |
-| 8 | ERCOT (whole) | 27.2 | 3.9 | 0.071 | 22.7 | 5.1 | flat-load growth |
-| 9 | SC (Santee Cooper) | 28.3 | 5.4 | 0.014 | 25.0 | 5.1 | flat-load growth |
-| 10 | CAISO / SDGE | 3.5 | 10.5 | 0.013 | −1.1 | 3.7 | possible midday solar suppression |
-| 19 | **PJM / AEP** | 9.2 | 3.4 | 0.021 | 10.4 | 2.3 | mixed |
-| 91 | **ERCOT / NCEN** | 14.2 | 1.9 | 0.029 | −12.2 | −1.3 | flat-load growth |
+## Who built what
 
-Validation: DOM 6th, OPPD 7th, AEP 19th, **Dallas 91st**. Dominion's load factor moved
-0.628 to 0.670 (0.590 to 0.617 on raw peak, matching the hand estimate). On a 2019 to
-2026 Jan–Aug basis DOM is 3rd, OPPD 6th, AEP 12th, NCEN 81st.
+| | |
+|---|---|
+| **Shri** | The grid engine and the interface. L0-L4 pipeline (`scripts/`), carbon-free index, flat-load detector, siting score, fuel decomposition, export and alerts, and the front end shell. |
+| **Yash** | The investigation layer. Claims pipeline (`claims/`), document ingestion and extraction, the company verdict schema, the facility-to-utility lookup, the API, the ask layer, and the Voloridge reproducibility run on EC2. |
+| **Both** | The JSON schema for a company card was agreed before either side built against it, which is what let the two halves develop in parallel and still join. The honesty rules were argued out jointly: most of them exist because one of us tried to make a claim the other could not verify. |
 
-**The Dallas miss, and why.** NCEN grew 14%, but the median ERCOT zone grew about 26%,
-so its neighbor divergence is −12: the detector penalizes zones inside a BA that is
-booming overall. That is a property of the method, reported as is.
+---
 
-**Pattern labels** are descriptive only and do not touch the score: *flat-load growth*
-(growth ≥ 10% and overnight excess > 0), *possible midday solar suppression* (growth < 5%
-and overnight excess ≥ 5 points, the signature of behind-the-meter solar lowering
-metered midday demand), *mixed* (everything else). Growth is shown next to the score
-everywhere.
+## Repo map
 
-**What the detector flags.** Flat 24/7 load in general: datacenters, crypto mining,
-oilfield electrification. ERCOT Far West is the Permian Basin. We say "consistent with,"
-never "caused by." Regions it flags that are not known datacenter clusters are named as
-findings: ERCOT North and Far West, Phoenix and Tucson, Santee Cooper.
+| Path | What is in it |
+|---|---|
+| `scripts/` | L0-L4 data pipeline. **Frozen.** `l3_detector.py` is the detector; do not re-tune. |
+| `engine/` | Verification, corrections, alpha, irradiance, diagnostics. `engine/verify` builds `claims/companies.json`. |
+| `claims/` | The investigation. `lookup/facilities.csv` is the 134-site mapping, the row that flips verdicts. `companies.json` is the deliverable. |
+| `server/` | FastAPI. `ai.py` is the ask layer, ten typed tools. `--static-export` bakes every endpoint to JSON so the demo needs no server. |
+| `web/` | Vite + React front end. Builds `dist/` with the static export baked in. |
+| `dashboard/` | The original dashboard. **Frozen fallback.** Do not edit. |
+| `docs/` | Everything below. |
 
-**WACM flag.** WACM's demand rose about 1.5 GW during 2022 while its generation stayed
-near 4 GW and its net exports fell from 1.5 GW to zero, with no change in interchange
-partners. The data does not explain it; it could be a reporting or footprint change. It
-stays in the ranking (frozen method) and is excluded from alerts.
+---
 
-## Siting score (L4)
+## The documents, and which to read first
 
-Per BA: overnight carbon-free share in 2025, its change since 2019, overnight clean MW
-divided by overnight demand in 2025, and the 2019 to 2025 per-year slope of that ratio.
-The composite is the mean percentile across the first three (higher = new flat load
-served more cleanly). No "years remaining" or capacity headroom is claimed.
+| File | Use it for |
+|---|---|
+| **`docs/DEMO_VIDEO.md`** | **The 2:30 video script.** Exact words, screen direction, and a table of every figure with its source. Start here. |
+| **`docs/judges_qa_redteam.md`** | 72 questions from six hostile experts (26 fatal, 35 serious), each answered from the data with an explicit concession. Read before judging. |
+| `docs/DEVPOST.md` | All eight Devpost answers, ready to paste. |
+| `docs/TABS.md` | Every screen, every control, what to say about it, and the trap a judge reaches for. |
+| `docs/spec.md` | The full method. The Amendments block at the top overrides the body. |
+| `docs/DEMO_RUNBOOK.md` | Running the live demo, and what to do when something breaks. |
+| `docs/voloridge/SUBMISSION.md` · `docs/arrowstreet/SUBMISSION.md` | The two track write-ups. |
+| `docs/DEPLOY.md` · `docs/DEPLOY_API.md` | Deploying the site and the API. |
+| `docs/GLOSSARY.md` | Balancing authority, zone, carbon-free share, talk vs walk. |
 
-| BA | overnight CF 2025 | change since 2019 | clean MW / demand | ratio slope / yr | siting rank |
-|---|---|---|---|---|---|
-| BPAT | 0.905 | +0.022 | 1.245 | −0.044 | 3 |
-| SPP | 0.519 | +0.052 | 0.537 | +0.010 | 10 |
-| Duke Carolinas | 0.593 | −0.018 | 0.657 | −0.007 | 17 |
-| ERCOT | 0.413 | +0.014 | 0.417 | 0.000 | 18 |
-| MISO | 0.345 | +0.025 | 0.341 | +0.007 | 24 |
-| PJM | 0.390 | −0.042 | 0.408 | −0.004 | 34 |
-| NYISO | 0.459 | −0.195 | 0.386 | −0.026 | 35 |
+---
 
-52 BAs ranked. The hand-mapped operator table (zone → utility → parent → ticker) for the
-top flagged regions is in `scripts/operators_manual.json`; it is a who-serves-the-load
-table, not an investment view.
+## Honesty rules, condensed
 
-## Honesty rules we hold to
+These are not decoration. Every one exists because breaking it produced something false out
+of correct numbers.
 
-- We measure generation within a footprint, not consumption. Interchange is not
-  allocated, and overnight is when interchange is largest relative to load.
-- Average grid mix, not marginal emissions.
-- Regions are coarse. PJM spans Chicago to New Jersey. Zones report demand only and
-  inherit their parent BA's generation figures; the dashboard labels this.
-- "Consistent with datacenter load being served by gas," never "caused by."
-- Company verdicts are "true on paper, X physically," grid-only, excluding contracted
-  clean power. The facility lookup is hand-curated. `cannot_verify` is explicit.
-- No backtests, no claims about stock prices.
-- National figures are "consistent with EIA's published mix" unless a number is cited.
+1. **Never say "caused by."** Say *consistent with*. The detector flags flat load, which is
+   datacenters, crypto, and oilfield electrification.
+2. **Never say a company lied.** Annual matched claims are true under the GHG Protocol
+   market-based method. The verdict is *"true on paper, X physically."*
+3. **Never state a share falling as clean generation shrinking.** Give the absolute in the
+   same breath. This is the single easiest way to write something false here.
+4. **Zones report demand only** and inherit the parent BA's generation. PJM's +10.74 GW of
+   gas is never Dominion's.
+5. **Nulls render as a phrase, never a zero.** `(talk_score ?? 0)` once drew Amazon's null
+   as a 0% bar, a screen that said "Amazon talks at zero" built from correct JSON.
+6. We measure generation within a footprint, not consumption. Interchange is not allocated.
+   Average grid mix, not marginal emissions. Regions are coarse.
 
-## Data traps found and handled
+---
 
-- **Fuel categories changed on 2024-07-01.** EIA split hydro, solar and wind into finer
-  buckets. Old and new buckets are never both populated in the same hour, so summing
-  parent plus children never double counts.
-- **98M of 118M generation rows are empty padding.** Real data starts 2018-07-01.
-- **Raw Dominion demand has two corrupt hours** in October 2021 (over a billion MWh).
-  Use `out_eia930__hourly_subregion_demand` and `demand_imputed_pudl_mwh`.
-- **The partner-level interchange table is unreliable for PJM before 2020.** The PJM–MISO
-  tie flips sign between 2019 and 2020 and the partner sum correlates only 0.45 with
-  EIA's adjusted net. The headline interchange series comes from the operations table,
-  which closes generation − interchange = demand to a 7 MW median residual. Sign
-  convention: positive = export from the reporting BA.
-- **PJM/PL has one corrupt demand hour in 2019** (11.6 GW spike against a 7.6 GW p99.5)
-  that would have given it a fake +0.18 load-factor jump; hence the p99.5 peak.
-- **Small BAs that generate nothing read 0%.** Map facilities to the parent region.
-- **2018 is a half year and 2026 ends 2026-09-05.** Same-months (Jan–Aug) and
-  trailing-12-month series make 2026 comparable; partial months are dropped.
-- **69 of 70 generating BAs have a reporting time zone** (SIKE does not, dropped).
-  Arizona is America/Phoenix, no DST.
+## Running it
 
-## Definitions (L1)
-
-Carbon-free = nuclear + hydro + wind + solar + geothermal. Fossil = gas + coal + oil.
-Other/unknown (biomass, waste, petcoke) counts in the denominator, not as carbon-free.
-Storage (net of charging) is excluded from both sides. Small negatives are clipped to
-zero. Value column: `net_generation_adjusted_mwh`, populated in all but 58 real rows.
-
-## Running the pipeline
+Python venv is `~/hackmit-venv`. `data/` is gitignored; re-fetch on a new machine (~375 MB).
 
 ```bash
-python3 -m venv ~/hackmit-venv && source ~/hackmit-venv/bin/activate
-pip install boto3 pandas pyarrow
-
+source ~/hackmit-venv/bin/activate
 python3 scripts/vendor/pudl_fetch.py --output-dir data/pudl \
   --table core_eia930__hourly_net_generation_by_energy_source \
   --table core_eia930__hourly_interchange \
@@ -183,74 +168,24 @@ python3 scripts/vendor/pudl_fetch.py --output-dir data/pudl \
   --table out_eia930__hourly_subregion_demand \
   --table core_eia__codes_balancing_authorities \
   --table core_eia__codes_balancing_authority_subregions
-
-python3 scripts/build_wide.py          # long -> wide generation table
-python3 scripts/carbon_free_index.py   # L1: hourly CF index, 70 BAs
-python3 scripts/overnight_profile.py   # L2: local-time night vs day
-python3 scripts/l2_temporal.py         # L2: clean MW, Jan-Aug, trailing 12
-python3 scripts/l2_interchange.py      # L2: PJM interchange
-python3 scripts/l3_detector.py         # L3: detector (frozen)
-python3 scripts/l4_supply.py           # L4: fuel mix, siting score
-python3 scripts/export_json.py         # regions.json, heatmaps, mock company card
-python3 scripts/alerts.py              # alerts.json
-
-cd dashboard && npm install && npm run dev   # static React + Plotly, no backend
+python3 scripts/build_wide.py && python3 scripts/carbon_free_index.py
+python3 scripts/overnight_profile.py && python3 scripts/l2_temporal.py && python3 scripts/l2_interchange.py
+python3 scripts/l3_detector.py && python3 scripts/l4_supply.py
+python3 scripts/export_json.py && python3 scripts/alerts.py
+python3 -m engine.verify && python3 -m server --static-export
+cd web && npm ci && npm run build
 ```
 
-About 375 MB of raw parquet, a few minutes per step on a laptop. `data/` is gitignored;
-the exported JSON under `dashboard/public/data/` is committed.
+The built `web/dist/` is the demo. It needs no server, no Python and no network: every
+endpoint is baked in as JSON. Keep a built `dist/` on two laptops before judging.
 
-## JSON contracts
-
-`dashboard/public/data/regions.json` is `{"meta": {...}, "regions": [...]}`, one object per
-region with `cf_share`, `cf_avg_mw`, `demand`, `detection`, `fuel_delta_overnight_gw`,
-`overnight_fuel_mw`, `siting`, `interchange`, `trailing12`, `profile_24h`, `operators`,
-`data_flags` and `heatmap_uri` (see docs/spec.md for the field-level schema). Zones carry
-`cf_inherited_from_ba: true`. Heatmaps are `data/heatmaps/<BA>.json`, 365 × 24 for 2025 in
-local time. `alerts.json` lists threshold rules with the month each was first crossed.
-
-`claims/companies.json` is Yash's deliverable (schema in docs/spec.md). Until it lands,
-the dashboard loads `claims/companies.mock.json` behind a visible MOCK DATA banner. The
-mock file's claim text is illustrative; its grid evidence numbers are real L1 outputs.
-
-## Document retrieval (Elastic Cloud)
-
-The verified corpus is indexed as-is; retrieval never re-extracts a PDF. Configure one
-of these credential pairs locally (they are intentionally not committed):
+To run with the ask layer locally:
 
 ```bash
-# ~/.wattson.env
-ELASTIC_CLOUD_ID=...              # preferred Elastic Cloud connection form
-ELASTIC_API_KEY=...
-# Or, when the project setup supplies an endpoint instead:
-# ELASTICSEARCH_URL=https://...elastic-cloud.com
-# ELASTIC_API_KEY=...
+set -a && . ~/.wattson.env && set +a
+python3 -m uvicorn server.app:app --port 8010
+cd web && VITE_API_BASE=http://localhost:8010 npm run build
 ```
 
-```bash
-pip install -r requirements.txt
-python3 -m engine.retrieval --dry-run  # validates: 354 passages, 309 ESG + 45 10-K
-python3 -m engine.retrieval            # create/index wattson-corpus-v1
-python3 -m server
-curl 'localhost:8000/api/search/status'
-curl 'localhost:8000/api/search?q=100%25+renewable'
-curl 'localhost:8000/api/search?q=100%25+renewable&ticker=MSFT&doc_type=10k'
-```
-
-`/api/search/status` reports corpus counts and the live `indexed` count; `/api/search`
-reports `total`, score, exact source URL, and either a PDF page or an EDGAR HTML locator
-for each result. `quality_flag=suspect` remains searchable for completeness but must
-never be presented as a quote; `tabular` hits are numerical evidence only.
-
-## Dashboard (L7)
-
-`dashboard/` is a static Vite + React + Plotly site reading the JSON above. Screens:
-ranked detector table (landing), region detail (365 × 24 heatmap, 24-hour profile 2019
-vs 2025, night vs day trend, overnight fuel mix by year, siting score, demand and load
-factor, operators), alerts with first-crossed dates, and the company watchlist with the
-Talk vs Walk chart. Every table has a CSV export button.
-
-## Repo layout
-
-Shri: `scripts/`, `dashboard/`. Yash: `claims/`. Raw and processed data live in `data/`
-(not committed). Voloridge's original fetch script is vendored in `scripts/vendor/`.
+**Credentials never live in this repo.** Keys are in `~/.wattson.env` (chmod 600) and in
+Fly's secret store. The client reads only `VITE_API_BASE`, which is a URL, not a secret.

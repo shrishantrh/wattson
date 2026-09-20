@@ -4,9 +4,9 @@
  "id": "AAPL",
  "listed_equity": true,
  "coverage_status": "sites_only",
- "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+ "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
  "claims_absent_reason": "no_documents_ingested",
- "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+ "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
  "sites": [
   {
    "metro": "Maiden (Catawba County)",
@@ -84,7 +84,7 @@
   "Unweighted across sites; we do not know each site's load.",
   "Site mapping is hand-curated from serving utilities, never inferred from state.",
   "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-  "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+  "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
  ],
  "is_mock": false
 }

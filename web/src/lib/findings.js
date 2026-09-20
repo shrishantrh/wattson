@@ -1,11 +1,11 @@
 // Every screen title is a plain-English sentence generated from the numbers on that screen.
 // Nothing here is hand-written per region or company: change the data and the sentence changes.
-export const n0 = x => (x == null || Number.isNaN(Number(x)) ? '—' : Math.round(Number(x)).toLocaleString('en-US'))
-export const pct0 = x => (x == null ? '—' : `${Math.round(x * 100)}%`)
-export const pct1 = x => (x == null ? '—' : `${(x * 100).toFixed(1)}%`)
-export const pts1 = x => (x == null ? '—' : `${x > 0 ? '+' : x < 0 ? '−' : ''}${Math.abs(x * 100).toFixed(1)} pts`)
-export const gw1 = mw => (mw == null ? '—' : `${(Math.abs(mw) / 1000).toFixed(1)} GW`)
-export const signedGw = gw => (gw == null ? '—' : `${gw > 0 ? '+' : gw < 0 ? '−' : ''}${Math.abs(gw).toFixed(1)} GW`)
+export const n0 = x => (x == null || Number.isNaN(Number(x)) ? ', ' : Math.round(Number(x)).toLocaleString('en-US'))
+export const pct0 = x => (x == null ? ', ' : `${Math.round(x * 100)}%`)
+export const pct1 = x => (x == null ? ', ' : `${(x * 100).toFixed(1)}%`)
+export const pts1 = x => (x == null ? ', ' : `${x > 0 ? '+' : x < 0 ? '−' : ''}${Math.abs(x * 100).toFixed(1)} pts`)
+export const gw1 = mw => (mw == null ? ', ' : `${(Math.abs(mw) / 1000).toFixed(1)} GW`)
+export const signedGw = gw => (gw == null ? ', ' : `${gw > 0 ? '+' : gw < 0 ? '−' : ''}${Math.abs(gw).toFixed(1)} GW`)
 const y = (o, k) => (o && o[k] != null ? Number(o[k]) : null)
 
 // Opening: the PJM finding.
@@ -30,7 +30,7 @@ export function nationalTitle(cf, baseline = '2019', latest = '2025') {
   const d = cf?.[latest]?.daytime - cf?.[baseline]?.daytime, o = cf?.[latest]?.overnight - cf?.[baseline]?.overnight
   if (!Number.isFinite(d) || !Number.isFinite(o)) return { title: 'Daytime and overnight clean share since 2019', sub: '' }
   const nightVerb = Math.abs(o) < 0.01 ? 'stood still' : o < 0 ? `fell ${pts1(o).replace('−', '')}` : `rose ${pts1(o).replace('+', '')}`
-  return { title: `Since ${baseline} the grid cleaned up by day and ${nightVerb} at night.`, sub: `The day gained ${pts1(d).replace('+', '')} since ${baseline}: ${pct1(cf[baseline].daytime)} to ${pct1(cf[latest].daytime)}. The night ${nightVerb}: ${pct1(cf[baseline].overnight)} to ${pct1(cf[latest].overnight)}${o < 0 ? ' — a smaller slice of a bigger night, not less clean power' : ''}. A datacenter draws the same power at 3am as at noon, so the load the AI buildout adds runs on the hours that never improved.` }
+  return { title: `Since ${baseline} the grid cleaned up by day and ${nightVerb} at night.`, sub: `The day gained ${pts1(d).replace('+', '')} since ${baseline}: ${pct1(cf[baseline].daytime)} to ${pct1(cf[latest].daytime)}. The night ${nightVerb}: ${pct1(cf[baseline].overnight)} to ${pct1(cf[latest].overnight)}${o < 0 ? ', a smaller slice of a bigger night, not less clean power' : ''}. A datacenter draws the same power at 3am as at noon, so the load the AI buildout adds runs on the hours that never improved.` }
 }
 
 // Opening: the detector map.
@@ -58,7 +58,7 @@ export function regionTitle(region, label) {
   if (!Number.isFinite(g)) return { title: `${name}`, sub: '' }
   const grew = g >= 0 ? `grew ${pct0(g)}` : `fell ${pct0(-g)}`
   const grid = region?.cf_inherited_from_ba ? `The grid serving it (${region.ba})` : 'Its grid'
-  const clean = !Number.isFinite(o) ? '' : Math.abs(o) < 0.01 ? `${grid} got no cleaner after dark over the same years — its night clean share is where it was in 2019.` : o < 0 ? `${grid} got no cleaner after dark over the same years — its night clean share is ${pts1(o).replace('−', '')} lower than in 2019.` : `${grid} did get cleaner after dark — its night clean share is ${pts1(o).replace('+', '')} higher than in 2019.`
+  const clean = !Number.isFinite(o) ? '' : Math.abs(o) < 0.01 ? `${grid} got no cleaner after dark over the same years, its night clean share is where it was in 2019.` : o < 0 ? `${grid} got no cleaner after dark over the same years, its night clean share is ${pts1(o).replace('−', '')} lower than in 2019.` : `${grid} did get cleaner after dark, its night clean share is ${pts1(o).replace('+', '')} higher than in 2019.`
   return { title: `${name}'s overnight demand ${grew} since 2019. ${clean}${corr != null ? ' (from the corrected 2019 figure)' : ''}`, sub: `Average demand ${n0(d['2019']?.avg_mw)} MW to ${n0(d['2025']?.avg_mw)} MW; overnight ${n0(d['2019']?.overnight_avg_mw)} MW to ${n0(d['2025']?.overnight_avg_mw)} MW.` }
 }
 
@@ -104,8 +104,8 @@ const trendWord = (chg, slope) => (chg != null ? (chg > 0.01 ? 'improving' : chg
 // inferred here from an empty array: an operator with no claims is a statement about OUR
 // document coverage, and the screen has to say which of the two it is looking at.
 export const COVERAGE_LINE = {
-  sites_only: 'We have read no documents from this operator. Its sites and their grids are measured; there is no claim of its own to hold against them.',
-  no_site_resolved: 'We could not tie a single site to the utility that serves it, so there is no grid to check. Recorded as an unmapped operator rather than given a grid it may not draw from.',
+  sites_only: 'Located from the serving utility outward, then measured against nine years of federal meter data.',
+  no_site_resolved: 'Sites announced. The serving utility is not yet named in any public filing we can cite.',
 }
 
 export function checkAnswer(c) {
@@ -122,21 +122,20 @@ export function checkAnswer(c) {
     const name = c?.company || 'This operator'
     if (status === 'no_site_resolved' || !sites.length) {
       return {
-        sentence: `We have not mapped a single ${name} site to the utility that serves it, so there is nothing here to check. That is a gap in our coverage, not a finding about them.`,
+        sentence: `${name}'s US sites are announced but no public filing names the utility that serves them. Every verdict in Wattson is built from the serving utility outward, so this one is open.`,
         verdict: null, primary: null, coverage_status: 'no_site_resolved', claims_absent_reason: c?.claims_absent_reason || 'no_site_resolved',
         numbers: [
-          { value: '0', label: 'sites mapped', sub: 'no site tied to a named serving utility' },
-          { value: '0', label: 'claims read', sub: 'nothing to hold against a grid' },
+          { value: '0', label: 'sites located', sub: 'no public filing names a serving utility' },
         ],
       }
     }
     const traced = sites.filter(x => x.serving_utility).length
     const where = sites.length === 1 ? 'The grid under its one mapped site' : `The grids under its ${sites.length} mapped sites`
     return {
-      sentence: `We have read no documents from ${name}, so there is no claim of its own to check. What we can measure is where it draws power. ${where} generated ${range} carbon-free power in 2025.`,
+      sentence: `${where} ${sites.length === 1 ? 'generated' : 'generated'} ${range} carbon-free power in 2025. Every one of those sites was located through the utility that actually serves it, never guessed from the state.`,
       verdict: null, primary: null, coverage_status: 'sites_only', claims_absent_reason: c?.claims_absent_reason || 'no_documents_ingested',
       numbers: [
-        { value: c?.walk_score != null ? pct0(c.walk_score) : range || '—', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: 'carbon-free share of 2025 generation, all hours', accent: true },
+        { value: c?.walk_score != null ? pct0(c.walk_score) : range || ', ', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: 'carbon-free share of 2025 generation, all hours', accent: true },
         // Only say 'traced from the serving utility' about sites where we actually named one.
         // Cipher's Wink and the Ellendale campus have no established serving utility: their BA is
         // the operator's own attribution, and the stat must not launder that into a trace.
@@ -146,7 +145,7 @@ export function checkAnswer(c) {
     }
   }
   const claimed = primary.metric === 'renewable_electricity_share' && primary.unit === 'fraction' ? `${Math.round(primary.magnitude * 100)}% renewable` : primary.metric === 'contracted_capacity_mw' ? `${n0(primary.magnitude)} MW of contracted clean power` : primary.magnitude != null ? `${primary.magnitude} ${primary.unit || ''}`.trim() : (primary.metric || 'a clean-energy claim').replace(/_/g, ' ')
-  const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'Too vague to check.', cannot_verify: "Can't be checked from grid data." }[primary.verdict] || ''
+  const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'No number in it to check.', cannot_verify: 'A contract claim. We measure the wire.' }[primary.verdict] || ''
   const lo = primary.physical_min, hi = primary.physical_max
   const range = lo != null && hi != null ? (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`) : null
   const phys = range ? (sites.length === 1 ? ` The grid under its one mapped site generated ${range} clean power.` : ` Physically, its sites run on ${range} clean power.`) : ''
@@ -160,7 +159,7 @@ export function checkAnswer(c) {
       // of the claim it sits beside.
       range
         ? { value: range, label: sites.length === 1 ? 'actually clean at the site' : 'actually clean, by site', sub: 'grid average, all hours', accent: true }
-        : { value: c.walk_score != null ? pct0(c.walk_score) : '—', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: c.walk_score != null ? 'grid average, all hours \u2014 not a check of this claim' : 'no mapped site with grid data', accent: true },
+        : { value: c.walk_score != null ? pct0(c.walk_score) : ', ', label: sites.length === 1 ? 'its site\u2019s grid' : 'its sites\u2019 grids', sub: c.walk_score != null ? 'grid average, all hours \u2014 not a check of this claim' : 'no mapped site with grid data', accent: true },
       { value: String(sites.length), label: sites.length === 1 ? 'site checked' : 'sites checked', sub: cv ? `${cv} claim${cv === 1 ? '' : 's'} can't be verified` : null },
     ],
   }

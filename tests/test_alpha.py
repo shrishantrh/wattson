@@ -74,9 +74,28 @@ def test_the_coarse_region_limit_is_stated(payload):
 
 
 def test_no_listed_equity_count_is_surfaced_from_the_facilities_endpoint(payload):
+    """The counts must come FROM the facilities table, not from a number typed here.
+
+    These were pinned at 5 of 12 and went stale the moment the site table grew past the
+    four operators it started with; the assertion then failed for the one reason it should
+    never fire -- the data got better. What matters is that the payload is counted from the
+    same rows the facilities endpoint serves, and that the two classes stay unconflated: a
+    known utility with no listed equity is a finding, an unknown utility is a coverage gap.
+    """
+    from server import data
+
+    rows = list(data.facilities())
+    resolved = [f for f in rows if f.get("serving_utility")]
+    no_equity = [f for f in resolved if not f.get("utility_ticker")]
+
     ne = payload["no_listed_equity"]
-    assert ne["count"] == 5
-    assert ne["resolved"] == 12
+    assert ne["resolved"] == len(resolved)
+    assert ne["count"] == len(no_equity)
+    assert ne["unresolved"] == len(rows) - len(resolved)
+    assert ne["total_sites"] == len(rows)
+    assert 0 < ne["count"] <= ne["resolved"] < ne["total_sites"]
+    # The note must carry the counts, not just assert them in the abstract.
+    assert str(ne["count"]) in ne["note"] and str(ne["resolved"]) in ne["note"]
     assert re.search(r"\d", ne["note"])
 
 

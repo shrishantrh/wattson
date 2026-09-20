@@ -35,7 +35,7 @@ function Contract({ m }) {
       <div className="kx-track" aria-hidden="true">
         {mid != null && <div className="kx-fill" style={{ width: `${Math.max(2, Math.min(100, mid))}%` }} />}
       </div>
-      <div className="kx-px">{bid != null ? `${bid}¢` : '—'}<span className="kx-sep">/</span>{ask != null ? `${ask}¢` : '—'}</div>
+      <div className="kx-px">{bid != null ? `${bid}¢` : ', '}<span className="kx-sep">/</span>{ask != null ? `${ask}¢` : ', '}</div>
       <div className="kx-close">{close || ''}</div>
     </div>
   )
@@ -132,7 +132,7 @@ export default function Alpha() {
           <div><b>{data.no_listed_equity?.count ?? 5}</b><span>sites with no equity</span></div>
         </div>
 
-        {asOf && <p className="alpha-asof">Kalshi prices cached {asOf} UTC at build time — stale by construction, never fetched from your browser.</p>}
+        {asOf && <p className="alpha-asof">Kalshi prices cached {asOf} UTC at build time, stale by construction, never fetched from your browser.</p>}
 
         {!!(data.thesis_markets || []).length && (
           <section className="thesis">

@@ -79,7 +79,7 @@ export function parseQuery(text) {
   const raw = String(text || '').trim()
   if (!raw) return { kind: 'unknown', hint: 'Try a company, or "300 MW: Phoenix vs Omaha"' }
   const mwMatch = raw.match(/(\d+(?:\.\d+)?)\s*(mw|megawatts?|gw)/i)
-  const parts = raw.replace(/(\d+(?:\.\d+)?)\s*(mw|megawatts?|gw)\s*(:|in|at|for|-|—)?/i, '').split(/\s*(?:\bvs\.?\b|\bversus\b|\bor\b|,|\||;|\/|\band\b)\s*/i).map(s => s.trim()).filter(Boolean)
+  const parts = raw.replace(/(\d+(?:\.\d+)?)\s*(mw|megawatts?|gw)\s*(:|in|at|for|-|, )?/i, '').split(/\s*(?:\bvs\.?\b|\bversus\b|\bor\b|,|\||;|\/|\band\b)\s*/i).map(s => s.trim()).filter(Boolean)
   if (!mwMatch && parts.length === 1) {
     const c = matchCompany(parts[0])
     if (c) return { kind: 'check', ticker: c.key, name: c.name, coverage_status: c.coverage_status }

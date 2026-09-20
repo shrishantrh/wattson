@@ -36,12 +36,14 @@ Plus **Method** and **Data**, which exist so nothing above has to be taken on tr
 | Company chips | Jump straight into a verdict. 52 operators are reachable, not just the four on screen. |
 | ⌘K bar | The ask layer. Type anything. |
 
-**Say:** *"Since 2019 the US added 61.4 GW of clean power to the average daytime hour and
-14.3 GW to the average overnight hour — 4.3× as much to the hours a datacenter doesn't
+**Say:** *"Since 2019 the US added 64.7 GW of clean power to the average daytime hour and
+17.7 GW to the average overnight hour — 3.7 times as much to the hours a datacenter doesn't
 care about."*
 
 **Do not say** the clean share "fell" without immediately giving the absolute. The share
-went 0.405 → 0.397 while output **rose** 159.0 → 173.4 GW. Demand simply grew faster.
+held flat at 0.397 while output **rose** 155.7 → 173.4 GW. Demand simply grew faster.
+These are the corrected 2019 figures; the published baseline carries AZPS's 3,373 MW
+overnight phantom. If you are asked, say so — we found it ourselves.
 Saying only the first half is the single easiest way to state something false out of true
 numbers.
 

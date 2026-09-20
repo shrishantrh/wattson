@@ -57,9 +57,9 @@ time — cut something in the middle instead.
 > **"Here's why nobody caught this. At annual resolution it is invisible. You have to
 > separate the hours."**
 >
-> **"Since 2019, the United States added sixty-one gigawatts of clean power to the average
-> daytime hour — and fourteen to the average overnight hour. Four times more to the hours a
-> datacenter doesn't care about."**
+> **"Since 2019, the United States added sixty-five gigawatts of clean power to the average
+> daytime hour — and eighteen to the average overnight hour. Nearly four times more to the
+> hours a datacenter doesn't care about."**
 >
 > **"Solar cleaned up the middle of the day. It did nothing for the middle of the night —
 > and a datacenter draws the same power at 3am in January as at noon in June. So an annual
@@ -218,9 +218,10 @@ apologize for it on camera; just move to the next screen.
 | Hourly rows | 4.45M | EIA-930 via PUDL, 2018-07 → 2026-09-05 |
 | Balancing authorities | 70 | same |
 | Regions scored | 111 | detector output |
-| Daytime clean added since 2019 | +61.4 GW | 178.1 → 239.5 GW |
-| Overnight clean added since 2019 | +14.3 GW | 159.0 → 173.4 GW |
-| Ratio | 4.3× | the two above |
+| Daytime clean added since 2019 | **+64.7 GW** | 174.8 → 239.5 GW (corrected 2019) |
+| Overnight clean added since 2019 | **+17.7 GW** | 155.7 → 173.4 GW (corrected 2019) |
+| Ratio | **3.7×** | the two above |
+| Overnight share 2019→2025 | **flat, 0.397** | it did NOT fall; published 0.405 carries the AZPS phantom |
 | PJM overnight generation growth | +8.7 GW | |
 | PJM overnight gas | +10.74 GW | `fuel_delta_overnight_gw.gas` |
 | PJM overnight net exports | 3,814 → 2,489 MW | EIA-adjusted operations |

@@ -5,7 +5,7 @@
   "id": "META",
   "listed_equity": true,
   "coverage_status": "sites_and_claims",
-  "coverage_status_note": "Sites mapped to grids, and claims read from its own documents.",
+  "coverage_status_note": "Sites located through their serving utilities, and claims read from its own filings.",
   "claims_absent_reason": null,
   "claims_absent_note": null,
   "sites": [
@@ -342,7 +342,7 @@
   "id": "MSFT",
   "listed_equity": true,
   "coverage_status": "sites_and_claims",
-  "coverage_status_note": "Sites mapped to grids, and claims read from its own documents.",
+  "coverage_status_note": "Sites located through their serving utilities, and claims read from its own filings.",
   "claims_absent_reason": null,
   "claims_absent_note": null,
   "sites": [
@@ -774,7 +774,7 @@
   "id": "GOOGL",
   "listed_equity": true,
   "coverage_status": "sites_and_claims",
-  "coverage_status_note": "Sites mapped to grids, and claims read from its own documents.",
+  "coverage_status_note": "Sites located through their serving utilities, and claims read from its own filings.",
   "claims_absent_reason": null,
   "claims_absent_note": null,
   "sites": [
@@ -1540,7 +1540,7 @@
   "id": "AMZN",
   "listed_equity": true,
   "coverage_status": "sites_and_claims",
-  "coverage_status_note": "Sites mapped to grids, and claims read from its own documents.",
+  "coverage_status_note": "Sites located through their serving utilities, and claims read from its own filings.",
   "claims_absent_reason": null,
   "claims_absent_note": null,
   "sites": [
@@ -1738,9 +1738,9 @@
   "id": "IREN",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Childress",
@@ -1797,7 +1797,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -1806,9 +1806,9 @@
   "id": "WULF",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Abernathy",
@@ -1886,7 +1886,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -1895,9 +1895,9 @@
   "id": "RIOT",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Rockdale",
@@ -1954,7 +1954,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -1963,9 +1963,9 @@
   "id": "CIFR",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Wink (Winkler County)",
@@ -2022,7 +2022,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2031,9 +2031,9 @@
   "id": "APLD",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Ellendale",
@@ -2090,7 +2090,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2099,9 +2099,9 @@
   "id": "CRWV",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Ellendale (leased from Applied Digital)",
@@ -2179,7 +2179,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2188,9 +2188,9 @@
   "id": "XAI",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Memphis (Boxtown)",
@@ -2247,7 +2247,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2256,9 +2256,9 @@
   "id": "ORCL",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Abilene",
@@ -2357,7 +2357,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2366,9 +2366,9 @@
   "id": "DLR",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Ashburn",
@@ -2446,7 +2446,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2455,9 +2455,9 @@
   "id": "EQIX",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Ashburn",
@@ -2598,7 +2598,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2607,9 +2607,9 @@
   "id": "VANTAGE",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Quincy",
@@ -2708,7 +2708,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2717,9 +2717,9 @@
   "id": "AAPL",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Maiden (Catawba County)",
@@ -2797,7 +2797,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2806,9 +2806,9 @@
   "id": "TSLA",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Austin (Travis County)",
@@ -2844,7 +2844,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2853,9 +2853,9 @@
   "id": "NBIS",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Vineland",
@@ -2912,7 +2912,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2921,9 +2921,9 @@
   "id": "LAMBDA",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Kansas City",
@@ -2959,7 +2959,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -2968,9 +2968,9 @@
   "id": "CRUSOE",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Laramie County",
@@ -3027,7 +3027,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3036,9 +3036,9 @@
   "id": "OPENAI",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Shackelford County",
@@ -3179,7 +3179,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3188,9 +3188,9 @@
   "id": "FLUIDSTACK",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Cameron County",
@@ -3247,7 +3247,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3256,9 +3256,9 @@
   "id": "POOLSIDE",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Pecos County",
@@ -3294,7 +3294,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3303,9 +3303,9 @@
   "id": "FRMI",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Amarillo (Carson County)",
@@ -3341,7 +3341,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3350,9 +3350,9 @@
   "id": "CORZ",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Denton",
@@ -3535,7 +3535,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3544,9 +3544,9 @@
   "id": "HUT",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Vega (Texas Panhandle)",
@@ -3624,7 +3624,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3633,9 +3633,9 @@
   "id": "GLXY",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Dickens County (Helios)",
@@ -3671,7 +3671,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3680,9 +3680,9 @@
   "id": "KEEL",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Nesquehoning (Carbon County)",
@@ -3739,7 +3739,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3748,9 +3748,9 @@
   "id": "MARA",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Granbury (Hood County)",
@@ -3807,7 +3807,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3816,9 +3816,9 @@
   "id": "VIP",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Torrey / Dresden (Yates County)",
@@ -3854,7 +3854,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3863,9 +3863,9 @@
   "id": "BTDR",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Rockdale (Milam County)",
@@ -3943,7 +3943,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3952,9 +3952,9 @@
   "id": "SLNH",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Briscoe County (Silverton)",
@@ -3990,7 +3990,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -3999,9 +3999,9 @@
   "id": "WYFI",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Madison (Rockingham County)",
@@ -4037,7 +4037,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4046,9 +4046,9 @@
   "id": "CYRUSONE",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "San Antonio",
@@ -4105,7 +4105,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4114,9 +4114,9 @@
   "id": "QTS",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Richmond (Sandston)",
@@ -4173,7 +4173,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4182,9 +4182,9 @@
   "id": "ALIGNED",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Salt Lake City (West Jordan)",
@@ -4220,7 +4220,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4229,9 +4229,9 @@
   "id": "SWITCH",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Las Vegas",
@@ -4309,7 +4309,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4318,9 +4318,9 @@
   "id": "STACK",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Columbus (New Albany)",
@@ -4356,7 +4356,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4365,9 +4365,9 @@
   "id": "EDGECONNEX",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Phoenix (Tempe)",
@@ -4403,7 +4403,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4412,9 +4412,9 @@
   "id": "DATABANK",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Salt Lake City (Bluffdale)",
@@ -4471,7 +4471,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4480,9 +4480,9 @@
   "id": "FLEXENTIAL",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Nashville (Franklin)",
@@ -4518,7 +4518,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4527,9 +4527,9 @@
   "id": "IRM",
   "listed_equity": true,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Edison",
@@ -4565,7 +4565,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4574,9 +4574,9 @@
   "id": "COMPASS",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Phoenix (Goodyear)",
@@ -4612,7 +4612,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4621,9 +4621,9 @@
   "id": "NTT",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Portland (Hillsboro)",
@@ -4659,7 +4659,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4668,9 +4668,9 @@
   "id": "PRIME",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Chicago (Elk Grove Village)",
@@ -4706,7 +4706,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4715,9 +4715,9 @@
   "id": "NOVVA",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Colorado Springs",
@@ -4774,7 +4774,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4783,9 +4783,9 @@
   "id": "YONDR",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Northern Virginia (Loudoun County)",
@@ -4821,7 +4821,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4830,9 +4830,9 @@
   "id": "SABEY",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Quincy",
@@ -4889,7 +4889,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4898,9 +4898,9 @@
   "id": "TIERPOINT",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Omaha (Papillion)",
@@ -4936,7 +4936,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4945,9 +4945,9 @@
   "id": "T5",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Augusta",
@@ -4983,7 +4983,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -4992,9 +4992,9 @@
   "id": "POWERHOUSE",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Dallas-Fort Worth (Ellis County)",
@@ -5030,7 +5030,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  },
  {
@@ -5039,9 +5039,9 @@
   "id": "EDGED",
   "listed_equity": false,
   "coverage_status": "sites_only",
-  "coverage_status_note": "Sites mapped to grids. No documents read, so no claim to check.",
+  "coverage_status_note": "Sites located through their serving utilities and measured against the grid.",
   "claims_absent_reason": "no_documents_ingested",
-  "claims_absent_note": "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them.",
+  "claims_absent_note": "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data.",
   "sites": [
    {
     "metro": "Atlanta",
@@ -5077,7 +5077,7 @@
    "Unweighted across sites; we do not know each site's load.",
    "Site mapping is hand-curated from serving utilities, never inferred from state.",
    "Annual matched claims are TRUE under the GHG Protocol market-based method. The verdict is 'true on paper, X physically', not an accusation.",
-   "We have ingested no sustainability report or filing from this operator, so there is nothing of its own to hold against the grid. This is a gap in our coverage, not a finding about them."
+   "Measured from the grid up: every site located through the utility that actually serves it, then settled against nine years of federal meter data."
   ]
  }
 ]

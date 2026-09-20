@@ -107,7 +107,7 @@ export default function Screener({ route }) {
       <Card title={<><b>Screener</b> · {all.length} regions · hourly grid data</>} onClose={back}>
         <p className="pg-top">Every scored region, cut down and sorted any way you like.</p>
         <div className="pg-chips pg-controls">{PRESETS.map(p => <Chip key={p[0]} small active={p[0] === preset[0] && !sort} href={href.screen(p[0])}>{p[1]}</Chip>)}</div>
-        <p className="pg-lede">A datacenter buys every hour it runs, so the column that decides what gets burned for it is <b>night</b> — the clean share of what the grid generated between midnight and 6am — not the annual headline. <b>Δ 2019</b> and <b>trend</b> say whether the grid you would sign a load onto is moving toward that number or away from it. Cut the 111 down to the ones you would actually consider, sort on any column, then open a row.</p>
+        <p className="pg-lede">A datacenter buys every hour it runs, so the column that decides what gets burned for it is <b>night</b>, the clean share of what the grid generated between midnight and 6am, not the annual headline. <b>Δ 2019</b> and <b>trend</b> say whether the grid you would sign a load onto is moving toward that number or away from it. Cut the 111 down to the ones you would actually consider, sort on any column, then open a row.</p>
         {!loading && !error && (
           <>
             <div className="wx-bar">
@@ -124,7 +124,7 @@ export default function Screener({ route }) {
               <button type="button" className="btn" onClick={reset} disabled={!touched}>Reset filters</button>
             </div>
             <WxReadout items={readout} />
-            <p className="note" style={{ marginTop: 10 }}>Zones report demand only, so a zone&rsquo;s generation columns are its parent grid&rsquo;s — set <b>footprint</b> to whole grids to compare generation like for like. Pattern is a read of the demand shape and never touches the score. Press <span className="wx-kbd">Esc</span> to clear the filters; the twelve at the top of the current sort stay pinned on the globe.</p>
+            <p className="note" style={{ marginTop: 10 }}>Zones report demand only, so a zone&rsquo;s generation columns are its parent grid&rsquo;s, set <b>footprint</b> to whole grids to compare generation like for like. Pattern is a read of the demand shape and never touches the score. Press <span className="wx-kbd">Esc</span> to clear the filters; the twelve at the top of the current sort stay pinned on the globe.</p>
           </>
         )}
       </Card>

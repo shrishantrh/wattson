@@ -31,13 +31,13 @@ const clamp01 = x => (x == null ? null : Math.min(1, Math.max(0, x)))
 
 // ---- words for numbers ----------------------------------------------------------------------
 // Whole percents, one decimal under 10% so 5.6% and 0.7% are not rounded into 6% and 1%.
-export const fmtShare = x => { const v = num(x); if (v == null) return '—'; const p = Math.max(0, v) * 100; return p > 0 && p < 10 ? `${p.toFixed(1)}%` : `${Math.round(p)}%` }
+export const fmtShare = x => { const v = num(x); if (v == null) return ', '; const p = Math.max(0, v) * 100; return p > 0 && p < 10 ? `${p.toFixed(1)}%` : `${Math.round(p)}%` }
 // "46–75%": one percent sign, the app's convention for a range across sites.
-export const fmtRange = (lo, hi) => { const a = num(lo), b = num(hi); if (a == null && b == null) return '—'; if (a == null || b == null) return fmtShare(a ?? b); return fmtShare(a) === fmtShare(b) ? fmtShare(a) : `${fmtShare(a).replace('%', '')}–${fmtShare(b)}` }
+export const fmtRange = (lo, hi) => { const a = num(lo), b = num(hi); if (a == null && b == null) return ', '; if (a == null || b == null) return fmtShare(a ?? b); return fmtShare(a) === fmtShare(b) ? fmtShare(a) : `${fmtShare(a).replace('%', '')}–${fmtShare(b)}` }
 // A change in a share, in points: "−35 pts", "−4.9 pts".
-export const fmtPts = d => { const v = num(d); if (v == null) return '—'; const p = Math.abs(v) * 100; const s = p < 10 ? p.toFixed(1) : String(Math.round(p)); return `${v < 0 ? '−' : v > 0 ? '+' : ''}${s} pts` }
-export const fmtGw = gw => { const v = num(gw); return v == null ? '—' : `${Math.abs(v).toFixed(1)} GW` }
-export const fmtSignedGw = gw => { const v = num(gw); if (v == null) return '—'; const r = Math.round(v * 10) / 10; return `${r > 0 ? '+' : r < 0 ? '−' : ''}${Math.abs(r).toFixed(1)} GW` }
+export const fmtPts = d => { const v = num(d); if (v == null) return ', '; const p = Math.abs(v) * 100; const s = p < 10 ? p.toFixed(1) : String(Math.round(p)); return `${v < 0 ? '−' : v > 0 ? '+' : ''}${s} pts` }
+export const fmtGw = gw => { const v = num(gw); return v == null ? ', ' : `${Math.abs(v).toFixed(1)} GW` }
+export const fmtSignedGw = gw => { const v = num(gw); if (v == null) return ', '; const r = Math.round(v * 10) / 10; return `${r > 0 ? '+' : r < 0 ? '−' : ''}${Math.abs(r).toFixed(1)} GW` }
 const listWords = a => (a.length <= 2 ? a.join(' and ') : `${a.slice(0, -1).join(', ')} and ${a[a.length - 1]}`)
 
 // ---- the increment: what share of the generation added at night since 2019 was clean ------------
@@ -153,9 +153,9 @@ export function companyLadder(company, { grids = {} } = {}) {
   const incS = stat(incRows.map(r => r.grid.increment.share))
   const loaded = rows.some(r => r.grid)
   const rungs = withDrops([
-    rung('claimed', 'claimed', basisWords(claim), { lo: claimed, hi: claimed, mean: claimed }, { status: 'paper', source: `p. ${claim.page ?? '—'}, ${shortDoc(claim.source_doc)}` }),
+    rung('claimed', 'claimed', basisWords(claim), { lo: claimed, hi: claimed, mean: claimed }, { status: 'paper', source: `p. ${claim.page ?? ', '}, ${shortDoc(claim.source_doc)}` }),
     hourly
-      ? rung('hourly', 'its own hourly figure', `hourly, ${String(claim.scope || 'market-based').replace(/_/g, '-')}`, { lo: hourly.share, hi: hourly.share, mean: hourly.share }, { status: 'disclosed', source: `p. ${hourly.page ?? '—'}, ${shortDoc(hourly.source_doc)}${hourly.year ? `, ${hourly.year}` : ''}` })
+      ? rung('hourly', 'its own hourly figure', `hourly, ${String(claim.scope || 'market-based').replace(/_/g, '-')}`, { lo: hourly.share, hi: hourly.share, mean: hourly.share }, { status: 'disclosed', source: `p. ${hourly.page ?? ', '}, ${shortDoc(hourly.source_doc)}${hourly.year ? `, ${hourly.year}` : ''}` })
       : rung('hourly', 'its own hourly figure', 'hourly, market-based', null, { status: 'cannot_verify', source: 'no hourly figure in the documents read' }),
     rung('grid_all', `grid at its site${rows.length > 1 ? 's' : ''}, all hours`, 'physical, grid-only, 2025', allS, { status: 'grid', source: 'EIA-930 via PUDL; contracted power excluded' }),
     rung('grid_night', 'same grid, midnight to 6am', 'physical, overnight, 2025', nightS, { status: loaded ? 'grid' : 'loading', source: 'EIA-930 via PUDL; a flat load puts a quarter of its energy here' }),
@@ -168,8 +168,8 @@ export function companyLadder(company, { grids = {} } = {}) {
   // did not grow. The rungs can only abbreviate those ("can't verify", "not readable"), so they are spelled
   // out here. Corrections and data flags are not: the card lists them under the ladder.
   const floor = nightS || allS
-  const readings = [`${fmtShare(claimed)}${metricWord(claim)} on paper (p. ${claim.page ?? '—'})`]
-  if (hourly) readings.push(`${fmtShare(hourly.share)} hourly by its own report (p. ${hourly.page ?? '—'})`)
+  const readings = [`${fmtShare(claimed)}${metricWord(claim)} on paper (p. ${claim.page ?? ', '})`]
+  if (hourly) readings.push(`${fmtShare(hourly.share)} hourly by its own report (p. ${hourly.page ?? ', '})`)
   if (floor) readings.push(`${fmtRange(floor.lo, floor.hi)} physically ${nightS ? 'between midnight and 6am' : 'over all hours'} at ${listWords(names)}`)
   const parts = [`${company.company || company.ticker} is ${listWords(readings)}.`]
   if (claim.verdict === 'contradicted') parts.push('The claim is contradicted in its own filings.')

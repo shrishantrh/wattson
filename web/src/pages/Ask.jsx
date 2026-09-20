@@ -14,7 +14,7 @@ import '../styles/pages.css'
 import '../styles/answer.css'
 import '../styles/ask.css'
 
-// #/ask?q=... — the page a typed question builds.
+// #/ask?q=..., the page a typed question builds.
 //
 // Ask anything in the palette and, when the answer has a shape (several places side by side,
 // a ranking, one subject with figures), it lands here as a table with units, a chart and links
@@ -87,7 +87,7 @@ export default function Ask({ route }) {
     if (!q) return (
       <>
         <p className="pg-lede">Type a question and get the numbers, not an essay. Every figure comes from a tool over the published EIA-930 index; nothing is recalled or estimated.</p>
-        {!aiOn && <p className="note">The ask layer needs the API running with a key. Every other screen works without it — try the <a href={href.screen()}>screener</a> or <a href={href.data()}>the data</a>.</p>}
+        {!aiOn && <p className="note">The ask layer needs the API running with a key. Every other screen works without it, try the <a href={href.screen()}>screener</a> or <a href={href.data()}>the data</a>.</p>}
         <ul className="ask-egs">{EXAMPLES.map(e => <li key={e}><a href={href.ask(e)}>{e}</a></li>)}</ul>
       </>
     )

@@ -24,7 +24,7 @@ function ShapeChart({ profile, weights, base, best, label }) {
   return (
     <div className="shape-chart">
       <svg className="shape-svg" viewBox="0 0 24 100" preserveAspectRatio="none" role="img" aria-label={`Clean share by hour${label ? ` in ${label}` : ''} with the load shape drawn over it`}>
-        {profile.map((v, h) => { const hgt = v == null ? 0 : Math.max(4, (v / max) * 100); return <rect key={h} className={`shape-bar${bright.has(h) ? ' best' : ''}`} x={h + 0.1} width={0.8} y={100 - hgt} height={hgt}><title>{`${hourWord(h)} · ${v == null ? '—' : pct(v)} clean`}</title></rect> })}
+        {profile.map((v, h) => { const hgt = v == null ? 0 : Math.max(4, (v / max) * 100); return <rect key={h} className={`shape-bar${bright.has(h) ? ' best' : ''}`} x={h + 0.1} width={0.8} y={100 - hgt} height={hgt}><title>{`${hourWord(h)} · ${v == null ? ', ' : pct(v)} clean`}</title></rect> })}
         {base && <path className="shape-line base" d={line(base)} />}
         <path className="shape-line" d={line(weights)} />
         <path className="shape-dots" d={dots(weights)} />
@@ -70,10 +70,10 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
       className="mod-shape"
       caption="Pick a load shape; the clean share is re-weighted to match it."
       lead={<Lead
-        value={share == null ? '—' : <NumberTicker value={share * 100} format={n => `${n.toFixed(1)}%`} />}
+        value={share == null ? ', ' : <NumberTicker value={share * 100} format={n => `${n.toFixed(1)}%`} />}
         t="clean"
         label={`clean power for a ${shapeWords} load, ${shown}`}
-        aside={fossil == null ? '—' : <NumberTicker value={Math.round(fossil)} format={n => mw(n)} />}
+        aside={fossil == null ? ', ' : <NumberTicker value={Math.round(fossil)} format={n => mw(n)} />}
         asideTone="fossil"
         asideLabel={`of ${mw(loadMW)} not carbon-free`}
       />}
@@ -86,11 +86,11 @@ export default function ShapeModule({ profile, label, loadMW = 300, year = '2025
         <span role="listitem" className={`shape-chip${flexible && shape.id === 'flat' ? ' on' : ''}`}>{FLEX_LABEL} <b>{pct(cmp.flexible20.share)}</b></span>
       </div>
       <p className="shape-best">
-        Cleanest six hours <b>{hourSpanWords(six.hours)}</b>, {pct(six.mean)} clean; dirtiest six ({hourSpanWords(bad.hours)}) {pct(bad.mean)} — a {((six.mean - bad.mean) * 100).toFixed(1)}-point gap, all that moving hours can buy here.
+        Cleanest six hours <b>{hourSpanWords(six.hours)}</b>, {pct(six.mean)} clean; dirtiest six ({hourSpanWords(bad.hours)}) {pct(bad.mean)}, a {((six.mean - bad.mean) * 100).toFixed(1)}-point gap, all that moving hours can buy here.
         {fx && fx.to.length > 0 && ` The flexible fifth moves from ${hourSpanWords(fx.from)} into ${hourSpanWords(fx.to)}.`}
       </p>
       {s19 != null && s25 != null && (
-        <p className={`shape-years${s25 < s19 ? ' accent' : ''}`}><span className="from">2019 {pct(s19)}</span> → 2025 {pct(s25)}<span className="shape-years-l">for a {shapeWords} load — six years of buildout, {s25 >= s19 ? '+' : '−'}{Math.abs((s25 - s19) * 100).toFixed(1)} pts</span></p>
+        <p className={`shape-years${s25 < s19 ? ' accent' : ''}`}><span className="from">2019 {pct(s19)}</span> → 2025 {pct(s25)}<span className="shape-years-l">for a {shapeWords} load, six years of buildout, {s25 >= s19 ? '+' : '−'}{Math.abs((s25 - s19) * 100).toFixed(1)} pts</span></p>
       )}
     </Mod>
   )

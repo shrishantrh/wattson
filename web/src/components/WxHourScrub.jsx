@@ -39,7 +39,7 @@ export default function WxHourScrub({ profile, loadMW = 300, baselineYear = 2019
     return { best, worst, top: Math.min(1, Math.max(0.25, Math.ceil(peak * 4 - 1e-9) / 4)) }
   }, [now, was])
 
-  if (!now || !stats) return <p className="note">This grid does not report an hour-by-hour profile, so there is nothing to walk through.</p>
+  if (!now || !stats) return <p className="note">Hour-by-hour profiles are available for grids that report generation. This one reports demand.</p>
 
   const v = now[hour], w = hasWas ? was[hour] : null
   const change = isNum(v) && isNum(w) ? v - w : null

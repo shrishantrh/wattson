@@ -58,10 +58,10 @@ export default function NearbyModule({ regions, regionId, loadMW = 300, k = 3 })
         </div>
         {caveat && <div className="nb-caveat">{caveat}</div>}
         <div className="nb-nums">
-          <Num num={from.fossilMW != null ? Math.round(from.fossilMW) : undefined} value="—" format={mwFmt} label={`fossil MW of a ${n0(load)} MW load here`} accent />
+          <Num num={from.fossilMW != null ? Math.round(from.fossilMW) : undefined} value=", " format={mwFmt} label={`fossil MW of a ${n0(load)} MW load here`} accent />
           {best
             ? <Num num={Math.round(best.fossilMW)} format={mwFmt} label={`fossil MW at ${best.label}`} />
-            : <Num value={outside ? `${n0(outside.miles)} mi` : '—'} label={outside ? `to the nearest cleaner grid, ${outside.label}` : 'no cleaner grid in the data'} />}
+            : <Num value={outside ? `${n0(outside.miles)} mi` : ', '} label={outside ? `to the nearest cleaner grid, ${outside.label}` : 'no cleaner grid in the data'} />}
         </div>
         {listed.length > 0 || flagged.length > 0 || outside ? (
           <div className="nb-rows">
