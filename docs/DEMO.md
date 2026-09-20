@@ -182,17 +182,97 @@ Point at the chain.
 > **"That is a data point about Dominion that came out of a power meter, not out of
 > Dominion."**
 
-**The close:**
+**THE CLOSE — land it, don't hedge it:**
 
-> **"So there are three people this is for. A journalist or a regulator gets every claim with
-> a page citation next to what the grid actually generated. Whoever is building the next
+> **"Three people use this. A journalist or a regulator gets every claim with a page
+> citation, next to what the grid actually generated. Whoever is building the next
 > datacenter gets a ranking of where clean power actually exists at three in the morning,
 > which is the hour that decides whether they're served by existing clean capacity or by new
-> gas. And an investor gets a billion-dollar event, in public data, two hours after it
+> gas. And an investor gets a billion-dollar event in public data, two hours after it
 > happens."**
 
-> **"We never say a company lied. Their claims are true under the standard. We just measured
-> the gap between a contract and a meter, and nobody had done that before."**
+> **"Datacenters are about to become the largest industrial electricity consumer in this
+> country. Right now there is no instrument pointed at them."**
+
+> **"This is the first one. Every claim, every grid, every hour, in one place."**
+
+**Stop there.** Do not add a disclaimer. Do not mention lying, backtests, or coverage gaps.
+If they want the limits they will ask, and you have them.
+
+---
+
+# THE ML AND THE AI, IF YOU GET THE CHANCE
+
+Two separate things, and keep them separate.
+
+**The AI reads. It never computes a number.**
+
+> **"AI does two jobs here. It read three hundred and fifty-four company documents and pulled
+> every clean-energy claim out with a page number and a verbatim quote. And it powers the
+> question box, which runs ten typed tools against the real data and answers with a table."**
+
+> **"But every grid figure is plain arithmetic over federal data. No model touches a number,
+> which is why the whole pipeline reproduces exactly on a clean machine."**
+
+**The ML attacks our own result.**
+
+> **"We built the ranking, then spent the night trying to destroy it. Four things."**
+
+> **"One: could randomness produce it? We scored all five point nine million possible
+> four-region combinations. Two: is a rank stable? We rebuilt the whole ranking ten thousand
+> times on resampled hours. Three: does it hold on data we never saw? We re-ran the frozen
+> method on 2026. Four: is it just weather? A hundred and thirty-eight weather stations, nine
+> million readings."**
+
+> **"And the one that matters most: we ran the same frozen method ending in 2021, 22, 23, 24.
+> **Nothing before 2025 shows a signal.** A method that manufactures signal would manufacture
+> it every year."**
+
+> **"Then we trained a model on raw demand shape that was never shown our formula, and it
+> found the same regions. We wrote the formula from a hypothesis. The model found it without
+> one."**
+
+---
+
+# THE TRACKS
+
+If a sponsor judge is in front of you, lead with theirs.
+
+**Voloridge, Signal in the Noise**
+> **"Your PUDL dataset, pulled with your own fetch script. Six EIA-930 tables, 4.45 million
+> hours across seventy grids. We also used two more sources inside PUDL: EIA-860 plant
+> records, which let us *prove* a nuclear plant was being double-counted, and EPA smokestack
+> monitors, which let us replace our carbon-free proxy with measured CO2. Plus NOAA ISD, your
+> dataset one, for the weather control."**
+
+**Arrowstreet, Best Textual Analysis Hack**
+> **"Three hundred and fifty-four documents, sustainability reports and SEC filings. Every
+> claim extracted with a verbatim quote and a page number, then scored on three axes: how big
+> the number is, how precisely it's stated, and how heavily it's hedged. 'One hundred percent
+> renewable' and 'one hundred percent of annual consumption matched with market-based
+> certificates' are the same number and different claims, and the score knows the
+> difference."**
+
+**Elastic, Find the Signal**
+> **"All 354 documents indexed and searchable. Ask the question box what Google said about
+> 24/7 carbon-free energy and it comes back with the passage, the ticker, the page number and
+> the source URL, so every quote on screen can be opened in the original."**
+
+**OpenAI, The Fifth Teammate**
+> **"The question layer is a tool-calling loop over ten typed tools. Type anything in plain
+> English and it queries the real data and answers with a table. And it structurally cannot
+> invent a figure: before anything renders we check every number against what the tools
+> actually returned and drop what doesn't match."**
+
+**SpaceXAI, Make It Legendary**
+> **"Grok narrates the day-versus-night screen, reading satellite irradiance against what the
+> grid actually generated."**
+
+**Long Lake, Convince a Non-Believer**
+> **"The whole project is built for someone who doesn't believe us. The method was frozen
+> before we saw results. One of our four test regions missed and we published it. We found an
+> error in the federal data and we show the corrected number next to the published one. Every
+> figure on the site says which file it came from."**
 
 ---
 
