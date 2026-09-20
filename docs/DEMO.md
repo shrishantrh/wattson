@@ -4,18 +4,60 @@
 
 ---
 
-# 1. THE HOOK · 10 seconds
+# 1. THE OPENING · 75 seconds
+## Stay on the Home screen. Talk over it.
 
-> **"Solar panels don't work at night."**
->
-> **"Datacenters never turn off."**
->
-> **"Every AI company says it runs on renewable energy. Nobody ever checked what that means
-> at 3am."**
->
-> **"So we did. Every grid in America, every hour, nine years."**
+**This is the full version. Use it.** The 10-second hook in section 1b is only for when
+someone is clearly in a rush or walking past.
 
-Stop there. No jargon, nothing to teach. They already know solar doesn't work at night.
+> **"Every company building AI datacenters publishes a clean energy claim. Google, Microsoft,
+> Meta, Amazon, all of them. And every one of those claims is checked by nobody."**
+
+> **"There's a whole industry auditing fast fashion. There's one for airlines and one for oil
+> companies. Datacenters are now the fastest-growing consumer of electricity in America, and
+> there is no equivalent. Not one."**
+
+Pause.
+
+> **"And it isn't that nobody cared. It's that greenwashing here is an accounting problem, not
+> a lying problem. These companies don't say they run on clean power. They say they *matched*
+> their *annual* consumption with renewable *purchases*. That's a real accounting standard,
+> it's correct, and it averages over every hour of the year. So buying solar at noon cancels
+> burning gas at 3am, on paper. The claim is airtight and the physical question underneath it
+> had never been asked."**
+
+> **"And datacenters are unusual in one way that makes it matter. Your house uses most of its
+> power in the evening. A factory runs shifts. A datacenter draws the same power at three in
+> the morning as at noon, and it never stops. So half its life is spent in the half of the
+> day that never got cleaner."**
+
+> **"We hold fifty-two operators. The four you've heard of at least publish a report we can
+> check. The other forty-eight, the neoclouds, the bitcoin miners that converted to AI, the
+> colocation companies, mostly publish nothing at all. There is no claim to check and no
+> report to read."**
+
+> **"That's exactly why this works. The grid data doesn't care whether anyone published
+> anything. We can measure what a company runs on whether or not it ever says a word, and
+> those forty-eight are the ones building fastest right now."**
+
+> **"So that's what Wattson is."**
+
+> **"Wattson is a greenwashing investigation of datacenter operators. We settle every
+> renewable claim against four and a half million hours of federal meter data, and hand
+> asset managers the named utility on the other side of the gap."**
+
+Say it flat and stop. Everything after this is you proving that sentence.
+
+**Now click "What we found in the grid data →" at the bottom of the home screen.**
+
+---
+
+# 1b. THE 10-SECOND HOOK · only if they are rushing
+
+> **"Solar panels don't work at night. Datacenters never turn off. Every AI company says it
+> runs on renewable energy, and nobody ever checked what that means at 3am. So we did."**
+
+Then go straight to the proof below.
 
 ---
 
