@@ -131,15 +131,6 @@ export default function Alpha() {
 
         {asOf && <p className="alpha-asof">Kalshi prices cached {asOf} UTC at build time — stale by construction, never fetched from your browser.</p>}
 
-        {!!em.series_with_no_open_contracts?.length && (
-          <div className="alpha-dead">
-            <b>Nobody is trading this.</b>{' '}
-            {em.series_with_no_open_contracts.map(s => <code key={s}>{s}</code>).reduce((a, b) => [a, ' ', b])}
-            {' '}exist on Kalshi with zero open contracts — including PJM West power, the single most on-point
-            market for our headline finding. A market nobody trades is information about liquidity.
-          </div>
-        )}
-
         {!!(data.thesis_markets || []).length && (
           <section className="thesis">
             <h3 className="thesis-t">Markets on the thesis itself</h3>

@@ -341,10 +341,9 @@ def build() -> dict:
                         "built. Equities and commodities below are unaffected."),
             "series_with_no_open_contracts": empty_series,
             "series_note": (
-                "These Kalshi series exist but currently have no open "
-                "contracts. Shown rather than hidden: a market that exists and "
-                "is not being traded is information about liquidity, not a "
-                "reason to pretend the market is absent."
+                "Series matched but carrying no open contracts. Recorded here "
+                "so the match is auditable; not surfaced in the product, because "
+                "a market with no contracts offers nothing to act on."
             ),
         },
         "chains": chains,
