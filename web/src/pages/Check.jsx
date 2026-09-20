@@ -108,7 +108,7 @@ export default function Check({ route }) {
   } else {
     const a = checkAnswer(data)
     const modules = [
-      ...(sideBySideOf(data).length ? [{ id: 'sbs', title: mtitle(LinkIcon, 'Says, and discloses, in the same report'), render: () => <SideBySideModule company={data} /> }] : []),
+      ...((data.claims || []).some(k => k.page && k.verbatim) ? [{ id: 'sbs', title: mtitle(LinkIcon, 'Says, and discloses, in the same report'), render: () => <SideBySideModule company={data} /> }] : []),
       ...(innovLadderModule.applies({ company: data }) ? [{ id: innovLadderModule.id, title: mtitle(Layers, innovLadderModule.title), render: () => innovLadderModule.render({ company: data }) }] : []),
       { id: 'sites', title: mtitle(Place, 'Where its sites draw power'), render: () => (
         <>

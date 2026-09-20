@@ -32,11 +32,16 @@ function PageCrop({ item, caption }) {
 // page, label?, values: [..], years?: [..], unit? } or the same under `series`.
 const pickSeries = e => { const s = e.series || e.values || e.data; return Array.isArray(s) && s.length >= 2 && s.every(v => typeof v === 'number') ? s : null }
 
-export function sideBySideOf(company) {
+export function sideBySideOf(company, index) {
   const out = []
-  for (const k of company?.claims || []) for (const e of k.evidence || []) { const s = pickSeries(e); if (s) out.push({ claim: k, evidence: e, series: s }) }
+  for (const k of company?.claims || []) {
+    const pages = index?.[k.claim_id]
+    const ev = (k.evidence || []).find(e => pickSeries(e))
+    if (ev || pages?.says) out.push({ claim: k, evidence: ev || null, series: ev ? pickSeries(ev) : null, pages: pages || null })
+  }
   return out
 }
+
 
 // The page cite as a mono chip; dashed when the source has no page (raw SEC HTML). `title` names the document.
 function PageChip({ page, title }) {
@@ -49,29 +54,31 @@ function leadWords(pairs) {
   const p = pairs[0]
   const says = p?.claim?.page, disc = p?.evidence?.page
   if (says != null && disc != null) return <>The same report says it on <b>page {says}</b> and discloses the numbers on <b>page {disc}</b>.</>
-  return <>The claim and the company's own disclosure, from its own report, side by side.</>
+  if (says != null) return <>The claim as it is printed on <b>page {says}</b> of the company&apos;s own report.</>
+  return <>The claim as it is printed in the company&apos;s own report.</>
 }
 
 export default function SideBySideModule({ company }) {
-  const pairs = sideBySideOf(company)
   const idx = useEvidenceIndex()
+  const pairs = sideBySideOf(company, idx)
   if (!pairs.length) return null
-  const sameDocAll = pairs.every(({ claim, evidence }) => { const a = claim.source_doc || null, b = evidence.source_doc || a; return !a || !b || a === b })
+  const sameDocAll = pairs.every(({ claim, evidence }) => { const a = claim.source_doc || null, b = evidence?.source_doc || a; return !a || !b || a === b })
   const doc = pairs[0]?.claim?.source_doc || pairs[0]?.evidence?.source_doc || null
+  const anyDisclosure = pairs.some(p => Array.isArray(p.series) && p.series.length)
   return (
     <Mod
       className="mod-sbs"
-      caption="Its own words on one page, its own figures on another. Nothing here comes from us."
+      caption={anyDisclosure ? "Its own words on one page, its own figures on another. Nothing here comes from us." : "The claim as it appears on the company's own page. Nothing here comes from us."}
       lead={<Say>{leadWords(pairs)}</Say>}
-      foot={<>{sameDocAll ? 'Same report, both pages, no other source.' : 'Two filings by the same company, no other source.'}{doc ? ` Source: ${doc}.` : ''} Click a page to see it full size with the lines highlighted.</>}
+      foot={<>{anyDisclosure ? (sameDocAll ? 'Same report, both pages, no other source.' : 'Two filings by the same company, no other source.') : 'Read off the rendered page of the company\u2019s own report.'}{doc ? ` Source: ${doc}.` : ''} Click a page to see it full size with the lines highlighted.</>}
     >
       <div className="sbs-wrap">
-        {pairs.map(({ claim, evidence, series }, i) => {
-          const years = evidence.years || evidence.labels || series.map(() => '')
-          const unit = evidence.unit || '%'
-          const max = Math.max(...series, 100)
-          const pages = idx[claim.claim_id]
-          const saysDoc = claim.source_doc || null, discDoc = evidence.source_doc || saysDoc
+        {pairs.map(({ claim, evidence, series, pages }, i) => {
+          const hasSeries = Array.isArray(series) && series.length > 0
+          const years = evidence?.years || evidence?.labels || (hasSeries ? series.map(() => '') : [])
+          const unit = evidence?.unit || '%'
+          const max = Math.max(...(series || [100]), 100)
+          const saysDoc = claim.source_doc || null, discDoc = evidence?.source_doc || saysDoc
           const quote = String(claim.verbatim || '').replace(/^[“"]+/, '').replace(/[”"]+$/, '')
           return (
             <div key={claim.claim_id || i} className="sbs">
@@ -81,15 +88,15 @@ export default function SideBySideModule({ company }) {
                   {pages?.discloses && <PageCrop item={pages.discloses} caption="The disclosure, same report" />}
                 </div>
               )}
-              <div className="sbs-pair">
+              <div className={`sbs-pair ${hasSeries ? '' : 'sbs-pair-one'}`}>
                 <div className="sbs-col">
                   <div className="sbs-head"><b>Says</b><PageChip page={claim.page} title={saysDoc} /></div>
                   <blockquote className="sbs-quote">{quote}”</blockquote>
                 </div>
-                <div className="sbs-col">
-                  <div className="sbs-head"><b>Discloses</b><PageChip page={evidence.page} title={discDoc} /></div>
-                  {evidence.label && <div className="sbs-head-l">{evidence.label}</div>}
-                  <div className="sbs-bars" role="img" aria-label={`${evidence.label || 'Disclosed series'}: ${series.map((v, j) => `${years[j] ? `${years[j]} ` : ''}${v}${unit}`).join(', ')}`}>
+                {hasSeries && <div className="sbs-col">
+                  <div className="sbs-head"><b>Discloses</b><PageChip page={evidence?.page} title={discDoc} /></div>
+                  {evidence?.label && <div className="sbs-head-l">{evidence?.label}</div>}
+                  <div className="sbs-bars" role="img" aria-label={`${evidence?.label || 'Disclosed series'}: ${series.map((v, j) => `${years[j] ? `${years[j]} ` : ''}${v}${unit}`).join(', ')}`}>
                     {series.map((v, j) => {
                       const pctH = Math.max(0, Math.min(100, (v / max) * 100))
                       return (
@@ -103,7 +110,7 @@ export default function SideBySideModule({ company }) {
                       )
                     })}
                   </div>
-                </div>
+                </div>}
               </div>
             </div>
           )
