@@ -73,38 +73,31 @@ reality."* Two of a company's own numbers side by side are not arguable.
 ## How we built it
 
 **The hard part was the text, not the map.** A sustainability report does not contain a
-claim you can check. It contains a sentence like "we match 100% of our annual global
-electricity consumption with renewable energy purchases," and almost every word in it is
+checkable claim. It contains a sentence like "we match 100% of our annual global
+electricity consumption with renewable energy purchases," where almost every word is
 load-bearing. We built a pipeline that reads 354 documents, 309 sustainability reports and
 45 SEC filings, and turns each claim into a record: the number, how precisely it is stated,
 how heavily it is qualified, and the page it came from.
 
-**Then we score the hedging, because that is where the meaning hides.** "100% renewable"
-and "100% of annual consumption matched with market-based certificates" are the same
-number and completely different claims. Each narrowing qualifier costs the claim scope:
-"annual" is the expensive one, because averaging over a year is exactly what hides the
-night. That gives a talk score: how big the claim is, how specific, and how little it is
-hedged. The walk score comes from the grid. The gap between them is the finding.
+**The hedging is where the meaning hides.** "100% renewable" and "100% of annual
+consumption matched with market-based certificates" are the same number and completely
+different claims. Each qualifier costs the claim scope, and "annual" is the expensive one,
+because averaging over a year is exactly what hides the night. That produces a talk score.
+The grid produces a walk score. The gap between them is the finding.
 
-**Getting an LLM to do this without inventing things was most of the work.** Our first PDF
-reader parsed two-column reports straight across the page and spliced sentences together
-into fluent quotes that did not exist. Every claim now carries a verbatim quote and a page
-number you can open and check. Documents are indexed and searchable, so the ask layer can
-pull a company's exact words with the citation attached.
-
-**The ask layer can only report what the data returned.** It answers questions through ten
-typed tools that query the real numbers, and before anything renders we check every figure
-on screen against what those tools actually returned. A figure that does not match is
-discarded and the answer falls back to prose. The model cannot put a number on screen that
-the data did not produce.
+**Getting an LLM to do this without inventing things was most of the work.** Every claim
+carries a verbatim quote and a page number you can open. The ask layer answers through ten
+typed tools, and before anything renders we check each figure against what those tools
+actually returned; anything that does not match is dropped. The model cannot put a number
+on screen that the data did not produce.
 
 **No AI in the measurement, deliberately.** Every grid figure is plain arithmetic over
 government data, which is why it reproduces exactly on a fresh machine. AI reads documents
 and answers questions. It never produces a number.
 
-**Knowing which grid a site is on is the quiet trap.** IREN's site in the Texas Panhandle
-looks like it belongs to the regional grid covering most of those counties, but it wires
-directly into ERCOT. One wrong row flips a verdict, so all 134 are hand-checked against a
+**Which grid a site sits on is the quiet trap.** IREN's site in the Texas Panhandle looks
+like it belongs to the regional grid covering most of those counties. It wires directly
+into ERCOT instead. One wrong row flips a verdict, so all 134 are hand-checked against a
 cited source.
 
 ## Individual contributions
@@ -123,26 +116,23 @@ they actually joined at the end.
 ## Challenges we ran into
 
 **We published a number that was wrong.** Arizona's clean power looked like it collapsed
-between 2019 and 2025. It had not. One nuclear plant was being reported twice, once by each
-of two neighboring grid operators, which inflated the 2019 baseline. Corrected, Arizona's
-clean share actually rose. We found it in our own checks rather than having it pointed out,
-and the site now shows the published figure and the corrected one side by side instead of
-quietly swapping them.
+since 2019. It had not: one nuclear plant was reported twice, once by each of two
+neighboring grid operators, inflating the baseline. Corrected, Arizona's clean share rose.
+We found it in our own checks, and the site now shows the published and corrected figures
+side by side instead of quietly swapping them.
 
 **Our PDF parser made up quotes.** It read two-column reports straight across the page
-instead of down each column, so it stitched the end of one sentence onto the start of
-another. The results read perfectly well and were not in the document. We had already
-repeated one before we caught it. We switched parsers, and every claim now carries a page
-number so any quote can be checked against the original.
+instead of down each column, stitching the end of one sentence onto the start of another.
+The results read perfectly and were not in the document. We had already repeated one before
+catching it. We switched parsers, and every claim now carries a page number to check.
 
-**Missing data displayed as zero.** A company we had not read any documents for showed a
-score of 0% rather than a blank, which made it look like we had measured something and
-found nothing. Blanks now render as blanks everywhere.
+**Missing data displayed as zero**, so a company we had read nothing for showed a score of
+0% rather than a blank, making it look like we had measured something and found nothing.
 
-**The pipeline is hourly, and almost nothing else is.** Company reports are annual, grid
-regions are drawn for markets rather than geography, and time zones mean "overnight" is a
-different set of hours in Texas than in New England. Most of the engineering went into
-keeping those aligned so a night in one region is comparable to a night in another.
+**The pipeline is hourly and almost nothing else is.** Reports are annual, grid regions are
+drawn for markets rather than geography, and time zones mean "overnight" is a different set
+of hours in Texas than in New England. Most of the engineering went into keeping those
+aligned.
 
 ## Accomplishments that we're proud of
 
