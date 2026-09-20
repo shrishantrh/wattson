@@ -296,6 +296,33 @@ Short answers. Do not volunteer this, it is not what wins.
 > **"Four and a half million hourly rows, pulled from PUDL on S3, which is where the
 > federal energy data is published in parquet."**
 
+**"Which parts of PUDL did you use?"**
+
+PUDL is not one dataset, it is a bundle of federal sources. Wattson uses three of them.
+
+| Source inside PUDL | Tables | What it does here |
+|---|---|---|
+| **EIA-930** hourly grid | `core_eia930__hourly_net_generation_by_energy_source`, `out_eia930__hourly_operations`, `out_eia930__hourly_subregion_demand`, plus the two balancing-authority code tables | **The spine.** 4.45M hours, the carbon-free index, the detector, all 111 regions |
+| **EIA-860** plant records | `core_eia860__scd_plants`, `scd_generators`, `out_eia860__yearly_ownership`, `core_eia__entity_plants` / `_generators` / `_utilities` | **Proved the Palo Verde double count.** Ownership shares, nameplate capacity, plant-to-grid attribution |
+| **EPA CEMS** smokestack monitors | `cems_plant_hour`, `cems_unit_year`, `cems_code_plant_year` | **Measured CO2 directly** instead of using carbon-free share as a proxy |
+
+> **"PUDL bundles EIA, EPA, FERC and SEC data. We used three of those sources: the hourly
+> grid tables, the plant ownership records, and the EPA smokestack monitors."**
+
+**"What else, outside PUDL?"**
+
+| Source | What it does |
+|---|---|
+| **NOAA ISD** (Voloridge dataset #1) | 138 stations, 9.18M hourly readings. The weather control |
+| **NASA POWER** | Satellite irradiance. The independent check that the sun did not change |
+| **Company reports** | 309 sustainability PDFs |
+| **SEC EDGAR** | 45 10-K filings |
+| **Kalshi** | The event markets on Generating Alpha |
+| **Hand-built facility lookup** | 134 sites to their serving utility. **The hard part, and the reason nobody had done this** |
+
+> **"Two of your datasets, PUDL and NOAA. Plus satellite irradiance, 354 company documents,
+> and a hand-built map of 134 datacenters to the utility that actually serves each one."**
+
 **"What's the AI stack?"**
 > **"OpenAI for reading documents and for the question box, which is a tool-calling loop over
 > ten typed tools. Elasticsearch indexes the 354 documents so every quote comes back with its
