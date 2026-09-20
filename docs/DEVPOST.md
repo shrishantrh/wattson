@@ -72,22 +72,40 @@ reality."* Two of a company's own numbers side by side are not arguable.
 
 ## How we built it
 
-**The detector.** Three signals, combined with fixed weights: how much faster demand grew
-overnight than on average, how much a region diverged from its neighbors, and how much its
-daily demand curve flattened. **We locked the weights and named four test regions before
-we ever looked at the ranking.** Three landed in the top twenty. One missed badly, Dallas
-at 91st, and we publish the miss and the reason rather than quietly retuning.
+**The hard part was the text, not the map.** A sustainability report does not contain a
+claim you can check. It contains a sentence like "we match 100% of our annual global
+electricity consumption with renewable energy purchases," and almost every word in it is
+load-bearing. We built a pipeline that reads 354 documents, 309 sustainability reports and
+45 SEC filings, and turns each claim into a record: the number, how precisely it is stated,
+how heavily it is qualified, and the page it came from.
 
-**The hard part is knowing which grid a site is on.** It is not a map lookup. IREN's site
-in the Texas Panhandle looks like it should be on the regional grid that covers most of
-those counties, but it wires directly into ERCOT instead. One wrong row flips a verdict,
-so every site is hand-checked against a source we cite.
+**Then we score the hedging, because that is where the meaning hides.** "100% renewable"
+and "100% of annual consumption matched with market-based certificates" are the same
+number and completely different claims. Each narrowing qualifier costs the claim scope:
+"annual" is the expensive one, because averaging over a year is exactly what hides the
+night. That gives a talk score: how big the claim is, how specific, and how little it is
+hedged. The walk score comes from the grid. The gap between them is the finding.
 
-**No machine learning in the measurement, on purpose.** Every number is plain arithmetic
-over government data, which is why it reproduces exactly on a fresh machine. We use AI
-only to read documents and answer questions, never to produce a figure.
+**Getting an LLM to do this without inventing things was most of the work.** Our first PDF
+reader parsed two-column reports straight across the page and spliced sentences together
+into fluent quotes that did not exist. Every claim now carries a verbatim quote and a page
+number you can open and check. Documents are indexed and searchable, so the ask layer can
+pull a company's exact words with the citation attached.
 
----
+**The ask layer can only report what the data returned.** It answers questions through ten
+typed tools that query the real numbers, and before anything renders we check every figure
+on screen against what those tools actually returned. A figure that does not match is
+discarded and the answer falls back to prose. The model cannot put a number on screen that
+the data did not produce.
+
+**No AI in the measurement, deliberately.** Every grid figure is plain arithmetic over
+government data, which is why it reproduces exactly on a fresh machine. AI reads documents
+and answers questions. It never produces a number.
+
+**Knowing which grid a site is on is the quiet trap.** IREN's site in the Texas Panhandle
+looks like it belongs to the regional grid covering most of those counties, but it wires
+directly into ERCOT. One wrong row flips a verdict, so all 134 are hand-checked against a
+cited source.
 
 ## Individual contributions
 
