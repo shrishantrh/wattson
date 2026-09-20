@@ -122,19 +122,27 @@ they actually joined at the end.
 
 ## Challenges we ran into
 
-**Our own number was wrong, backwards.** Arizona looked like its clean power collapsed. It
-had not: one nuclear plant was being counted twice. We caught it ourselves and now show
-both the published and corrected figure rather than quietly fixing it.
+**We published a number that was wrong.** Arizona's clean power looked like it collapsed
+between 2019 and 2025. It had not. One nuclear plant was being reported twice, once by each
+of two neighboring grid operators, which inflated the 2019 baseline. Corrected, Arizona's
+clean share actually rose. We found it in our own checks rather than having it pointed out,
+and the site now shows the published figure and the corrected one side by side instead of
+quietly swapping them.
 
-**A PDF reader that invented quotes.** Our first parser read two-column reports straight
-across, splicing sentences together into fluent quotes that did not exist. We had repeated
-one out loud before noticing. That was the scariest bug of the weekend, because it does not
-look like a bug, it looks like a discovery.
+**Our PDF parser made up quotes.** It read two-column reports straight across the page
+instead of down each column, so it stitched the end of one sentence onto the start of
+another. The results read perfectly well and were not in the document. We had already
+repeated one before we caught it. We switched parsers, and every claim now carries a page
+number so any quote can be checked against the original.
 
-**A missing value that displayed as zero**, producing a screen saying a company "talks at
-zero" from entirely correct data.
+**Missing data displayed as zero.** A company we had not read any documents for showed a
+score of 0% rather than a blank, which made it look like we had measured something and
+found nothing. Blanks now render as blanks everywhere.
 
----
+**The pipeline is hourly, and almost nothing else is.** Company reports are annual, grid
+regions are drawn for markets rather than geography, and time zones mean "overnight" is a
+different set of hours in Texas than in New England. Most of the engineering went into
+keeping those aligned so a night in one region is comparable to a night in another.
 
 ## Accomplishments that we're proud of
 
