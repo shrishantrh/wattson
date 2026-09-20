@@ -3,12 +3,24 @@
 <head>
 <meta charset="utf-8">
 <title>Wattson</title>
-<!-- Self-contained: no external stylesheet, script, font or image. Works offline by double-click.
-     Palette is taken from web/src/styles/tokens.css so the deck and the product read as one thing.
-     --clean means carbon-free generation, --fossil means fossil generation, --warn means data
-     that is flagged or corrected. None of the three is ever used decoratively.
-     RULE ENFORCED IN THIS FILE: no slide carries more than 15 words of body text, headline
-     included. Everything else lives in data-notes, behind N. -->
+<!-- Self-contained: no external stylesheet, script, font, image or network request of any
+     kind. Works offline by double-click.
+
+     Palette is taken from web/src/styles/tokens.css so the deck and the product read as one
+     thing. --clean (#4fd4d0) means carbon-free generation and NOTHING else. --fossil
+     (#ff7a4a) means fossil generation and NOTHING else. --warn (#e8b43f) is only for data
+     that is flagged or corrected. Anything that is neither -- a coverage count, a rank, a
+     company claim -- is drawn in the neutral ink ramp.
+
+     TWO RULES ENFORCED IN THIS FILE:
+       1. No slide carries more than 15 rendered words, headline and axis labels included.
+          window.__wordCounts() in the console prints the real count for every slide.
+       2. Every slide is the picture of the sentence spoken over it. The exact sentence is
+          the first thing in that slide's data-notes, and the pairing is written out in
+          deck.md. A slide that only restates the narration has been deleted.
+
+     Running order follows docs/pitch/video-script-yash.md. Every figure traces to
+     docs/pitch/numbers.md or docs/pitch/numbers-v2.md; the source is named in the notes. -->
 <style>
   :root{
     --bg:#080a09;
@@ -21,6 +33,8 @@
     --line-soft:rgba(255,255,255,0.08);
     --clean:#4fd4d0;
     --clean-dim:rgba(79,212,208,0.55);
+    --clean-soft:rgba(79,212,208,0.16);
+    --clean-line:rgba(79,212,208,0.45);
     --fossil:#ff7a4a;
     --warn:#e8b43f;
     --font-ui:'Inter Variable',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
@@ -36,27 +50,33 @@
   section.on{display:flex}
   .spacer{flex:1}
 
-  .eyebrow{font-size:23px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  .eyebrow{font-size:30px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
     font-weight:600;font-family:var(--font-mono)}
   h1{font-size:132px;line-height:1;font-weight:600;letter-spacing:-.035em}
-  h2{font-size:78px;line-height:1.06;font-weight:600;letter-spacing:-.028em;max-width:1300px}
-  h2.small{font-size:64px}
+  h2{font-size:78px;line-height:1.06;font-weight:600;letter-spacing:-.028em;max-width:1340px}
+  h2.small{font-size:56px}
+  /* the explanatory line: the part that makes a slide legible to a stranger. It is not a
+     footnote and is not sized like one. */
+  .sub{font-size:42px;line-height:1.35;color:var(--ink-2);font-weight:400;letter-spacing:-.01em;
+    margin-top:20px;max-width:1320px}
   .lede{font-size:40px;line-height:1.3;color:var(--ink-2);font-weight:400;letter-spacing:-.01em}
   .rule{height:1px;background:var(--line);margin:36px 0}
+  .foot{font-size:32px;color:var(--muted);font-family:var(--font-mono);letter-spacing:.05em;
+    margin-top:22px}
   svg{display:block}
   .fig{display:flex;align-items:center;justify-content:center;flex:1 1 auto;min-height:0}
   .fig svg{max-width:100%;max-height:100%;height:auto}
 
-  /* the only three-across numeric row in the deck: a number at display size with a short label */
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:64px;align-items:end}
-  .stats .k{font-size:118px;line-height:.92;font-weight:500;letter-spacing:-.04em}
-  .stats .v{font-size:26px;color:var(--muted);margin-top:18px;letter-spacing:.01em;
-    font-family:var(--font-mono)}
-  .stats .k.sm{font-size:82px;font-weight:600;letter-spacing:-.03em}
+  /* the provenance strip: what the data is, under the app, for the 100 seconds the deck
+     is otherwise showing nothing. Mono, muted, never a signal hue. */
+  .prov{font-size:30px;color:var(--muted);font-family:var(--font-mono);letter-spacing:.02em;
+    line-height:1.7;white-space:nowrap}
+  .prov b{font-weight:400;padding:0 16px;border-left:1px solid var(--line)}
+  .prov b:first-child{padding-left:0;border-left:0}
 
   .live{display:flex;align-items:center;gap:20px}
   .dot{width:22px;height:22px;border-radius:50%;background:var(--clean);
-    box-shadow:0 0 0 0 rgba(79,212,208,.55);animation:pulse 2.4s var(--ease,ease-out) infinite}
+    box-shadow:0 0 0 0 rgba(79,212,208,.55);animation:pulse 2.4s ease-out infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(79,212,208,.45)}70%{box-shadow:0 0 0 26px rgba(79,212,208,0)}100%{box-shadow:0 0 0 0 rgba(79,212,208,0)}}
   @media (prefers-reduced-motion:reduce){.dot{animation:none}}
 
@@ -68,175 +88,236 @@
 
   #hud{position:fixed;right:24px;bottom:18px;font-size:15px;color:#4b524e;letter-spacing:.12em;
     font-family:var(--font-mono)}
+  /* The control legend is for the speaker, not the room: it disappears on the first
+     keypress and is never drawn in full screen. Press ? to bring it back. */
   #help{position:fixed;left:24px;bottom:18px;font-size:15px;color:#3d4340;letter-spacing:.08em;
     font-family:var(--font-mono)}
+  #help.hide{display:none}
+  :fullscreen #help{display:none}
+  :-webkit-full-screen #help{display:none}
   #notes{position:fixed;left:0;right:0;bottom:0;background:var(--surface-2);
     border-top:1px solid var(--line);padding:20px 28px;font-size:19px;line-height:1.5;
     color:var(--ink-2);display:none;max-height:34vh;overflow:auto}
   #notes.on{display:block}
   #notes b{color:var(--warn);letter-spacing:.1em;text-transform:uppercase;font-size:15px;
     font-family:var(--font-mono);display:block;margin-bottom:8px}
+  #notes i{color:var(--fossil);font-style:normal;font-family:var(--font-mono);font-size:13px;
+    letter-spacing:.08em;display:block;margin-bottom:10px}
 </style>
 </head>
 <body>
 <div id="stagewrap"><div id="stage">
 
-  <!-- 1 · TITLE · 5s -->
-  <section data-notes="0:00-0:05 (5s). SAY: &quot;I'm Shrishant. This is Wattson.&quot; / &quot;AI datacenters draw the same power at 3am as at noon.&quot; Hands off the laptop; let the room read two lines. || Cut from the slide, say only if asked: hourly carbon-free share of generation for 70 US balancing authorities, EIA-930 via PUDL, snapshot ends 2026-09-05; HackMIT 2026, Voloridge 'Signal in the Noise'. On stage say 'grids', never 'balancing authorities'.">
-    <div class="eyebrow">HackMIT 2026</div>
+  <!-- 1 · THE ABSENCE · 13s -->
+  <section data-notes="0:00-0:13 (13s, 29 words). SAY, word for word: &quot;There's a greenwashing watchdog for fast fashion. For airlines. For oil majors. There isn't one for datacenters - the fastest-growing industrial power load in America. So we built it.&quot; || DELIVERY: say the three 'for' clauses at pace, then break hard before 'There isn't one.' The list does the work - by the third item the room has accepted that this is a normal, mature thing that obviously should exist, so the absence lands as an oversight rather than a pitch. Hands off the laptop. DO NOT OPEN ON SOLAR: solar is the evidence, not the thesis; the night wins the argument thirty seconds from now. || The slide shows the empty fourth row - that is the picture. No signal hue on this slide by design: an absent watchdog is neither clean nor fossil. || If asked 'fastest-growing according to whom?': that is the framing claim, not a Wattson measurement - EIA and the regional operators' own load forecasts. Do not attach a number to it.">
+    <div class="eyebrow">Wattson</div>
     <div class="spacer"></div>
-    <h1>Wattson</h1>
-    <div class="rule"></div>
-    <div class="lede">It follows the power, not the press release.</div>
+    <div class="fig">
+      <svg viewBox="0 0 1392 566" role="img">
+        <text x="60" y="44" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="4">GREENWASHING WATCHDOGS</text>
+        <line x1="60" y1="72" x2="1332" y2="72" stroke="#232827" stroke-width="1"/>
+
+        <!-- three that exist: muted label, solid tick -->
+        <text x="60" y="160" font-size="60" font-weight="500" letter-spacing="-2" fill="#939c97">Fast fashion</text>
+        <path d="M1240 140 l22 24 l44 -52" fill="none" stroke="#939c97" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="60" y1="196" x2="1332" y2="196" stroke="#232827" stroke-width="1"/>
+
+        <text x="60" y="284" font-size="60" font-weight="500" letter-spacing="-2" fill="#939c97">Airlines</text>
+        <path d="M1240 264 l22 24 l44 -52" fill="none" stroke="#939c97" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="60" y1="320" x2="1332" y2="320" stroke="#232827" stroke-width="1"/>
+
+        <text x="60" y="408" font-size="60" font-weight="500" letter-spacing="-2" fill="#939c97">Oil majors</text>
+        <path d="M1240 388 l22 24 l44 -52" fill="none" stroke="#939c97" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="60" y1="444" x2="1332" y2="444" stroke="#232827" stroke-width="1"/>
+
+        <!-- the one that does not: full ink label, and an empty dashed slot where the tick goes -->
+        <text x="60" y="524" font-size="72" font-weight="600" letter-spacing="-3" fill="#edf0ed">Datacenters</text>
+        <rect x="1236" y="468" width="76" height="76" rx="10" fill="none" stroke="#939c97" stroke-width="5" stroke-dasharray="9 11"/>
+      </svg>
+    </div>
     <div class="spacer"></div>
   </section>
 
-  <!-- 2 · DAY VS NIGHT · 13s -->
-  <section data-notes="0:05-0:18 (13s). SAY: &quot;Since 2019 the US grid got much cleaner by day - 37 percent to 47. At night: 40 to 40.&quot; / &quot;Solar fixed the day. It did nothing for the night.&quot; This is the ONLY pair of numbers you quote with no app behind it - say it slowly and let the two lines do the work. || Cut from the slide: exact values 37.2% to 46.5% daytime (10:00-15:59 local) and 40.5% to 39.7% overnight (00:00-05:59 local), api/regions.json meta.national.cf_share; day +9.3 pts, night -0.8 pts. TRAP T8: this is a SHARE. Clean megawatts at night did rise 14 GW nationally (159,031 to 173,380) - they just did not keep up with 45 GW of new overnight GENERATION (not demand, T7). TRAP T11: 2025 is the last complete year; never mix in partial 2026.">
-    <h2>Decarbonization happened in daylight.</h2>
+  <!-- 2 · WHAT WATTSON IS · 12s -->
+  <section data-notes="0:13-0:25 (12s, 27 words). SAY: &quot;We take a company's public clean-energy claim, find the grid its buildings actually draw from, and compare the claim to what that grid generated, hour by hour.&quot; || This slide exists because a judge who only reads the slides must still learn what the product does. Say it slowly; it is the only plain-English definition in the talk. Every later slide is one of these three boxes filled in: slide 3 and 4 are box three, the demo is all three, slide 7 is a worked example with real values. || No signal hue: a schema is not generation. The same shape returns on slide 7 carrying Alphabet's actual numbers, which is why the two slides are drawn alike. || If asked what 'the grid it draws from' means: the balancing authority whose footprint the site sits in, mapped from the serving utility by hand, never inferred from the state. 107 of our 134 sites resolve to a named serving utility; 27 do not and are counted separately.">
+    <div class="spacer"></div>
     <div class="fig">
-      <svg viewBox="0 0 1392 470" role="img">
-        <!-- baseline + two measured endpoints per series; the line between them is a join of two
-             measurements, which is why each end carries a dot. -->
-        <line x1="150" y1="424" x2="1010" y2="424" stroke="#232827" stroke-width="1"/>
-        <line x1="150" y1="424" x2="150" y2="60" stroke="#232827" stroke-width="1"/>
-        <line x1="1010" y1="424" x2="1010" y2="60" stroke="#232827" stroke-width="1"/>
+      <svg viewBox="0 0 1392 300" role="img">
+        <rect x="10" y="60" width="356" height="150" rx="14" fill="none" stroke="#3d4340" stroke-width="3" stroke-dasharray="9 11"/>
+        <text x="188" y="152" text-anchor="middle" font-size="46" font-weight="500" letter-spacing="-1" fill="#edf0ed">a company&#8217;s claim</text>
 
-        <!-- DAY: clean-dim is the product's own de-emphasised daytime series -->
-        <line x1="150" y1="257.6" x2="1010" y2="99.5" stroke="rgba(79,212,208,0.55)" stroke-width="7" stroke-linecap="round"/>
-        <circle cx="150" cy="257.6" r="10" fill="rgba(79,212,208,0.55)"/>
-        <circle cx="1010" cy="99.5" r="13" fill="#4fd4d0"/>
-        <!-- NIGHT: full-strength clean, and visibly flat -->
-        <line x1="150" y1="201.5" x2="1010" y2="215.1" stroke="#4fd4d0" stroke-width="7" stroke-linecap="round"/>
-        <circle cx="150" cy="201.5" r="10" fill="#4fd4d0"/>
-        <circle cx="1010" cy="215.1" r="13" fill="#4fd4d0"/>
+        <path d="M388 135 h66" stroke="#3d4340" stroke-width="3"/>
+        <path d="M440 123 l16 12 l-16 12" fill="none" stroke="#3d4340" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 
-        <text x="128" y="250" text-anchor="end" font-size="30" fill="#939c97" font-family="ui-monospace,Menlo,monospace">37%</text>
-        <text x="128" y="194" text-anchor="end" font-size="30" fill="#939c97" font-family="ui-monospace,Menlo,monospace">40%</text>
+        <rect x="476" y="60" width="380" height="150" rx="14" fill="#121615" stroke="#232827" stroke-width="3"/>
+        <text x="666" y="127" text-anchor="middle" font-size="46" font-weight="500" letter-spacing="-1" fill="#edf0ed">the grid it</text>
+        <text x="666" y="181" text-anchor="middle" font-size="46" font-weight="500" letter-spacing="-1" fill="#edf0ed">draws from</text>
 
-        <text x="1054" y="86" font-size="104" font-weight="500" letter-spacing="-4" fill="#4fd4d0">47%</text>
-        <text x="1056" y="128" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">Day</text>
-        <text x="1054" y="248" font-size="104" font-weight="500" letter-spacing="-4" fill="#4fd4d0">40%</text>
-        <text x="1056" y="290" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">Night</text>
+        <path d="M878 135 h66" stroke="#3d4340" stroke-width="3"/>
+        <path d="M930 123 l16 12 l-16 12" fill="none" stroke="#3d4340" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 
-        <text x="150" y="462" text-anchor="middle" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">2019</text>
-        <text x="1010" y="462" text-anchor="middle" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">2025</text>
+        <rect x="966" y="60" width="416" height="150" rx="14" fill="rgba(79,212,208,0.16)" stroke="rgba(79,212,208,0.45)" stroke-width="3"/>
+        <text x="1174" y="127" text-anchor="middle" font-size="46" font-weight="500" letter-spacing="-1" fill="#4fd4d0">what that grid</text>
+        <text x="1174" y="181" text-anchor="middle" font-size="46" font-weight="500" letter-spacing="-1" fill="#4fd4d0">burned, hour by hour</text>
+      </svg>
+    </div>
+    <div class="spacer"></div>
+  </section>
+
+  <!-- 3 · CLEAN POWER ADDED, DAY vs NIGHT · 18s -->
+  <section data-notes="0:25-0:43 (18s, 38 words). SAY: &quot;Since twenty-nineteen we added sixty-five gigawatts of clean power to the average daytime hour, and eighteen to the overnight hour - to the hours a datacenter ignores. And that&#39;s after we corrected a nuclear plant the federal data counted twice.&quot; || Let the two bars land before you say the numbers. Do not talk over them. || FIGURES - THESE ARE THE CORRECTED SERIES, AND THAT IS THE POINT. Published national cf_avg_mw 2019 (api/regions.json meta.national) is daytime 178,129 and overnight 159,031. Both contain AZPS&#39;s phantom: api/region/AZPS.json corrections[1] on cf_avg_mw.2019 gives published overnight 3,373 -> corrected 34.7 and published daytime 3,736 -> corrected 402.2, i.e. a phantom of 3,338 MW overnight and 3,334 MW daytime, Palo Verde nuclear booked by AZPS and SRP at the same time (confidence: proven). Stripping it: corrected 2019 daytime 174,795 and overnight 155,693. Against 2025 (daytime 239,533, overnight 173,380) that is +64,738 MW by day and +17,687 MW overnight, ratio 3.66 -> 3.7x. The PUBLISHED figures would have been +61.4 / +14.3 / 4.3x - 16% more flattering, and built on the exact 2019 number that backup B2 exists to discredit. We do not quote a number our own correction file proves wrong. SAY THAT OUT LOUD; it is the messy-data story and it is stronger than the bigger ratio. || TRAP N1: these are absolute megawatt averages per hour-class, not shares. Both go UP. The overnight SHARE is roughly flat on a corrected basis (about 40.0% in 2019 against 39.7% in 2025) - never say &#39;four times cleaner by day&#39;, which is a share sentence. TRAP N2: 17.7 GW at night is real, about a Dominion and a half. It grew and still lost the race to 45 GW of new overnight generation. || Daytime = 10:00-15:59 local, overnight = 00:00-05:59 local. Generation, national sum, not demand and not consumption.">
+    <h2 class="small">Clean power added since 2019, by hour of day.</h2>
+    <div class="fig">
+      <svg viewBox="0 0 1392 660" role="img">
+        <!-- To scale: 400px for 64.7 GW, so 17.7 GW is 109px. Both bars are --clean because
+             both are carbon-free generation; the daytime series is --clean-dim, as the product
+             de-emphasises daytime hours. Every value clears its bar by 40px. Corrected 2019
+             baseline: the AZPS double count is stripped from both endpoints. -->
+        <line x1="230" y1="540" x2="1180" y2="540" stroke="#232827" stroke-width="1"/>
+        
+        <rect x="300" y="140" width="240" height="400" fill="rgba(79,212,208,0.55)"/>
+        <text x="420" y="100" text-anchor="middle" font-size="104" font-weight="500" letter-spacing="-4" fill="rgba(79,212,208,0.9)">+64.7 <tspan font-size="56">GW</tspan></text>
+        <text x="420" y="600" text-anchor="middle" font-size="44" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">daytime</text>
+
+        <text x="680" y="360" text-anchor="middle" font-size="72" font-weight="500" letter-spacing="-2" fill="#939c97">3.7&#215;</text>
+
+        <rect x="820" y="431" width="240" height="109" fill="#4fd4d0"/>
+        <text x="940" y="391" text-anchor="middle" font-size="104" font-weight="500" letter-spacing="-4" fill="#4fd4d0">+17.7</text>
+        <text x="940" y="600" text-anchor="middle" font-size="44" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">overnight</text>
       </svg>
     </div>
   </section>
 
-  <!-- 3 · PJM · 12s -->
-  <section data-notes="0:18-0:30 (12s). SAY: &quot;So 'one hundred percent clean' is an annual average. We wanted the hourly one.&quot; This slide is a PREVIEW of the finding you narrate inside the app at 2:04 - do NOT read the digits now, just let the two bars sit there. Call PJM 'the mid-Atlantic grid'. || Cut from the slide: +8,701 avg MW overnight generation (82,539 to 91,240, api/region/PJM.json total_avg_mw); clean 35,700 to 35,619, i.e. -81 MW = 0.23% of the 2019 level; -0.9% of the increment was clean (-81/8,701); gas +10.7 GW, coal -2.5, nuclear -0.9 (fuel_delta_overnight_gw, deltas sum +8.69 against +8.70); overnight net exports 3.8 to 2.5 GW. LANGUAGE: 'consistent with datacenter load being served by gas', NEVER 'caused by'. Part of the gas rise is coal-to-gas switching. Average mix, not marginal.">
-    <div class="eyebrow">PJM overnight, 2019&ndash;2025</div>
-    <h2>None of it was clean.</h2>
+  <!-- 4 · PJM · 14s -->
+  <section data-notes="0:43-0:57 (14s, 30 words). SAY: &quot;PJM - the grid from Chicago to New Jersey - is where the datacenters are. Overnight generation there rose eight point seven gigawatts. Gas supplied ten point seven. Clean fell eighty-one megawatts.&quot; || Gloss PJM every time, unconditionally: the room is not technical. Do not read the coal bar aloud - it is on the slide so that a judge who notices 10.7 is bigger than 8.7 gets the answer before they ask it. || FIGURES (api/region/PJM.json; numbers.md 2.1, numbers-v2.md 2.7): overnight total_avg_mw 82,539 -> 91,240 = +8,701 MW. fuel_delta_overnight_gw: gas +10.74, coal -2.52, nuclear -0.95, hydro -0.22, wind +1.07, solar +0.01, oil +0.15, other +0.41; they sum to +8.69 against +8.70. Overnight cf_avg_mw 35,700 -> 35,619 = -81 MW. The slide prints -81 MW, not -0.1 GW, because rounding 81 to 0.1 overstates the magnitude by 23% in the direction that flatters us. || LANGUAGE: &#39;consistent with datacenter load being served by gas&#39;, NEVER &#39;caused by&#39;. Average mix, not marginal - EIA-930 gives fuel and interchange, not dispatch order. Overnight net exports fell 3,814 -> 2,489 MW, so this is not PJM exporting less. Part of the gas rise is coal-to-gas switching, which is what the coal bar shows. || &#39;Largest datacenter cluster on earth&#39; is NOT in either numbers file - that is why the line now says &#39;is where the datacenters are&#39; instead of asserting a superlative we did not measure.">
+    <div class="eyebrow">PJM, 2019&ndash;2025</div>
+    <h2 class="small">All the night growth was gas.</h2>
     <div class="fig">
       <svg viewBox="0 0 1392 560" role="img">
-        <!-- the bars are to scale: 81 is 0.93% of 8,701, so the clean bar is a 5.6px sliver
-             against a 600px column. That ratio IS the argument. -->
-        <line x1="120" y1="420" x2="1330" y2="420" stroke="#232827" stroke-width="1"/>
-        <rect x="150" y="60" width="186" height="360" fill="#ff7a4a"/>
-        <rect x="150" y="420" width="186" height="3.35" fill="#4fd4d0"/>
+        <!-- A zero line, not a baseline. 0.018622 px per MW: gas +10,740 is 200px, coal -2,520
+             is 47px, clean -81 MW is a 1.5px hairline BELOW the line. Only gas and coal are
+             --fossil, because only they are fossil generation; clean is --clean. The +8,701
+             total is spoken, never drawn in a signal hue, because a total is neither. -->
+        <line x1="180" y1="300" x2="1330" y2="300" stroke="#232827" stroke-width="1"/>
+        <text x="1330" y="268" text-anchor="end" font-size="38" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">MW</text>
 
-        <text x="400" y="228" font-size="136" font-weight="500" letter-spacing="-6" fill="#ff7a4a">+8,701</text>
-        <text x="404" y="278" font-size="28" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="1">generation</text>
+        <rect x="300" y="100" width="200" height="200" fill="#ff7a4a"/>
+        <text x="400" y="62" text-anchor="middle" font-size="88" font-weight="500" letter-spacing="-3" fill="#ff7a4a">+10,740</text>
+        <text x="400" y="352" text-anchor="middle" font-size="44" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">gas</text>
 
-        <text x="400" y="476" font-size="86" font-weight="500" letter-spacing="-4" fill="#4fd4d0">&#8722;81</text>
-        <text x="404" y="516" font-size="28" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="1">clean</text>
+        <rect x="620" y="300" width="200" height="47" fill="#ff7a4a" opacity="0.55"/>
+        <text x="720" y="424" text-anchor="middle" font-size="72" font-weight="500" letter-spacing="-2" fill="#ff7a4a">&#8722;2,520</text>
+        <text x="720" y="476" text-anchor="middle" font-size="44" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">coal</text>
 
-        <text x="1330" y="404" text-anchor="end" font-size="24" fill="#4b524e" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">avg MW</text>
+        <rect x="940" y="300" width="200" height="2" fill="#4fd4d0"/>
+        <text x="1040" y="252" text-anchor="middle" font-size="72" font-weight="500" letter-spacing="-2" fill="#4fd4d0">&#8722;81</text>
+        <text x="1040" y="352" text-anchor="middle" font-size="44" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">clean</text>
       </svg>
     </div>
   </section>
 
-  <!-- 4 · WHAT IT IS · 12s -->
-  <section data-notes="0:30-0:42 (12s). SAY: &quot;Wattson reads what every US grid actually generated, hour by hour, and asks two questions: what powers a company's sites, and where should the next go?&quot; Cursor rests over the Google chip; do not click yet. || Cut from the slide: 4,451,763 hourly rows exactly, 2018-07-01 to 2026-09-05 (data/processed/hourly_cf_index.parquet - gitignored, local only); 111 = 68 zones + 43 balancing authorities, scored from demand alone with NO company list; 52 balancing authorities ranked for siting; 10 claims from 4 companies. THREE COUNTS, never blur them (T16): 70 in the hourly index, 124 published regions, 111 scored. If a judge asks for the field behind 4.45M: 'it's the row count of the hourly index; the published JSON carries the 124 regions built from it, not the raw rows.' Also unsaid here: flat load raises the overnight floor faster than the mean, which is the fingerprint the detector reads.">
-    <h2>Every hour, every grid.</h2>
-    <div class="spacer"></div>
-    <div class="stats">
-      <div><div class="k">4.45M</div><div class="v">hourly rows</div></div>
-      <div><div class="k">70</div><div class="v">balancing authorities</div></div>
-      <div><div class="k">111</div><div class="v">regions scored</div></div>
-    </div>
-    <div class="rule"></div>
-    <div class="spacer"></div>
-  </section>
-
-  <!-- 5 · HOLDING SLIDE · 112s -->
-  <section data-notes="0:42-2:34 (112s). HOLDING SLIDE - no numbers on it by design. Switch to the app now and stay there for all three beats. BEAT 1 (0:42) click the Google chip -> #/check/GOOGL: 100% claimed, true on paper, 6% measured on Santee Cooper's grid; 'we never say they lied'; then Show the evidence -> page 4 against page 94's ~65% hourly, five years, both theirs. BEAT 2 (1:23) Esc, then the 300 MW chip -> Phoenix vs Northern Virginia vs Omaha: Omaha 1st at 52% and improving; Phoenix 2nd on 10% and the DOUBLE-COUNT LINE IS MANDATORY (climbing from two, not falling from sixty-two); N. Virginia 39% and getting worse; 144 MW off fossil in Omaha, average mix not marginal. BEAT 3 (1:59) Home then 'What we found in the grid data' -> #/found: clean at night flat since 2019, +8.7 GW of which 10.7 gas, 'consistent with, not caused by'; then the four ranks - N. Virginia 6th, Omaha 7th, the AEP zone 19th, Dallas 91st, the miss we print. Come back to the deck at 2:34 wherever you are. IF YOU ARE BEHIND: cut Beat 2 whole, never just the Phoenix line. The site is static, precomputed JSON, no backend to fail - say that only if something stalls.">
+  <!-- 5 · HOLDING SLIDE · 95s -->
+  <section data-notes="0:57-2:32 (95s, 163 words spoken + about 20s of typing, clicking and LLM latency). HOLDING SLIDE. The provenance strip is the only thing the deck contributes for 95 seconds, so it carries what the data IS - a Voloridge judge scoring &#39;use of real-world public datasets&#39; can read it the whole time without costing you a spoken second. EIA-930 via PUDL; 4,451,763 hourly rows; 70 balancing authorities (say &#39;grid operators&#39;); 354 indexed passages. || BEAT A, the check (29 words, 13s): &quot;Google claims one hundred percent renewable - page four. On the grid that serves the site: five point six percent. True under the accounting rule. We&#39;re measuring a different thing.&quot; NOTE: do NOT say &#39;we never say they lied&#39; - it plants the word. api/company/GOOGL.json, claim p.4 annual market-based, Moncks Corner on Santee Cooper, cf_share_2025 0.056. If you linger: footprint not meter, and it UNDERSTATES the site because Santee Cooper&#39;s V.C. Summer nuclear share reports under SCEG at 42%. Do not say &#39;market-based&#39; aloud - it costs fifteen seconds of confusion. || BEAT B, the detector (48 words, 22s): &quot;We also find datacenters without a list of datacenters. A hundred and eleven regions scored on the signature of flat, round-the-clock load. We named four test regions before we ran it, so we couldn&#39;t cheat. Two landed in the top ten. Two missed. Both are on the screen.&quot; TWO HITS, TWO MISSES - N. Virginia 6th and Omaha 7th are the hits; the AEP zone 19th and Dallas 91st are the misses, and backup B1 draws both misses struck through. The earlier script said &#39;three hit&#39;, which contradicted our own backup slide. Never inflate this. NEVER CUT THIS BEAT for time - it is the primary track&#39;s entire case. || BEAT C, OpenAI and the blind spot (45 words, 21s): &quot;[Six Stargate sites, every one mapped.] El Paso Electric, at three in the morning: one megawatt of clean power out of six hundred and fifty-five. And El Paso Matters reports a gas microgrid here that never touches that grid. If that&#39;s right, this load never shows up in federal demand data. Including ours.&quot; api/region/EPE.json: cf_share.2025 daytime 0.341, overnight 0.001; overnight cf_avg_mw 1.0 of total 655.0 (654 gas + 1 solar). KEEP THE CONDITIONAL &#39;if that&#39;s right&#39; - the microgrid is a press note at confidence=medium (El Paso Matters, 2025-09-25), not a measurement. TRAP X3: Abilene is NOT one of OpenAI&#39;s six; it is filed under Oracle. The six are Shackelford, Santa Teresa, Milam, Lordstown, Port Washington, Pike County. TRAP N3: EPE imports overnight (853 MW demand against 655 generated), so this is footprint generation. TRAP N4: EPE was 0.0% in 2019 - a flat line at the floor, NOT the Arizona correction. || BEAT D, the ask layer, Codex and the corpus (41 words, 19s): &quot;And you can just ask it in English. That&#39;s OpenAI&#39;s tool-calling API over ten typed tools against our own data - and Codex wrote the document-search layer underneath it: an index of three hundred and fifty-four passages from their own filings, [six flagged as junk and kept visible,] every one with its page.&quot; VERIFIED BY DIRECT COUNT of claims/raw/*.jsonl: 354 records = 309 sustainability-report passages + 45 from 10-Ks, across 8 source documents and 312 distinct pages; quality 341 ok / 7 tabular / 6 suspect. SAY &#39;PASSAGES&#39;, NOT &#39;FILINGS&#39; - 354 is the passage count; there are 8 filings. SAY &#39;OVER TEN TYPED TOOLS&#39;: the RUNNING SERVICE reports ELEVEN tools including search_corpus, and the demo runs against that service, so eleven is what a judge would see; the copy of server/ai.py in the repo is stale and lists ten. &#39;Over ten&#39; is true of both and cannot be made wrong by the next deploy. If asked for the number, say eleven and name search_corpus. Model is gpt-4.1. Do NOT say &#39;seven tool calls&#39; - the call count is a property of the live run and cannot be promised in advance. || IF YOU ARE BEHIND, drop the bracketed clauses first (about 13 words), then beat C&#39;s &#39;Six Stargate sites&#39; line. Never cut beat B. The site is a static export with no backend; if the ask layer is down, Cmd-K degrades to the deterministic palette. Come back to the deck at 2:32 wherever you are.">
     <div class="live"><span class="dot"></span><span class="eyebrow" style="color:var(--clean)">Live</span></div>
     <div class="spacer"></div>
-    <h1 style="font-size:112px">Wattson, running.</h1>
+    <h1 style="font-size:104px">Wattson, running.</h1>
     <div class="rule" style="max-width:640px"></div>
+    <div class="prov"><b>EIA-930 via PUDL</b><b>4.45M hourly rows</b><b>70 grid operators</b><b>354 indexed passages</b></div>
     <div class="spacer"></div>
   </section>
 
-  <!-- 6 · LIMITS · 10s -->
-  <section data-notes="2:34-2:44 (10s). SAY, word for word: &quot;Generation inside a footprint, not consumption. Average mix, not marginal. Contracts excluded. Claims we can't check are counted on screen.&quot; Hands off the laptop, look up. Fast and flat - this is the differentiator, not an apology. || The five limits, cut from the slide: (1) generation inside a footprint, not consumption, interchange is not allocated; (2) average grid mix, not marginal emissions; (3) 'consistent with datacenter load being served by gas', never 'caused by'; (4) 'true on paper, X physically', never 'they lied' - 9 of 10 claims true on paper, 1 cannot_verify (Amazon, no falsifiable sentence, talk_score is null not zero); (5) regions are coarse, PJM spans Chicago to New Jersey, site and operator mapping is hand-curated. Source: api/regions.json meta.caveats; every figure traces to docs/numbers_checklist.md.">
+  <!-- 6 · COVERAGE · 15s -->
+  <section data-notes="2:32-2:47 (15s, 32 words). SAY: &quot;The thing we&#39;re proudest of is what it refuses to say. Ten claims read. Nine true on paper. One we can&#39;t verify. Forty-eight of our fifty-two operators, we haven&#39;t read at all.&quot; || Hands off the laptop, look up. Fast and flat - this is the differentiator, not an apology. The slide now leads with what we DO hold, because an Arrowstreet judge whose only exposure to our textual work is the sentence &#39;we read nothing for 48 of 52&#39; scores a zero. || FIGURES (api/companies.json; numbers-v2.md 2.5): count 52 operators, 134 sites; count_with_claims 4 (META, MSFT, GOOGL, AMZN); count_sites_only 48, each carrying claims_absent_reason &#39;no_documents_ingested&#39;. Claims: 10 across the four, 9 true_on_paper, 1 cannot_verify (Amazon - kind no_finding, reason no_falsifiable_content; talk_score is null, NOT zero). || TRAP X1: it is 48 OPERATORS. The &#39;twelve&#39; in an older script was a SITE count from a stale string on the Alpha page. TRAP X2: do NOT use the old Nebius line - both Nebius sites name a serving utility (Vineland Municipal, Independence Power and Light); what is true is that neither utility has listed equity, because both are municipal. TRAP N8: never round 48 down. || COLOUR: neutral ink only. A coverage count is neither a fuel nor flagged data. || If asked how many sites are behind the meter: ten site notes say so explicitly, about fifteen describe on-site generation of some kind, and there is no flag field - say &#39;about a dozen of the 134, from the site notes&#39;, never &#39;11&#39; (X4).">
+    <h2 class="small">4 operators: their filings. 48: the grid only.</h2>
+    <div class="sub">Ten claims read, one we cannot verify.</div>
+    <div class="fig">
+      <svg viewBox="0 0 1392 330" role="img">
+        <!-- 52 marks, 4 filled. Hollow stroke is --muted, not --line: at a third scale a
+             --line stroke vanished and the slide read as &quot;four white squares&quot;, which hid
+             the gap that IS the content. -->
+        <g id="marks"></g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 7 · THE CHAIN · 11s -->
+  <section data-notes="2:47-2:58 (11s, 25 words). SAY: &quot;And every verdict ends at a named utility in a named region. Which means someone can look up who&#39;s exposed before the filing says so.&quot; || Point at the middle box as you say &#39;named utility&#39;. This is the sentence that separates the project from a class project - do not cut it for time, cut a bracketed clause in the demo instead. || The slide is the same three-box shape as slide 2, now carrying real values - that is deliberate: the schema, then the instance. || The quote is verbatim from Alphabet&#39;s 2026 Environmental Report, page 4: &#39;we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)&#39; - annual, market-based, verdict true_on_paper. Santee Cooper is the utility serving the Moncks Corner site. 5.6% is api/company/GOOGL.json sites[0].cf_share_2025 = 0.056, the share that grid GENERATED carbon-free across 2025. MANDATORY if challenged: footprint not meter, grid-only with contracted power excluded, and it UNDERSTATES the site because Santee Cooper&#39;s V.C. Summer nuclear share reports under SCEG at 42%. Never say &#39;Google&#39;s datacentre runs on 6% clean power&#39; (T4). || The page cite is on the slide because it is the only source citation in the running order and it is what the textual-analysis track scores. || If asked what someone does with it: load growth hits a regulated utility&#39;s rate base long before it hits its filings, and 107 of our 134 sites resolve to a named serving utility, 42 of them with no listed equity. Say the denominator, 107, not 134 (N12). No stock-price claim, no backtest.">
     <div class="spacer"></div>
-    <h2 class="small">The limits are on the screen, not in a footnote.</h2>
+    <div class="fig">
+      <svg viewBox="0 0 1392 320" role="img">
+        <rect x="10" y="50" width="424" height="180" rx="14" fill="none" stroke="#3d4340" stroke-width="3" stroke-dasharray="9 11"/>
+        <text x="222" y="124" text-anchor="middle" font-size="40" font-weight="500" letter-spacing="-1" fill="#edf0ed">&#8220;matched 100%</text>
+        <text x="222" y="170" text-anchor="middle" font-size="40" font-weight="500" letter-spacing="-1" fill="#edf0ed">of our electricity&#8221;</text>
+        <text x="222" y="278" text-anchor="middle" font-size="38" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="1">Alphabet, p. 4</text>
+
+        <path d="M456 140 h64" stroke="#3d4340" stroke-width="3"/>
+        <path d="M506 128 l16 12 l-16 12" fill="none" stroke="#3d4340" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <rect x="542" y="50" width="424" height="180" rx="14" fill="#121615" stroke="#232827" stroke-width="3"/>
+        <text x="754" y="155" text-anchor="middle" font-size="48" font-weight="500" letter-spacing="-2" fill="#edf0ed">Santee Cooper</text>
+        <text x="754" y="278" text-anchor="middle" font-size="38" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="1">serving utility</text>
+
+        <path d="M988 140 h64" stroke="#3d4340" stroke-width="3"/>
+        <path d="M1038 128 l16 12 l-16 12" fill="none" stroke="#3d4340" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <rect x="1074" y="50" width="308" height="180" rx="14" fill="rgba(79,212,208,0.16)" stroke="rgba(79,212,208,0.45)" stroke-width="3"/>
+        <text x="1228" y="160" text-anchor="middle" font-size="84" font-weight="500" letter-spacing="-3" fill="#4fd4d0">5.6%</text>
+        <text x="1228" y="278" text-anchor="middle" font-size="38" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="1">generated 2025</text>
+      </svg>
+    </div>
     <div class="spacer"></div>
   </section>
 
-  <!-- 7 · CLOSE · 15s -->
-  <section data-notes="2:44-2:59 (15s). SAY: &quot;Yash built the data engine and the claims extraction. I built the product.&quot; / &quot;Four and a half million hours of grid data.&quot; / &quot;Wattson. It follows the power, not the press release.&quot; Then STOP - leave the screen here. || The 'four and a half million hours' line is the one line you may drop anywhere if the clock is tight; the slide survives losing it. Cut from the slide: EIA-930 via PUDL (Voloridge dataset #6), static site with no backend, every figure traces to a file in the repo. Backup slides for the question period are one B away.">
+  <!-- 8 · CLOSE · 4s -->
+  <section data-notes="2:58-3:00 (4s, 9 words). SAY: &quot;Wattson. It follows the power, not the press release.&quot; Then STOP. Leave the screen here; no thank-you, no team names, no reaching for the laptop. || If you have run short, the honest filler is: &#39;a datacenter draws the same power at 3am in January as at noon in June.&#39; || Backups are one B away: B1 the frozen detector, B2 the Arizona double count (which is also the correction you already referenced on slide 3), B3 Alphabet&#39;s own page 94.">
     <div class="eyebrow">Wattson</div>
     <div class="spacer"></div>
     <h2>It follows the power, not the press release.</h2>
     <div class="rule"></div>
-    <div class="stats" style="grid-template-columns:repeat(3,1fr)">
-      <div><div class="k sm">Yash</div><div class="v">data engine</div></div>
-      <div><div class="k sm">Shrishant</div><div class="v">product</div></div>
-      <div></div>
-    </div>
     <div class="spacer"></div>
   </section>
 
   <!-- BACKUP B1 · the detector -->
-  <section data-backup="1" data-notes="BACKUP B1 - not in the running order. For judges' Q4: &quot;how do I know you didn't tune the detector to find Data Center Alley?&quot; ANSWER: &quot;We froze the weights, the 500-megawatt cut and the peak definition, and named four test regions, before we saw a single rank. Northern Virginia sixth, Omaha seventh - good. The AEP zone 19th and Dallas 91st - misses. They're on screen next to the wins.&quot; || Cut from the slide: score = z(overnight excess) + z(neighbour divergence) + 0.5 z(load-factor delta), robust z (median/MAD); regions under 500 MW average demand excluded (13 unranked; largest excluded IID 434 MW, smallest ranked TPWR 518 MW); peak = 99.5th percentile hour; 111 regions scored, ranks 1-111 contiguous; the four validation regions are listed in api/regions.json meta.validation_named_in_advance. Scores: PJM/DOM 7.71 (growth 31.8%), SWPP/OPPD 6.82 (39.4%), PJM/AEP 2.29 (9.2%), ERCO/NCEN -1.32 (14.2%). Why Dallas is 91st: growth 14.2% against a median ERCOT zone near 26%, so neighbour divergence is -12.2 - the whole of ERCOT is booming, so Dallas does not diverge. SAY 'the AEP zone' or 'Columbus and out across five states', never 'Central Ohio' (T9).">
+  <section data-backup="1" data-notes="BACKUP B1 - not in the running order. For the judges' question &quot;how do I know you didn't tune the detector to find Data Center Alley?&quot; ANSWER: &quot;We froze the weights, the 500-megawatt cut and the peak definition, and named four test regions, before we saw a single rank. Northern Virginia sixth, Omaha seventh - good. The AEP zone 19th and Dallas 91st - misses. They're on screen next to the wins.&quot; || Cut from the slide: score = z(overnight excess) + z(neighbour divergence) + 0.5 z(load-factor delta), robust z (median/MAD); regions under 500 MW average demand excluded (13 unranked; largest excluded IID 434 MW, smallest ranked TPWR 518 MW); peak = 99.5th percentile hour; 111 regions scored, ranks 1-111 contiguous; the four validation regions are listed in api/regions.json meta.validation_named_in_advance. Scores: PJM/DOM 7.71 (growth 31.8%), SWPP/OPPD 6.82 (39.4%), PJM/AEP 2.29 (9.2%), ERCO/NCEN -1.32 (14.2%). Why Dallas is 91st: growth 14.2% against a median ERCOT zone near 26%, so neighbour divergence is -12.2 - the whole of ERCOT is booming, so Dallas does not diverge from its neighbours. SAY 'the AEP zone' or 'Columbus and out across five states', never 'Central Ohio' (T9). COLOUR: ink for hits, --warn for the two misses, because --clean and --fossil mean generation and a rank is not generation.">
     <h2 class="small">Frozen before any rank.</h2>
     <div class="fig">
       <svg viewBox="0 0 1392 486" role="img">
-        <!-- rank axis 1..111. Hits are ink; the two misses are --warn and struck through,
-             because --clean and --fossil mean generation here and nothing else. -->
         <line x1="130" y1="300" x2="1300" y2="300" stroke="#232827" stroke-width="2"/>
         <line x1="130" y1="288" x2="130" y2="312" stroke="#4b524e" stroke-width="2"/>
         <line x1="1300" y1="288" x2="1300" y2="312" stroke="#4b524e" stroke-width="2"/>
-        <text x="1300" y="348" text-anchor="end" font-size="24" fill="#4b524e" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">111</text>
+        <text x="1300" y="348" text-anchor="end" font-size="30" fill="#939c97" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">111</text>
 
-        <!-- hit: rank 6 -->
         <circle cx="181" cy="300" r="15" fill="#edf0ed" stroke="#080a09" stroke-width="4"/>
         <line x1="181" y1="284" x2="181" y2="196" stroke="#3d4340" stroke-width="2"/>
         <text x="181" y="172" text-anchor="middle" font-size="62" font-weight="500" letter-spacing="-2" fill="#edf0ed">6th</text>
-        <text x="181" y="122" text-anchor="middle" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">N. Virginia</text>
-        <!-- hit: rank 7 -->
+        <text x="181" y="104" text-anchor="middle" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace">N. Virginia</text>
+
         <circle cx="204" cy="300" r="15" fill="#edf0ed" stroke="#080a09" stroke-width="4"/>
         <line x1="204" y1="316" x2="204" y2="368" stroke="#3d4340" stroke-width="2"/>
         <text x="204" y="420" text-anchor="middle" font-size="62" font-weight="500" letter-spacing="-2" fill="#edf0ed">7th</text>
-        <text x="204" y="462" text-anchor="middle" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">Omaha</text>
+        <text x="204" y="470" text-anchor="middle" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace">Omaha</text>
 
-        <!-- miss: rank 19 -->
         <circle cx="316" cy="300" r="16" fill="none" stroke="#e8b43f" stroke-width="3"/>
         <line x1="306" y1="290" x2="326" y2="310" stroke="#e8b43f" stroke-width="3"/>
         <line x1="326" y1="290" x2="306" y2="310" stroke="#e8b43f" stroke-width="3"/>
         <line x1="316" y1="284" x2="316" y2="230" stroke="rgba(232,180,63,.45)" stroke-width="2"/>
         <text x="440" y="212" text-anchor="middle" font-size="62" font-weight="500" letter-spacing="-2" fill="#e8b43f">19th</text>
-        <text x="440" y="162" text-anchor="middle" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">AEP</text>
+        <text x="440" y="144" text-anchor="middle" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace">AEP</text>
         <line x1="316" y1="230" x2="440" y2="230" stroke="rgba(232,180,63,.45)" stroke-width="2"/>
 
-        <!-- miss: rank 91 -->
         <circle cx="1077" cy="300" r="16" fill="none" stroke="#e8b43f" stroke-width="3"/>
         <line x1="1067" y1="290" x2="1087" y2="310" stroke="#e8b43f" stroke-width="3"/>
         <line x1="1087" y1="290" x2="1067" y2="310" stroke="#e8b43f" stroke-width="3"/>
         <line x1="1077" y1="284" x2="1077" y2="196" stroke="rgba(232,180,63,.45)" stroke-width="2"/>
         <text x="1077" y="172" text-anchor="middle" font-size="62" font-weight="500" letter-spacing="-2" fill="#e8b43f">91st</text>
-        <text x="1077" y="122" text-anchor="middle" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">Dallas</text>
-        <text x="1077" y="388" text-anchor="middle" font-size="24" fill="#e8b43f" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">misses</text>
+        <text x="1077" y="104" text-anchor="middle" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace">Dallas</text>
+        <text x="1077" y="388" text-anchor="middle" font-size="30" fill="#e8b43f" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">misses</text>
       </svg>
     </div>
   </section>
 
   <!-- BACKUP B2 · the Phoenix correction -->
-  <section data-backup="1" data-notes="BACKUP B2 - not in the running order. For judges' Q5: &quot;your own data shows Phoenix falling from 62 percent to 10 - did it collapse?&quot; ANSWER: &quot;No - that's a double count we caught. A nuclear plant was reported under two authorities: the two series correlate 0.9948, and they sum to 7,087 megawatts against a 3,937-megawatt nameplate. Corrected, Phoenix rose from 2 percent to 10. We show published and corrected side by side rather than quietly rewriting it.&quot; || Cut from the slide: r = 0.9948 over 7,976 hours; 98.8% of hours identical within 5 MW; 7,087 MW combined against a 3,937 MW nameplate; the series ends in a STEP on one date, 2019-12-04, not a decline; api/region/AZPS.json corrections. The 2025 level (10.4%) is sound and uncorrected - only the 2019 baseline and every delta from it were wrong. The demand-side detector rank (3rd) has no generation term and is untouched. CONFIDENCE TIERS: the double count is PROVEN; that the plant is Palo Verde is a high-confidence INFERENCE, not checked against EIA-860 - say 'Arizona's only nuclear station, and the magnitude matches the nameplate'; the corrected siting rank (~32) is approximate, plus or minus 2; WHY it steps on that date is NOT established. Say 'a double count we caught', never 'Phoenix collapsed' (T2). Never say 0.15 for Phoenix - the export says 0.104 (D5).">
+  <section data-backup="1" data-notes="BACKUP B2 - not in the running order. For the judges' question &quot;your own data shows Phoenix falling from 62 percent to 10 - did it collapse?&quot; ANSWER: &quot;No - that's a double count we caught. A nuclear plant was reported under two authorities: the two series correlate 0.9948, and they sum to 7,087 megawatts against a 3,937-megawatt nameplate. Corrected, Phoenix rose from 2 percent to 10. We show published and corrected side by side rather than quietly rewriting it.&quot; || Cut from the slide: r = 0.9948 over 7,976 hours; 98.8% of hours identical within 5 MW; the series ends in a STEP on one date, 2019-12-04, not a decline; api/region/AZPS.json corrections. The 2025 level (10.4%) is sound and uncorrected - only the 2019 baseline and every delta from it were wrong. The demand-side detector rank (3rd) has no generation term and is untouched. CONFIDENCE TIERS: the double count is PROVEN; that the plant is Palo Verde is a high-confidence INFERENCE, not checked against EIA-860 - say 'Arizona's only nuclear station, and the magnitude matches the nameplate'; the corrected siting rank (~32) is approximate, plus or minus 2; WHY it steps on that date is NOT established. Say 'a double count we caught', never 'Phoenix collapsed' (T2). Never say 0.15 for Phoenix - the export says 0.104 (D5). COLOUR: the published series is --warn because it is flagged data; the corrected series is --clean because it is a carbon-free share.">
     <div class="eyebrow">Phoenix overnight</div>
     <h2 class="small">Two operators, one nuclear plant.</h2>
     <div class="fig">
@@ -245,44 +326,41 @@
         <line x1="180" y1="420" x2="180" y2="60" stroke="#232827" stroke-width="1"/>
         <line x1="1020" y1="420" x2="1020" y2="60" stroke="#232827" stroke-width="1"/>
 
-        <!-- published: --warn, the token reserved for data that is flagged or corrected -->
         <line x1="180" y1="76" x2="1020" y2="345.6" stroke="#e8b43f" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 14"/>
         <circle cx="180" cy="76" r="11" fill="#e8b43f"/>
         <text x="158" y="70" text-anchor="end" font-size="52" font-weight="500" letter-spacing="-2" fill="#e8b43f">62%</text>
-        <text x="300" y="150" font-size="26" fill="#e8b43f" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">published</text>
+        <text x="300" y="150" font-size="32" fill="#e8b43f" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">published</text>
 
-        <!-- corrected: --clean, because it is a carbon-free share -->
         <line x1="180" y1="391" x2="1020" y2="345.6" stroke="#4fd4d0" stroke-width="7" stroke-linecap="round"/>
         <circle cx="180" cy="391" r="11" fill="#4fd4d0"/>
         <text x="158" y="402" text-anchor="end" font-size="52" font-weight="500" letter-spacing="-2" fill="#4fd4d0">1.7%</text>
-        <text x="300" y="404" font-size="26" fill="#4fd4d0" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">corrected</text>
+        <text x="300" y="404" font-size="32" fill="#4fd4d0" font-family="ui-monospace,Menlo,monospace" letter-spacing="2">corrected</text>
 
         <circle cx="1020" cy="345.6" r="13" fill="#edf0ed"/>
         <text x="1058" y="332" font-size="96" font-weight="500" letter-spacing="-4" fill="#edf0ed">10.4%</text>
 
-        <text x="180" y="458" text-anchor="middle" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">2019</text>
-        <text x="1020" y="458" text-anchor="middle" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">2025</text>
+        <text x="180" y="458" text-anchor="middle" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace">2019</text>
+        <text x="1020" y="458" text-anchor="middle" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace">2025</text>
       </svg>
     </div>
   </section>
 
-  <!-- BACKUP B3 · Google, claimed vs measured -->
-  <section data-backup="1" data-notes="BACKUP B3 - not in the running order. For judges' Q3: &quot;so 'true on paper' means they lied?&quot; ANSWER: &quot;No. Nothing in our data is marked contradicted. Annual matching is genuinely true under the market-based method - Google bought certificates equal to its consumption. We're measuring a different thing: what was on the wire at 3am. Nine of ten claims are true on paper, one we can't verify, and we count it.&quot; || The claim, verbatim, cut from the slide: 'we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)' - Alphabet, 2026 Environmental Report, page 4, market-based, annual, verdict true_on_paper. The 65% is Google's OWN page 94: hourly carbon-free across their data centers, 65/64/64/66/65 for 2021-2025. The 5.6% is the Santee Cooper grid at their Moncks Corner site in 2025 (api/company/GOOGL.json sites[0].cf_share_2025 = 0.056); the app rounds it to 6%, this is the same number unrounded; the gap is 94.4 points. MANDATORY CAVEAT (sites[0].note): never present 0.056 without it - that is the footprint, not the meter, grid-only with contracted power excluded, and it UNDERSTATES the site because Santee Cooper's share of V.C. Summer nuclear reports under a neighbouring authority, SCEG, at 42%. Never say 'Google's data centre runs on 6% clean power' (T4). Across four companies: 10 claims, 9 true on paper, 1 cannot_verify (Amazon; talk_score null, not zero).">
-    <div class="eyebrow">Alphabet</div>
-    <h2 class="small">True on paper.</h2>
+  <!-- BACKUP B3 · Alphabet's own page 94 -->
+  <section data-backup="1" data-notes="BACKUP B3 - not in the running order. For the judges' question &quot;so 'true on paper' means they lied?&quot; ANSWER: &quot;No. Nothing in our data is marked contradicted. Annual matching is genuinely true under the market-based method - Google bought certificates equal to its consumption. We're measuring a different thing: what was on the wire at 3am. Nine of ten claims are true on paper, one we can't verify, and we count it.&quot; || The claim, verbatim: 'we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)' - Alphabet, 2026 Environmental Report, page 4, market-based, annual, verdict true_on_paper. The 65% is Google's OWN page 94: hourly carbon-free across their data centers, 65/64/64/66/65 for 2021-2025 - ninety pages after the 100%. The 5.6% is the Santee Cooper grid at their Moncks Corner site in 2025 (api/company/GOOGL.json sites[0].cf_share_2025 = 0.056); the app rounds to 6%, this is the same number unrounded; the gap is 94.4 points. MANDATORY CAVEAT (sites[0].note): never present 0.056 without it - footprint not meter, grid-only with contracted power excluded, and it UNDERSTATES the site because Santee Cooper's share of V.C. Summer nuclear reports under SCEG at 42%. Never say 'Google's data centre runs on 6% clean power' (T4). Across four companies: 10 claims, 9 true on paper, 1 cannot_verify (Amazon; talk_score null, not zero).">
+    <div class="eyebrow">Alphabet, page 94</div>
+    <h2 class="small">Their own hourly number.</h2>
     <div class="fig">
-      <svg viewBox="0 0 1392 480" role="img">
-        <!-- bars to scale against 100%. The claim is an outline; what was generated is filled. -->
+      <svg viewBox="0 0 1392 510" role="img">
         <text x="360" y="92" text-anchor="end" font-size="86" font-weight="500" letter-spacing="-3" fill="#edf0ed">100%</text>
-        <text x="360" y="130" text-anchor="end" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">claimed</text>
+        <text x="360" y="146" text-anchor="end" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace">claimed</text>
         <rect x="410" y="34" width="900" height="72" fill="none" stroke="#939c97" stroke-width="2" stroke-dasharray="6 8"/>
 
         <text x="360" y="262" text-anchor="end" font-size="86" font-weight="500" letter-spacing="-3" fill="#4fd4d0">65%</text>
-        <text x="360" y="300" text-anchor="end" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">their own report</text>
+        <text x="360" y="316" text-anchor="end" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace">their report</text>
         <rect x="410" y="204" width="585" height="72" fill="rgba(79,212,208,0.55)"/>
 
         <text x="360" y="432" text-anchor="end" font-size="86" font-weight="500" letter-spacing="-3" fill="#4fd4d0">5.6%</text>
-        <text x="360" y="470" text-anchor="end" font-size="26" fill="#939c97" font-family="ui-monospace,Menlo,monospace">the grid</text>
+        <text x="360" y="486" text-anchor="end" font-size="32" fill="#939c97" font-family="ui-monospace,Menlo,monospace">the grid</text>
         <rect x="410" y="374" width="50.4" height="72" fill="#4fd4d0"/>
       </svg>
     </div>
@@ -312,12 +390,19 @@
     slides.forEach(function(s,n){s.classList.toggle('on',n===i);});
     hud.textContent=(i<firstBackup)?((i+1)+' / '+running.length)
       :('backup '+(i-firstBackup+1)+' / '+(slides.length-running.length));
-    notes.innerHTML='<b>Slide '+(i<firstBackup?(i+1)+' of '+running.length:'backup '+(i-firstBackup+1))+'</b>'+(slides[i].dataset.notes||'');
+    notes.innerHTML='<b>Slide '+(i<firstBackup?(i+1)+' of '+running.length:'backup '+(i-firstBackup+1))+'</b>'
+      +'<i>PRESENTER NOTES \u2014 THESE ARE VISIBLE TO THE ROOM ON A MIRRORED DISPLAY. REHEARSAL ONLY.</i>'
+      +(slides[i].dataset.notes||'');
     fit();
   }
   function go(d){ i=Math.max(0,Math.min(slides.length-1,i+d)); draw(); }
+  var help=document.getElementById('help');
   document.addEventListener('keydown',function(e){
     var k=e.key;
+    // The legend is for the speaker. Once they have used a key they know the keys, so it
+    // stops being projected to the room. '?' brings it back.
+    if(k==='?'){help.classList.toggle('hide');e.preventDefault();return;}
+    help.classList.add('hide');
     if(k==='ArrowRight'||k===' '||k==='PageDown'||k==='ArrowDown'){e.preventDefault();go(1);}
     else if(k==='ArrowLeft'||k==='PageUp'||k==='ArrowUp'){e.preventDefault();go(-1);}
     else if(k==='Home'){i=0;draw();}
@@ -329,6 +414,46 @@
   document.addEventListener('click',function(e){ go(e.clientX < window.innerWidth*0.25 ? -1 : 1); });
   window.addEventListener('resize',fit);
   draw();
+  // Rendered word count per slide, including SVG text and axis labels. The rule is 15.
+  // Slide 6: 52 marks, 4 filled (operators whose own filings we hold), 48 hollow.
+  (function(){
+    var g=document.getElementById('marks'); if(!g) return;
+    var NS='http://www.w3.org/2000/svg', cols=13, sz=54, gap=16, x0=249, y0=20;
+    for(var n=0;n<52;n++){
+      var r=document.createElementNS(NS,'rect');
+      r.setAttribute('x', x0+(n%cols)*(sz+gap));
+      r.setAttribute('y', y0+Math.floor(n/cols)*(sz+gap));
+      r.setAttribute('width',sz); r.setAttribute('height',sz); r.setAttribute('rx',8);
+      if(n<4){ r.setAttribute('fill','#edf0ed'); }
+      else { r.setAttribute('fill','none'); r.setAttribute('stroke','#939c97'); r.setAttribute('stroke-width','2'); }
+      g.appendChild(r);
+    }
+  })();
+
+  // Geometry check: report any two text boxes on the same slide whose rendered rectangles
+  // intersect. This is how the slide-3 headline/figure collision was found; run it after
+  // any layout change rather than eyeballing a screenshot.
+  window.__overlaps=function(){
+    var out=[], wasOn=notesOn, cur=i;
+    slides.forEach(function(sec,n){
+      slides.forEach(function(o,m){o.classList.toggle('on',m===n);});
+      var els=[].slice.call(sec.querySelectorAll('h1,h2,.lede,.sub,.foot,.eyebrow,.prov,text'))
+        .filter(function(e){return (e.textContent||'').trim().length;})
+        .map(function(e){return {t:(e.textContent||'').trim().slice(0,34), r:e.getBoundingClientRect()};})
+        .filter(function(e){return e.r.width>0 && e.r.height>0;});
+      for(var a=0;a<els.length;a++) for(var b=a+1;b<els.length;b++){
+        var A=els[a].r, B=els[b].r;
+        var ox=Math.min(A.right,B.right)-Math.max(A.left,B.left);
+        var oy=Math.min(A.bottom,B.bottom)-Math.max(A.top,B.top);
+        if(ox>4 && oy>4) out.push({slide:n+1, a:els[a].t, b:els[b].t,
+          overlap:Math.round(ox)+'x'+Math.round(oy)});
+      }
+    });
+    slides.forEach(function(o,m){o.classList.toggle('on',m===cur);});
+    notesOn=wasOn;
+    return out;
+  };
+
   window.__wordCounts=function(){
     return slides.map(function(s,n){
       var w=document.createTreeWalker(s,NodeFilter.SHOW_TEXT,null), parts=[], nd;

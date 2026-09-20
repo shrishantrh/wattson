@@ -1,358 +1,355 @@
-# Wattson — pitch deck (plain text)
+# deck.md — what is on each slide, and the exact words said over it
 
-Companion to `docs/pitch/deck.html`. Same content, slide by slide, with the timing budget,
-the purpose of the slide, the repo source for every number on it, and what was cut off the
-slide into the presenter notes.
+The deliverable of this file is the **pairing**. Left: what the audience sees. Right: the
+sentence coming out of your mouth while they see it. If a slide cannot be paired with a
+sentence, the slide is wrong.
 
-**The deck follows `docs/pitch/script.md`, which is the performance spine.** The script is
-machine-timed from its word count at 130 wpm and lands its last word at 2:59. Its shape is:
-**setup 0:00–0:42**, **app 0:42–2:34** (three beats), **close 2:34–2:59**. The deck is a
-frame around that: **7 running slides — 42 s of front, a holding slide for the 112 s in the
-app, 25 s of close** — plus **3 backup slides** for the question period.
+- **Deck:** `docs/pitch/deck.html`. Self-contained, no external request, opens offline by
+  double-click. Keys: `←` `→` `space` advance · `N` presenter notes · `F` full screen ·
+  `B` backup slides · `?` brings the control legend back.
+- **Spoken script:** `docs/pitch/script.md`, the same words laid out to read from.
+- **Narrative:** `docs/pitch/video-script-yash.md`, with the corrections in
+  `docs/pitch/review-deck.md` applied.
+- **Figures:** traced to `docs/pitch/numbers.md`, `docs/pitch/numbers-v2.md`, or recomputed
+  here from `web/public/api/` and `claims/raw/` with the computation shown. Sources are
+  cited per slide and again in each slide's presenter notes.
 
-## The one rule this file enforces
+## Two measurements, run — not estimated
 
-**No slide carries more than 15 words of body text, headline included.** A slide is one idea,
-stated once. The previous version ran 35 / 46 / 77 / 89 / 35 / 93 / 53 / 82 / 102 / 89 words
-per slide; a room reads about ten to fifteen words off a screen while someone is talking over
-it, so six of those slides communicated nothing and competed with the speaker. Everything
-longer than a label now lives in `data-notes` behind the **N** key, where the audience never
-sees it and the presenter always can.
+Open the deck and run these in the console. Both are part of the file.
 
-Most slides are now a **picture of a number**, drawn in inline SVG — no libraries, no
-external requests, no images. `deck.html` is self-contained and opens offline by double-click.
+```js
+window.__wordCounts()   // rendered words per slide. Cap is 15, headline and axis labels included.
+window.__overlaps()     // any two text boxes on a slide whose rendered rectangles intersect
+```
 
-Rebuilt 2026-09-20 against `docs/pitch/numbers.md` (52 figures checked) and
-`docs/pitch/script.md`. No figure was invented or changed; every number below already appears
-in one of those two files. Where the fact-check and the older prose (`README.md`, `CLAUDE.md`,
-`docs/numbers_checklist.md`) disagree, `web/public/api/` wins.
+Last run at 1280×720:
 
-Paths: `api/` = `web/public/api/` (what the site actually serves); `dash/` =
-`dashboard/public/data/regions.json` (the pipeline export).
+```
+S1=9  S2=15  S3=15  S4=15  S5=15  S6=15  S7=15  S8=9  B9=15  B10=14  B11=15
+over the cap: 0        overlaps: []        external references: 0
+```
 
-**Design.** Palette is lifted from `web/src/styles/tokens.css` so the deck and the product read
-as one thing: `--clean` #4fd4d0 is carbon-free generation, `--fossil` #ff7a4a is fossil
-generation, `--warn` #e8b43f is data that is flagged or corrected. None of the three is ever
-used decoratively — on B1 the two detector misses are `--warn`, not `--fossil`, because
-`--fossil` means a fuel.
+Every slide is at or under the cap and **no two text boxes intersect anywhere in the deck**.
+The overlap check is how the slide-3 headline/figure collision (191×12px) was found and is
+how you confirm a layout change rather than eyeballing a screenshot.
 
-**Controls** (unchanged): `→` / `space` forward, `←` back, `N` presenter notes with per-slide
-timing, **`B` jumps to the backup slides and back**, `F` full screen, click right/left to
-advance/go back. The counter reads "3 / 7" in the running order and "backup 2 / 3" past the
-close. Each backup slide is badged **BACKUP — NOT IN THE RUNNING ORDER** on screen.
+## Presenter mechanics — read before you plug in
 
-**Stage vocabulary.** The script bans "balancing authority" on stage (say "grids"), bans
-"carbon-free share of generation", "caused by", "lied", "greenwashing", "headroom",
-"70 grid regions" and "0.15 for Phoenix". Three counts are in play and any one named must say
-which: **70** balancing authorities in the hourly index, **124** published regions, **111**
-scored by the detector.
+- **`N` renders the notes in the same window.** On a mirrored display that projects the trap
+  list — including the sentences you are forbidden to say — to the room. The notes panel
+  now prints that warning in its own header. **Treat `N` as rehearsal-only.** If you need
+  notes live, use a printout or a second device.
+- **The control legend hides itself** on your first keypress, so the room never reads
+  `← → / space · N notes · B backup · F full screen` for three minutes. It is also
+  suppressed in full screen. `?` toggles it back.
+- The slide counter (bottom right) stays: a slide count is defensible, a keyboard
+  cheat-sheet is not.
 
----
-
-## Slide 1 — Title · 5 s (0:00–0:05) · **11 words**
-
-**Purpose:** name the project while the presenter's hands are off the laptop. Covers the
-script's 0:00 and 0:03.
-
-> HACKMIT 2026
-> **Wattson**
-> It follows the power, not the press release.
-
-| Number / fact | Source |
-|---|---|
-| tagline | `README.md` L3; script 2:55 |
-
-**Cut into the notes:** the whole provenance line — hourly carbon-free share of generation for
-70 US balancing authorities, EIA-930 via PUDL, snapshot ends 2026-09-05
-(`api/regions.json` → `meta.data_snapshot_end`; `README.md` L8–13; `docs/spec.md` L59) — and
-the Voloridge track name. None of it is spoken at 0:00, so none of it belongs on screen.
+**Timing: 357 spoken words = 164.8s at 130 wpm, plus ~15s of typing, clicking and LLM
+latency = ~180s.** Numerals are written as spoken, so the count measures the real talk.
+Dropping the two bracketed clauses gives 344 words / 158.8s and 21 seconds of slack.
 
 ---
 
-## Slide 2 — Decarbonization happened in daylight · 13 s (0:05–0:18) · **12 words**
+## The stranger test
 
-**Purpose:** carries the script's 0:08 ("37 percent to 47. At night: 40 to 40") and 0:18
-("Solar fixed the day. It did nothing for the night."). The script notes this is the **only**
-pair of numbers quoted with no app behind it, so the slide has to hold them.
+For each slide: could a tired person in row fifteen, who has never heard of a balancing
+authority or a carbon-free share, say what the slide is claiming? Not whether it is
+defensible — whether they *get* it. Every row below was re-checked against a screenshot
+scaled to 0.34, which is roughly the back of a room.
 
-**Now a drawing, not a sentence.** Two lines from 2019 to 2025 — the daytime series rising, the
-overnight series flat — each drawn as a join between its two measured endpoints, with a dot at
-each end. The two end values sit at display size (104 px) to the right of the plot: **47% Day**
-and **40% Night**. Start values are 30 px in the margin.
+| # | What a stranger takes away | Fixed to get there |
+|---|---|---|
+| 1 | "Other industries have greenwashing watchdogs. Datacenters don't." | The empty slot was a 3px hairline that nearly vanished at range; now 5px `--muted`. |
+| 2 | "They compare what a company claims to what its grid actually burned." | "what **it** burned" had no antecedent on the slide — "it" could have been the company. Now "what **that grid** burned, hour by hour". Box widths rebalanced to the text they hold; the longest phrase had the narrowest box. |
+| 3 | "Since 2019 far more clean power was added to daytime hours than to overnight hours." | The word "added" is now in the headline at 56px, not a 26px footer. `GW` moved from a floating axis label to sit beside the number it belongs to. Both bars carry `+`. |
+| 4 | "In this grid, all the growth at night came from gas." | **"Gas took all of it" had no antecedent** — a stranger could not tell what "it" was. Now "All the night growth was gas." The coal bar answers "how does +10,740 come out of +8,701?" before it is asked. |
+| 5 | "This is the live product, built on federal hourly data and an index of their filings." | Provenance strip added. `70 grid operators` rather than "balancing authorities", deliberately. |
+| 6 | "For 4 companies they've read the documents; for 48 they only have grid data, and they say so." | Was "Documents read for 4 of 52 operators" with the legend "48 sites only" — a stranger knew neither what a document was here nor whether 4 of 52 was good. Hollow marks raised from `--line` to `--muted` so the gap is visible at range. |
+| 7 | "Alphabet claims 100%; the utility that serves the site generated 5.6%." | "Santee Cooper" meant nothing on its own; it is now labelled **serving utility**. The claim box carries the quotation and `Alphabet, p. 4` instead of a bare `100%`. |
+| 8 | "That's the name and the idea." | — |
+| B1 | "They named their test regions in advance and published the misses." | Rank and place labels were overlapping and set at 24–26px; separated and raised to 30–32px. |
+| B2 | "One nuclear plant was counted by two operators; corrected, the number goes up not down." | `published` label moved clear of the dotted line it labels. |
+| B3 | "Their own report says 65% on page 94, ninety pages after the 100%." | Labels raised to 32px, which collided with the figures above them; viewBox extended and labels moved down. |
 
-> **Decarbonization happened in daylight.**
-> plot: 37% → **47%** Day · 40% → **40%** Night · axis 2019, 2025
+Three slides still use a term a stranger will not know — **PJM** (slide 4), **EIA-930** and
+**PUDL** (slide 5's provenance strip). PJM is glossed unconditionally in the spoken line
+("the grid from Chicago to New Jersey"); the two dataset names are deliberate, because a
+judge scoring "use of real-world public datasets" needs to see them named, and they read as
+provenance rather than as something to decode.
 
-| Number | Source |
-|---|---|
-| 37% → 47% daytime | `api/regions.json` → `meta.national.cf_share["2019"/"2025"].daytime` = 0.372 / 0.465 |
-| 40% → 40% overnight | same field `.overnight` = 0.405 / 0.397; day **+9.3 pts**, night **−0.8 pts** |
-| the two windows, local time | `api/regions.json` → `meta.overnight_hours_local`, `meta.daytime_hours_local` |
+## The type scale
 
-The slide shows the rounded figures the presenter speaks; the exact ones are in the notes.
+The rule the review caught us on: **a qualifier that makes the slide truthful cannot be set
+at a quarter of the headline size.** Current ratios, after rebalancing:
 
-**Cut into the notes:** 37.2 / 46.5 / 40.5 / 39.7 to one decimal with their local-time windows;
-+9.3 pts vs −0.8 pts; the sentence "a datacenter draws the same power at 3am in January as at
-noon in June" (framing, not a measurement — permitted phrasing, numbers.md §3, spoken at 0:03);
-**trap T8** (this is a *share* — clean megawatts at night rose 14 GW nationally, 159,031 →
-173,380, against 45 GW of new overnight *generation*, T7); **trap T11** (2025 is the last
-complete year; never mix in partial 2026).
-
----
-
-## Slide 3 — The finding, as an increment · 12 s (0:18–0:30) · **14 words**
-
-**Purpose:** sits under the script's 0:23 line, "'one hundred percent clean' is an annual
-average — we wanted the hourly one". It **previews** the finding the presenter narrates in the
-app at 2:04; he does not read the digits here.
-
-**Now one very large bar against one invisible one.** The bars are to scale: 81 is 0.93% of
-8,701, so the clean bar is a 3.35-unit sliver under the baseline against a 360-unit column
-above it. That ratio *is* the argument. `+8,701` is set in `--fossil` at 136 px, `−81` in
-`--clean` at 86 px.
-
-> PJM OVERNIGHT, 2019–2025
-> **None of it was clean.**
-> **+8,701** generation · **−81** clean · avg MW
-
-| Number | Source |
-|---|---|
-| +8,701 avg MW overnight generation | `api/region/PJM.json` → `total_avg_mw` overnight 82,539 → 91,240 |
-| −81 avg MW clean (35,700 → 35,619) | `api/region/PJM.json` → `cf_avg_mw[y].overnight`; −81 MW = 0.23% of the 2019 level |
-
-**Cut into the notes:** 35,700 → 35,619 in full; **−0.9%** of the increment was clean
-(−81 / 8,701, numbers.md §2.1); **gas +10.7 GW**, coal −2.5, nuclear −0.9
-(`fuel_delta_overnight_gw`; deltas sum +8.69 against +8.70); **overnight net exports 3.8 →
-2.5 GW** (`interchange["2019"/"2025"].overnight_net_export_mw` = 3814 / 2489, EIA-adjusted
-operations table, positive = export); "consistent with datacenter load being served by gas",
-never "caused by"; part of the gas rise is coal-to-gas switching (`numbers_checklist.md`
-DISC 3); average mix, not marginal; say "the mid-Atlantic grid", not "PJM", out loud.
-
----
-
-## Slide 4 — What it is · 12 s (0:30–0:42) · **13 words**
-
-**Purpose:** the script's 0:29 line — what Wattson reads. Last slide before the app.
-
-**Now three numerals at display size** (118 px) with a three-word label under each, and nothing
-else. The two questions are spoken, not printed.
-
-> **Every hour, every grid.**
-> **4.45M** hourly rows · **70** balancing authorities · **111** regions scored
-
-| Number | Source |
-|---|---|
-| 4.45M hourly rows (4,451,763) | `data/processed/hourly_cf_index.parquet` row count (numbers.md §2.4) |
-| 70 balancing authorities | same file, `ba.nunique()` = 70 |
-| 111 regions scored | `api/regions.json` → `meta.n_scored` |
-
-**Caveat that travels with the first two figures:** they are reproducible but live only in a
-**gitignored local parquet**. If a judge asks for the field: "it's the row count of the hourly
-index; the published JSON carries the 124 regions built from it, not the raw rows."
-
-**Cut into the notes:** the exact row count and the date range 2018-07-01 → 2026-09-05; the
-composition 68 zones + 43 balancing authorities and "from demand alone, no company list";
-**52** balancing authorities ranked for siting (`api/region/PJM.json` → `siting.n_ranked`);
-**10** claims from **4** companies (`api/companies.json` `count` = 4, `is_mock: false`); the
-sentence about flat load raising the overnight floor faster than the mean; and trap T16 — the
-three counts (70 / 124 / 111) must never be blurred.
-
----
-
-## Slide 5 — HOLDING SLIDE, live demo · 112 s (0:42–2:34) · **3 words**
-
-**Purpose:** stays on screen behind the presenter while he is in the app for all three beats.
-**No numbers on this slide by design** — and now no bullets either, because the three beats
-were a list the audience had to read while watching a demo.
-
-> ● LIVE
-> **Wattson, running.**
-
-The three beats, in order, now live only in the notes:
-
-| Beat | Clock | Route | What is spoken |
+| Role | Was | Now | Ratio to headline |
 |---|---|---|---|
-| 1 | 0:42–1:23 | `#/check/GOOGL` → `?evidence=1` | 100% claimed, true on paper, 6% on the Santee Cooper grid; then page 4 against page 94's ~65% hourly, five years |
-| 2 | 1:23–1:59 | `#/compare?mw=300&metros=Phoenix\|Northern Virginia\|Omaha` | Omaha 52% and improving; **Phoenix 2nd on 10%, the double-count line is mandatory**; N. Virginia 39% and getting worse; 144 MW off fossil in Omaha, average mix |
-| 3 | 1:59–2:34 | `#/found` | clean at night flat since 2019, +8.7 GW of which 10.7 gas, "consistent with, not caused by"; 111 regions, weights frozen, N. Virginia 6th, Dallas 91st |
+| Headline (`h2.small`) | 64px | 56px | — |
+| Explanatory line (`.sub`) | 38px | 42px | 0.75 |
+| Series labels in charts (daytime, gas, clean) | 30px | 44px | 0.79 |
+| Role and axis labels (serving utility, GW, MW) | 26–32px | 38px | 0.68 |
+| Eyebrow | 23px | 30px | 0.54 |
+| Provenance strip | 26px | 30px | — |
 
-**Cut into the notes:** those three lines in full, with the routes and the clicks; "static
-site, precomputed JSON, no backend to fail" (`docs/spec.md` L228; `api/index.json`, 137 real
-endpoint responses) — say it only if something stalls; and the fallback rule, cut **beat 2
-whole**, never just the Phoenix line.
-
----
-
-## Slide 6 — What we do not claim · 10 s (2:34–2:44) · **10 words**
-
-**Purpose:** the script's first close line. One sentence, 64 px, alone on the slide. The five
-limits were a five-item list nobody could read in ten seconds while the presenter recited four
-of them from memory; they are the thing he *says*, so they are now notes.
-
-> **The limits are on the screen, not in a footnote.**
-
-| Fact | Source |
-|---|---|
-| the five limits | `api/regions.json` → `meta.caveats`; `CLAUDE.md` Honesty rules; `docs/spec.md` L298–309 |
-| 9 true on paper, 1 cannot_verify | `api/companies.json` `cannot_verify_total` = 1 |
-| every figure traced | `docs/numbers_checklist.md`, `docs/pitch/numbers.md`; `node web/test/smoke.mjs` |
-
-Spoken line: *"Generation inside a footprint, not consumption. Average mix, not marginal.
-Contracts excluded. Claims we can't check are counted on screen."*
-
-**Cut into the notes:** all five limits verbatim, including "9 of 10 claims true on paper, 1
-cannot_verify — Amazon, no falsifiable sentence, `talk_score` is null not zero (T14)" and
-"PJM spans Chicago to New Jersey"; and the `docs/numbers_checklist.md` pointer.
+Nothing that carries meaning is now below 30px on a 1600×900 stage, i.e. below ~10px at
+one-third scale. Verified by scaling every screenshot to 0.34 rather than assuming.
 
 ---
 
-## Slide 7 — Close · 15 s (2:44–2:59) · **14 words**
+## The running order
 
-**Purpose:** carries the script's last three lines — the credit, the scale figure, the tagline.
-The scale figure is now on slide 4 rather than repeated here, which is what freed the room for
-the credit to be legible.
-
-> WATTSON
-> **It follows the power, not the press release.**
-> **Yash** data engine · **Shrishant** product
-
-| Fact | Source |
-|---|---|
-| credit split | script 2:44; `CLAUDE.md` ownership |
-| tagline | script 2:55 |
-| "four and a half million hours" (spoken, shown on slide 4) | as slide 4; script 2:50 |
-
-**Cut into the notes:** EIA-930 via PUDL (Voloridge dataset #6), "static site, no backend",
-"every figure traces to a file in the repo", and the reminder that "four and a half million
-hours" is the one line that may be dropped anywhere if the clock is tight — the slide survives
-losing it, because the number is no longer printed here.
+| # | On screen | Spoken over it | Slide words | Runs |
+|---|---|---|---|---|
+| 1 | Fast fashion ✓, Airlines ✓, Oil majors ✓, **Datacenters** — an empty dashed slot | "There's a greenwashing watchdog for fast fashion. For airlines. For oil majors. There isn't one for datacenters — the industrial load every forecast says is growing fastest. So we built it." | 9 | 0:00–0:14 |
+| 2 | a company's claim → the grid it draws from → what that grid burned, hour by hour | "We take a company's public clean-energy claim, find the grid its buildings actually draw from, and compare the claim to what that grid generated, hour by hour." | 14 | 0:14–0:26 |
+| 3 | **+64.7** and **+17.7** clean bars, **3.7×** between them, under "Clean power added since 2019, by hour of day." | "Since twenty-nineteen we added sixty-five gigawatts to the average daytime hour, and eighteen to the overnight hour — to the hours a datacenter ignores. And that's after we corrected a nuclear plant the federal data counted twice." | 15 | 0:26–0:43 |
+| 4 | gas **+10,740**, coal **−2,520**, clean **−81** MW, under "All the night growth was gas." | "PJM — the grid from Chicago to New Jersey — is where the datacenters are. Overnight generation there rose eight point seven gigawatts. Gas supplied ten point seven. Clean fell eighty-one megawatts." | 15 | 0:43–0:57 |
+| 5 | Holding slide + provenance strip: EIA-930 via PUDL · 4.45M hourly rows · 70 grid operators · 354 indexed passages | *(the live app — four beats, below)* | 15 | 0:57–2:29 |
+| 6 | 52 marks, 4 filled; "4 operators: their filings. 48: the grid only." / "Ten claims read, one we cannot verify." | "The thing we're proudest of is what it refuses to say. Ten claims read. Nine true on paper. One we can't verify. Forty-eight of fifty-two, we haven't read at all." | 15 | 2:29–2:43 |
+| 7 | "matched 100% of our electricity" / Alphabet, p. 4 → Santee Cooper / serving utility → 5.6% / generated 2025 | "And every verdict ends at a named utility in a named region. Which means someone can look up who's exposed before the filing says so." | 15 | 2:43–2:54 |
+| 8 | "It follows the power, not the press release." | "Wattson. It follows the power, not the press release." | 9 | 2:54–2:59 |
 
 ---
 
-## Timing summary — running order
+## Slide by slide
 
-| # | Slide | Words | Seconds | Cumulative | Script anchor |
-|---|---|---|---|---|---|
-| 1 | Title | 11 | 5 | 0:05 | 0:00, 0:03 |
-| 2 | Decarbonization happened in daylight | 12 | 13 | 0:18 | 0:08, 0:18 |
-| 3 | None of it was clean (PJM preview) | 14 | 12 | 0:30 | 0:23 |
-| 4 | Every hour, every grid | 13 | 12 | 0:42 | 0:29 |
-| 5 | **Holding slide — live demo** | 3 | 112 | 2:34 | beats 1–3 |
-| 6 | The limits are on the screen | 10 | 10 | 2:44 | 2:34 |
-| 7 | Close | 14 | 15 | 2:59 | 2:44, 2:50, 2:55 |
+### 1 · The absence · 30 words · 14s
 
-Front **42 s** · app **112 s** · close **25 s** · **total 179 s**, last word at 2:59, matching
-the script's own machine-timed total exactly. **77 words across the seven running slides**,
-against 419 before.
+Three ticked rows in muted grey, then **Datacenters** in full ink with an empty dashed slot
+where its tick would be. The dashed stroke is 5px `--muted`, not a 3px hairline: the empty
+slot is the entire point of the slide and it has to survive the back of the room.
 
-Timing is unchanged from the previous version; only what is on the slides changed.
+The spoken line says *"the industrial load every forecast says is growing fastest"*, not
+"the fastest-growing industrial power load in America". That superlative is in neither
+numbers file, and the project's own rule is that anything unmeasured is attributed out loud.
+
+No signal hue: an absent watchdog is neither clean nor fossil.
 
 ---
 
-## Backup slides — NOT in the running order
+### 2 · What Wattson is · 27 words · 12s — **new slide**
 
-Press **`B`** in `deck.html` to jump to them and `B` again to return. Each is badged
-"BACKUP — NOT IN THE RUNNING ORDER" on screen, in `--warn`, so it cannot be mistaken for a live
-slide. They exist for the question period; every one of them covers ground the presenter
-already spoke while standing in the app.
+A three-box schema: **a company's claim** (dashed, neutral — a claim is not a measurement)
+→ **the grid it draws from** (ink) → **what that grid burned, hour by hour** (`--clean`).
 
-### B1 — Frozen before any rank · **15 words**
-
-**For judges' Q4:** "How do I know you didn't tune the detector to find Data Center Alley?"
-Spoken live at 2:20 on `#/found`.
-
-**Now a rank axis, 1 to 111, with the four pre-registered regions placed where they actually
-landed.** The two hits (6th, 7th) are white dots above and below the line; the two misses (19th,
-91st) are `--warn` rings struck through with an ×, and the word **misses** sits under them. The
-prediction and the outcome are the same picture.
-
-> **Frozen before any rank.**
-> **6th** N. Virginia · **7th** Omaha · **19th** AEP (miss) · **91st** Dallas (miss) · axis to 111
-
-| Number / fact | Source |
-|---|---|
-| the four regions, named in advance | `api/regions.json` → `meta.validation_named_in_advance` |
-| rank 6 N. Virginia | `api/region/PJM%2FDOM.json` → `detection.rank` |
-| rank 7 · rank 19 · rank 91 | `SWPP%2FOPPD`, `PJM%2FAEP`, `ERCO%2FNCEN` → `detection.rank` |
-| 111 scored, ranks 1..111 contiguous | `api/regions.json` → `meta.n_scored` |
-
-**Cut into the notes:** the method string in full — score = z(overnight excess) +
-z(neighbour divergence) + 0.5 z(load-factor delta), robust z (median/MAD), 500 MW cut, p99.5
-peak, frozen before results (`api/regions.json` → `meta.detector_method`); scores and growth
-(7.71 / 31.8%, 6.82 / 39.4%, 2.29 / 9.2%, −1.32 / 14.2%); that the 500 MW cut holds (13
-unranked, largest excluded IID 434 MW, smallest ranked TPWR 518 MW); why Dallas is 91st
-(growth 14.2% against a median ERCOT zone near 26%, neighbour divergence −12.2); and T9 — say
-"the AEP zone" or "Columbus and out across five states", never "Central Ohio".
-
-### B2 — Two operators, one nuclear plant · **14 words**
-
-**For judges' Q5:** "Your own data shows Phoenix falling from 62% to 10%. Did it collapse?"
-Spoken live at 1:35 on `#/compare`.
-
-**Now the two lines, because "wrong in direction, not just magnitude" is a shape.** The
-published series falls from 62% in `--warn` (dotted — flagged data); the corrected series rises
-from 1.7% in `--clean`; they meet at the shared, uncorrected 2025 value, **10.4%**, set at 96 px.
-
-> PHOENIX OVERNIGHT
-> **Two operators, one nuclear plant.**
-> published **62%** ↘ · corrected **1.7%** ↗ · both → **10.4%** · axis 2019, 2025
-
-| Number | Source |
-|---|---|
-| published 2019 overnight 0.620 → corrected 0.017 | `api/region/AZPS.json` → `corrections.corrections[0]` (numbers.md D1) |
-| 2025 = 0.104, uncorrected — the level is real | same file → `cf_share.2025.overnight` |
-
-**Cut into the notes:** r = **0.9948** over **7,976** hours; **98.8%** of hours identical within
-5 MW; **7,087 MW** combined against a **3,937 MW** nameplate; the step on **2019-12-04**, not a
-decline; published and corrected shown side by side, the export not rewritten; the demand-side
-detector rank (**3rd**) has no generation term and is untouched; the confidence tiers — the
-double count is **proven**, Palo Verde is a **high-confidence inference** ("Arizona's only
-nuclear station, and the magnitude matches the nameplate"), the corrected siting rank (~32) is
-**approximate ±2**, and *why* it steps on that date is **not established**; say "a double count
-we caught", never "Phoenix collapsed" (T2); never say 0.15 (D5).
-
-### B3 — True on paper · **13 words**
-
-**For judges' Q3:** "So 'true on paper' means they lied?" Spoken live at 0:44–1:21 on
-`#/check/GOOGL`. The app rounds to 6%; this slide's 5.6% is the same number unrounded.
-
-**Now the claimed figure against the measured one, to scale.** Three bars on a 100% axis: the
-claim is a dashed outline (paper), the two measurements are filled (`--clean-dim` for Google's
-own hourly figure, `--clean` for the grid). 5.6% renders as a 50-unit stub against the 900-unit
-claim.
-
-> ALPHABET
-> **True on paper.**
-> **100%** claimed · **65%** their own report · **5.6%** the grid
-
-| Number | Source |
-|---|---|
-| 100% claimed, market-based, annual, page 4; verdict `true_on_paper` | `api/company/GOOGL.json` → `claims[0]` |
-| 65% hourly CFE, 2025 (their page 94) | same → `claims[0].evidence[1].values` = [65,64,64,66,65], 2021–2025 |
-| 5.6% on the SC grid, 2025 | same → `sites[0].cf_share_2025` = 0.056 = `dash/regions.json` SC `cf_share[2025].all`; gap **94.4 pts** |
-
-**Cut into the notes:** the verbatim quote ("we again matched 100% of our electricity
-consumption with renewable energy purchases (on a global and annual basis)" — Alphabet, 2026
-Environmental Report, page 4); the five-year series 65/64/64/66/65; the mandatory caveat from
-`sites[0].note` — never present 0.056 without it: footprint not meter, grid-only, contracted
-power excluded, and it *understates* the site because Santee Cooper's share of V.C. Summer
-nuclear reports under a neighbouring authority, **SCEG at 42%** (`api/region/SCEG.json`
-`cf_share.2025.all` = 0.421); T4 — never "Google's data centre runs on 6% clean power"; and the
-four-company totals, 10 claims, 9 true on paper, 1 cannot_verify (Amazon, `talk_score: null`,
-not 0 — T14).
+**Why it was added.** The previous running order never said what the product does. Slide 1
+set up an absence, 3 and 4 were evidence, 5 was a holding slide, 6 was coverage, 7 a
+verdict. A judge who only read the slides never learned what Wattson is. This is the only
+plain-English definition in the talk, and slide 7 is deliberately the same shape carrying
+Alphabet's real values — the schema, then the instance.
 
 ---
 
-## Numbers deliberately on no slide at all
+### 3 · Clean power added, day against night · 36 words · 17s
 
-- **Dominion's overnight growth.** +3,973 MW is **45.7% of PJM's overnight *generation*
-  growth** but **60.6% of its overnight *demand* growth** (numbers.md D7). If it comes up,
-  say which. The script carries the same instruction.
-- **Alert counts.** `api/alerts.json` reports `count_before_ranking` = 14, a known bug; the
-  real ratio is 162 raw → 14 ranked (D3). Not speakable while pointing at a field that says 14.
-- **Talk-vs-walk scores.** `talk_score` is a language score; Amazon's is `null`, not 0.
-- **"Half a datacenter's power is used at night."** Not measured (numbers.md §3).
-- **EC2 reproducibility runtime.** Not run; `docs/ec2_runtime.csv` does not exist.
+Two `--clean` bars to scale (400px for 64.7 GW, so 17.7 GW is 109px), a `3.7×` marker
+between them, and the headline **"Clean power added since 2019, by hour of day."**
 
-Q&A: `docs/judges_qa.md` (25 questions), `docs/pitch/script.md` §"Six questions judges will
-ask" (the six most likely, under 25 s each), `docs/pitch/numbers.md` §4 (17 traps).
+**Three defects fixed here.**
+
+1. **The headline was false to a stranger.** "Four times more clean power by day" over bars
+   reading 61 and 14 reads as a statement about *levels*, and the levels are 239.5 and
+   173.4 GW — a ratio of 1.4. The word "added" was nowhere on the slide and the only
+   qualifier was a 26px footer. The headline now carries "added since 2019" at 60px and the
+   bar values carry a `+`.
+2. **The figures were the contaminated ones.** 61.4 / 14.3 / 4.3× come from the published
+   2019 baseline, which contains AZPS's phantom — the exact double count that backup B2
+   exists to expose, two keypresses away. Using it would have been a 16% flattering number
+   the team's own file proves wrong.
+3. **The qualifier was sized as a footnote.** Bar labels are now 40px and the axis 32px.
+
+**The computation, shown in full.** Published `meta.national.cf_avg_mw` 2019: daytime
+178,129 MW, overnight 159,031 MW. `api/region/AZPS.json` `corrections[1]` on
+`cf_avg_mw.2019` (confidence `proven`): overnight published 3,373 → corrected 34.7; daytime
+published 3,736 → corrected 402.2. Phantom = 3,338.3 overnight, 3,333.8 daytime. Corrected
+2019: daytime **174,795.2**, overnight **155,692.7**. Against 2025 (239,533 / 173,380):
+
+- daytime **+64,738 MW**
+- overnight **+17,687 MW**
+- ratio **3.66 → 3.7×**
+
+**Trap N1.** These are absolute megawatt averages per hour-class, not shares. Both go up.
+On a corrected basis the overnight share is roughly flat (about 40.0% in 2019 against 39.7%
+in 2025), so the old fallback line "the share slipped 40.5 to 39.7" also used the
+contaminated baseline and is gone. Never say "four times cleaner by day".
+
+---
+
+### 4 · PJM · 30 words · 14s
+
+A zero line with gas **+10,740** in `--fossil`, coal **−2,520** in dimmed `--fossil` below
+the line, and clean **−81** as a hairline, in MW, under **"All the night growth was gas."**
+The earlier headline, "Gas took all of it.", had no antecedent for "it" anywhere on the
+slide — a stranger could not tell what gas had taken.
+
+**What was wrong, and is fixed.**
+
+- **A real rendering collision.** The old two-line headline overlapped the `+10.7` figure by
+  191×12 pixels. The headline is now one short line and `window.__overlaps()` returns empty.
+- **The colour taught the opposite of the truth.** The old slide drew the `+8,701` total in
+  the fossil hue; that column was total generation. Now only gas and coal — which are fossil
+  — are fossil-coloured, and the total is spoken, never drawn.
+- **The arithmetic invited a challenge with no on-screen answer.** A judge can subtract:
+  10.7 > 8.7. The coal bar now answers it before it is asked. Do not read coal aloud.
+- **`−0.1` overstated the magnitude by 23%** in the flattering direction. It now prints
+  **−81 MW**, which is also the better number: "eighty-one megawatts" sounds like a
+  measurement.
+- **"None clean" (a level) contradicted "−0.1" (a change).** The headline is now "Gas took
+  all of it."
+
+*Source: `api/region/PJM.json` — `total_avg_mw` overnight 82,539 → 91,240 = +8,701;
+`fuel_delta_overnight_gw` gas +10.74, coal −2.52, nuclear −0.95 (deltas sum +8.69 against
++8.70); `cf_avg_mw` overnight 35,700 → 35,619 = −81.*
+
+---
+
+### 5 · Holding slide · 170 words · 92s + ~15s interaction
+
+The slide carries a **provenance strip**: `EIA-930 via PUDL · 4.45M hourly rows · 70 grid
+operators · 354 indexed passages`. It is up for ninety-five seconds and costs no spoken
+time. This is where the dataset lives now that the old "4.45M / 70 / 111" spec-dump slide is
+gone — deleting that slide was right, deleting the *dataset* was not.
+
+**(a) The check — 29 words, 13s.**
+*"Google claims one hundred percent renewable — page four. On the grid that serves the
+site: five point six percent. True under the accounting rule. We're measuring a different
+thing."*
+The page cite is spoken because source citation is what the textual-analysis track scores.
+"We never say they lied" is **cut** — it plants the word nobody asked for.
+`api/company/GOOGL.json`, p.4 annual claim, Moncks Corner on Santee Cooper, 0.056.
+
+**(b) The detector — 48 words, 22s. Never cut.**
+*"We also find datacenters without a list of datacenters. A hundred and eleven regions
+scored on the signature of flat, round-the-clock load. We named four test regions before we
+ran it, so we couldn't cheat. Two landed in the top ten. Two missed. Both are on the
+screen."*
+**Two hits, two misses — corrected.** The previous script said "three hit" while backup B1
+drew the AEP zone at 19th struck through as a miss, and this file said two and two. A judge
+pressing `B` after hearing "three hit" saw two crosses. All three artefacts now agree.
+"We named four test regions before we ran it, so we couldn't cheat" replaces "method frozen
+before we saw the ranking", which was methodology jargon with no verb.
+
+**(c) OpenAI and the blind spot — 49 words, 23s.**
+*"[Six Stargate sites, every one mapped.] El Paso Electric, at three in the morning: one
+megawatt out of six hundred and fifty-five. And El Paso Matters reports a gas microgrid
+here that never touches that grid. If that's right, this load never shows up in federal
+data. Including ours."*
+**"If that's right" is restored** — `numbers-v2.md` §3 prescribes the conditional and both
+the deck and the script had dropped it, asserting a press note at `confidence=medium` as
+settled fact. The "one tenth of one percent" phrasing is gone: half a room hears it as ten
+percent, and one megawatt out of 655 is the same fact as a picture.
+`api/region/EPE.json`: overnight `cf_avg_mw` 1.0 of `total_avg_mw` 655.0 (654 gas, 1 solar).
+
+**(d) The ask layer, Codex and the corpus — 44 words, 20s.**
+*"And you can just ask it in English. That's OpenAI's tool-calling API over ten typed tools
+— and Codex wrote the document-search layer underneath: three hundred and fifty-four
+passages from their own filings, [six flagged as junk and kept visible,] every one with its
+page."*
+This beat now serves three sponsor tracks that the previous draft served not at all:
+the tool-calling API and **Codex** (which appeared zero times in every pitch file), and the
+**corpus** (likewise zero). "Seven tool calls" is **cut** — the call count is a property of
+the live run and cannot be promised in advance.
+
+**Corpus figures, recomputed here** (neither numbers file carries them yet): a direct count
+over `claims/raw/*.jsonl` gives **354 records = 309 sustainability-report passages + 45
+from 10-Ks**, across **8 source documents** and **312 distinct pages**; quality **341 ok, 7
+tabular, 6 suspect**. Every record carries `page`, `source_doc` and `source_url`.
+
+> **Units warning.** 354 is a count of **passages, not filings.** There are eight filings.
+> Saying "354 filings" is wrong and is exactly the kind of error this project exists to
+> catch. The slide says "354 indexed passages" and the script says "passages".
+
+> **Tool count.** Say **"over ten typed tools"**. The *running service* reports **eleven**,
+> including `search_corpus`, and the demo runs against that service — so eleven is what a
+> judge would see. The copy of `server/ai.py` in the repo is stale and lists ten. "Over ten"
+> is true of both and cannot be made wrong by the next deploy. If asked for a number, say
+> eleven and name `search_corpus`. The model is `gpt-4.1`.
+
+---
+
+### 6 · What it refuses to say · 30 words · 14s
+
+52 marks, 4 filled. Headline **"4 operators: their filings. 48: the grid only."** and a
+38px line, **"Ten claims read, one we cannot verify."**
+
+**Two fixes.** The slide used to read "Documents read for 4 of 52 operators" with the legend
+"4 checked / 48 sites only" — a stranger could not tell what a document was here, why
+reading one mattered, or whether 4 of 52 was good or bad, and the only statement the running
+order made about documents was an admission of failure with no frame. It now leads with what
+we **do** hold and puts the `cannot_verify` count on screen in the running order. Second,
+the 48 hollow marks were stroked in `--line` and vanished at a third scale, so the slide read
+as "four white squares" and the gap — the content — was invisible. They are now `--muted`.
+
+*Source: `api/companies.json` — 52 operators, 134 sites, `count_with_claims` 4,
+`count_sites_only` 48; 10 claims, 9 `true_on_paper`, 1 `cannot_verify` (Amazon,
+`no_falsifiable_content`, `talk_score` null not zero). Verified `numbers-v2.md` §2.5.*
+
+---
+
+### 7 · The chain · 25 words · 12s
+
+The same three-box shape as slide 2, filled in: the **quoted claim** with its page cite
+(dashed, neutral) → **Santee Cooper**, labelled **serving utility** → **5.6%**, labelled
+**generated 2025**, in `--clean`.
+
+**Two fixes.** The first box used to be a bare `100%` with no provenance, which made the
+only textual-analysis slide in the deck carry no text and no source; it now carries the
+quotation and `Alphabet, p. 4`. And "Santee Cooper" meant nothing to a stranger, so it is
+labelled as what it is.
+
+*Source: `api/company/GOOGL.json` — claim p.4 of the 2026 Environmental Report (annual,
+market-based, verdict `true_on_paper`); `sites[0].cf_share_2025` = 0.056.*
+
+---
+
+### 8 · Close · 9 words · 4s
+
+*"Wattson. It follows the power, not the press release."* Then stop.
+
+---
+
+## Backup slides — one `B` away
+
+| | On screen | The question it answers |
+|---|---|---|
+| B1 | Rank axis 1–111: 6th N. Virginia and 7th Omaha in ink; 19th AEP and 91st Dallas crossed out in `--warn` under "misses" | "How do I know you didn't tune the detector?" Weights, the 500 MW cut and the peak definition were frozen and four regions named before any rank was seen. **Two hits, two misses** — which is exactly what beat (b) now says. |
+| B2 | Published 62% in `--warn` against corrected 1.7% in `--clean`, both landing on 10.4% | "Did Phoenix collapse from 62% to 10?" No — a double count we caught. r = 0.9948 over 7,976 hours, 7,087 MW against a 3,937 MW nameplate. Corrected, Phoenix *rose* from 2%. **Slide 3 already references this correction**, so B2 now confirms the story rather than ambushing it. |
+| B3 | 100% claimed, 65% their own report, 5.6% the grid | "So 'true on paper' means they lied?" No. Annual matching is genuinely true under the accounting rule. Google's own page 94 says 65% hourly, ninety pages after the 100% on page 4. |
+
+---
+
+## What was deleted, and why
+
+| Deleted | Reason |
+|---|---|
+| The old **title card** | The tagline is the last thing said, not the first. It closes the deck now. |
+| The two **percentage lines** (37→47, 40→40) | Near-parallel slopes at slide scale; the headline did all the work. |
+| **"Every hour, every grid" / 4.45M / 70 / 111** | A spec dump with no claim attached. But deleting the *slide* should not have deleted the *dataset*: EIA-930, PUDL and the row count are now on the holding slide's provenance strip, where they are visible for ninety-five seconds at no spoken cost. |
+| **"The limits are on the screen, not in a footnote."** | A bare sentence in black — meaningless without the speaker, redundant with them. |
+| The **team-credit block** | Credits are not an argument. Say the split in Q&A. |
+| The **fossil-coloured +8,701 column** | It was total generation drawn in the fossil hue. |
+| **61.4 / 14.3 / 4.3×** | Built on the published 2019 baseline, which contains the AZPS phantom that backup B2 exists to expose. Replaced by the corrected 64.7 / 17.7 / 3.7×, spoken as a correction we made. |
+| **"Four times more clean power by day"** as a headline | False to anyone who does not already know the method: it reads as a statement about levels, and the levels are 239.5 against 173.4. |
+| **"Three hit"** | Contradicted backup B1 and this file, both of which show two hits and two misses. |
+| **"Seven tool calls"** | A property of the live run; unverifiable in advance and contradictable by the screen behind you. |
+| **"We never say they lied"** | A denial nobody asked for that plants the word. |
+| **"At annual resolution this finding does not exist"** | Said twice in thirteen seconds, and a boast about method rather than a finding. |
+| **"the fastest-growing industrial power load in America"** and **"the largest datacenter cluster on earth"** | Unmeasured superlatives asserted as fact, in the opening sentences of the two most important slides. Both now attributed or reworded. |
+| **"So it never appears in federal demand data"** | Dropped the conditional on a `confidence=medium` press note. Restored to "If that's right". |
+| **"Quincy is a hundred percent carbon-free"** | "Is" is a consumption verb for a generation figure from a net exporter. |
+| The **Nebius** beat | Both Nebius sites name a serving utility. |
+| **"Twelve operators"**, **"eleven behind-the-meter sites"**, **Abilene as an OpenAI site** | Wrong by four times; not reproducible from the repo; filed under Oracle. |
+
+## Open items for whoever owns the numbers files
+
+- `numbers-v2.md` §2.1 verifies the **published** 61.4 / 14.3 / 4.3× and does not yet carry
+  the corrected 64.7 / 17.7 / 3.7×. The computation is written out under slide 3 above and
+  should be traced into that file.
+- The **corpus counts** (354 / 309 / 45 / 8 docs / 312 pages / 341-7-6) are recomputed here
+  from `claims/raw/*.jsonl` and are in neither numbers file. `numbers.md` §3 still lists
+  *"354 chunks in claims/raw"* under UNVERIFIABLE with "don't quote it" — that entry is
+  stale and should be re-verified and moved, not ignored.
+- The README's line that the Elastic track is not claimable is out of date; the index is
+  live.

@@ -1,222 +1,282 @@
-# Wattson · three-minute pitch script
+# script.md — the three-minute talk, as spoken
 
-*It follows the power, not the press release.*
+Read the **bold** lines as written; they are timed and every figure in them is traced.
+Everything else is direction. Slide numbers refer to `docs/pitch/deck.html`; the pairing of
+each slide to each sentence is in `docs/pitch/deck.md`. If a number on screen disagrees
+with this script, **the screen is right** — read the screen.
 
-Presenter: **Shrishant** (built the web product). Teammate **Yash** built the data engine and
-the claims extraction — name him once, in the close.
+**Numerals are written the way they are spoken** ("eight point seven", not "8.7"), so the
+word count measures the talk that gets delivered rather than a shorter one on paper.
 
-Read at a **calm 130 words per minute**. Spoken body is **367 words ≈ 2:49** of speech; with a third of a second of air on each of the 28
-lines for the clicks, the last word lands at **2:59**. That is the real number, recounted after
-the Phoenix fix — not an estimate. `/` marks a **breath**. **Bold** in the right column is a
-**click or keypress**. Never read a number off the screen while clicking; every number below
-is memorised, and the screen only has to agree.
+**Clauses in [square brackets] are the cut list.** Drop them in order, from the back, if the
+app is slow. They total 13 words ≈ 6 seconds. **Never cut beat (b), the detector** — it is
+the primary track's entire case.
 
-**Before you walk up:** app at `http://localhost:5174/#/`, window 1440×900, globe already
-loaded once. Open these four in background tabs so nothing loads cold:
-`#/check/GOOGL` · `#/check/GOOGL?evidence=1` ·
-`#/compare?mw=300&metros=Phoenix|Northern%20Virginia|Omaha` · `#/found`.
-Do **not** press `d` (demo mode goes to Meta, not Google).
+To re-measure after an edit:
 
----
-
-## The walkthrough
-
-### Setup · 0:00 – 0:42 · route `#/`
-
-| Clock | SAY | DO |
-|---|---|---|
-| 0:00 | "I'm Shrishant. This is Wattson." / | Landing is already up: globe, one box. Hands off the laptop. |
-| 0:03 | "AI datacenters draw the same power at 3am as at noon." / | Stand still. Let the globe turn. |
-| 0:08 | "Since 2019 the US grid got much cleaner by day — 37 percent to 47. At night: 40 to 40." / | Nothing. This is the only place you quote a pair of numbers with no screen behind them — say it slowly. |
-| 0:18 | "Solar fixed the day. It did nothing for the night." / | Nothing. |
-| 0:23 | "So “one hundred percent clean” is an annual average. We wanted the hourly one." / | Hand moves to the trackpad. |
-| 0:29 | "Wattson reads what every US grid actually generated, hour by hour, and asks two questions: what powers a company's sites, and where should the next go?" / | Cursor rests over the **Google** chip. Do not click yet. |
-
-### Beat 1 · 0:42 – 1:23 · routes `#/check/GOOGL` → `#/check/GOOGL?evidence=1`
-
-| Clock | SAY | DO |
-|---|---|---|
-| 0:42 | "First question. Google." / | **Click the `Google` chip.** URL becomes `#/check/GOOGL`. Wait for the card. |
-| 0:44 | "Google says one hundred percent renewable. True on paper — it's an annual, market-based claim." / | Card reads *true on paper · 100% claimed · 6% measured*. Point at it; don't read it. |
-| 0:51 | "The one Google site we could map sits on Santee Cooper's grid, which generated six percent clean power last year." / | Nothing. |
-| 1:00 | "We never say they lied. We say: true on paper, six percent physically." / | Nothing. This sentence is the product. |
-| 1:07 | "And their own report agrees." / | **Click `Show the evidence`.** URL becomes `#/check/GOOGL?evidence=1`. First module is *Says, and discloses*. |
-| 1:09 | "Page 4: matched one hundred percent. Page 94, same document: hourly clean energy across their data centers, flat at about 65 percent for five years." / | Let the two page chips and the five bars sit on screen for a beat. |
-| 1:21 | "Two measurements. Both theirs." / | Hand back to the trackpad. |
-
-### Beat 2 · 1:23 – 1:59 · route `#/compare?mw=300&metros=Phoenix|Northern Virginia|Omaha`
-
-| Clock | SAY | DO |
-|---|---|---|
-| 1:23 | "Second question." / | **Press `Esc`**, then **click the chip `300 MW: Phoenix vs Northern Virginia vs Omaha`.** |
-| 1:25 | "Three hundred megawatts of round-the-clock load. Phoenix, Northern Virginia, or Omaha?" / | Three ranked rows appear. Omaha is 1. |
-| 1:30 | "Omaha wins: 52 percent clean at night, and improving." / | Point at row 1. Do not touch the load-shape picker. |
-| 1:35 | "Phoenix is second on ten percent. That's not a bug — its 2019 number double-counted a nuclear plant, so it's climbing from two percent, not falling from sixty-two." / | **Mandatory line.** Row 2 shows *10%* sitting above row 3's *39%*; the audience sees that inversion whether or not you explain it. The card's own second sentence says the same thing — point at it, don't read it. |
-| 1:48 | "Northern Virginia is 39, and getting worse." / | Point at row 3. |
-| 1:52 | "At night that load pulls 144 megawatts off fossil plants in Omaha. Average mix, not marginal." / | The live line under the rows reads 144 versus 269. |
-
-### Beat 3 · 1:59 – 2:34 · route `#/found`
-
-| Clock | SAY | DO |
-|---|---|---|
-| 1:59 | "Last screen. The grid that serves Data Center Alley." / | **Click `Home`, then `What we found in the grid data →`** (or type `#/found`). Lands on the tab **The finding**. |
-| 2:04 | "Clean generation at night: flat since 2019. Within a hundred megawatts." / | The hero reads `35,700→35,619`. **Do not say the digits** — let them be read while you say “flat”. |
-| 2:09 | "Night generation rose 8.7 gigawatts. 10.7 of it was gas." / | Point at the two tiles. |
-| 2:14 | "Consistent with datacenter load being served by gas. Not caused by." / | Nothing. |
-| 2:20 | "Our detector scored 111 regions from demand alone. Weights frozen, test regions named, before we saw a ranking. Northern Virginia sixth. Dallas 91st — we missed it, and we print it." / | Point at the row of four ranks at the bottom of the same screen: *Northern Virginia 6th · Omaha 7th · Central Ohio 19th · Dallas 91st*. No click. If you name the third one out loud, say “the AEP zone” — the screen's “Central Ohio” label covers five states. |
-
-### Close · 2:34 – 2:59 · stay on `#/found`
-
-| Clock | SAY | DO |
-|---|---|---|
-| 2:34 | "Generation inside a footprint, not consumption. Average mix, not marginal. Contracts excluded. Claims we can't check are counted on screen." / | Hands off the laptop. Look up. |
-| 2:44 | "Yash built the data engine and the claims extraction. I built the product." / | Nothing. |
-| 2:50 | "Four and a half million hours of grid data." / | Nothing. |
-| 2:55 | "Wattson. It follows the power, not the press release." | Stop. Leave the screen on the finding. |
+```
+python3 - <<'PY'
+import io,re
+t=io.open('docs/pitch/script.md',encoding='utf-8').read()
+b=re.findall(r'^> \*\*(.+?)\*\*$', t, re.M)
+w=lambda s: len([x for x in re.sub(r'[\[\]]','',s).split() if x not in '—-·'])
+print(sum(map(w,b)), 'words =', round(sum(map(w,b))/130*60,1),'s')
+PY
+```
 
 ---
 
-## The 20-second hallway version
+## 0:00 – 0:14 · Slide 1 · the absence · 30 words
 
-> "AI datacenters run flat — same power at 3am as at noon. Since 2019 the US grid cleaned up
-> by day and stood still at night. Wattson reads what every grid actually generated, hour by
-> hour, and checks company clean-power claims against it. Google says 100 percent renewable;
-> true on paper, and the one site we mapped sits on a grid that generated six percent. Then it
-> tells you where to put the next 300 megawatts."
+**SCREEN:** fast fashion ✓, airlines ✓, oil majors ✓, datacenters — an empty slot.
 
-*(66 words ≈ 30 s at 130 wpm; drop the last sentence to land at 20 s.)*
+> **There's a greenwashing watchdog for fast fashion. For airlines. For oil majors. There isn't one for datacenters — the industrial load every forecast says is growing fastest. So we built it.**
 
-## The one-sentence version
+Say the three "for" clauses at pace, then break hard before "There isn't one." The list does
+the work: by the third item the room has accepted that this is a normal, mature thing that
+obviously should exist, so the absence lands as an oversight rather than a pitch.
 
-> "Wattson checks clean-energy claims and siting decisions against what the grid physically
-> generated, hour by hour — because the night never got cleaner."
-
----
-
-## Six questions judges will ask
-
-Each answer is under 55 words (under 25 s). Say the caveat first, the number second.
-
-**1. Why average mix and not marginal emissions?**
-> "Because EIA-930 gives us generation by fuel and interchange — not dispatch order, not
-> prices. A marginal number would be a model; this is a measurement. So 39 percent at night
-> means 39 percent of that grid's overnight generation was clean, not that the next megawatt
-> is." [^1]
-
-**2. Is that generation or consumption?**
-> "Generation inside a grid's footprint. We don't allocate imports, and we say so on every
-> screen. Where it bites, the card says it: PacifiCorp West generated 797 megawatts against
-> 2,311 of demand, so Meta's Prineville site row reads 'generates 34 percent of what it
-> uses.'" [^2]
-
-**3. So 'true on paper' means they lied?**
-> "No. Nothing in our data is marked contradicted. Annual matching is genuinely true under the
-> market-based method — Google bought certificates equal to its consumption. We're measuring a
-> different thing: what was on the wire at 3am. Nine of ten claims are true on paper, one we
-> can't verify, and we count it." [^3]
-
-**4. How do I know you didn't tune the detector to find Data Center Alley?**
-> "We froze the weights, the 500-megawatt cut and the peak definition, and named four test
-> regions, before we saw a single rank. Northern Virginia sixth, Omaha seventh — good. The AEP
-> zone 19th and Dallas 91st — misses. They're on screen next to the wins." [^4]
-
-**5. Your own data shows Phoenix falling from 62 percent to 10. Did it collapse?**
-> "No — that's a double count we caught. A nuclear plant was reported under two authorities:
-> the two series correlate 0.9948, and they sum to 7,087 megawatts against a 3,937-megawatt
-> nameplate. Corrected, Phoenix rose from 2 percent to 10. We show published and corrected side
-> by side rather than quietly rewriting it." [^5]
-
-**6. What's actually new here, technically?**
-> "An hourly clean-power index for 70 balancing authorities — the operators that keep supply and
-> demand matched on a piece of the grid — from four and a half million rows, split by local
-> night and day. That split shows something no annual series does: all the decarbonization since 2019
-> happened in daylight. And a detector using only demand found Data Center Alley sixth of 111
-> with no company list." [^6]
->
-> *(Counts that must not be blurred: **70** balancing authorities in the hourly index, **124**
-> published regions, **111** scored by the detector. Never say “70 grid regions”.)*
+**Note the attribution.** It is "every forecast says", not a flat assertion — "the
+fastest-growing industrial load in America" is not a Wattson measurement and is in neither
+numbers file. **Do not open on solar.** Solar is the evidence, not the thesis.
 
 ---
 
-## Failure plan
+## 0:14 – 0:26 · Slide 2 · what Wattson is · 27 words
 
-**If the app does not load.** Do not debug on stage. Say: *"The grid data doesn't care whether
-my laptop does — let me tell you what's in it."* Then talk the three beats from memory: Google
-100 on paper and 6 physically; Omaha 52 at night versus Northern Virginia 39, with Phoenix at
-10 and rising from a corrected 2; PJM flat at 35,700 megawatts of clean power at night while
-night generation rose 8.7 gigawatts. Recovery
-while you talk: everything is static — `cd /Users/shrishant/Code/hackmit/web/dist &&
-python3 -m http.server 8099`, then `http://localhost:8099/#/`. Last resort:
-`docs/screenshots/`.
+**SCREEN:** a company's claim → the grid it draws from → what it burned, hour by hour.
 
-**If the globe is slow or WebGL fails.** Say: *"The globe is the backdrop; the cards are the
-demo."* Hit the `2D` toggle and keep going. Never wait for the globe to finish spinning — every
-beat above works with the globe half-drawn, because every number is in a card.
+> **We take a company's public clean-energy claim, find the grid its buildings actually draw from, and compare the claim to what that grid generated, hour by hour.**
 
-**If a number on screen disagrees with this script.** Read the screen, out loud, and say why:
-*"The screen is live off the pipeline and this script isn't — trust the screen."* Then move on
-in the same breath. Do not correct yourself twice, and do not open a JSON file. If a judge
-presses, the honest answer is: *"The export is regenerated from the raw data; the doc is
-written by hand. That's exactly the direction I want that error to run."*
-
-**If you fall behind the clock.** Cut Beat 2 (compare) **whole** and go straight from the
-Google evidence to `#/found`. The story still closes: a claim checked, and the grid that
-serves the claimants. Never cut only the Phoenix line out of Beat 2 — that leaves rank 2
-showing 10% above rank 3 showing 39% with nobody on stage explaining it, which is the one
-way this demo can look broken. The other line you may drop, anywhere, is the closing “four
-and a half million hours”.
-
-**If a judge interrupts mid-demo.** Answer in one sentence, then say *"— and that's on the next
-screen"* and continue. Do not restart a beat.
+This slide exists because a judge who only reads the slides must still learn what the
+product does. Say it slowly — it is the only plain-English definition in the talk. Every
+later slide is one of these three boxes filled in, and slide 7 is this exact shape carrying
+Alphabet's real values.
 
 ---
 
-## Footnotes · every spoken figure and its source
+## 0:26 – 0:43 · Slide 3 · the evidence · 36 words
 
-Paths are relative to the repo root; `api/` means `web/public/api/`. Verified against the
-served files on 2026-09-19 and re-checked live at `http://localhost:5174`.
+**SCREEN:** +64.7 against +17.7, with 3.7× between them. Let the bars land first.
 
-| Spoken figure | Source |
-|---|---|
-| Day 37 → 47%, night 40 → 40% (37.2 → 46.5, 40.5 → 39.7) | `api/regions.json` meta.national.cf_share; `web/public/fixtures/opening.json` national; rendered on `#/found?s=sweep` |
-| Google "100% renewable", annual, market-based, p. 4 | `api/company/GOOGL.json` claims[0] (scope market_based, page 4); verbatim in `claims/raw/GOOGL_esg.jsonl` p. 4 |
-| 6% clean, Santee Cooper grid, 2025 | `api/company/GOOGL.json` sites[0].cf_share_2025; `api/region/SC.json` cf_share.2025.all = 0.056 |
-| Page 94, ~65% hourly for five years (65/64/64/66/65, 2021–2025) | `api/company/GOOGL.json` claims[0].evidence[1].values; `claims/raw/GOOGL_esg.jsonl` p. 94 |
-| 42% SCEG (Q&A backup on V.C. Summer) | `api/region/SCEG.json` cf_share.2025.all = 0.421; `GOOGL.json` notes |
-| Omaha 52% at night, improving | `api/site/300mw-phoenix-nova-omaha.json` candidates[0]; `api/region/SWPP.json` cf_share.2025.overnight = 0.519 |
-| N. Virginia 39% at night, getting worse | `api/region/PJM.json` cf_share.2025.overnight = 0.390, change_since_2019 = −0.042 |
-| Phoenix 10% at night, ranked 2nd | level `api/region/AZPS.json` cf_share.2025.overnight = 0.104 (**not** corrected — the level is real); ranking `api/site/300mw-phoenix-nova-omaha.json` siting_score Omaha 0.737 > Phoenix 0.449 > N. Virginia 0.436 |
-| Phoenix “climbing from two, not falling from sixty-two” | `api/region/AZPS.json` corrections: published 2019 overnight 0.620 → corrected **0.017**; tier *proven*; numbers.md D1/D2/T3 |
-| 144 MW / 269 MW fossil at 300 MW | 300 × (1 − 0.519) and 300 × (1 − 0.104); rendered as the live line on `#/compare` |
-| 35,700 → 35,619 MW clean at night | `web/public/fixtures/opening.json` pjm; `api/region/PJM.json` cf_avg_mw |
-| +8.7 GW night generation, +10.7 GW gas | `api/region/PJM.json` total_avg_mw, fuel_delta_overnight_gw |
-| Exports 3.8 → 2.5 GW (Q&A backup) | `api/region/PJM.json` interchange (EIA-adjusted operations table) |
-| 111 regions; 6th / 7th / 19th / 91st | `api/regions.json` meta.n_scored, meta.validation_named_in_advance; detection.rank in `PJM%2FDOM`, `SWPP%2FOPPD`, `PJM%2FAEP`, `ERCO%2FNCEN` |
-| Frozen weights, 500 MW cut, p99.5 peak | `api/regions.json` meta.detector_method; CLAUDE.md "Frozen decisions" |
-| 9 of 10 claims true on paper, 1 cannot_verify | `api/companies.json`; `api/company/AMZN.json` cannot_verify_reason |
-| PacifiCorp West 797 MW vs 2,311 MW demand; 34% | `api/region/PACW.json` total_avg_mw, demand; `api/company/META.json` notes |
-| Phoenix correction: r = 0.9948, 7,087 vs 3,937 MW, 2% → 10% | `api/region/AZPS.json` corrections |
-| 4.45M hourly rows (4,451,763) · 70 balancing authorities | `data/processed/hourly_cf_index.parquet` row count and `ba.nunique()`, via `docs/pitch/numbers.md` §2.4. **Gitignored, local only** — if a judge asks for the field: “it's the row count of the hourly index; the published JSON carries the 124 regions built from it, not the raw rows.” |
+> **Since twenty-nineteen we added sixty-five gigawatts to the average daytime hour, and eighteen to the overnight hour — to the hours a datacenter ignores. And that's after we corrected a nuclear plant the federal data counted twice.**
 
-**Said but not from grid data — say them as what they are.** "Half a datacenter's load lands
-at night" is a framing of flat load over the six overnight hours, not a measurement. Operator
-tickers are hand-mapped and unverified. Never say "carbon-free share of generation", "caused
-by", "lied", "greenwashing", "headroom", "70 grid regions", or "0.15 for Phoenix" (the export
-says 0.104). "Balancing authority" is banned on stage; it appears only in judge answers, and
-only with the gloss "the operators that keep supply and demand matched on a piece of the grid".
+**These are the corrected figures, and saying so is the point.** The published 2019 baseline
+contains AZPS's phantom — Palo Verde nuclear booked by two authorities at once, 3,338 MW
+overnight and 3,334 MW daytime, which our own corrections file proves. On the published
+numbers this slide would read +61.4 / +14.3 / 4.3×: sixteen percent more flattering, and
+built on the exact figure backup B2 exists to discredit. We do not quote a number our own
+work proves wrong, and the correction is a better story than the bigger ratio.
 
-**If a judge raises Dominion, name which growth.** Dominion's overnight demand rose 3,973 MW
-(10,060 → 14,033). That is **46% of PJM's overnight *generation* growth** and **61% of its
-overnight *demand* growth** — so "about half" is true only against generation, and you must say
-which one [numbers.md D7]. Never "Dominion is all of PJM's growth".
+**The trap.** These are absolute megawatts, not shares. Both went **up**. On a corrected
+basis the overnight share is roughly flat, about 40.0% in 2019 against 39.7% in 2025 — so
+never say "four times cleaner by day", which is a share sentence. And 17.7 GW at night is
+real, about a Dominion and a half: it grew and still lost the race.
 
-**"Central Ohio" is a five-state zone** (AEP: Ohio, Indiana, West Virginia, Virginia,
-Kentucky). Say "the AEP zone" or "Columbus and out across five states", not "Central Ohio",
-whenever you say it out loud [numbers.md T9].
+*Source: `api/regions.json` `meta.national.cf_avg_mw` (2019 daytime 178,129, overnight
+159,031; 2025 daytime 239,533, overnight 173,380) minus `api/region/AZPS.json`
+`corrections[1]` on `cf_avg_mw.2019` (overnight 3,373 → 34.7; daytime 3,736 → 402.2,
+confidence `proven`). Corrected 2019: daytime 174,795, overnight 155,693. Deltas +64,738
+and +17,687; ratio 3.66.*
 
-[^1]: judges_qa Q1; `api/regions.json` meta.caveats.
-[^2]: judges_qa Q2; `api/region/PACW.json`.
-[^3]: judges_qa Q15, Q16; `api/companies.json`.
-[^4]: judges_qa Q4, Q8; `api/regions.json` meta.detector_method.
-[^5]: judges_qa Q11; `api/region/AZPS.json` corrections.
-[^6]: judges_qa Q24; CLAUDE.md L1.
+---
+
+## 0:43 – 0:57 · Slide 4 · PJM · 30 words
+
+**SCREEN:** "All the night growth was gas." — gas +10,740, coal −2,520, clean −81, in megawatts.
+
+> **PJM — the grid from Chicago to New Jersey — is where the datacenters are. Overnight generation there rose eight point seven gigawatts. Gas supplied ten point seven. Clean fell eighty-one megawatts.**
+
+**Gloss PJM every time, unconditionally.** The room is not technical.
+
+**Do not read the coal bar aloud.** It is on the slide so that a judge who notices 10.7 is
+bigger than 8.7 gets the answer before they have to ask: coal fell 2.5 GW and nuclear 0.9,
+so part of the gas rise is coal-to-gas switching. The deltas close at +8.69 against +8.70.
+
+Say "consistent with datacenter load being served by gas", never "caused by". Average mix,
+not marginal. Overnight net exports fell 3,814 to 2,489 MW, so it isn't PJM exporting less.
+Note the line says "is where the datacenters are", not "the largest cluster on earth" —
+that superlative is in neither numbers file.
+
+*Source: `api/region/PJM.json` — `total_avg_mw` overnight 82,539 → 91,240;
+`fuel_delta_overnight_gw` gas +10.74, coal −2.52; `cf_avg_mw` overnight 35,700 → 35,619.*
+
+---
+
+## 0:57 – 2:29 · Slide 5 · the product, live · 170 words + ~15s of interaction
+
+**SCREEN:** the holding slide, carrying the provenance strip — EIA-930 via PUDL, 4.45M
+hourly rows, 70 grid operators, 354 indexed passages. That strip is up for ninety-five
+seconds and costs no spoken time; it is what a Voloridge judge scores on "real-world public
+datasets". Switch to the app and stay there.
+
+Do not narrate the UI. Ask it things.
+
+### (a) The check — 29 words, 13s.
+
+> **Google claims one hundred percent renewable — page four. On the grid that serves the site: five point six percent. True under the accounting rule. We're measuring a different thing.**
+
+Do **not** say "we never say they lied" — it plants the word nobody asked for. Do not say
+"market-based" aloud either; it costs fifteen seconds of confusion. If you linger on the
+5.6%: footprint not meter, and it *understates* the site, because Santee Cooper's share of
+V.C. Summer nuclear reports under SCEG at 42%.
+
+### (b) The detector — 48 words, 22s. **Never cut this beat.**
+
+> **We also find datacenters without a list of datacenters. A hundred and eleven regions scored on the signature of flat, round-the-clock load. We named four test regions before we ran it, so we couldn't cheat. Two landed in the top ten. Two missed. Both are on the screen.**
+
+**Two hits, two misses.** N. Virginia 6th and Omaha 7th are the hits; the AEP zone 19th and
+Dallas 91st are the misses, and backup B1 draws both struck through. An earlier draft said
+"three hit", which contradicted our own backup slide. Never inflate this — the miss is what
+makes the hits worth believing.
+
+### (c) OpenAI, and our own blind spot — 49 words, 23s (43 without the bracket).
+
+Type `openai`, then open the New Mexico site.
+
+> **[Six Stargate sites, every one mapped.] El Paso Electric, at three in the morning: one megawatt out of six hundred and fifty-five. And El Paso Matters reports a gas microgrid here that never touches that grid. If that's right, this load never shows up in federal data. Including ours.**
+
+**Keep "if that's right".** The microgrid is a press note at `confidence=medium` (El Paso
+Matters, 2025-09-25), not something we measured — say "El Paso Matters reports", never "we
+found". **Abilene is not one of OpenAI's six**; it is filed under Oracle. The six are
+Shackelford, Santa Teresa, Milam, Lordstown, Port Washington, Pike County. EPE imports
+overnight (853 MW demand against 655 generated), so this is footprint generation; and it was
+0.0% in 2019, a flat line at the floor, not a collapse.
+
+### (d) The ask layer, Codex and the corpus — 44 words, 20s (37 without the bracket).
+
+> **And you can just ask it in English. That's OpenAI's tool-calling API over ten typed tools — and Codex wrote the document-search layer underneath: three hundred and fifty-four passages from their own filings, [six flagged as junk and kept visible,] every one with its page.**
+
+**Say "passages", not "filings".** 354 is the passage count; there are 8 source documents.
+
+**"Over ten typed tools" is deliberate.** The running service reports **eleven** tools,
+including `search_corpus`, and the demo runs against that service — so eleven is what a
+judge would see. The copy of `server/ai.py` in the repo is stale and lists ten. "Over ten"
+is true of both and cannot be made wrong by the next deploy. If a judge asks for the
+number, say eleven and name `search_corpus`. The model is `gpt-4.1`.
+
+**Do not say "seven tool calls"** — the call count is a property of the live run and cannot
+be promised in advance.
+
+*Verified by direct count of `claims/raw/*.jsonl`: 354 records = 309 sustainability-report
+passages + 45 from 10-Ks, across 8 source documents and 312 distinct pages; quality 341 ok
+/ 7 tabular / 6 suspect. Every record carries `page`, `source_doc` and `source_url`.*
+
+**If you are behind:** drop the bracketed clauses first, then beat (c)'s "Six Stargate
+sites" line. The site is a static export with no backend; if the ask layer is down, ⌘K
+degrades to the deterministic palette and every other screen is unaffected.
+
+---
+
+## 2:29 – 2:43 · Slide 6 · what it refuses to say · 30 words
+
+**SCREEN:** 4 operators: their filings. 48: the grid only.
+
+> **The thing we're proudest of is what it refuses to say. Ten claims read. Nine true on paper. One we can't verify. Forty-eight of fifty-two, we haven't read at all.**
+
+Hands off the laptop, look up. Fast and flat — this is the differentiator, not an apology.
+The slide now leads with what we **do** hold, because a textual-analysis judge whose only
+exposure to our document work is "we read nothing for 48 of 52" scores a zero.
+
+**It is 48 operators, not 12** — the twelve in an older draft was a *site* count from a
+stale string. **Do not use the Nebius line**: both Nebius sites name a serving utility; what
+is true is that neither utility has listed equity, because both are municipal. If asked how
+many sites are behind the meter: ten site notes say so explicitly, about fifteen describe
+on-site generation of some kind, and there is no flag field — say "about a dozen of the
+134, from the site notes", never "eleven".
+
+*Source: `api/companies.json` — 52 operators, 134 sites, `count_with_claims` 4,
+`count_sites_only` 48; 10 claims, 9 `true_on_paper`, 1 `cannot_verify` (Amazon,
+`no_falsifiable_content`; `talk_score` is null, not zero).*
+
+---
+
+## 2:43 – 2:54 · Slide 7 · the chain · 25 words
+
+**SCREEN:** "matched 100% of our electricity" / Alphabet, p. 4 → Santee Cooper / serving
+utility → 5.6% / generated 2025. Point at the middle box.
+
+> **And every verdict ends at a named utility in a named region. Which means someone can look up who's exposed before the filing says so.**
+
+This is the sentence that separates the project from a class project. Do not cut it for
+time — cut a bracketed clause in the demo instead.
+
+The page cite is on the slide because it is the only source citation in the running order,
+and it is what the textual-analysis track scores. If asked what someone does with it: load
+growth hits a regulated utility's rate base long before it hits its filings, and 107 of our
+134 sites resolve to a named serving utility, 42 of them with no listed equity. Say the
+denominator — 107, not 134. No stock-price claim, no backtest.
+
+---
+
+## 2:54 – 2:59 · Slide 8 · close · 9 words
+
+> **Wattson. It follows the power, not the press release.**
+
+Then stop. No thank-you, no team names, no reaching for the laptop. If you have run short,
+the honest filler is *"a datacenter draws the same power at 3am in January as at noon in
+June."*
+
+---
+
+## The budget, measured
+
+| Block | Words | Seconds @ 130 wpm | Running |
+|---|---|---|---|
+| Slide 1 · the absence | 30 | 13.8 | 0:14 |
+| Slide 2 · what Wattson is | 27 | 12.5 | 0:26 |
+| Slide 3 · clean power added | 36 | 16.6 | 0:43 |
+| Slide 4 · PJM | 30 | 13.8 | 0:57 |
+| Slide 5 · demo (a) the check | 29 | 13.4 | 1:10 |
+| Slide 5 · demo (b) the detector | 48 | 22.2 | 1:32 |
+| Slide 5 · demo (c) OpenAI + blind spot | 49 | 22.6 | 1:55 |
+| Slide 5 · demo (d) ask layer, Codex, corpus | 44 | 20.3 | 2:15 |
+| Slide 6 · what it refuses to say | 30 | 13.8 | 2:29 |
+| Slide 7 · the chain | 25 | 11.5 | 2:41 |
+| Slide 8 · close | 9 | 4.2 | 2:45 |
+| **Spoken total** | **357** | **164.8** | |
+| Interaction: typing, clicking, LLM latency | — | ~15 | |
+| **Delivered total** | | **~180** | **3:00** |
+
+Drop both bracketed clauses (13 words, 6.0s) and the spoken total is **344 words /
+158.8s**, leaving 21 seconds for a slow app. That is the contingency — not the detector.
+
+Slides before the demo: 123 words, 56.8s. Live app: 170 words, 78.5s spoken. Close: 64
+words, 29.5s. Counts measured from this file by the snippet above, not estimated.
+
+---
+
+## Rules for the recording
+
+- **Never say "caused by."** Say "consistent with."
+- **Never say a company lied** — and do not say "we never say they lied" either. The verdict
+  is *"true under the accounting rule; we're measuring a different thing."*
+- **Never quote a megawatt comparison as a share comparison** or the other way round. This
+  is the single easiest number in the talk to get wrong.
+- **Never quote the published 2019 baseline.** 61.4 / 14.3 / 4.3× are contaminated by the
+  AZPS double count. The corrected figures are 64.7 / 17.7 / 3.7×, and you say that you
+  corrected them.
+- **Two hits, two misses.** Never "three hit".
+- **354 passages, 8 source documents, over ten typed tools.** Never "354 filings" — that
+  overstates the document count by 44×. The live service reports eleven tools; the repo copy
+  says ten; "over ten" is true either way.
+- Gloss every term on first use: PJM is "the grid from Chicago to New Jersey"; overnight is
+  "three in the morning". Do not say "balancing authority" — the running order never needs
+  it. Do not say "market-based", "load factor", "interchange", "PPA" or "REC".
+- Anything you did not measure gets attributed out loud: the microgrid is El Paso Matters'
+  reporting, the site-to-utility mapping is hand-curated, the tickers are hand-mapped.
+- If a number on screen disagrees with this script, **the screen is right.**
+
+## If something breaks
+
+The whole site is a static export and runs with no server. If the ask layer is down, ⌘K
+degrades to the deterministic command palette and every other screen is unaffected. Don't
+apologise on camera; move to the next screen.
+
+## Backup slides, one `B` away
+
+- **B1** — the frozen detector, for "how do I know you didn't tune it?" It shows two hits
+  and two misses, which is exactly what beat (b) says.
+- **B2** — the Arizona double count, for "did Phoenix collapse from 62% to 10?" This is also
+  the correction slide 3 already referenced, so it confirms rather than ambushes.
+- **B3** — Alphabet's own page 94, for "so 'true on paper' means they lied?"
