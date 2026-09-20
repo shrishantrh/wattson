@@ -8,7 +8,7 @@ svg{position:absolute;inset:0}
 .v{position:absolute;inset:0;background:
  radial-gradient(58% 54% at 50% 47%, rgba(7,9,8,.40) 0%, rgba(7,9,8,.60) 62%, rgba(7,9,8,.82) 100%),
  linear-gradient(180deg, rgba(7,9,8,.55) 0%, rgba(7,9,8,0) 34%, rgba(7,9,8,.88) 100%)}
-.c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 64px}
+.c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 64px 0}
 .eyebrow{font-size:19px;font-weight:600;letter-spacing:.20em;text-transform:uppercase;color:#ff7a4a;margin-bottom:24px}
 h1{font-size:136px;line-height:.9;font-weight:800;letter-spacing:-.038em;color:#eef0ee;text-shadow:0 8px 52px rgba(0,0,0,.95)}
 .sub{margin-top:24px;font-size:42px;line-height:1.2;font-weight:600;letter-spacing:-.014em;color:#eef0ee;text-shadow:0 4px 30px rgba(0,0,0,.98)}
@@ -29,30 +29,34 @@ h1{font-size:136px;line-height:.9;font-weight:800;letter-spacing:-.038em;color:#
 <div class="foot"><span>Every US grid</span><span class="dot"></span><span>every hour</span><span class="dot"></span><span>since 2019</span></div>
 </div>
 <script>
-// Orthographic dot sphere, rotated so North America faces the viewer. Dots brighten toward the
-// centre of the disc and the US band is warmer, matching the product's own land rendering.
+// The landing screen's globe: a big dotted sphere that overruns the frame, land bright, ocean almost
+// gone, North America facing the viewer. Orthographic projection, dots culled on the far side.
 const NS='http://www.w3.org/2000/svg', svg=document.getElementById('g');
-const cx=640, cy=352, R=430, lon0=-96*Math.PI/180, tilt=20*Math.PI/180;
+const cx=640, cy=330, R=452, lon0=-98*Math.PI/180, tilt=16*Math.PI/180;
 function add(el,a){const n=document.createElementNS(NS,el);for(const k in a)n.setAttribute(k,a[k]);svg.appendChild(n);return n}
-add('circle',{cx,cy,r:R,fill:'#111815'});
-const rings=90;
+add('circle',{cx,cy,r:R,fill:'#0d1411'});
+add('circle',{cx,cy,r:R,fill:'none',stroke:'#3d4f47','stroke-width':1.4,'stroke-opacity':0.8});
+// Coarse land mask: boxes in [latMin,latMax,lonMin,lonMax]. Enough for a recognisable planet.
+const NA=[[24,50,-125,-66],[50,71,-141,-55],[14,32,-118,-86],[60,83,-56,-20],[55,71,-168,-141]];
+const OTHER=[[-56,13,-82,-34],[36,71,-10,40],[-35,37,-18,52],[8,55,40,100],[10,54,100,145],[-44,-11,113,154],[60,78,60,180]];
+const inBox=(la,lo,B)=>B.some(b=>la>=b[0]&&la<=b[1]&&lo>=b[2]&&lo<=b[3]);
+const rings=150;
 for(let i=0;i<=rings;i++){
-  const lat=(-90+180*i/rings)*Math.PI/180;
-  const circ=Math.max(1,Math.round(Math.cos(lat)*190));
+  const lat=(-90+180*i/rings)*Math.PI/180, latd=lat*180/Math.PI;
+  const circ=Math.max(1,Math.round(Math.cos(lat)*320));
   for(let j=0;j<circ;j++){
-    const lon=(-Math.PI+2*Math.PI*j/circ);
+    const lon=-Math.PI+2*Math.PI*j/circ, lond=lon*180/Math.PI;
     const x3=Math.cos(lat)*Math.cos(lon-lon0), y3=Math.sin(lat), z3=Math.cos(lat)*Math.sin(lon-lon0);
     const yr=y3*Math.cos(tilt)-x3*Math.sin(tilt), xr=y3*Math.sin(tilt)+x3*Math.cos(tilt);
-    if(xr<=0.02) continue;                                  // back of the sphere
-    const px=cx+R*z3, py=cy-R*yr;
-    const depth=Math.pow(xr,0.85);
-    const latd=lat*180/Math.PI, lond=lon*180/Math.PI;
-    const us = latd>24&&latd<50&&lond>-126&&lond<-66;
-    const o=(us?1.0:0.52)*depth;
-    if(o<0.05) continue;
-    add('circle',{cx:px.toFixed(1),cy:py.toFixed(1),r:(us?2.15:1.7).toFixed(2),
-      fill:us?'#cfe3da':'#93a49c','fill-opacity':o.toFixed(3)});
+    if(xr<=0.015) continue;
+    const depth=Math.pow(xr,0.7);
+    const na=inBox(latd,lond,NA), other=!na&&inBox(latd,lond,OTHER);
+    let o,r,c;
+    if(na){o=1.0*depth; r=2.25; c='#eaf5ef';}
+    else if(other){o=0.58*depth; r=1.8; c='#93a8a0';}
+    else {o=0.16*depth; r=1.3; c='#56675f';}
+    if(o<0.045) continue;
+    add('circle',{cx:(cx+R*z3).toFixed(1),cy:(cy-R*yr).toFixed(1),r:r.toFixed(2),fill:c,'fill-opacity':o.toFixed(3)});
   }
 }
-add('circle',{cx,cy,r:R,fill:'none',stroke:'#5b6f66','stroke-width':1.4,'stroke-opacity':0.75});
 </script></body></html>
