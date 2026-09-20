@@ -8,9 +8,17 @@ click by click.
 
 ## 1. What this project is
 
-Every company building AI datacenters publishes a clean-energy claim. "100% renewable."
-"Carbon neutral." Nobody has ever checked those claims against what the power plants
-actually burned, because the claim is one sentence in a PDF and the proof is nine years of
+Every company building AI datacenters publishes a clean-energy claim. The wording is
+careful, and the care is the point. Google: *"we again matched 100% of our electricity
+consumption with renewable energy purchases (on a global and annual basis)"*. Microsoft:
+*"we matched 100% of our annual global electricity consumption with renewable energy"*.
+Meta: *"we have matched 100% of our annual electricity use with clean and renewable
+energy"*.
+
+Notice what none of them say. Not one claims to RUN on clean power. Each says it MATCHED
+its consumption, over a YEAR, with purchases. That is an accounting statement and it is
+accurate. The physical statement, what actually came out of the wires at 3am, is a
+different question and nobody had answered it, because the claim is one sentence in a PDF and the proof is nine years of
 hourly federal data across seventy grid regions. The two live in different formats.
 
 **Wattson joins them.** It takes a company's published claim, works out which electricity
@@ -111,9 +119,10 @@ We did not find new data. We refused to average over the hours that matter.
 
 This is why we never say a company lied.
 
-**The number:** Google says 100% renewable. Its ten mapped datacenters sit on grids that
-ran between **5.6% and 91.3%** carbon-free in 2025. Same company, same annual claim, a
-sixteen-fold spread in what is physically behind it.
+**The number:** Google matched 100% of its consumption with renewable purchases on an
+annual basis. Its ten mapped datacenters sit on grids that ran between **5.6% and 91.3%**
+carbon-free in 2025. Same company, same annual claim, a sixteen-fold spread in what is
+physically behind it. The claim is true. The spread is also true.
 
 ### Step 6. None of this works unless you know which grid each datacenter is on.
 
@@ -174,9 +183,11 @@ each region has a 2025 carbon-free share:
 Plain average of those ten = **0.464**. That is the entire calculation. No weighting by
 site size, which is a limitation we state: one very large site could move it.
 
-**Talk score** = magnitude × specificity × scope. Google's is 0.405. "100% renewable" scores
-high on magnitude and specificity, then loses scope because the claim is annual and
-market-based.
+**Talk score** = magnitude × specificity × scope. Google's is 0.405, not 1.0, and the
+reason is exactly the hedging above. "100%" scores high on magnitude and specificity, then
+loses most of its scope to four qualifiers: *matched*, *purchases*, *annual*, *global*.
+A company that said plainly "our datacenters run on renewable energy" would score far
+higher, and none of them say that.
 
 ### The detector
 
@@ -232,9 +243,14 @@ hourly federal data. We joined them."*
 
 On screen: Google's claim with a page citation, the verdict, 10 sites with their utilities.
 
-Say: *"Google says 100% renewable. That is true under the accounting standard, so we say
-true on paper. Physically, its ten datacenters sit on grids that ran from six percent to
-ninety-one percent carbon-free. One contract, ten completely different realities."*
+Say: *"Google says it matched 100% of its electricity consumption with renewable energy
+purchases, on a global and annual basis. That is true, and it is careful. What it does not
+say is what came out of the wire. Its ten datacenters sit on grids that ran from six
+percent to ninety-one percent carbon-free. One annual claim, ten different physical
+realities."*
+
+**Do not paraphrase this as "Google says 100% renewable."** The quote is on page 4 and a
+judge can pull it up. Quote it, do not summarise it.
 
 If asked how: *"Plain average of the ten grids. No weighting, no contracts."*
 
