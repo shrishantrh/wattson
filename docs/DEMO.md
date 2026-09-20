@@ -45,9 +45,12 @@ Pause.
 > anything. We can measure what a company runs on whether or not it ever says a word, and
 > those forty-eight are the ones building fastest right now."**
 
-> **"So we take the claim where there is one, work out which grid each datacenter actually
-> plugs into, and put it next to what the power plants burned. What we wanted was one thing:
-> to turn a claim nobody could check into a number you can look up."**
+> **"So that's what Wattson is."**
+
+> **"We check what AI datacenters actually run on."**
+
+Say that line flat and stop. It is the whole product in eight words, and everything after
+this is you proving it.
 
 **Now click "What we found in the grid data →" at the bottom of the home screen.**
 
