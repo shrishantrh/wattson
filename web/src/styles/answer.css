@@ -186,3 +186,8 @@
   .ans-gap-v.long { font-size: 18px; }
   .ans-rank li.is-best .ans-rank-v { font-size: 26px; }
 }
+
+/* four load shapes in a 2x2 grid: wrapping a segmented control into a ragged second row
+   reads as a layout bug, a grid reads as a choice */
+.ans-controls .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 100%; }
+.ans-controls .seg button { width: 100%; text-align: center; }
