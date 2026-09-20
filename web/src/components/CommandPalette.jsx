@@ -203,6 +203,9 @@ function Preview({ preview }) {
 
 // cmdk root with shouldFilter=false: lib/commands.js does the matching, so each group is capped
 // and the free-text "Ask" fallback is offered only when nothing matches (or the query is composed).
+// The product's own accent orange, stated rather than derived: the library picks a hue from the
+// seed and 'wattson' lands on a periwinkle that matches nothing else on the page.
+const FACE_PALETTE = { head: '#ff7a4a', eye: '#1a0e08' }
 const FACE_EXPR = { idle: calm, listening: calm, thinking: unsure, answering: happy, failed: sad, unavailable: sleepy }
 const FACE_SAY = { idle: 'Ask layer ready', listening: 'Listening', thinking: 'Working on it', answering: 'Answer ready', failed: 'That did not come back', unavailable: 'Ask layer not running in this copy' }
 
@@ -414,9 +417,11 @@ function Palette({ groups, loading, limit, emptyLimit, autoFocus, placeholder, o
         <span ref={faceBox} className="pal-face" data-state={faceState} title={FACE_SAY[faceState]} aria-hidden="true">
           {/* background={false}: the library's own backdrop is a near-white plate, which reads as a
               sticker on a dark bar. The blob is the figure; the circle around it is ours, in CSS.
+              hue 16 is the product's own accent orange, so the face matches the wordmark's kicker
+              rather than introducing a fifth colour.
               animate="always" so it breathes at rest instead of waiting for a hover that never
               comes inside an input. */}
-          <Blobatar name="wattson" size={30} hue={272} background={false}
+          <Blobatar name="wattson" size={30} palette={FACE_PALETTE} background={false}
             animate="always" expression={FACE_EXPR[faceState]} title="" />
         </span>
         {/* The completion is drawn behind the input: the typed half is transparent so the
