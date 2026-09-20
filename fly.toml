@@ -1,23 +1,24 @@
-# Free-tier shaped: one shared CPU, 256 MB, scaled to zero when idle.
-# A cold start costs a few seconds on the first question and nothing after. The site
-# itself never waits on this -- askAvailable() fails closed and the palette stays in
-# navigation mode, so a sleeping or dead API degrades to exactly today's behaviour.
-app = "wattson-api"
-primary_region = "iad"          # same coast as the judges and near PJM, for what it's worth
+# fly.toml app configuration file generated for wattson-api-ivory-seastar-408 on 2026-09-19T19:59:28-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'wattson-api-ivory-seastar-408'
+primary_region = 'iad'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
+
+[env]
+  WATTSON_ASK_MODEL = 'gpt-5'
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = "stop"
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
 
 [[vm]]
-  size = "shared-cpu-1x"
-  memory = "256mb"
-
-[env]
-  WATTSON_ASK_MODEL = "gpt-5"
+  size = 'shared-cpu-1x'
+  memory = '256mb'

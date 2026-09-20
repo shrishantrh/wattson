@@ -125,9 +125,16 @@ def t_region(region_id: str):
     return out
 
 
+MAX_COMPARE = 8
+
+
 def t_compare_regions(region_ids: list, metric: str = "cf_share_overnight", years: list = None):
     """Line up several regions on one metric across years. Use for any comparison question."""
     years = years or ["2019", "2025"]
+    truncated = None
+    if len(region_ids) > MAX_COMPARE:
+        truncated = len(region_ids) - MAX_COMPARE
+        region_ids = region_ids[:MAX_COMPARE]
     paths = {
         "cf_share_overnight": lambda r, y: ((r.get("cf_share") or {}).get(y) or {}).get("overnight"),
         "cf_share_daytime": lambda r, y: ((r.get("cf_share") or {}).get(y) or {}).get("daytime"),
@@ -151,8 +158,14 @@ def t_compare_regions(region_ids: list, metric: str = "cf_share_overnight", year
                      "change": (round(b - a, 4) if a is not None and b is not None else None),
                      "cf_inherited_from_ba": r.get("cf_inherited_from_ba"),
                      "has_corrections": data.corrections_for(rid) is not None})
-    return {"metric": metric, "years": years, "rows": rows,
-            "note": "Shares are 0-1 fractions. A zone's generation figures are its parent BA's."}
+    out = {"metric": metric, "years": years, "rows": rows,
+           "note": "Shares are 0-1 fractions. A zone's generation figures are its parent BA's."}
+    if truncated:
+        out["truncated"] = (f"{truncated} more regions were requested than this tool returns at "
+                            f"once. For a ranking across all regions use rank_regions instead of "
+                            f"comparing many by name, and say in your answer that the list was "
+                            f"narrowed.")
+    return out
 
 
 def t_national():
@@ -241,7 +254,7 @@ SCHEMAS = [
         "description": "Everything about one region: clean share by year, demand, fuel change, siting, operators, and any corrections to published values. Region ids look like PJM, ERCO, AZPS, or PJM/DOM for a zone.",
         "parameters": {"type": "object", "properties": {"region_id": {"type": "string"}}, "required": ["region_id"]}}},
     {"type": "function", "function": {"name": "compare_regions",
-        "description": "Line several regions up on one metric across years. USE THIS FOR ANY COMPARISON QUESTION rather than calling region repeatedly.",
+        "description": "Line up to 8 named regions on one metric across years. Use for a comparison between regions the user named. For 'which regions are the worst/best at X' across the whole set, call rank_regions instead -- it is one call and it sorts all 111.",
         "parameters": {"type": "object", "properties": {
             "region_ids": {"type": "array", "items": {"type": "string"}},
             "metric": {"type": "string", "enum": ["cf_share_overnight", "cf_share_daytime", "cf_share_all", "clean_mw_overnight", "total_mw_overnight", "demand_avg_mw", "demand_overnight_mw"]},
@@ -272,7 +285,7 @@ SCHEMAS = [
             "limit": {"type": "integer"}}, "required": ["q"]}}},
 ]
 
-MAX_TURNS = 6
+MAX_TURNS = 5
 
 
 def ask(question: str, page_context: dict | None = None, max_turns: int = MAX_TURNS) -> dict:
