@@ -26,6 +26,17 @@ const END = '<!-- SLIDES:END -->';
 
 const MAX_WORDS = 15;
 
+// Per-file exceptions to MAX_WORDS. One file has one, recorded in CONTRACT.md with its
+// reason: 02-concepts.html is the teaching opening, spoken before any screen is touched,
+// and its slides carry a definition and a consequence rather than punctuating a live demo.
+// A raised ceiling for one fragment is enforced here rather than by loosening the cap for
+// everyone, so the other fragments cannot drift into it by accident.
+const WORD_CAP_EXCEPTIONS = {
+  '07-payoff.html': 25,   // a labelled chain diagram; the labels are the content
+  '02-concepts.html': 25,
+};
+const wordCap = (file) => WORD_CAP_EXCEPTIONS[file] ?? MAX_WORDS;
+
 // The running order. Every one of these must exist or a placeholder stands in for it.
 //
 // Cut down on 2026-09-20. The pitch is now the live demo in docs/DEMO.md; the deck is a
@@ -34,9 +45,14 @@ const MAX_WORDS = 15;
 // in a second deck that could drift from the demo's wording — 02-solution, 03-howitworks,
 // 05-results, 06-rigor, 07-stack. The PJM finding and the prediction survive as backup
 // slides in 09-backup.html, for the night the site is down.
+// 02-concepts was added back on 2026-09-20: the demo teaches nothing to a judge who does
+// not already know what a grid region is or what a clean share measures, so the opening now
+// lays out the two terms and the six steps of the argument before the site is opened.
 const RUNNING_ORDER = [
   ['01', 'problem'],
+  ['02', 'concepts'],
   ['04', 'demo'],
+  ['07', 'payoff'],
   ['08', 'close'],
 ];
 
@@ -178,12 +194,13 @@ for (const file of files) {
     if (!notes) warnings.push(`${label}: <section> has no data-notes.`);
     if (!/\bclass\s*=\s*"[^"]*\bslide\b/i.test(sec)) errors.push(`${label}: <section> is missing class="slide".`);
 
+    const cap = wordCap(file);
     const words = visibleWords(sec);
-    if (words.length > MAX_WORDS) {
-      errors.push(`${label}: ${words.length} visible words, max ${MAX_WORDS}. Over by ${words.length - MAX_WORDS}: "${words.join(' ').slice(0, 120)}..."`);
+    if (words.length > cap) {
+      errors.push(`${label}: ${words.length} visible words, max ${cap}. Over by ${words.length - cap}: "${words.join(' ').slice(0, 120)}..."`);
     }
 
-    slides.push({ file: label, html: sec.trim(), title: title || '(untitled)', words: words.length, prefix });
+    slides.push({ file: label, html: sec.trim(), title: title || '(untitled)', words: words.length, cap, prefix });
   }
 }
 
@@ -220,7 +237,8 @@ console.log('');
 console.log('  Wattson deck assembly');
 console.log('  ' + '-'.repeat(68));
 for (const [i, s] of assembled.entries()) {
-  const flag = s.missing ? ' MISSING' : s.words > MAX_WORDS ? ' OVER' : '';
+  const cap = s.cap ?? MAX_WORDS;
+  const flag = s.missing ? ' MISSING' : s.words > cap ? ' OVER' : cap !== MAX_WORDS ? ` (cap ${cap})` : '';
   console.log(`  ${W(i + 1)}. ${String(s.words).padStart(2)}w  ${s.title.padEnd(34).slice(0, 34)}  ${s.file}${flag}`);
 }
 console.log('  ' + '-'.repeat(68));

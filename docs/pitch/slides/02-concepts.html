@@ -1,0 +1,82 @@
+<!-- 02-concepts.html. PART ONE of docs/DEMO.md, the 75 seconds spoken before any screen is
+     touched. Three slides. This is the only stretch of the pitch with no live product on
+     screen, which is the whole reason the deck still exists.
+     Cap for this file is 25 words (see CONTRACT.md); counts below are 22 / 24 / 23.
+     Everything the demo shows live was retired on 2026-09-20 - a slide beside a live screen
+     loses, and two tellings of one idea is how the deck and the demo drift apart. -->
+
+<section class="slide" data-title="An accounting problem"
+  data-notes="SPOKEN, from docs/DEMO.md Part One: &quot;It isn&#39;t that nobody cared. Greenwashing here is an accounting problem, not a lying problem. These companies don&#39;t say they run on clean power. They say they MATCHED their ANNUAL consumption with renewable PURCHASES. That&#39;s a real accounting standard, it&#39;s correct, and it averages over every hour of the year. So buying solar at noon cancels burning gas at 3am, on paper. The claim is airtight and the physical question underneath it had never been asked.&quot;
+
+THIS IS THE TURN OF THE WHOLE PITCH. Everything after it depends on the judge accepting that the claim is true and the question is still open. Say it slowly and do not touch the laptop.
+
+THE THREE MARKED WORDS ARE THE ARGUMENT. Matched, not ran on. Annual, not hourly. Purchases, not generation. A judge who reads those three words understands the thesis before you finish the sentence.
+
+HOUSE RULE, from DEMO.md: never paraphrase any of these as &#39;100% renewable&#39;. Quote them or leave them out. Google&#39;s exact sentence, page 4 of its 2026 environmental report: &#39;we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)&#39;. Microsoft and Meta word it almost identically. Source: api/company/GOOGL.json claims[0].verbatim, page 4.
+
+8,760 is arithmetic, 365 x 24. It is on the slide because it makes the averaging concrete: a year is that many hours added together, and one sum cannot tell them apart.">
+  <div class="eyebrow">The claims</div>
+  <h2 class="headline">They never say they run on clean power.</h2>
+  <p class="sub">They <b>matched</b> an <b>annual</b> total with <b>purchases</b>. One sum over 8,760 hours.</p>
+  <div class="rule"></div>
+</section>
+
+<section class="slide" data-title="Flat demand"
+  data-notes="SPOKEN, from docs/DEMO.md Part One: &quot;Datacenters are unusual in one way that makes it matter. Your house uses most of its power in the evening. A factory runs shifts. A datacenter draws the same power at three in the morning as at noon, and it never stops. So half its life is spent in the half of the day that never got cleaner.&quot;
+
+WHY THIS SLIDE EXISTS. Without it, a judge has no reason to care that the night is dirtier than the day - plenty of things run at night. The point is that a datacenter is the one large customer that cannot be partly served by power that is only sometimes there. Servers do not sleep.
+
+THE PICTURE. Three demand shapes over 24 hours, same axis: a house peaking in the evening, a factory running shifts, a datacenter flat. The flat line is the anomaly and it should read as one.
+
+Source for the shapes: illustrative, not measured, and the notes say so. No figure on this slide needs a citation because there is no figure on it. The measured version of this idea is the day-vs-night screen in the live demo (Screen 2).
+
+IF ASKED whether flat load is only datacenters: no. Crypto and oilfield electrification look identical, and our rank 2 region is probably the Permian oilfield. Volunteer that rather than be caught by it.">
+  <div class="eyebrow">Why datacenters</div>
+  <h2 class="headline">A datacenter never stops.</h2>
+  <svg viewBox="0 0 900 200" role="img" aria-label="Three daily demand shapes: a house peaking in the evening, a factory running shifts, and a datacenter flat across the day">
+    <g style="fill:var(--muted)" font-size="19" font-family="inherit">
+      <text x="10" y="42">House</text>
+      <text x="10" y="106">Factory</text>
+      <text x="10" y="170" style="fill:var(--ink)">Datacenter</text>
+    </g>
+    <g fill="none" stroke-width="3" stroke-linecap="round">
+      <path d="M150 46 L214 44 L278 42 L342 40 L406 38 L470 34 L534 26 L598 14 L662 20 L726 34 L790 42 L854 46" style="stroke:var(--muted)"/>
+      <path d="M150 118 L214 118 L246 92 L310 90 L374 92 L438 118 L470 118 L502 92 L566 90 L630 92 L694 118 L790 118 L854 118" style="stroke:var(--muted)"/>
+      <path d="M150 166 L854 166" style="stroke:var(--accent)"/>
+    </g>
+    <g style="fill:var(--muted)" font-size="15" font-family="inherit">
+      <text x="150" y="196">midnight</text>
+      <text x="470" y="196" text-anchor="middle">noon</text>
+      <text x="854" y="196" text-anchor="end">midnight</text>
+    </g>
+  </svg>
+</section>
+
+<section class="slide" data-title="Fifty-two operators"
+  data-notes="SPOKEN, from docs/DEMO.md Part One: &quot;We hold fifty-two operators. The four you&#39;ve heard of at least publish a report we can check. The other forty-eight, the neoclouds, the bitcoin miners that converted to AI, the colocation companies, mostly publish nothing at all. There is no claim to check and no report to read. That&#39;s exactly why this works. The grid data doesn&#39;t care whether anyone published anything. We can measure what a company runs on whether or not it ever says a word, and those forty-eight are the ones building fastest right now.&quot;
+
+THE FRAMING MATTERS AND WE HAD IT BACKWARDS. An earlier deck showed 48 of 52 as a coverage gap - an apology. It is the opposite. The method does not need anyone to publish. That is the strength, and the 48 are the ones building fastest.
+
+FIGURES: 52 operators, 134 sites, 4 with documents read, 48 sites-only. Source numbers-v2.md 2.5, from api/companies.json count / count_with_claims / count_sites_only.
+
+DO NOT SAY &#39;twelve&#39; for the coverage gap. A stale string in an older data file says twelve; it is 48. numbers-v2.md X1.
+
+IF ASKED what a neocloud is: a GPU rental company that grew out of crypto mining or built from scratch for AI - CoreWeave, Crusoe, Nebius and similar. They are not covered by sustainability reporting the way a public technology company is.">
+  <div class="eyebrow">Who we hold</div>
+  <h2 class="headline">Most of them publish nothing.</h2>
+  <svg viewBox="0 0 900 128" role="img" aria-label="Fifty-two operators: four publish a report, forty-eight publish nothing, and all fifty-two are measured from grid data">
+    <g>
+      <rect x="10" y="16" width="62" height="34" rx="6" style="fill:var(--accent)" fill-opacity="0.9"/>
+      <text x="41" y="39" text-anchor="middle" font-size="19" font-family="inherit" style="fill:var(--bg)">4</text>
+      <text x="86" y="39" font-size="19" font-family="inherit" style="fill:var(--ink)">publish a report</text>
+    </g>
+    <g>
+      <rect x="10" y="66" width="62" height="34" rx="6" fill="none" stroke-width="1.5" style="stroke:var(--line-strong)"/>
+      <text x="41" y="89" text-anchor="middle" font-size="19" font-family="inherit" style="fill:var(--muted)">48</text>
+      <text x="86" y="89" font-size="19" font-family="inherit" style="fill:var(--muted)">publish nothing</text>
+    </g>
+    <line x1="470" y1="18" x2="470" y2="106" stroke-width="1.5" style="stroke:var(--line-soft)"/>
+    <text x="506" y="55" font-size="19" font-family="inherit" style="fill:var(--ink)">All 52 draw from a grid</text>
+    <text x="506" y="86" font-size="19" font-family="inherit" style="fill:var(--ink)">we already measure</text>
+  </svg>
+</section>

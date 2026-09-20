@@ -320,6 +320,85 @@ body.show-notes #notes { display: flex; }
     <span class="rule"></span>
   </section>
   
+  <!-- 02-concepts.html#1 -->
+  <section class="slide" data-title="An accounting problem"
+    data-notes="SPOKEN, from docs/DEMO.md Part One: &quot;It isn&#39;t that nobody cared. Greenwashing here is an accounting problem, not a lying problem. These companies don&#39;t say they run on clean power. They say they MATCHED their ANNUAL consumption with renewable PURCHASES. That&#39;s a real accounting standard, it&#39;s correct, and it averages over every hour of the year. So buying solar at noon cancels burning gas at 3am, on paper. The claim is airtight and the physical question underneath it had never been asked.&quot;
+  
+  THIS IS THE TURN OF THE WHOLE PITCH. Everything after it depends on the judge accepting that the claim is true and the question is still open. Say it slowly and do not touch the laptop.
+  
+  THE THREE MARKED WORDS ARE THE ARGUMENT. Matched, not ran on. Annual, not hourly. Purchases, not generation. A judge who reads those three words understands the thesis before you finish the sentence.
+  
+  HOUSE RULE, from DEMO.md: never paraphrase any of these as &#39;100% renewable&#39;. Quote them or leave them out. Google&#39;s exact sentence, page 4 of its 2026 environmental report: &#39;we again matched 100% of our electricity consumption with renewable energy purchases (on a global and annual basis)&#39;. Microsoft and Meta word it almost identically. Source: api/company/GOOGL.json claims[0].verbatim, page 4.
+  
+  8,760 is arithmetic, 365 x 24. It is on the slide because it makes the averaging concrete: a year is that many hours added together, and one sum cannot tell them apart.">
+    <div class="eyebrow">The claims</div>
+    <h2 class="headline">They never say they run on clean power.</h2>
+    <p class="sub">They <b>matched</b> an <b>annual</b> total with <b>purchases</b>. One sum over 8,760 hours.</p>
+    <div class="rule"></div>
+  </section>
+  
+  <!-- 02-concepts.html#2 -->
+  <section class="slide" data-title="Flat demand"
+    data-notes="SPOKEN, from docs/DEMO.md Part One: &quot;Datacenters are unusual in one way that makes it matter. Your house uses most of its power in the evening. A factory runs shifts. A datacenter draws the same power at three in the morning as at noon, and it never stops. So half its life is spent in the half of the day that never got cleaner.&quot;
+  
+  WHY THIS SLIDE EXISTS. Without it, a judge has no reason to care that the night is dirtier than the day - plenty of things run at night. The point is that a datacenter is the one large customer that cannot be partly served by power that is only sometimes there. Servers do not sleep.
+  
+  THE PICTURE. Three demand shapes over 24 hours, same axis: a house peaking in the evening, a factory running shifts, a datacenter flat. The flat line is the anomaly and it should read as one.
+  
+  Source for the shapes: illustrative, not measured, and the notes say so. No figure on this slide needs a citation because there is no figure on it. The measured version of this idea is the day-vs-night screen in the live demo (Screen 2).
+  
+  IF ASKED whether flat load is only datacenters: no. Crypto and oilfield electrification look identical, and our rank 2 region is probably the Permian oilfield. Volunteer that rather than be caught by it.">
+    <div class="eyebrow">Why datacenters</div>
+    <h2 class="headline">A datacenter never stops.</h2>
+    <svg viewBox="0 0 900 200" role="img" aria-label="Three daily demand shapes: a house peaking in the evening, a factory running shifts, and a datacenter flat across the day">
+      <g style="fill:var(--muted)" font-size="19" font-family="inherit">
+        <text x="10" y="42">House</text>
+        <text x="10" y="106">Factory</text>
+        <text x="10" y="170" style="fill:var(--ink)">Datacenter</text>
+      </g>
+      <g fill="none" stroke-width="3" stroke-linecap="round">
+        <path d="M150 46 L214 44 L278 42 L342 40 L406 38 L470 34 L534 26 L598 14 L662 20 L726 34 L790 42 L854 46" style="stroke:var(--muted)"/>
+        <path d="M150 118 L214 118 L246 92 L310 90 L374 92 L438 118 L470 118 L502 92 L566 90 L630 92 L694 118 L790 118 L854 118" style="stroke:var(--muted)"/>
+        <path d="M150 166 L854 166" style="stroke:var(--accent)"/>
+      </g>
+      <g style="fill:var(--muted)" font-size="15" font-family="inherit">
+        <text x="150" y="196">midnight</text>
+        <text x="470" y="196" text-anchor="middle">noon</text>
+        <text x="854" y="196" text-anchor="end">midnight</text>
+      </g>
+    </svg>
+  </section>
+  
+  <!-- 02-concepts.html#3 -->
+  <section class="slide" data-title="Fifty-two operators"
+    data-notes="SPOKEN, from docs/DEMO.md Part One: &quot;We hold fifty-two operators. The four you&#39;ve heard of at least publish a report we can check. The other forty-eight, the neoclouds, the bitcoin miners that converted to AI, the colocation companies, mostly publish nothing at all. There is no claim to check and no report to read. That&#39;s exactly why this works. The grid data doesn&#39;t care whether anyone published anything. We can measure what a company runs on whether or not it ever says a word, and those forty-eight are the ones building fastest right now.&quot;
+  
+  THE FRAMING MATTERS AND WE HAD IT BACKWARDS. An earlier deck showed 48 of 52 as a coverage gap - an apology. It is the opposite. The method does not need anyone to publish. That is the strength, and the 48 are the ones building fastest.
+  
+  FIGURES: 52 operators, 134 sites, 4 with documents read, 48 sites-only. Source numbers-v2.md 2.5, from api/companies.json count / count_with_claims / count_sites_only.
+  
+  DO NOT SAY &#39;twelve&#39; for the coverage gap. A stale string in an older data file says twelve; it is 48. numbers-v2.md X1.
+  
+  IF ASKED what a neocloud is: a GPU rental company that grew out of crypto mining or built from scratch for AI - CoreWeave, Crusoe, Nebius and similar. They are not covered by sustainability reporting the way a public technology company is.">
+    <div class="eyebrow">Who we hold</div>
+    <h2 class="headline">Most of them publish nothing.</h2>
+    <svg viewBox="0 0 900 128" role="img" aria-label="Fifty-two operators: four publish a report, forty-eight publish nothing, and all fifty-two are measured from grid data">
+      <g>
+        <rect x="10" y="16" width="62" height="34" rx="6" style="fill:var(--accent)" fill-opacity="0.9"/>
+        <text x="41" y="39" text-anchor="middle" font-size="19" font-family="inherit" style="fill:var(--bg)">4</text>
+        <text x="86" y="39" font-size="19" font-family="inherit" style="fill:var(--ink)">publish a report</text>
+      </g>
+      <g>
+        <rect x="10" y="66" width="62" height="34" rx="6" fill="none" stroke-width="1.5" style="stroke:var(--line-strong)"/>
+        <text x="41" y="89" text-anchor="middle" font-size="19" font-family="inherit" style="fill:var(--muted)">48</text>
+        <text x="86" y="89" font-size="19" font-family="inherit" style="fill:var(--muted)">publish nothing</text>
+      </g>
+      <line x1="470" y1="18" x2="470" y2="106" stroke-width="1.5" style="stroke:var(--line-soft)"/>
+      <text x="506" y="55" font-size="19" font-family="inherit" style="fill:var(--ink)">All 52 draw from a grid</text>
+      <text x="506" y="86" font-size="19" font-family="inherit" style="fill:var(--ink)">we already measure</text>
+    </svg>
+  </section>
+  
   <!-- 04-demo.html -->
   <section class="slide" data-title="Live demo" data-notes="HOLDING SLIDE. Up for four to six minutes. THE PITCH IS THE DEMO - drive it from docs/DEMO.md, which is click by click and was checked against the live site. Three-minute cut: sections 2, 6, 10 (the table, the company, the freeze). Five minutes: add 3, 7, 9. Full: all of it, about seven minutes.
   
@@ -355,6 +434,43 @@ body.show-notes #notes { display: flex; }
       <p class="note">52 operators, 134 sites</p>
     </div>
   
+  </section>
+  
+  <!-- 07-payoff.html -->
+  <section class="slide" data-title="The chain"
+    data-notes="SPOKEN, from docs/DEMO.md Part Three: &quot;A datacenter is a billion-dollar electricity customer that nobody announces. The operator doesn&#39;t say which utility serves it. The utility often can&#39;t say either. It surfaces in an earnings call months later. But it cannot hide from the meter. The moment that load energises, it is in federal data within two hours. So every region we flag resolves to the utility that delivers the power, that utility&#39;s parent company, and a ticker. Northern Virginia is rank six. Overnight demand up thirty-nine percent. Utility: Virginia Electric and Power. Parent: Dominion Energy, ticker D. That is a data point about Dominion that came out of a power meter, not out of Dominion.&quot;
+  
+  THEN THE CLOSE, and land it without hedging: &quot;Three people use this. A journalist or a regulator gets every claim with a page citation, next to what the grid actually generated. Whoever is building the next datacenter gets a ranking of where clean power actually exists at three in the morning, which is the hour that decides whether they&#39;re served by existing clean capacity or by new gas. And an investor gets a billion-dollar event in public data, two hours after it happens.&quot;
+  
+  DO NOT ADD A DISCLAIMER HERE. The demo script is explicit: do not mention lying, backtests or coverage gaps at the close. If they want the limits they will ask, and you have them.
+  
+  FIGURES. Rank 6 of 111 and +39% overnight demand growth: PJM/DOM detection.rank and detection.overnight_growth_pct, numbers.md 2.3. Utility, parent and ticker: api/facilities.json, hand-traced from the serving utility outward, never inferred from the state.
+  
+  IF ASKED whether this is tradeable: &#39;It is an input to a trade, not a trade. A third of the load we found sits on public power and cooperatives with no listed equity at all, that number is on the screen, and we have run no backtest and don&#39;t claim one.&#39;
+  
+  TWO-HOUR LAG: EIA-930 publishes with roughly a two hour delay. That is the reason the last line of the chain matters - the event is public before the company discusses it.">
+    <h2 class="headline">A meter reading, not an announcement.</h2>
+    <svg viewBox="0 0 900 150" role="img" aria-label="The chain from a flagged region to a listed company: Northern Virginia, rank six, overnight demand up thirty-nine percent, served by Virginia Electric and Power, parent Dominion Energy, ticker D">
+      <g font-family="inherit">
+        <text x="10" y="40" font-size="21" style="fill:var(--ink)">N. Virginia</text>
+        <text x="10" y="68" font-size="17" style="fill:var(--muted)">rank 6 · +39% at night</text>
+        <text x="300" y="40" font-size="21" style="fill:var(--ink)">Virginia Electric and Power</text>
+        
+        <text x="676" y="40" font-size="21" style="fill:var(--ink)">Dominion Energy</text>
+        
+        <text x="676" y="114" font-size="34" style="fill:var(--accent)">D</text>
+      </g>
+      <g stroke-width="1.6" style="stroke:var(--line-strong)">
+        <line x1="246" y1="34" x2="286" y2="34"/>
+        <line x1="620" y1="34" x2="662" y2="34"/>
+      </g>
+      <g fill="none" stroke-width="1.6" style="stroke:var(--line-strong)">
+        <path d="M282 30 l6 4 -6 4"/>
+        <path d="M658 30 l6 4 -6 4"/>
+      </g>
+      <line x1="10" y1="132" x2="890" y2="132" stroke-width="1" style="stroke:var(--line-soft)"/>
+      <text x="10" y="148" font-size="15" font-family="inherit" style="fill:var(--muted)">federal data, two-hour lag</text>
+    </svg>
   </section>
   
   <!-- 08-close.html -->

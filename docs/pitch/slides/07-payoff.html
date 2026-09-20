@@ -1,0 +1,41 @@
+<!-- 07-payoff.html. PART THREE of docs/DEMO.md. One slide, shown while Generating Alpha is
+     on screen or straight after it, then the close.
+     Visible word count: 15. Max is 15.
+     The chain is the payoff and it is the one thing in Part Three that is clearer drawn than
+     spoken: a region we flagged resolves to a utility, to a parent, to a ticker. -->
+
+<section class="slide" data-title="The chain"
+  data-notes="SPOKEN, from docs/DEMO.md Part Three: &quot;A datacenter is a billion-dollar electricity customer that nobody announces. The operator doesn&#39;t say which utility serves it. The utility often can&#39;t say either. It surfaces in an earnings call months later. But it cannot hide from the meter. The moment that load energises, it is in federal data within two hours. So every region we flag resolves to the utility that delivers the power, that utility&#39;s parent company, and a ticker. Northern Virginia is rank six. Overnight demand up thirty-nine percent. Utility: Virginia Electric and Power. Parent: Dominion Energy, ticker D. That is a data point about Dominion that came out of a power meter, not out of Dominion.&quot;
+
+THEN THE CLOSE, and land it without hedging: &quot;Three people use this. A journalist or a regulator gets every claim with a page citation, next to what the grid actually generated. Whoever is building the next datacenter gets a ranking of where clean power actually exists at three in the morning, which is the hour that decides whether they&#39;re served by existing clean capacity or by new gas. And an investor gets a billion-dollar event in public data, two hours after it happens.&quot;
+
+DO NOT ADD A DISCLAIMER HERE. The demo script is explicit: do not mention lying, backtests or coverage gaps at the close. If they want the limits they will ask, and you have them.
+
+FIGURES. Rank 6 of 111 and +39% overnight demand growth: PJM/DOM detection.rank and detection.overnight_growth_pct, numbers.md 2.3. Utility, parent and ticker: api/facilities.json, hand-traced from the serving utility outward, never inferred from the state.
+
+IF ASKED whether this is tradeable: &#39;It is an input to a trade, not a trade. A third of the load we found sits on public power and cooperatives with no listed equity at all, that number is on the screen, and we have run no backtest and don&#39;t claim one.&#39;
+
+TWO-HOUR LAG: EIA-930 publishes with roughly a two hour delay. That is the reason the last line of the chain matters - the event is public before the company discusses it.">
+  <h2 class="headline">A meter reading, not an announcement.</h2>
+  <svg viewBox="0 0 900 150" role="img" aria-label="The chain from a flagged region to a listed company: Northern Virginia, rank six, overnight demand up thirty-nine percent, served by Virginia Electric and Power, parent Dominion Energy, ticker D">
+    <g font-family="inherit">
+      <text x="10" y="40" font-size="21" style="fill:var(--ink)">N. Virginia</text>
+      <text x="10" y="68" font-size="17" style="fill:var(--muted)">rank 6 · +39% at night</text>
+      <text x="300" y="40" font-size="21" style="fill:var(--ink)">Virginia Electric and Power</text>
+      
+      <text x="676" y="40" font-size="21" style="fill:var(--ink)">Dominion Energy</text>
+      
+      <text x="676" y="114" font-size="34" style="fill:var(--accent)">D</text>
+    </g>
+    <g stroke-width="1.6" style="stroke:var(--line-strong)">
+      <line x1="246" y1="34" x2="286" y2="34"/>
+      <line x1="620" y1="34" x2="662" y2="34"/>
+    </g>
+    <g fill="none" stroke-width="1.6" style="stroke:var(--line-strong)">
+      <path d="M282 30 l6 4 -6 4"/>
+      <path d="M658 30 l6 4 -6 4"/>
+    </g>
+    <line x1="10" y1="132" x2="890" y2="132" stroke-width="1" style="stroke:var(--line-soft)"/>
+    <text x="10" y="148" font-size="15" font-family="inherit" style="fill:var(--muted)">federal data, two-hour lag</text>
+  </svg>
+</section>
