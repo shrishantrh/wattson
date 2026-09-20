@@ -229,6 +229,200 @@ half is gas or coal.
 
 ---
 
+## 4b. The detector score, formula and all
+
+```
+score  =  z(overnight_excess)  +  z(neighbor_divergence)  +  0.5 x z(load_factor_delta)
+```
+
+### The three inputs, in plain words
+
+**`overnight_excess`** = how many percentage points faster a region's demand grew at NIGHT
+than it grew ON AVERAGE, 2019 to 2025.
+
+> A house peaks in the evening. A factory runs shifts. Both grow their peak faster than
+> their trough. A datacenter grows both equally, so its region's nights start catching up
+> with its days. Northern Virginia's is **+7.7 points**. ERCOT North's is **+13.4**.
+
+**`neighbor_divergence`** = this region's average demand growth minus the MEDIAN growth of
+the other zones on the same grid.
+
+> This controls for the regional economy. If all of Texas is booming, a booming Dallas
+> proves nothing. Northern Virginia's is **+32.9 points**, meaning it grew 33 points faster
+> than the rest of PJM.
+
+**`load_factor_delta`** = the change in (average demand ÷ peak demand) between 2019 and 2025.
+
+> Load factor is how flat your demand curve is. A perfectly flat customer has a load factor
+> of 1.0. Adding a 24/7 load pushes a region's load factor up. Dominion's rose **+0.042**.
+
+### What `z()` means, and why robust
+
+A z-score says "how many typical deviations from typical is this." It puts three quantities
+measured in different units on one scale so they can be added.
+
+We use a **robust** z: `(x - median) / (MAD x 1.4826)` rather than `(x - mean) / std`.
+
+> Why it matters here: ERCOT's two zones grew **+94.6%** and **+116.1%**. With a normal
+> z-score those two outliers inflate the standard deviation, which shrinks everyone else's
+> score toward zero and hides real signal in the other 109 regions. The median and the
+> median absolute deviation barely move when two points are extreme. The 1.4826 is the
+> constant that makes MAD comparable to a standard deviation for normal data.
+
+### Why 0.5 on the third term
+
+Load factor is the noisiest of the three: it depends on a single peak hour, and one bad
+hour of data moves it. It gets half weight for that reason, and the weight was fixed before
+any ranking was computed.
+
+### The two cuts
+
+- Regions under **500 MW** average demand are excluded. Below that, one factory closing
+  moves the percentages wildly.
+- Peak is the **99.5th percentile hour**, not the maximum. PJM has one corrupt hour in 2019
+  that would otherwise define its peak.
+
+### Worked example: Northern Virginia
+
+| input | value | robust z |
+|---|---|---|
+| overnight excess | +7.7 pts | ~1.4 |
+| neighbor divergence | +32.9 pts | ~4.5 |
+| load factor delta | +0.042 | ~1.6 |
+
+`1.4 + 4.5 + 0.5 x 1.6 = 7.71` → **rank 6 of 111**.
+
+**Note what carries it: neighbor divergence.** Dominion did not just grow, it grew far
+faster than everything else on its own grid. That is the fingerprint.
+
+---
+
+## 4c. The market side: Generating Alpha
+
+This is the screen most people skip and it is the one an investor cares about.
+
+### The chain
+
+A grid observation is useless to a fund until it ends at something tradeable. The chain has
+four links:
+
+```
+flagged region  ->  serving utility  ->  its parent company  ->  ticker
+```
+
+**Worked example, ERCO/NRTH, our rank 1 region:**
+
+- Demand grew **94.6%** since 2019, overnight excess **+13.4 points**
+- Overnight generation there added **+6.62 GW gas** and **+5.53 GW wind**
+- The utility serving that load is **AEP Texas**
+- Parent: **American Electric Power**, ticker **AEP**, with the SEC filing linked
+- Also exposed: **NRG**
+
+Each instrument carries a `why` sentence and a source URL. Nothing is asserted without one.
+
+### The honest part, and it is the strongest thing on the page
+
+**42 of the 107 sites whose utility we could establish are served by public power, a
+cooperative, or a state authority with no listed equity at all.** A further 27 have no
+established serving utility.
+
+> Say this out loud: "A third of the load we found lands on utilities you cannot buy. That
+> is a real limit on this as a trade, and we put the number on the screen rather than
+> quietly filtering those rows out."
+
+### The Kalshi markets
+
+Four event markets where the thesis is expressible:
+
+| series | what it settles on |
+|---|---|
+| `KXUSADATACENTERS` | how many US datacenters actually get built |
+| `KXDATACENTCON` | US private datacenter construction spending |
+| `KXPOWERKWH` | US average retail electricity price |
+| `KXRATEPAYERLAW` | whether federal datacenter power-cost standards pass |
+
+### The frame, and do not soften it
+
+The page says, in its own text:
+
+> *"This is an input to a trade, not a trade."*
+> *"We have no validation that this signal predicts any price. We have run no backtest and
+> tested nothing against a price series."*
+
+**Why that is the right call:** the mechanism is real — load growth hits a regulated
+utility's rate base before it appears in filings — but we never measured the lead time, so
+we do not quote one. A red-team pass killed an earlier "eighteen months" claim for exactly
+that reason and we deleted it.
+
+> "We stop at the physical input on purpose. We would rather concede the investment case
+> than fake a regulatory model over a weekend."
+
+---
+
+## 4d. The machine learning, what each model was for
+
+**Nothing here produces a number on the site.** Every figure on screen is arithmetic over
+federal data. The models exist to attack our own result from outside. All four were
+forbidden from using any detector output as an input.
+
+### `engine/stats` — is the ranking better than chance?
+
+| test | what it does | result |
+|---|---|---|
+| **Exact permutation** | Score all 5,989,005 possible four-region combinations. Where do our four pre-registered regions land? | p = **0.0488**. Marginal, and we say so |
+| **Block bootstrap** | Resample the hourly data in 7-day blocks, 10,000 times, rebuild the ranking each time | Dominion 6th, 95% CI **3rd to 7th** |
+| **Out-of-sample holdout** | Re-rank using 2026 data the method never saw | Spearman **0.877**, 8 of top 10 unchanged |
+| **Placebo windows** | Run the same frozen method ending in each earlier year | p = 0.13, 0.14, 0.21, 0.10, then **0.049** at 2025. **Nothing before 2025 clears significance** |
+| **FDR control** | Correct for testing 111 regions at once | 71 survive at q=0.05 |
+
+**The placebo result is the one to quote.** The signal appears exactly when the datacenter
+buildout happened and not before. If this were a methodology artifact it would show up in
+every year.
+
+### `engine/ml` — can a model find the same regions without our rule?
+
+Gradient boosting and logistic regression over **17 features of demand shape only** —
+load factor, summer/winter ratio, diurnal range, profile entropy, overnight-to-daytime
+ratio. Labels come from our 134 mapped sites, which were built from utilities and filings,
+never from the detector.
+
+Repeated stratified 5-fold cross-validation, 100 fits. **AUC 0.727**, average precision
+0.705, against floors of 0.500 and 0.441. Zero of 1,000 label shuffles beat it.
+
+**The finding against us, which we publish:** `log(average demand)` alone scores **0.749**,
+beating the shape model. Bigger regions carry more mapped sites because we mapped more
+sites in bigger regions. So the claim is "shape adds information beyond size," not "shape
+beats size."
+
+**The useful reframe it produced:** the model leans on *static flatness*, the detector leans
+on *change*. The detector's load-factor term ranks **last of 52** in the model's importance.
+They measure different things. **The detector finds where flat load is ARRIVING; the model
+finds where it already SITS.**
+
+### `engine/shape` — do datacenter grids cluster? When did load go flat?
+
+k-means and Ward clustering on normalized 24-hour demand profiles, with PCA.
+
+**This came back negative and is published as negative.** 50 pre-declared tests; nothing
+survives correction. Mapped-site regions are *depleted* in the flattest cluster, not
+enriched. PELT changepoint detection found break dates that do not cluster in time either
+(p = 0.310).
+
+**Its one positive is post-hoc and about the detector, not datacenters:** an
+overnight-ratio change computed here without ever reading the detector correlates **0.655**
+with the shipped score.
+
+### `engine/weather` — is it just hot summers?
+
+Regression of demand growth on the change in cooling and heating degree hours, from 138
+NOAA stations, 9.18 million station-hours.
+
+Weather explains **7.8%**. The temperature model itself fits at median R-squared **0.733**,
+so this is not a weak control failing to find an effect.
+
+
+---
+
 ## 5. The demo, click by click
 
 ### Open on the landing page
