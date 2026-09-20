@@ -1,0 +1,8306 @@
+{
+ "meta": {
+  "generated": "2026-09-20 06:41 UTC",
+  "git_head": "ccd3587",
+  "master_seed": 20260920,
+  "seeds": {
+   "permutation": 20260921,
+   "component": 20260922,
+   "bootstrap_week": 20260923,
+   "bootstrap_day": 20260924,
+   "holdout": 20260925,
+   "autocorr": 20260926,
+   "permutation_holdout": 20260927,
+   "bootstrap_month": 20260928,
+   "family": 20260929
+  },
+  "python": "3.14.2",
+  "numpy": "2.5.3",
+  "pandas": "3.0.6",
+  "machine": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "detector": "scripts/l3_detector.py, FROZEN 2026-09-19, imported not copied",
+  "total_runtime_sec": 1153.3
+ },
+ "reconciliation": {
+  "max_abs_diff_growth_pct": 4.618527782440651e-14,
+  "max_abs_diff_overnight_excess": 8.881784197001252e-14,
+  "max_abs_diff_load_factor_delta": 3.3306690738754696e-16,
+  "max_abs_diff_neighbor_divergence": 5.595524044110789e-14,
+  "max_abs_diff_score": 6.217248937900877e-14,
+  "rank_mismatches_vs_frozen": 0,
+  "n_regions_compared_to_export": 111,
+  "max_abs_score_diff_vs_export": 0.004932133217179224,
+  "rank_mismatches_vs_export": 0,
+  "export_score_rounding": 0.005,
+  "reconciles": true
+ },
+ "permutation": {
+  "statistic": "mean detector score of the 4 pre-registered validation regions",
+  "validation_regions": [
+   "PJM/DOM",
+   "PJM/AEP",
+   "SWPP/OPPD",
+   "ERCO/NCEN"
+  ],
+  "validation_scores": {
+   "PJM/DOM": 7.707,
+   "PJM/AEP": 2.285,
+   "SWPP/OPPD": 6.82,
+   "ERCO/NCEN": -1.325
+  },
+  "validation_ranks": {
+   "PJM/DOM": 6,
+   "PJM/AEP": 19,
+   "SWPP/OPPD": 7,
+   "ERCO/NCEN": 91
+  },
+  "n_regions": 111,
+  "n_subsets_enumerated": 5989005,
+  "n_permutations_monte_carlo": 200000,
+  "seed": 20260921,
+  "obs_mean_score": 3.872,
+  "null_mean_score": 0.7023,
+  "p_exact_mean_score": 0.04880910935956807,
+  "p_monte_carlo_mean_score": 0.04882475587622062,
+  "obs_mean_rank": 30.75,
+  "null_mean_rank": 56.0,
+  "p_exact_mean_rank": 0.057090284613220396,
+  "p_monte_carlo_mean_rank": 0.056429717851410745,
+  "mc_null_score_quantiles": {
+   "0.5": 0.444,
+   "0.9": 2.855,
+   "0.95": 3.843,
+   "0.99": 5.462
+  },
+  "runtime_sec": 2.2
+ },
+ "permutation_holdout": {
+  "statistic": "mean detector score of the 4 pre-registered validation regions",
+  "validation_regions": [
+   "PJM/DOM",
+   "PJM/AEP",
+   "SWPP/OPPD",
+   "ERCO/NCEN"
+  ],
+  "validation_scores": {
+   "PJM/DOM": 7.836,
+   "PJM/AEP": 2.948,
+   "SWPP/OPPD": 6.709,
+   "ERCO/NCEN": -1.044
+  },
+  "validation_ranks": {
+   "PJM/DOM": 3,
+   "PJM/AEP": 12,
+   "SWPP/OPPD": 6,
+   "ERCO/NCEN": 81
+  },
+  "n_regions": 110,
+  "n_subsets_enumerated": 5773185,
+  "n_permutations_monte_carlo": 200000,
+  "seed": 20260927,
+  "obs_mean_score": 4.1122,
+  "null_mean_score": 0.4278,
+  "p_exact_mean_score": 0.015749711814189223,
+  "p_monte_carlo_mean_score": 0.015534922325388374,
+  "obs_mean_rank": 25.5,
+  "null_mean_rank": 55.5,
+  "p_exact_mean_rank": 0.027131643971222124,
+  "p_monte_carlo_mean_rank": 0.02689486552567237,
+  "mc_null_score_quantiles": {
+   "0.5": 0.246,
+   "0.9": 2.331,
+   "0.95": 3.111,
+   "0.99": 4.464
+  },
+  "runtime_sec": 2.2
+ },
+ "permutation_drop_one_POSTHOC": {
+  "warning": "post-hoc, circular, not evidence",
+  "results": {
+   "drop_PJM/DOM": {
+    "obs_mean_score": 2.5935,
+    "p_exact": 0.13697901404323423
+   },
+   "drop_PJM/AEP": {
+    "obs_mean_score": 4.4009,
+    "p_exact": 0.0513986880959358
+   },
+   "drop_SWPP/OPPD": {
+    "obs_mean_score": 2.8893,
+    "p_exact": 0.11537542546716859
+   },
+   "drop_ERCO/NCEN": {
+    "obs_mean_score": 5.6042,
+    "p_exact": 0.022284336045803935
+   }
+  }
+ },
+ "permutation_family_restricted": {
+  "null": "restricted permutation preserving the BA-family composition (2 regions from one family, 1 each from two others)",
+  "answers": "red-team objection that 68 zones nest inside 8 scored parents",
+  "n_families": 43,
+  "obs_mean_score": 3.872,
+  "null_median": 0.5702,
+  "p_monte_carlo": 0.04906475467622662,
+  "n_permutations": 200000,
+  "seed": 20260929,
+  "runtime_sec": 5.5
+ },
+ "component_independence_POSTHOC": {
+  "note": "post-hoc statistic; diagnostic of component agreement, not a confirmatory test",
+  "statistic": "mean of the top 10 scores",
+  "obs": 8.4577,
+  "null_median": 6.6729,
+  "p_monte_carlo": 1.999960000799984e-05,
+  "n_permutations": 50000,
+  "seed": 20260922,
+  "pearson_corr_components": {
+   "overnight_excess~neighbor_divergence": 0.281,
+   "overnight_excess~load_factor_delta": 0.295,
+   "neighbor_divergence~load_factor_delta": 0.422
+  },
+  "runtime_sec": 1.0
+ },
+ "bootstrap_7day_blocks": {
+  "b": 10000,
+  "block_days": 7,
+  "seed": 20260923,
+  "runtime_sec": 483.7,
+  "per_region": [
+   {
+    "region": "ERCO/NRTH",
+    "score": 16.466,
+    "score_ci95": [
+     12.554,
+     19.949
+    ],
+    "score_se": 1.938,
+    "score_boot_median": 16.026,
+    "rank": 1,
+    "rank_ci95": [
+     1,
+     1
+    ],
+    "rank_ci_width": 0,
+    "rank_boot_median": 1,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "ERCO/FWES",
+    "score": 13.893,
+    "score_ci95": [
+     10.459,
+     17.501
+    ],
+    "score_se": 1.847,
+    "score_boot_median": 13.612,
+    "rank": 2,
+    "rank_ci95": [
+     2,
+     2
+    ],
+    "rank_ci_width": 0,
+    "rank_boot_median": 2,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "AZPS",
+    "score": 9.012,
+    "score_ci95": [
+     7.224,
+     9.878
+    ],
+    "score_se": 0.676,
+    "score_boot_median": 8.58,
+    "rank": 3,
+    "rank_ci95": [
+     3,
+     6
+    ],
+    "rank_ci_width": 3,
+    "rank_boot_median": 3,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "TEPC",
+    "score": 8.508,
+    "score_ci95": [
+     6.189,
+     9.803
+    ],
+    "score_se": 0.92,
+    "score_boot_median": 7.918,
+    "rank": 4,
+    "rank_ci95": [
+     3,
+     7
+    ],
+    "rank_ci_width": 4,
+    "rank_boot_median": 4,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "WACM",
+    "score": 8.237,
+    "score_ci95": [
+     5.549,
+     10.9
+    ],
+    "score_se": 1.424,
+    "score_boot_median": 7.988,
+    "rank": 5,
+    "rank_ci95": [
+     3,
+     7
+    ],
+    "rank_ci_width": 4,
+    "rank_boot_median": 5,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "PJM/DOM",
+    "score": 7.707,
+    "score_ci95": [
+     5.417,
+     9.574
+    ],
+    "score_se": 1.095,
+    "score_boot_median": 7.451,
+    "rank": 6,
+    "rank_ci95": [
+     3,
+     7
+    ],
+    "rank_ci_width": 4,
+    "rank_boot_median": 5,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "SWPP/OPPD",
+    "score": 6.82,
+    "score_ci95": [
+     4.999,
+     8.108
+    ],
+    "score_se": 0.818,
+    "score_boot_median": 6.492,
+    "rank": 7,
+    "rank_ci95": [
+     5,
+     7
+    ],
+    "rank_ci_width": 2,
+    "rank_boot_median": 7,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "ERCO",
+    "score": 5.138,
+    "score_ci95": [
+     3.878,
+     5.907
+    ],
+    "score_se": 0.521,
+    "score_boot_median": 4.835,
+    "rank": 8,
+    "rank_ci95": [
+     8,
+     10
+    ],
+    "rank_ci_width": 2,
+    "rank_boot_median": 9,
+    "p_in_top10": 0.986,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "SC",
+    "score": 5.076,
+    "score_ci95": [
+     3.123,
+     7.009
+    ],
+    "score_se": 1.017,
+    "score_boot_median": 4.887,
+    "rank": 9,
+    "rank_ci95": [
+     8,
+     13
+    ],
+    "rank_ci_width": 5,
+    "rank_boot_median": 9,
+    "p_in_top10": 0.922,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "CISO/SDGE",
+    "score": 3.719,
+    "score_ci95": [
+     2.312,
+     4.614
+    ],
+    "score_se": 0.578,
+    "score_boot_median": 3.422,
+    "rank": 10,
+    "rank_ci95": [
+     9,
+     19
+    ],
+    "rank_ci_width": 10,
+    "rank_boot_median": 12,
+    "p_in_top10": 0.303,
+    "p_in_top20": 0.983
+   },
+   {
+    "region": "PNM/PNM",
+    "score": 3.618,
+    "score_ci95": [
+     2.325,
+     4.517
+    ],
+    "score_se": 0.57,
+    "score_boot_median": 3.412,
+    "rank": 11,
+    "rank_ci95": [
+     9,
+     17
+    ],
+    "rank_ci_width": 8,
+    "rank_boot_median": 12,
+    "p_in_top10": 0.247,
+    "p_in_top20": 0.998
+   },
+   {
+    "region": "CISO/PGAE",
+    "score": 3.412,
+    "score_ci95": [
+     1.885,
+     3.981
+    ],
+    "score_se": 0.525,
+    "score_boot_median": 3.049,
+    "rank": 12,
+    "rank_ci95": [
+     10,
+     24
+    ],
+    "rank_ci_width": 14,
+    "rank_boot_median": 14,
+    "p_in_top10": 0.074,
+    "p_in_top20": 0.929
+   },
+   {
+    "region": "SRP",
+    "score": 3.378,
+    "score_ci95": [
+     1.77,
+     4.338
+    ],
+    "score_se": 0.641,
+    "score_boot_median": 3.203,
+    "rank": 13,
+    "rank_ci95": [
+     9,
+     26
+    ],
+    "rank_ci_width": 17,
+    "rank_boot_median": 13,
+    "p_in_top10": 0.213,
+    "p_in_top20": 0.911
+   },
+   {
+    "region": "ERCO/SOUT",
+    "score": 3.308,
+    "score_ci95": [
+     2.161,
+     3.928
+    ],
+    "score_se": 0.451,
+    "score_boot_median": 3.019,
+    "rank": 14,
+    "rank_ci95": [
+     10,
+     21
+    ],
+    "rank_ci_width": 11,
+    "rank_boot_median": 14,
+    "p_in_top10": 0.059,
+    "p_in_top20": 0.97
+   },
+   {
+    "region": "PGE",
+    "score": 3.108,
+    "score_ci95": [
+     1.737,
+     4.396
+    ],
+    "score_se": 0.687,
+    "score_boot_median": 3.006,
+    "rank": 15,
+    "rank_ci95": [
+     10,
+     23
+    ],
+    "rank_ci_width": 13,
+    "rank_boot_median": 14,
+    "p_in_top10": 0.099,
+    "p_in_top20": 0.946
+   },
+   {
+    "region": "ERCO/SCEN",
+    "score": 2.875,
+    "score_ci95": [
+     1.653,
+     3.73
+    ],
+    "score_se": 0.534,
+    "score_boot_median": 2.638,
+    "rank": 16,
+    "rank_ci95": [
+     11,
+     26
+    ],
+    "rank_ci_width": 15,
+    "rank_boot_median": 16,
+    "p_in_top10": 0.018,
+    "p_in_top20": 0.841
+   },
+   {
+    "region": "NYIS/ZONE",
+    "score": 2.63,
+    "score_ci95": [
+     1.405,
+     3.377
+    ],
+    "score_se": 0.508,
+    "score_boot_median": 2.45,
+    "rank": 17,
+    "rank_ci95": [
+     12,
+     28
+    ],
+    "rank_ci_width": 16,
+    "rank_boot_median": 18,
+    "p_in_top10": 0.001,
+    "p_in_top20": 0.767
+   },
+   {
+    "region": "NYIS/ZOND",
+    "score": 2.372,
+    "score_ci95": [
+     1.178,
+     3.392
+    ],
+    "score_se": 0.571,
+    "score_boot_median": 2.205,
+    "rank": 18,
+    "rank_ci95": [
+     13,
+     30
+    ],
+    "rank_ci_width": 17,
+    "rank_boot_median": 20,
+    "p_in_top10": 0.001,
+    "p_in_top20": 0.572
+   },
+   {
+    "region": "PJM/AEP",
+    "score": 2.285,
+    "score_ci95": [
+     1.251,
+     3.125
+    ],
+    "score_se": 0.489,
+    "score_boot_median": 2.108,
+    "rank": 19,
+    "rank_ci95": [
+     14,
+     30
+    ],
+    "rank_ci_width": 16,
+    "rank_boot_median": 21,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.481
+   },
+   {
+    "region": "NYIS/ZONG",
+    "score": 2.27,
+    "score_ci95": [
+     1.335,
+     2.92
+    ],
+    "score_se": 0.414,
+    "score_boot_median": 2.093,
+    "rank": 20,
+    "rank_ci95": [
+     14,
+     28
+    ],
+    "rank_ci_width": 14,
+    "rank_boot_median": 21,
+    "p_in_top10": 0.001,
+    "p_in_top20": 0.432
+   },
+   {
+    "region": "CISO",
+    "score": 2.094,
+    "score_ci95": [
+     0.749,
+     2.742
+    ],
+    "score_se": 0.503,
+    "score_boot_median": 1.882,
+    "rank": 21,
+    "rank_ci95": [
+     15,
+     42
+    ],
+    "rank_ci_width": 27,
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.332
+   },
+   {
+    "region": "SWPP/OKGE",
+    "score": 2.061,
+    "score_ci95": [
+     1.226,
+     2.708
+    ],
+    "score_se": 0.384,
+    "score_boot_median": 1.907,
+    "rank": 22,
+    "rank_ci95": [
+     16,
+     31
+    ],
+    "rank_ci_width": 15,
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.254
+   },
+   {
+    "region": "SWPP/SPS",
+    "score": 1.977,
+    "score_ci95": [
+     0.73,
+     2.561
+    ],
+    "score_se": 0.458,
+    "score_boot_median": 1.704,
+    "rank": 23,
+    "rank_ci95": [
+     17,
+     42
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 25,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.179
+   },
+   {
+    "region": "FPL",
+    "score": 1.872,
+    "score_ci95": [
+     0.046,
+     3.189
+    ],
+    "score_se": 0.806,
+    "score_boot_median": 1.784,
+    "rank": 24,
+    "rank_ci95": [
+     12,
+     60
+    ],
+    "rank_ci_width": 48,
+    "rank_boot_median": 25,
+    "p_in_top10": 0.008,
+    "p_in_top20": 0.361
+   },
+   {
+    "region": "SWPP/WAUE",
+    "score": 1.859,
+    "score_ci95": [
+     0.469,
+     3.135
+    ],
+    "score_se": 0.692,
+    "score_boot_median": 1.673,
+    "rank": 25,
+    "rank_ci95": [
+     14,
+     46
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 26,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.207
+   },
+   {
+    "region": "NYIS/ZONF",
+    "score": 1.746,
+    "score_ci95": [
+     0.886,
+     2.395
+    ],
+    "score_se": 0.39,
+    "score_boot_median": 1.608,
+    "rank": 26,
+    "rank_ci95": [
+     19,
+     35
+    ],
+    "rank_ci_width": 16,
+    "rank_boot_median": 27,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.071
+   },
+   {
+    "region": "GCPD",
+    "score": 1.705,
+    "score_ci95": [
+     0.604,
+     2.516
+    ],
+    "score_se": 0.482,
+    "score_boot_median": 1.579,
+    "rank": 27,
+    "rank_ci95": [
+     18,
+     43
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 27,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.107
+   },
+   {
+    "region": "SWPP/NPPD",
+    "score": 1.616,
+    "score_ci95": [
+     0.454,
+     2.611
+    ],
+    "score_se": 0.554,
+    "score_boot_median": 1.432,
+    "rank": 28,
+    "rank_ci95": [
+     17,
+     48
+    ],
+    "rank_ci_width": 31,
+    "rank_boot_median": 28,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.09
+   },
+   {
+    "region": "NYIS/ZONA",
+    "score": 1.359,
+    "score_ci95": [
+     0.366,
+     1.97
+    ],
+    "score_se": 0.413,
+    "score_boot_median": 1.213,
+    "rank": 29,
+    "rank_ci95": [
+     23,
+     49
+    ],
+    "rank_ci_width": 26,
+    "rank_boot_median": 32,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.006
+   },
+   {
+    "region": "SWPP/GRDA",
+    "score": 1.357,
+    "score_ci95": [
+     0.405,
+     2.523
+    ],
+    "score_se": 0.541,
+    "score_boot_median": 1.42,
+    "rank": 30,
+    "rank_ci95": [
+     18,
+     50
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 29,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.077
+   },
+   {
+    "region": "FPC",
+    "score": 1.334,
+    "score_ci95": [
+     -0.188,
+     2.313
+    ],
+    "score_se": 0.643,
+    "score_boot_median": 1.181,
+    "rank": 31,
+    "rank_ci95": [
+     17,
+     67
+    ],
+    "rank_ci_width": 50,
+    "rank_boot_median": 32,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.102
+   },
+   {
+    "region": "NYIS/ZONC",
+    "score": 1.268,
+    "score_ci95": [
+     0.28,
+     1.741
+    ],
+    "score_se": 0.375,
+    "score_boot_median": 1.119,
+    "rank": 32,
+    "rank_ci95": [
+     26,
+     51
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 33,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4001",
+    "score": 1.005,
+    "score_ci95": [
+     0.15,
+     1.718
+    ],
+    "score_se": 0.401,
+    "score_boot_median": 0.908,
+    "rank": 33,
+    "rank_ci95": [
+     26,
+     55
+    ],
+    "rank_ci_width": 29,
+    "rank_boot_median": 37,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "PJM/JC",
+    "score": 1.0,
+    "score_ci95": [
+     0.253,
+     1.658
+    ],
+    "score_se": 0.365,
+    "score_boot_median": 0.894,
+    "rank": 34,
+    "rank_ci95": [
+     25,
+     51
+    ],
+    "rank_ci_width": 26,
+    "rank_boot_median": 38,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "MISO/0035",
+    "score": 0.946,
+    "score_ci95": [
+     0.343,
+     1.633
+    ],
+    "score_se": 0.326,
+    "score_boot_median": 0.923,
+    "rank": 35,
+    "rank_ci95": [
+     27,
+     52
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 37,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS/ZONB",
+    "score": 0.93,
+    "score_ci95": [
+     0.039,
+     1.495
+    ],
+    "score_se": 0.381,
+    "score_boot_median": 0.803,
+    "rank": 36,
+    "rank_ci95": [
+     29,
+     59
+    ],
+    "rank_ci_width": 30,
+    "rank_boot_median": 40,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "LGEE",
+    "score": 0.924,
+    "score_ci95": [
+     0.009,
+     2.17
+    ],
+    "score_se": 0.555,
+    "score_boot_median": 0.897,
+    "rank": 37,
+    "rank_ci95": [
+     22,
+     60
+    ],
+    "rank_ci_width": 38,
+    "rank_boot_median": 37,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.017
+   },
+   {
+    "region": "ISNE/4006",
+    "score": 0.916,
+    "score_ci95": [
+     0.167,
+     1.518
+    ],
+    "score_se": 0.35,
+    "score_boot_median": 0.815,
+    "rank": 38,
+    "rank_ci95": [
+     28,
+     53
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 40,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "SWPP",
+    "score": 0.854,
+    "score_ci95": [
+     0.139,
+     1.631
+    ],
+    "score_se": 0.388,
+    "score_boot_median": 0.79,
+    "rank": 39,
+    "rank_ci95": [
+     28,
+     57
+    ],
+    "rank_ci_width": 29,
+    "rank_boot_median": 40,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS/ZONI",
+    "score": 0.833,
+    "score_ci95": [
+     -0.21,
+     1.472
+    ],
+    "score_se": 0.42,
+    "score_boot_median": 0.673,
+    "rank": 40,
+    "rank_ci95": [
+     27,
+     64
+    ],
+    "rank_ci_width": 37,
+    "rank_boot_median": 42,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PL",
+    "score": 0.817,
+    "score_ci95": [
+     -0.501,
+     4.476
+    ],
+    "score_se": 1.428,
+    "score_boot_median": 0.72,
+    "rank": 41,
+    "rank_ci95": [
+     10,
+     74
+    ],
+    "rank_ci_width": 64,
+    "rank_boot_median": 42,
+    "p_in_top10": 0.065,
+    "p_in_top20": 0.265
+   },
+   {
+    "region": "BANC",
+    "score": 0.742,
+    "score_ci95": [
+     -0.163,
+     1.311
+    ],
+    "score_se": 0.371,
+    "score_boot_median": 0.593,
+    "rank": 42,
+    "rank_ci95": [
+     31,
+     65
+    ],
+    "rank_ci_width": 34,
+    "rank_boot_median": 44,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/EKPC",
+    "score": 0.721,
+    "score_ci95": [
+     -0.855,
+     2.965
+    ],
+    "score_se": 0.973,
+    "score_boot_median": 0.855,
+    "rank": 43,
+    "rank_ci95": [
+     15,
+     83
+    ],
+    "rank_ci_width": 68,
+    "rank_boot_median": 38,
+    "p_in_top10": 0.002,
+    "p_in_top20": 0.083
+   },
+   {
+    "region": "CISO/SCE",
+    "score": 0.619,
+    "score_ci95": [
+     -0.687,
+     1.453
+    ],
+    "score_se": 0.546,
+    "score_boot_median": 0.474,
+    "rank": 44,
+    "rank_ci95": [
+     29,
+     77
+    ],
+    "rank_ci_width": 48,
+    "rank_boot_median": 48,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4002",
+    "score": 0.546,
+    "score_ci95": [
+     -0.217,
+     1.252
+    ],
+    "score_se": 0.384,
+    "score_boot_median": 0.468,
+    "rank": 45,
+    "rank_ci95": [
+     33,
+     65
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 48,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PNM",
+    "score": 0.542,
+    "score_ci95": [
+     -0.343,
+     1.378
+    ],
+    "score_se": 0.449,
+    "score_boot_median": 0.47,
+    "rank": 46,
+    "rank_ci95": [
+     31,
+     71
+    ],
+    "rank_ci_width": 40,
+    "rank_boot_median": 48,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS/ZONK",
+    "score": 0.515,
+    "score_ci95": [
+     -0.439,
+     1.21
+    ],
+    "score_se": 0.417,
+    "score_boot_median": 0.496,
+    "rank": 47,
+    "rank_ci95": [
+     31,
+     71
+    ],
+    "rank_ci_width": 40,
+    "rank_boot_median": 47,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/8910",
+    "score": 0.485,
+    "score_ci95": [
+     -0.592,
+     1.171
+    ],
+    "score_se": 0.441,
+    "score_boot_median": 0.385,
+    "rank": 48,
+    "rank_ci95": [
+     31,
+     75
+    ],
+    "rank_ci_width": 44,
+    "rank_boot_median": 50,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "FMPP",
+    "score": 0.456,
+    "score_ci95": [
+     -1.15,
+     1.611
+    ],
+    "score_se": 0.716,
+    "score_boot_median": 0.373,
+    "rank": 49,
+    "rank_ci95": [
+     24,
+     86
+    ],
+    "rank_ci_width": 62,
+    "rank_boot_median": 50,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.006
+   },
+   {
+    "region": "BPAT",
+    "score": 0.447,
+    "score_ci95": [
+     -0.562,
+     1.482
+    ],
+    "score_se": 0.525,
+    "score_boot_median": 0.43,
+    "rank": 50,
+    "rank_ci95": [
+     30,
+     76
+    ],
+    "rank_ci_width": 46,
+    "rank_boot_median": 49,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PN",
+    "score": 0.414,
+    "score_ci95": [
+     -0.446,
+     1.139
+    ],
+    "score_se": 0.408,
+    "score_boot_median": 0.339,
+    "rank": 51,
+    "rank_ci95": [
+     35,
+     73
+    ],
+    "rank_ci_width": 38,
+    "rank_boot_median": 51,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM",
+    "score": 0.401,
+    "score_ci95": [
+     -0.387,
+     1.206
+    ],
+    "score_se": 0.417,
+    "score_boot_median": 0.306,
+    "rank": 52,
+    "rank_ci95": [
+     33,
+     71
+    ],
+    "rank_ci_width": 38,
+    "rank_boot_median": 52,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PS",
+    "score": 0.379,
+    "score_ci95": [
+     -0.539,
+     0.952
+    ],
+    "score_se": 0.376,
+    "score_boot_median": 0.287,
+    "rank": 53,
+    "rank_ci95": [
+     37,
+     74
+    ],
+    "rank_ci_width": 37,
+    "rank_boot_median": 53,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4003",
+    "score": 0.378,
+    "score_ci95": [
+     -0.42,
+     0.927
+    ],
+    "score_se": 0.347,
+    "score_boot_median": 0.275,
+    "rank": 54,
+    "rank_ci95": [
+     35,
+     73
+    ],
+    "rank_ci_width": 38,
+    "rank_boot_median": 53,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "TEC",
+    "score": 0.341,
+    "score_ci95": [
+     -1.351,
+     1.626
+    ],
+    "score_se": 0.772,
+    "score_boot_median": 0.261,
+    "rank": 55,
+    "rank_ci95": [
+     24,
+     89
+    ],
+    "rank_ci_width": 65,
+    "rank_boot_median": 53,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.006
+   },
+   {
+    "region": "ERCO/COAS",
+    "score": 0.327,
+    "score_ci95": [
+     -0.895,
+     0.833
+    ],
+    "score_se": 0.441,
+    "score_boot_median": 0.142,
+    "rank": 56,
+    "rank_ci95": [
+     38,
+     81
+    ],
+    "rank_ci_width": 43,
+    "rank_boot_median": 56,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4005",
+    "score": 0.304,
+    "score_ci95": [
+     -0.496,
+     0.955
+    ],
+    "score_se": 0.367,
+    "score_boot_median": 0.213,
+    "rank": 57,
+    "rank_ci95": [
+     38,
+     72
+    ],
+    "rank_ci_width": 34,
+    "rank_boot_median": 55,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "IPCO",
+    "score": 0.253,
+    "score_ci95": [
+     -0.924,
+     1.129
+    ],
+    "score_se": 0.519,
+    "score_boot_median": 0.142,
+    "rank": 58,
+    "rank_ci95": [
+     32,
+     83
+    ],
+    "rank_ci_width": 51,
+    "rank_boot_median": 57,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0001",
+    "score": 0.224,
+    "score_ci95": [
+     -0.439,
+     0.887
+    ],
+    "score_se": 0.341,
+    "score_boot_median": 0.174,
+    "rank": 59,
+    "rank_ci95": [
+     40,
+     74
+    ],
+    "rank_ci_width": 34,
+    "rank_boot_median": 56,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "TVA",
+    "score": 0.196,
+    "score_ci95": [
+     -0.794,
+     1.427
+    ],
+    "score_se": 0.567,
+    "score_boot_median": 0.135,
+    "rank": 60,
+    "rank_ci95": [
+     30,
+     81
+    ],
+    "rank_ci_width": 51,
+    "rank_boot_median": 57,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4008",
+    "score": 0.06,
+    "score_ci95": [
+     -0.746,
+     0.644
+    ],
+    "score_se": 0.357,
+    "score_boot_median": 0.005,
+    "rank": 61,
+    "rank_ci95": [
+     45,
+     80
+    ],
+    "rank_ci_width": 35,
+    "rank_boot_median": 61,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/EAST",
+    "score": -0.045,
+    "score_ci95": [
+     -1.327,
+     0.819
+    ],
+    "score_se": 0.551,
+    "score_boot_median": -0.215,
+    "rank": 62,
+    "rank_ci95": [
+     38,
+     90
+    ],
+    "rank_ci_width": 52,
+    "rank_boot_median": 67,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS",
+    "score": -0.053,
+    "score_ci95": [
+     -0.8,
+     0.516
+    ],
+    "score_se": 0.334,
+    "score_boot_median": -0.143,
+    "rank": 63,
+    "rank_ci95": [
+     48,
+     82
+    ],
+    "rank_ci_width": 34,
+    "rank_boot_median": 65,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "JEA",
+    "score": -0.076,
+    "score_ci95": [
+     -1.236,
+     0.865
+    ],
+    "score_se": 0.539,
+    "score_boot_median": -0.108,
+    "rank": 64,
+    "rank_ci95": [
+     36,
+     88
+    ],
+    "rank_ci_width": 52,
+    "rank_boot_median": 64,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/ATSI",
+    "score": -0.093,
+    "score_ci95": [
+     -0.596,
+     0.438
+    ],
+    "score_se": 0.262,
+    "score_boot_median": -0.103,
+    "rank": 65,
+    "rank_ci95": [
+     50,
+     77
+    ],
+    "rank_ci_width": 27,
+    "rank_boot_median": 63,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE",
+    "score": -0.106,
+    "score_ci95": [
+     -0.915,
+     0.617
+    ],
+    "score_se": 0.389,
+    "score_boot_median": -0.214,
+    "rank": 66,
+    "rank_ci95": [
+     46,
+     84
+    ],
+    "rank_ci_width": 38,
+    "rank_boot_median": 67,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/CE",
+    "score": -0.117,
+    "score_ci95": [
+     -0.939,
+     0.372
+    ],
+    "score_se": 0.335,
+    "score_boot_median": -0.206,
+    "rank": 67,
+    "rank_ci95": [
+     50,
+     84
+    ],
+    "rank_ci_width": 34,
+    "rank_boot_median": 67,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DPL",
+    "score": -0.123,
+    "score_ci95": [
+     -1.04,
+     0.973
+    ],
+    "score_se": 0.523,
+    "score_boot_median": -0.143,
+    "rank": 68,
+    "rank_ci95": [
+     38,
+     86
+    ],
+    "rank_ci_width": 48,
+    "rank_boot_median": 65,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4007",
+    "score": -0.167,
+    "score_ci95": [
+     -0.832,
+     0.499
+    ],
+    "score_se": 0.34,
+    "score_boot_median": -0.226,
+    "rank": 69,
+    "rank_ci95": [
+     49,
+     82
+    ],
+    "rank_ci_width": 33,
+    "rank_boot_median": 67,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4004",
+    "score": -0.203,
+    "score_ci95": [
+     -0.839,
+     0.343
+    ],
+    "score_se": 0.296,
+    "score_boot_median": -0.296,
+    "rank": 70,
+    "rank_ci95": [
+     53,
+     82
+    ],
+    "rank_ci_width": 29,
+    "rank_boot_median": 70,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/BC",
+    "score": -0.215,
+    "score_ci95": [
+     -0.89,
+     0.519
+    ],
+    "score_se": 0.363,
+    "score_boot_median": -0.269,
+    "rank": 71,
+    "rank_ci95": [
+     48,
+     82
+    ],
+    "rank_ci_width": 34,
+    "rank_boot_median": 69,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DAY",
+    "score": -0.287,
+    "score_ci95": [
+     -0.735,
+     0.329
+    ],
+    "score_se": 0.273,
+    "score_boot_median": -0.279,
+    "rank": 72,
+    "rank_ci95": [
+     51,
+     81
+    ],
+    "rank_ci_width": 30,
+    "rank_boot_median": 69,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PEP",
+    "score": -0.287,
+    "score_ci95": [
+     -0.92,
+     0.226
+    ],
+    "score_se": 0.294,
+    "score_boot_median": -0.38,
+    "rank": 73,
+    "rank_ci95": [
+     55,
+     84
+    ],
+    "rank_ci_width": 29,
+    "rank_boot_median": 72,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "CPLE",
+    "score": -0.464,
+    "score_ci95": [
+     -1.558,
+     1.048
+    ],
+    "score_se": 0.678,
+    "score_boot_median": -0.47,
+    "rank": 74,
+    "rank_ci95": [
+     34,
+     93
+    ],
+    "rank_ci_width": 59,
+    "rank_boot_median": 75,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "NEVP",
+    "score": -0.467,
+    "score_ci95": [
+     -1.675,
+     0.277
+    ],
+    "score_se": 0.491,
+    "score_boot_median": -0.545,
+    "rank": 75,
+    "rank_ci95": [
+     53,
+     94
+    ],
+    "rank_ci_width": 41,
+    "rank_boot_median": 77,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "DUK",
+    "score": -0.513,
+    "score_ci95": [
+     -1.247,
+     0.587
+    ],
+    "score_se": 0.479,
+    "score_boot_median": -0.481,
+    "rank": 76,
+    "rank_ci95": [
+     45,
+     89
+    ],
+    "rank_ci_width": 44,
+    "rank_boot_median": 75,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/ME",
+    "score": -0.516,
+    "score_ci95": [
+     -1.142,
+     0.211
+    ],
+    "score_se": 0.349,
+    "score_boot_median": -0.566,
+    "rank": 77,
+    "rank_ci95": [
+     56,
+     88
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 77,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SCL",
+    "score": -0.563,
+    "score_ci95": [
+     -1.744,
+     0.58
+    ],
+    "score_se": 0.591,
+    "score_boot_median": -0.677,
+    "rank": 78,
+    "rank_ci95": [
+     47,
+     95
+    ],
+    "rank_ci_width": 48,
+    "rank_boot_median": 79,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "EPE",
+    "score": -0.568,
+    "score_ci95": [
+     -1.702,
+     0.23
+    ],
+    "score_se": 0.492,
+    "score_boot_median": -0.581,
+    "rank": 79,
+    "rank_ci95": [
+     53,
+     93
+    ],
+    "rank_ci_width": 40,
+    "rank_boot_median": 78,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/SECI",
+    "score": -0.59,
+    "score_ci95": [
+     -1.489,
+     0.033
+    ],
+    "score_se": 0.385,
+    "score_boot_median": -0.695,
+    "rank": 80,
+    "rank_ci95": [
+     60,
+     92
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 80,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DUQ",
+    "score": -0.619,
+    "score_ci95": [
+     -1.132,
+     -0.137
+    ],
+    "score_se": 0.252,
+    "score_boot_median": -0.592,
+    "rank": 81,
+    "rank_ci95": [
+     64,
+     87
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 77,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS/ZONJ",
+    "score": -0.671,
+    "score_ci95": [
+     -1.938,
+     0.24
+    ],
+    "score_se": 0.566,
+    "score_boot_median": -0.661,
+    "rank": 82,
+    "rank_ci95": [
+     53,
+     97
+    ],
+    "rank_ci_width": 44,
+    "rank_boot_median": 80,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/AP",
+    "score": -0.709,
+    "score_ci95": [
+     -1.699,
+     0.263
+    ],
+    "score_se": 0.502,
+    "score_boot_median": -0.78,
+    "rank": 83,
+    "rank_ci95": [
+     54,
+     95
+    ],
+    "rank_ci_width": 41,
+    "rank_boot_median": 82,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "LDWP",
+    "score": -0.713,
+    "score_ci95": [
+     -2.192,
+     0.357
+    ],
+    "score_se": 0.637,
+    "score_boot_median": -0.84,
+    "rank": 84,
+    "rank_ci95": [
+     52,
+     99
+    ],
+    "rank_ci_width": 47,
+    "rank_boot_median": 83,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PACE",
+    "score": -0.735,
+    "score_ci95": [
+     -1.407,
+     -0.159
+    ],
+    "score_se": 0.319,
+    "score_boot_median": -0.764,
+    "rank": 85,
+    "rank_ci95": [
+     66,
+     91
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 81,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DEOK",
+    "score": -0.765,
+    "score_ci95": [
+     -1.308,
+     -0.368
+    ],
+    "score_se": 0.239,
+    "score_boot_median": -0.812,
+    "rank": 86,
+    "rank_ci95": [
+     71,
+     90
+    ],
+    "rank_ci_width": 19,
+    "rank_boot_median": 82,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/MPS",
+    "score": -0.875,
+    "score_ci95": [
+     -1.883,
+     0.516
+    ],
+    "score_se": 0.615,
+    "score_boot_median": -0.899,
+    "rank": 87,
+    "rank_ci95": [
+     48,
+     97
+    ],
+    "rank_ci_width": 49,
+    "rank_boot_median": 84,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/KCPL",
+    "score": -1.054,
+    "score_ci95": [
+     -1.898,
+     -0.241
+    ],
+    "score_se": 0.426,
+    "score_boot_median": -1.106,
+    "rank": 88,
+    "rank_ci95": [
+     68,
+     96
+    ],
+    "rank_ci_width": 28,
+    "rank_boot_median": 88,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO",
+    "score": -1.114,
+    "score_ci95": [
+     -1.58,
+     -0.629
+    ],
+    "score_se": 0.241,
+    "score_boot_median": -1.075,
+    "rank": 89,
+    "rank_ci95": [
+     77,
+     93
+    ],
+    "rank_ci_width": 16,
+    "rank_boot_median": 87,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PE",
+    "score": -1.168,
+    "score_ci95": [
+     -1.828,
+     -0.511
+    ],
+    "score_se": 0.335,
+    "score_boot_median": -1.198,
+    "rank": 90,
+    "rank_ci95": [
+     75,
+     96
+    ],
+    "rank_ci_width": 21,
+    "rank_boot_median": 89,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/NCEN",
+    "score": -1.325,
+    "score_ci95": [
+     -2.425,
+     -0.507
+    ],
+    "score_se": 0.484,
+    "score_boot_median": -1.47,
+    "rank": 91,
+    "rank_ci95": [
+     75,
+     100
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 92,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/AE",
+    "score": -1.332,
+    "score_ci95": [
+     -2.247,
+     -0.486
+    ],
+    "score_se": 0.443,
+    "score_boot_median": -1.277,
+    "rank": 92,
+    "rank_ci95": [
+     75,
+     100
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 90,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SOCO",
+    "score": -1.567,
+    "score_ci95": [
+     -2.139,
+     -0.831
+    ],
+    "score_se": 0.333,
+    "score_boot_median": -1.525,
+    "rank": 93,
+    "rank_ci95": [
+     81,
+     99
+    ],
+    "rank_ci_width": 18,
+    "rank_boot_median": 93,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PSCO",
+    "score": -1.66,
+    "score_ci95": [
+     -2.463,
+     -0.952
+    ],
+    "score_se": 0.381,
+    "score_boot_median": -1.72,
+    "rank": 94,
+    "rank_ci95": [
+     85,
+     101
+    ],
+    "rank_ci_width": 16,
+    "rank_boot_median": 95,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0006",
+    "score": -1.854,
+    "score_ci95": [
+     -2.378,
+     -1.332
+    ],
+    "score_se": 0.269,
+    "score_boot_median": -1.847,
+    "rank": 95,
+    "rank_ci95": [
+     91,
+     100
+    ],
+    "rank_ci_width": 9,
+    "rank_boot_median": 96,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0027",
+    "score": -1.956,
+    "score_ci95": [
+     -2.889,
+     -0.931
+    ],
+    "score_se": 0.509,
+    "score_boot_median": -1.878,
+    "rank": 96,
+    "rank_ci95": [
+     84,
+     105
+    ],
+    "rank_ci_width": 21,
+    "rank_boot_median": 96,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0004",
+    "score": -2.031,
+    "score_ci95": [
+     -2.767,
+     -1.352
+    ],
+    "score_se": 0.37,
+    "score_boot_median": -2.038,
+    "rank": 97,
+    "rank_ci95": [
+     92,
+     104
+    ],
+    "rank_ci_width": 12,
+    "rank_boot_median": 98,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PACW",
+    "score": -2.036,
+    "score_ci95": [
+     -3.262,
+     -0.568
+    ],
+    "score_se": 0.696,
+    "score_boot_median": -1.966,
+    "rank": 98,
+    "rank_ci95": [
+     75,
+     105
+    ],
+    "rank_ci_width": 30,
+    "rank_boot_median": 97,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/CSWS",
+    "score": -2.075,
+    "score_ci95": [
+     -2.837,
+     -1.294
+    ],
+    "score_se": 0.395,
+    "score_boot_median": -2.043,
+    "rank": 99,
+    "rank_ci95": [
+     91,
+     103
+    ],
+    "rank_ci_width": 12,
+    "rank_boot_median": 98,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/EDE",
+    "score": -2.337,
+    "score_ci95": [
+     -3.297,
+     -0.945
+    ],
+    "score_se": 0.603,
+    "score_boot_median": -2.287,
+    "rank": 100,
+    "rank_ci95": [
+     83,
+     106
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 100,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "AVA",
+    "score": -2.393,
+    "score_ci95": [
+     -3.356,
+     -1.289
+    ],
+    "score_se": 0.52,
+    "score_boot_median": -2.393,
+    "rank": 101,
+    "rank_ci95": [
+     89,
+     105
+    ],
+    "rank_ci_width": 16,
+    "rank_boot_median": 101,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/WR",
+    "score": -2.58,
+    "score_ci95": [
+     -3.3,
+     -1.923
+    ],
+    "score_se": 0.351,
+    "score_boot_median": -2.562,
+    "rank": 102,
+    "rank_ci95": [
+     98,
+     106
+    ],
+    "rank_ci_width": 8,
+    "rank_boot_median": 102,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SCEG",
+    "score": -2.649,
+    "score_ci95": [
+     -3.527,
+     -1.637
+    ],
+    "score_se": 0.488,
+    "score_boot_median": -2.567,
+    "rank": 103,
+    "rank_ci95": [
+     94,
+     107
+    ],
+    "rank_ci_width": 13,
+    "rank_boot_median": 102,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/WFEC",
+    "score": -2.927,
+    "score_ci95": [
+     -3.804,
+     -2.179
+    ],
+    "score_se": 0.407,
+    "score_boot_median": -2.943,
+    "rank": 104,
+    "rank_ci95": [
+     100,
+     108
+    ],
+    "rank_ci_width": 8,
+    "rank_boot_median": 104,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "TPWR",
+    "score": -3.431,
+    "score_ci95": [
+     -4.463,
+     -2.018
+    ],
+    "score_se": 0.62,
+    "score_boot_median": -3.292,
+    "rank": 105,
+    "rank_ci95": [
+     97,
+     108
+    ],
+    "rank_ci_width": 11,
+    "rank_boot_median": 106,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "CPLW",
+    "score": -3.505,
+    "score_ci95": [
+     -4.645,
+     -1.702
+    ],
+    "score_se": 0.735,
+    "score_boot_median": -3.24,
+    "rank": 106,
+    "rank_ci95": [
+     94,
+     109
+    ],
+    "rank_ci_width": 15,
+    "rank_boot_median": 105,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "WALC",
+    "score": -3.655,
+    "score_ci95": [
+     -6.641,
+     -1.114
+    ],
+    "score_se": 1.432,
+    "score_boot_median": -3.627,
+    "rank": 107,
+    "rank_ci95": [
+     88,
+     111
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 107,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NWMT",
+    "score": -3.761,
+    "score_ci95": [
+     -4.532,
+     -2.907
+    ],
+    "score_se": 0.417,
+    "score_boot_median": -3.683,
+    "rank": 108,
+    "rank_ci95": [
+     105,
+     108
+    ],
+    "rank_ci_width": 3,
+    "rank_boot_median": 107,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "AECI",
+    "score": -4.963,
+    "score_ci95": [
+     -5.906,
+     -2.813
+    ],
+    "score_se": 0.775,
+    "score_boot_median": -4.588,
+    "rank": 109,
+    "rank_ci95": [
+     105,
+     111
+    ],
+    "rank_ci_width": 6,
+    "rank_boot_median": 109,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PSEI",
+    "score": -5.006,
+    "score_ci95": [
+     -6.0,
+     -3.923
+    ],
+    "score_se": 0.534,
+    "score_boot_median": -4.907,
+    "rank": 110,
+    "rank_ci95": [
+     108,
+     111
+    ],
+    "rank_ci_width": 3,
+    "rank_boot_median": 110,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/WEST",
+    "score": -5.781,
+    "score_ci95": [
+     -7.42,
+     -4.332
+    ],
+    "score_se": 0.798,
+    "score_boot_median": -5.726,
+    "rank": 111,
+    "rank_ci95": [
+     109,
+     111
+    ],
+    "rank_ci_width": 2,
+    "rank_boot_median": 111,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   }
+  ],
+  "median_rank_ci_width": 27,
+  "median_rank_ci_width_top10": 3,
+  "median_rank_ci_width_rest": 29,
+  "n_regions_rank_ci_wider_than_20": 72,
+  "n_regions_rank_ci_width_le_5": 12,
+  "expected_true_top10_members": 9.21,
+  "median_rank_bias": 0.0,
+  "median_score_bias": -0.088,
+  "table": [
+   {
+    "region": "ERCO/NRTH",
+    "score": 16.466,
+    "score_ci95": [
+     12.554,
+     19.949
+    ],
+    "rank": 1,
+    "rank_ci95": [
+     1,
+     1
+    ],
+    "rank_boot_median": 1,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "ERCO/FWES",
+    "score": 13.893,
+    "score_ci95": [
+     10.459,
+     17.501
+    ],
+    "rank": 2,
+    "rank_ci95": [
+     2,
+     2
+    ],
+    "rank_boot_median": 2,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "AZPS",
+    "score": 9.012,
+    "score_ci95": [
+     7.224,
+     9.878
+    ],
+    "rank": 3,
+    "rank_ci95": [
+     3,
+     6
+    ],
+    "rank_boot_median": 3,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "TEPC",
+    "score": 8.508,
+    "score_ci95": [
+     6.189,
+     9.803
+    ],
+    "rank": 4,
+    "rank_ci95": [
+     3,
+     7
+    ],
+    "rank_boot_median": 4,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "WACM",
+    "score": 8.237,
+    "score_ci95": [
+     5.549,
+     10.9
+    ],
+    "rank": 5,
+    "rank_ci95": [
+     3,
+     7
+    ],
+    "rank_boot_median": 5,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "PJM/DOM",
+    "score": 7.707,
+    "score_ci95": [
+     5.417,
+     9.574
+    ],
+    "rank": 6,
+    "rank_ci95": [
+     3,
+     7
+    ],
+    "rank_boot_median": 5,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "SWPP/OPPD",
+    "score": 6.82,
+    "score_ci95": [
+     4.999,
+     8.108
+    ],
+    "rank": 7,
+    "rank_ci95": [
+     5,
+     7
+    ],
+    "rank_boot_median": 7,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "ERCO",
+    "score": 5.138,
+    "score_ci95": [
+     3.878,
+     5.907
+    ],
+    "rank": 8,
+    "rank_ci95": [
+     8,
+     10
+    ],
+    "rank_boot_median": 9,
+    "p_in_top10": 0.986
+   },
+   {
+    "region": "SC",
+    "score": 5.076,
+    "score_ci95": [
+     3.123,
+     7.009
+    ],
+    "rank": 9,
+    "rank_ci95": [
+     8,
+     13
+    ],
+    "rank_boot_median": 9,
+    "p_in_top10": 0.922
+   },
+   {
+    "region": "CISO/SDGE",
+    "score": 3.719,
+    "score_ci95": [
+     2.312,
+     4.614
+    ],
+    "rank": 10,
+    "rank_ci95": [
+     9,
+     19
+    ],
+    "rank_boot_median": 12,
+    "p_in_top10": 0.303
+   },
+   {
+    "region": "PNM/PNM",
+    "score": 3.618,
+    "score_ci95": [
+     2.325,
+     4.517
+    ],
+    "rank": 11,
+    "rank_ci95": [
+     9,
+     17
+    ],
+    "rank_boot_median": 12,
+    "p_in_top10": 0.247
+   },
+   {
+    "region": "CISO/PGAE",
+    "score": 3.412,
+    "score_ci95": [
+     1.885,
+     3.981
+    ],
+    "rank": 12,
+    "rank_ci95": [
+     10,
+     24
+    ],
+    "rank_boot_median": 14,
+    "p_in_top10": 0.074
+   },
+   {
+    "region": "SRP",
+    "score": 3.378,
+    "score_ci95": [
+     1.77,
+     4.338
+    ],
+    "rank": 13,
+    "rank_ci95": [
+     9,
+     26
+    ],
+    "rank_boot_median": 13,
+    "p_in_top10": 0.213
+   },
+   {
+    "region": "ERCO/SOUT",
+    "score": 3.308,
+    "score_ci95": [
+     2.161,
+     3.928
+    ],
+    "rank": 14,
+    "rank_ci95": [
+     10,
+     21
+    ],
+    "rank_boot_median": 14,
+    "p_in_top10": 0.059
+   },
+   {
+    "region": "PGE",
+    "score": 3.108,
+    "score_ci95": [
+     1.737,
+     4.396
+    ],
+    "rank": 15,
+    "rank_ci95": [
+     10,
+     23
+    ],
+    "rank_boot_median": 14,
+    "p_in_top10": 0.099
+   },
+   {
+    "region": "ERCO/SCEN",
+    "score": 2.875,
+    "score_ci95": [
+     1.653,
+     3.73
+    ],
+    "rank": 16,
+    "rank_ci95": [
+     11,
+     26
+    ],
+    "rank_boot_median": 16,
+    "p_in_top10": 0.018
+   },
+   {
+    "region": "NYIS/ZONE",
+    "score": 2.63,
+    "score_ci95": [
+     1.405,
+     3.377
+    ],
+    "rank": 17,
+    "rank_ci95": [
+     12,
+     28
+    ],
+    "rank_boot_median": 18,
+    "p_in_top10": 0.001
+   },
+   {
+    "region": "NYIS/ZOND",
+    "score": 2.372,
+    "score_ci95": [
+     1.178,
+     3.392
+    ],
+    "rank": 18,
+    "rank_ci95": [
+     13,
+     30
+    ],
+    "rank_boot_median": 20,
+    "p_in_top10": 0.001
+   },
+   {
+    "region": "PJM/AEP",
+    "score": 2.285,
+    "score_ci95": [
+     1.251,
+     3.125
+    ],
+    "rank": 19,
+    "rank_ci95": [
+     14,
+     30
+    ],
+    "rank_boot_median": 21,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "NYIS/ZONG",
+    "score": 2.27,
+    "score_ci95": [
+     1.335,
+     2.92
+    ],
+    "rank": 20,
+    "rank_ci95": [
+     14,
+     28
+    ],
+    "rank_boot_median": 21,
+    "p_in_top10": 0.001
+   },
+   {
+    "region": "CISO",
+    "score": 2.094,
+    "score_ci95": [
+     0.749,
+     2.742
+    ],
+    "rank": 21,
+    "rank_ci95": [
+     15,
+     42
+    ],
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "SWPP/OKGE",
+    "score": 2.061,
+    "score_ci95": [
+     1.226,
+     2.708
+    ],
+    "rank": 22,
+    "rank_ci95": [
+     16,
+     31
+    ],
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "SWPP/SPS",
+    "score": 1.977,
+    "score_ci95": [
+     0.73,
+     2.561
+    ],
+    "rank": 23,
+    "rank_ci95": [
+     17,
+     42
+    ],
+    "rank_boot_median": 25,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "FPL",
+    "score": 1.872,
+    "score_ci95": [
+     0.046,
+     3.189
+    ],
+    "rank": 24,
+    "rank_ci95": [
+     12,
+     60
+    ],
+    "rank_boot_median": 25,
+    "p_in_top10": 0.008
+   },
+   {
+    "region": "SWPP/WAUE",
+    "score": 1.859,
+    "score_ci95": [
+     0.469,
+     3.135
+    ],
+    "rank": 25,
+    "rank_ci95": [
+     14,
+     46
+    ],
+    "rank_boot_median": 26,
+    "p_in_top10": 0.0
+   }
+  ]
+ },
+ "bootstrap_1day_blocks_sensitivity": {
+  "b": 10000,
+  "block_days": 1,
+  "seed": 20260924,
+  "runtime_sec": 463.4,
+  "per_region": [
+   {
+    "region": "ERCO/NRTH",
+    "score": 16.466,
+    "score_ci95": [
+     14.29,
+     18.451
+    ],
+    "score_se": 1.071,
+    "score_boot_median": 16.325,
+    "rank": 1,
+    "rank_ci95": [
+     1,
+     1
+    ],
+    "rank_ci_width": 0,
+    "rank_boot_median": 1,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "ERCO/FWES",
+    "score": 13.893,
+    "score_ci95": [
+     11.987,
+     15.784
+    ],
+    "score_se": 0.971,
+    "score_boot_median": 13.779,
+    "rank": 2,
+    "rank_ci95": [
+     2,
+     2
+    ],
+    "rank_ci_width": 0,
+    "rank_boot_median": 2,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "AZPS",
+    "score": 9.012,
+    "score_ci95": [
+     8.065,
+     9.694
+    ],
+    "score_se": 0.415,
+    "score_boot_median": 8.859,
+    "rank": 3,
+    "rank_ci95": [
+     3,
+     5
+    ],
+    "rank_ci_width": 2,
+    "rank_boot_median": 3,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "TEPC",
+    "score": 8.508,
+    "score_ci95": [
+     7.167,
+     9.518
+    ],
+    "score_se": 0.599,
+    "score_boot_median": 8.286,
+    "rank": 4,
+    "rank_ci95": [
+     3,
+     6
+    ],
+    "rank_ci_width": 3,
+    "rank_boot_median": 4,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "WACM",
+    "score": 8.237,
+    "score_ci95": [
+     6.754,
+     9.608
+    ],
+    "score_se": 0.726,
+    "score_boot_median": 8.116,
+    "rank": 5,
+    "rank_ci95": [
+     3,
+     6
+    ],
+    "rank_ci_width": 3,
+    "rank_boot_median": 5,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "PJM/DOM",
+    "score": 7.707,
+    "score_ci95": [
+     6.454,
+     8.776
+    ],
+    "score_se": 0.597,
+    "score_boot_median": 7.588,
+    "rank": 6,
+    "rank_ci95": [
+     4,
+     6
+    ],
+    "rank_ci_width": 2,
+    "rank_boot_median": 6,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "SWPP/OPPD",
+    "score": 6.82,
+    "score_ci95": [
+     5.733,
+     7.677
+    ],
+    "score_se": 0.496,
+    "score_boot_median": 6.685,
+    "rank": 7,
+    "rank_ci95": [
+     7,
+     7
+    ],
+    "rank_ci_width": 0,
+    "rank_boot_median": 7,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "ERCO",
+    "score": 5.138,
+    "score_ci95": [
+     4.354,
+     5.833
+    ],
+    "score_se": 0.379,
+    "score_boot_median": 5.054,
+    "rank": 8,
+    "rank_ci95": [
+     8,
+     9
+    ],
+    "rank_ci_width": 1,
+    "rank_boot_median": 8,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "SC",
+    "score": 5.076,
+    "score_ci95": [
+     3.91,
+     6.156
+    ],
+    "score_se": 0.581,
+    "score_boot_median": 4.966,
+    "rank": 9,
+    "rank_ci95": [
+     8,
+     10
+    ],
+    "rank_ci_width": 2,
+    "rank_boot_median": 9,
+    "p_in_top10": 0.993,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "CISO/SDGE",
+    "score": 3.719,
+    "score_ci95": [
+     2.885,
+     4.296
+    ],
+    "score_se": 0.36,
+    "score_boot_median": 3.557,
+    "rank": 10,
+    "rank_ci95": [
+     10,
+     15
+    ],
+    "rank_ci_width": 5,
+    "rank_boot_median": 11,
+    "p_in_top10": 0.352,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "PNM/PNM",
+    "score": 3.618,
+    "score_ci95": [
+     2.877,
+     4.138
+    ],
+    "score_se": 0.318,
+    "score_boot_median": 3.488,
+    "rank": 11,
+    "rank_ci95": [
+     10,
+     15
+    ],
+    "rank_ci_width": 5,
+    "rank_boot_median": 12,
+    "p_in_top10": 0.232,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "CISO/PGAE",
+    "score": 3.412,
+    "score_ci95": [
+     2.617,
+     4.002
+    ],
+    "score_se": 0.351,
+    "score_boot_median": 3.264,
+    "rank": 12,
+    "rank_ci95": [
+     10,
+     17
+    ],
+    "rank_ci_width": 7,
+    "rank_boot_median": 13,
+    "p_in_top10": 0.07,
+    "p_in_top20": 0.999
+   },
+   {
+    "region": "SRP",
+    "score": 3.378,
+    "score_ci95": [
+     2.631,
+     3.9
+    ],
+    "score_se": 0.32,
+    "score_boot_median": 3.306,
+    "rank": 13,
+    "rank_ci95": [
+     10,
+     17
+    ],
+    "rank_ci_width": 7,
+    "rank_boot_median": 13,
+    "p_in_top10": 0.114,
+    "p_in_top20": 0.997
+   },
+   {
+    "region": "ERCO/SOUT",
+    "score": 3.308,
+    "score_ci95": [
+     2.62,
+     3.926
+    ],
+    "score_se": 0.333,
+    "score_boot_median": 3.236,
+    "rank": 14,
+    "rank_ci95": [
+     10,
+     17
+    ],
+    "rank_ci_width": 7,
+    "rank_boot_median": 13,
+    "p_in_top10": 0.068,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "PGE",
+    "score": 3.108,
+    "score_ci95": [
+     2.241,
+     3.885
+    ],
+    "score_se": 0.419,
+    "score_boot_median": 3.039,
+    "rank": 15,
+    "rank_ci95": [
+     10,
+     19
+    ],
+    "rank_ci_width": 9,
+    "rank_boot_median": 15,
+    "p_in_top10": 0.035,
+    "p_in_top20": 0.988
+   },
+   {
+    "region": "ERCO/SCEN",
+    "score": 2.875,
+    "score_ci95": [
+     2.146,
+     3.538
+    ],
+    "score_se": 0.361,
+    "score_boot_median": 2.827,
+    "rank": 16,
+    "rank_ci95": [
+     12,
+     20
+    ],
+    "rank_ci_width": 8,
+    "rank_boot_median": 16,
+    "p_in_top10": 0.004,
+    "p_in_top20": 0.982
+   },
+   {
+    "region": "NYIS/ZONE",
+    "score": 2.63,
+    "score_ci95": [
+     1.815,
+     3.126
+    ],
+    "score_se": 0.335,
+    "score_boot_median": 2.489,
+    "rank": 17,
+    "rank_ci95": [
+     14,
+     25
+    ],
+    "rank_ci_width": 11,
+    "rank_boot_median": 18,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.834
+   },
+   {
+    "region": "NYIS/ZOND",
+    "score": 2.372,
+    "score_ci95": [
+     1.658,
+     2.989
+    ],
+    "score_se": 0.341,
+    "score_boot_median": 2.286,
+    "rank": 18,
+    "rank_ci95": [
+     15,
+     25
+    ],
+    "rank_ci_width": 10,
+    "rank_boot_median": 19,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.695
+   },
+   {
+    "region": "PJM/AEP",
+    "score": 2.285,
+    "score_ci95": [
+     1.655,
+     2.75
+    ],
+    "score_se": 0.283,
+    "score_boot_median": 2.191,
+    "rank": 19,
+    "rank_ci95": [
+     17,
+     26
+    ],
+    "rank_ci_width": 9,
+    "rank_boot_median": 20,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.543
+   },
+   {
+    "region": "NYIS/ZONG",
+    "score": 2.27,
+    "score_ci95": [
+     1.643,
+     2.782
+    ],
+    "score_se": 0.294,
+    "score_boot_median": 2.159,
+    "rank": 20,
+    "rank_ci95": [
+     16,
+     26
+    ],
+    "rank_ci_width": 10,
+    "rank_boot_median": 21,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.481
+   },
+   {
+    "region": "CISO",
+    "score": 2.094,
+    "score_ci95": [
+     1.441,
+     2.618
+    ],
+    "score_se": 0.302,
+    "score_boot_median": 1.994,
+    "rank": 21,
+    "rank_ci95": [
+     17,
+     29
+    ],
+    "rank_ci_width": 12,
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.279
+   },
+   {
+    "region": "SWPP/OKGE",
+    "score": 2.061,
+    "score_ci95": [
+     1.47,
+     2.597
+    ],
+    "score_se": 0.287,
+    "score_boot_median": 1.999,
+    "rank": 22,
+    "rank_ci95": [
+     17,
+     28
+    ],
+    "rank_ci_width": 11,
+    "rank_boot_median": 22,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.264
+   },
+   {
+    "region": "SWPP/SPS",
+    "score": 1.977,
+    "score_ci95": [
+     1.34,
+     2.565
+    ],
+    "score_se": 0.315,
+    "score_boot_median": 1.911,
+    "rank": 23,
+    "rank_ci95": [
+     17,
+     31
+    ],
+    "rank_ci_width": 14,
+    "rank_boot_median": 24,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.179
+   },
+   {
+    "region": "FPL",
+    "score": 1.872,
+    "score_ci95": [
+     1.052,
+     2.429
+    ],
+    "score_se": 0.345,
+    "score_boot_median": 1.81,
+    "rank": 24,
+    "rank_ci95": [
+     17,
+     36
+    ],
+    "rank_ci_width": 19,
+    "rank_boot_median": 25,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.198
+   },
+   {
+    "region": "SWPP/WAUE",
+    "score": 1.859,
+    "score_ci95": [
+     1.142,
+     2.624
+    ],
+    "score_se": 0.38,
+    "score_boot_median": 1.814,
+    "rank": 25,
+    "rank_ci95": [
+     18,
+     32
+    ],
+    "rank_ci_width": 14,
+    "rank_boot_median": 25,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.105
+   },
+   {
+    "region": "NYIS/ZONF",
+    "score": 1.746,
+    "score_ci95": [
+     1.112,
+     2.301
+    ],
+    "score_se": 0.309,
+    "score_boot_median": 1.67,
+    "rank": 26,
+    "rank_ci95": [
+     20,
+     32
+    ],
+    "rank_ci_width": 12,
+    "rank_boot_median": 27,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.032
+   },
+   {
+    "region": "GCPD",
+    "score": 1.705,
+    "score_ci95": [
+     1.068,
+     2.215
+    ],
+    "score_se": 0.291,
+    "score_boot_median": 1.628,
+    "rank": 27,
+    "rank_ci95": [
+     20,
+     34
+    ],
+    "rank_ci_width": 14,
+    "rank_boot_median": 27,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.026
+   },
+   {
+    "region": "SWPP/NPPD",
+    "score": 1.616,
+    "score_ci95": [
+     0.862,
+     2.177
+    ],
+    "score_se": 0.333,
+    "score_boot_median": 1.515,
+    "rank": 28,
+    "rank_ci95": [
+     21,
+     39
+    ],
+    "rank_ci_width": 18,
+    "rank_boot_median": 28,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.018
+   },
+   {
+    "region": "NYIS/ZONA",
+    "score": 1.359,
+    "score_ci95": [
+     0.669,
+     1.806
+    ],
+    "score_se": 0.289,
+    "score_boot_median": 1.264,
+    "rank": 29,
+    "rank_ci95": [
+     25,
+     43
+    ],
+    "rank_ci_width": 18,
+    "rank_boot_median": 31,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "SWPP/GRDA",
+    "score": 1.357,
+    "score_ci95": [
+     0.687,
+     2.207
+    ],
+    "score_se": 0.388,
+    "score_boot_median": 1.419,
+    "rank": 30,
+    "rank_ci95": [
+     21,
+     41
+    ],
+    "rank_ci_width": 20,
+    "rank_boot_median": 29,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.016
+   },
+   {
+    "region": "FPC",
+    "score": 1.334,
+    "score_ci95": [
+     0.597,
+     1.863
+    ],
+    "score_se": 0.32,
+    "score_boot_median": 1.252,
+    "rank": 31,
+    "rank_ci95": [
+     23,
+     46
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 32,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.007
+   },
+   {
+    "region": "NYIS/ZONC",
+    "score": 1.268,
+    "score_ci95": [
+     0.69,
+     1.607
+    ],
+    "score_se": 0.234,
+    "score_boot_median": 1.17,
+    "rank": 32,
+    "rank_ci95": [
+     28,
+     41
+    ],
+    "rank_ci_width": 13,
+    "rank_boot_median": 33,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4001",
+    "score": 1.005,
+    "score_ci95": [
+     0.408,
+     1.518
+    ],
+    "score_se": 0.283,
+    "score_boot_median": 0.939,
+    "rank": 33,
+    "rank_ci95": [
+     29,
+     49
+    ],
+    "rank_ci_width": 20,
+    "rank_boot_median": 37,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/JC",
+    "score": 1.0,
+    "score_ci95": [
+     0.424,
+     1.606
+    ],
+    "score_se": 0.302,
+    "score_boot_median": 0.943,
+    "rank": 34,
+    "rank_ci95": [
+     27,
+     47
+    ],
+    "rank_ci_width": 20,
+    "rank_boot_median": 37,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0035",
+    "score": 0.946,
+    "score_ci95": [
+     0.447,
+     1.386
+    ],
+    "score_se": 0.241,
+    "score_boot_median": 0.914,
+    "rank": 35,
+    "rank_ci95": [
+     30,
+     50
+    ],
+    "rank_ci_width": 20,
+    "rank_boot_median": 37,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS/ZONB",
+    "score": 0.93,
+    "score_ci95": [
+     0.165,
+     1.407
+    ],
+    "score_se": 0.318,
+    "score_boot_median": 0.842,
+    "rank": 36,
+    "rank_ci95": [
+     30,
+     57
+    ],
+    "rank_ci_width": 27,
+    "rank_boot_median": 39,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "LGEE",
+    "score": 0.924,
+    "score_ci95": [
+     0.314,
+     1.522
+    ],
+    "score_se": 0.317,
+    "score_boot_median": 0.927,
+    "rank": 37,
+    "rank_ci95": [
+     28,
+     52
+    ],
+    "rank_ci_width": 24,
+    "rank_boot_median": 37,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4006",
+    "score": 0.916,
+    "score_ci95": [
+     0.218,
+     1.465
+    ],
+    "score_se": 0.324,
+    "score_boot_median": 0.852,
+    "rank": 38,
+    "rank_ci95": [
+     29,
+     53
+    ],
+    "rank_ci_width": 24,
+    "rank_boot_median": 38,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP",
+    "score": 0.854,
+    "score_ci95": [
+     0.291,
+     1.383
+    ],
+    "score_se": 0.279,
+    "score_boot_median": 0.826,
+    "rank": 39,
+    "rank_ci95": [
+     31,
+     54
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 39,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS/ZONI",
+    "score": 0.833,
+    "score_ci95": [
+     0.158,
+     1.447
+    ],
+    "score_se": 0.331,
+    "score_boot_median": 0.721,
+    "rank": 40,
+    "rank_ci95": [
+     29,
+     55
+    ],
+    "rank_ci_width": 26,
+    "rank_boot_median": 41,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PL",
+    "score": 0.817,
+    "score_ci95": [
+     -0.232,
+     4.71
+    ],
+    "score_se": 1.577,
+    "score_boot_median": 0.813,
+    "rank": 41,
+    "rank_ci95": [
+     10,
+     67
+    ],
+    "rank_ci_width": 57,
+    "rank_boot_median": 39,
+    "p_in_top10": 0.134,
+    "p_in_top20": 0.349
+   },
+   {
+    "region": "BANC",
+    "score": 0.742,
+    "score_ci95": [
+     0.195,
+     1.178
+    ],
+    "score_se": 0.248,
+    "score_boot_median": 0.668,
+    "rank": 42,
+    "rank_ci95": [
+     33,
+     56
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 42,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/EKPC",
+    "score": 0.721,
+    "score_ci95": [
+     -0.559,
+     2.047
+    ],
+    "score_se": 0.66,
+    "score_boot_median": 0.722,
+    "rank": 43,
+    "rank_ci95": [
+     23,
+     77
+    ],
+    "rank_ci_width": 54,
+    "rank_boot_median": 41,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.008
+   },
+   {
+    "region": "CISO/SCE",
+    "score": 0.619,
+    "score_ci95": [
+     -0.093,
+     1.303
+    ],
+    "score_se": 0.353,
+    "score_boot_median": 0.569,
+    "rank": 44,
+    "rank_ci95": [
+     31,
+     64
+    ],
+    "rank_ci_width": 33,
+    "rank_boot_median": 45,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4002",
+    "score": 0.546,
+    "score_ci95": [
+     -0.155,
+     1.05
+    ],
+    "score_se": 0.316,
+    "score_boot_median": 0.469,
+    "rank": 45,
+    "rank_ci95": [
+     37,
+     64
+    ],
+    "rank_ci_width": 27,
+    "rank_boot_median": 48,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PNM",
+    "score": 0.542,
+    "score_ci95": [
+     -0.052,
+     1.032
+    ],
+    "score_se": 0.277,
+    "score_boot_median": 0.467,
+    "rank": 46,
+    "rank_ci95": [
+     36,
+     64
+    ],
+    "rank_ci_width": 28,
+    "rank_boot_median": 48,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS/ZONK",
+    "score": 0.515,
+    "score_ci95": [
+     -0.069,
+     1.138
+    ],
+    "score_se": 0.306,
+    "score_boot_median": 0.479,
+    "rank": 47,
+    "rank_ci95": [
+     34,
+     62
+    ],
+    "rank_ci_width": 28,
+    "rank_boot_median": 48,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/8910",
+    "score": 0.485,
+    "score_ci95": [
+     -0.035,
+     0.907
+    ],
+    "score_se": 0.242,
+    "score_boot_median": 0.439,
+    "rank": 48,
+    "rank_ci95": [
+     37,
+     64
+    ],
+    "rank_ci_width": 27,
+    "rank_boot_median": 49,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "FMPP",
+    "score": 0.456,
+    "score_ci95": [
+     -0.263,
+     0.987
+    ],
+    "score_se": 0.315,
+    "score_boot_median": 0.41,
+    "rank": 49,
+    "rank_ci95": [
+     34,
+     71
+    ],
+    "rank_ci_width": 37,
+    "rank_boot_median": 50,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "BPAT",
+    "score": 0.447,
+    "score_ci95": [
+     -0.115,
+     1.017
+    ],
+    "score_se": 0.289,
+    "score_boot_median": 0.429,
+    "rank": 50,
+    "rank_ci95": [
+     36,
+     65
+    ],
+    "rank_ci_width": 29,
+    "rank_boot_median": 49,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PN",
+    "score": 0.414,
+    "score_ci95": [
+     -0.223,
+     0.899
+    ],
+    "score_se": 0.286,
+    "score_boot_median": 0.373,
+    "rank": 51,
+    "rank_ci95": [
+     38,
+     69
+    ],
+    "rank_ci_width": 31,
+    "rank_boot_median": 51,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM",
+    "score": 0.401,
+    "score_ci95": [
+     -0.09,
+     0.85
+    ],
+    "score_se": 0.242,
+    "score_boot_median": 0.361,
+    "rank": 52,
+    "rank_ci95": [
+     39,
+     63
+    ],
+    "rank_ci_width": 24,
+    "rank_boot_median": 51,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PS",
+    "score": 0.379,
+    "score_ci95": [
+     -0.16,
+     0.872
+    ],
+    "score_se": 0.261,
+    "score_boot_median": 0.336,
+    "rank": 53,
+    "rank_ci95": [
+     39,
+     65
+    ],
+    "rank_ci_width": 26,
+    "rank_boot_median": 52,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4003",
+    "score": 0.378,
+    "score_ci95": [
+     -0.239,
+     0.78
+    ],
+    "score_se": 0.261,
+    "score_boot_median": 0.292,
+    "rank": 54,
+    "rank_ci95": [
+     38,
+     70
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 53,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "TEC",
+    "score": 0.341,
+    "score_ci95": [
+     -0.415,
+     0.984
+    ],
+    "score_se": 0.355,
+    "score_boot_median": 0.309,
+    "rank": 55,
+    "rank_ci95": [
+     34,
+     75
+    ],
+    "rank_ci_width": 41,
+    "rank_boot_median": 53,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/COAS",
+    "score": 0.327,
+    "score_ci95": [
+     -0.256,
+     0.774
+    ],
+    "score_se": 0.264,
+    "score_boot_median": 0.255,
+    "rank": 56,
+    "rank_ci95": [
+     40,
+     70
+    ],
+    "rank_ci_width": 30,
+    "rank_boot_median": 54,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4005",
+    "score": 0.304,
+    "score_ci95": [
+     -0.404,
+     0.896
+    ],
+    "score_se": 0.337,
+    "score_boot_median": 0.226,
+    "rank": 57,
+    "rank_ci95": [
+     39,
+     71
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 56,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "IPCO",
+    "score": 0.253,
+    "score_ci95": [
+     -0.395,
+     0.74
+    ],
+    "score_se": 0.286,
+    "score_boot_median": 0.2,
+    "rank": 58,
+    "rank_ci95": [
+     41,
+     73
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 56,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0001",
+    "score": 0.224,
+    "score_ci95": [
+     -0.32,
+     0.73
+    ],
+    "score_se": 0.263,
+    "score_boot_median": 0.208,
+    "rank": 59,
+    "rank_ci95": [
+     42,
+     72
+    ],
+    "rank_ci_width": 30,
+    "rank_boot_median": 56,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "TVA",
+    "score": 0.196,
+    "score_ci95": [
+     -0.471,
+     0.762
+    ],
+    "score_se": 0.321,
+    "score_boot_median": 0.15,
+    "rank": 60,
+    "rank_ci95": [
+     40,
+     75
+    ],
+    "rank_ci_width": 35,
+    "rank_boot_median": 58,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4008",
+    "score": 0.06,
+    "score_ci95": [
+     -0.679,
+     0.507
+    ],
+    "score_se": 0.296,
+    "score_boot_median": 0.026,
+    "rank": 61,
+    "rank_ci95": [
+     48,
+     80
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 61,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/EAST",
+    "score": -0.045,
+    "score_ci95": [
+     -1.081,
+     0.703
+    ],
+    "score_se": 0.459,
+    "score_boot_median": -0.136,
+    "rank": 62,
+    "rank_ci95": [
+     41,
+     88
+    ],
+    "rank_ci_width": 47,
+    "rank_boot_median": 65,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS",
+    "score": -0.053,
+    "score_ci95": [
+     -0.564,
+     0.397
+    ],
+    "score_se": 0.246,
+    "score_boot_median": -0.091,
+    "rank": 63,
+    "rank_ci95": [
+     51,
+     76
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 64,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "JEA",
+    "score": -0.076,
+    "score_ci95": [
+     -0.776,
+     0.519
+    ],
+    "score_se": 0.332,
+    "score_boot_median": -0.114,
+    "rank": 64,
+    "rank_ci95": [
+     46,
+     83
+    ],
+    "rank_ci_width": 37,
+    "rank_boot_median": 65,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/ATSI",
+    "score": -0.093,
+    "score_ci95": [
+     -0.516,
+     0.313
+    ],
+    "score_se": 0.209,
+    "score_boot_median": -0.108,
+    "rank": 65,
+    "rank_ci95": [
+     53,
+     76
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 64,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE",
+    "score": -0.106,
+    "score_ci95": [
+     -0.724,
+     0.382
+    ],
+    "score_se": 0.284,
+    "score_boot_median": -0.176,
+    "rank": 66,
+    "rank_ci95": [
+     52,
+     81
+    ],
+    "rank_ci_width": 29,
+    "rank_boot_median": 67,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/CE",
+    "score": -0.117,
+    "score_ci95": [
+     -0.775,
+     0.378
+    ],
+    "score_se": 0.297,
+    "score_boot_median": -0.179,
+    "rank": 67,
+    "rank_ci95": [
+     50,
+     83
+    ],
+    "rank_ci_width": 33,
+    "rank_boot_median": 67,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DPL",
+    "score": -0.123,
+    "score_ci95": [
+     -0.68,
+     0.491
+    ],
+    "score_se": 0.3,
+    "score_boot_median": -0.143,
+    "rank": 68,
+    "rank_ci95": [
+     48,
+     80
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 65,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4007",
+    "score": -0.167,
+    "score_ci95": [
+     -0.754,
+     0.348
+    ],
+    "score_se": 0.28,
+    "score_boot_median": -0.242,
+    "rank": 69,
+    "rank_ci95": [
+     53,
+     82
+    ],
+    "rank_ci_width": 29,
+    "rank_boot_median": 69,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4004",
+    "score": -0.203,
+    "score_ci95": [
+     -0.716,
+     0.266
+    ],
+    "score_se": 0.249,
+    "score_boot_median": -0.27,
+    "rank": 70,
+    "rank_ci95": [
+     55,
+     81
+    ],
+    "rank_ci_width": 26,
+    "rank_boot_median": 70,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/BC",
+    "score": -0.215,
+    "score_ci95": [
+     -0.697,
+     0.264
+    ],
+    "score_se": 0.245,
+    "score_boot_median": -0.261,
+    "rank": 71,
+    "rank_ci95": [
+     55,
+     80
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 69,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DAY",
+    "score": -0.287,
+    "score_ci95": [
+     -0.672,
+     0.185
+    ],
+    "score_se": 0.218,
+    "score_boot_median": -0.286,
+    "rank": 72,
+    "rank_ci95": [
+     56,
+     80
+    ],
+    "rank_ci_width": 24,
+    "rank_boot_median": 70,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PEP",
+    "score": -0.287,
+    "score_ci95": [
+     -0.738,
+     0.124
+    ],
+    "score_se": 0.219,
+    "score_boot_median": -0.333,
+    "rank": 73,
+    "rank_ci95": [
+     59,
+     82
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 71,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "CPLE",
+    "score": -0.464,
+    "score_ci95": [
+     -1.251,
+     0.257
+    ],
+    "score_se": 0.385,
+    "score_boot_median": -0.498,
+    "rank": 74,
+    "rank_ci95": [
+     53,
+     90
+    ],
+    "rank_ci_width": 37,
+    "rank_boot_median": 76,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NEVP",
+    "score": -0.467,
+    "score_ci95": [
+     -1.047,
+     -0.057
+    ],
+    "score_se": 0.254,
+    "score_boot_median": -0.514,
+    "rank": 75,
+    "rank_ci95": [
+     63,
+     87
+    ],
+    "rank_ci_width": 24,
+    "rank_boot_median": 77,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "DUK",
+    "score": -0.513,
+    "score_ci95": [
+     -1.041,
+     0.042
+    ],
+    "score_se": 0.281,
+    "score_boot_median": -0.508,
+    "rank": 76,
+    "rank_ci95": [
+     60,
+     87
+    ],
+    "rank_ci_width": 27,
+    "rank_boot_median": 76,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/ME",
+    "score": -0.516,
+    "score_ci95": [
+     -0.979,
+     -0.079
+    ],
+    "score_se": 0.23,
+    "score_boot_median": -0.563,
+    "rank": 77,
+    "rank_ci95": [
+     66,
+     87
+    ],
+    "rank_ci_width": 21,
+    "rank_boot_median": 78,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SCL",
+    "score": -0.563,
+    "score_ci95": [
+     -1.308,
+     0.099
+    ],
+    "score_se": 0.354,
+    "score_boot_median": -0.65,
+    "rank": 78,
+    "rank_ci95": [
+     59,
+     91
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 80,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "EPE",
+    "score": -0.568,
+    "score_ci95": [
+     -1.2,
+     -0.111
+    ],
+    "score_se": 0.281,
+    "score_boot_median": -0.606,
+    "rank": 79,
+    "rank_ci95": [
+     63,
+     89
+    ],
+    "rank_ci_width": 26,
+    "rank_boot_median": 79,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/SECI",
+    "score": -0.59,
+    "score_ci95": [
+     -1.117,
+     -0.183
+    ],
+    "score_se": 0.235,
+    "score_boot_median": -0.629,
+    "rank": 80,
+    "rank_ci95": [
+     67,
+     88
+    ],
+    "rank_ci_width": 21,
+    "rank_boot_median": 79,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DUQ",
+    "score": -0.619,
+    "score_ci95": [
+     -0.995,
+     -0.233
+    ],
+    "score_se": 0.193,
+    "score_boot_median": -0.604,
+    "rank": 81,
+    "rank_ci95": [
+     67,
+     87
+    ],
+    "rank_ci_width": 20,
+    "rank_boot_median": 79,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS/ZONJ",
+    "score": -0.671,
+    "score_ci95": [
+     -1.274,
+     -0.06
+    ],
+    "score_se": 0.308,
+    "score_boot_median": -0.642,
+    "rank": 82,
+    "rank_ci95": [
+     64,
+     90
+    ],
+    "rank_ci_width": 26,
+    "rank_boot_median": 80,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/AP",
+    "score": -0.709,
+    "score_ci95": [
+     -1.527,
+     -0.031
+    ],
+    "score_se": 0.384,
+    "score_boot_median": -0.759,
+    "rank": 83,
+    "rank_ci95": [
+     63,
+     93
+    ],
+    "rank_ci_width": 30,
+    "rank_boot_median": 83,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "LDWP",
+    "score": -0.713,
+    "score_ci95": [
+     -1.49,
+     -0.062
+    ],
+    "score_se": 0.366,
+    "score_boot_median": -0.769,
+    "rank": 84,
+    "rank_ci95": [
+     64,
+     92
+    ],
+    "rank_ci_width": 28,
+    "rank_boot_median": 83,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PACE",
+    "score": -0.735,
+    "score_ci95": [
+     -1.204,
+     -0.32
+    ],
+    "score_se": 0.226,
+    "score_boot_median": -0.748,
+    "rank": 85,
+    "rank_ci95": [
+     71,
+     89
+    ],
+    "rank_ci_width": 18,
+    "rank_boot_median": 82,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DEOK",
+    "score": -0.765,
+    "score_ci95": [
+     -1.182,
+     -0.483
+    ],
+    "score_se": 0.179,
+    "score_boot_median": -0.823,
+    "rank": 86,
+    "rank_ci95": [
+     75,
+     89
+    ],
+    "rank_ci_width": 14,
+    "rank_boot_median": 84,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/MPS",
+    "score": -0.875,
+    "score_ci95": [
+     -1.547,
+     -0.186
+    ],
+    "score_se": 0.346,
+    "score_boot_median": -0.889,
+    "rank": 87,
+    "rank_ci95": [
+     67,
+     92
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 85,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/KCPL",
+    "score": -1.054,
+    "score_ci95": [
+     -1.679,
+     -0.532
+    ],
+    "score_se": 0.293,
+    "score_boot_median": -1.107,
+    "rank": 88,
+    "rank_ci95": [
+     77,
+     94
+    ],
+    "rank_ci_width": 17,
+    "rank_boot_median": 88,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO",
+    "score": -1.114,
+    "score_ci95": [
+     -1.524,
+     -0.774
+    ],
+    "score_se": 0.19,
+    "score_boot_median": -1.124,
+    "rank": 89,
+    "rank_ci95": [
+     83,
+     92
+    ],
+    "rank_ci_width": 9,
+    "rank_boot_median": 88,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PE",
+    "score": -1.168,
+    "score_ci95": [
+     -1.684,
+     -0.628
+    ],
+    "score_se": 0.269,
+    "score_boot_median": -1.202,
+    "rank": 90,
+    "rank_ci95": [
+     79,
+     94
+    ],
+    "rank_ci_width": 15,
+    "rank_boot_median": 90,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/NCEN",
+    "score": -1.325,
+    "score_ci95": [
+     -1.995,
+     -0.718
+    ],
+    "score_se": 0.326,
+    "score_boot_median": -1.386,
+    "rank": 91,
+    "rank_ci95": [
+     82,
+     97
+    ],
+    "rank_ci_width": 15,
+    "rank_boot_median": 91,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/AE",
+    "score": -1.332,
+    "score_ci95": [
+     -1.844,
+     -0.759
+    ],
+    "score_se": 0.273,
+    "score_boot_median": -1.312,
+    "rank": 92,
+    "rank_ci95": [
+     81,
+     96
+    ],
+    "rank_ci_width": 15,
+    "rank_boot_median": 91,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SOCO",
+    "score": -1.567,
+    "score_ci95": [
+     -2.014,
+     -1.09
+    ],
+    "score_se": 0.236,
+    "score_boot_median": -1.55,
+    "rank": 93,
+    "rank_ci95": [
+     88,
+     98
+    ],
+    "rank_ci_width": 10,
+    "rank_boot_median": 93,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PSCO",
+    "score": -1.66,
+    "score_ci95": [
+     -2.268,
+     -1.155
+    ],
+    "score_se": 0.283,
+    "score_boot_median": -1.709,
+    "rank": 94,
+    "rank_ci95": [
+     89,
+     99
+    ],
+    "rank_ci_width": 10,
+    "rank_boot_median": 94,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0006",
+    "score": -1.854,
+    "score_ci95": [
+     -2.298,
+     -1.548
+    ],
+    "score_se": 0.192,
+    "score_boot_median": -1.896,
+    "rank": 95,
+    "rank_ci95": [
+     93,
+     99
+    ],
+    "rank_ci_width": 6,
+    "rank_boot_median": 96,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0027",
+    "score": -1.956,
+    "score_ci95": [
+     -2.665,
+     -1.313
+    ],
+    "score_se": 0.34,
+    "score_boot_median": -1.945,
+    "rank": 96,
+    "rank_ci95": [
+     91,
+     102
+    ],
+    "rank_ci_width": 11,
+    "rank_boot_median": 96,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0004",
+    "score": -2.031,
+    "score_ci95": [
+     -2.654,
+     -1.612
+    ],
+    "score_se": 0.266,
+    "score_boot_median": -2.086,
+    "rank": 97,
+    "rank_ci95": [
+     94,
+     102
+    ],
+    "rank_ci_width": 8,
+    "rank_boot_median": 98,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PACW",
+    "score": -2.036,
+    "score_ci95": [
+     -2.785,
+     -1.338
+    ],
+    "score_se": 0.365,
+    "score_boot_median": -2.065,
+    "rank": 98,
+    "rank_ci95": [
+     91,
+     102
+    ],
+    "rank_ci_width": 11,
+    "rank_boot_median": 98,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/CSWS",
+    "score": -2.075,
+    "score_ci95": [
+     -2.574,
+     -1.592
+    ],
+    "score_se": 0.251,
+    "score_boot_median": -2.087,
+    "rank": 99,
+    "rank_ci95": [
+     94,
+     101
+    ],
+    "rank_ci_width": 7,
+    "rank_boot_median": 98,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/EDE",
+    "score": -2.337,
+    "score_ci95": [
+     -3.105,
+     -1.634
+    ],
+    "score_se": 0.378,
+    "score_boot_median": -2.365,
+    "rank": 100,
+    "rank_ci95": [
+     94,
+     104
+    ],
+    "rank_ci_width": 10,
+    "rank_boot_median": 100,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "AVA",
+    "score": -2.393,
+    "score_ci95": [
+     -3.136,
+     -1.865
+    ],
+    "score_se": 0.324,
+    "score_boot_median": -2.467,
+    "rank": 101,
+    "rank_ci95": [
+     96,
+     104
+    ],
+    "rank_ci_width": 8,
+    "rank_boot_median": 101,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/WR",
+    "score": -2.58,
+    "score_ci95": [
+     -3.123,
+     -2.112
+    ],
+    "score_se": 0.259,
+    "score_boot_median": -2.6,
+    "rank": 102,
+    "rank_ci95": [
+     99,
+     105
+    ],
+    "rank_ci_width": 6,
+    "rank_boot_median": 102,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SCEG",
+    "score": -2.649,
+    "score_ci95": [
+     -3.241,
+     -2.032
+    ],
+    "score_se": 0.308,
+    "score_boot_median": -2.614,
+    "rank": 103,
+    "rank_ci95": [
+     97,
+     105
+    ],
+    "rank_ci_width": 8,
+    "rank_boot_median": 102,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/WFEC",
+    "score": -2.927,
+    "score_ci95": [
+     -3.6,
+     -2.423
+    ],
+    "score_se": 0.3,
+    "score_boot_median": -2.967,
+    "rank": 104,
+    "rank_ci95": [
+     101,
+     106
+    ],
+    "rank_ci_width": 5,
+    "rank_boot_median": 104,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "TPWR",
+    "score": -3.431,
+    "score_ci95": [
+     -4.122,
+     -2.705
+    ],
+    "score_se": 0.36,
+    "score_boot_median": -3.396,
+    "rank": 105,
+    "rank_ci95": [
+     103,
+     108
+    ],
+    "rank_ci_width": 5,
+    "rank_boot_median": 106,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "CPLW",
+    "score": -3.505,
+    "score_ci95": [
+     -4.554,
+     -2.514
+    ],
+    "score_se": 0.527,
+    "score_boot_median": -3.471,
+    "rank": 106,
+    "rank_ci95": [
+     102,
+     108
+    ],
+    "rank_ci_width": 6,
+    "rank_boot_median": 106,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "WALC",
+    "score": -3.655,
+    "score_ci95": [
+     -4.953,
+     -2.511
+    ],
+    "score_se": 0.618,
+    "score_boot_median": -3.682,
+    "rank": 107,
+    "rank_ci95": [
+     102,
+     109
+    ],
+    "rank_ci_width": 7,
+    "rank_boot_median": 107,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NWMT",
+    "score": -3.761,
+    "score_ci95": [
+     -4.411,
+     -3.242
+    ],
+    "score_se": 0.295,
+    "score_boot_median": -3.778,
+    "rank": 108,
+    "rank_ci95": [
+     106,
+     108
+    ],
+    "rank_ci_width": 2,
+    "rank_boot_median": 107,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "AECI",
+    "score": -4.963,
+    "score_ci95": [
+     -5.891,
+     -3.911
+    ],
+    "score_se": 0.507,
+    "score_boot_median": -4.864,
+    "rank": 109,
+    "rank_ci95": [
+     108,
+     111
+    ],
+    "rank_ci_width": 3,
+    "rank_boot_median": 109,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PSEI",
+    "score": -5.006,
+    "score_ci95": [
+     -5.706,
+     -4.416
+    ],
+    "score_se": 0.328,
+    "score_boot_median": -5.014,
+    "rank": 110,
+    "rank_ci95": [
+     109,
+     111
+    ],
+    "rank_ci_width": 2,
+    "rank_boot_median": 110,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/WEST",
+    "score": -5.781,
+    "score_ci95": [
+     -6.689,
+     -4.963
+    ],
+    "score_se": 0.442,
+    "score_boot_median": -5.774,
+    "rank": 111,
+    "rank_ci95": [
+     110,
+     111
+    ],
+    "rank_ci_width": 1,
+    "rank_boot_median": 111,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   }
+  ],
+  "median_rank_ci_width": 19,
+  "median_rank_ci_width_top10": 2,
+  "median_rank_ci_width_rest": 20,
+  "n_regions_rank_ci_wider_than_20": 50,
+  "n_regions_rank_ci_width_le_5": 17,
+  "expected_true_top10_members": 9.35,
+  "median_rank_bias": 0.0,
+  "median_score_bias": -0.049,
+  "table": [
+   {
+    "region": "ERCO/NRTH",
+    "score": 16.466,
+    "score_ci95": [
+     14.29,
+     18.451
+    ],
+    "rank": 1,
+    "rank_ci95": [
+     1,
+     1
+    ],
+    "rank_boot_median": 1,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "ERCO/FWES",
+    "score": 13.893,
+    "score_ci95": [
+     11.987,
+     15.784
+    ],
+    "rank": 2,
+    "rank_ci95": [
+     2,
+     2
+    ],
+    "rank_boot_median": 2,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "AZPS",
+    "score": 9.012,
+    "score_ci95": [
+     8.065,
+     9.694
+    ],
+    "rank": 3,
+    "rank_ci95": [
+     3,
+     5
+    ],
+    "rank_boot_median": 3,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "TEPC",
+    "score": 8.508,
+    "score_ci95": [
+     7.167,
+     9.518
+    ],
+    "rank": 4,
+    "rank_ci95": [
+     3,
+     6
+    ],
+    "rank_boot_median": 4,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "WACM",
+    "score": 8.237,
+    "score_ci95": [
+     6.754,
+     9.608
+    ],
+    "rank": 5,
+    "rank_ci95": [
+     3,
+     6
+    ],
+    "rank_boot_median": 5,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "PJM/DOM",
+    "score": 7.707,
+    "score_ci95": [
+     6.454,
+     8.776
+    ],
+    "rank": 6,
+    "rank_ci95": [
+     4,
+     6
+    ],
+    "rank_boot_median": 6,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "SWPP/OPPD",
+    "score": 6.82,
+    "score_ci95": [
+     5.733,
+     7.677
+    ],
+    "rank": 7,
+    "rank_ci95": [
+     7,
+     7
+    ],
+    "rank_boot_median": 7,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "ERCO",
+    "score": 5.138,
+    "score_ci95": [
+     4.354,
+     5.833
+    ],
+    "rank": 8,
+    "rank_ci95": [
+     8,
+     9
+    ],
+    "rank_boot_median": 8,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "SC",
+    "score": 5.076,
+    "score_ci95": [
+     3.91,
+     6.156
+    ],
+    "rank": 9,
+    "rank_ci95": [
+     8,
+     10
+    ],
+    "rank_boot_median": 9,
+    "p_in_top10": 0.993
+   },
+   {
+    "region": "CISO/SDGE",
+    "score": 3.719,
+    "score_ci95": [
+     2.885,
+     4.296
+    ],
+    "rank": 10,
+    "rank_ci95": [
+     10,
+     15
+    ],
+    "rank_boot_median": 11,
+    "p_in_top10": 0.352
+   },
+   {
+    "region": "PNM/PNM",
+    "score": 3.618,
+    "score_ci95": [
+     2.877,
+     4.138
+    ],
+    "rank": 11,
+    "rank_ci95": [
+     10,
+     15
+    ],
+    "rank_boot_median": 12,
+    "p_in_top10": 0.232
+   },
+   {
+    "region": "CISO/PGAE",
+    "score": 3.412,
+    "score_ci95": [
+     2.617,
+     4.002
+    ],
+    "rank": 12,
+    "rank_ci95": [
+     10,
+     17
+    ],
+    "rank_boot_median": 13,
+    "p_in_top10": 0.07
+   },
+   {
+    "region": "SRP",
+    "score": 3.378,
+    "score_ci95": [
+     2.631,
+     3.9
+    ],
+    "rank": 13,
+    "rank_ci95": [
+     10,
+     17
+    ],
+    "rank_boot_median": 13,
+    "p_in_top10": 0.114
+   },
+   {
+    "region": "ERCO/SOUT",
+    "score": 3.308,
+    "score_ci95": [
+     2.62,
+     3.926
+    ],
+    "rank": 14,
+    "rank_ci95": [
+     10,
+     17
+    ],
+    "rank_boot_median": 13,
+    "p_in_top10": 0.068
+   },
+   {
+    "region": "PGE",
+    "score": 3.108,
+    "score_ci95": [
+     2.241,
+     3.885
+    ],
+    "rank": 15,
+    "rank_ci95": [
+     10,
+     19
+    ],
+    "rank_boot_median": 15,
+    "p_in_top10": 0.035
+   },
+   {
+    "region": "ERCO/SCEN",
+    "score": 2.875,
+    "score_ci95": [
+     2.146,
+     3.538
+    ],
+    "rank": 16,
+    "rank_ci95": [
+     12,
+     20
+    ],
+    "rank_boot_median": 16,
+    "p_in_top10": 0.004
+   },
+   {
+    "region": "NYIS/ZONE",
+    "score": 2.63,
+    "score_ci95": [
+     1.815,
+     3.126
+    ],
+    "rank": 17,
+    "rank_ci95": [
+     14,
+     25
+    ],
+    "rank_boot_median": 18,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "NYIS/ZOND",
+    "score": 2.372,
+    "score_ci95": [
+     1.658,
+     2.989
+    ],
+    "rank": 18,
+    "rank_ci95": [
+     15,
+     25
+    ],
+    "rank_boot_median": 19,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "PJM/AEP",
+    "score": 2.285,
+    "score_ci95": [
+     1.655,
+     2.75
+    ],
+    "rank": 19,
+    "rank_ci95": [
+     17,
+     26
+    ],
+    "rank_boot_median": 20,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "NYIS/ZONG",
+    "score": 2.27,
+    "score_ci95": [
+     1.643,
+     2.782
+    ],
+    "rank": 20,
+    "rank_ci95": [
+     16,
+     26
+    ],
+    "rank_boot_median": 21,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "CISO",
+    "score": 2.094,
+    "score_ci95": [
+     1.441,
+     2.618
+    ],
+    "rank": 21,
+    "rank_ci95": [
+     17,
+     29
+    ],
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "SWPP/OKGE",
+    "score": 2.061,
+    "score_ci95": [
+     1.47,
+     2.597
+    ],
+    "rank": 22,
+    "rank_ci95": [
+     17,
+     28
+    ],
+    "rank_boot_median": 22,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "SWPP/SPS",
+    "score": 1.977,
+    "score_ci95": [
+     1.34,
+     2.565
+    ],
+    "rank": 23,
+    "rank_ci95": [
+     17,
+     31
+    ],
+    "rank_boot_median": 24,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "FPL",
+    "score": 1.872,
+    "score_ci95": [
+     1.052,
+     2.429
+    ],
+    "rank": 24,
+    "rank_ci95": [
+     17,
+     36
+    ],
+    "rank_boot_median": 25,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "SWPP/WAUE",
+    "score": 1.859,
+    "score_ci95": [
+     1.142,
+     2.624
+    ],
+    "rank": 25,
+    "rank_ci95": [
+     18,
+     32
+    ],
+    "rank_boot_median": 25,
+    "p_in_top10": 0.0
+   }
+  ]
+ },
+ "bootstrap_28day_blocks_sensitivity": {
+  "b": 10000,
+  "block_days": 28,
+  "seed": 20260928,
+  "runtime_sec": 172.3,
+  "per_region": [
+   {
+    "region": "ERCO/NRTH",
+    "score": 16.466,
+    "score_ci95": [
+     10.619,
+     20.224
+    ],
+    "score_se": 2.539,
+    "score_boot_median": 15.311,
+    "rank": 1,
+    "rank_ci95": [
+     1,
+     2
+    ],
+    "rank_ci_width": 1,
+    "rank_boot_median": 1,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "ERCO/FWES",
+    "score": 13.893,
+    "score_ci95": [
+     9.001,
+     17.819
+    ],
+    "score_se": 2.305,
+    "score_boot_median": 13.277,
+    "rank": 2,
+    "rank_ci95": [
+     1,
+     2
+    ],
+    "rank_ci_width": 1,
+    "rank_boot_median": 2,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "AZPS",
+    "score": 9.012,
+    "score_ci95": [
+     5.268,
+     9.932
+    ],
+    "score_se": 1.127,
+    "score_boot_median": 8.19,
+    "rank": 3,
+    "rank_ci95": [
+     3,
+     8
+    ],
+    "rank_ci_width": 5,
+    "rank_boot_median": 3,
+    "p_in_top10": 0.999,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "TEPC",
+    "score": 8.508,
+    "score_ci95": [
+     4.997,
+     9.586
+    ],
+    "score_se": 1.173,
+    "score_boot_median": 7.368,
+    "rank": 4,
+    "rank_ci95": [
+     3,
+     8
+    ],
+    "rank_ci_width": 5,
+    "rank_boot_median": 5,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "WACM",
+    "score": 8.237,
+    "score_ci95": [
+     4.22,
+     11.386
+    ],
+    "score_se": 1.93,
+    "score_boot_median": 7.813,
+    "rank": 5,
+    "rank_ci95": [
+     3,
+     8
+    ],
+    "rank_ci_width": 5,
+    "rank_boot_median": 4,
+    "p_in_top10": 0.996,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "PJM/DOM",
+    "score": 7.707,
+    "score_ci95": [
+     4.347,
+     9.733
+    ],
+    "score_se": 1.456,
+    "score_boot_median": 7.188,
+    "rank": 6,
+    "rank_ci95": [
+     3,
+     7
+    ],
+    "rank_ci_width": 4,
+    "rank_boot_median": 5,
+    "p_in_top10": 0.998,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "SWPP/OPPD",
+    "score": 6.82,
+    "score_ci95": [
+     4.313,
+     8.295
+    ],
+    "score_se": 1.053,
+    "score_boot_median": 6.188,
+    "rank": 7,
+    "rank_ci95": [
+     5,
+     8
+    ],
+    "rank_ci_width": 3,
+    "rank_boot_median": 7,
+    "p_in_top10": 1.0,
+    "p_in_top20": 1.0
+   },
+   {
+    "region": "ERCO",
+    "score": 5.138,
+    "score_ci95": [
+     2.839,
+     5.869
+    ],
+    "score_se": 0.729,
+    "score_boot_median": 4.581,
+    "rank": 8,
+    "rank_ci95": [
+     7,
+     14
+    ],
+    "rank_ci_width": 7,
+    "rank_boot_median": 9,
+    "p_in_top10": 0.897,
+    "p_in_top20": 0.999
+   },
+   {
+    "region": "SC",
+    "score": 5.076,
+    "score_ci95": [
+     2.355,
+     7.433
+    ],
+    "score_se": 1.353,
+    "score_boot_median": 4.736,
+    "rank": 9,
+    "rank_ci95": [
+     6,
+     17
+    ],
+    "rank_ci_width": 11,
+    "rank_boot_median": 9,
+    "p_in_top10": 0.799,
+    "p_in_top20": 0.993
+   },
+   {
+    "region": "CISO/SDGE",
+    "score": 3.719,
+    "score_ci95": [
+     1.53,
+     4.975
+    ],
+    "score_se": 0.847,
+    "score_boot_median": 3.277,
+    "rank": 10,
+    "rank_ci95": [
+     8,
+     26
+    ],
+    "rank_ci_width": 18,
+    "rank_boot_median": 12,
+    "p_in_top10": 0.294,
+    "p_in_top20": 0.931
+   },
+   {
+    "region": "PNM/PNM",
+    "score": 3.618,
+    "score_ci95": [
+     1.681,
+     4.696
+    ],
+    "score_se": 0.796,
+    "score_boot_median": 3.277,
+    "rank": 11,
+    "rank_ci95": [
+     9,
+     23
+    ],
+    "rank_ci_width": 14,
+    "rank_boot_median": 12,
+    "p_in_top10": 0.254,
+    "p_in_top20": 0.949
+   },
+   {
+    "region": "CISO/PGAE",
+    "score": 3.412,
+    "score_ci95": [
+     0.794,
+     3.955
+    ],
+    "score_se": 0.798,
+    "score_boot_median": 2.867,
+    "rank": 12,
+    "rank_ci95": [
+     10,
+     41
+    ],
+    "rank_ci_width": 31,
+    "rank_boot_median": 14,
+    "p_in_top10": 0.077,
+    "p_in_top20": 0.809
+   },
+   {
+    "region": "SRP",
+    "score": 3.378,
+    "score_ci95": [
+     0.337,
+     4.846
+    ],
+    "score_se": 1.127,
+    "score_boot_median": 3.092,
+    "rank": 13,
+    "rank_ci95": [
+     8,
+     52
+    ],
+    "rank_ci_width": 44,
+    "rank_boot_median": 13,
+    "p_in_top10": 0.295,
+    "p_in_top20": 0.77
+   },
+   {
+    "region": "ERCO/SOUT",
+    "score": 3.308,
+    "score_ci95": [
+     1.154,
+     3.91
+    ],
+    "score_se": 0.663,
+    "score_boot_median": 2.766,
+    "rank": 14,
+    "rank_ci95": [
+     10,
+     33
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 15,
+    "p_in_top10": 0.03,
+    "p_in_top20": 0.85
+   },
+   {
+    "region": "PGE",
+    "score": 3.108,
+    "score_ci95": [
+     1.291,
+     4.627
+    ],
+    "score_se": 0.882,
+    "score_boot_median": 2.969,
+    "rank": 15,
+    "rank_ci95": [
+     9,
+     29
+    ],
+    "rank_ci_width": 20,
+    "rank_boot_median": 14,
+    "p_in_top10": 0.163,
+    "p_in_top20": 0.867
+   },
+   {
+    "region": "ERCO/SCEN",
+    "score": 2.875,
+    "score_ci95": [
+     0.974,
+     3.668
+    ],
+    "score_se": 0.677,
+    "score_boot_median": 2.384,
+    "rank": 16,
+    "rank_ci95": [
+     11,
+     38
+    ],
+    "rank_ci_width": 27,
+    "rank_boot_median": 18,
+    "p_in_top10": 0.011,
+    "p_in_top20": 0.689
+   },
+   {
+    "region": "NYIS/ZONE",
+    "score": 2.63,
+    "score_ci95": [
+     0.93,
+     3.532
+    ],
+    "score_se": 0.671,
+    "score_boot_median": 2.334,
+    "rank": 17,
+    "rank_ci95": [
+     11,
+     37
+    ],
+    "rank_ci_width": 26,
+    "rank_boot_median": 18,
+    "p_in_top10": 0.01,
+    "p_in_top20": 0.652
+   },
+   {
+    "region": "NYIS/ZOND",
+    "score": 2.372,
+    "score_ci95": [
+     0.632,
+     3.688
+    ],
+    "score_se": 0.795,
+    "score_boot_median": 2.06,
+    "rank": 18,
+    "rank_ci95": [
+     11,
+     42
+    ],
+    "rank_ci_width": 31,
+    "rank_boot_median": 20,
+    "p_in_top10": 0.013,
+    "p_in_top20": 0.507
+   },
+   {
+    "region": "PJM/AEP",
+    "score": 2.285,
+    "score_ci95": [
+     0.828,
+     3.343
+    ],
+    "score_se": 0.671,
+    "score_boot_median": 1.993,
+    "rank": 19,
+    "rank_ci95": [
+     12,
+     39
+    ],
+    "rank_ci_width": 27,
+    "rank_boot_median": 21,
+    "p_in_top10": 0.002,
+    "p_in_top20": 0.445
+   },
+   {
+    "region": "NYIS/ZONG",
+    "score": 2.27,
+    "score_ci95": [
+     0.938,
+     3.075
+    ],
+    "score_se": 0.555,
+    "score_boot_median": 1.995,
+    "rank": 20,
+    "rank_ci95": [
+     12,
+     33
+    ],
+    "rank_ci_width": 21,
+    "rank_boot_median": 22,
+    "p_in_top10": 0.006,
+    "p_in_top20": 0.381
+   },
+   {
+    "region": "CISO",
+    "score": 2.094,
+    "score_ci95": [
+     -0.328,
+     2.961
+    ],
+    "score_se": 0.841,
+    "score_boot_median": 1.816,
+    "rank": 21,
+    "rank_ci95": [
+     14,
+     67
+    ],
+    "rank_ci_width": 53,
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.37
+   },
+   {
+    "region": "SWPP/OKGE",
+    "score": 2.061,
+    "score_ci95": [
+     1.037,
+     2.767
+    ],
+    "score_se": 0.447,
+    "score_boot_median": 1.8,
+    "rank": 22,
+    "rank_ci95": [
+     16,
+     36
+    ],
+    "rank_ci_width": 20,
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.252
+   },
+   {
+    "region": "SWPP/SPS",
+    "score": 1.977,
+    "score_ci95": [
+     -0.036,
+     2.623
+    ],
+    "score_se": 0.667,
+    "score_boot_median": 1.524,
+    "rank": 23,
+    "rank_ci95": [
+     16,
+     61
+    ],
+    "rank_ci_width": 45,
+    "rank_boot_median": 27,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.179
+   },
+   {
+    "region": "FPL",
+    "score": 1.872,
+    "score_ci95": [
+     -1.598,
+     4.135
+    ],
+    "score_se": 1.477,
+    "score_boot_median": 1.786,
+    "rank": 24,
+    "rank_ci95": [
+     9,
+     92
+    ],
+    "rank_ci_width": 83,
+    "rank_boot_median": 24,
+    "p_in_top10": 0.099,
+    "p_in_top20": 0.425
+   },
+   {
+    "region": "SWPP/WAUE",
+    "score": 1.859,
+    "score_ci95": [
+     -0.194,
+     3.647
+    ],
+    "score_se": 1.029,
+    "score_boot_median": 1.515,
+    "rank": 25,
+    "rank_ci95": [
+     12,
+     64
+    ],
+    "rank_ci_width": 52,
+    "rank_boot_median": 27,
+    "p_in_top10": 0.007,
+    "p_in_top20": 0.278
+   },
+   {
+    "region": "NYIS/ZONF",
+    "score": 1.746,
+    "score_ci95": [
+     0.675,
+     2.425
+    ],
+    "score_se": 0.451,
+    "score_boot_median": 1.496,
+    "rank": 26,
+    "rank_ci95": [
+     17,
+     41
+    ],
+    "rank_ci_width": 24,
+    "rank_boot_median": 28,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.088
+   },
+   {
+    "region": "GCPD",
+    "score": 1.705,
+    "score_ci95": [
+     0.308,
+     2.796
+    ],
+    "score_se": 0.627,
+    "score_boot_median": 1.548,
+    "rank": 27,
+    "rank_ci95": [
+     15,
+     51
+    ],
+    "rank_ci_width": 36,
+    "rank_boot_median": 27,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.183
+   },
+   {
+    "region": "SWPP/NPPD",
+    "score": 1.616,
+    "score_ci95": [
+     0.066,
+     3.001
+    ],
+    "score_se": 0.764,
+    "score_boot_median": 1.337,
+    "rank": 28,
+    "rank_ci95": [
+     14,
+     59
+    ],
+    "rank_ci_width": 45,
+    "rank_boot_median": 29,
+    "p_in_top10": 0.001,
+    "p_in_top20": 0.172
+   },
+   {
+    "region": "NYIS/ZONA",
+    "score": 1.359,
+    "score_ci95": [
+     -0.227,
+     2.456
+    ],
+    "score_se": 0.678,
+    "score_boot_median": 1.16,
+    "rank": 29,
+    "rank_ci95": [
+     17,
+     64
+    ],
+    "rank_ci_width": 47,
+    "rank_boot_median": 32,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.066
+   },
+   {
+    "region": "SWPP/GRDA",
+    "score": 1.357,
+    "score_ci95": [
+     0.15,
+     2.828
+    ],
+    "score_se": 0.677,
+    "score_boot_median": 1.502,
+    "rank": 30,
+    "rank_ci95": [
+     15,
+     57
+    ],
+    "rank_ci_width": 42,
+    "rank_boot_median": 27,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.18
+   },
+   {
+    "region": "FPC",
+    "score": 1.334,
+    "score_ci95": [
+     -1.272,
+     2.839
+    ],
+    "score_se": 1.057,
+    "score_boot_median": 1.173,
+    "rank": 31,
+    "rank_ci95": [
+     14,
+     87
+    ],
+    "rank_ci_width": 73,
+    "rank_boot_median": 32,
+    "p_in_top10": 0.001,
+    "p_in_top20": 0.216
+   },
+   {
+    "region": "NYIS/ZONC",
+    "score": 1.268,
+    "score_ci95": [
+     -0.059,
+     1.837
+    ],
+    "score_se": 0.509,
+    "score_boot_median": 0.999,
+    "rank": 32,
+    "rank_ci95": [
+     23,
+     60
+    ],
+    "rank_ci_width": 37,
+    "rank_boot_median": 36,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.006
+   },
+   {
+    "region": "ISNE/4001",
+    "score": 1.005,
+    "score_ci95": [
+     -0.063,
+     1.775
+    ],
+    "score_se": 0.46,
+    "score_boot_median": 0.887,
+    "rank": 33,
+    "rank_ci95": [
+     24,
+     60
+    ],
+    "rank_ci_width": 36,
+    "rank_boot_median": 38,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.004
+   },
+   {
+    "region": "PJM/JC",
+    "score": 1.0,
+    "score_ci95": [
+     -0.03,
+     2.071
+    ],
+    "score_se": 0.508,
+    "score_boot_median": 0.836,
+    "rank": 34,
+    "rank_ci95": [
+     18,
+     57
+    ],
+    "rank_ci_width": 39,
+    "rank_boot_median": 39,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.038
+   },
+   {
+    "region": "MISO/0035",
+    "score": 0.946,
+    "score_ci95": [
+     0.262,
+     1.674
+    ],
+    "score_se": 0.369,
+    "score_boot_median": 0.902,
+    "rank": 35,
+    "rank_ci95": [
+     25,
+     55
+    ],
+    "rank_ci_width": 30,
+    "rank_boot_median": 37,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "NYIS/ZONB",
+    "score": 0.93,
+    "score_ci95": [
+     -0.251,
+     1.747
+    ],
+    "score_se": 0.525,
+    "score_boot_median": 0.742,
+    "rank": 36,
+    "rank_ci95": [
+     25,
+     65
+    ],
+    "rank_ci_width": 40,
+    "rank_boot_median": 41,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.006
+   },
+   {
+    "region": "LGEE",
+    "score": 0.924,
+    "score_ci95": [
+     -0.321,
+     2.507
+    ],
+    "score_se": 0.744,
+    "score_boot_median": 0.849,
+    "rank": 37,
+    "rank_ci95": [
+     17,
+     68
+    ],
+    "rank_ci_width": 51,
+    "rank_boot_median": 38,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.083
+   },
+   {
+    "region": "ISNE/4006",
+    "score": 0.916,
+    "score_ci95": [
+     -0.087,
+     1.711
+    ],
+    "score_se": 0.426,
+    "score_boot_median": 0.777,
+    "rank": 38,
+    "rank_ci95": [
+     24,
+     59
+    ],
+    "rank_ci_width": 35,
+    "rank_boot_median": 40,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.007
+   },
+   {
+    "region": "SWPP",
+    "score": 0.854,
+    "score_ci95": [
+     -0.051,
+     1.81
+    ],
+    "score_se": 0.482,
+    "score_boot_median": 0.782,
+    "rank": 39,
+    "rank_ci95": [
+     25,
+     61
+    ],
+    "rank_ci_width": 36,
+    "rank_boot_median": 40,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "NYIS/ZONI",
+    "score": 0.833,
+    "score_ci95": [
+     -0.69,
+     1.65
+    ],
+    "score_se": 0.577,
+    "score_boot_median": 0.667,
+    "rank": 40,
+    "rank_ci95": [
+     25,
+     75
+    ],
+    "rank_ci_width": 50,
+    "rank_boot_median": 42,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.006
+   },
+   {
+    "region": "PJM/PL",
+    "score": 0.817,
+    "score_ci95": [
+     -0.741,
+     4.103
+    ],
+    "score_se": 1.242,
+    "score_boot_median": 0.707,
+    "rank": 41,
+    "rank_ci95": [
+     10,
+     79
+    ],
+    "rank_ci_width": 69,
+    "rank_boot_median": 42,
+    "p_in_top10": 0.029,
+    "p_in_top20": 0.171
+   },
+   {
+    "region": "BANC",
+    "score": 0.742,
+    "score_ci95": [
+     -0.608,
+     1.358
+    ],
+    "score_se": 0.488,
+    "score_boot_median": 0.516,
+    "rank": 42,
+    "rank_ci95": [
+     31,
+     74
+    ],
+    "rank_ci_width": 43,
+    "rank_boot_median": 46,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/EKPC",
+    "score": 0.721,
+    "score_ci95": [
+     -0.996,
+     3.582
+    ],
+    "score_se": 1.22,
+    "score_boot_median": 0.839,
+    "rank": 43,
+    "rank_ci95": [
+     11,
+     85
+    ],
+    "rank_ci_width": 74,
+    "rank_boot_median": 39,
+    "p_in_top10": 0.019,
+    "p_in_top20": 0.183
+   },
+   {
+    "region": "CISO/SCE",
+    "score": 0.619,
+    "score_ci95": [
+     -1.489,
+     1.735
+    ],
+    "score_se": 0.84,
+    "score_boot_median": 0.453,
+    "rank": 44,
+    "rank_ci95": [
+     25,
+     92
+    ],
+    "rank_ci_width": 67,
+    "rank_boot_median": 48,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.003
+   },
+   {
+    "region": "ISNE/4002",
+    "score": 0.546,
+    "score_ci95": [
+     -0.214,
+     1.457
+    ],
+    "score_se": 0.429,
+    "score_boot_median": 0.487,
+    "rank": 45,
+    "rank_ci95": [
+     28,
+     63
+    ],
+    "rank_ci_width": 35,
+    "rank_boot_median": 48,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "PNM",
+    "score": 0.542,
+    "score_ci95": [
+     -0.646,
+     1.679
+    ],
+    "score_se": 0.608,
+    "score_boot_median": 0.418,
+    "rank": 46,
+    "rank_ci95": [
+     25,
+     78
+    ],
+    "rank_ci_width": 53,
+    "rank_boot_median": 49,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.008
+   },
+   {
+    "region": "NYIS/ZONK",
+    "score": 0.515,
+    "score_ci95": [
+     -1.004,
+     1.486
+    ],
+    "score_se": 0.628,
+    "score_boot_median": 0.488,
+    "rank": 47,
+    "rank_ci95": [
+     27,
+     83
+    ],
+    "rank_ci_width": 56,
+    "rank_boot_median": 47,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.002
+   },
+   {
+    "region": "MISO/8910",
+    "score": 0.485,
+    "score_ci95": [
+     -1.187,
+     1.621
+    ],
+    "score_se": 0.72,
+    "score_boot_median": 0.347,
+    "rank": 48,
+    "rank_ci95": [
+     24,
+     86
+    ],
+    "rank_ci_width": 62,
+    "rank_boot_median": 51,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.006
+   },
+   {
+    "region": "FMPP",
+    "score": 0.456,
+    "score_ci95": [
+     -2.357,
+     2.419
+    ],
+    "score_se": 1.252,
+    "score_boot_median": 0.382,
+    "rank": 49,
+    "rank_ci95": [
+     16,
+     103
+    ],
+    "rank_ci_width": 87,
+    "rank_boot_median": 50,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.086
+   },
+   {
+    "region": "BPAT",
+    "score": 0.447,
+    "score_ci95": [
+     -0.834,
+     1.997
+    ],
+    "score_se": 0.734,
+    "score_boot_median": 0.418,
+    "rank": 50,
+    "rank_ci95": [
+     22,
+     82
+    ],
+    "rank_ci_width": 60,
+    "rank_boot_median": 49,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.014
+   },
+   {
+    "region": "PJM/PN",
+    "score": 0.414,
+    "score_ci95": [
+     -0.611,
+     1.305
+    ],
+    "score_se": 0.49,
+    "score_boot_median": 0.286,
+    "rank": 51,
+    "rank_ci95": [
+     32,
+     77
+    ],
+    "rank_ci_width": 45,
+    "rank_boot_median": 53,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "PJM",
+    "score": 0.401,
+    "score_ci95": [
+     -0.706,
+     1.469
+    ],
+    "score_se": 0.596,
+    "score_boot_median": 0.241,
+    "rank": 52,
+    "rank_ci95": [
+     28,
+     78
+    ],
+    "rank_ci_width": 50,
+    "rank_boot_median": 53,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PS",
+    "score": 0.379,
+    "score_ci95": [
+     -0.854,
+     1.137
+    ],
+    "score_se": 0.513,
+    "score_boot_median": 0.303,
+    "rank": 53,
+    "rank_ci95": [
+     34,
+     79
+    ],
+    "rank_ci_width": 45,
+    "rank_boot_median": 52,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4003",
+    "score": 0.378,
+    "score_ci95": [
+     -0.664,
+     1.086
+    ],
+    "score_se": 0.451,
+    "score_boot_median": 0.257,
+    "rank": 54,
+    "rank_ci95": [
+     31,
+     78
+    ],
+    "rank_ci_width": 47,
+    "rank_boot_median": 53,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "TEC",
+    "score": 0.341,
+    "score_ci95": [
+     -2.531,
+     2.383
+    ],
+    "score_se": 1.303,
+    "score_boot_median": 0.259,
+    "rank": 55,
+    "rank_ci95": [
+     17,
+     105
+    ],
+    "rank_ci_width": 88,
+    "rank_boot_median": 54,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.074
+   },
+   {
+    "region": "ERCO/COAS",
+    "score": 0.327,
+    "score_ci95": [
+     -1.472,
+     1.01
+    ],
+    "score_se": 0.658,
+    "score_boot_median": 0.083,
+    "rank": 56,
+    "rank_ci95": [
+     34,
+     92
+    ],
+    "rank_ci_width": 58,
+    "rank_boot_median": 58,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4005",
+    "score": 0.304,
+    "score_ci95": [
+     -0.617,
+     1.09
+    ],
+    "score_se": 0.428,
+    "score_boot_median": 0.23,
+    "rank": 57,
+    "rank_ci95": [
+     36,
+     74
+    ],
+    "rank_ci_width": 38,
+    "rank_boot_median": 54,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "IPCO",
+    "score": 0.253,
+    "score_ci95": [
+     -1.461,
+     1.54
+    ],
+    "score_se": 0.767,
+    "score_boot_median": 0.129,
+    "rank": 58,
+    "rank_ci95": [
+     26,
+     91
+    ],
+    "rank_ci_width": 65,
+    "rank_boot_median": 57,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.005
+   },
+   {
+    "region": "MISO/0001",
+    "score": 0.224,
+    "score_ci95": [
+     -0.448,
+     0.985
+    ],
+    "score_se": 0.377,
+    "score_boot_median": 0.168,
+    "rank": 59,
+    "rank_ci95": [
+     38,
+     73
+    ],
+    "rank_ci_width": 35,
+    "rank_boot_median": 56,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "TVA",
+    "score": 0.196,
+    "score_ci95": [
+     -1.071,
+     1.782
+    ],
+    "score_se": 0.768,
+    "score_boot_median": 0.112,
+    "rank": 60,
+    "rank_ci95": [
+     23,
+     86
+    ],
+    "rank_ci_width": 63,
+    "rank_boot_median": 57,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.009
+   },
+   {
+    "region": "ISNE/4008",
+    "score": 0.06,
+    "score_ci95": [
+     -0.765,
+     0.822
+    ],
+    "score_se": 0.392,
+    "score_boot_median": 0.042,
+    "rank": 61,
+    "rank_ci95": [
+     42,
+     79
+    ],
+    "rank_ci_width": 37,
+    "rank_boot_median": 59,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/EAST",
+    "score": -0.045,
+    "score_ci95": [
+     -1.727,
+     0.969
+    ],
+    "score_se": 0.693,
+    "score_boot_median": -0.364,
+    "rank": 62,
+    "rank_ci95": [
+     35,
+     95
+    ],
+    "rank_ci_width": 60,
+    "rank_boot_median": 71,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS",
+    "score": -0.053,
+    "score_ci95": [
+     -0.92,
+     0.636
+    ],
+    "score_se": 0.389,
+    "score_boot_median": -0.147,
+    "rank": 63,
+    "rank_ci95": [
+     45,
+     84
+    ],
+    "rank_ci_width": 39,
+    "rank_boot_median": 64,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "JEA",
+    "score": -0.076,
+    "score_ci95": [
+     -1.78,
+     1.276
+    ],
+    "score_se": 0.804,
+    "score_boot_median": -0.091,
+    "rank": 64,
+    "rank_ci95": [
+     29,
+     96
+    ],
+    "rank_ci_width": 67,
+    "rank_boot_median": 64,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "PJM/ATSI",
+    "score": -0.093,
+    "score_ci95": [
+     -0.845,
+     0.739
+    ],
+    "score_se": 0.397,
+    "score_boot_median": -0.111,
+    "rank": 65,
+    "rank_ci95": [
+     44,
+     82
+    ],
+    "rank_ci_width": 38,
+    "rank_boot_median": 63,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE",
+    "score": -0.106,
+    "score_ci95": [
+     -0.991,
+     0.788
+    ],
+    "score_se": 0.467,
+    "score_boot_median": -0.189,
+    "rank": 66,
+    "rank_ci95": [
+     42,
+     86
+    ],
+    "rank_ci_width": 44,
+    "rank_boot_median": 66,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/CE",
+    "score": -0.117,
+    "score_ci95": [
+     -1.228,
+     0.513
+    ],
+    "score_se": 0.452,
+    "score_boot_median": -0.207,
+    "rank": 67,
+    "rank_ci95": [
+     47,
+     88
+    ],
+    "rank_ci_width": 41,
+    "rank_boot_median": 66,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DPL",
+    "score": -0.123,
+    "score_ci95": [
+     -1.444,
+     1.59
+    ],
+    "score_se": 0.803,
+    "score_boot_median": -0.2,
+    "rank": 68,
+    "rank_ci95": [
+     25,
+     93
+    ],
+    "rank_ci_width": 68,
+    "rank_boot_median": 66,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.01
+   },
+   {
+    "region": "ISNE/4007",
+    "score": -0.167,
+    "score_ci95": [
+     -0.85,
+     0.637
+    ],
+    "score_se": 0.37,
+    "score_boot_median": -0.162,
+    "rank": 69,
+    "rank_ci95": [
+     46,
+     82
+    ],
+    "rank_ci_width": 36,
+    "rank_boot_median": 65,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ISNE/4004",
+    "score": -0.203,
+    "score_ci95": [
+     -0.845,
+     0.584
+    ],
+    "score_se": 0.343,
+    "score_boot_median": -0.258,
+    "rank": 70,
+    "rank_ci95": [
+     48,
+     81
+    ],
+    "rank_ci_width": 33,
+    "rank_boot_median": 68,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/BC",
+    "score": -0.215,
+    "score_ci95": [
+     -1.109,
+     0.897
+    ],
+    "score_se": 0.524,
+    "score_boot_median": -0.303,
+    "rank": 71,
+    "rank_ci95": [
+     38,
+     86
+    ],
+    "rank_ci_width": 48,
+    "rank_boot_median": 69,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DAY",
+    "score": -0.287,
+    "score_ci95": [
+     -0.769,
+     0.461
+    ],
+    "score_se": 0.32,
+    "score_boot_median": -0.274,
+    "rank": 72,
+    "rank_ci95": [
+     49,
+     81
+    ],
+    "rank_ci_width": 32,
+    "rank_boot_median": 68,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PEP",
+    "score": -0.287,
+    "score_ci95": [
+     -1.052,
+     0.338
+    ],
+    "score_se": 0.358,
+    "score_boot_median": -0.415,
+    "rank": 73,
+    "rank_ci95": [
+     50,
+     86
+    ],
+    "rank_ci_width": 36,
+    "rank_boot_median": 72,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "CPLE",
+    "score": -0.464,
+    "score_ci95": [
+     -1.848,
+     1.843
+    ],
+    "score_se": 0.982,
+    "score_boot_median": -0.48,
+    "rank": 74,
+    "rank_ci95": [
+     23,
+     97
+    ],
+    "rank_ci_width": 74,
+    "rank_boot_median": 75,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.017
+   },
+   {
+    "region": "NEVP",
+    "score": -0.467,
+    "score_ci95": [
+     -2.327,
+     0.718
+    ],
+    "score_se": 0.795,
+    "score_boot_median": -0.588,
+    "rank": 75,
+    "rank_ci95": [
+     41,
+     103
+    ],
+    "rank_ci_width": 62,
+    "rank_boot_median": 77,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "DUK",
+    "score": -0.513,
+    "score_ci95": [
+     -1.352,
+     1.055
+    ],
+    "score_se": 0.656,
+    "score_boot_median": -0.463,
+    "rank": 76,
+    "rank_ci95": [
+     35,
+     91
+    ],
+    "rank_ci_width": 56,
+    "rank_boot_median": 74,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/ME",
+    "score": -0.516,
+    "score_ci95": [
+     -1.218,
+     0.475
+    ],
+    "score_se": 0.447,
+    "score_boot_median": -0.554,
+    "rank": 77,
+    "rank_ci95": [
+     48,
+     90
+    ],
+    "rank_ci_width": 42,
+    "rank_boot_median": 76,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SCL",
+    "score": -0.563,
+    "score_ci95": [
+     -1.98,
+     1.213
+    ],
+    "score_se": 0.829,
+    "score_boot_median": -0.659,
+    "rank": 78,
+    "rank_ci95": [
+     34,
+     99
+    ],
+    "rank_ci_width": 65,
+    "rank_boot_median": 78,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "EPE",
+    "score": -0.568,
+    "score_ci95": [
+     -2.175,
+     0.521
+    ],
+    "score_se": 0.695,
+    "score_boot_median": -0.587,
+    "rank": 79,
+    "rank_ci95": [
+     44,
+     100
+    ],
+    "rank_ci_width": 56,
+    "rank_boot_median": 77,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/SECI",
+    "score": -0.59,
+    "score_ci95": [
+     -1.88,
+     0.351
+    ],
+    "score_se": 0.573,
+    "score_boot_median": -0.604,
+    "rank": 80,
+    "rank_ci95": [
+     51,
+     96
+    ],
+    "rank_ci_width": 45,
+    "rank_boot_median": 77,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DUQ",
+    "score": -0.619,
+    "score_ci95": [
+     -1.279,
+     0.086
+    ],
+    "score_se": 0.354,
+    "score_boot_median": -0.555,
+    "rank": 81,
+    "rank_ci95": [
+     59,
+     88
+    ],
+    "rank_ci_width": 29,
+    "rank_boot_median": 76,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "NYIS/ZONJ",
+    "score": -0.671,
+    "score_ci95": [
+     -2.705,
+     0.916
+    ],
+    "score_se": 0.944,
+    "score_boot_median": -0.596,
+    "rank": 82,
+    "rank_ci95": [
+     37,
+     106
+    ],
+    "rank_ci_width": 69,
+    "rank_boot_median": 77,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "PJM/AP",
+    "score": -0.709,
+    "score_ci95": [
+     -1.811,
+     0.67
+    ],
+    "score_se": 0.631,
+    "score_boot_median": -0.791,
+    "rank": 83,
+    "rank_ci95": [
+     44,
+     98
+    ],
+    "rank_ci_width": 54,
+    "rank_boot_median": 82,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "LDWP",
+    "score": -0.713,
+    "score_ci95": [
+     -2.794,
+     0.78
+    ],
+    "score_se": 0.895,
+    "score_boot_median": -0.869,
+    "rank": 84,
+    "rank_ci95": [
+     43,
+     104
+    ],
+    "rank_ci_width": 61,
+    "rank_boot_median": 83,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PACE",
+    "score": -0.735,
+    "score_ci95": [
+     -1.605,
+     0.009
+    ],
+    "score_se": 0.41,
+    "score_boot_median": -0.739,
+    "rank": 85,
+    "rank_ci95": [
+     62,
+     93
+    ],
+    "rank_ci_width": 31,
+    "rank_boot_median": 80,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/DEOK",
+    "score": -0.765,
+    "score_ci95": [
+     -1.341,
+     -0.289
+    ],
+    "score_se": 0.266,
+    "score_boot_median": -0.784,
+    "rank": 86,
+    "rank_ci95": [
+     67,
+     90
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 81,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/MPS",
+    "score": -0.875,
+    "score_ci95": [
+     -2.213,
+     1.132
+    ],
+    "score_se": 0.896,
+    "score_boot_median": -0.882,
+    "rank": 87,
+    "rank_ci95": [
+     34,
+     100
+    ],
+    "rank_ci_width": 66,
+    "rank_boot_median": 83,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.001
+   },
+   {
+    "region": "SWPP/KCPL",
+    "score": -1.054,
+    "score_ci95": [
+     -2.089,
+     0.052
+    ],
+    "score_se": 0.562,
+    "score_boot_median": -1.062,
+    "rank": 88,
+    "rank_ci95": [
+     58,
+     98
+    ],
+    "rank_ci_width": 40,
+    "rank_boot_median": 87,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO",
+    "score": -1.114,
+    "score_ci95": [
+     -1.543,
+     -0.534
+    ],
+    "score_se": 0.259,
+    "score_boot_median": -1.012,
+    "rank": 89,
+    "rank_ci95": [
+     74,
+     93
+    ],
+    "rank_ci_width": 19,
+    "rank_boot_median": 85,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/PE",
+    "score": -1.168,
+    "score_ci95": [
+     -1.81,
+     -0.369
+    ],
+    "score_se": 0.359,
+    "score_boot_median": -1.142,
+    "rank": 90,
+    "rank_ci95": [
+     71,
+     96
+    ],
+    "rank_ci_width": 25,
+    "rank_boot_median": 88,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/NCEN",
+    "score": -1.325,
+    "score_ci95": [
+     -2.785,
+     -0.19
+    ],
+    "score_se": 0.665,
+    "score_boot_median": -1.541,
+    "rank": 91,
+    "rank_ci95": [
+     64,
+     104
+    ],
+    "rank_ci_width": 40,
+    "rank_boot_median": 93,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PJM/AE",
+    "score": -1.332,
+    "score_ci95": [
+     -2.498,
+     0.003
+    ],
+    "score_se": 0.654,
+    "score_boot_median": -1.187,
+    "rank": 92,
+    "rank_ci95": [
+     62,
+     103
+    ],
+    "rank_ci_width": 41,
+    "rank_boot_median": 89,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SOCO",
+    "score": -1.567,
+    "score_ci95": [
+     -2.148,
+     -0.51
+    ],
+    "score_se": 0.415,
+    "score_boot_median": -1.486,
+    "rank": 93,
+    "rank_ci95": [
+     72,
+     100
+    ],
+    "rank_ci_width": 28,
+    "rank_boot_median": 92,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PSCO",
+    "score": -1.66,
+    "score_ci95": [
+     -2.847,
+     -0.584
+    ],
+    "score_se": 0.569,
+    "score_boot_median": -1.729,
+    "rank": 94,
+    "rank_ci95": [
+     76,
+     104
+    ],
+    "rank_ci_width": 28,
+    "rank_boot_median": 95,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0006",
+    "score": -1.854,
+    "score_ci95": [
+     -2.395,
+     -1.0
+    ],
+    "score_se": 0.361,
+    "score_boot_median": -1.688,
+    "rank": 95,
+    "rank_ci95": [
+     84,
+     101
+    ],
+    "rank_ci_width": 17,
+    "rank_boot_median": 95,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0027",
+    "score": -1.956,
+    "score_ci95": [
+     -3.038,
+     -0.326
+    ],
+    "score_se": 0.714,
+    "score_boot_median": -1.736,
+    "rank": 96,
+    "rank_ci95": [
+     69,
+     106
+    ],
+    "rank_ci_width": 37,
+    "rank_boot_median": 95,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "MISO/0004",
+    "score": -2.031,
+    "score_ci95": [
+     -2.805,
+     -1.07
+    ],
+    "score_se": 0.456,
+    "score_boot_median": -1.919,
+    "rank": 97,
+    "rank_ci95": [
+     86,
+     105
+    ],
+    "rank_ci_width": 19,
+    "rank_boot_median": 97,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PACW",
+    "score": -2.036,
+    "score_ci95": [
+     -3.85,
+     0.533
+    ],
+    "score_se": 1.127,
+    "score_boot_median": -1.788,
+    "rank": 98,
+    "rank_ci95": [
+     47,
+     107
+    ],
+    "rank_ci_width": 60,
+    "rank_boot_median": 96,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/CSWS",
+    "score": -2.075,
+    "score_ci95": [
+     -2.934,
+     -1.054
+    ],
+    "score_se": 0.485,
+    "score_boot_median": -1.951,
+    "rank": 99,
+    "rank_ci95": [
+     87,
+     105
+    ],
+    "rank_ci_width": 18,
+    "rank_boot_median": 98,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/EDE",
+    "score": -2.337,
+    "score_ci95": [
+     -3.375,
+     -0.052
+    ],
+    "score_se": 0.869,
+    "score_boot_median": -2.213,
+    "rank": 100,
+    "rank_ci95": [
+     60,
+     107
+    ],
+    "rank_ci_width": 47,
+    "rank_boot_median": 100,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "AVA",
+    "score": -2.393,
+    "score_ci95": [
+     -3.468,
+     -0.481
+    ],
+    "score_se": 0.761,
+    "score_boot_median": -2.344,
+    "rank": 101,
+    "rank_ci95": [
+     72,
+     105
+    ],
+    "rank_ci_width": 33,
+    "rank_boot_median": 101,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/WR",
+    "score": -2.58,
+    "score_ci95": [
+     -3.397,
+     -1.637
+    ],
+    "score_se": 0.454,
+    "score_boot_median": -2.424,
+    "rank": 102,
+    "rank_ci95": [
+     95,
+     107
+    ],
+    "rank_ci_width": 12,
+    "rank_boot_median": 102,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SCEG",
+    "score": -2.649,
+    "score_ci95": [
+     -3.812,
+     -1.006
+    ],
+    "score_se": 0.733,
+    "score_boot_median": -2.469,
+    "rank": 103,
+    "rank_ci95": [
+     86,
+     109
+    ],
+    "rank_ci_width": 23,
+    "rank_boot_median": 102,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "SWPP/WFEC",
+    "score": -2.927,
+    "score_ci95": [
+     -3.885,
+     -1.712
+    ],
+    "score_se": 0.54,
+    "score_boot_median": -2.83,
+    "rank": 104,
+    "rank_ci95": [
+     95,
+     108
+    ],
+    "rank_ci_width": 13,
+    "rank_boot_median": 104,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "TPWR",
+    "score": -3.431,
+    "score_ci95": [
+     -4.594,
+     -0.882
+    ],
+    "score_se": 0.936,
+    "score_boot_median": -3.138,
+    "rank": 105,
+    "rank_ci95": [
+     81,
+     109
+    ],
+    "rank_ci_width": 28,
+    "rank_boot_median": 106,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "CPLW",
+    "score": -3.505,
+    "score_ci95": [
+     -4.632,
+     -0.481
+    ],
+    "score_se": 1.026,
+    "score_boot_median": -3.058,
+    "rank": 106,
+    "rank_ci95": [
+     71,
+     109
+    ],
+    "rank_ci_width": 38,
+    "rank_boot_median": 105,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "WALC",
+    "score": -3.655,
+    "score_ci95": [
+     -8.335,
+     0.564
+    ],
+    "score_se": 2.338,
+    "score_boot_median": -3.471,
+    "rank": 107,
+    "rank_ci95": [
+     47,
+     111
+    ],
+    "rank_ci_width": 64,
+    "rank_boot_median": 107,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.003
+   },
+   {
+    "region": "NWMT",
+    "score": -3.761,
+    "score_ci95": [
+     -4.553,
+     -2.431
+    ],
+    "score_se": 0.544,
+    "score_boot_median": -3.501,
+    "rank": 108,
+    "rank_ci95": [
+     103,
+     109
+    ],
+    "rank_ci_width": 6,
+    "rank_boot_median": 107,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "AECI",
+    "score": -4.963,
+    "score_ci95": [
+     -5.841,
+     -1.005
+    ],
+    "score_se": 1.248,
+    "score_boot_median": -4.468,
+    "rank": 109,
+    "rank_ci95": [
+     83,
+     111
+    ],
+    "rank_ci_width": 28,
+    "rank_boot_median": 109,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "PSEI",
+    "score": -5.006,
+    "score_ci95": [
+     -6.087,
+     -3.131
+    ],
+    "score_se": 0.738,
+    "score_boot_median": -4.673,
+    "rank": 110,
+    "rank_ci95": [
+     107,
+     111
+    ],
+    "rank_ci_width": 4,
+    "rank_boot_median": 109,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   },
+   {
+    "region": "ERCO/WEST",
+    "score": -5.781,
+    "score_ci95": [
+     -7.886,
+     -3.632
+    ],
+    "score_se": 1.109,
+    "score_boot_median": -5.56,
+    "rank": 111,
+    "rank_ci95": [
+     107,
+     111
+    ],
+    "rank_ci_width": 4,
+    "rank_boot_median": 111,
+    "p_in_top10": 0.0,
+    "p_in_top20": 0.0
+   }
+  ],
+  "median_rank_ci_width": 38,
+  "median_rank_ci_width_top10": 5,
+  "median_rank_ci_width_rest": 40,
+  "n_regions_rank_ci_wider_than_20": 89,
+  "n_regions_rank_ci_width_le_5": 9,
+  "expected_true_top10_members": 8.98,
+  "median_rank_bias": 0.0,
+  "median_score_bias": -0.084,
+  "table": [
+   {
+    "region": "ERCO/NRTH",
+    "score": 16.466,
+    "score_ci95": [
+     10.619,
+     20.224
+    ],
+    "rank": 1,
+    "rank_ci95": [
+     1,
+     2
+    ],
+    "rank_boot_median": 1,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "ERCO/FWES",
+    "score": 13.893,
+    "score_ci95": [
+     9.001,
+     17.819
+    ],
+    "rank": 2,
+    "rank_ci95": [
+     1,
+     2
+    ],
+    "rank_boot_median": 2,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "AZPS",
+    "score": 9.012,
+    "score_ci95": [
+     5.268,
+     9.932
+    ],
+    "rank": 3,
+    "rank_ci95": [
+     3,
+     8
+    ],
+    "rank_boot_median": 3,
+    "p_in_top10": 0.999
+   },
+   {
+    "region": "TEPC",
+    "score": 8.508,
+    "score_ci95": [
+     4.997,
+     9.586
+    ],
+    "rank": 4,
+    "rank_ci95": [
+     3,
+     8
+    ],
+    "rank_boot_median": 5,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "WACM",
+    "score": 8.237,
+    "score_ci95": [
+     4.22,
+     11.386
+    ],
+    "rank": 5,
+    "rank_ci95": [
+     3,
+     8
+    ],
+    "rank_boot_median": 4,
+    "p_in_top10": 0.996
+   },
+   {
+    "region": "PJM/DOM",
+    "score": 7.707,
+    "score_ci95": [
+     4.347,
+     9.733
+    ],
+    "rank": 6,
+    "rank_ci95": [
+     3,
+     7
+    ],
+    "rank_boot_median": 5,
+    "p_in_top10": 0.998
+   },
+   {
+    "region": "SWPP/OPPD",
+    "score": 6.82,
+    "score_ci95": [
+     4.313,
+     8.295
+    ],
+    "rank": 7,
+    "rank_ci95": [
+     5,
+     8
+    ],
+    "rank_boot_median": 7,
+    "p_in_top10": 1.0
+   },
+   {
+    "region": "ERCO",
+    "score": 5.138,
+    "score_ci95": [
+     2.839,
+     5.869
+    ],
+    "rank": 8,
+    "rank_ci95": [
+     7,
+     14
+    ],
+    "rank_boot_median": 9,
+    "p_in_top10": 0.897
+   },
+   {
+    "region": "SC",
+    "score": 5.076,
+    "score_ci95": [
+     2.355,
+     7.433
+    ],
+    "rank": 9,
+    "rank_ci95": [
+     6,
+     17
+    ],
+    "rank_boot_median": 9,
+    "p_in_top10": 0.799
+   },
+   {
+    "region": "CISO/SDGE",
+    "score": 3.719,
+    "score_ci95": [
+     1.53,
+     4.975
+    ],
+    "rank": 10,
+    "rank_ci95": [
+     8,
+     26
+    ],
+    "rank_boot_median": 12,
+    "p_in_top10": 0.294
+   },
+   {
+    "region": "PNM/PNM",
+    "score": 3.618,
+    "score_ci95": [
+     1.681,
+     4.696
+    ],
+    "rank": 11,
+    "rank_ci95": [
+     9,
+     23
+    ],
+    "rank_boot_median": 12,
+    "p_in_top10": 0.254
+   },
+   {
+    "region": "CISO/PGAE",
+    "score": 3.412,
+    "score_ci95": [
+     0.794,
+     3.955
+    ],
+    "rank": 12,
+    "rank_ci95": [
+     10,
+     41
+    ],
+    "rank_boot_median": 14,
+    "p_in_top10": 0.077
+   },
+   {
+    "region": "SRP",
+    "score": 3.378,
+    "score_ci95": [
+     0.337,
+     4.846
+    ],
+    "rank": 13,
+    "rank_ci95": [
+     8,
+     52
+    ],
+    "rank_boot_median": 13,
+    "p_in_top10": 0.295
+   },
+   {
+    "region": "ERCO/SOUT",
+    "score": 3.308,
+    "score_ci95": [
+     1.154,
+     3.91
+    ],
+    "rank": 14,
+    "rank_ci95": [
+     10,
+     33
+    ],
+    "rank_boot_median": 15,
+    "p_in_top10": 0.03
+   },
+   {
+    "region": "PGE",
+    "score": 3.108,
+    "score_ci95": [
+     1.291,
+     4.627
+    ],
+    "rank": 15,
+    "rank_ci95": [
+     9,
+     29
+    ],
+    "rank_boot_median": 14,
+    "p_in_top10": 0.163
+   },
+   {
+    "region": "ERCO/SCEN",
+    "score": 2.875,
+    "score_ci95": [
+     0.974,
+     3.668
+    ],
+    "rank": 16,
+    "rank_ci95": [
+     11,
+     38
+    ],
+    "rank_boot_median": 18,
+    "p_in_top10": 0.011
+   },
+   {
+    "region": "NYIS/ZONE",
+    "score": 2.63,
+    "score_ci95": [
+     0.93,
+     3.532
+    ],
+    "rank": 17,
+    "rank_ci95": [
+     11,
+     37
+    ],
+    "rank_boot_median": 18,
+    "p_in_top10": 0.01
+   },
+   {
+    "region": "NYIS/ZOND",
+    "score": 2.372,
+    "score_ci95": [
+     0.632,
+     3.688
+    ],
+    "rank": 18,
+    "rank_ci95": [
+     11,
+     42
+    ],
+    "rank_boot_median": 20,
+    "p_in_top10": 0.013
+   },
+   {
+    "region": "PJM/AEP",
+    "score": 2.285,
+    "score_ci95": [
+     0.828,
+     3.343
+    ],
+    "rank": 19,
+    "rank_ci95": [
+     12,
+     39
+    ],
+    "rank_boot_median": 21,
+    "p_in_top10": 0.002
+   },
+   {
+    "region": "NYIS/ZONG",
+    "score": 2.27,
+    "score_ci95": [
+     0.938,
+     3.075
+    ],
+    "rank": 20,
+    "rank_ci95": [
+     12,
+     33
+    ],
+    "rank_boot_median": 22,
+    "p_in_top10": 0.006
+   },
+   {
+    "region": "CISO",
+    "score": 2.094,
+    "score_ci95": [
+     -0.328,
+     2.961
+    ],
+    "rank": 21,
+    "rank_ci95": [
+     14,
+     67
+    ],
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "SWPP/OKGE",
+    "score": 2.061,
+    "score_ci95": [
+     1.037,
+     2.767
+    ],
+    "rank": 22,
+    "rank_ci95": [
+     16,
+     36
+    ],
+    "rank_boot_median": 23,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "SWPP/SPS",
+    "score": 1.977,
+    "score_ci95": [
+     -0.036,
+     2.623
+    ],
+    "rank": 23,
+    "rank_ci95": [
+     16,
+     61
+    ],
+    "rank_boot_median": 27,
+    "p_in_top10": 0.0
+   },
+   {
+    "region": "FPL",
+    "score": 1.872,
+    "score_ci95": [
+     -1.598,
+     4.135
+    ],
+    "rank": 24,
+    "rank_ci95": [
+     9,
+     92
+    ],
+    "rank_boot_median": 24,
+    "p_in_top10": 0.099
+   },
+   {
+    "region": "SWPP/WAUE",
+    "score": 1.859,
+    "score_ci95": [
+     -0.194,
+     3.647
+    ],
+    "rank": 25,
+    "rank_ci95": [
+     12,
+     64
+    ],
+    "rank_boot_median": 27,
+    "p_in_top10": 0.007
+   }
+  ]
+ },
+ "holdout": {
+  "in_sample": "2019 -> 2025, calendar years",
+  "holdout": "2019 -> 2026 Jan-Aug (data through 2026-09-05)",
+  "n_common_regions": 110,
+  "dropped_from_holdout": [
+   "WACM"
+  ],
+  "spearman_rho": 0.8769,
+  "spearman_ci95_fisher": [
+   0.8251,
+   0.9141
+  ],
+  "spearman_ci95_bootstrap": [
+   0.7953,
+   0.9293
+  ],
+  "kendall_tau_b": 0.7181,
+  "kendall_ci95_bootstrap": [
+   0.634,
+   0.7883
+  ],
+  "n_bootstrap_regions_spearman": 10000,
+  "n_bootstrap_regions_kendall": 2000,
+  "seed": 20260925,
+  "topk_overlap": {
+   "top10": {
+    "overlap": 8,
+    "of": 10,
+    "expected_by_chance": 0.91,
+    "p_hypergeometric": 4.771050656432982e-09,
+    "members_both": [
+     "AZPS",
+     "ERCO",
+     "ERCO/FWES",
+     "ERCO/NRTH",
+     "PJM/DOM",
+     "SC",
+     "SWPP/OPPD",
+     "TEPC"
+    ],
+    "in_sample_only": [
+     "CISO/SDGE",
+     "PNM/PNM"
+    ],
+    "holdout_only": [
+     "ERCO/SOUT",
+     "SWPP/GRDA"
+    ]
+   },
+   "top20": {
+    "overlap": 15,
+    "of": 20,
+    "expected_by_chance": 3.64,
+    "p_hypergeometric": 1.5792183288222313e-10,
+    "members_both": [
+     "AZPS",
+     "CISO/PGAE",
+     "ERCO",
+     "ERCO/FWES",
+     "ERCO/NRTH",
+     "ERCO/SCEN",
+     "ERCO/SOUT",
+     "NYIS/ZONG",
+     "PGE",
+     "PJM/AEP",
+     "PJM/DOM",
+     "PNM/PNM",
+     "SC",
+     "SWPP/OPPD",
+     "TEPC"
+    ],
+    "in_sample_only": [
+     "CISO",
+     "CISO/SDGE",
+     "NYIS/ZOND",
+     "NYIS/ZONE",
+     "SRP"
+    ],
+    "holdout_only": [
+     "BPAT",
+     "FPL",
+     "PJM/PL",
+     "SWPP/GRDA",
+     "SWPP/WAUE"
+    ]
+   }
+  },
+  "validation_set": {
+   "PJM/DOM": {
+    "rank_in_sample": 6,
+    "rank_holdout": 3,
+    "score_in_sample": 7.707,
+    "score_holdout": 7.836
+   },
+   "PJM/AEP": {
+    "rank_in_sample": 19,
+    "rank_holdout": 12,
+    "score_in_sample": 2.285,
+    "score_holdout": 2.948
+   },
+   "SWPP/OPPD": {
+    "rank_in_sample": 7,
+    "rank_holdout": 6,
+    "score_in_sample": 6.82,
+    "score_holdout": 6.709
+   },
+   "ERCO/NCEN": {
+    "rank_in_sample": 91,
+    "rank_holdout": 81,
+    "score_in_sample": -1.325,
+    "score_holdout": -1.044
+   }
+  },
+  "runtime_sec": 1.2
+ },
+ "placebo_windows": {
+  "note": "frozen detector, target year varied; method unchanged",
+  "windows": {
+   "2021": {
+    "n_scored": 111,
+    "validation_ranks": {
+     "PJM/DOM": 5,
+     "PJM/AEP": 37,
+     "SWPP/OPPD": 12,
+     "ERCO/NCEN": 104
+    },
+    "obs_mean_score": 1.6662,
+    "p_exact_mean_score": 0.1286828112516186,
+    "p_exact_mean_rank": 0.15650362622839686,
+    "spearman_vs_shipped_2025": 0.6217
+   },
+   "2022": {
+    "n_scored": 111,
+    "validation_ranks": {
+     "PJM/DOM": 6,
+     "PJM/AEP": 43,
+     "SWPP/OPPD": 17,
+     "ERCO/NCEN": 93
+    },
+    "obs_mean_score": 1.8889,
+    "p_exact_mean_score": 0.14475927136477595,
+    "p_exact_mean_rank": 0.16032846858534933,
+    "spearman_vs_shipped_2025": 0.8334
+   },
+   "2023": {
+    "n_scored": 111,
+    "validation_ranks": {
+     "PJM/DOM": 8,
+     "PJM/AEP": 38,
+     "SWPP/OPPD": 22,
+     "ERCO/NCEN": 99
+    },
+    "obs_mean_score": 1.5987,
+    "p_exact_mean_score": 0.21489479471130848,
+    "p_exact_mean_rank": 0.19289030481691033,
+    "spearman_vs_shipped_2025": 0.8908
+   },
+   "2024": {
+    "n_scored": 111,
+    "validation_ranks": {
+     "PJM/DOM": 5,
+     "PJM/AEP": 43,
+     "SWPP/OPPD": 8,
+     "ERCO/NCEN": 89
+    },
+    "obs_mean_score": 2.7711,
+    "p_exact_mean_score": 0.0993844553477581,
+    "p_exact_mean_rank": 0.1118098916264054,
+    "spearman_vs_shipped_2025": 0.9371
+   },
+   "2025": {
+    "n_scored": 111,
+    "validation_ranks": {
+     "PJM/DOM": 6,
+     "PJM/AEP": 19,
+     "SWPP/OPPD": 7,
+     "ERCO/NCEN": 91
+    },
+    "obs_mean_score": 3.872,
+    "p_exact_mean_score": 0.04880910935956807,
+    "p_exact_mean_rank": 0.057090284613220396,
+    "spearman_vs_shipped_2025": 1.0
+   }
+  }
+ },
+ "bootstrap_ci_coverage_of_holdout": {
+  "nominal_coverage": 0.95,
+  "n_regions": 110,
+  "n_covered": 79,
+  "empirical_coverage": 0.718,
+  "interpretation": "coverage far below 0.95 means the block bootstrap measures within-year sampling noise only; window and regime choice dominate the real uncertainty on a rank",
+  "worst_misses": [
+   {
+    "region": "CISO/SDGE",
+    "rank_in_sample": 10,
+    "rank_ci95": [
+     9,
+     19
+    ],
+    "rank_holdout": 79,
+    "outside_by": 60
+   },
+   {
+    "region": "SRP",
+    "rank_in_sample": 13,
+    "rank_ci95": [
+     9,
+     26
+    ],
+    "rank_holdout": 56,
+    "outside_by": 30
+   },
+   {
+    "region": "CISO",
+    "rank_in_sample": 21,
+    "rank_ci95": [
+     15,
+     42
+    ],
+    "rank_holdout": 64,
+    "outside_by": 22
+   },
+   {
+    "region": "CISO/SCE",
+    "rank_in_sample": 44,
+    "rank_ci95": [
+     29,
+     77
+    ],
+    "rank_holdout": 93,
+    "outside_by": 16
+   },
+   {
+    "region": "ISNE/4008",
+    "rank_in_sample": 61,
+    "rank_ci95": [
+     45,
+     80
+    ],
+    "rank_holdout": 30,
+    "outside_by": 15
+   },
+   {
+    "region": "NYIS/ZONE",
+    "rank_in_sample": 17,
+    "rank_ci95": [
+     12,
+     28
+    ],
+    "rank_holdout": 39,
+    "outside_by": 11
+   },
+   {
+    "region": "BPAT",
+    "rank_in_sample": 50,
+    "rank_ci95": [
+     30,
+     76
+    ],
+    "rank_holdout": 19,
+    "outside_by": 11
+   },
+   {
+    "region": "SWPP/GRDA",
+    "rank_in_sample": 30,
+    "rank_ci95": [
+     18,
+     50
+    ],
+    "rank_holdout": 10,
+    "outside_by": 8
+   },
+   {
+    "region": "NYIS/ZOND",
+    "rank_in_sample": 18,
+    "rank_ci95": [
+     13,
+     30
+    ],
+    "rank_holdout": 37,
+    "outside_by": 7
+   },
+   {
+    "region": "ISNE/4005",
+    "rank_in_sample": 57,
+    "rank_ci95": [
+     38,
+     72
+    ],
+    "rank_holdout": 31,
+    "outside_by": 7
+   }
+  ],
+  "top10_misses": [
+   {
+    "region": "CISO/SDGE",
+    "rank_in_sample": 10,
+    "rank_ci95": [
+     9,
+     19
+    ],
+    "rank_holdout": 79,
+    "outside_by": 60
+   },
+   {
+    "region": "ERCO/NRTH",
+    "rank_in_sample": 1,
+    "rank_ci95": [
+     1,
+     1
+    ],
+    "rank_holdout": 2,
+    "outside_by": 1
+   },
+   {
+    "region": "ERCO/FWES",
+    "rank_in_sample": 2,
+    "rank_ci95": [
+     2,
+     2
+    ],
+    "rank_holdout": 1,
+    "outside_by": 1
+   },
+   {
+    "region": "SC",
+    "rank_in_sample": 9,
+    "rank_ci95": [
+     8,
+     13
+    ],
+    "rank_holdout": 7,
+    "outside_by": 1
+   }
+  ]
+ },
+ "fdr": {
+  "b": 10000,
+  "block_days": 7,
+  "seed": 20260923,
+  "n_tests": 111,
+  "naive_expected_false_positives_at_alpha_0.05": 5.55,
+  "p_value_floor_percentile": 9.999000099990002e-05,
+  "smallest_bh_threshold_q005": 0.00045045045045045046,
+  "families": {
+   "A_overnight_excess_gt_0": {
+    "n_tests": 111,
+    "bh_q0.05": {
+     "n_rejected": 71,
+     "expected_false_discoveries_overall": 3.55,
+     "n_rejected_in_top10": 10,
+     "expected_false_discoveries_in_top10_upper_bound": 0.5,
+     "by_n_rejected": 63,
+     "not_rejected_in_top20": []
+    },
+    "bh_q0.10": {
+     "n_rejected": 82,
+     "expected_false_discoveries_overall": 8.2,
+     "n_rejected_in_top10": 10,
+     "expected_false_discoveries_in_top10_upper_bound": 1.0,
+     "by_n_rejected": 65,
+     "not_rejected_in_top20": []
+    },
+    "max_p_in_top10": 0.003950002162903958,
+    "median_p_all": 0.00030179435210254735
+   },
+   "B_iut_overnight_and_divergence_gt_0": {
+    "n_tests": 111,
+    "bh_q0.05": {
+     "n_rejected": 24,
+     "expected_false_discoveries_overall": 1.2,
+     "n_rejected_in_top10": 9,
+     "expected_false_discoveries_in_top10_upper_bound": 0.45,
+     "by_n_rejected": 21,
+     "not_rejected_in_top20": [
+      "CISO/SDGE",
+      "CISO/PGAE",
+      "NYIS/ZONE"
+     ]
+    },
+    "bh_q0.10": {
+     "n_rejected": 26,
+     "expected_false_discoveries_overall": 2.6,
+     "n_rejected_in_top10": 9,
+     "expected_false_discoveries_in_top10_upper_bound": 0.9,
+     "by_n_rejected": 21,
+     "not_rejected_in_top20": [
+      "CISO/SDGE",
+      "CISO/PGAE",
+      "NYIS/ZONE"
+     ]
+    },
+    "max_p_in_top10": 0.6913881683416709,
+    "median_p_all": 0.5877565752226592
+   }
+  },
+  "per_region_top25": [
+   {
+    "region": "ERCO/NRTH",
+    "rank": 1,
+    "overnight_excess": 13.36,
+    "se": 1.65,
+    "p_normal": 2.9338945455587123e-16,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "ERCO/FWES",
+    "rank": 2,
+    "overnight_excess": 3.06,
+    "se": 0.685,
+    "p_normal": 3.871070850975275e-06,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "AZPS",
+    "rank": 3,
+    "overnight_excess": 12.34,
+    "se": 1.174,
+    "p_normal": 3.805681848871906e-26,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "TEPC",
+    "rank": 4,
+    "overnight_excess": 14.51,
+    "se": 2.008,
+    "p_normal": 2.5396399614538595e-13,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "WACM",
+    "rank": 5,
+    "overnight_excess": 4.89,
+    "se": 1.23,
+    "p_normal": 3.4839798612825985e-05,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "PJM/DOM",
+    "rank": 6,
+    "overnight_excess": 7.7,
+    "se": 1.654,
+    "p_normal": 1.6114649680124388e-06,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "SWPP/OPPD",
+    "rank": 7,
+    "overnight_excess": 5.62,
+    "se": 1.239,
+    "p_normal": 2.9066712268876436e-06,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "ERCO",
+    "rank": 8,
+    "overnight_excess": 3.91,
+    "se": 0.979,
+    "p_normal": 3.207291120935797e-05,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "SC",
+    "rank": 9,
+    "overnight_excess": 5.41,
+    "se": 2.035,
+    "p_normal": 0.003950002162903958,
+    "p_percentile": 0.0037996200379962005
+   },
+   {
+    "region": "CISO/SDGE",
+    "rank": 10,
+    "overnight_excess": 10.54,
+    "se": 0.86,
+    "p_normal": 8.693750511834236e-35,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "PNM/PNM",
+    "rank": 11,
+    "overnight_excess": 7.97,
+    "se": 1.434,
+    "p_normal": 1.3903789194193434e-08,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "CISO/PGAE",
+    "rank": 12,
+    "overnight_excess": 8.46,
+    "se": 0.66,
+    "p_normal": 5.983730877122006e-38,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "SRP",
+    "rank": 13,
+    "overnight_excess": 4.77,
+    "se": 1.392,
+    "p_normal": 0.00030179435210254735,
+    "p_percentile": 0.0008999100089991
+   },
+   {
+    "region": "ERCO/SOUT",
+    "rank": 14,
+    "overnight_excess": 4.99,
+    "se": 0.816,
+    "p_normal": 4.761208538382477e-10,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "PGE",
+    "rank": 15,
+    "overnight_excess": 7.6,
+    "se": 0.466,
+    "p_normal": 4.596203799085355e-60,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "ERCO/SCEN",
+    "rank": 16,
+    "overnight_excess": 3.68,
+    "se": 1.155,
+    "p_normal": 0.0007075461350307356,
+    "p_percentile": 0.000999900009999
+   },
+   {
+    "region": "NYIS/ZONE",
+    "rank": 17,
+    "overnight_excess": 11.64,
+    "se": 0.667,
+    "p_normal": 1.6485771200404318e-68,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "NYIS/ZOND",
+    "rank": 18,
+    "overnight_excess": 3.65,
+    "se": 0.322,
+    "p_normal": 4.546412315430915e-30,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "PJM/AEP",
+    "rank": 19,
+    "overnight_excess": 3.38,
+    "se": 1.084,
+    "p_normal": 0.0009095168977636693,
+    "p_percentile": 0.0005999400059994001
+   },
+   {
+    "region": "NYIS/ZONG",
+    "rank": 20,
+    "overnight_excess": 7.76,
+    "se": 0.767,
+    "p_normal": 2.1725704102274498e-24,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "CISO",
+    "rank": 21,
+    "overnight_excess": 5.05,
+    "se": 0.643,
+    "p_normal": 1.939491158919362e-15,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "SWPP/OKGE",
+    "rank": 22,
+    "overnight_excess": 2.44,
+    "se": 1.151,
+    "p_normal": 0.016968790753683294,
+    "p_percentile": 0.017998200179982
+   },
+   {
+    "region": "SWPP/SPS",
+    "rank": 23,
+    "overnight_excess": 2.68,
+    "se": 0.574,
+    "p_normal": 1.4675237111554332e-06,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "FPL",
+    "rank": 24,
+    "overnight_excess": 3.73,
+    "se": 0.605,
+    "p_normal": 3.5135724628376564e-10,
+    "p_percentile": 9.999000099990002e-05
+   },
+   {
+    "region": "SWPP/WAUE",
+    "rank": 25,
+    "overnight_excess": 2.11,
+    "se": 0.733,
+    "p_normal": 0.002002422158896195,
+    "p_percentile": 0.0014998500149985001
+   }
+  ],
+  "n_regions_with_negative_overnight_excess": 13
+ },
+ "autocorrelation": {
+  "n_region_years": 222,
+  "b_block_bootstrap": 2000,
+  "block_days": 7,
+  "seed": 20260926,
+  "median_acf": {
+   "rho_h1": 0.979,
+   "rho_h24": 0.897,
+   "rho_h168": 0.763,
+   "rho_d1": 0.898,
+   "rho_d7": 0.694,
+   "rho_d14": 0.625,
+   "rho_resid_d1": 0.65,
+   "rho_resid_d3": 0.002,
+   "rho_resid_d7": -0.026,
+   "rho_resid_d14": 0.02
+  },
+  "hourly_n_nominal": 8760,
+  "ess_bartlett_median": 62.5,
+  "ess_bartlett_iqr": [
+   53.8,
+   71.9
+  ],
+  "vif_block_median": 74.3,
+  "vif_block_iqr": [
+   65.6,
+   84.5
+  ],
+  "ess_block_median": 118.0,
+  "ess_block_iqr": [
+   103.7,
+   133.5
+  ],
+  "se_annual_mean_inflation_factor_median": 8.62,
+  "runtime_sec": 0.5
+ }
+}

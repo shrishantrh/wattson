@@ -6,8 +6,10 @@ It does NOT import or read any detector output: only raw PUDL parquet.
 
 Two panels come out:
 
-  hour_panel    (region, year, local_hour) -> mean demand MW, hours
-                the 24-hour load shape, used for Q1 (clustering).
+  hour_panel    (region, year, month, local_hour) -> mean demand MW, hours
+                the 24-hour load shape, used for Q1 (clustering). Month is kept so a
+                profile can be restricted to the shoulder season, where air
+                conditioning is not the dominant term.
   month_panel   (region, year, month) -> mean demand MW, mean overnight (00-05
                 local) demand MW, hours; used for Q2 (changepoints).
 
@@ -88,7 +90,7 @@ def build_panels() -> tuple[pd.DataFrame, pd.DataFrame]:
     d = localize(load_demand(), codes())
     night = d.local_hour.isin(NIGHT)
 
-    hour = (d.groupby(["region", "year", "local_hour"], observed=True)
+    hour = (d.groupby(["region", "year", "month", "local_hour"], observed=True)
               .agg(ba=("ba", "first"), zone=("zone", "first"),
                    mw=("demand_mwh", "mean"), hours=("demand_mwh", "count"))
               .reset_index())
@@ -130,33 +132,15 @@ def eligible_regions(hour: pd.DataFrame) -> pd.Index:
     hourly series is dominated by reporting noise and a handful of industrial
     customers, and a 24-hour profile built from it is not measuring a grid.
     """
-    y = (hour.groupby(["region", "year"], observed=True)
-             .agg(mw=("mw", "mean"), hours=("hours", "sum")))
+    h = hour.assign(mwh=hour.mw * hour.hours)
+    y = (h.groupby(["region", "year"], observed=True)
+           .agg(mwh=("mwh", "sum"), hours=("hours", "sum")))
+    y["mw"] = y.mwh / y.hours
     ok = {}
     for yr in (BASE, TARGET):
         s = y.xs(yr, level="year")
         ok[yr] = s.index[(s.mw >= MIN_MW) & (s.hours >= FULL_YEAR_FRACTION * 8760)]
     return ok[BASE].intersection(ok[TARGET]).sort_values()
-
-
-# ---------------------------------------------------------------------- Q1 features
-
-def hour_profiles(hour: pd.DataFrame, regions: pd.Index, year: int) -> pd.DataFrame:
-    """24-wide normalized load shape, one row per region.
-
-    Normalization: each hour's mean demand divided by that region-year's mean demand,
-    so every profile averages to 1.0 and a region's SIZE is removed while its
-    PEAK-TO-TROUGH RATIO is kept. Flatness is the thing we are trying to see, so it
-    must survive normalization -- z-scoring each profile (the other obvious choice)
-    would divide exactly that signal away. The z-scored variant is run as a
-    robustness check in cluster.py.
-    """
-    h = hour[(hour.year == year) & hour.region.isin(regions)]
-    wide = h.pivot_table(index="region", columns="local_hour", values="mw")
-    wide = wide.reindex(columns=range(24))
-    if wide.isna().any().any():
-        raise ValueError("missing local hours in profile matrix")
-    return wide.div(wide.mean(axis=1), axis=0)
 
 
 # ---------------------------------------------------------------------- Q2 features

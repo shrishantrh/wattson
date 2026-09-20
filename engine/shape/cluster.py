@@ -38,22 +38,41 @@ YEARS = range(2018, 2027)
 
 # ------------------------------------------------------------------- feature matrix
 
-def profile_matrix(hour: pd.DataFrame, regions, years=YEARS,
-                   normalize: str = "mean") -> pd.DataFrame:
+SHOULDER = (4, 5, 10, 11)   # April, May, October, November
+
+
+def profile_matrix(hour: pd.DataFrame, regions, years=YEARS, normalize: str = "mean",
+                   months=None, min_hours_frac: float = 0.9) -> pd.DataFrame:
     """(region, year) x 24 normalized load shapes.
 
     normalize="mean": divide by the row mean. Row averages to 1.0; a flat region sits
       near the all-ones vector and a peaky one swings around it. Flatness survives.
     normalize="z": subtract the row mean and divide by the row sd. Amplitude is
       removed entirely and only the TIMING of the peak is left. Robustness check.
+
+    months: restrict to these calendar months before averaging. The shoulder season
+      (April, May, October, November) is the interesting restriction: heating and
+      cooling are both near their minimum, so a region's annual profile is much less
+      a statement about its climate and more about its non-weather load.
     """
-    rows, idx = [], []
     h = hour[hour.region.isin(set(regions)) & hour.year.isin(list(years))]
-    for (region, year), g in h.groupby(["region", "year"], observed=True):
-        g = g.set_index("local_hour").reindex(range(24))
-        if g.mw.isna().any() or g.hours.sum() < 0.9 * 8760:
+    if months is not None:
+        h = h[h.month.isin(list(months))]
+    h = h.assign(mwh=h.mw * h.hours)
+    g = (h.groupby(["region", "year", "local_hour"], observed=True)
+           .agg(mwh=("mwh", "sum"), hours=("hours", "sum")))
+    g["mw"] = g.mwh / g.hours
+
+    expected = 8760 if months is None else sum(
+        {1: 744, 2: 672, 3: 744, 4: 720, 5: 744, 6: 720,
+         7: 744, 8: 744, 9: 720, 10: 744, 11: 720, 12: 744}[m] for m in months)
+
+    rows, idx = [], []
+    for (region, year), gg in g.groupby(level=["region", "year"], observed=True):
+        s = gg.reset_index(level=["region", "year"], drop=True).reindex(range(24))
+        if s.mw.isna().any() or s.hours.sum() < min_hours_frac * expected:
             continue
-        v = g.mw.to_numpy(float)
+        v = s.mw.to_numpy(float)
         if normalize == "mean":
             v = v / v.mean()
         elif normalize == "z":
@@ -63,7 +82,7 @@ def profile_matrix(hour: pd.DataFrame, regions, years=YEARS,
         rows.append(v)
         idx.append((region, year))
     X = pd.DataFrame(rows, index=pd.MultiIndex.from_tuples(idx, names=["region", "year"]),
-                     columns=[f"h{h:02d}" for h in range(24)])
+                     columns=[f"h{i:02d}" for i in range(24)])
     return X.sort_index()
 
 
