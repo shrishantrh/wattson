@@ -426,7 +426,21 @@ def t_facilities(company: str = None, state: str = None):
     """Datacenter sites joined to the grid they draw from."""
     rows = data.facilities()
     if company:
-        rows = [r for r in rows if company.lower() in (r.get("company") or "").lower()]
+        # Match the ticker as well as the name. The model reaches for "MSFT" at least as
+        # often as "Microsoft", and matching only the name returned zero rows for a company
+        # with seven mapped sites, which the model then reported as having no data.
+        q = company.strip().lower()
+        rows = [r for r in rows
+                if q in (r.get("company") or "").lower()
+                or q == (r.get("ticker") or "").lower()]
+        if not rows:
+            known = sorted({(r.get("company") or "") for r in data.facilities()})
+            return {"count": 0, "facilities": [],
+                    "no_match_for": company,
+                    "known_companies": known,
+                    "note": ("No site matched that name or ticker. Pick the closest from "
+                             "known_companies and call this tool again before telling the "
+                             "user we have nothing.")}
     if state:
         rows = [r for r in rows if (r.get("state") or "").upper() == state.upper()]
     return {"count": len(rows), "facilities": [
