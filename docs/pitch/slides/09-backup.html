@@ -1,0 +1,27 @@
+<!-- 09 · BACKUP · parked after the running order so the arrow keys never walk into it.
+     `B` jumps here and `B` again returns the presenter to where they were.
+     Same rules as every other fragment, including the 15-word cap. -->
+
+<section class="slide" data-backup="1" data-title="Out of sample" data-notes="BACKUP. Press B. The answer to &quot;how do I know you didn&#39;t tune this until it agreed with you?&quot; when naming four regions in advance is not enough for the judge in front of you.
+
+WHAT THIS IS, in plain words: we ranked 111 regions using data through 2025. Then we ran the same unchanged method over 2026 data it had never seen, and compared the two rankings. Spearman is just a number for how alike two orderings are: 1.0 is identical, 0 is random. We got 0.877. And eight of the ten regions in the top ten are the same regions in both.
+
+FIGURES, docs/STATS.md test 4: rho = 0.877, 95% interval [0.795, 0.929], Kendall tau-b 0.718 [0.634, 0.788], n = 110 (one region does not report through the 2026 window). Top-10 overlap 8 of 10, p = 4.8e-9; chance would put 0.91 of them there.
+
+THE OTHER TESTS, in pocket. Permutation on the four named regions: p = 0.049, and the family-restricted version that accounts for zones nesting inside their parents gives 0.0491 - MARGINAL, and say marginal, because the headline rests on four observations and dropping Northern Virginia alone moves it. Weather: each region&#39;s own temperature response explains 7.8% of the 71,861 MW of overnight demand growth across the 111 regions, and the temperature model itself fits well (median R-squared 0.733), so that is a real answer rather than a weak control failing to find an effect; with each region&#39;s weather response removed, nights still grew faster than days in 96 of 111. Cooling peaks in the afternoon, so if this were air conditioning the days would have grown more (docs/WEATHER.md).
+
+WHAT FAILED, and we publish it: the coverage of our 95% rank intervals against the holdout is 0.718 against a nominal 0.95, so the intervals are too narrow. Below the top ten the ranking is not an ordering - the median interval is 29 places wide. Treat the top ten as a set.">
+  <div class="eyebrow">Out of sample</div>
+  <h2 class="headline">Re-ranked on 2026. Same answer.</h2>
+  <div class="rule"></div>
+  <div class="rowa">
+    <div class="cola">
+      <div class="big">0.877</div>
+      <div class="label">rank agreement</div>
+    </div>
+    <div class="cola">
+      <div class="big">8/10</div>
+      <div class="label">top ten same</div>
+    </div>
+  </div>
+</section>

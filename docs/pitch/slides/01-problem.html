@@ -1,15 +1,17 @@
 <!-- 01-problem.html. Three slides. Visible word counts: 13 / 13 / 15. Max is 15. -->
 
 <section class="slide" data-title="No watchdog"
-  data-notes="SPOKEN: There is a greenwashing watchdog for fast fashion. For airlines. For oil majors. There isn't one for datacenters, the fastest-growing industrial electricity load in America. So we built it.
+  data-notes="SPOKEN: &quot;Fast fashion has watchdogs. Airlines have watchdogs. Datacenters have none - and every forecast says they&#39;re growing fastest.&quot;
 
-WHY THIS SLIDE: the list does the work. By the third tick the judge has accepted that auditing an industry's environmental claims is a normal, mature thing that obviously exists. The empty box then lands as an oversight, not as a pitch. The absence is the picture.
+HANDS OFF THE LAPTOP. The list does the work. By the third tick the judge has accepted that auditing an industry&#39;s environmental promises is a normal, mature thing that obviously exists. The empty box then lands as an oversight, not as a pitch. The absence is the picture, and the next slide says why the absence survived.
 
-WHAT IS AND ISN'T CLAIMED: every operator building AI datacenters publishes a clean-power claim. We are not saying any of them lied. An annual matched claim is genuinely true under the GHG Protocol market-based method. We are saying nobody has ever settled those claims against what the grid physically generated, hour by hour.
+WORD CHOICE, deliberate. Say &quot;every forecast says they&#39;re growing fastest&quot;, not &quot;the fastest-growing industrial load in America&quot;. The superlative is in neither numbers file; attributing it costs two words and cannot be attacked.
 
-SCALE WE HOLD, if asked: 52 operators and 134 mapped sites; documents read for 4 of them (META, MSFT, GOOGL, AMZN), 48 sites-only, and every sites-only row prints its own reason (claims_absent_reason: no_documents_ingested). Source: api/companies.json count=52, count_with_claims=4, count_sites_only=48; api/facilities.json count=134. numbers-v2.md 2.5. Do NOT say twelve operators, that was a stale string (numbers-v2.md X1).
+WHAT IS AND ISN&#39;T CLAIMED: every operator building AI datacenters publishes a clean-power promise. We are not saying any of them lied. A promise that matches a year of clean power against a year of use is genuinely true under the accounting standard (the GHG Protocol market-based method - say &quot;the accounting standard&quot; out loud, name the standard only if a judge asks). We are saying nobody has ever settled those promises against what the grid physically generated, hour by hour.
 
-Evidence base: 4.45M hourly rows (4,451,763), 70 balancing authorities, 2018-07-01 to 2026-09-05. numbers.md 2.4. Say balancing authorities, then add: the grid operator for an area.
+SCALE WE HOLD, if asked: 52 operators and 134 mapped buildings; documents read for 4 of them (META, MSFT, GOOGL, AMZN), 48 buildings-only, and every buildings-only row prints its own reason (claims_absent_reason: no_documents_ingested). Source: api/companies.json count=52, count_with_claims=4, count_sites_only=48; api/facilities.json count=134. numbers-v2.md 2.5. Do NOT say twelve operators, that was a stale string (numbers-v2.md X1).
+
+Evidence base: 4.45M hourly rows (4,451,763), 70 grid regions, 2018-07-01 to 2026-09-05. numbers.md 2.4. Say &quot;grid region&quot;; the term of art is &quot;balancing authority&quot; and it is worth naming once, to a technical judge, right after the plain word - never instead of it.
 
 The three ticked industries are context, not our measurements. Do not put a number on them.">
   <p class="eyebrow">Greenwashing watchdogs</p>
@@ -43,19 +45,21 @@ The three ticked industries are context, not our measurements. Do not put a numb
 
 
 <section class="slide" data-title="Annual vs hourly"
-  data-notes="SPOKEN: Here is why nobody caught it. A company buys certificates over a year to match what it consumed over a year. That is genuinely true under the accounting standard, the GHG Protocol market-based method. At annual resolution there is nothing to see. You have to separate the hours.
+  data-notes="SPOKEN: &quot;Nobody has checked, because of how the promise is written: a year of clean power bought against a year of use. It balances.&quot;
 
-THE PICTURE: left is the year as the claim reports it, one block, fully matched. Right is the same year split into hours. The megawatt-hours are identical. Only the resolution changed, and a gap appears.
+THE ONE GLOSS THAT MUST BE SPOKEN HERE, because &quot;true on paper&quot; is used for the rest of the talk and this is where it is earned: a company buys certificates for a year&#39;s worth of clean power to match a year&#39;s worth of use. Add the year up and the two sides cancel. That is a real accounting standard - the GHG Protocol market-based method - and the claim is genuinely true under it. At yearly resolution there is nothing to see. You have to separate the hours.
+
+THE PICTURE: left is the year as the promise reports it, one block, fully matched. Right is the same year split into hours. The megawatt-hours are identical. Only the resolution changed, and a gap appears.
 
 NEVER say a company lied. The verdict language is: true on paper, X percent physically. We are measuring the gap between a contract and a meter, not accusing anyone of fraud. CLAUDE.md honesty rules.
 
-CAVEAT to have ready: we measure generation inside a balancing authority footprint, not consumption at a meter. Interchange is not allocated. It is an average grid mix, not marginal emissions. EIA-930 gives fuel and interchange, not dispatch order. numbers.md T6, T17.
+CAVEAT to have ready: we measure power generated inside a grid region, not power consumed at a building. Imports and exports are not traced through. It is the average mix of the region, not the specific plant that fires up when a datacenter switches on - which, if anything, understates us. EIA-930 gives fuel and interchange, not dispatch order. numbers.md T6, T17.
 
 The hourly bars here are illustrative of the mechanism, not a plot of a specific region. The real hourly series is on the following slides and in the product. Do not read a number off this one.
 
-Worked example available if pressed: Alphabet claims 100% (report p.4, annual, market-based); across the ten mapped Google sites the grids physically generated 46% carbon-free in 2025. A 54-point gap, and the verdict field still reads true_on_paper, so the phrasing does not change. Source: api/company/GOOGL.json claims[0].physical_mean_unweighted = 0.464, walk_score 0.464, verdict true_on_paper. Traced in numbers.md, Correction 2026-09-20: the Google headline pair.
+Worked example available if pressed: Alphabet claims 100% (report p.4, annual, market-based); across the ten mapped Google buildings the grids physically generated 46% clean in 2025. A 54-point gap, and the verdict field still reads true_on_paper, so the phrasing does not change. Source: api/company/GOOGL.json claims[0].physical_mean_unweighted = 0.464, walk_score 0.464, verdict true_on_paper. Traced in numbers.md, Correction 2026-09-20: the Google headline pair.
 
-CARRY THE RANGE, NOT ONE SITE: physical_min 0.056, physical_max 0.913. One Google site sits on a grid at 5.6% carbon-free and another at 91.3%. That is the answer to the objection that this rests on a single place, and it is direct evidence the method distinguishes rather than prosecutes. Never quote 5.6% alone as Google's figure, it is one end of a range; the 100 against 5.6 pair (94 points, one site) is SUPERSEDED and must not be spoken. Google's own report puts hourly CFE at 65% on p.94.">
+CARRY THE RANGE, NOT ONE BUILDING: physical_min 0.056, physical_max 0.913. One Google building sits on a grid that was 5.6% clean and another on one that was 91.3%. That is the answer to the objection that this rests on a single place, and it is direct evidence the method distinguishes rather than prosecutes. Never quote 5.6% alone as Google&#39;s figure, it is one end of a range; the 100 against 5.6 pair (94 points, one building) is SUPERSEDED and must not be spoken. Google&#39;s own report puts hourly clean supply at 65% on p.94.">
   <p class="eyebrow">True on paper</p>
   <svg viewBox="0 0 1000 400" role="img" aria-label="The same year shown as one fully matched annual block, then split into hours where the night hours are fossil.">
     <!-- annual -->
@@ -91,35 +95,37 @@ CARRY THE RANGE, NOT ONE SITE: physical_min 0.056, physical_max 0.913. One Googl
 
 
 <section class="slide" data-title="Added since 2019"
-  data-notes="SPOKEN: Since 2019 the United States added about sixty-five gigawatts of clean power to the average daytime hour, and about eighteen to the average overnight hour. Nearly four times more to the hours a datacenter does not care about. Solar cleaned up the middle of the day and did nothing for the middle of the night. A flat 24/7 load draws the same megawatt at 3am as at noon, so it runs hardest on the hours that never improved.
+  data-notes="SPOKEN: &quot;Nobody looks inside the hours. Since 2019 America added sixty-five reactors&#39; worth of clean power to its midday hours - eighteen reactors&#39; worth to its three-a.m. hours.&quot; Then, without clicking: &quot;Solar fixed the daytime. A datacenter draws the same power at three in the morning as at noon - hours that never improved.&quot;
 
-READ THE BARS RIGHT. These are megawatts of clean generation ADDED since 2019, both positive, not levels and not shares. The levels are 239.5 GW daytime and 173.4 GW overnight, a ratio of only 1.4. If anyone reads 64.7 and 17.7 as levels the slide is misleading, so the words clean power added since 2019 are on the slide itself.
+WHY REACTORS AND NOT GIGAWATTS. A large nuclear reactor is about one gigawatt, so +64.7 GW and +17.7 GW are about sixty-five and eighteen reactors&#39; worth. Same fact, and it lands on a judge who has no feel for a gigawatt. UNDERSTAND.md section 3, step 2. The slide still prints the gigawatts, so nothing is hidden.
 
-FIGURES AND SOURCE: numbers-v2.md, Addendum: the corrected-baseline headline pair. That addendum is the traceable source for both bars and records the arithmetic field by field. Corrected pair, the one to use: +64,738 MW daytime, +17,687 MW overnight, ratio 3.66x. Published-baseline pair, do not use: +61,404 / +14,349, 4.28x. Underlying fields: api/regions.json meta.national.cf_avg_mw (2019 daytime 178,129, overnight 159,031; 2025 daytime 239,533, overnight 173,380), an absolute megawatt average per hour-class, national sum, generation not demand; minus the Arizona phantom from api/region/AZPS.json region.corrections.corrections[] at path cf_avg_mw.2019 (3,334 MW daytime, 3,338 MW overnight), giving a corrected 2019 baseline of 174.8 GW daytime and 155.7 GW overnight. Baseline year 2019, latest complete year 2025. Windows are 10:00-15:59 and 00:00-05:59 local.
+READ THE BARS RIGHT. These are megawatts of clean generation ADDED since 2019, both positive, not levels and not shares. The levels are 239.5 GW midday and 173.4 GW overnight, a ratio of only 1.4. If anyone reads 64.7 and 17.7 as levels the slide is misleading, so the words clean power added since 2019 are on the slide itself.
 
-WHY CORRECTED BASELINE: the published 2019 figures carry a double count we found in the federal record. Palo Verde nuclear was reported by AZPS and SRP simultaneously until 2019-12-04. r = 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, combined 7,087 MW against a 3,937 MW nameplate. Removing the phantom lowers the 2019 baseline and widens both deltas. numbers.md D1, confidence tier proven. Say a double count we caught, never it collapsed. The plant identification is a high-confidence inference, not confirmed against EIA-860, and why the step falls on that date is not established.
+FIGURES AND SOURCE: numbers-v2.md, Addendum: the corrected-baseline headline pair. That addendum is the traceable source for both bars and records the arithmetic field by field. Corrected pair, the one to use: +64,738 MW midday, +17,687 MW overnight, ratio 3.66x. Published-baseline pair, do not use: +61,404 / +14,349, 4.28x. Underlying fields: api/regions.json meta.national.cf_avg_mw (2019 midday 178,129, overnight 159,031; 2025 midday 239,533, overnight 173,380), an absolute megawatt average per hour-class, national sum, generation not demand; minus the Arizona phantom from api/region/AZPS.json region.corrections.corrections[] at path cf_avg_mw.2019 (3,334 MW midday, 3,338 MW overnight), giving a corrected 2019 baseline of 174.8 GW midday and 155.7 GW overnight. Baseline year 2019, latest complete year 2025. Windows are 10:00-15:59 and 00:00-05:59 local time where the power is: 3am in Texas is not 3am in Maine.
 
-SHARE VS LEVEL, the house trap: if you say a share fell, say the absolute in the same breath. Clean megawatts at night ROSE. On the corrected baseline the overnight share is flat at about 0.397; on the published baseline it reads 0.405 to 0.397, and that 0.8 point slip is the AZPS phantom. Never say clean power at night shrank. numbers.md T8, numbers-v2.md N1 and N2.
+WHY THE CORRECTED BASELINE: the published 2019 figures count one power plant twice, and we found it in the federal record. Palo Verde was reported in full by two owners at once until 2019-12-04. Removing that phantom lowers the 2019 starting point and widens both gaps. numbers.md D1, confidence tier proven. Say &quot;a double count we caught&quot;, never &quot;it collapsed&quot;. The slide two from the end is where you tell that story.
 
-THE FLAT LINE is the datacenter load, drawn at one height across both bars. Illustrative of flat 24/7 load, not a measured series.
+THE SHARE DID NOT FALL. This is the house trap and the one way to say something false out of true numbers. Overnight clean share was 39.7% in 2019 and 39.7% in 2025 - flat. Clean megawatts at night ROSE, by 17.7 GW; demand simply rose faster. Never state a share without the absolute in the same breath, and never say clean power at night shrank. UNDERSTAND.md section 4; numbers.md T8; numbers-v2.md N1 and N2.
 
-WHERE IT GOES NEXT, the question they should now want answered: which grid is a given company's site actually on at 3am. PJM, the grid serving the largest datacenter cluster on earth, added 8.7 GW of overnight generation since 2019 and none of it was clean, clean generation fell 81 MW; gas supplied 10.74 GW. api/region/PJM.json total_avg_mw, cf_avg_mw, fuel_delta_overnight_gw.gas. numbers.md 2.1.">
+THE FLAT LINE is the datacenter load, drawn at one height across both bars. It is the picture of a building that draws the same power at 3am as at noon. Illustrative, not a measured series.
+
+WHERE IT GOES NEXT, the question they should now want answered: which grid is a given company&#39;s building actually on at 3am. PJM, the grid serving the largest datacenter cluster on earth, generates 8.7 GW more power at night than it did in 2019, and not one net megawatt of that increase is clean - clean generation fell 81 MW while gas supplied 10.74 GW. api/region/PJM.json total_avg_mw, cf_avg_mw, fuel_delta_overnight_gw.gas. numbers.md 2.1.">
   <p class="headline">Clean power added since 2019</p>
-  <svg viewBox="0 0 1000 400" role="img" aria-label="Clean power added to the average daytime hour since 2019 is 64.7 gigawatts. To the average overnight hour, 17.7 gigawatts. A flat datacenter load sits at the same height across both.">
+  <svg viewBox="0 0 1000 400" role="img" aria-label="Clean power added to the average midday hour since 2019 is 64.7 gigawatts. To the average 3am hour, 17.7 gigawatts. A flat datacenter load sits at the same height across both.">
     <!-- baseline -->
     <line x1="40" y1="300" x2="960" y2="300" stroke="var(--line)" stroke-width="2"/>
 
     <!-- daytime bar: 64.7 -->
     <rect x="130" y="56" width="230" height="244" rx="6" fill="var(--clean)"/>
     <text x="130" y="42" style="fill:var(--ink)" font-size="52" font-weight="700">+64.7 GW</text>
-    <text x="130" y="348" style="fill:var(--muted)" font-size="36">Daytime hour</text>
+    <text x="130" y="348" style="fill:var(--muted)" font-size="36">Midday hour</text>
 
     <!-- overnight bar: 17.7, height scaled 248 * 17.7/64.7 = 68 -->
     <rect x="620" y="233" width="230" height="67" rx="6" fill="var(--clean)"/>
     <text x="620" y="219" style="fill:var(--ink)" font-size="52" font-weight="700">+17.7 GW</text>
-    <text x="620" y="348" style="fill:var(--muted)" font-size="36">Overnight hour</text>
+    <text x="620" y="348" style="fill:var(--muted)" font-size="36">3am hour</text>
 
-    <!-- where flat 24/7 load lands. A pointer, never a level. -->
+    <!-- where a round-the-clock load lands: same power at 3am as at noon. A pointer, never a level. -->
     <text x="392" y="112" style="fill:var(--accent)" font-size="34" font-weight="600">Datacenter load</text>
     <path d="M470 140 Q 560 205 665 244" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
     <path d="M643 228 l26 18 l-30 10" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>

@@ -1,20 +1,27 @@
-<section class="slide" data-title="PJM at night" data-notes="THE HEADLINE FINDING. Takeaway: PJM, the grid serving the largest concentration of datacenters on earth, added 8,701 MW of overnight generation since 2019 and not one megawatt of it was clean - clean generation actually fell 81 MW.
+<section class="slide" data-title="PJM at night" data-notes="SPOKEN: &quot;Here&#39;s what it finds. PJM - Chicago to New Jersey - generates eight point seven gigawatts more at night than in 2019. (breath) Not one net megawatt of it is clean.&quot; Then, over the next slides: &quot;A separate instrument agrees: EPA&#39;s smokestack monitors measured PJM&#39;s night-time carbon dioxide up four million tons.&quot;
 
-The drawing is at TRUE SCALE: one megawatt is the same height in all three bars. The dashed rule across the chart sits at +8,701 MW, the total overnight generation growth named in the headline; the gas column stands ABOVE it. That is the whole picture - gas supplied more than the growth itself, because it also replaced retiring coal. The clean bar is 1.3 px tall and on the wrong side of zero. Its near-invisibility is the finding, not a rendering fault.
+THE HEADLINE FINDING, and the sentence to use is the one above: PJM generates 8,701 MW more power at night than it did in 2019, and not one net megawatt of that increase is clean - clean generation actually fell 81 MW. Gloss PJM the first time: the grid from Chicago to New Jersey, which serves the largest concentration of datacenters on earth.
+
+THE DRAWING IS AT TRUE SCALE: one megawatt is the same height in all three bars. The dashed rule across the chart sits at +8,701 MW, the total overnight growth named in the headline; the gas column stands ABOVE it. That is the whole picture - gas supplied more than the growth itself, because it also replaced retiring coal. The clean bar is 1.3 px tall and on the wrong side of zero. Its near-invisibility is the finding, not a rendering fault.
+
+WHY GAS EXCEEDS THE TOTAL, before anyone subtracts: coal fell 2,518 MW and nuclear 950 MW. Gas replaced those AND supplied the growth. It is coal-to-gas switching plus new load. UNDERSTAND.md section 3, step 3.
 
 FIGURES, all from api/region/PJM.json, overnight = 00:00-05:59 local, 2019 vs 2025:
 - 8,701 MW: total_avg_mw overnight 82,539 -> 91,240. numbers.md 2.1; numbers-v2.md 2.7.
 - gas +10,740 MW: fuel_delta_overnight_gw.gas = +10.74. numbers.md 2.1; numbers-v2.md 2.7.
 - coal -2,520 MW: fuel_delta_overnight_gw.coal = -2.52. numbers.md 2.1.
-- clean -81 MW: cf_avg_mw overnight 35,700 -> 35,619. Carbon-free = nuclear + hydro + wind + solar + geothermal. numbers.md 2.1: flat within 100 MW, -0.23% of the 2019 level; increment share -0.9%.
+- clean -81 MW: cf_avg_mw overnight 35,700 -> 35,619. Clean = nuclear + hydro + wind + solar + geothermal. numbers.md 2.1: flat within 100 MW, -0.23% of the 2019 level.
 - Full fuel closure if challenged: nuclear -0.95, hydro -0.22, wind +1.07, solar +0.01, gas +10.74, coal -2.52, oil +0.15, other +0.41; sum +8.69 GW against total +8.70. numbers.md 2.1.
-- Net exports fell, so the new power stayed inside PJM: overnight net export 3,814 MW (2019) -> 2,489 MW (2025), EIA-adjusted operations table, positive = export. numbers.md 2.1; numbers-v2.md 2.7. Do NOT use the 2026 value (partial year).
+- Net exports fell, so the new power stayed inside PJM: overnight net export 3,814 MW (2019) -> 2,489 MW (2025), EIA-adjusted operations table, positive = export. numbers.md 2.1. Do NOT use the 2026 value (partial year).
+
+THE INDEPENDENT CHECK, and it is the strongest thing on this slide after the bars: EPA&#39;s continuous emissions monitors sit on the smokestacks and measure carbon dioxide directly. They are a different instrument, on different hardware, with no connection to our pipeline. They measured PJM&#39;s overnight CO2 rising 3,957,992 short tons a year between 2019 and 2025, +5.9%, while overnight carbon intensity went 0.369 -> 0.353 short tons per MWh. Say &#39;up four million tons&#39;. Source: docs/EMISSIONS.md, the PJM overnight table. Across 49 regions our clean share and the measured intensity move together at Spearman -0.868 (Pearson -0.834), which is what it means to say the two instruments agree.
+WHERE THAT PROXY FAILS, volunteer it if pressed: the share cannot see whether the fossil half is gas or coal. PACE has a 0.255 clean share and emits 0.715 short tons per MWh; FPL has 0.263 - the same share - and emits 0.268. A 2.7-fold difference at the same share. docs/EMISSIONS.md.
 
 SAY / DO NOT SAY:
 - Consistent with datacenter load being served by gas. Never caused by. (CLAUDE.md)
-- This is an average mix, not a marginal one. EIA-930 gives fuel and interchange, not dispatch order (numbers.md T6). Say the caveat before anyone asks.
-- We measure generation inside a footprint, not consumption. Interchange is not allocated.
-- PJM is coarse: Chicago to New Jersey. If asked where it lands: Dominion is +3,973 MW overnight demand = 45.7% of PJM's overnight GENERATION growth, 60.6% of its overnight DEMAND growth. Say which denominator (numbers.md D7). About half is true only against generation.
+- This is an average mix, not the specific plant that fires up. EIA-930 gives fuel and interchange, not dispatch order (numbers.md T6). Say the caveat before anyone asks; it understates us if anything.
+- We measure what a region generated, not what a building consumed. Imports are not traced through.
+- PJM is coarse: Chicago to New Jersey. If asked where it lands: Dominion is +3,973 MW overnight demand = 45.7% of PJM&#39;s overnight GENERATION growth, 60.6% of its overnight DEMAND growth. Say which denominator (numbers.md D7). About half is true only against generation.
 
 VISIBLE WORDS: 14. PJM (1) + 8,701 MW more at night. None clean. (7) + +10,740 gas (2) + -2,520 coal (2) + -81 clean (2).">
 
@@ -48,33 +55,35 @@ VISIBLE WORDS: 14. PJM (1) + 8,701 MW more at night. None clean. (7) + +10,740 g
 
 </section>
 
-<section class="slide" data-title="One claim, ten grids" data-notes="THE COMPANY FINDING. Takeaway: one company, one claim, ten mapped buildings - and the physical answer runs from 5.6% to 91.3% carbon-free. Which grid a building sits on decides the answer. The claim is true on paper the whole way across.
+<section class="slide" data-title="One claim, ten grids" data-notes="THE COMPANY FINDING. Takeaway, in one sentence: one company, one annual claim, ten mapped buildings - and the grids under them ran from 5.6% to 91.3% clean. A sixteen-fold spread behind a single sentence in a report. Which grid a building sits on decides the answer, and the claim is true on paper the whole way across.
 
-WHY THIS SLIDE AND NOT 100-VERSUS-46: the solution slide already lands 100% claimed against 46% measured for this same company. Repeating it here would have been two slides disagreeing about nothing, or agreeing too loudly. This slide keeps 100 and 46 ON the scale as reference marks and leads on what the solution slide cannot say: the spread. A mean of 46% across ten sites is the headline; the range is the evidence that the method DISTINGUISHES rather than prosecutes. A tool that just wanted a scandal would not put a 91.3% dot on the wall.
+SPOKEN: this slide is flipped past in the run (the PJM line covers it). If you stop on it, the line is: &quot;One claim, ten buildings, and the grids under them run from six percent clean to ninety-one. A sixteen-fold spread.&quot;
 
-FIGURES, all from api/company/GOOGL.json (read live, 2026-09-20). Alphabet (Google), 10 mapped sites, coverage 1.0:
+WHY THIS SLIDE AND NOT 100-VERSUS-46: the solution slide already lands 100% claimed against 46% measured for this same company. This slide keeps 100 and 46 ON the scale as reference marks and leads on what the solution slide cannot say: the spread. The mean of 46% is the headline; the range is the evidence that the method DISTINGUISHES rather than prosecutes. A tool that just wanted a scandal would not put a 91.3% dot on the wall.
+
+FIGURES, all from api/company/GOOGL.json (read live, 2026-09-20). Alphabet (Google), 10 mapped buildings, coverage 1.0:
 - Claimed 100%: page 4 of the sustainability report, annual, market-based accounting. A real and standard method - which is exactly why the verdict is true_on_paper.
-- mean 46%: physical_mean_unweighted = 0.464, identical to walk_score 0.464. Gap 53.6 points, say 54. Method string: mean physical carbon-free share across mapped sites, calendar 2025, all hours, grid-only, unweighted by site size. UNWEIGHTED - we do not know each site load. GRID-ONLY - excludes PPAs and RECs.
-- 5.6% = physical_min. Moncks Corner, Berkeley County SC, on Santee Cooper (BA: SC).
-- 91.3% = physical_max. The Dalles, Oregon, on Bonneville (BA: BPAT) - Columbia River hydro.
-- The ten, in full: Moncks Corner SC 0.056; Council Bluffs MISO 0.349; Pine Island MISO 0.349; Fort Wayne PJM 0.393; Pryor SWPP 0.456; Midlothian ERCO 0.461; Bridgeport TVA 0.487; Lenoir DUK 0.575; Mesa SRP 0.599; The Dalles BPAT 0.913. Two pairs sit on top of each other on the axis - the two MISO sites at 0.349, and Pryor 0.456 next to Midlothian 0.461 - so each pair is drawn stacked. The vertical offset is only to make all ten countable; it carries no meaning. There are ten dots and ten sites.
+- average 46%: physical_mean_unweighted = 0.464, identical to walk_score 0.464. Gap 53.6 points, say 54. It is the PLAIN AVERAGE of how clean each of the ten grids was in calendar 2025, all hours, grid-only. UNWEIGHTED - we do not know each building&#39;s load, and one very large building could move it, which we say. GRID-ONLY - it leaves out purchase agreements and certificates.
+- 5.6% = physical_min. Moncks Corner, Berkeley County SC.
+- 91.3% = physical_max. The Dalles, Oregon - Columbia River hydro.
+- 91.3 / 5.6 = 16.3, hence &#39;a sixteen-fold spread&#39; (UNDERSTAND.md section 3, step 5).
+- The ten, in full: Moncks Corner SC 0.056; Council Bluffs IA 0.349; Pine Island MN 0.349; Fort Wayne IN 0.393; Pryor OK 0.456; Midlothian TX 0.461; Bridgeport AL 0.487; Lenoir NC 0.575; Mesa AZ 0.599; The Dalles OR 0.913. Two pairs sit on top of each other on the axis - the two at 0.349, and 0.456 next to 0.461 - so each pair is drawn stacked. The vertical offset is only to make all ten countable; it carries no meaning. Ten dots, ten buildings.
 - Verdict unchanged: every one of the five extracted claims reads true_on_paper. Nobody is called a liar. The product prints true on paper, X physically.
 
-THE CAVEAT THAT MUST TRAVEL WITH THE 5.6% END (numbers.md T4; the site note says never present 0.056 without it): that is the footprint, not the meter - and Santee Cooper share of V.C. Summer nuclear reports under a different authority, SCEG, at 42.1%. So the low end understates what is available to that site. Say it before a judge asks. The same footprint-not-meter caveat runs the other way at The Dalles.
+THE CAVEAT THAT MUST TRAVEL WITH THE 5.6% END (numbers.md T4): that is what the region generated, not what the building consumed - and the Santee Cooper share of the V.C. Summer nuclear station reports under a different authority, at 42.1%. So the low end understates what is available to that building. Say it before a judge asks. The same caveat runs the other way at The Dalles.
 
 IN POCKET:
-- Their own report says 65% hourly CFE on page 94, ninety pages after the 100% on page 4. Five years: 65, 64, 64, 66, 65 (2021-2025). Their number, not ours. numbers.md 2.6.
-- Across the four companies whose documents we read: 9 true_on_paper, 1 cannot_verify (Amazon - no falsifiable sentence extracted, kind no_finding, talk_score null; never render null as 0). numbers.md 2.6, T14.
-- Coverage gap, out loud: 52 operators and 134 sites held, documents read for four. numbers-v2.md 2.5, N8.
-- We measure what the grid inside a footprint generated, not what these companies consumed. Interchange is not allocated (numbers.md T17).
+- Their own report says 65% clean power hour by hour on page 94, ninety pages after the 100% on page 4. Five years: 65, 64, 64, 66, 65 (2021-2025). Their number, not ours. numbers.md 2.6.
+- Across the four companies whose documents we read: 9 true_on_paper, 1 cannot_verify (Amazon - no falsifiable sentence extracted, talk_score null; never render null as 0). numbers.md 2.6, T14.
+- Coverage gap, out loud: 52 operators and 134 buildings held, documents read for four. numbers-v2.md 2.5, N8.
 
-STALE SOURCE WARNING: numbers.md section 2.6 still records Alphabet as 5.6% with 1 site and a 94.4-point gap. That was true when only Moncks Corner was mapped. The live record now has 10 sites, mean 0.464, gap 53.6 points. api/ is the authority (numbers.md own rule), so 46 wins and the prose is the error.
+STALE SOURCE WARNING: numbers.md section 2.6 still records Alphabet as 5.6% with 1 building and a 94.4-point gap. That was true when only Moncks Corner was mapped. The live record now has 10, mean 0.464, gap 53.6 points. api/ is the authority (numbers.md own rule), so 46 wins and the prose is the error.
 
-VISIBLE WORDS: 14. Ten sites (2) + True on paper. The grid decides. (6) + claimed 100% (2) + mean 46% (2) + 5.6% (1) + 91.3% (1).">
+VISIBLE WORDS: 15. Google (1) + True on paper. Ten grids, a sixteen-fold spread. (8) + claimed 100% (2) + average 46% (2) + 5.6% (1) + 91.3% (1).">
 
   <div class="cola">
-    <p class="eyebrow">Ten sites</p>
-    <h2 class="headline">True on paper. The grid decides.</h2>
+    <p class="eyebrow">Google</p>
+    <h2 class="headline">True on paper. Ten grids, a sixteen-fold spread.</h2>
     <div class="rule"></div>
   </div>
 
@@ -88,9 +97,9 @@ VISIBLE WORDS: 14. Ten sites (2) + True on paper. The grid decides. (6) + claime
 
     <!-- mean of the ten, 0.464 -->
     <line x1="496" y1="110" x2="496" y2="190" style="stroke:var(--ink)" stroke-width="3" opacity="0.75"/>
-    <text x="496" y="226" text-anchor="middle" style="fill:var(--muted);font-size:var(--t-body)">mean 46%</text>
+    <text x="496" y="226" text-anchor="middle" style="fill:var(--muted);font-size:var(--t-body)">average 46%</text>
 
-    <!-- ten mapped sites, physical carbon-free share 2025 -->
+    <!-- ten mapped buildings, the clean share of the grid under each, 2025 -->
     <g style="fill:var(--clean)">
       <circle cx="112.6" cy="150" r="13"/>
       <circle cx="388.1" cy="134" r="13"/>
@@ -110,22 +119,31 @@ VISIBLE WORDS: 14. Ten sites (2) + True on paper. The grid decides. (6) + claime
 
 </section>
 
-<section class="slide" data-title="The detector" data-notes="THE THIRD FINDING. Takeaway: the detector scores 111 regions from demand data alone, with no company list as an input, and it lands on the known datacenter corridors - and on the same strip you can see where it missed.
+<section class="slide" data-title="The detector" data-notes="THE THIRD FINDING. Takeaway: the detector ranks 111 regions on one signature - demand that stopped rising and falling with the day - using demand data alone, with no company list as an input. It lands on the known datacenter corridors, and on the same strip you can see where it missed.
 
-Each tick is one scored region, rank 1 at the left, rank 111 at the right. Two ticks are raised: 6th and 91st. Putting the miss on the same axis as the hit is the credibility beat (numbers.md T15) - the miss is the reason to believe the hits.
+SPOKEN, if you stop here: &quot;We also find these places with no list of them - a hundred and eleven regions ranked on demand that stopped following the day.&quot;
+
+Each tick is one scored region, rank 1 at the left, rank 111 at the right. Two ticks are raised: 6th and 91st. Putting the miss on the same axis as the hit is the credibility beat (numbers.md T15).
+
+WHAT THE SCORE IS, in plain words. Three ingredients. How much faster demand grew at night than on average (homes and EVs are peaky; a datacenter is not). How much faster than its neighbours on the same grid, which controls for a whole region simply booming. And how much the daily demand curve flattened, at half weight. Written down: score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z on median and median absolute deviation rather than mean and standard deviation, so that two Texas zones growing 95% and 116% cannot set the scale for all 111. Regions under 500 MW average demand excluded; peak taken at the 99.5th percentile hour. meta.detector_method.
 
 FIGURES, from api/regions.json and the region files, via numbers.md 2.3:
-- 111 regions scored; ranks 1..111 contiguous; composition 68 zones + 43 BAs. meta.n_scored.
-- Demand data only: score = z(overnight_excess) + z(neighbor_divergence) + 0.5 z(load_factor_delta), robust z (median/MAD); regions under 500 MW average demand excluded; peak = 99.5th percentile hour. Frozen before the ranking was seen. meta.detector_method.
-- Four validation regions named IN ADVANCE: PJM/DOM, PJM/AEP, SWPP/OPPD, ERCO/NCEN. meta.validation_named_in_advance.
-- 6th = PJM/DOM, Data Center Alley / Northern Virginia. Score 7.71, growth +31.8%, overnight excess 7.7 pts, neighbour divergence 32.9. Zone overnight demand 10,060 -> 14,033 MW, +39.5%.
-- 91st = ERCO/NCEN, Dallas-Fort Worth. Score -1.32, growth +14.2%. Reported as is: neighbour divergence penalises a zone inside a BA that is booming overall, and all of ERCOT is booming.
-- In pocket: Omaha (SWPP/OPPD) 7th, score 6.82, growth +39.4%. The AEP zone 19th - call it the AEP zone, not Central Ohio, because it spans Ohio, Indiana, West Virginia, Virginia and Kentucky (numbers.md T9).
+- 111 regions scored; ranks 1..111 contiguous; composition 68 zones + 43 parents. meta.n_scored.
+- Four test regions named IN ADVANCE: PJM/DOM, PJM/AEP, SWPP/OPPD, ERCO/NCEN. meta.validation_named_in_advance.
+- 6th = PJM/DOM, Data Center Alley / Northern Virginia. Score 7.71, growth +31.8%, overnight excess 7.7 pts. Zone overnight demand 10,060 -> 14,033 MW, +39.5%.
+- 7th = SWPP/OPPD, Omaha. Score 6.82, growth +39.4%.
+- 19th = the AEP zone, score 2.29. Call it the AEP zone, not Central Ohio: it spans Ohio, Indiana, West Virginia, Virginia and Kentucky (numbers.md T9).
+- 91st = ERCO/NCEN, Dallas-Fort Worth. Score -1.32, growth +14.2%. THE MISS, and volunteer it: the neighbour term compares a zone with its neighbours, and every zone in Texas is booming, so a booming Dallas looks ordinary. Drop that one term and Dallas is 48th. We published the 91st because the weights were fixed before we saw where anything would land. UNDERSTAND.md section 4.
 - The 500 MW cut holds: 13 regions unranked, largest excluded IID at 434 MW, smallest ranked TPWR at 518 MW.
 - WACM ranks 5th and is flagged and excluded from alerts: demand +1.5 GW in 2022 with flat generation and exports falling to zero, unexplained. It stays in the ranking. Do not present it as a clean win (numbers.md T12).
-- Zones carry demand only and inherit the parent BA's generation figures (cf_inherited_from_ba).
+- Zones carry demand only and inherit the parent&#39;s generation figures (cf_inherited_from_ba).
 
-THE FINDING HELD BACK - the correction, if there is time or a data-quality question. The published record says AZPS overnight clean share fell from 62% to 10%. The 62% was never real: Palo Verde nuclear was reported by AZPS AND SRP simultaneously until 2019-12-04 - r = 0.9948 over 7,976 hours, identical within 5 MW in 98.8% of them, a combined 7,087 MW against a 3,937 MW nameplate. Corrected like-for-like, Phoenix ROSE from 1.7% to 10.4%: the published figure was wrong in direction, not only in magnitude. Confidence tier: proven. Published and corrected are shown side by side in the product and the correction is applied at serve time (siting_score 0.173 -> 0.449, rank 49 -> about 32, plus or minus 2). Say 'a double count we caught', never 'it collapsed'. The 2025 level of 10.4% is sound, and AZPS's demand-side rank (3rd) was never affected. numbers.md D1, D2, T2.
+LIMITS TO VOLUNTEER RATHER THAN BE ASKED:
+- It finds round-the-clock load in general, not datacenters specifically. Crypto mining and oilfield electrification look identical; our rank 2, ERCOT Far West, is probably the Permian oilfield.
+- Below the top ten the ranking is not an ordering. The median rank interval is 29 places wide, so treat the top ten as a set, not a league table.
+- Region size predicts our labels better than load shape does, and we report that rather than bury it.
+
+THE FINDING HELD BACK - the correction, if there is time or a data-quality question. The published record says AZPS overnight clean share fell from 62% to 10%. The 62% was never real: one nuclear plant was reported in full by two owners at once until 2019-12-04. Corrected like-for-like, Phoenix ROSE from 1.7% to 10.4%: the published figure was wrong in direction, not only in size. Say &#39;a double count we caught&#39;, never &#39;it collapsed&#39;. The 2025 level of 10.4% is sound, and the demand-side rank (3rd) was never affected. numbers.md D1, D2, T2.
 
 VISIBLE WORDS: 14. DETECTOR (1) + 111 regions scored. No company list. (6) + 6th Data Center Alley (4) + 91st Dallas, missed (3).">
 

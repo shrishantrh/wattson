@@ -14,6 +14,43 @@ sentence, the slide is wrong.
   here from `web/public/api/` and `claims/raw/` with the computation shown. Sources are
   cited per slide and again in each slide's presenter notes.
 
+## The plain-language pass, 2026-09-20
+
+The complaint that prompted it: *"the method frozen"* — what is that supposed to mean? The
+deck was full of phrases precise to us and empty to everyone else. Every one below was
+replaced everywhere it was spoken or shown. Where the term of art still earns its keep (a
+sponsor needs the dataset named), it now follows the plain sentence instead of replacing it.
+
+| Was | Now |
+|---|---|
+| "the method frozen", "pre-registered", "frozen before we saw a ranking" | "We named four regions before we ran it, so it could fail in public" |
+| "balancing authority" | "grid region" / "grid operator"; the real term is named once, to a technical judge, straight after the plain word |
+| "flat 24/7 load" | "a datacenter draws the same power at three in the morning as at noon"; as a label, "round-the-clock load" |
+| "overnight excess" | "how much faster demand grew at night than on average" |
+| "neighbour divergence" | "how much faster than its neighbours on the same grid" |
+| "load factor delta" | "how much the daily demand curve flattened" |
+| "robust z", "median absolute deviation" | "median rather than mean, so two booming Texas zones can't set the scale for all 111" (notes only; never spoken) |
+| "the increment" | gone. Say "the growth" or name the megawatts |
+| "carbon-free share", "clean share", "cf share", "the index" | **clean share** everywhere, spoken as "how much of the power was clean" |
+| "market-based", "GHG Protocol" | "the accounting standard"; named only if a judge asks |
+| "true on paper" | kept — and glossed on first use: "a year of clean power bought against a year of use. It balances." |
+| "the corrected baseline", "the phantom", "the double count" | "a power plant was counted twice in the federal data. We caught it, and we use the corrected number even though it shrinks our headline" |
+| "64.7 GW / 17.7 GW" | "sixty-five reactors' worth / eighteen reactors' worth" — a large reactor is about a gigawatt (`UNDERSTAND.md` §3) |
+| "static export" | "a folder of files with no server behind it" |
+| "354 passages" | unchanged, and still never "354 filings" — there are eight |
+
+**Two hits, two misses is gone.** Nothing ever pre-registered a rank threshold: the two
+records of the prediction — `docs/spec.md` "Validation, pre-registered" and
+`numbers.md` §2.3 / T15 — both annotate **only Dallas** as the miss and list the AEP zone at
+19th as a plain result. The deck now says **three of four landed in the top twenty, and
+Dallas came 91st**, which is what the sources say and is also the stronger sentence. The old
+line came from a deck-internal reconciliation, not from the prediction.
+
+**The flow rule.** Each beat now hands off to the next: absence → why it survived → look
+inside the hours → so we built it → the one number under it → the product → what it finds →
+why you can believe it → the close. Nothing in the spoken script is a caption that could be
+read in isolation.
+
 ## Two measurements, run — not estimated
 
 Open the deck and run these in the console. Both are part of the file.
@@ -26,9 +63,14 @@ window.__overlaps()     // any two text boxes on a slide whose rendered rectangl
 Last run at 1280×720:
 
 ```
-S1=9  S2=15  S3=15  S4=15  S5=15  S6=15  S7=15  S8=9  B9=15  B10=14  B11=15
+S1=13 S2=13 S3=15 S4=15 S5=15 S6=15 S7=14 S8=14 S9=15 S10=14
+S11=15 S12=15 S13=15 S14=15 B15=15
 over the cap: 0        overlaps: []        external references: 0
 ```
+
+Fifteen sections in the current build (the fourteen-slide run plus one backup,
+`09-backup.html`). `node docs/pitch/build-deck.mjs` prints the same per-slide counts from
+the fragments, which is the check that runs before every commit.
 
 Every slide is at or under the cap and **no two text boxes intersect anywhere in the deck**.
 The overlap check is how the slide-3 headline/figure collision (191×12px) was found and is
@@ -65,7 +107,7 @@ scaled to 0.34, which is roughly the back of a room.
 | 2 | "They compare what a company claims to what its grid actually burned." | "what **it** burned" had no antecedent on the slide — "it" could have been the company. Now "what **that grid** burned, hour by hour". Box widths rebalanced to the text they hold; the longest phrase had the narrowest box. |
 | 3 | "Since 2019 far more clean power was added to daytime hours than to overnight hours." | The word "added" is now in the headline at 56px, not a 26px footer. `GW` moved from a floating axis label to sit beside the number it belongs to. Both bars carry `+`. |
 | 4 | "In this grid, all the growth at night came from gas." | **"Gas took all of it" had no antecedent** — a stranger could not tell what "it" was. Now "All the night growth was gas." The coal bar answers "how does +10,740 come out of +8,701?" before it is asked. |
-| 5 | "This is the live product, built on federal hourly data and an index of their filings." | Provenance strip added. `70 grid operators` rather than "balancing authorities", deliberately. |
+| 5 | "This is the live product, built on federal hourly data and an index of their filings." | Provenance strip added, and it now reads `70 grid operators` rather than "70 balancing authorities" — the plain word on the wall, the term of art in the mouth. |
 | 6 | "For 4 companies they've read the documents; for 48 they only have grid data, and they say so." | Was "Documents read for 4 of 52 operators" with the legend "48 sites only" — a stranger knew neither what a document was here nor whether 4 of 52 was good. Hollow marks raised from `--line` to `--muted` so the gap is visible at range. |
 | 7 | "Alphabet claims 100%; the utility that serves the site generated 5.6%." | "Santee Cooper" meant nothing on its own; it is now labelled **serving utility**. The claim box carries the quotation and `Alphabet, p. 4` instead of a bare `100%`. |
 | 8 | "That's the name and the idea." | — |
@@ -102,13 +144,13 @@ one-third scale. Verified by scaling every screenshot to 0.34 rather than assumi
 
 | # | On screen | Spoken over it | Slide words | Runs |
 |---|---|---|---|---|
-| 1 | Fast fashion ✓, Airlines ✓, Oil majors ✓, **Datacenters** — an empty dashed slot | "There's a greenwashing watchdog for fast fashion. For airlines. For oil majors. There isn't one for datacenters — the industrial load every forecast says is growing fastest. So we built it." | 9 | 0:00–0:14 |
-| 2 | a company's claim → the grid it draws from → what that grid burned, hour by hour | "We take a company's public clean-energy claim, find the grid its buildings actually draw from, and compare the claim to what that grid generated, hour by hour." | 14 | 0:14–0:26 |
-| 3 | **+64.7** and **+17.7** clean bars, **3.7×** between them, under "Clean power added since 2019, by hour of day." | "Since twenty-nineteen we added sixty-five gigawatts to the average daytime hour, and eighteen to the overnight hour — to the hours a datacenter ignores. And that's after we corrected a nuclear plant the federal data counted twice." | 15 | 0:26–0:43 |
-| 4 | gas **+10,740**, coal **−2,520**, clean **−81** MW, under "All the night growth was gas." | "PJM — the grid from Chicago to New Jersey — is where the datacenters are. Overnight generation there rose eight point seven gigawatts. Gas supplied ten point seven. Clean fell eighty-one megawatts." | 15 | 0:43–0:57 |
+| 1 | Fast fashion ✓, Airlines ✓, Oil majors ✓, **Datacenters** — an empty dashed slot | "Fast fashion has watchdogs. Airlines have watchdogs. Datacenters have none — and every forecast says they're growing fastest." | 9 | 0:00–0:14 |
+| 2 | a company's claim → the grid it draws from → what that grid burned, hour by hour | "So we built the watchdog. It takes the claim, finds the buildings, finds the grid under each, and reads what that grid generated, hour by hour." | 14 | 0:14–0:26 |
+| 3 | **+64.7** and **+17.7** clean bars, **3.7×** between them, under "Clean power added since 2019, by hour of day." | "Nobody looks inside the hours. Since 2019 America added sixty-five reactors' worth of clean power to its midday hours — eighteen reactors' worth to its three-a.m. hours." | 15 | 0:26–0:43 |
+| 4 | gas **+10,740**, coal **−2,520**, clean **−81** MW, under "All the night growth was gas." | "Here's what it finds. PJM — Chicago to New Jersey — generates eight point seven gigawatts more at night than in 2019. Not one net megawatt of it is clean." | 15 | 0:43–0:57 |
 | 5 | Holding slide + provenance strip: EIA-930 via PUDL · 4.45M hourly rows · 70 grid operators · 354 indexed passages | *(the live app — four beats, below)* | 15 | 0:57–2:29 |
-| 6 | 52 marks, 4 filled; "4 operators: their filings. 48: the grid only." / "Ten claims read, one we cannot verify." | "The thing we're proudest of is what it refuses to say. Ten claims read. Nine true on paper. One we can't verify. Forty-eight of fifty-two, we haven't read at all." | 15 | 2:29–2:43 |
-| 7 | "matched 100% of our electricity" / Alphabet, p. 4 → Santee Cooper / serving utility → 5.6% / generated 2025 | "And every verdict ends at a named utility in a named region. Which means someone can look up who's exposed before the filing says so." | 15 | 2:43–2:54 |
+| 6 | 52 marks, 4 filled; "4 operators: their filings. 48: the grid only." / "Ten claims read, one we cannot verify." | "One region looked like its clean power collapsed. It hadn't — a plant counted twice in the federal data. We use the corrected number, and it shrinks our headline." | 15 | 2:29–2:43 |
+| 7 | "matched 100% of our electricity" / Alphabet, p. 4 → Santee Cooper / serving utility → 5.6% / generated 2025 | "Every answer ends at a named utility, in a named place, at a named hour." | 15 | 2:43–2:54 |
 | 8 | "It follows the power, not the press release." | "Wattson. It follows the power, not the press release." | 9 | 2:54–2:59 |
 
 ---
@@ -225,11 +267,14 @@ The page cite is spoken because source citation is what the textual-analysis tra
 scored on the signature of flat, round-the-clock load. We named four test regions before we
 ran it, so we couldn't cheat. Two landed in the top ten. Two missed. Both are on the
 screen."*
-**Two hits, two misses — corrected.** The previous script said "three hit" while backup B1
-drew the AEP zone at 19th struck through as a miss, and this file said two and two. A judge
-pressing `B` after hearing "three hit" saw two crosses. All three artefacts now agree.
-"We named four test regions before we ran it, so we couldn't cheat" replaces "method frozen
-before we saw the ranking", which was methodology jargon with no verb.
+**Three landed, Dallas missed — resolved 2026-09-20.** This file and backup B1 used to say
+"two hits, two misses", scoring the AEP zone at 19th as a miss. Nothing was ever
+pre-registered that would make 19th of 111 a failure: both records of the prediction
+(`docs/spec.md`, `numbers.md` §2.3/T15) annotate only Dallas. The deck, the script and the
+slide now all say three of four landed in the top twenty and Dallas came 91st.
+"We named four regions before we ran it, so it could fail in public" replaces "method frozen
+before we saw the ranking", which was methodology jargon with no verb. The count is now
+**three landed in the top twenty, Dallas 91st** — see the plain-language section at the top.
 
 **(c) OpenAI and the blind spot — 49 words, 23s.**
 *"[Six Stargate sites, every one mapped.] El Paso Electric, at three in the morning: one
@@ -314,8 +359,8 @@ market-based, verdict `true_on_paper`); `sites[0].cf_share_2025` = 0.056.*
 
 | | On screen | The question it answers |
 |---|---|---|
-| B1 | Rank axis 1–111: 6th N. Virginia and 7th Omaha in ink; 19th AEP and 91st Dallas crossed out in `--warn` under "misses" | "How do I know you didn't tune the detector?" Weights, the 500 MW cut and the peak definition were frozen and four regions named before any rank was seen. **Two hits, two misses** — which is exactly what beat (b) now says. |
-| B2 | Published 62% in `--warn` against corrected 1.7% in `--clean`, both landing on 10.4% | "Did Phoenix collapse from 62% to 10?" No — a double count we caught. r = 0.9948 over 7,976 hours, 7,087 MW against a 3,937 MW nameplate. Corrected, Phoenix *rose* from 2%. **Slide 3 already references this correction**, so B2 now confirms the story rather than ambushing it. |
+| B1 | Now a running slide, **"Called in advance"**: rank axis 1–111 with 6th, 7th and 19th marked as landed and 91st Dallas as the miss | "How do I know you didn't tune the detector?" The scoring rule, the 500 MW cut and the peak definition were written down and four regions named before any rank existed. **Three landed in the top twenty; Dallas came 91st, and dropping the neighbour term alone moves it to 48th.** |
+| B2 | Published 62% in `--warn` against corrected 1.7% in `--clean`, both landing on 10.4% | "Did Phoenix collapse from 62% to 10?" No — a double count we caught. r = 0.9948 over 7,976 hours, and a peak hour of 8,041 MW against a 4,209.6 MW nameplate — 1.91× what the plant can produce. Corrected, Phoenix *rose* from 2%. **Slide 3 already references this correction**, so B2 now confirms the story rather than ambushing it. |
 | B3 | 100% claimed, 65% their own report, 5.6% the grid | "So 'true on paper' means they lied?" No. Annual matching is genuinely true under the accounting rule. Google's own page 94 says 65% hourly, ninety pages after the 100% on page 4. |
 
 ---
@@ -332,7 +377,7 @@ market-based, verdict `true_on_paper`); `sites[0].cf_share_2025` = 0.056.*
 | The **fossil-coloured +8,701 column** | It was total generation drawn in the fossil hue. |
 | **61.4 / 14.3 / 4.3×** | Built on the published 2019 baseline, which contains the AZPS phantom that backup B2 exists to expose. Replaced by the corrected 64.7 / 17.7 / 3.7×, spoken as a correction we made. |
 | **"Four times more clean power by day"** as a headline | False to anyone who does not already know the method: it reads as a statement about levels, and the levels are 239.5 against 173.4. |
-| **"Three hit"** | Contradicted backup B1 and this file, both of which show two hits and two misses. |
+| **"Three hit"** | Was deleted for contradicting backup B1, then **restored on 2026-09-20** as "three landed in the top twenty" — the deletion was the error, because no rank threshold was ever pre-registered and only Dallas is annotated as a miss in either source. |
 | **"Seven tool calls"** | A property of the live run; unverifiable in advance and contradictable by the screen behind you. |
 | **"We never say they lied"** | A denial nobody asked for that plants the word. |
 | **"At annual resolution this finding does not exist"** | Said twice in thirteen seconds, and a boast about method rather than a finding. |
