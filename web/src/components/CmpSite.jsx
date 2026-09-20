@@ -38,6 +38,10 @@ export default function CmpSite({ aId, bId, facilities, regionsById, mw = 300, i
   const a = side(A), b = side(B)
   const sameRegion = A.region_id === B.region_id
   const sameBa = a.ba === b.ba
+  // A zone inherits its parent authority's generation and its siting score, so two sites in
+  // one authority agree on every clean-power row by definition. A zero printed there would
+  // read as a finding, so it is withheld and the reason is given above the table.
+  const byDef = 'Both sites draw from one balancing authority, which reports this figure for both. The difference is zero by construction, not by measurement.'
 
   const gridWords = s => `${labelOfId(s.f.region_id)}${s.isZone ? `, a zone of ${s.ba}` : ''}`
   const opWords = f => `${f.company || f.operator_key}${f.ticker ? `, ${f.ticker}` : ', private'}`
@@ -49,18 +53,18 @@ export default function CmpSite({ aId, bId, facilities, regionsById, mw = 300, i
     { k: 'That utility’s parent', aText: A.utility_parent || NONE, bText: B.utility_parent || NONE, noDiff: true },
     { k: 'Parent ticker', hint: 'hand-mapped, and unverified for some', aText: A.utility_ticker || 'not listed', bText: B.utility_ticker || 'not listed', noDiff: true },
     { k: 'Grid it draws from', aText: <a href={href.region(A.region_id)}>{gridWords(a)}</a>, bText: <a href={href.region(B.region_id)}>{gridWords(b)}</a>, noDiff: true },
-    { k: 'Clean share of that grid, 2025, all hours', a: a.allHours, b: b.allHours, fmt: fPct1, diff: 'pts', good: 'high', noDiff: sameRegion },
+    { k: 'Clean share of that grid, 2025, all hours', a: a.allHours, b: b.allHours, fmt: fPct1, diff: 'pts', good: 'high', noDiff: sameBa, noDiffWhy: byDef },
     { k: 'Clean generation in that grid, 2025 average', hint: 'all hours', a: a.gen.cleanAll, b: b.gen.cleanAll, fmt: fMw, diff: 'mw', aTag: genTag(a), bTag: genTag(b), noDiff: sameBa },
     { k: 'All generation in that grid, 2025 average', hint: 'all hours', a: a.gen.totalAll, b: b.gen.totalAll, fmt: fMw, diff: 'mw', aTag: genTag(a), bTag: genTag(b), noDiff: sameBa },
-    { k: 'Clean share of that grid at night, 2025', hint: '00:00 to 05:59 local', a: a.night, b: b.night, fmt: fPct1, diff: 'pts', good: 'high', hero: true, noDiff: sameRegion },
+    { k: 'Clean share of that grid at night, 2025', hint: '00:00 to 05:59 local', a: a.night, b: b.night, fmt: fPct1, diff: 'pts', good: 'high', hero: true, noDiff: sameBa, noDiffWhy: byDef },
     { k: 'Clean generation in that grid at night, 2025 average', a: a.gen.cleanNight, b: b.gen.cleanNight, fmt: fMw, diff: 'mw', aTag: genTag(a), bTag: genTag(b), noDiff: sameBa },
     { k: 'All generation in that grid at night, 2025 average', a: a.gen.totalNight, b: b.gen.totalNight, fmt: fMw, diff: 'mw', aTag: genTag(a), bTag: genTag(b), noDiff: sameBa },
     { k: 'Demand where the site sits, at night, 2025 average', hint: 'the region’s own meter, never the parent’s', a: a.own.demandNight, b: b.own.demandNight, fmt: fMw, diff: 'mw', aTag: A.region_id, bTag: B.region_id, noDiff: sameRegion },
     { k: 'Flat-load rank of 111', hint: '1 is the grid where 24/7 load is landing hardest', a: a.r?.detection?.rank ?? A.detector_rank, b: b.r?.detection?.rank ?? B.detector_rank, fmt: fRank, diff: 'places', noDiff: sameRegion },
     { k: 'Demand growth since 2019', a: a.r?.detection?.growth_pct ?? A.growth_pct, b: b.r?.detection?.growth_pct ?? B.growth_pct, fmt: fGrowth, diff: 'pct', noDiff: sameRegion },
-    { k: 'Siting rank, 1 is best', a: a.r?.siting?.siting_rank, b: b.r?.siting?.siting_rank, fmt: fRank, diff: 'places', good: 'low', noDiff: sameRegion },
+    { k: 'Siting rank, 1 is best', a: a.r?.siting?.siting_rank, b: b.r?.siting?.siting_rank, fmt: fRank, diff: 'places', good: 'low', noDiff: sameBa, noDiffWhy: byDef },
     { k: 'What the demand shape looks like', hint: 'descriptive, never part of any score', aText: a.r?.detection?.pattern || NONE, bText: b.r?.detection?.pattern || NONE, noDiff: true },
-    { k: `Of ${fMw(load)} of flat load, run at night on generation that is not carbon-free`, a: a.fossil, b: b.fossil, fmt: fMw, diff: 'mw', good: 'low', hero: true, noDiff: sameRegion },
+    { k: `Of ${fMw(load)} of flat load, run at night on generation that is not carbon-free`, a: a.fossil, b: b.fossil, fmt: fMw, diff: 'mw', good: 'low', hero: true, noDiff: sameBa, noDiffWhy: byDef },
   ]
 
   const gap = isNum(a.night) && isNum(b.night) ? a.night - b.night : null

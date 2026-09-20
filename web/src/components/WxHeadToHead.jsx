@@ -89,7 +89,9 @@ export default function WxHeadToHead({ regions = [], mw = 300, initial = [], val
   const cleaner = gap == null || gap === 0 ? null : gap > 0 ? a : b
   const verdict = same
     ? `Both sides are ${a.name}, so every row is the same figure twice. Pick a second grid and the difference appears in the third column.`
-    : cleaner
+    : sameGrid
+      ? `${a.name} and ${b.name} both sit inside ${a.ba}, which reports the generation for both of them. Every clean-power row here is the same figure twice by construction. What differs is the demand each one meters, how fast that grew, and where the detector ranks it.`
+      : cleaner
       ? `${cleaner.name} runs ${Math.abs(gap * 100).toFixed(1)} points cleaner at night on the 2025 mix. Siting ${fMw(load)} there instead takes ${fMw(Math.abs(a.fossil - b.fossil))} of that load off generation that is not carbon-free, in every night hour of the year.`
       : isNum(a.night) && isNum(b.night)
         ? 'The two run on the same clean share at night, so the choice between them turns on the rows below.'
@@ -115,7 +117,7 @@ export default function WxHeadToHead({ regions = [], mw = 300, initial = [], val
       <CmpTable rows={rows} aLabel={a.name} bLabel={b.name} />
       <div className="cmp-notes">
         <p>Cyan marks a row where the left-hand grid is the better of the two for a flat load, ember where it is worse. A row with no direction, such as which grid grew faster, is left uncolored.</p>
-        {sameGen && !same && (
+        {sameGrid && !same && (
           <p>Both grids sit inside {a.ba}, so the generation rows are the same figure twice by construction. What differs is the demand each one meters and where it ranks.</p>
         )}
         {zones.length > 0 && (
