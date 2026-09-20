@@ -144,11 +144,21 @@ export function checkAnswer(c) {
       ],
     }
   }
-  const claimed = primary.metric === 'renewable_electricity_share' && primary.unit === 'fraction' ? `${Math.round(primary.magnitude * 100)}% renewable` : primary.metric === 'contracted_capacity_mw' ? `${n0(primary.magnitude)} MW of contracted clean power` : primary.magnitude != null ? `${primary.magnitude} ${primary.unit || ''}`.trim() : (primary.metric || 'a clean-energy claim').replace(/_/g, ' ')
+  const claimed = primary.metric === 'renewable_electricity_share' && primary.unit === 'fraction' ? `it matched ${Math.round(primary.magnitude * 100)}% of its electricity with renewable purchases` : primary.metric === 'contracted_capacity_mw' ? `${n0(primary.magnitude)} MW of contracted clean power` : primary.magnitude != null ? `${primary.magnitude} ${primary.unit || ''}`.trim() : (primary.metric || 'a clean-energy claim').replace(/_/g, ' ')
   const verdictText = { true_on_paper: 'True on paper.', contradicted: 'Contradicted by its own filings.', unfalsifiable: 'No number in it to check.', cannot_verify: 'A contract claim. We measure the wire.' }[primary.verdict] || ''
   const lo = primary.physical_min, hi = primary.physical_max
   const range = lo != null && hi != null ? (Math.round(lo * 100) === Math.round(hi * 100) ? `${Math.round(lo * 100)}%` : `${Math.round(lo * 100)}–${Math.round(hi * 100)}%`) : null
-  const phys = range ? (sites.length === 1 ? ` The grid under its one mapped site generated ${range} clean power.` : ` Physically, its sites run on ${range} clean power.`) : ''
+  // Lead with the WALK SCORE, the mean across its mapped grids, because that is the figure
+  // we actually computed and the one talk-vs-walk compares. The range follows it: a spread
+  // is context for the average, not a replacement for it.
+  const walk = c && c.walk_score != null ? pct0(c.walk_score) : null
+  const sameEnds = lo != null && hi != null && Math.round(lo * 100) === Math.round(hi * 100)
+  const spread = range && !sameEnds ? `, ranging ${range} across ${sites.length} sites` : ''
+  const phys = walk
+    ? (sites.length === 1
+        ? ` Physically, the grid under its one mapped site generated ${walk} clean power.`
+        : ` Physically, its sites averaged ${walk} clean power${spread}.`)
+    : (range ? ` Physically, its sites run on ${range} clean power.` : '')
   return {
     sentence: `${c.company} says ${claimed}. ${verdictText}${phys}`,
     verdict: primary.verdict, primary,

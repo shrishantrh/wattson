@@ -1,323 +1,361 @@
-# DEMO
+# DEMO SCRIPT
 
-**This is the final demo doc.** Everything you need on stage is here. Every screen below
-was opened and checked against the live site; where something does not work, it says so.
+Read top to bottom. **Bold lines are what you say.** Everything else is direction.
+
+Shape: **talk for a minute → show for four → land the payoff in one.**
 
 **Live:** https://shrishantrh.github.io/wattson/
+**API:** https://wattson-api-v2.fly.dev/ (⌘K needs this; everything else works without it)
+
+**Before you walk up:** open the site, press ⌘K once and close it. That wakes the API so
+your first real question is instant instead of taking three seconds.
+
+---
+
+# PART ONE · THE OPENING
+## 75 seconds. Stay on the Home screen. Talk over it.
+
+> **"Every company building AI datacenters publishes a clean energy claim. Google, Microsoft,
+> Meta, Amazon, all of them. And every one of those claims is checked by nobody."**
+
+> **"There's a whole industry auditing fast fashion. There's one for airlines and one for oil
+> companies. Datacenters are now the fastest-growing consumer of electricity in America, and
+> there is no equivalent. Not one."**
+
+Pause.
+
+> **"And it isn't that nobody cared. It's that greenwashing here is an accounting problem, not
+> a lying problem. These companies don't say they run on clean power. They say they *matched*
+> their *annual* consumption with renewable *purchases*. That's a real accounting standard,
+> it's correct, and it averages over every hour of the year. So buying solar at noon cancels
+> burning gas at 3am, on paper. The claim is airtight and the physical question underneath it
+> had never been asked."**
+
+> **"And datacenters are unusual in one way that makes it matter. Your house uses most of its
+> power in the evening. A factory runs shifts. A datacenter draws the same power at three in
+> the morning as at noon, and it never stops. So half its life is spent in the half of the
+> day that never got cleaner."**
+
+> **"We hold fifty-two operators. The four you've heard of at least publish a report we can
+> check. The other forty-eight, the neoclouds, the bitcoin miners that converted to AI, the
+> colocation companies, mostly publish nothing at all. There is no claim to check and no
+> report to read."**
+
+> **"That's exactly why this works. The grid data doesn't care whether anyone published
+> anything. We can measure what a company runs on whether or not it ever says a word, and
+> those forty-eight are the ones building fastest right now."**
+
+> **"So we take the claim where there is one, work out which grid each datacenter actually
+> plugs into, and put it next to what the power plants burned. What we wanted was one thing:
+> to turn a claim nobody could check into a number you can look up."**
+
+**Now click "What we found in the grid data →" at the bottom of the home screen.**
+
+
+---
+
+# PART TWO · HOW IT WORKS
+## Four screens, about four minutes.
+
+---
+
+## SCREEN 1 · **What we found**
+### You just clicked here from Home. Arrow through the four steps.
+
+> **"This is PJM, the grid serving the largest datacenter cluster on earth. Northern Virginia
+> sits inside it."**
+
+> **"Thirty-five thousand seven hundred megawatts of clean power at night in 2019.
+> Thirty-five thousand six hundred and nineteen today. Six years, and it's within eighty-one
+> megawatts of where it started."**
+
+> **"Meanwhile total generation at night went up eight point seven gigawatts, and gas went up
+> ten point seven. Everything they added after dark, they added by burning something."**
+
+> **"And if you only look at annual averages, this finding does not exist."**
+
+---
+
+## SCREEN 2 · **Day vs night**
+### Why the gap is there at all
+
+Point at the three numbers.
+
+> **"America's grid got dramatically cleaner during the day. Forty-six percent carbon-free
+> between ten and four. At three in the morning it's thirty-nine percent and has barely moved
+> since 2019."**
+
+> **"And the third number is the control. We pulled satellite data on actual sunlight hitting
+> the ground. The sun didn't change, it varies about one percent a year. So the daytime
+> improvement is panels we built, not a sunnier decade. And panels make nothing at 3am."**
+
+> **"Which is exactly when a datacenter pulls just as hard as at noon."**
+
+---
+
+## SCREEN 3 · Search box → **GOOGL**
+### The company side. This is where you show the AI reading documents.
+
+> **"So who's claiming otherwise? This is Google's own sentence, from its own report, page
+> four. It says it matched one hundred percent of its electricity with renewable purchases,
+> on an annual basis."**
+
+**Now the part that shows the text work:**
+
+> **"We didn't type that in. We ingested three hundred and fifty-four documents, sustainability
+> reports and SEC filings, and had a model pull every clean-energy claim out with its page
+> number and a verbatim quote. Then it scores each one: how big the number is, how precisely
+> it's stated, and how heavily it's hedged."**
+
+> **"Because the hedging is where the meaning is. 'One hundred percent renewable' and 'one
+> hundred percent of annual consumption matched with market-based certificates' are the same
+> number and completely different claims. Every qualifier cuts the score."**
+
+**Then the measurement:**
+
+> **"That's the talk. Here's the walk. Its ten datacenters averaged forty-six percent clean
+> power, ranging from six to ninety-one."**
+
+**If a judge points at the headline** (it reads "says 100% renewable", which is our
+shorthand, not their words):
+
+> **"That headline is our shorthand. Their exact sentence is on the line below it: matched,
+> purchases, annual. The hedging is the point, and it's why their talk score isn't 100."**
+
+> **"Both things are true at once. The claim is correct under the accounting standard. But one
+> annual number is covering ten completely different physical realities."**
+
+**If you have a spare five seconds, type MSFT then META:**
+
+> **"Microsoft, forty-six percent. Meta, forty-six percent. The claims are all worded
+> differently. The physics is the same."**
+
+---
+
+## SCREEN 4 · **Method**
+### This is the technical complexity score. Don't rush it.
+
+> **"Underneath all of this is a detector. It scores all one hundred and eleven US grid
+> regions on one question: how much does your electricity demand look like a customer moved
+> in that never turns off?"**
+
+> **"Three signals. Did demand grow at night as fast as during the day. Did it grow faster
+> than its neighbours on the same grid. Did the daily demand curve flatten out. Only an
+> always-on customer does all three."**
+
+> **"And it never reads a press release. It finds datacenters without a list of datacenters."**
+
+Then slow down:
+
+> **"We fixed that formula and named four test regions before we looked at any results, in the
+> same commit as the code. Three of the four landed in the top twenty."**
+
+> **"Then we spent last night trying to break it. We re-ran the frozen formula on 2026 data
+> that didn't exist when we locked it. It held, eight of the top ten unchanged. We ran it
+> ending in 2021, 22, 23, 24: nothing before 2025 shows a signal at all. It's dated to the
+> buildout."**
+
+> **"And we trained a machine learning model on raw demand shape that was never shown our
+> formula. It found the same regions. We wrote the formula from a hypothesis; the model found
+> it without one."**
+
+**Then the strongest single thing you have:**
+
+> **"And along the way we found an error in the federal data itself. Two grid operators were
+> each reporting the same nuclear plant in full instead of their share. Together they
+> reported one point nine one times what that plant can physically produce. We confirmed it
+> three ways, including pulling the plant's ownership records and its smokestack emissions.
+> The site shows the corrected number next to the published one."**
+
+---
+
+# PART THREE · THE PAYOFF
+## Generating Alpha. 60 seconds. End here.
+
+## SCREEN 5 · **Generating Alpha**
+
+> **"So what is this actually for?"**
+
+> **"A datacenter is a billion-dollar electricity customer that nobody announces. The
+> operator doesn't say which utility serves it. The utility often can't say either. It
+> surfaces in an earnings call months later."**
+
+> **"But it cannot hide from the meter. The moment that load energises, it is in federal data
+> within two hours."**
+
+Point at the chain.
+
+> **"So every region we flag resolves to the utility that delivers the power, that utility's
+> parent company, and a ticker. Northern Virginia is rank six. Overnight demand up
+> thirty-nine percent. Utility: Virginia Electric and Power. Parent: **Dominion Energy,
+> ticker D.**"**
+
+> **"That is a data point about Dominion that came out of a power meter, not out of
+> Dominion."**
+
+**THE CLOSE — land it, don't hedge it:**
+
+> **"Three people use this. A journalist or a regulator gets every claim with a page
+> citation, next to what the grid actually generated. Whoever is building the next
+> datacenter gets a ranking of where clean power actually exists at three in the morning,
+> which is the hour that decides whether they're served by existing clean capacity or by new
+> gas. And an investor gets a billion-dollar event in public data, two hours after it
+> happens."**
+
+> **"Datacenters are about to become the largest industrial electricity consumer in this
+> country. Right now there is no instrument pointed at them."**
+
+> **"This is the first one. Every claim, every grid, every hour, in one place."**
+
+**Stop there.** Do not add a disclaimer. Do not mention lying, backtests, or coverage gaps.
+If they want the limits they will ask, and you have them.
+
+---
+
+# THE ML AND THE AI, IF YOU GET THE CHANCE
+
+Two separate things, and keep them separate.
+
+**The AI reads. It never computes a number.**
+
+> **"AI does two jobs here. It read three hundred and fifty-four company documents and pulled
+> every clean-energy claim out with a page number and a verbatim quote. And it powers the
+> question box, which runs ten typed tools against the real data and answers with a table."**
+
+> **"But every grid figure is plain arithmetic over federal data. No model touches a number,
+> which is why the whole pipeline reproduces exactly on a clean machine."**
+
+**The ML attacks our own result.**
+
+> **"We built the ranking, then spent the night trying to destroy it. Four things."**
+
+> **"One: could randomness produce it? We scored all five point nine million possible
+> four-region combinations. Two: is a rank stable? We rebuilt the whole ranking ten thousand
+> times on resampled hours. Three: does it hold on data we never saw? We re-ran the frozen
+> method on 2026. Four: is it just weather? A hundred and thirty-eight weather stations, nine
+> million readings."**
+
+> **"And the one that matters most: we ran the same frozen method ending in 2021, 22, 23, 24.
+> **Nothing before 2025 shows a signal.** A method that manufactures signal would manufacture
+> it every year."**
+
+> **"Then we trained a model on raw demand shape that was never shown our formula, and it
+> found the same regions. We wrote the formula from a hypothesis. The model found it without
+> one."**
+
+---
+
+# THE TRACKS
+
+If a sponsor judge is in front of you, lead with theirs.
+
+**Voloridge, Signal in the Noise**
+> **"Your PUDL dataset, pulled with your own fetch script. Six EIA-930 tables, 4.45 million
+> hours across seventy grids. We also used two more sources inside PUDL: EIA-860 plant
+> records, which let us *prove* a nuclear plant was being double-counted, and EPA smokestack
+> monitors, which let us replace our carbon-free proxy with measured CO2. Plus NOAA ISD, your
+> dataset one, for the weather control."**
+
+**Arrowstreet, Best Textual Analysis Hack**
+> **"Three hundred and fifty-four documents, sustainability reports and SEC filings. Every
+> claim extracted with a verbatim quote and a page number, then scored on three axes: how big
+> the number is, how precisely it's stated, and how heavily it's hedged. 'One hundred percent
+> renewable' and 'one hundred percent of annual consumption matched with market-based
+> certificates' are the same number and different claims, and the score knows the
+> difference."**
+
+**Elastic, Find the Signal**
+> **"All 354 documents indexed and searchable. Ask the question box what Google said about
+> 24/7 carbon-free energy and it comes back with the passage, the ticker, the page number and
+> the source URL, so every quote on screen can be opened in the original."**
+
+**OpenAI, The Fifth Teammate**
+> **"The question layer is a tool-calling loop over ten typed tools. Type anything in plain
+> English and it queries the real data and answers with a table. And it structurally cannot
+> invent a figure: before anything renders we check every number against what the tools
+> actually returned and drop what doesn't match."**
+
+**SpaceXAI, Make It Legendary**
+> **"Grok narrates the day-versus-night screen, reading satellite irradiance against what the
+> grid actually generated."**
+
+**Long Lake, Convince a Non-Believer**
+> **"The whole project is built for someone who doesn't believe us. The method was frozen
+> before we saw results. One of our four test regions missed and we published it. We found an
+> error in the federal data and we show the corrected number next to the published one. Every
+> figure on the site says which file it came from."**
+
+---
+
+# THE COLLABORATION LINE
+## 20 seconds, right at the end or in answer to a question.
+
+> **"Two of us. Shri built the grid engine — nine years of hourly data into an index, the
+> detector itself, and the whole front end. I built the investigation side — reading the
+> documents, pulling the claims out with page numbers, mapping every datacenter to the
+> utility that serves it, and the question layer."**
+
+> **"We agreed the data format between the two halves before either of us wrote a line, which
+> is the only reason they joined at the end."**
+
+> **"And the biggest thing we learned is that the dangerous bugs look correct. Our first PDF
+> reader spliced two columns together into quotes that read perfectly and didn't exist. We'd
+> repeated one out loud before we caught it. Everything we show now carries a page number you
+> can open."**
+
+---
+
+# IF THEY ASK
+
+**"Isn't this just that summers got hotter?"**
+> **"We pulled hourly temperature from a hundred and thirty-eight weather stations and
+> measured how much extra power each region uses when it gets hot. That explains seven point
+> eight percent of the growth. And Northern Virginia was actually **colder** in 2025 while
+> its overnight demand went up four gigawatts."**
+
+**"Did you tune it after seeing results?"**
+> **"Git proves we didn't. The four test regions are in the same commit as the code that
+> produced the first ranking, and the only change after that is twenty-two lines, none of
+> which touch the score."**
+
+**"How many companies?"**
+> **"Fifty-two operators, one hundred and thirty-four sites, each traced through the utility
+> that actually serves it."**
+
+**"Can I try it?"**
+Press **⌘K** and hand it over. Or type:
+> "Which five regions have the most clean power at 3am, and which utility serves each?"
+
+Anything harder: `docs/evidence/` — nine files, each with the quote and the citation.
+
+---
+
+# NUMBERS TO HAVE COLD
 
 | | |
 |---|---|
-| Deeper background | `docs/UNDERSTAND.md` |
-| If a judge challenges a number | `docs/evidence/` (9 files, one per likely challenge) |
-| Video script | `docs/DEMO_VIDEO.md` |
-| Deploy and offline fallback | `docs/DEMO_RUNBOOK.md` |
+| Google's actual words | "matched 100% of our consumption with renewable **purchases**, on an **annual** basis". Never say "claims 100% renewable" |
+| Google's spread | **6% to 91%** across ten sites |
+| PJM clean at night | **35,700 → 35,619 MW**, six years |
+| PJM growth at night | **+8.7 GW** total, **+10.7 GW** of it gas |
+| Day vs night nationally | **46.5%** clean midday, **39.7%** at 3am |
+| The chain | N. Virginia, rank 6, +39% → **Dominion Energy, D** |
+| The federal data error | **1.91×** the plant's nameplate |
+| Scale | 4.45M hours · 111 regions · 52 operators · 134 sites |
 
 ---
 
-## 0. Before you start
-
-- Open the site. Leave it on the landing page.
-- Have `docs/evidence/` open in a second window or on your phone.
-- If ⌘K is slow on the first question, that is the API waking from sleep. It takes ~3s once.
-
----
-
-## 1. The opening (20s) · landing page
-
-> "There is a greenwashing watchdog for fast fashion. For airlines. For oil majors. There
-> isn't one for datacenters, the fastest growing user of electricity in America. So we
-> built one."
-
-> "And these companies are careful. They don't say they run on clean power. Google says it
-> **matched** 100% of its consumption with renewable **purchases**, on an **annual** basis.
-> That's an accounting statement, and it's true. Nobody has checked the physical one."
-
----
-
-## 2. The evidence, before any method (40s) · `#/data`
-
-Click **Data**. You land on **Regions**. The columns **Night** and **Day** are adjacent.
-
-Find **NEVP**.
-
-> "This is Las Vegas. Fifty-six percent of its power is carbon-free at midday. **One point
-> eight percent at three in the morning.** Same grid, same year, ten hours apart."
-
-> "A datacenter buys both, equally, because it never stops. This isn't hidden. It's two
-> columns of federal data that nobody had put next to a company's claim."
-
-Now find **GCPD**:
-
-> "Same table, a hundred percent day and night. Columbia River hydro, and Microsoft has a
-> site there. So we're measuring, not prosecuting. Where you build decides what burns."
-
----
-
-## 3. The alt-data view (40s) · `#/data` → **Facilities**
-
-Click the **Facilities** tab. 134 rows. Sort by **RANK**.
-
-> "This is the whole product in one table. Company, the utility that actually delivers its
-> power, that utility's parent, the ticker, the grid, how clean that grid is, and where it
-> ranks out of 111 for looking like an always-on customer arrived."
-
-> "A datacenter is a billion-dollar capex event nobody announces. But it can't hide from
-> the meter. This table is built from federal data published with a two hour lag."
-
-Point at a **Dominion** row:
-
-> "Northern Virginia. Nine datacenters we've mapped, including Amazon and Microsoft. The
-> utility is Virginia Electric and Power, parent **Dominion Energy, ticker D**. That's a
-> data point about Dominion that came from a power meter, not from Dominion."
-
----
-
-## 4. One region, in depth (50s) · click through to `#/region/PJM/DOM`
-
-> "Rank six of a hundred and eleven. Overnight demand went from ten thousand to fourteen
-> thousand megawatts, up thirty-nine percent."
-
-Point at the caveat line on screen:
-
-> "And note what the page says itself: *generation below is the whole PJM grid, not this
-> zone alone*. A zone reports demand only. We won't let you attribute PJM's gas to Dominion."
-
-**Use the hour scrubber.** Drag to 03:00.
-
-> "Three in the morning: thirty-nine point six percent clean, against forty-four in 2019."
-
-**Then toggle CLEAN SHARE → CLEAN MW.** This is the honest moment:
-
-> "And here's the thing most people get wrong. The share fell, but clean output barely
-> moved, 35,700 to 35,619 megawatts. **No clean power was lost.** The share fell because
-> everything else in those hours grew around it. If you only quote the share, you say
-> something false using true numbers."
-
----
-
-## 5. The simple lookup (20s) · type `NBIS` in the search box
-
-> "Nebius. Two sites, forty-two percent on their grids. And look at what it says: zero
-> claims read, no documents ingested from this operator."
-
-> "Forty-eight of our fifty-two companies are like that. That's a statement about **our**
-> coverage, not a finding about them, and it says so rather than leaving a blank."
-
----
-
-## 6. The accusation (50s) · type `GOOGL`
-
-> "Google's own words, page four of its 2026 environmental report. True under the standard,
-> so we say **true on paper**."
-
-> "Physically, its ten datacenters sit on grids that ran from **five point six percent** —
-> a rural co-op in South Carolina — to **ninety-one percent** on Columbia River hydro. One
-> annual claim, ten different realities."
-
-If asked how the score works:
-
-> "Plain average of those ten grids. No weighting, no contracts. Talk is what they said,
-> walk is what the wires did."
-
----
-
-## 7. The sponsor beat and our blind spot (40s) · type `openai`
-
-> "We built the question layer on OpenAI's models. So let's point it at OpenAI. Six
-> Stargate sites, each traced to the utility serving it."
-
-Open the **Santa Teresa** site:
-
-> "El Paso Electric. Thirty-four percent clean at midday, **one tenth of one percent** at
-> night."
-
-Then, and do not skip it:
-
-> "And this one we cannot see at all. It runs on a seven to nine hundred megawatt gas
-> microgrid that never touches the grid. Eleven of our sites are like that. **A demand-only
-> detector cannot see a datacenter that brought its own power plant.** We'd rather say that
-> than have someone find it."
-
----
-
-## 8. Comparison (40s) · `#/compare` → **Head to head** → **Operators**
-
-**Pick the two manually.** The deep link does not pre-fill tickers.
-
-> "Any two of the 111 grids, any two of the 52 operators, any two of the 134 sites."
-
-With two operators up:
-
-> "Clean share, and the megawatts behind it, because a percentage without a quantity is how
-> you mislead people. And the difference worked out in the third column."
-
----
-
-## 9. Ask it anything (40s) · ⌘K
-
-Type: **"Which five regions have the most clean power at 3am relative to their demand, and
-which utility serves each?"**
-
-> "Seven tool calls against the real data, back as a table with links. And it structurally
-> cannot show you a number the tools didn't return: we check every figure in the answer
-> against what the tools actually returned, and drop the ones that don't match."
-
-Backups, both verified: `compare NBIS and CRWV` · `what did Google say about 24/7 carbon
-free energy` (pulls the quote and page out of 354 indexed documents).
-
----
-
-## 10. Why believe the ranking (60s) · `#/method`
-
-> "The detector scores 111 regions from demand alone. It never reads a press release.
-> Three signals: how much faster demand grew at night than on average, how much faster than
-> its neighbours on the same grid, and how much the daily curve flattened."
-
-> "We fixed the weights and named four test regions **before** we looked at any ranking, in
-> the same commit as the code. Three landed in the top twenty. **Dallas came 91st.** We
-> published the miss."
-
-Then the part that wins it:
-
-> "Then we spent last night trying to destroy our own result."
-
-**Name the tests. Short.**
-
-> "We asked whether randomness could produce it. Barely not, p of 0.049, and we say it's
-> marginal. We rebuilt the ranking ten thousand times on resampled hours: Dominion holds
-> between third and seventh. We re-ran the frozen method on 2026 data that didn't exist
-> when we locked it: it held at **0.877**, eight of the top ten unchanged."
-
-> "And the one that matters most: we ran the same frozen method ending in 2021, 22, 23, 24.
-> **Nothing before 2025 is statistically significant.** The signal is dated to the buildout.
-> A method that manufactures signal would manufacture it every year."
-
----
-
-## 11. The model that says the formula was optional (30s)
-
-> "Then we checked whether our formula was even necessary. We trained a gradient boosted
-> model on seventeen features of raw demand shape — flatness, summer versus winter, the
-> size of the day-night swing. It was never shown our detector's output. Its labels came
-> from the 134 datacenters we mapped by hand from utility filings."
-
-> "It found the same regions. AUC of 0.727, and zero of a thousand shuffled-label runs beat
-> it. **We wrote the formula from a hypothesis. The model found it without the formula.**"
-
-Then the concession, unprompted:
-
-> "And it told us something against us: region *size* alone predicts our labels better than
-> shape does, 0.749. Bigger regions have more mapped sites because we mapped more of them.
-> So the honest claim is that shape adds information beyond size, not that it beats size.
-> That's in the write-up."
-
----
-
-## 12. Who's exposed (30s) · `#/alpha`
-
-> "Every flagged region resolves to the utility, the parent, the ticker."
-
-Then the limit:
-
-> "And a third of the load we found sits on public power and cooperatives with **no listed
-> equity at all**. That number is on the screen. This is an input to a trade, not a trade.
-> We have run no backtest and we don't claim one."
-
----
-
-## 13. Close (20s)
-
-> "We never say a company lied. Their claim is true under the standard. We measure the gap
-> between a contract and a meter."
-
-> "And we found an error in the federal data doing it. A nuclear plant reported twice by two
-> grid operators, totalling **1.91 times what it can physically produce**. We confirmed it
-> three ways and we show the corrected number next to the published one."
-
----
-
-## Cuts
-
-**Three minutes:** 2, 6, 10. The table, the company, the freeze.
-**Five minutes:** add 3, 7, 9.
-**Full:** all of it, about seven minutes.
-
-## Known, so you are not surprised
-
-- **ERCOT North is rank 1 and has no mapped datacenters.** Coverage gap, or it isn't
-  datacenters. IREN and Tesla are in ERCOT, but in other zones: `ERCO`, `ERCO/WEST`,
-  `ERCO/SCEN`.
-- **The region page does not list its datacenters.** Region to company is not a click.
-  Company to region is. Use the Facilities sheet for that direction.
-- **The Compare deep link does not pre-fill tickers.** Pick them manually.
-- **First ⌘K question may take a few seconds** while the API wakes.
-
----
-
-## The answers to the four questions you will definitely get
-
-### "Isn't this just that summers got hotter?"
-
-> "We pulled hourly temperature from a hundred and thirty-eight weather stations and
-> measured, for every region, exactly how much extra power it uses when it gets hot. Then we
-> asked how much of the growth that explains. **Seven point eight percent.**"
-
-> "And Northern Virginia was actually **colder** overnight in 2025 than in 2019, while its
-> overnight demand went up **three thousand nine hundred and sixty megawatts.** It got
-> colder and used four gigawatts more power at night. That isn't air conditioning."
-
-If they push on whether the weather model was any good: *"It explains about three quarters
-of the normal hour-to-hour swing in demand. It works. Weather is just not what grew."*
-
-### "Did you tune this after seeing the results?"
-
-> "No, and git proves it. The four test regions are named in the same commit as the code
-> that produced the first ranking. The only change after that is twenty-two lines, none of
-> which touch the score."
-
-Two commands they can run in front of you:
-```
-git show 7dc87a0:scripts/l3_detector.py | grep NCEN
-git show --numstat c421061 -- scripts/l3_detector.py
-```
-
-### "How do I know your data is right?"
-
-> "We found an error in the federal data. Two grid operators were each reporting the same
-> nuclear plant in full instead of their share. Combined they reported **1.91 times what
-> that plant can physically produce.** We confirmed it three ways and we show the corrected
-> number next to the published one."
-
-### "Is this actually tradeable?"
-
-> "It's an input to a trade, not a trade. A datacenter is a billion-dollar capex event
-> nobody announces, and it shows up in federal meter data with a two hour lag. We resolve it
-> to the utility and the ticker. But a third of the load we found sits on public power with
-> no listed equity, that number is on the screen, and we have run no backtest and don't
-> claim one."
-
----
-
-## Have these four cold
-
-1. **The claim quote.** "Matched 100% of our electricity consumption with renewable energy
-   purchases, on a global and annual basis." **Never** paraphrase as "100% renewable."
-2. **NEVP: 1.8% at night, 55.8% by day.** Two columns, one row, no method required.
-3. **Dallas came 91st.** Volunteer it before anyone asks.
-4. **1.91 times the nameplate.** The federal data error, confirmed three ways.
-
----
-
-## If something breaks
-
-**⌘K is slow or dead:** the API sleeps when idle; the first question takes a few seconds.
-If it is genuinely down, every other screen still works because the whole site is a baked
-export. Do not apologise, move to the next beat.
-
-**No network at all:**
-```bash
-cd web && npm run build && cd dist && python3 -m http.server 8099
-```
-
-**Someone challenges a figure:** open `docs/evidence/`. Nine files, each with the quote and
-the citation.
+# TIMING
+
+| | |
+|---|---|
+| **Part One** talking | 1:15 |
+| **Part Two** four screens | 4:00 |
+| **Part Three** payoff | 1:00 |
+| **Collaboration** | 0:20 |
+| **Total** | **6:35**, leaving time for questions |
+
+**Running long?** Cut Screen 3. Never cut Screen 4 or Part Three.
+
+**If something breaks:** everything except ⌘K works with no network. If you lose your place,
+go Home and click a company — Screen 1 on its own is a complete pitch.
