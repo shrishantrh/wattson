@@ -68,6 +68,52 @@
 .pal-preview-u { font-family: var(--font-mono); font-size: var(--t-micro); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 18ch; }
 .pal-preview-x { margin: 8px 0 0; font-size: var(--t-micro); line-height: 1.4; color: var(--warn); }
 
+/* ---- the ask layer (components/CommandPalette.jsx, lib/ask.js) ----
+   Two more strips in the same column as the preview above: the input's 18px gutter, the same
+   hairline underneath, the same faint lift off the panel. An optional layer should not arrive
+   as a different piece of furniture. None of this renders when no server is configured. */
+
+/* the bar: small controls, the same height and edge as every other control in the app */
+.pal-askbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 18px; border-bottom: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); background: rgba(255, 255, 255, 0.02); }
+.pal-askbtn {
+  flex: 0 1 auto;
+  min-width: 0;
+  height: var(--h-ctl-sm, 24px);
+  padding: 0 8px;
+  border: 1px solid var(--line-strong, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-sm, 8px);
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-ui);
+  font-size: var(--t-small);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.pal-askbtn:hover { color: var(--ink); border-color: var(--line-focus); }
+.pal-askbtn:focus-visible { outline: none; box-shadow: var(--ring); }
+
+/* the answer is prose the reader reads, not a row they pick: a measure and a line-height rather
+   than row density. It scrolls on its own so a long answer cannot push the results out. */
+.pal-answer { padding: 12px 18px; border-bottom: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); max-height: 40vh; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.pal-answer-t { margin: 0; max-width: 62ch; font-size: var(--t-body); line-height: 1.5; color: var(--ink); text-wrap: pretty; }
+.pal-answer-note { margin: 0; font-size: var(--t-small); line-height: 1.45; color: var(--muted); }
+
+/* provenance, clearly subordinate to the answer: the footnote treatment, with the tool names in
+   the mono the rest of the app gives to identifiers */
+.pal-answer-tools { margin: 8px 0 0; font-family: var(--font-mono); font-size: var(--t-micro); line-height: 1.4; letter-spacing: 0; color: var(--muted); }
+
+/* unavailable is a state, not a crash. The amber the app already reserves for data that is
+   flagged or degraded, as a left rule rather than a banner: it says "this part stood down",
+   which is exactly true — everything else on the screen still works. */
+.pal-answer.error { border-left: 2px solid var(--warn); background: var(--warn-soft); padding-left: 16px; }
+
+@media (prefers-reduced-motion: reduce) { .pal-askbtn { transition: none; } }
+
 /* the footer names what ↵ will do to the row you are on, on the left, and the rest of the
    keyboard on the right. It is the only always-visible hint, so it never wraps or moves. */
 .pal-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 14px; border-top: 1px solid var(--line-soft, rgba(255, 255, 255, 0.08)); font-size: var(--t-micro); color: var(--muted); font-family: var(--font-mono); letter-spacing: 0; }
