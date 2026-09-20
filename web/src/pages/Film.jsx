@@ -144,7 +144,18 @@ async function act(a) {
   if (a.type === 'move') { await moveTo(el); return }
   if (a.type === 'scroll') {
     const sp = scrollParent(el)
-    if (sp) { const top = el.getBoundingClientRect().top - sp.getBoundingClientRect().top + sp.scrollTop - 12; sp.scrollTo({ top: Math.max(0, top), behavior: 'smooth' }) } else el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    // Smooth scrolling is throttled to a standstill in a hidden or backgrounded window, exactly like
+    // requestAnimationFrame, so every scrolling shot silently no-ops when the recorder is not in
+    // front and the expect check then fails for a reason that has nothing to do with the shot.
+    // Step the scroll ourselves on a timer instead: it looks the same on camera and cannot stall.
+    const ease = t => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2)
+    const glide = (set, from, to, ms = 420) => new Promise(done => {
+      const t0 = Date.now()
+      const step = () => { const k = Math.min(1, (Date.now() - t0) / ms); set(from + (to - from) * ease(k)); if (k < 1) setTimeout(step, 16); else done() }
+      step()
+    })
+    if (sp) { const top = el.getBoundingClientRect().top - sp.getBoundingClientRect().top + sp.scrollTop - 12; await glide(v => { sp.scrollTop = v }, sp.scrollTop, Math.max(0, top)) }
+    else { const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 12); await glide(v => window.scrollTo(0, v), window.scrollY, top) }
     await sleep(750)
     at = null   // the page moved under the cursor; the next move is a fade-in, not a drift
     await moveTo(el, 500)

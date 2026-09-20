@@ -31,7 +31,7 @@ one finding, one refusal and one clean result.
 
 **6. grids** · walk · '#/check/GOOGL'
 
-> Now the grids. They ran six to ninety-one percent clean last year. The claim is true on paper under the GHG Protocol. Not a lie. A contract against a meter.
+> Now the grids. They ran six to ninety-one percent clean last year. That averages forty-six. So the claim is true on paper under the GHG Protocol. Not a lie. A contract against a meter.
 
 **7. claims** · walk · '#/check/GOOGL'
 
@@ -57,23 +57,27 @@ one finding, one refusal and one clean result.
 
 > We built the ask layer on OpenAI’s models. So point it at OpenAI. Six Stargate sites. Each mapped to a grid. Only three to a named utility. One we can’t see at all. Reporting says it runs on its own gas plant.
 
-**13. ask** · walk · ASK_ROUTE
+**13. blind** · walk · '#/check/OPENAI?evidence=1'
+
+> Ten of our mapped sites are behind the meter. A demand-only detector can’t see them.
+
+**14. ask** · walk · ASK_ROUTE
 
 > You can also just ask it. Which claimant sits on the dirtiest grid at night? It answers Google. Moncks Corner. Zero point seven percent clean overnight.
 
-**14. askhow** · walk · ASK_ROUTE
+**15. askhow** · walk · ASK_ROUTE
 
 > That’s an OpenAI tool-calling loop over eleven typed tools. One searches three hundred fifty-four passages in Elasticsearch. They come from the companies’ own reports and filings. Codex wrote that retrieval layer.
 
-**15. refuse** · refusal · '#/check/CRUSOE'
+**16. refuse** · refusal · '#/check/CRUSOE'
 
 > Last thing. Watch what it won’t say. We couldn’t tie a single Crusoe building to a named utility. So the record says that.
 
-**16. clean** · refusal · '#/check/VANTAGE?evidence=1'
+**17. clean** · refusal · '#/check/VANTAGE?evidence=1'
 
 > Vantage’s Quincy, Washington site sits on a grid a hundred percent carbon-free at 3am. Columbia River hydro. The method distinguishes.
 
-**17. end** · close · end
+**18. end** · close · end
 
 > A claim. The buildings behind it. The grid under each one. The hour that decides it. It follows the power, not the press release.
 
@@ -86,19 +90,20 @@ one finding, one refusal and one clean result.
 | 3 | why | what | 25 | 11.5 s |
 | 4 | type | walk | 0 | 0.6 s |
 | 5 | google | walk | 18 | 8.4 s |
-| 6 | grids | walk | 30 | 13.6 s |
+| 6 | grids | walk | 34 | 15.4 s |
 | 7 | claims | walk | 20 | 9.3 s |
 | 8 | detector | walk | 29 | 13.2 s |
 | 9 | method | walk | 34 | 15.4 s |
 | 10 | pjm | finding | 26 | 11.9 s |
 | 11 | gas | finding | 24 | 11.0 s |
 | 12 | stargate | walk | 42 | 18.9 s |
-| 13 | ask | walk | 26 | 11.9 s |
-| 14 | askhow | walk | 31 | 14.1 s |
-| 15 | refuse | refusal | 23 | 10.6 s |
-| 16 | clean | refusal | 20 | 9.3 s |
-| 17 | end | close | 24 | 11.0 s |
-| | **total** | | **418** | **191.9 s** |
+| 13 | blind | walk | 15 | 7.1 s |
+| 14 | ask | walk | 26 | 11.9 s |
+| 15 | askhow | walk | 31 | 14.1 s |
+| 16 | refuse | refusal | 23 | 10.6 s |
+| 17 | clean | refusal | 20 | 9.3 s |
+| 18 | end | close | 24 | 11.0 s |
+| | **total** | | **437** | **200.8 s** |
 
-418 words over 17 shots at `words / 2.3 + 0.6 s` = 191.9 s of speech. Interaction adds
-about 36 s, so the film runs near 3:47.
+437 words over 18 shots at `words / 2.3 + 0.6 s` = 200.8 s of speech. Interaction adds
+about 36 s, so the film runs near 3:56.

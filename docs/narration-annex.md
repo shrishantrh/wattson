@@ -40,10 +40,10 @@ that pause — where a clause needed one, it became two sentences.
 
 ## Timing
 
-- **Narration: 418 words over 17 shots = 191.9 s**, at `words / 2.3 + 0.6 s` per shot.
+- **Narration: 437 words over 18 shots = 200.8 s**, at `words / 2.3 + 0.6 s` per shot.
 - Interaction adds about **36 s** — ~12 s on the live model call in `ask`, ~4 s of typing in `type`,
   2.6 s of title card, and 0.6–1.5 s per shot of veil, caption-out and gap, all outside the hold.
-- **Realistic running time: about 3:47.**
+- **Realistic running time: about 3:56.**
 - This is over the 150 s narration target by design. The coordinator took the length in exchange for
   keeping the clean result (`clean`) and the Stargate utility split, on the grounds that a shorter
   film that implies a company lied by omission is worse in every way. Do not cut the explanation
@@ -69,9 +69,10 @@ that pause — where a clause needed one, it became two sentences.
     `column.scrollTop = 861` moves the evidence module from top 941 to top 80, while the identical
     smooth `scrollTo` leaves it at 0/941 indefinitely. Every shot that scrolls (`claims`,
     `stargate`, `clean`) therefore fails in a hidden tab and passes in a visible one.
-  - **Worth handing to whoever owns `web/src/pages/Film.jsx`:** dropping `behavior: 'smooth'` from
-    the `scroll` action (or using `'auto'`) would make the film robust to an offscreen recorder.
-    That file is not ours, so the change was not made here.
+  - **Fixed upstream.** Film.jsx's `scroll` action no longer uses smooth behaviour; it steps the
+    scroll on a timer with its own easing, so it looks the same on camera and cannot stall in a
+    backgrounded window. The defensive waits and second scroll pass in the shot list are kept as
+    belt and braces; they cost nothing, since action time is absorbed by the narration.
 - **Build the app, then regenerate the narration, in that order.** Building first and narrating
   second leaves the recorded app pacing to the previous voice's clip lengths.
 
@@ -138,11 +139,16 @@ reaches in shot 6. At this moment the number is on screen but not under the curs
 
 ### 6 · `grids` — `#/check/GOOGL` — 30 words · 13.6 s
 **Screen.** The gap block: says 100% / its grids 6–91% / 54 points apart, across 10 sites.
-> Now the grids. They ran six to ninety-one percent clean last year. The claim is true on paper
-> under the GHG Protocol. Not a lie. A contract against a meter.
+> Now the grids. They ran six to ninety-one percent clean last year. That averages forty-six. So
+> the claim is true on paper under the GHG Protocol. Not a lie. A contract against a meter.
 
-*Figures:* `company/GOOGL.json` → `claims[0].physical_min` 0.056, `.physical_max` 0.913; 54 points
-is 100 − `claims[0].physical_mean_unweighted` (0.464). The GHG Protocol framing is `notes[3]`.
+*Figures:* `company/GOOGL.json` → `claims[0].physical_min` 0.056, `.physical_max` 0.913, and
+`claims[0].physical_mean_unweighted` 0.464. The on-screen "54 points apart" is 100 − 46.4. The GHG
+Protocol framing is `notes[3]`.
+**The pair is 100 against 46, not 100 against 5.6.** Google has ten mapped sites; 5.6% is the low
+end of a range, not the company's figure, and the old one-site framing is dead. The narration gives
+the range and then the mean explicitly, so "six" cannot be misheard as Google's number. The deck
+carries the same pair.
 *Check:* `.ans-gap` contains "100%", "6–91%", "54 points apart, across 10 sites.".
 
 ### 7 · `claims` — `#/check/GOOGL` — 20 words · 9.3 s
@@ -221,7 +227,24 @@ read "utility unknown".
 *Check:* `[data-module="sites"] .site-note .note` contains "700-900 MW gas microgrid" and
 "does NOT connect".
 
-### 13 · `ask` — `#/ask?q=…` — 26 words · 11.9 s
+### 13 · `blind` — `#/check/OPENAI?evidence=1` — 15 words · 7.1 s
+**Screen.** The same open caveat, held: "…so this load will not appear in EPE demand."
+> Ten of our mapped sites are behind the meter. A demand-only detector can't see them.
+
+*Figures:* **ten**, counted by hand across `company/*.json` → `sites[].note`, matching on the phrase
+"behind the meter": Crusoe (Laramie County, Childress County), Hut 8 (Vega), Keel (Nesquehoning,
+Venango County), Oracle (Shackelford County, Santa Teresa), Poolside (Pecos County), Soluna (Briscoe
+County), Vulcan (Torrey / Dresden). A looser match on on-site generation of any kind — microgrids,
+co-located plants, mobile turbines — gives fifteen.
+**Do not say eleven.** That figure is not reproducible from anything in the repo. Say ten, or "about
+a dozen". The method limit is also written into `facilities.json` → `notes[5]`
+("SOME SITES BURN GAS WE CANNOT SEE").
+*Why it is here:* the Santa Teresa caveat is one site; this generalises it into the limitation, on
+screen, in the product's own words. It is the film stating its own blind spot out loud.
+*Check:* `[data-module="sites"] .site-note .note` contains "will not appear in EPE demand" — a
+different string from shot 12's, so the two checks are independent rather than duplicated.
+
+### 14 · `ask` — `#/ask?q=…` — 26 words · 11.9 s
 **Screen.** The live answer, headlined close to "Google sits on the lowest overnight clean share
 among 100% renewable claimants", with **0.7% clean at night, 2025** and **14 clean MW**.
 > You can also just ask it. Which claimant sits on the dirtiest grid at night? It answers Google.
@@ -236,7 +259,7 @@ says. It is false globally — El Paso Electric is at 0.1% overnight, Arizona at
 Moncks Corner, `kind: "single"`, and the V.C. Summer caveat. The expect looks only for "Google".
 *Check:* `.ask-headline` contains "Google". **Verified live.**
 
-### 14 · `askhow` — `#/ask?q=…` — 31 words · 14.1 s
+### 15 · `askhow` — `#/ask?q=…` — 31 words · 14.1 s
 **Screen.** The caveat list and the provenance line: "Every figure here came from companies,
 company, region over the published EIA-930 index. All 2 figures match numbers those tools returned."
 > That's an OpenAI tool-calling loop over eleven typed tools. One searches three hundred fifty-four
@@ -268,7 +291,7 @@ question answers from the numeric tools; its provenance line reads "companies, c
 does not include `search_corpus`.
 *Check:* `.ask-prov` contains "over the published EIA-930 index". **Verified live.**
 
-### 15 · `refuse` — `#/check/CRUSOE` — 23 words · 10.6 s
+### 16 · `refuse` — `#/check/CRUSOE` — 23 words · 10.6 s
 **Screen.** "sites mapped 2 — grid is the operator's own attribution; no serving utility
 established", with the "no documents ingested" reason in full.
 > Last thing. Watch what it won't say. We couldn't tie a single Crusoe building to a named utility.
@@ -291,7 +314,7 @@ is 48 of 52.
 *Figures:* none. The four beats deliberately echo shot 2.
 *Check:* `.film-slide.show` contains "HackMIT 2026".
 
-### 16 · `clean` — `#/check/VANTAGE?evidence=1` — 20 words · 9.3 s
+### 17 · `clean` — `#/check/VANTAGE?evidence=1` — 20 words · 9.3 s
 **Screen.** First row: Quincy · Grant County PUD · Grant Co. WA · **100% · 100% at night**.
 > Vantage's Quincy, Washington site sits on a grid a hundred percent carbon-free at 3am. Columbia
 > River hydro. The method distinguishes.
@@ -307,7 +330,7 @@ the module mounts, once the per-region series loads. The shot waits 2.2 s before
 scrolls a second time afterwards.
 *Check:* `[data-module="sites"] .rows` contains "Quincy", "Grant County PUD", "100% at night".
 
-### 17 · `end` — slide `end` — 24 words · 11.0 s
+### 18 · `end` — slide `end` — 24 words · 11.0 s
 (unchanged; the four beats echo shot 2)
 
 ## Shots cut in the restructure, and what went with them
@@ -316,7 +339,7 @@ scrolls a second time afterwards.
 |---|---|---|
 | `openai` + `sites` | OpenAI 37% across six sites, and the three-of-six utility split | Folded into `stargate`, split included. The 37% figure is no longer spoken; it is still on the answer header. |
 | `epe` | El Paso Electric 34.1% by day, 1 clean MW of 655 at night | No honesty issue — no EPE share is stated any more. The figure is still on screen in the site row. |
-| `jupiter` | The blind-spot admission as its own beat, plus "ten mapped sites are behind the meter" | The microgrid admission survives inside `stargate`; the behind-the-meter count is gone. **This is the one remaining thing I would add back** if 8 words free up, since it is the film's own limitation stated out loud. |
+| `jupiter` | The blind-spot admission as its own beat, plus "ten mapped sites are behind the meter" | Nothing. The microgrid admission lives in `stargate` and the behind-the-meter count is restored as `blind` (shot 13). |
 | `clean` | — | **Restored.** Cutting it left nothing on screen that comes out well, which made the film read as an accusation rather than an instrument. |
 
 ---
@@ -334,7 +357,7 @@ nest under a top-level `region` key, company files are flat. Live endpoints are 
 | 46.5% / 39.7% on the slide | 3 `why` | `regions.json` | `meta.national.cf_share.2025.{daytime,overnight}`; also `film.js` `NATIONAL` |
 | Google claims 100%, annual, market-based | 5 `google` | `company/GOOGL.json` | `claims[0].magnitude`, `.timeframe`, `.scope`, `.verdict` |
 | ten mapped buildings | 5 `google` | `company/GOOGL.json` | `sites` array length |
-| 6–91% physically | 6 `grids` | `company/GOOGL.json` | `claims[0].physical_min` 0.056, `.physical_max` 0.913 |
+| 6–91% physically, averaging 46 | 6 `grids` | `company/GOOGL.json` | `claims[0].physical_min` 0.056, `.physical_max` 0.913, `.physical_mean_unweighted` 0.464 |
 | 54 points apart (on screen) | 6 `grids` | `company/GOOGL.json` | 100 − `claims[0].physical_mean_unweighted` (0.464) |
 | p. 4 claim sentence | 7 `claims` | `company/GOOGL.json` | `claims[0].verbatim`, `.page`, `.source_doc`, `.source_url` |
 | p. 94, 65% hourly CFE | 7 `claims` | `company/GOOGL.json` | `claims[0].evidence[type="internal_contradiction"]`: `page` 94, `values` [65,64,64,66,65] |
@@ -346,13 +369,14 @@ nest under a top-level `region` key, company files are flat. Live endpoints are 
 | PJM overnight gas +10.7 GW | 11 `gas` | `region/PJM.json` | `region.fuel_delta_overnight_gw.gas` = 10.74 |
 | six Stargate sites, each mapped to a grid | 12 `stargate` | `company/OPENAI.json` | `sites` length 6; `sites[].region_id` all non-null; `coverage` = 1.0 |
 | Project Jupiter gas plant, no interconnection | 12 `stargate` | `company/OPENAI.json` | `sites[1].note`, `.source_type` = press, `.source_url` — **reported, not measured** |
-| Google / Santee Cooper 0.7% clean overnight | 13 `ask` | `region/SC.json` | `region.cf_share.2025.overnight` = 0.007; `region.cf_avg_mw` 14 MW of `region.total_avg_mw` 1,906 MW |
-| Eleven typed tools, model gpt-4.1 | 14 `askhow` | live `/api/ask/status` | `tools[]` (11 names), `model`. The repo's `server/ai.py` `TOOLS` is stale at ten |
-| 354 **passages** from their own reports and filings | 14 `askhow` | live `/api/search/status` | `indexed` = 354, `corpus.esg` = 309, `corpus.10k` = 45, `index` = `wattson-corpus-v1` |
-| 8 source documents, 4 companies | 14 `askhow` | `claims/raw/*.jsonl` | one JSONL per document, one passage per line: GOOGL 118+9, META 74+19, MSFT 66+11, AMZN 51+6. `server/search.py` `_doc_type()` maps `*_esg.jsonl` → esg, `*_10k.jsonl` → 10k |
-| Codex wrote the Elasticsearch retrieval layer | 14 `askhow` | — | confirmed by the team; no repo artifact records it |
-| Crusoe: no building tied to a named utility | 15 `refuse` | `company/CRUSOE.json` | `sites` length 2, both `sites[].serving_utility` = null; `coverage_status` = `sites_only` |
-| Quincy 100% carbon-free at 3am | 16 `clean` | `region/GCPD.json` | `region.cf_share.2025.overnight` = 1.0 (991 of 991 MW); site row `company/VANTAGE.json` `sites[0]` |
+| ten mapped sites behind the meter | 13 `blind` | `company/*.json` | `sites[].note` matching "behind the meter": 10 sites. A looser match on on-site generation of any kind gives 15. **Not eleven.** Limit also stated in `facilities.json` `notes[5]` |
+| Google / Santee Cooper 0.7% clean overnight | 14 `ask` | `region/SC.json` | `region.cf_share.2025.overnight` = 0.007; `region.cf_avg_mw` 14 MW of `region.total_avg_mw` 1,906 MW |
+| Eleven typed tools, model gpt-4.1 | 15 `askhow` | live `/api/ask/status` | `tools[]` (11 names), `model`. The repo's `server/ai.py` `TOOLS` is stale at ten |
+| 354 **passages** from their own reports and filings | 15 `askhow` | live `/api/search/status` | `indexed` = 354, `corpus.esg` = 309, `corpus.10k` = 45, `index` = `wattson-corpus-v1` |
+| 8 source documents, 4 companies | 15 `askhow` | `claims/raw/*.jsonl` | one JSONL per document, one passage per line: GOOGL 118+9, META 74+19, MSFT 66+11, AMZN 51+6. `server/search.py` `_doc_type()` maps `*_esg.jsonl` → esg, `*_10k.jsonl` → 10k |
+| Codex wrote the Elasticsearch retrieval layer | 15 `askhow` | — | confirmed by the team; no repo artifact records it |
+| Crusoe: no building tied to a named utility | 16 `refuse` | `company/CRUSOE.json` | `sites` length 2, both `sites[].serving_utility` = null; `coverage_status` = `sites_only` |
+| Quincy 100% carbon-free at 3am | 17 `clean` | `region/GCPD.json` | `region.cf_share.2025.overnight` = 1.0 (991 of 991 MW); site row `company/VANTAGE.json` `sites[0]` |
 | only three of six sites to a named utility | 12 `stargate` | `company/OPENAI.json` | `sites[].serving_utility`: Ohio Edison, We Energies, AEP Ohio named; three null |
 
 ### On screen but no longer spoken
@@ -365,7 +389,6 @@ the previous cut and were dropped in the restructure.
 | 48 of 52 operators have no documents read | the Crusoe card's coverage block | `companies.json` | `count` 52, `count_sites_only` 48, `count_with_claims` 4 |
 | OpenAI 37% across its grids | the OpenAI answer header | `company/OPENAI.json` | `walk_score` = 0.369 |
 | El Paso Electric 34.1% by day, 1 MW of 655 at night | the Santa Teresa site row ("16% · 0% at night") | `region/EPE.json` | `region.cf_share.2025.daytime`; `region.cf_avg_mw` / `region.total_avg_mw`, 2025 overnight |
-| ~10 mapped sites behind the meter | nowhere on screen | `company/*.json` | `sites[].note`; count per `docs/pitch/numbers-v2.md`; limit stated in `facilities.json` `notes[5]` |
 
 ## Figures deliberately not spoken
 
@@ -374,7 +397,8 @@ the previous cut and were dropped in the restructure.
 - **+61.4 / +14.3 GW and "four times"** — measured from the contaminated 2019 baseline. Superseded
   by +64.7 / +17.7 GW and 3.66x.
 - **"Six percent physically"** for Google, and **94 points apart** — superseded by the merge.
-- **Eleven behind-the-meter sites** — not reproducible from the repo; "ten" is used.
+- **Eleven behind-the-meter sites** — not reproducible from the repo. Ten is what the notes say, and ten is what shot 13 speaks.
+- **"100% against 5.6%"** for Google — the one-site framing is dead. It is 100 against 46, a 54-point gap across ten sites.
 - **Twelve operators with no documents read** — it is 48.
 - **Nebius has no named utility** — false; both its sites name one.
 - **Abilene as a Stargate site** — not in OpenAI's six.

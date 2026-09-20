@@ -117,7 +117,7 @@ export const FILM = [
 
   { id: 'grids', section: 'walk', route: '#/check/GOOGL', holdMs: 8000, title: 'Step three and four',
     sub: 'The grid under each building, and what it generated in 2025.',
-    say: 'Now the grids. They ran six to ninety-one percent clean last year. The claim is true on paper under the GHG Protocol. Not a lie. A contract against a meter.',
+    say: 'Now the grids. They ran six to ninety-one percent clean last year. That averages forty-six. So the claim is true on paper under the GHG Protocol. Not a lie. A contract against a meter.',
     waitFor: '.ans-gap', actions: [{ type: 'wait', ms: 300 }, { type: 'move', selector: '.ans-gap' }],
     expect: { selector: '.ans-gap', text: ['100%', '6–91%', '54 points apart, across 10 sites.'] } },
 
@@ -186,6 +186,17 @@ export const FILM = [
       { type: 'scroll', selector: '[data-module="sites"] .site-note .note' },
     ],
     expect: { selector: '[data-module="sites"] .site-note .note', text: ['700-900 MW gas microgrid', 'does NOT connect'] } },
+
+  // The specific case generalises into the limitation. "Ten" is the count of site notes that say
+  // "behind the meter" across company/*.json, verified by hand: ten say it, fifteen describe on-site
+  // generation of any kind. Not eleven — that figure is not reproducible from anything in the repo.
+  { id: 'blind', section: 'walk', route: '#/check/OPENAI?evidence=1', holdMs: 6000,
+    title: 'Our own blind spot', sub: 'Ten mapped sites make their own power, so federal demand data never sees them.',
+    say: 'Ten of our mapped sites are behind the meter. A demand-only detector can’t see them.',
+    waitFor: '[data-module="sites"] .site-note .note', actions: [
+      { type: 'move', selector: '[data-module="sites"] .site-note .note' },
+    ],
+    expect: { selector: '[data-module="sites"] .site-note .note', text: 'will not appear in EPE demand' } },
 
   { id: 'ask', section: 'walk', route: ASK_ROUTE, holdMs: 9000, title: 'Or just ask it',
     sub: 'Typed in plain English, answered off the published index.',
