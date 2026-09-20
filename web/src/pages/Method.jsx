@@ -68,6 +68,54 @@ export default function Method() {
     <>
       <Breadcrumbs trail={crumbs} onBack={back} />
 
+      {/* What we ran AT our own result. Kept compact: one line per test, the number, and
+          what the number means. This is the substance behind "we tried to break it". */}
+      <Section title="What we ran against our own result">
+        <div className="mt-forms">
+          <div className="mt-form">
+            <b>Permutation test &middot; is it better than chance?</b>
+            <code className="mt-formula">all C(111,4) = 5,989,005 combinations scored &rarr; p = 0.0488</code>
+            <p className="note">We named four test regions in advance. We then scored every possible four-region combination out of 111. Only 4.9% do as well as ours. Marginal, and we say so: the out-of-sample result below is the stronger claim.</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Block bootstrap &middot; how stable is a rank?</b>
+            <code className="mt-formula">10,000 rebuilds on 7-day resampled blocks &rarr; Dominion 6th, 95% CI 3rd to 7th</code>
+            <p className="note">Resampled in week-long blocks rather than single hours, because demand is heavily autocorrelated and shuffling hours would fake precision we do not have.</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Out-of-sample holdout &middot; does it survive new data?</b>
+            <code className="mt-formula">re-run frozen on 2026 Jan-Aug &rarr; Spearman 0.877, 8 of top 10 unchanged</code>
+            <p className="note">Data that did not exist when the weights were fixed. Spearman is 1.0 for identical rankings and 0 for random ones. Top-10 overlap of 8 against 0.91 expected by chance, hypergeometric p = 4.8e-9.</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Placebo windows &middot; was the signal always there?</b>
+            <code className="mt-formula">same frozen method ending 2021 / 22 / 23 / 24 &rarr; p = 0.13, 0.14, 0.21, 0.10</code>
+            <p className="note">Nothing before 2025 clears significance, and 2025 does. A method that manufactures signal would manufacture it in every year. This dates the signal to the buildout.</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Supervised model &middot; can it be found without our formula?</b>
+            <code className="mt-formula">gradient boosting on 17 demand-shape features &rarr; AUC 0.727, 0 of 1,000 label shuffles beat it</code>
+            <p className="note">Trained on load-shape features only, never shown the detector output, labelled from the 134 sites we mapped from utility filings. It found the same regions. Against us: region size alone scores 0.749, so shape adds information beyond size rather than beating it.</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Weather control &middot; is it just hotter summers?</b>
+            <code className="mt-formula">138 NOAA stations, 9.18M readings &rarr; weather explains 7.8% of overnight growth</code>
+            <p className="note">The temperature model itself fits at median R&sup2; 0.733, so this is a working control, not a weak one that found nothing. Northern Virginia was 0.21&deg;C colder overnight in 2025 while its overnight demand rose 3,960 MW.</p>
+          </div>
+
+          <div className="mt-form">
+            <b>Unsupervised clustering &middot; do datacenter grids group together?</b>
+            <code className="mt-formula">k-means + PCA on 24-hour profiles &rarr; no enrichment, 50 tests, nothing survives correction</code>
+            <p className="note">A negative result, published as one. Mapped-site regions are depleted in the flattest cluster rather than enriched.</p>
+          </div>
+        </div>
+      </Section>
+
       <Section title="Every formula, in one place">
         <div className="mt-forms">
           <div className="mt-form">

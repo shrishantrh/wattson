@@ -104,16 +104,27 @@ Point at the three numbers.
 > four. It says it matched one hundred percent of its electricity with renewable purchases,
 > on an annual basis."**
 
-**Now the part that shows the text work:**
+**Now the AI side. This is the Arrowstreet story, so slow down:**
 
-> **"We didn't type that in. We ingested three hundred and fifty-four documents, sustainability
-> reports and SEC filings, and had a model pull every clean-energy claim out with its page
-> number and a verbatim quote. Then it scores each one: how big the number is, how precisely
-> it's stated, and how heavily it's hedged."**
+> **"We didn't read these by hand. We ingested three hundred and fifty-four documents,
+> sustainability reports and SEC filings, and had a language model do three jobs."**
 
-> **"Because the hedging is where the meaning is. 'One hundred percent renewable' and 'one
+> **"One: find every clean-energy claim in the document and pull it out with a verbatim
+> quote and the page number, so nothing on this screen is our paraphrase."**
+
+> **"Two: score how hedged each claim is. Because 'one hundred percent renewable' and 'one
 > hundred percent of annual consumption matched with market-based certificates' are the same
-> number and completely different claims. Every qualifier cuts the score."**
+> number and completely different claims. Every qualifier cuts the score. 'Annual' costs the
+> most, because averaging over a year is exactly what hides the night."**
+
+> **"Three: everything is indexed, so you can ask it what a company said and get the passage,
+> the page and the source URL back."**
+
+**And the guard, which is the part that matters:**
+
+> **"The model never computes a number. It reads text and it answers questions. Every grid
+> figure on this site is plain arithmetic over federal data, which is why the whole pipeline
+> reproduces exactly on a clean machine."**
 
 **Then the measurement:**
 
