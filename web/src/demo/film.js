@@ -1,7 +1,7 @@
 // The film: an ordered shot list Film.jsx runs on top of the live app (open any route with ?film=1).
 // One story in five sections: PROBLEM (two slides), SOLUTION (one slide), HOW IT WORKS (the app
-// walkthrough), IMPACT (two slides), CLOSE. A shot is either a slide Film.jsx draws itself (`slide`)
-// or an app screen (`route`) with actions run in order by the fake cursor.
+// walkthrough), IMPACT (the finding and the limits), CLOSE. A shot is either a slide Film.jsx draws
+// itself (`slide`) or an app screen (`route`) with actions run in order by the fake cursor.
 //
 // `say` is the narration (scripts/narrate.mjs renders it and writes film.timing.json); a shot holds
 // for max(holdMs, narration + 600 ms) after its actions, then 400 ms of silence. `expect` is checked
@@ -9,8 +9,14 @@
 // `notText` means the element's text must have moved on from that value). Failures land in
 // window.__film.errors; the recorder prints the PASS/FAIL table and tiles one frame per check into
 // docs/wattson-demo-shots.png. title is big (six words or fewer), sub one line; transitional shots
-// have neither. Every number here is one the screen renders itself or one in docs/demo_script.md
-// (recomputed from the served files); docs/narration.md is the readable copy of the script.
+// have neither. Every number here is one the screen renders itself or one in docs/pitch/numbers.md;
+// docs/narration.md is the readable copy of the script, with a source for every figure spoken.
+//
+// Every selector and every expect string below was read off the running app at 1440x900 on
+// 2026-09-20, after the interface rebuild: the answer card's primary action is `.ans-next` (its
+// label is dynamic — "See its report pages" / "See the evidence" / "Hide the evidence"), the
+// compare screen puts the answer above the controls, and evidence cards carry worded Drag/Hide
+// buttons. There is no close button on an answer card any more; navigation is the breadcrumb.
 //
 // Action: { type: 'move' | 'click' | 'type' | 'wait' | 'scroll', selector?, text?, ms?, fallback? }
 //   move    cursor to the element's centre (measured at that moment)   click   move, ripple, el.click()
@@ -34,23 +40,23 @@ export const DETECTOR = {
 export const SOURCES = ['p. 4 · matched 100%', 'p. 94 · 65% hourly CFE', 'google-2026-environmental-report.pdf', 'EIA-930 hourly, via PUDL', 'through 2026-09-05', '111 regions']
 
 export const FILM = [
-  // PROBLEM
-  { id: 'flat', section: 'problem', slide: 'flat', holdMs: 3000, title: 'Every AI company says 100% renewable.',
-    say: 'Every big technology company says its data centers run on one hundred percent renewable energy. On paper, that is true.',
+  // PROBLEM — the flat load, and the hours it lands in.
+  { id: 'flat', section: 'problem', slide: 'flat', holdMs: 6500, title: 'The same power at 3am as at noon.',
+    say: 'An AI datacenter draws the same power at three in the morning as at noon.',
     expect: { selector: '.film-slide.show', text: '3am' } },
 
-  { id: 'night', section: 'problem', slide: 'night', holdMs: 6000, title: 'The night never got cleaner.',
-    say: 'But a data center draws the same power at three in the morning as at noon. And since twenty nineteen, solar cleaned up the day while the night went backwards.',
+  { id: 'night', section: 'problem', slide: 'night', holdMs: 11000, title: 'The night never got cleaner.',
+    say: 'Since twenty nineteen the grid cleaned up by day: thirty seven percent to forty six. At night, forty to forty. Solar fixed the day, not the night.',
     expect: { selector: '.film-slide.show', text: ['46.5%', '39.7%'] } },
 
   // SOLUTION
-  { id: 'two', section: 'solution', slide: 'two', holdMs: 5000, title: 'So we built Wattson.',
-    say: 'So half of that load lands in the hours that never improved. Wattson reads what every American grid actually generated, hour by hour, and answers two questions.',
+  { id: 'two', section: 'solution', slide: 'two', holdMs: 9500, title: 'So we built Wattson.',
+    say: 'So half of a flat load lands in hours that never improved. Wattson reads what every American grid actually generated, hour by hour.',
     expect: { selector: '.film-slide.show', text: ['powering', 'new load'] } },
 
-  // HOW IT WORKS
-  { id: 'landing', section: 'how', route: '#/', holdMs: 1500, title: "What's really powering it?", sub: 'Every US grid, every hour, from EIA-930 via PUDL.',
-    say: 'First. What is really powering a company?',
+  // HOW IT WORKS — question one: what powers a company's sites?
+  { id: 'landing', section: 'how', route: '#/', holdMs: 3500, title: "What's really powering it?", sub: 'Every US grid, every hour, from EIA-930 via PUDL.',
+    say: 'First question. What is actually powering a company’s data centers?',
     waitFor: '.pal-inline input', actions: [{ type: 'wait', ms: 300 }, { type: 'move', selector: '.pal-inline input' }],
     expect: { selector: '.hero-q', text: "What's really powering it?" } },
 
@@ -61,68 +67,81 @@ export const FILM = [
     ],
     expect: { selector: '.column', text: 'Alphabet (Google)' } },
 
-  { id: 'google', section: 'how', route: '#/check/GOOGL', holdMs: 4000, title: 'True on paper. 6% physically.', sub: 'One mapped site, on a grid that generated 6% clean power in 2025.',
-    say: 'Google says it matched one hundred percent of its electricity with renewable energy. Wattson finds the grid its data center actually draws from. That grid generated six percent clean power.',
-    waitFor: '.column .verdict', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.column .verdict' }],
-    expect: { selector: '.column .verdict', text: 'True on paper' } },
+  { id: 'google', section: 'how', route: '#/check/GOOGL', holdMs: 11500, title: 'True on paper. 6% physically.', sub: 'One mapped site, on a grid that generated 6% clean power in 2025.',
+    say: 'Google says one hundred percent renewable. True on paper: an annual, market based claim. Its one mapped site sits on Santee Cooper’s grid, which generated six percent clean power last year.',
+    waitFor: '.ans-rest', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.ans-rest' }],
+    expect: { selector: '.ans-rest', text: 'True on paper' } },
 
-  { id: 'evidence', section: 'how', route: '#/check/GOOGL', holdMs: 5000, title: 'Page 4 vs page 94', sub: 'Their own report, both pages.',
-    say: "And we do not have to argue about it. Page four of Google's own report says one hundred percent, matched annually. Page ninety four says sixty five percent, hour by hour. Same report, two different questions.",
-    waitFor: '.column .toggle', actions: [
-      { type: 'click', selector: '.column .toggle' },
+  { id: 'gap', section: 'how', route: '#/check/GOOGL', holdMs: 5000, title: '94 points apart', sub: 'Says 100%. Its grids generated 6%.',
+    say: 'We never say they lied. We say: true on paper, six percent physically.',
+    waitFor: '.ans-gap', actions: [{ type: 'move', selector: '.ans-gap' }],
+    expect: { selector: '.ans-gap', text: ['100%', '6%', '94 points apart.'] } },
+
+  { id: 'evidence', section: 'how', route: '#/check/GOOGL', holdMs: 7500, title: 'Page 4 vs page 94', sub: 'Their own report, both numbers, one document.',
+    say: 'Their own report agrees. Page four makes the claim. Page ninety four discloses the hourly number: about sixty five percent, flat for five years.',
+    waitFor: '.ans-next', actions: [
+      { type: 'click', selector: '.ans-next' },
       { type: 'scroll', selector: '[data-module="sbs"]' },
     ],
-    expect: { selector: '[data-module="sbs"]', text: ['Says', 'Discloses'] } },
+    expect: { selector: '[data-module="sbs"]', text: ['p. 4', 'p. 94', '65%'] } },
 
-  { id: 'chip', section: 'how', route: '#/check/GOOGL?evidence=1', holdMs: 600, title: null, sub: null,
-    say: 'Second. If you are building, where should you go?',
-    waitFor: '.brand', actions: [
-      { type: 'click', selector: '.brand' },
-      { type: 'wait', ms: 300 },
+  { id: 'page94', section: 'how', route: '#/check/GOOGL?evidence=1', holdMs: 5500, title: 'Their page, full size', sub: 'google-2026-environmental-report.pdf, page 94.',
+    say: 'Here is that page, full size, straight out of their report. Two measurements, both theirs.',
+    waitFor: '.sbs-ex:nth-child(2) .sbs-shot', actions: [{ type: 'click', selector: '.sbs-ex:nth-child(2) .sbs-shot' }],
+    expect: { selector: '.sbs-lb', text: 'page 94' } },
+
+  // HOW IT WORKS — question two: where should new load go?
+  { id: 'tocompare', section: 'how', route: '#/check/GOOGL?evidence=1', holdMs: 3000, title: null, sub: null,
+    say: 'Second question. If you are building three hundred megawatts of flat load, where should it go?',
+    waitFor: '.sbs-lb', actions: [
+      { type: 'click', selector: '.sbs-lb' },
+      { type: 'click', selector: '.bc-seg', text: 'Home' },
+      { type: 'wait', ms: 400 },
       { type: 'click', selector: 'a.chip[href^="#/compare"]' },
     ],
-    expect: { selector: '.column', text: 'Compare' } },
+    expect: { selector: '.ans-sticky', text: ['300 MW', 'Omaha'] } },
 
-  { id: 'compare', section: 'how', route: DEMO_COMPARE_ROUTE, holdMs: 5000, title: 'Same 300 MW, three grids', sub: 'Ranked on clean power at night, frozen before any result was seen.',
-    say: 'Three hundred megawatts, three places. Omaha runs fifty two percent clean at night, and improving. Northern Virginia, thirty nine, and getting worse. That is forty megawatts more fossil fuel, every hour, for the life of the building.',
-    waitFor: '.column .nums', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.column .nums' }],
-    expect: { selector: '.column .verdict', text: 'Omaha is your cleanest option' } },
+  { id: 'compare', section: 'how', route: DEMO_COMPARE_ROUTE, holdMs: 9500, title: 'Same 300 MW, three grids', sub: 'Ranked on clean power at night, frozen before any result was seen.',
+    say: 'Three hundred megawatts, three places. Omaha is the cleanest: fifty two percent clean at night, and improving. Northern Virginia is thirty nine, and getting worse.',
+    waitFor: '.ans-rank', actions: [{ type: 'wait', ms: 400 }, { type: 'move', selector: '.ans-rank' }],
+    expect: { selector: '.ans-rank', text: ['Omaha', '52%', 'N. Virginia', '39%'] } },
 
-  { id: 'shape', section: 'how', route: DEMO_COMPARE_ROUTE, holdMs: 4000, title: 'Same places, different load shape', sub: 'A load has a shape; the ranking re-runs from each 24-hour profile.',
-    say: 'It depends on your load, too. Shift to business hours and the ranking changes, because you are using different hours of the day.',
-    waitFor: '.shape-seg button', actions: [{ type: 'click', selector: '.shape-seg button', text: 'business hours' }],
-    expect: { selector: '.column .verdict', text: 'For a business hours load' } },
+  { id: 'fossil', section: 'how', route: DEMO_COMPARE_ROUTE, holdMs: 9000, title: '144 MW versus 269 MW', sub: 'Fossil generation behind the same load, at night, on the 2025 mix.',
+    say: 'Same three hundred megawatts: a hundred and forty four megawatts of fossil at night in Omaha, two hundred and sixty nine in Phoenix.',
+    waitFor: '.note.live', actions: [{ type: 'move', selector: '.note.live' }],
+    expect: { selector: '.note.live', text: ['144 MW', '269 MW'] } },
 
-  { id: 'nearby', section: 'how', route: DEMO_COMPARE_ROUTE, holdMs: 4000, title: 'Is there a cleaner grid nearby?', sub: 'The same load, the cleanest grids within reach.',
-    say: 'It also says when there is nothing better. Within five hundred miles of Omaha, nothing runs cleaner at night.',
-    waitFor: '.column .toggle', actions: [
-      { type: 'click', selector: '.shape-seg button', text: '24/7 flat' },
-      { type: 'click', selector: '.column .toggle' },
-      { type: 'scroll', selector: '[data-module="nearby"], [data-module="night"]' },
+  { id: 'phoenix', section: 'how', route: DEMO_COMPARE_ROUTE, holdMs: 10000, title: 'A double count, corrected', sub: 'Phoenix ranks 2nd on 10%, above Northern Virginia on 39%. Here is why.',
+    say: 'Phoenix ranks second on ten percent, above Northern Virginia’s thirty nine. Its published twenty nineteen figure counted a nuclear plant twice, so it is climbing from two percent, not falling from sixty two.',
+    waitFor: '.ans-next', actions: [
+      { type: 'click', selector: '.ans-next' },
+      { type: 'wait', ms: 1200 },
+      { type: 'scroll', selector: '[data-module="cand-AZPS"]' },
     ],
-    expect: { selector: '[data-module="nearby"], [data-module="night"]', text: 'Omaha' } },
+    expect: { selector: '[data-module="cand-AZPS"]', text: 'Corrected, Phoenix rose from 2% to 10%' } },
 
-  { id: 'sweep', section: 'how', route: '#/found?s=sweep', holdMs: 6000, title: 'Cleaner by day, not at night', sub: 'The grid cleaned up by day and stood still at night since 2019.',
-    say: 'Both answers come from one measurement. By day, clean power rose from thirty seven percent to forty six. At night, it fell.',
-    waitFor: '.pair', actions: [{ type: 'wait', ms: 300 }, { type: 'move', selector: '.pair' }],
-    expect: { selector: '.pair', text: '40.5%' } },
+  // IMPACT — the finding, the detector, the limits.
+  { id: 'found', section: 'impact', route: '#/found', holdMs: 10500, title: 'Flat since 2019', sub: 'PJM overnight clean generation: 35,700 MW then, 35,619 MW now.',
+    say: 'The mid Atlantic grid that serves Data Center Alley added eight point seven gigawatts of overnight generation since twenty nineteen. Clean generation at night fell eighty one megawatts.',
+    waitFor: '.fd-fig', actions: [{ type: 'wait', ms: 300 }, { type: 'move', selector: '.fd-fig' }],
+    expect: { selector: '.fd-fig', text: '35,619' } },
 
-  { id: 'detector', section: 'how', route: '#/found?s=detector', holdMs: 7000, title: 'Where flat load is landing', sub: '111 regions scored from demand alone, no company list.',
-    say: 'And a detector that finds where this load is landing, from demand alone. No company list. It ranked Northern Virginia sixth and Omaha seventh, and we named those before we looked.',
+  { id: 'gas', section: 'impact', route: '#/found', holdMs: 8000, title: '8.7 GW more at night', sub: '10.7 GW of it gas, while exports to neighbours fell.',
+    say: 'Ten point seven gigawatts of that growth was gas. Consistent with flat datacenter load being served by gas. Not caused by.',
+    waitFor: '.fd-nums', actions: [{ type: 'move', selector: '.fd-nums' }],
+    expect: { selector: '.fd-nums', text: ['+8.7 GW', '+10.7 GW'] } },
+
+  { id: 'detector', section: 'impact', route: '#/found?s=detector', holdMs: 10000, title: '111 regions, demand only', sub: 'Method frozen and four regions named before any ranking was seen.',
+    say: 'A detector scored one hundred and eleven regions from demand alone, frozen before any ranking. Northern Virginia sixth. Dallas ninety first: we missed it, and we print it.',
     waitFor: '.ys-play', actions: [{ type: 'wait', ms: 300 }, { type: 'click', selector: '.ys-play' }],
-    expect: { selector: '.ys-year', notText: '2019' } },
+    expect: { selector: '.fd-scene .note', text: ['Northern Virginia 6th', 'Dallas 91st'] } },
 
-  // IMPACT
-  { id: 'found', section: 'impact', slide: 'found', holdMs: 5000, title: '111 regions, scored from demand alone.',
-    say: 'One hundred and eleven regions, scored the same way. Five of the places it flagged are not known data center clusters.',
-    expect: { selector: '.film-slide.show', text: ['Northern Virginia', 'Santee Cooper'] } },
-
-  { id: 'sources', section: 'impact', slide: 'sources', holdMs: 4500, title: 'Every number cites its source.',
-    say: 'Every number cites its source. Where the published data is wrong, we show our correction beside it, not instead of it.',
+  { id: 'sources', section: 'impact', slide: 'sources', holdMs: 12500, title: 'Every number cites its source.',
+    say: 'The limits. We measure what a grid generated inside its footprint, not what a company consumed. Average mix, not marginal. Contracted power excluded. Claims we cannot verify are counted, not scored.',
     expect: { selector: '.film-slide.show', text: ['p. 94', 'EIA-930'] } },
 
   // CLOSE
-  { id: 'end', section: 'close', slide: 'end', holdMs: 4000, title: 'Wattson',
-    say: 'Wattson. It follows the power, not the press release.',
+  { id: 'end', section: 'close', slide: 'end', holdMs: 9000, title: 'Wattson',
+    say: 'Yash built the data engine and the claims extraction. I built the product. Wattson. It follows the power, not the press release.',
     expect: { selector: '.film-slide.show', text: 'HackMIT 2026' } },
 ]

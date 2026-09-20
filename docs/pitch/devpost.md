@@ -129,18 +129,66 @@ are counted rather than hidden, and no company is called a liar anywhere in the 
 
 ## What we learned
 
-That the interesting question is almost never the annual average. Decarbonization is usually
-reported as one number per year, and that number is genuinely improving. Split it by hour and a
-completely different picture appears, one where the improvement is concentrated in the hours the sun
-is up and the hours a data center runs hardest have not moved in six years.
+**A CSS transform silently captures `position: fixed`.** Our full-page image viewer kept opening at
+346px wide, clipped inside its card. We spent hours treating it as a layout overflow. The real cause:
+the drag-and-drop library puts a `transform` on every sortable card, and a transformed ancestor
+becomes the containing block for `fixed` descendants, so the overlay was anchored to the card instead
+of the viewport. `transform`, `filter`, `perspective`, `will-change` and `contain` all do this. The
+fix is to portal the overlay to `document.body`. If something `fixed` is behaving as though it is
+`absolute`, walk up the tree looking for those properties rather than debugging the overlay.
 
-That a measurement is only as good as the honesty around it. It is easy to compute a share; it is
-much harder to say precisely what that share is and is not, and to keep saying it on every screen
-where the number appears.
+**A collapsed `<details>` still has geometry.** We wrote an automated audit that walks the DOM and
+flags any text box intersecting a chart box. It reported a collision 2,350px from anything painted.
+Chrome still returns `getBoundingClientRect()` for children of a closed `<details>`, and they project
+wherever the layout would have put them. Visually hidden is not geometrically absent. We replaced the
+folds with a component that mounts its body only while open, which fixed the audit and removed the
+dead nodes. Any geometry-based test needs conditional mounting, not `display: none` thinking.
 
-That freezing your parameters before you look at the answer is uncomfortable and worth it. It is the
-only reason we can say the detector found anything rather than that we tuned it until it agreed with
-us.
+**Content-hashed chunks make every deploy a breaking change for open tabs.** A deploy renames every
+JavaScript chunk. A tab loaded before it still holds the old entry bundle, so the first navigation to
+a lazily imported route requests a filename that no longer exists and dies with "Failed to fetch
+dynamically imported module". The site is fine; the tab is stale. We now catch that specific rejection
+in the lazy loader and reload once, guarded by a `sessionStorage` flag so a genuinely missing chunk
+cannot loop, and skipped where that storage throws. Any app doing route-level code splitting behind a
+CDN has this bug and usually does not know it.
+
+**Our worst failure mode was a fallback that worked.** The front end resolves data from a live API,
+then a static export, then bundled fixtures, which is what lets the whole thing run offline. That also
+means a broken data export produces a site that looks completely normal and is quietly serving
+placeholder numbers. Green build, green tests, wrong product. We made it a hard failure instead: the
+deploy greps the build log for the line that proves the export synced, asserts specific files exist in
+the output, and runs 77 data-shape checks. A graceful degradation you cannot see is worse than a crash.
+
+**Automate the verification, not just the action.** Our demo video is a real screen recording driven
+by a headless browser clicking real elements. The first version silently recorded nothing being typed,
+and looked plausible. Now every shot declares what must be on screen at that moment, the recorder
+prints a pass/fail table, tiles one frame per shot into a contact sheet, and refuses to write a file
+it cannot vouch for: it fingerprints the shot list into the narration so stale audio cannot be muxed
+against renamed shots, detects hot-module reloads that splice two takes together, and probes the
+output with ffmpeg for a real, non-silent audio track. It has already aborted on a take that would
+have looked fine.
+
+**Bundle budgets have to be measured, not assumed.** Our entry chunk started at roughly 5 MB, mostly
+because a 3D globe and a plotting library were reachable from the first import. Splitting the globe,
+React, the UI and the charts into separate chunks and importing the charts dynamically brought the
+entry to 178 kB. Switching from the full plotting distribution to its Cartesian-only build cut that
+dependency from 4.6 MB to 1.4 MB. None of this was visible from the source; it took reading the
+build's chunk table.
+
+**One malformed polygon can take out every polygon after it.** Rendering land as a hexagonal dot
+field threw about 90 errors per page load. The cause was a single country outline in the source
+topology whose ring collapsed to four identical vertices; the indexing library threw on it, and
+because the throw escaped the loop, every country after it in iteration order was never drawn. Guard
+per feature, not per batch, and validate geometry before handing it to a library that throws.
+
+**Robust statistics matter more than the model.** The detector uses median and median-absolute-
+deviation rather than mean and standard deviation, because a handful of very large regions otherwise
+dominate the normalization. Peak demand is the 99.5th percentile hour rather than the maximum, because
+one corrupt hour in 2019 would otherwise define a region's entire load factor. Both choices were made
+before we saw any ranking, along with the weights and a 500 MW exclusion, and we named four test
+regions in advance. Two landed where we predicted and two did not, and the miss taught us a real
+limitation: our neighbour-divergence term penalizes a zone inside a region that is booming overall,
+because it has no quiet neighbours to stand out against.
 
 ## What's next for our project
 
