@@ -9,7 +9,7 @@
 > ### 🏆 **Winner, Arrowstreet Capital "Best Textual Analysis Hack"** &nbsp;·&nbsp; **HackMIT 2026 Finalist**
 
 **HackMIT 2026.** Team: Yash and Shri.
-Live: https://shrishantrh.github.io/wattson/ · API: https://wattson-api-ivory-seastar-408.fly.dev/
+Live: https://shrishantrh.github.io/wattson/ · API: https://wattson-api-3.fly.dev/
 
 Greenwashing analysis is mature for fast fashion, airlines and oil majors. It does not
 exist for datacenters, the fastest-growing industrial electricity load in the United
