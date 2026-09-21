@@ -6,6 +6,8 @@
 > "100% renewable" claim against 4.45 million hours of federal meter data, and hand asset
 > managers the named utility on the other side of the gap.**
 
+> ### 🏆 **Winner, Arrowstreet Capital "Best Textual Analysis Hack"** &nbsp;·&nbsp; **HackMIT 2026 Finalist**
+
 **HackMIT 2026.** Team: Yash and Shri.
 Live: https://shrishantrh.github.io/wattson/ · API: https://wattson-api-ivory-seastar-408.fly.dev/
 
